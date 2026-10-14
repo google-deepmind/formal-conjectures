@@ -48,7 +48,6 @@ local notation "r̂(" n ")" =>
 
 def erdos_560.answer : ℕ → ℕ := sorry
 
-open erdos_560 in
 /--
 Let $\hat{R}(G)$ denote the size Ramsey number, the minimal number of edges $m$ such that there
 is a graph $H$ with $m$ edges such that in any $2$-colouring of the edges of $H$ there is a
@@ -59,7 +58,7 @@ $$\hat{R}(K_{n,n}),$$
 where $K_{n,n}$ is the complete bipartite graph with $n$ vertices in each component.
 -/
 @[category research open, question value, AMS 5]
-theorem erdos_560 : answer = (fun n : ℕ ↦ r̂(n)) := by
+theorem erdos_560 : erdos_560.answer = (fun n : ℕ ↦ r̂(n)) := by
   sorry
 
 /--

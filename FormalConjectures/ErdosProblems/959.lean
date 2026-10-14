@@ -73,7 +73,6 @@ def extremalGap (n : ℕ) : ℕ := by
 
 def erdos_959.answer : ℕ → ℝ := sorry
 
-open erdos_959 in
 /--
 Let $A\subseteq \mathbb{R}^2$ be a set of size $n$ and let $\{d_1,\ldots,d_k\}$ be
 the set of distinct distances determined by $A$. Let $f(d)$ be the number of times
@@ -84,7 +83,7 @@ where the maximum is taken over all $A$ of size $n$ (this is `extremalGap n`).
 -/
 @[category research open, question value, AMS 52]
 theorem erdos_959 :
-    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] (answer : ℕ → ℝ) := by
+    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] (erdos_959.answer : ℕ → ℝ) := by
   sorry
 
 /--

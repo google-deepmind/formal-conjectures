@@ -45,7 +45,6 @@ noncomputable def guaranteedMaxCosetDim (n : ℕ) (α : ℝ) : ℕ :=
 
 def green_51.answer : ℕ → ℝ → ℕ := sorry
 
-open green_51 in
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. What is the largest size of coset
 guaranteed to be contained in $2A$?
@@ -54,7 +53,7 @@ We phrase this by asking for the exact function $F(\alpha, n)$ giving the maximu
 of a guaranteed coset.
 -/
 @[category research open, question value, AMS 5 11]
-theorem green_51 : answer = guaranteedMaxCosetDim := by
+theorem green_51 : green_51.answer = guaranteedMaxCosetDim := by
   sorry
 
 /-- It is known that $A + A$ must contain a coset of dimension $\gg_\alpha n$ [Gr13]. -/

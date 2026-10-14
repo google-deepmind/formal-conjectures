@@ -49,7 +49,6 @@ noncomputable def n (k : ℕ) : ℕ :=
 
 def erdos_1063.better_upper.answer : ℕ → ℝ := sorry
 
-open erdos_1063.better_upper in
 /--
 Estimate $n_k$ by finding a better upper bound than Cambie's
 $n_k \leq k \cdot \operatorname{lcm}(1, \dotsc, k-1)$.
@@ -60,7 +59,7 @@ application, so the coercion lands on `n` and the `lcm` is taken in `ℝ`, where
 non-zero elements is `1` and the whole comparator collapses to `k`. -/
 @[category research open, question value, AMS 11]
 theorem erdos_1063.better_upper :
-    let upper_bound : ℕ → ℝ := answer
+    let upper_bound : ℕ → ℝ := erdos_1063.better_upper.answer
     (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
     upper_bound =o[atTop] fun k =>
       (k : ℝ) * (((Finset.Icc 1 (k - 1)).lcm id : ℕ) : ℝ) := by

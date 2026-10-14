@@ -46,7 +46,6 @@ noncomputable def numCircles (P : Set ℝ²) : ℕ :=
 
 def erdos_506.answer : ℕ := sorry
 
-open erdos_506 in
 /--
 What is the minimum number of circles determined by any $n$ points in $\mathbb{R}^2$, not all on a
 circle?
@@ -68,12 +67,11 @@ theorem erdos_506 (n : ℕ) (hn : 4 ≤ n) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer := by
+      erdos_506.answer := by
   sorry
 
 def erdos_506.variants.large_n.answer (n : ℕ) : ℕ := (n - 1).choose 2 + 1 - (n - 1) / 2
 
-open erdos_506.variants.large_n in
 /--
 For $n > 393$ the answer is $\binom{n-1}{2} + 1 - \left\lfloor \frac{n-1}{2} \right\rfloor$
 (Elliott [El67], with the correction of Purdy and Smith [PuSm], also reported in [BaBa94]): this is
@@ -85,12 +83,11 @@ theorem erdos_506.variants.large_n (n : ℕ) (hn : 393 < n) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer n := by
+      (erdos_506.variants.large_n.answer n) := by
   sorry
 
 def erdos_506.variants.small_n.answer : ℕ := sorry
 
-open erdos_506.variants.small_n in
 /--
 The problem appears to remain open for small $n$: Elliott's answer is established only for
 $n > 393$, so the minimum number of circles determined by $n$ points, not all on a line and not all
@@ -101,7 +98,7 @@ theorem erdos_506.variants.small_n (n : ℕ) (hn : 4 ≤ n) (hn' : n ≤ 393) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer := by
+      erdos_506.variants.small_n.answer := by
   sorry
 
 /--

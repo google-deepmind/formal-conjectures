@@ -96,12 +96,11 @@ theorem BB_5 : BB 5 = 47176870 := by
 
 def BB_6.answer : ℕ := sorry
 
-open BB_6 in
 /--
 Determine the value of the Busy Beaver function at n = 6.
 -/
 @[category research open, question value, AMS 3]
-theorem BB_6 : BB 6 = answer := by
+theorem BB_6 : BB 6 = BB_6.answer := by
   sorry
 
 end BusyBeaver

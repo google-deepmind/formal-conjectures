@@ -38,14 +38,13 @@ def IsGoodPair (t α : ℝ) : Prop :=
 
 def erdos_349.answer : Set (ℝ × ℝ) := sorry
 
-open erdos_349 in
 /--
 For what values of $t,\alpha \in (0,\infty)$ is the sequence $\lfloor t\alpha^n\rfloor$ complete
 (that is, all sufficiently large integers are the sum of distinct integers of the form $\lfloor t\alpha^n\rfloor$)?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_349 :
-    {(t, α) | 0 < t ∧ 0 < α ∧ IsGoodPair t α} = answer := by
+    {(t, α) | 0 < t ∧ 0 < α ∧ IsGoodPair t α} = erdos_349.answer := by
   sorry
 
 /--

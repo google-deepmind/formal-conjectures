@@ -88,10 +88,9 @@ theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = a
 def a_value_question_with_def.answer : Nat := sorry
 
 #guard_msgs in
-open a_value_question_with_def in
 /-- What is `2 + 2`? -/
 @[category research open, question value, AMS 11]
-theorem a_value_question_with_def : 2 + 2 = answer := by
+theorem a_value_question_with_def : 2 + 2 = a_value_question_with_def.answer := by
   sorry
 
 -- The form is checked against the statement, in both directions.
@@ -109,9 +108,8 @@ def a_value_question_with_def_tagged_yes_no.answer : Nat := sorry
 error: the statement of 'a_value_question_with_def_tagged_yes_no' refers to the unknown of a value question; use `question value`
 -/
 #guard_msgs in
-open a_value_question_with_def_tagged_yes_no in
 @[category research open, question, AMS 11]
-theorem a_value_question_with_def_tagged_yes_no : 2 + 2 = answer := by
+theorem a_value_question_with_def_tagged_yes_no : 2 + 2 = a_value_question_with_def_tagged_yes_no.answer := by
   sorry
 
 /--

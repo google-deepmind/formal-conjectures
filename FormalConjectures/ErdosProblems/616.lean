@@ -34,7 +34,6 @@ open Filter Asymptotics
 
 def erdos_616.answer : ℕ → ℕ∞ := sorry
 
-open erdos_616 in
 /--
 Let $r\geq 3$. For an $r$-uniform hypergraph $G$ let $\tau(G)$ denote the covering number (or
 transversal number), the minimum size of a set of vertices which includes at least one from each
@@ -43,7 +42,7 @@ where every subgraph $G'$ on at most $3r-3$ vertices has $\tau(G')\leq 1$, we ha
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_616 :
-    let f : ℕ → ℕ∞ := answer
+    let f : ℕ → ℕ∞ := erdos_616.answer
     ∀ r : ℕ, 3 ≤ r → Hypergraph.localTransversalBound r (3 * r - 3) 1 = f r := by
   sorry
 

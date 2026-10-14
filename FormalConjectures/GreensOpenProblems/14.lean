@@ -137,7 +137,6 @@ theorem green_14_upper_bound_kelley_meka :
 
 def green_14_variant_2r2.answer : (r : ℕ) × (↑(Icc 1 (2 * r ^ 2 - 1)) → Fin 2) := sorry
 
-open green_14_variant_2r2 in
 /--
 It remains an interesting open problem to actually write down a colouring showing (say)
 $W(3, r) \ge 2r^2$ for some $r$. [Gr24]
@@ -147,7 +146,7 @@ theorem green_14_variant_2r2 :
     -- Provide a pair (r, associated coloring) that avoids the monochromatic APs
     -- To show $W(3, r) > 2r^2 - 1$, we need a coloring of $\{1, \ldots, 2r^2 - 1\}$
     -- that avoids monochromatic APs of length 3 and $r$.
-    let ans : Σ r : ℕ, Icc 1 (2 * r^2 - 1) → Fin 2 := answer
+    let ans : Σ r : ℕ, Icc 1 (2 * r^2 - 1) → Fin 2 := green_14_variant_2r2.answer
     let r := ans.1
     let c := ans.2
     3 ≤ r ∧

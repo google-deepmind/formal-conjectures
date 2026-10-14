@@ -207,7 +207,6 @@ theorem maxTransversalsBound :
 
 def molsExistenceProblem.answer : Set ℕ := sorry
 
-open molsExistenceProblem in
 /--
 MOLS existence problem: determine exactly which orders `n` admit a complete set of `n - 1`
 mutually orthogonal latin squares.
@@ -216,7 +215,7 @@ Equivalently, this asks for which orders affine planes of order `n` exist. Compl
 for prime-power orders; the smallest currently unresolved order is `12`.
 -/
 @[category research open, question value, AMS 5]
-theorem molsExistenceProblem : answer = {n : ℕ | HasCompleteMOLS n} := by
+theorem molsExistenceProblem : molsExistenceProblem.answer = {n : ℕ | HasCompleteMOLS n} := by
   sorry
 
 /--

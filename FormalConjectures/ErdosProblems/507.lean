@@ -67,37 +67,34 @@ noncomputable def upperBarrier (n : ℕ) : ℝ := 1 / (n : ℝ) ^ ((7 : ℝ) / 6
 
 def erdos_507.equivalent.answer : ℕ → ℝ := sorry
 
-open erdos_507.equivalent in
 /--
 Let $\alpha(n)$ be such that every set of $n$ points in the unit disk contains three points which
 determine a triangle of area at most $\alpha(n)$. Estimate $\alpha(n)$.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_507.equivalent:
-    α ~[atTop] (answer : ℕ → ℝ) := by
+    α ~[atTop] (erdos_507.equivalent.answer : ℕ → ℝ) := by
   sorry
 
 def erdos_507.lower.answer : ℕ → ℝ := sorry
 
-open erdos_507.lower in
 /--
 Estimate a lower bound for$\alpha(n)$.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_507.lower:
-    let ans := (answer : ℕ → ℝ)
+    let ans := (erdos_507.lower.answer : ℕ → ℝ)
     (lowerBest =o[atTop] ans) ∧ (ans ≪ α) := by
   sorry
 
 def erdos_507.upper.answer : ℕ → ℝ := sorry
 
-open erdos_507.upper in
 /--
 Estimate an upper bound for$\alpha(n)$.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_507.upper:
-    let ans := (answer : ℕ → ℝ)
+    let ans := (erdos_507.upper.answer : ℕ → ℝ)
     (α ≪ ans) ∧ (ans =o[atTop] upperBarrier) := by
   sorry
 

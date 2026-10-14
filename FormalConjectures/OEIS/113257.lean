@@ -51,24 +51,22 @@ theorem a_5 : a 5 = 4682453347 := by decide
 
 def conjecture1.answer : ℕ := sorry
 
-open conjecture1 in
 /--
 The smallest prime in this sequence is $a(2) = 5$. What is the next prime?
 -/
 @[category research open, question value, AMS 11]
 theorem conjecture1 :
-    answer = a (sInf {n : ℕ | 2 < n ∧ (a n).Prime}) := by
+    conjecture1.answer = a (sInf {n : ℕ | 2 < n ∧ (a n).Prime}) := by
   sorry
 
 def conjecture2.answer : ℕ := sorry
 
-open conjecture2 in
 /--
 What is the first square value after 1?
 -/
 @[category research open, question value, AMS 11]
 theorem conjecture2 :
-    answer = a (sInf {n : ℕ | 1 < n ∧ IsSquare (a n)}) := by
+    conjecture2.answer = a (sInf {n : ℕ | 1 < n ∧ IsSquare (a n)}) := by
   sorry
 
 end OeisA113257

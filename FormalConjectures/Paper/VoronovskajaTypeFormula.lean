@@ -454,9 +454,8 @@ theorem voronovskaja_theorem.bernstein_operators
     (𝓝 ((1 / 2) * x * (1 - x) * f'')) := by
   sorry
 
-def voronovskaja_theorem.bezier_bernstein_operators.answer : ℝ → (ℝ → ℝ) → ℝ → ℝ := fun a g y => bezierBias a * Real.sqrt (y * (1 - y)) * iteratedDerivWithin 1 g I y
+noncomputable def voronovskaja_theorem.bezier_bernstein_operators.answer : ℝ → (ℝ → ℝ) → ℝ → ℝ := fun a g y => bezierBias a * Real.sqrt (y * (1 - y)) * iteratedDerivWithin 1 g I y
 
-open voronovskaja_theorem.bezier_bernstein_operators in
 /--
 Voronovskaja-type formula for Bézier--Bernstein operators with shape parameter
 $\alpha > 0$, $\alpha \neq 1$.
@@ -499,7 +498,7 @@ theorem voronovskaja_theorem.bezier_bernstein_operators
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
     (hf : ContDiffOn ℝ 2 f I) :
     Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
-      (𝓝 ((answer :
+      (𝓝 ((voronovskaja_theorem.bezier_bernstein_operators.answer :
         ℝ → (ℝ → ℝ) → ℝ → ℝ) α f x)) := by
   sorry
 

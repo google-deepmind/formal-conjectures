@@ -45,7 +45,6 @@ noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
 
 def erdos_329.answer : ℝ := sorry
 
-open erdos_329 in
 /--
 **Erdős Problem 329.**
 Let `A ⊆ ℕ` be a Sidon set. How large can
@@ -54,7 +53,7 @@ be?
 -/
 @[category research open, question value, AMS 5 11]
 theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
-    answer := by
+    erdos_329.answer := by
   sorry
 
 /--

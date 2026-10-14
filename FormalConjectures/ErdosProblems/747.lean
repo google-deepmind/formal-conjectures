@@ -34,9 +34,8 @@ namespace Erdos747
 open Filter Asymptotics
 open scoped Topology
 
-def erdos_747.answer : ℕ → ℝ := fun n : ℕ ↦ n * Real.log n
+noncomputable def erdos_747.answer : ℕ → ℝ := fun n : ℕ ↦ n * Real.log n
 
-open erdos_747 in
 /--
 How large should $\ell(n)$ be such that, almost surely, a random $3$-uniform hypergraph on $3n$
 vertices with $\ell(n)$ edges must contain $n$ vertex-disjoint edges?
@@ -46,7 +45,7 @@ for the general problem over $r$-uniform hypergraphs).
 -/
 @[category research solved, question value, AMS 5 60]
 theorem erdos_747 :
-    let threshold : ℕ → ℝ := answer
+    let threshold : ℕ → ℝ := erdos_747.answer
     ∀ ε : ℝ, 0 < ε → ε < 1 →
     Tendsto (fun n ↦ Hypergraph.matchingProbability (3 * n) 3
       ⌊(1 + ε) * threshold n⌋₊ n) atTop (𝓝 1) ∧

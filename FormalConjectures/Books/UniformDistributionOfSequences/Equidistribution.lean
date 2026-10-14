@@ -107,13 +107,12 @@ theorem isAccumulationPoint_three_halves_pow_infinite :
 
 def isAccumulationPoint_three_halves_pow.answer : ℝ := sorry
 
-open isAccumulationPoint_three_halves_pow in
 /--
 Find an accumulation point of the sequence `(3/2)^n` modulo `1`.
 -/
 @[category research open, question value, AMS 11]
 theorem isAccumulationPoint_three_halves_pow :
-    IsAccumulationPoint answer (fun n => Int.fract <| (3 / 2 : ℝ)^n) := by
+    IsAccumulationPoint isAccumulationPoint_three_halves_pow.answer (fun n => Int.fract <| (3 / 2 : ℝ)^n) := by
   sorry
 
 /-- The values of `(3/2)^n` modulo `1` are pairwise distinct: if `(3/2)^n - (3/2)^m` were an

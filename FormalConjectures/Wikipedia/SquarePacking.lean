@@ -112,7 +112,6 @@ theorem eleven_square_packing_in_square_bound :
 
 def least_eleven_square_packing_in_square.answer : ℝ := sorry
 
-open least_eleven_square_packing_in_square in
 /--
 What is the smallest square that can contain 11 unit squares?
 
@@ -120,7 +119,7 @@ Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
 @[category research open, question value, AMS 51]
 theorem least_eleven_square_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 11 UnitSquare (Square x))} answer := by
+    IsLeast {x : ℝ | Nonempty (Packing 11 UnitSquare (Square x))} least_eleven_square_packing_in_square.answer := by
   sorry
 
 /--
@@ -135,7 +134,6 @@ theorem seventeen_square_packing_in_square_bound :
 
 def least_seventeen_square_packing_in_square.answer : ℝ := sorry
 
-open least_seventeen_square_packing_in_square in
 /--
 What is the smallest square that can contain 17 unit squares?
 
@@ -143,7 +141,7 @@ Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
 @[category research open, question value, AMS 51]
 theorem least_seventeen_square_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 17 UnitSquare (Square x))} answer := by
+    IsLeast {x : ℝ | Nonempty (Packing 17 UnitSquare (Square x))} least_seventeen_square_packing_in_square.answer := by
   sorry
 
 /--
@@ -156,9 +154,8 @@ theorem three_square_packing_in_circle_bound :
     Nonempty (Packing 3 UnitSquare (Circle ((5 * NNReal.sqrt 17) / 16))) := by
   sorry
 
-def least_three_square_packing_in_circle.answer : ℝ≥0 := (5 * NNReal.sqrt 17) / 16
+noncomputable def least_three_square_packing_in_circle.answer : ℝ≥0 := (5 * NNReal.sqrt 17) / 16
 
-open least_three_square_packing_in_circle in
 /--
 What is the smallest circle that can contain 3 unit squares?
 
@@ -176,7 +173,7 @@ References: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle
     "https://github.com/KitaKen1/three-squares-in-a-circle-lean/blob/87bd2b6915933cf608a3cae6263c2500fe81f7ec/lean/ThreeSquares/Compressed/Main.lean#L216-L219"]
 theorem least_three_square_packing_in_circle :
     IsLeast {r : ℝ≥0 | Nonempty (Packing 3 UnitSquare (Circle r))}
-      answer := by
+      least_three_square_packing_in_circle.answer := by
   sorry
 
 /--
@@ -191,13 +188,12 @@ theorem twenty_one_circle_packing_in_square_bound :
 
 def least_twenty_one_circle_packing_in_square.answer : ℝ := sorry
 
-open least_twenty_one_circle_packing_in_square in
 /--
 What is the smallest square that can contain 21 unit circles?
 -/
 @[category research open, question value, AMS 51]
 theorem least_twenty_one_circle_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 21 UnitCircle (Square x))} answer := by
+    IsLeast {x : ℝ | Nonempty (Packing 21 UnitCircle (Square x))} least_twenty_one_circle_packing_in_square.answer := by
   sorry
 
 /--
@@ -217,7 +213,6 @@ theorem fifteen_circle_packing_in_circle_bound :
 
 def least_fifteen_circle_packing_in_circle.answer : ℝ≥0 := sorry
 
-open least_fifteen_circle_packing_in_circle in
 /--
 What is the smallest circle that can contain 15 unit circles?
 
@@ -228,7 +223,7 @@ Dense packings of congruent circles in a circle. Discrete Math 1998;181:139–15
 -/
 @[category research open, question value, AMS 51]
 theorem least_fifteen_circle_packing_in_circle :
-    IsLeast {r : ℝ≥0 | Nonempty (Packing 15 UnitCircle (Circle r))} answer := by
+    IsLeast {r : ℝ≥0 | Nonempty (Packing 15 UnitCircle (Circle r))} least_fifteen_circle_packing_in_circle.answer := by
   sorry
 
 end SquarePacking

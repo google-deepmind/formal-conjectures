@@ -64,7 +64,6 @@ noncomputable def subsetSumThreshold (n : ℕ): ℕ :=
 
 def erdos_789.answer : ℕ → ℝ := sorry
 
-open erdos_789 in
 /--
 Let $h(n)$ be maximal such that if $A\subseteq \mathbb{Z}$ with $\lvert A\rvert=n$
 then there is $B\subseteq A$ with $\lvert B\rvert \geq h(n)$ such that if
@@ -74,7 +73,7 @@ Estimate $h(n)$.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_789 :
-    (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop] (answer : ℕ → ℝ) := by
+    (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop] (erdos_789.answer : ℕ → ℝ) := by
   sorry
 
 /--

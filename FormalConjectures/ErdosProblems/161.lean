@@ -36,7 +36,6 @@ open Filter Asymptotics
 
 def erdos_161.parts.i.answer : ℕ → Set (ℝ × ℝ) := sorry
 
-open erdos_161.parts.i in
 /--
 Let $\alpha\in[0,1/2)$ and $n,t\geq 1$. Let $F^{(t)}(n,\alpha)$ be the smallest $m$ such that we can
 $2$-colour the edges of the complete $t$-uniform hypergraph on $n$ vertices such that if $X\subseteq
@@ -49,7 +48,7 @@ each color must occur, following the source's Ramsey convention.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_161.parts.i :
-    let E : ℕ → Set (ℝ × ℝ) := answer
+    let E : ℕ → Set (ℝ × ℝ) := erdos_161.parts.i.answer
     ∀ t : ℕ, 1 ≤ t →
       {p | p.1 ∈ Set.Ico (0 : ℝ) (1 / 2) ∧ p.2 ∈ Set.Ico (0 : ℝ) (1 / 2) ∧
         (fun n ↦ (Hypergraph.balancedColoringThreshold n t p.1 : ℝ)) =Θ[atTop]

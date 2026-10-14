@@ -58,57 +58,52 @@ Similar remarks hold for the `variants.monotone` formalisations later in this fi
 
 def erdos_357.parts.ii.bigO_version.answer : ℕ → ℝ := sorry
 
-open erdos_357.parts.ii.bigO_version in
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $g = O(f)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.parts.ii.bigO_version :
-    (answer : ℕ → ℝ) =O[atTop] (fun n ↦ (f n : ℝ)) := by
+    (erdos_357.parts.ii.bigO_version.answer : ℕ → ℝ) =O[atTop] (fun n ↦ (f n : ℝ)) := by
   sorry
 
 def erdos_357.parts.ii.bigO_version_symm.answer : ℕ → ℝ := sorry
 
-open erdos_357.parts.ii.bigO_version_symm in
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $f = O(g)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.parts.ii.bigO_version_symm :
-    (fun n ↦ (f n : ℝ)) =O[atTop] (answer : ℕ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =O[atTop] (erdos_357.parts.ii.bigO_version_symm.answer : ℕ → ℝ) := by
   sorry
 
 def erdos_357.parts.ii.bigTheta_version.answer : ℕ → ℝ := sorry
 
-open erdos_357.parts.ii.bigTheta_version in
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $f = \Theta(g)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.parts.ii.bigTheta_version :
-    (fun n ↦ (f n : ℝ)) =Θ[atTop] (answer : ℕ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =Θ[atTop] (erdos_357.parts.ii.bigTheta_version.answer : ℕ → ℝ) := by
   sorry
 
 def erdos_357.parts.ii.littleO_version.answer : ℕ → ℝ := sorry
 
-open erdos_357.parts.ii.littleO_version in
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $g = o(f)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.parts.ii.littleO_version :
-    (answer : ℕ → ℝ) =o[atTop] (fun n ↦ (f n : ℝ)) := by
+    (erdos_357.parts.ii.littleO_version.answer : ℕ → ℝ) =o[atTop] (fun n ↦ (f n : ℝ)) := by
   sorry
 
 def erdos_357.parts.ii.littleO_version_symm.answer : ℕ → ℝ := sorry
 
-open erdos_357.parts.ii.littleO_version_symm in
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct.
 How does $f(n)$ grow? Can we find a (good) explicit function $g$ such that $f = o(g)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.parts.ii.littleO_version_symm :
-    (fun n ↦ (f n : ℝ)) =o[atTop] (answer : ℕ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =o[atTop] (erdos_357.parts.ii.littleO_version_symm.answer : ℕ → ℝ) := by
   sorry
 
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
@@ -177,57 +172,52 @@ theorem erdos_357.variants.monotone.parts.i : (fun n ↦ (h n : ℝ)) =o[atTop] 
 
 def erdos_357.variants.monotone.parts.ii.bigO_version.answer : ℕ → ℝ := sorry
 
-open erdos_357.variants.monotone.parts.ii.bigO_version in
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How does $h(n)$ grow?
 Can we find a (good) explicit function $g$ such that $g = O(h)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.variants.monotone.parts.ii.bigO_version :
-    (answer : ℕ → ℝ) =O[atTop] (fun n ↦ (h n : ℝ)) := by
+    (erdos_357.variants.monotone.parts.ii.bigO_version.answer : ℕ → ℝ) =O[atTop] (fun n ↦ (h n : ℝ)) := by
   sorry
 
 def erdos_357.variants.monotone.parts.ii.bigO_version_symm.answer : ℕ → ℝ := sorry
 
-open erdos_357.variants.monotone.parts.ii.bigO_version_symm in
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How does $h(n)$ grow?
 Can we find a (good) explicit function $g$ such that $h = O(g)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.variants.monotone.parts.ii.bigO_version_symm :
-    (fun n ↦ (h n : ℝ)) =O[atTop] (answer : ℕ → ℝ) := by
+    (fun n ↦ (h n : ℝ)) =O[atTop] (erdos_357.variants.monotone.parts.ii.bigO_version_symm.answer : ℕ → ℝ) := by
   sorry
 
 def erdos_357.variants.monotone.parts.ii.bigTheta_version.answer : ℕ → ℝ := sorry
 
-open erdos_357.variants.monotone.parts.ii.bigTheta_version in
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How does $h(n)$ grow?
 Can we find a (good) explicit function $g$ such that $h = \Theta(g)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.variants.monotone.parts.ii.bigTheta_version :
-    (fun n ↦ (h n : ℝ)) =Θ[atTop] (answer : ℕ → ℝ) := by
+    (fun n ↦ (h n : ℝ)) =Θ[atTop] (erdos_357.variants.monotone.parts.ii.bigTheta_version.answer : ℕ → ℝ) := by
   sorry
 
 def erdos_357.variants.monotone.parts.ii.littleO_version.answer : ℕ → ℝ := sorry
 
-open erdos_357.variants.monotone.parts.ii.littleO_version in
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How does $h(n)$ grow?
 Can we find a (good) explicit function $g$ such that $g = o(h)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.variants.monotone.parts.ii.littleO_version :
-    (answer : ℕ → ℝ) =o[atTop] (fun n ↦ (h n : ℝ)) := by
+    (erdos_357.variants.monotone.parts.ii.littleO_version.answer : ℕ → ℝ) =o[atTop] (fun n ↦ (h n : ℝ)) := by
   sorry
 
 def erdos_357.variants.monotone.parts.ii.littleO_version_symm.answer : ℕ → ℝ := sorry
 
-open erdos_357.variants.monotone.parts.ii.littleO_version_symm in
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. How does $h(n)$ grow?
 Can we find a (good) explicit function $g$ such that $h = o(g)$ ? -/
 @[category research open, question value, AMS 11]
 theorem erdos_357.variants.monotone.parts.ii.littleO_version_symm :
-    (fun n ↦ (h n : ℝ)) =o[atTop] (answer : ℕ → ℝ) := by
+    (fun n ↦ (h n : ℝ)) =o[atTop] (erdos_357.variants.monotone.parts.ii.littleO_version_symm.answer : ℕ → ℝ) := by
   sorry
 
 -- TODO(Paul-Lez): add results from last paragraph of the page.

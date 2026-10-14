@@ -47,7 +47,6 @@ noncomputable def maxMass (r N : ℕ) : ℝ :=
 
 def erdos_538.answer : ℕ → ℕ → ℝ := sorry
 
-open erdos_538 in
 /--
 Let $r\geq 2$ and suppose that $A\subseteq\{1,\ldots,N\}$ is such that, for any
 $m$, there are at most $r$ solutions to $m=pa$ where $p$ is prime and $a\in A$.
@@ -60,7 +59,7 @@ admissible `A`.
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_538 :
-    let f : ℕ → ℕ → ℝ := answer
+    let f : ℕ → ℕ → ℝ := erdos_538.answer
     ∀ r : ℕ, 2 ≤ r → maxMass r ~[atTop] f r := by
   sorry
 

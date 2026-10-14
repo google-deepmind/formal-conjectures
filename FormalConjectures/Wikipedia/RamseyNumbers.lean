@@ -89,7 +89,6 @@ local notation "R(" k ", " l ")" => SimpleGraph.classicalRamsey k l
 
 def ramsey_number_five_five.answer : ℕ := sorry
 
-open ramsey_number_five_five in
 /--
 The open problem: determine the Ramsey number $R(5,5)$.
 
@@ -97,7 +96,7 @@ It is known that $43 \le R(5,5) \le 46$.
 -/
 @[category research open, question value, AMS 5]
 theorem ramsey_number_five_five :
-    R(5, 5) = answer := by
+    R(5, 5) = ramsey_number_five_five.answer := by
   sorry
 
 /--
@@ -172,13 +171,12 @@ theorem ramsey_number_four_five : R(4, 5) = 25 := by
 
 def ramsey_number_six_six.answer : ℕ := sorry
 
-open ramsey_number_six_six in
 /--
 The diagonal Ramsey number $R(6,6)$ is unknown. The best known bounds recorded in [Rad] are
 $102 \le R(6,6) \le 165$.
 -/
 @[category research open, question value, AMS 5]
-theorem ramsey_number_six_six : R(6, 6) = answer := by
+theorem ramsey_number_six_six : R(6, 6) = ramsey_number_six_six.answer := by
   sorry
 
 /--

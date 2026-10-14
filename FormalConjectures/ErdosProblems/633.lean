@@ -78,7 +78,6 @@ lemma isCuttable_iff_isSquare_of_linearIndependent
 -- The complete classification is too involved to encode as the answer set here.
 def erdos_633.answer : Set (Triangle ℝ ℝ²) := sorry
 
-open erdos_633 in
 /--
 Which triangles can only be decomposed into a square number of congruent triangles?
 
@@ -87,7 +86,7 @@ number of congruent triangles, settling this problem. The classification is too 
 in the answer slot here, so the answer is left as `sorry` and the reference records the result.
 -/
 @[category research solved, question value, AMS 5 51]
-lemma erdos_633 : T ∈ (answer : Set <| Triangle ℝ ℝ²) ↔
+lemma erdos_633 : T ∈ (erdos_633.answer : Set <| Triangle ℝ ℝ²) ↔
     ∀ n, IsCuttable n T → IsSquare n := sorry
 
 variable (n T) in

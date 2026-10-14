@@ -121,8 +121,8 @@ its author expects it to be true. A question leaves the answer open. There are t
   integer greater than 2 the sum of two primes?" is Goldbach's conjecture, a claim.
 - A question that asks for a value ("What is...?", "How large can...be?"). The unknown is a
   definition `<theorem>.answer`, declared with `sorry` before the theorem, which refers to it
-  as `answer`. Not a question: a conjectured value. "What is $R(5,5)$?" is a question, stated
-  as `R(5, 5) = answer`; "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43`.
+  by that name. Not a question: a conjectured value. "What is $R(5,5)$?" is a question, stated
+  as `R(5, 5) = ramsey_5_5.answer`; "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43`.
 
 A yes-or-no question is written `@[question]`, a value question `@[question value]`. The
 attribute checks the form against the statement: `value` requires the statement to refer to
@@ -144,10 +144,9 @@ theorem catalan_dickson :
 
 def hadwiger_nelson.answer : ℕ := sorry
 
-open hadwiger_nelson in
 /-- What is the chromatic number of the plane? -/
 @[category research open, question value, AMS 5]
-theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer := by
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nelson.answer := by
   sorry
 ```
 
@@ -596,7 +595,7 @@ Usage, together with a `research` category:
 - `@[question]` for a yes-or-no question. The statement is the proposition asked about; once
   answered, it is the one that holds: unchanged for a yes, negated with `¬` for a no.
 - `@[question value]` for a question that asks for a value. The unknown is a definition
-  `<theorem>.answer`, which the statement refers to as `answer`.
+  `<theorem>.answer`, which the statement refers to by that name.
 
 The attribute checks the form against the statement: `value` requires a reference to
 `<theorem>.answer` (or, in older files, a non-`Prop` `answer(...)`), and plain `question`

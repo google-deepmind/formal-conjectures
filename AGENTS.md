@@ -37,7 +37,7 @@ order and scope of quantifiers, bounds, hypotheses, and all variants. Test empty
 inputs. See [STATEMENTS.md](STATEMENTS.md) for the detailed checks.
 
 State the unknown of a value question as a definition `<theorem>.answer := sorry` before the
-theorem, and refer to it as `answer` in the statement. A tautological value is not a
+theorem, and refer to it by that name in the statement. A tautological value is not a
 mathematical solution.
 Tag a theorem with `@[question]` when the source asks a yes-or-no question, and with
 `@[question value]` when it asks for a value, rather than makes a claim.

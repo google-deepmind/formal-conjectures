@@ -43,7 +43,6 @@ def IsPositiveUnitWalk {d : ℕ} (a : ℕ → Fin d → ℝ) : Prop :=
 
 def erdos_192.answer : Set ℕ := Set.Iic 3
 
-open erdos_192 in
 /--
 Let $A=\{a_1,a_2,\ldots\}\subset \mathbb{R}^d$ be an infinite sequence such that $a_{i+1}-a_i$
 is a positive unit vector (i.e. is of the form $(0,0,\ldots,1,0,\ldots,0)$). For which $d$ must
@@ -69,7 +68,7 @@ constructed when $d=4$ by Keränen [Ke92]. We refer to a recent survey by Fici a
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos192.lean#L39"]
 theorem erdos_192 : {d : ℕ | ∀ a : ℕ → Fin d → ℝ, IsPositiveUnitWalk a →
     ∃ x ∈ Set.range a, ∃ y ∈ Set.range a, ∃ z ∈ Set.range a, x ≠ y ∧ ∀ j, x j + z j = 2 * y j} =
-      answer := by
+      erdos_192.answer := by
   sorry
 
 end Erdos192

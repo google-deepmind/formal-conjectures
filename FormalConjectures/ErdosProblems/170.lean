@@ -58,10 +58,9 @@ def F (N : ℕ) : ℕ :=
 
 def erdos170.answer : ℝ := sorry
 
-open erdos170 in
 /-- The problem is to determine the limit of the sequence $\frac{F(N)}{\sqrt{N}}$ as $N \to \infty$. -/
 @[category research open, question value, AMS 5]
-lemma erdos170 : Filter.Tendsto (fun N => F N / √N) Filter.atTop (𝓝 answer) := by sorry
+lemma erdos170 : Filter.Tendsto (fun N => F N / √N) Filter.atTop (𝓝 erdos170.answer) := by sorry
 
 /-- A known lower bound to the limit by Leech [Le56], which is $1.56\dots$. -/
 noncomputable abbrev lower_bound := √(sSup {2 * (1 - Real.sin θ / θ) | θ ≠ 0})

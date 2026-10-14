@@ -43,7 +43,6 @@ namespace Erdos77
 
 def erdos_77.answer : ℝ := sorry
 
-open erdos_77 in
 /--
 If $R(k)$ is the Ramsey number for $K_k$, the minimal $n$ such that every $2$-colouring of the edges
 of $K_n$ contains a monochromatic copy of $K_k$, then find the value of
@@ -54,7 +53,7 @@ This problem is #3 in Ramsey Theory in the graphs problem collection.
 @[category research open, question value, AMS 5]
 theorem erdos_77 :
     Filter.Tendsto (fun k : ℕ ↦ (SimpleGraph.diagonalRamsey k : ℝ) ^ (1 / (k : ℝ)))
-      Filter.atTop (𝓝 answer) := by
+      Filter.atTop (𝓝 erdos_77.answer) := by
   sorry
 
 -- TODO: Add variants of the problem.

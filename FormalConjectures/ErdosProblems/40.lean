@@ -43,7 +43,6 @@ def Erdos40For (g : ℕ → ℝ) : Prop :=
 
 def erdos_40.answer : Set (ℕ → ℝ) := sorry
 
-open erdos_40 in
 /--
 For what functions $g(N) → \infty$ is it true that
 $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
@@ -51,7 +50,7 @@ implies $\limsup 1_A\ast 1_A(n)=\infty$?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_40 :
-    {g : ℕ → ℝ | Tendsto g atTop atTop ∧ Erdos40For g} = answer := by
+    {g : ℕ → ℝ | Tendsto g atTop atTop ∧ Erdos40For g} = erdos_40.answer := by
   sorry
 
 /--

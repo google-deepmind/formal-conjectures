@@ -43,7 +43,6 @@ namespace Erdos593
 
 def erdos_593.answer : Set ((n : ℕ) × UniformHypergraph (Fin n) 3) := sorry
 
-open erdos_593 in
 /--
 **Erdős Problem 593 (\$500)**: Characterize those finite 3-uniform hypergraphs which appear
 in every 3-uniform hypergraph of chromatic number $> \aleph_0$.
@@ -63,7 +62,7 @@ erdosproblems.com still lists the problem as open.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_593 :
-    {p : Σ n : ℕ, UniformHypergraph (Fin n) 3 | p.2.IsObligatory} = answer := by
+    {p : Σ n : ℕ, UniformHypergraph (Fin n) 3 | p.2.IsObligatory} = erdos_593.answer := by
   sorry
 
 /--

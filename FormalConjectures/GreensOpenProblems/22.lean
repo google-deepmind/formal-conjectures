@@ -66,7 +66,6 @@ noncomputable def GreenSawhneyBound (r : ℕ) : ℝ := Real.exp (Real.exp (r ^ 5
 
 def green_22.answer : ℕ → ℝ := sorry
 
-open green_22 in
 /--
 If $\{1, \ldots, N\}$ is $r$-coloured then, for $N \geqslant N_0(r)$, there are integers
 $x, y \geqslant 3$ such that $x + y, xy$ have the same colour.
@@ -75,7 +74,7 @@ Find reasonable bounds for $N_0(r)$. The goal is to improve upon the Green-Sawhn
 -/
 @[category research open, question value, AMS 5 11]
 theorem green_22 :
-    let ans := (answer : ℕ → ℝ)
+    let ans := (green_22.answer : ℕ → ℝ)
     ∀ᶠ r in atTop, N₀ r ≤ ans r ∧
     ans =o[atTop] GreenSawhneyBound := by
   sorry

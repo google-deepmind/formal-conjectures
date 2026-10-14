@@ -61,7 +61,6 @@ theorem maxSubsetSumAvoidingCard_three_four : maxSubsetSumAvoidingCard 3 4 = 2 :
 
 def erdos_361.answer : ℕ → ℕ := sorry
 
-open erdos_361 in
 /--
 Let $c > 0$ and $n$ be some large integer. What is the size of the largest set
 $A \subseteq \{1, \ldots, \lfloor c n \rfloor\}$ such that $n$ is not a sum of a subset of $A$?
@@ -69,7 +68,7 @@ Does this depend on $n$ in an irregular way?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_361 (c : ℝ) (hc : 0 < c) :
-    subsetSumAvoidanceNumber c = answer := by
+    subsetSumAvoidanceNumber c = erdos_361.answer := by
   sorry
 
 end Erdos361

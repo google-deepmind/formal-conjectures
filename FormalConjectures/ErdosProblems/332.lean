@@ -44,7 +44,6 @@ def HasBoundedGaps (S : Set ℤ) : Prop :=
 
 def erdos_332.answer : Set ℕ → Prop := sorry
 
-open erdos_332 in
 /--
 Let $A\subseteq \mathbb{N}$ and $D(A)$ be the set of those numbers which occur infinitely often as
 $a_1 - a_2$ with $a_1, a_2\in A$. What conditions on $A$ are sufficient to ensure $D(A)$ has bounded
@@ -55,7 +54,7 @@ has to provide what the sufficient conditions are, and proof that they imply the
 If the condition is a solution to the problem is up to human judgement.
 -/
 @[category research open, question value, AMS 11]
-theorem erdos_332 (A : Set ℕ) : (answer : Set ℕ → Prop) A → HasBoundedGaps (D_A A) := by
+theorem erdos_332 (A : Set ℕ) : (erdos_332.answer : Set ℕ → Prop) A → HasBoundedGaps (D_A A) := by
   sorry
 
 -- TODO(firsching): formalize additional statements

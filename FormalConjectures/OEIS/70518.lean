@@ -69,14 +69,13 @@ theorem a_5 : a 5 = 781 := by
 
 def conjecture.answer : Option ℕ := sorry
 
-open conjecture in
 open scoped Classical in
 /--
 $a(28341)$ is divisible by $283411^2$. What is the next $n$ such that $a(n)$ is not squarefree?
 -/
 @[category research open, question value, AMS 11]
 theorem conjecture :
-    answer =
+    conjecture.answer =
       if h : ∃ n, 28341 < n ∧ ¬ Squarefree (a n) then
         some (sInf {n | 28341 < n ∧ ¬ Squarefree (a n)})
       else

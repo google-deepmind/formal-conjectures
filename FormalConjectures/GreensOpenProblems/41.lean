@@ -61,7 +61,6 @@ theorem minCopies_set_nonempty (ε : ℝ) (hε : 0 < ε) :
 
 def green_41.answer : ℝ → ℕ := sorry
 
-open green_41 in
 /--
 How many rotated (about the origin) copies of the 'pyjama set'
 $\\{(x, y) \in \mathbb{R}^2 : \text{dist}(x, \mathbb{Z}) \leq \varepsilon\\}$ are needed to cover
@@ -70,7 +69,7 @@ $\mathbb{R}^2$?
 That is, determine the minimal number of rotations as a function of $\varepsilon > 0$.
 -/
 @[category research open, question value, AMS 51 52]
-theorem green_41 : ∀ ε > 0, minCopies ε = (answer : ℝ → ℕ) ε := by
+theorem green_41 : ∀ ε > 0, minCopies ε = (green_41.answer : ℝ → ℕ) ε := by
   sorry
 
 /--

@@ -33,7 +33,6 @@ namespace Erdos614
 
 def erdos_614.answer : ℕ → ℕ → ℕ := sorry
 
-open erdos_614 in
 open scoped Classical in
 /--
 Let $f(n,k)$ be minimal such that there is a graph with $n$ vertices and $f(n,k)$ edges
@@ -42,7 +41,7 @@ Determine $f(n,k)$.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_614 :
-    let f : ℕ → ℕ → ℕ := answer
+    let f : ℕ → ℕ → ℕ := erdos_614.answer
     ∀ n k, IsLeast {m : ℕ | ∃ G : SimpleGraph (Fin n), G.edgeFinset.card = m ∧
       ∀ s : Finset (Fin n), s.card = k + 2 →
         ∃ v : s, k ≤ (G.induce (s : Set (Fin n))).degree v} (f n k) := by

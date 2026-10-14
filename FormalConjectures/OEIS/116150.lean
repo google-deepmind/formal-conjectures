@@ -51,14 +51,13 @@ theorem a_5 : a 5 = 341 := by decide
 
 def conjecture.answer : ℕ := sorry
 
-open conjecture in
 /--
 First primes are $a(11) = 264353$ and $a(17) = 193622861$.
 Additional primes: $a(71)$, $a(91)$, $a(431)$.
 What is the next prime?
 -/
 @[category research open, question value, AMS 11]
-theorem conjecture : answer = a (sInf {n : ℕ | 431 < n ∧ (a n).Prime}) := by
+theorem conjecture : conjecture.answer = a (sInf {n : ℕ | 431 < n ∧ (a n).Prime}) := by
   sorry
 
 end OeisA116150

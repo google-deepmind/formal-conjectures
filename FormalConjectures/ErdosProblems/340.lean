@@ -84,7 +84,6 @@ theorem erdos_340 (ε : ℝ) (hε : ε > 0) :
 
 def erdos_340.variants.isTheta.answer : ℕ → ℝ := sorry
 
-open erdos_340.variants.isTheta in
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
 we begin with $1$ and iteratively include the next smallest integer that preserves the
@@ -95,7 +94,7 @@ for all $\varepsilon > 0$ and large $N$?
 @[category research open, question value, AMS 5]
 theorem erdos_340.variants.isTheta (ε : ℝ) (hε : ε > 0) :
     (fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ)) =Θ[atTop]
-      (answer : ℕ → ℝ) := by
+      (erdos_340.variants.isTheta.answer : ℕ → ℝ) := by
   sorry
 
 /--

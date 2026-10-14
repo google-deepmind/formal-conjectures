@@ -42,13 +42,12 @@ def s := { k : ℕ | ∃ blue : Set ℂ,
 
 def erdos_188.answer : ℕ := sorry
 
-open erdos_188 in
 /--
 What is the smallest $k$ such that $\mathbb{R}^2$ can be red/blue coloured with no pair of red
 points unit distance apart, and no $k$-term arithmetic progression of blue points with distance 1?
 -/
 @[category research open, question value, AMS 5]
-theorem erdos_188 : IsLeast s answer := by
+theorem erdos_188 : IsLeast s erdos_188.answer := by
   sorry
 
 /--

@@ -41,11 +41,10 @@ noncomputable def minZeros (n : ℕ+) : ℕ∞ :=
 
 def green_82.answer : ℕ+ → ℕ∞ := sorry
 
-open green_82 in
 /-- Let $A \subset \mathbb{Z}$ be a set of size $n$. For how many $\theta \in \mathbb{R}/\mathbb{Z}$
 must we have $\sum_{a \in A} \cos(2\pi a\theta) = 0$? The answer is the function `minZeros`. -/
 @[category research open, question value, AMS 11 42]
-theorem green_82 : (answer : ℕ+ → ℕ∞) = minZeros := by
+theorem green_82 : (green_82.answer : ℕ+ → ℕ∞) = minZeros := by
   sorry
 
 /-- Lower bound: every set has at least $(\log \log n)^{1-o(1)}$ zeros. -/

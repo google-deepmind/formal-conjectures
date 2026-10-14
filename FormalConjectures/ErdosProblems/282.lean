@@ -70,11 +70,10 @@ theorem erdos_282 {x : ℚ} (hx : x ∈ Set.Ioo 0 1) (hx_den : Odd x.den) :
 
 def erdos_282.variants.general.answer : Set (ℚ × Set ℕ) := sorry
 
-open erdos_282.variants.general in
 /-- More generally, for which pairs $x$ and $A$ does this process terminate? -/
 @[category research open, question value, AMS 5]
 theorem erdos_282.variants.general (x : ℚ) (A : Set ℕ) :
-      greedyUnitFractionRem A x =ᶠ[atTop] 0 ↔ (x, A) ∈ (answer : Set (ℚ × Set ℕ)) := by
+      greedyUnitFractionRem A x =ᶠ[atTop] 0 ↔ (x, A) ∈ (erdos_282.variants.general.answer : Set (ℚ × Set ℕ)) := by
   sorry
 
 /-- In 1202 Fibonacci observed that this process terminates for any $x$ when $A=\mathbb{N}$. -/

@@ -33,14 +33,13 @@ universe u
 
 def erdos_592.answer : Ordinal.{u} → Prop := sorry
 
-open erdos_592 in
 /--
 Determine which countable ordinals $β$ have the property that, if $α = \omega^β$, then in any
 red/blue colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
 @[category research open, question value, AMS 3]
 theorem erdos_592 (β : Ordinal.{u}) : β.card ≤ ℵ₀ →
-    (OrdinalCardinalRamsey (ω ^ β) (ω ^ β) 3 ↔ (answer : Ordinal.{u} → Prop) β) := by
+    (OrdinalCardinalRamsey (ω ^ β) (ω ^ β) 3 ↔ (erdos_592.answer : Ordinal.{u} → Prop) β) := by
   sorry
 
 -- TODO(firsching): add condition by Galvin and Larson.

@@ -350,24 +350,22 @@ theorem minimum_overlap.variants.upper.haugland_2022 :
 
 def erdos_36.variants.lower.answer : ℝ := sorry
 
-open erdos_36.variants.lower in
 /--
 Find a better lower bound!
 -/
 @[category research open, question value, AMS 5 11]
 theorem erdos_36.variants.lower:
-    ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c = answer := by
+    ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c = erdos_36.variants.lower.answer := by
   sorry
 
 def erdos_36.variants.upper.answer : ℝ := sorry
 
-open erdos_36.variants.upper in
 /--
 Find a better upper bound!
 -/
 @[category research open, question value, AMS 5 11]
 theorem erdos_36.variants.upper :
-    ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c = answer := by
+    ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c = erdos_36.variants.upper.answer := by
   sorry
 
 /--
@@ -379,12 +377,11 @@ theorem erdos_36.variants.exists : ∃ c, atTop.Tendsto MinOverlapQuotient (𝓝
 
 def erdos_36.answer : ℝ := sorry
 
-open erdos_36 in
 /--
 Find the value of the limit of `MinOverlapQuotient`!
 -/
 @[category research open, question value, AMS 5 11]
-theorem erdos_36 : atTop.Tendsto MinOverlapQuotient (𝓝 answer) := by
+theorem erdos_36 : atTop.Tendsto MinOverlapQuotient (𝓝 erdos_36.answer) := by
   sorry
 
 end Erdos36
