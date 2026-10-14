@@ -32,7 +32,7 @@ public import FormalConjecturesUtil
   **On the equivalence of the Jacobian, Dixmier and Poisson Conjectures in any characteristic**
   by *Kossivi Adjamagbo, Arno van den Essen*. Published as *A proof of the equivalence of
   the Dixmier, Jacobian and Poisson conjectures*, Acta Math. Vietnam. 32 (2007), 205–214.
-- [Tsu05] [Endomorphisms of Weyl algebra and p-curvatures](https://projecteuclid.org/euclid.ojm/1153494380)
+- [Tsu05] [Endomorphisms of Weyl algebra and p-curvatures](https://doi.org/10.18910/7472)
   by *Yoshifumi Tsuchimoto*, Osaka J. Math. 42 (2005), 435–452. Proves the stable
   equivalence $JC \Longleftrightarrow DC$ independently.
 - [BKK07] [The Jacobian Conjecture is stably equivalent to the Dixmier Conjecture](https://doi.org/10.17323/1609-4514-2007-7-2-209-218)
