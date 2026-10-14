@@ -99,8 +99,8 @@ theorem NoKInLine : answer(sorry) = {k | 2 < k ∧ ∀ N, k ≤ N → NoKInLineF
 /-- **Green's Open Problem 72 / No-three-in-line problem**:
 For $N$ sufficiently large, is it impossible to have $2N$ points in $[N]^2$ with no three in a
 line? Green suspects the answer is yes, and that $(3/2 + o(1))N$ is optimal. -/
-@[category research open, AMS 5 52]
-theorem green_72 : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, ¬ NoKInLineFor 3 N := by
+@[category research open, question, AMS 5 52]
+theorem green_72 : ∀ᶠ N in Filter.atTop, ¬ NoKInLineFor 3 N := by
   sorry
 
 alias no_three_in_line := green_72
@@ -110,8 +110,8 @@ alias no_three_in_line := green_72
 This is not the negation of `green_72`. Negating that one gives $\exists^f N$ where this asks
 $\forall^f N$, so both can be answered `False` if the behaviour oscillates. Green asks his
 question in the `green_72` form. -/
-@[category research open, AMS 5 52]
-theorem green_72.variants.eventually : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
+@[category research open, question, AMS 5 52]
+theorem green_72.variants.eventually : ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
   sorry
 
 /-- For $N \leq 60$, this has been verified with computers. -/

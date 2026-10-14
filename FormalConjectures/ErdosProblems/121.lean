@@ -63,16 +63,16 @@ is some constant $c_k>0$ such that $F_k(N) \leq (1-c_k+o(1))N$.
 
 See also [888](https://www.erdosproblems.com/888).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos121.lean#L87"]
-theorem erdos_121 : answer(False) ↔ (fun N : ℕ => (F 5 N : ℝ)) ~[atTop] fun N : ℕ => (N : ℝ) := by
+theorem erdos_121 : ¬ (fun N : ℕ => (F 5 N : ℝ)) ~[atTop] fun N : ℕ => (N : ℝ) := by
   sorry
 
 /-- More generally, is $F_{2k+1}(N)=(1-o(1))N$? This is false for all $k \geq 2$ by Tao's
 theorem [Ta24]. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos121.lean#L87"]
-theorem erdos_121.variants.odd : answer(False) ↔ ∀ k : ℕ, 1 ≤ k →
+theorem erdos_121.variants.odd : ¬ ∀ k : ℕ, 1 ≤ k →
     (fun N : ℕ => (F (2 * k + 1) N : ℝ)) ~[atTop] fun N : ℕ => (N : ℝ) := by
   sorry
 

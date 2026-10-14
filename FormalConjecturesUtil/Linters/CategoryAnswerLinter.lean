@@ -23,11 +23,9 @@ public import Mathlib.Tactic.Lemma
 
 The `CategoryAnswerLinter` ensures that declarations tagged `@[category research solved]`
 do not leave `answer(sorry)` in their statement: once a problem is solved, the answer should
-be filled in explicitly, e.g. `answer(True)`.
+be filled in explicitly, e.g. `answer(2)`.
 
-The check is syntactic. Under the default `google.answer` setting, `answer(sorry)` at `Prop`
-elaborates to a bare `True` carrying no annotation, so the placeholder is no longer visible
-in the elaborated term.
+The check is syntactic, so it does not depend on the `google.answer` setting.
 
 A statement that deliberately keeps `answer(sorry)` (for instance because the problem is
 independent of ZFC, or because the answer is a constant that is not known explicitly) can opt
@@ -69,7 +67,7 @@ def categoryAnswerLinter : Linter where
         for answer in answerSorries sig.raw do
           logLintIf linter.style.category_answer answer
             "Declarations tagged `@[category research solved]` should not use `answer(sorry)`: \
-            the answer should be filled in explicitly, e.g. `answer(True)`."
+            the answer should be filled in explicitly, e.g. `answer(2)`."
     | _ => return
 
 initialize do

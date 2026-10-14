@@ -130,8 +130,8 @@ theorem green_31.variants.upper_hz26 :
 It is not known whether or not there exists a Sidon subset of $\mathbb{Z}/p\mathbb{Z}$ of size
 $(1 + o(1))\sqrt{p}$, for all $p$ [Gr24].
 -/
-@[category research open, AMS 5 11]
-theorem green_31.variants.zmod_p : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem green_31.variants.zmod_p :
     ∃ S : (n : ℕ) → Finset (ZMod n),
     ∃ o : ℕ → ℝ,
       (o =o[atTop] fun _ : ℕ ↦ (1 : ℝ)) ∧
@@ -200,8 +200,8 @@ $a + a = b + b$ with $a \ne b$, and the answer is trivially negative: a Sidon su
 of exponent $2$ then has at most one element. We use the definition of Babai and Sós [BS85]
 instead, see `IsGroupSidon`.
 -/
-@[category research open, AMS 5 11]
-theorem green_31.variants.abelian : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem green_31.variants.abelian :
     ∀ (G : Type) [AddCommGroup G] [Fintype G],
       ∃ S : Finset G, IsGroupSidon (S : Set G) ∧
         0.01 * Real.sqrt (Fintype.card G) ≤ S.card := by
@@ -220,8 +220,8 @@ def IsBinarySidon {n : ℕ} (S : Set (𝔽₂ n)) : Prop :=
 Another very nice old problem is whether there is a Sidon subset of $\{0, 1\}^n$ of size $N^{0.51}$,
 where $N = 2^n$ [Gr24].
 -/
-@[category research open, AMS 5 11]
-theorem green_31.variants.sidon_01n : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem green_31.variants.sidon_01n :
     ∃ S : (n : ℕ) → Finset (𝔽₂ n),
       (∀ n, IsBinarySidon (S n : Set (𝔽₂ n))) ∧
       ∀ᶠ n in atTop, ((2 : ℝ) ^ n) ^ (0.51 : ℝ) ≤ (S n).card := by

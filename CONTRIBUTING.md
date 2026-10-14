@@ -366,19 +366,20 @@ is outside of the scope of this repository.
   e.g. a problem sourced from Wikipedia should live in
   `FormalConjectures/Wikipedia`.
 - When a problem is stated as a yes-or-no question in English, tag it with
-  `@[question]` and use `answer(sorry)`:
+  `@[question]` and state the proposition the question asks about:
 
   ```lean
   /-- English version: "Does P hold?" -/
   @[category research open, question]
-  theorem myConjecture : answer(sorry) ↔ P := by
+  theorem myConjecture : P := by
     sorry
   ```
 
   This way the informal "Does ...", "Are there ..." or "Is it true that ..."
-  corresponds to the `answer(sorry)` in the formalised statement. If the
-  problem has been solved, `answer(sorry)` should be replaced by
-  `answer(True)` or `answer(False)` accordingly; the `question` tag stays.
+  is recorded by the tag, and the statement stays a plain proposition. Once
+  the question is answered, keep the tag and state what holds: `P` if the
+  answer is yes, `¬ P` if the answer is no. Do not use a `Prop`-valued
+  `answer(sorry)` such as `answer(sorry) ↔ P`.
 
   If the problem is not stated as a question, the following style is preferred:
 

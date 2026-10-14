@@ -77,8 +77,8 @@ gives a topologizable Tarski monster of every sufficiently large odd exponent $n
 taking $n$ to be a prime $p$ makes every non-trivial proper subgroup cyclic of
 order $p$. Any such group is a minimal topological group.
 -/
-@[category research solved, AMS 20 22]
-theorem kourovka_1_74.variants.tarski_monster : answer(True) ↔
+@[category research solved, question, AMS 20 22]
+theorem kourovka_1_74.variants.tarski_monster :
     ∃ (G : Type) (_ : Group G) (_ : TopologicalSpace G),
       IsTarskiMonster G ∧ IsTopologicalGroup G ∧ T2Space G ∧
       ¬ DiscreteTopology G := by

@@ -48,8 +48,8 @@ noncomputable def f (n : ℕ) : ℕ :=
 not all on a line, there are at least $f(n)$ lines which contain exactly two points
 (called ordinary lines). Does $f(n)\to\infty$?
 That $f(n)\to\infty$ was proved by Motzkin [Mo51]. -/
-@[category research solved, AMS 5 51]
-theorem erdos_210.parts.i : answer(True) ↔ Tendsto f atTop atTop := by
+@[category research solved, question, AMS 5 51]
+theorem erdos_210.parts.i : Tendsto f atTop atTop := by
   sorry
 
 /-- Kelly and Moser [KeMo58] proved that $f(n)\geq 3n/7$ for all $n$.

@@ -74,16 +74,16 @@ f(n) = f(n - f(n - 1)) + f(n - f(n - 2)).
 $$
 Does $f(n)$ miss infinitely many integers?
 -/
-@[category research open, AMS 11]
-theorem erdos_422 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_422 :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → Set.Infinite {n | ∀ x, f x ≠ n} := by
   sorry
 
 /--
 Is $f$ surjective?
 -/
-@[category research open, AMS 11]
-theorem erdos_422.variants.surjective : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_422.variants.surjective :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → f.Surjective := by
   sorry
 
@@ -99,8 +99,8 @@ theorem erdos_422.variants.growth_rate :
 /--
 Does $f$ become stationary at some point?
 -/
-@[category research open, AMS 11]
-theorem erdos_422.variants.eventually_const : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_422.variants.eventually_const :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → EventuallyConst f atTop := by
   sorry
 

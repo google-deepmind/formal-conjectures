@@ -112,9 +112,9 @@ theorem prime_power_divisor_separation : f 12 = 3 ∧ 12 / P 12 = 4 ∧ 12 / Q 1
 Erdős–Szekeres [ErSz78] could not prove this. (Since $f(n) \ge p(n)$, the least prime factor of
 $n$, there are infinitely many $n$ — those of the form $p^2$ — with $f(n) \ge n^{1/2}$; the
 question asks for the strict inequality.) Here $f(n) > n^{1/2}$ is written as `(f n) ^ 2 > n`. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_700.parts.ii :
-    answer(sorry) ↔ {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ (f n) ^ 2 > n}.Infinite := by
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ (f n) ^ 2 > n}.Infinite := by
   sorry
 
 /-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$.
@@ -124,9 +124,9 @@ theorem erdos_700.parts.ii :
 Erdős–Szekeres [ErSz78] prove the weaker bound $f(n) \le (1 + o(1)) n/\log n$ (the case $A = 1$).
 Here $f(n) \ll_A n/(\log n)^A$ is spelled out as: for every `A > 0` there is a constant `C`
 (depending on `A`) with `f(n) ≤ C · n/(log n)^A` for every composite `n`. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_700.parts.iii :
-    answer(sorry) ↔ (∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, ¬ n.Prime → 1 < n →
+    (∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, ¬ n.Prime → 1 < n →
       (f n : ℝ) ≤ C * (n : ℝ) / (Real.log n) ^ A) := by
   sorry
 

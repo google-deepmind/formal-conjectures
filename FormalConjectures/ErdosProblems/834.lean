@@ -40,9 +40,9 @@ reduces it to $2$?
 In the first formulation, the transversal notion of criticality, Li [Li25] proves that a
 $3$-critical $3$-uniform hypergraph must have a vertex of degree $\leq 6$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_834.parts.i :
-    answer(False) ↔ ∃ (n : ℕ) (H : Finset (Finset (Fin n))),
+    ¬ ∃ (n : ℕ) (H : Finset (Finset (Fin n))),
     H.IsUniform 3 ∧ (H : Set (Finset (Fin n))).HasFiniteTransversal 3 ∧
       ¬ (H : Set (Finset (Fin n))).HasFiniteTransversal 2 ∧
       (∀ e ∈ H, (H.erase e : Set (Finset (Fin n))).HasFiniteTransversal 2) ∧
@@ -56,9 +56,9 @@ where criticality means that deleting any edge or vertex reduces chromatic numbe
 In the second formulation, the chromatic notion of criticality, Li [Li25] provides an
 explicit $3$-critical $3$-uniform hypergraph on $9$ vertices with minimum degree $7$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_834.parts.ii :
-    answer(True) ↔ ∃ (n : ℕ) (H : Finset (Finset (Fin n))),
+    ∃ (n : ℕ) (H : Finset (Finset (Fin n))),
     H.IsUniform 3 ∧ H.HasHypergraphChromaticNumber 3 ∧
       (∀ e ∈ H, (H.erase e).HypergraphColorable 2) ∧
       (∀ v : Fin n, (H.filter (fun e ↦ v ∉ e)).HypergraphColorable 2) ∧

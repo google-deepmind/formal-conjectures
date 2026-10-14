@@ -62,10 +62,10 @@ not convex.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 30 52, formal_proof using lean4 at
+@[category research solved, question, AMS 30 52, formal_proof using lean4 at
 "https://github.com/plby/lean-proofs/blob/main/src/latest/ErdosProblems/Erdos1047.lean"]
-theorem erdos_1047 : answer(False) ↔
-    ∀ (f : ℂ[X]) (m : ℕ) (c : ℝ), f.Monic → (f.rootSet ℂ).ncard = m → 0 < c →
+theorem erdos_1047 :
+    ¬ ∀ (f : ℂ[X]) (m : ℕ) (c : ℝ), f.Monic → (f.rootSet ℂ).ncard = m → 0 < c →
       (componentsIn (sublevelSet f c)).ncard = m →
         ∀ t ∈ componentsIn (sublevelSet f c), Convex ℝ t := by
   sorry

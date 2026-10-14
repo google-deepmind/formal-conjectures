@@ -49,9 +49,9 @@ long arithmetic progressions?
 Yes. This was proved by an internal OpenAI model in September 2026 [OAI26]; see the linked Lean
 proof.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Progressions/Results/Conclusions.lean#L38"]
-theorem erdos_3 : answer(True) ↔ ∀ A : Set ℕ,
+theorem erdos_3 : ∀ A : Set ℕ,
     (¬ Summable fun a : A ↦ 1 / (a : ℝ)) →
     ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k := by
   sorry
