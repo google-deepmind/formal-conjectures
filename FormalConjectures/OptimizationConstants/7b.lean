@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.OptimizationConstants.«7a»
-import FormalConjecturesUtil
+module
+public import FormalConjectures.OptimizationConstants.«7a»
+public import FormalConjecturesUtil
 
 /-!
 # Tao's Optimization Constant 7b / The Irrationality Measure of $\Gamma(1/4)$
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   le cas de $\Gamma(1/4)$ et $\Gamma(1/3)$*](https://doi.org/10.4064/aa104-3-3).
   Acta Arith. **104** (2002), 243–281.
 -/
+
+@[expose] public section
 
 namespace Constant7b
 
@@ -52,8 +55,8 @@ theorem c7b_lower_bound : 2 ≤ C7b :=
   Constant7a.two_le_irrationalityExponent irrational_gamma_one_div_four
 
 /-- Can the current best lower bound be improved? -/
-@[category research open, AMS 11 33]
-theorem c7b_lower_bound_improved : answer(sorry) ↔ 2 < C7b := by
+@[category research open, question, AMS 11 33]
+theorem c7b_lower_bound_improved : 2 < C7b := by
   sorry
 
 /-- The first and current best known upper bound, proved by Bruiltet in [Bru2002]. It follows from
@@ -63,8 +66,8 @@ theorem c7b_upper_bound : C7b ≤ 10 ^ 143 := by
   sorry
 
 /-- Can the current best upper bound be improved? -/
-@[category research open, AMS 11 33]
-theorem c7b_upper_bound_improved : answer(sorry) ↔ C7b < 10 ^ 143 := by
+@[category research open, question, AMS 11 33]
+theorem c7b_upper_bound_improved : C7b < 10 ^ 143 := by
   sorry
 
 end Constant7b

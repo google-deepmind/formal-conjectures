@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Tao's Optimization Constant 7a / The Irrationality Measure of $\pi$
@@ -32,7 +34,12 @@ import FormalConjecturesUtil
 - [ZZ2020] Zeilberger, D. and Zudilin, W., *The irrationality measure of $\pi$ is at most
   $7.103205334137\ldots$*. Moscow J. Comb. Number Theory **9** (2020), 407–419.
   [arXiv:1912.06345](https://arxiv.org/abs/1912.06345)
+- [OAI2026] OpenAI, [*The irrationality exponent of $\pi$ is
+  2*](https://github.com/openai/math/blob/main/preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/paper.pdf),
+  2026.
 -/
+
+@[expose] public section
 
 namespace Constant7a
 
@@ -102,15 +109,10 @@ theorem irrationalityExponent_of_algebraic {x : ℝ} (hx : IsAlgebraic ℚ x) :
 /-- **Tao's Optimization Constant 7a / The irrationality measure of $\pi$**. -/
 noncomputable def C7a : ℝ≥0∞ := irrationalityExponent π
 
-/-- The first and current best known lower bound, given by Dirichlet's theorem [D1842]. This bound
+/-- The sharp lower bound, given by Dirichlet's theorem [D1842]. This bound
 holds for every irrational real number. -/
 @[category textbook, AMS 11]
 theorem c7a_lower_bound : 2 ≤ C7a := two_le_irrationalityExponent irrational_pi
-
-/-- Can the current best lower bound be improved? -/
-@[category research open, AMS 11]
-theorem c7a_lower_bound_improved : answer(sorry) ↔ 2 < C7a := by
-  sorry
 
 /-- The first known upper bound, proved by Mahler in [M1953]. This was the first proof that
 $C_{7a}$ is finite, or equivalently that $\pi$ is not a Liouville number. -/
@@ -124,14 +126,15 @@ irrationality measure for $\zeta(2) = \pi^2 / 6$. -/
 theorem c7a_lt_14_797075 : C7a < 14.797075 := by
   sorry
 
-/-- The current best known upper bound, proved by Zeilberger and Zudilin in [ZZ2020]. -/
+/-- The best upper bound before [OAI2026], proved by Zeilberger and Zudilin in [ZZ2020]. -/
 @[category research solved, AMS 11]
 theorem c7a_upper_bound : C7a < 7.103205334138 := by
   sorry
 
-/-- Can the current best upper bound be improved? -/
-@[category research open, AMS 11]
-theorem c7a_upper_bound_improved : answer(sorry) ↔ C7a < 7.103205334136 := by
+/-- The irrationality measure of $\pi$ is exactly $2$, proved by OpenAI in [OAI2026]. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/main/lean/ComparatorChallenges/PiExponent.lean"]
+theorem c7a_eq_two : C7a = 2 := by
   sorry
 
 end Constant7a
