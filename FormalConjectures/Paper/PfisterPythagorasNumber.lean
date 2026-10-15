@@ -77,6 +77,8 @@ theorem isLeast_pythagorasBounds_real : IsLeast (pythagorasBounds ℝ) 1 := by
       simp at hf
     · exact h
 
+def pfister_problem.answer : ℕ → ℕ := sorry
+
 /--
 **Pfister's problem** (Problem 1 of [Pfister1971, §4]): what is the true value of
 $p(\mathbb{R}(X_1, \dots, X_n))$, as a function of $n$? It is $1$, $2$, $4$ for $n = 0, 1, 2$
@@ -84,9 +86,9 @@ $p(\mathbb{R}(X_1, \dots, X_n))$, as a function of $n$? It is $1$, $2$, $4$ for 
 and open for every $n \ge 3$, where only the bounds
 $n + 2 \le p(\mathbb{R}(X_1, \dots, X_n)) \le 2^n$ are known.
 -/
-@[category research open, AMS 11 12 14]
+@[category research open, question value, AMS 11 12 14]
 theorem pfister_problem :
-    let p : ℕ → ℕ := answer(sorry)
+    let p : ℕ → ℕ := pfister_problem.answer
     ∀ n, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (p n) := by
   sorry
 
@@ -95,9 +97,9 @@ Pfister's problem in its common yes/no form (e.g. Question 0.2 of [Benoist2017])
 $p(\mathbb{R}(X_1, \dots, X_n)) = 2^n$ for every $n$, i.e. is Pfister's bound optimal? This
 holds for $n \le 2$ and is open for every $n \ge 3$.
 -/
-@[category research open, AMS 11 12 14]
+@[category research open, question, AMS 11 12 14]
 theorem pfister_problem.variants.eq_two_pow :
-    answer(sorry) ↔ ∀ n : ℕ, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (2 ^ n) := by
+    ∀ n : ℕ, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (2 ^ n) := by
   sorry
 
 /--

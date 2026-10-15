@@ -51,22 +51,26 @@ theorem erdos_160.known_upper :
 
 open Real
 
+def erdos_160.better_upper.answer : ℕ → ℝ := sorry
+
 /--
 Estimate $h(n)$ by finding a better upper bound.
 -/
-@[category research open, AMS 5 51]
+@[category research open, question value, AMS 5 51]
 theorem erdos_160.better_upper :
-    let upper_bound : ℕ → ℝ := answer(sorry)
+    let upper_bound : ℕ → ℝ := erdos_160.better_upper.answer
     (fun n => (erdos_160.h n : ℝ)) =O[atTop] upper_bound ∧
     upper_bound =o[atTop] fun n => (n : ℝ) ^ ((2 : ℝ) / 3) := by
   sorry
 
+def erdos_160.better_lower.answer : ℕ → ℝ := sorry
+
 /--
 Estimate $h(n)$ by finding a better lower bound.
 -/
-@[category research open, AMS 5 51]
+@[category research open, question value, AMS 5 51]
 theorem erdos_160.better_lower:
-    let lower_bound : ℕ → ℝ := answer(sorry)
+    let lower_bound : ℕ → ℝ := erdos_160.better_lower.answer
     (lower_bound =O[atTop] fun n => (erdos_160.h n : ℝ)) ∧
     ∀ c > 0,
     (fun (n : ℕ) => exp (c * log n ^ ((1 : ℝ) / 12))) =O[atTop] (fun n => (erdos_160.h n : ℝ)) →

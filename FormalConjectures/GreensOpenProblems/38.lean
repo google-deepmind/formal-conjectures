@@ -79,6 +79,8 @@ noncomputable def C₁ : ℝ := (367 : ℝ) ^ (5⁻¹ : ℝ)
 /-- The upper bound constant $C_2 \approx 3.3177$ from [La79]. -/
 noncomputable def C₂ : ℝ := (7 * Real.cos (Real.pi / 7)) / (1 + Real.cos (Real.pi / 7))
 
+def green_38.lower.answer : ℕ → ℝ := fun n : ℕ ↦ (134753 : ℝ) ^ (n / 10)
+
 /-- Can we improve the lower bound? The answer sequence must be eventually nonnegative, since
 `=O` compares norms.
 
@@ -89,18 +91,20 @@ gives valid sets of size $134753^{\lfloor n/10 \rfloor}$ in $\mathbb{F}_7^n$, se
 $134753^{1/10} > 3.258020 > C_1$ (note $134753 > 367^2 = 134689$). Gao [Ga26] and then Buys,
 Polak and Zuiddam [BPZ26] improved the rate further, to $3.258789\ldots$ and $3.2588\ldots$
 respectively; the latter is formalised in Lean. The exact growth rate remains open. -/
-@[category research solved, AMS 5 11]
+@[category research solved, question value, AMS 5 11]
 theorem green_38.lower :
-    let ans := (answer(fun n : ℕ ↦ (134753 : ℝ) ^ (n / 10)) : ℕ → ℝ)
+    let ans := green_38.lower.answer
     (∀ᶠ n in atTop, 0 ≤ ans n) ∧ ans ≤ᶠ[atTop] LargestAdmissibleCardinality ∧
     ∃ c > C₁, (fun n ↦ c ^ n) =O[atTop] ans := by
   sorry
 
+def green_38.upper.answer : ℕ → ℝ := sorry
+
 /-- Can we improve the best upper bound? The base `c` must be positive, since `=O` compares
 norms. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_38.upper :
-    let ans := (answer(sorry) : ℕ → ℝ)
+    let ans := green_38.upper.answer
     LargestAdmissibleCardinality ≤ᶠ[atTop] ans ∧
     ∃ c : ℝ, 0 < c ∧ c < C₂ ∧ ans =O[atTop] (fun n ↦ c ^ n) := by
   sorry

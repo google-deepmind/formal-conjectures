@@ -38,8 +38,6 @@ open scoped Cardinal
 
 namespace Erdos1119
 
--- The question is independent of ZFC (see the docstring), so the answer stays a placeholder.
-set_option linter.style.category_answer false in
 /--
 Let $\mathfrak{m}$ be an infinite cardinal with $\aleph_0 < \mathfrak{m} < \mathfrak{c} =
 2^{\aleph_0}$. Let $\{f_\alpha\}$ be a family of entire functions such that, for every
@@ -47,8 +45,8 @@ $z_0 \in \mathbb{C}$, there are at most $\mathfrak{m}$ distinct values of $f_\al
 Must $\{f_\alpha\}$ have cardinality at most $\mathfrak{m}$?
 
 This is Problem 2.46 in [Ha74], where it is attributed to Erdős. The question is
-**independent of ZFC**, so the headline statement carries `answer(sorry)`: it is neither
-provable nor refutable from the usual axioms of set theory.
+**independent of ZFC**: the headline statement is neither provable nor refutable from the
+usual axioms of set theory, so its `sorry` cannot be filled either way.
 
 The answer is yes if $\mathfrak{m}^+ < \mathfrak{c}$ (see
 `erdos_1119.variants.easy_case`), so the question reduces to the case
@@ -57,8 +55,8 @@ produced a model of $\mathfrak{c} = \aleph_2$ in which the answer is yes (with
 $\mathfrak{m} = \aleph_1$), while Schilhan and Weinert [ScWe24] produced a different
 model of $\mathfrak{c} = \aleph_2$ in which the answer is no.
 -/
-@[category research solved, AMS 3 30]
-theorem erdos_1119 : answer(sorry) ↔
+@[category research solved, question, AMS 3 30]
+theorem erdos_1119 :
     ∀ (m : Cardinal.{0}), ℵ₀ < m → m < 𝔠 →
     ∀ F : Set (ℂ → ℂ), (∀ f ∈ F, Differentiable ℂ f) →
       (∀ z₀ : ℂ, #{y : ℂ | ∃ f ∈ F, f z₀ = y} ≤ m) →

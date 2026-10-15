@@ -27,8 +27,8 @@ public import FormalConjecturesUtil
 namespace Erdos196
 
 /-- Must every permutation of $\mathbb{N}$, contain a monotone 4-term arithmetic progression?-/
-@[category research open, AMS 5 11]
-theorem erdos_196 : answer(sorry) ↔ ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 4 := by
+@[category research open, question, AMS 5 11]
+theorem erdos_196 : ∀ (f : ℕ ≃ ℕ), HasMonotoneAP f 4 := by
   sorry
 
 end Erdos196

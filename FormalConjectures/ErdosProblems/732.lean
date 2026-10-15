@@ -30,6 +30,8 @@ namespace Erdos732
 
 open Filter Asymptotics
 
+def erdos_732.parts.i.answer : ℕ → List ℕ → Prop := sorry
+
 /--
 Call a sequence $1< X_1\leq \cdots \leq X_m\leq n$ block-compatible if there is a pairwise balanced
 block design $A_1,\ldots,A_m\subseteq \{1,\ldots,n\}$ such that $\lvert A_i\rvert=X_i$ for $1\leq
@@ -39,9 +41,9 @@ Is there some constant $c>0$ such that for all large $n$ there are
 $$\geq \exp(c n^{1/2}\log n)$$
 many block-compatible sequences for $\{1,\ldots,n\}$?
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_732.parts.i :
-    let P : ℕ → List ℕ → Prop := answer(sorry)
+    let P : ℕ → List ℕ → Prop := erdos_732.parts.i.answer
     ∀ (n : ℕ) (s : List ℕ), s ∈ Hypergraph.blockSizeProfiles n ↔ P n s := by
   sorry
 
@@ -52,9 +54,9 @@ $\exp(c n^{1/2}\log n)$ block-compatible sequences?
 Alon has proved there are at least $2^{(\frac{1}{2}+o(1))n^{1/2}\log n}$ many sequences
 which are block-compatible for $n$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_732.parts.ii :
-    answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
     Real.exp (c * Real.sqrt n * Real.log n) ≤ (Hypergraph.blockSizeProfiles n).card := by
   sorry
 

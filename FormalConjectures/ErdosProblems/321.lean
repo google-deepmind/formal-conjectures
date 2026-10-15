@@ -39,13 +39,15 @@ noncomputable def R (N : ℕ) : ℕ :=
   sSup { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) }
 
+def erdos_321.answer : ℕ := sorry
+
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
 $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $R(N)$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_321 (N : ℕ) :
-    R N = answer(sorry) := by
+    R N = erdos_321.answer := by
   sorry
 
 /-
@@ -57,29 +59,35 @@ will therefore exist to the asymptotic formalisations. A true solution to
 the asymptotic variants should have a degree of optimality or non-triviality to it.
 -/
 
+def erdos_321.variants.isTheta.answer : ℕ → ℝ := sorry
+
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
 $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $\Theta(R(N))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_321.variants.isTheta :
-    (fun N ↦ (R N : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun N ↦ (R N : ℝ)) =Θ[atTop] erdos_321.variants.isTheta.answer := by
   sorry
+
+def erdos_321.variants.isBigO.answer : ℕ → ℝ := sorry
 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = O(g(N))$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_321.variants.isBigO :
-    (fun N ↦ (R N : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun N ↦ (R N : ℝ)) =O[atTop] erdos_321.variants.isBigO.answer := by
   sorry
+
+def erdos_321.variants.isLittleO.answer : ℕ → ℝ := sorry
 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. Find the simplest $g(N)$ such that $R(N) = o(g(N))$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_321.variants.isLittleO :
-    (fun N ↦ (R N : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun N ↦ (R N : ℝ)) =o[atTop] erdos_321.variants.isLittleO.answer := by
   sorry
 
 /--

@@ -50,27 +50,33 @@ noncomputable def bestLower (N : ℕ) : ℝ := Real.log (Real.log N)
 /-- The best-known upper bound [ESS89]. -/
 noncomputable def bestUpper (N : ℕ) : ℝ := (N : ℝ) / Real.log N
 
+def green_25.answer : Set (ℕ → ℕ) := sorry
+
 /--
 For which values of $k$ is the following true: whenever we partition $[N] = A_1 \cup \dots \cup A_k$,
 $\left|\bigcup^k_{i=1} (A_i \hat{+} A_i)\right| \geq \frac{1}{10} N$?
 -/
-@[category research open, AMS 5 11]
-theorem green_25 : {k : ℕ → ℕ | ∀ᶠ N in atTop, Property25 (k N) N} = answer(sorry) := by
+@[category research open, question value, AMS 5 11]
+theorem green_25 : {k : ℕ → ℕ | ∀ᶠ N in atTop, Property25 (k N) N} = green_25.answer := by
   sorry
 
+def green_25.upper.answer : ℕ → ℕ := sorry
+
 /-- We conjecture that the best-known upper bound can be lowered. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_25.upper :
-    let ans := (answer(sorry) : ℕ → ℕ)
+    let ans := green_25.upper.answer
     (∀ᶠ N in atTop, 1 ≤ ans N ∧ ans N ≤ N) ∧ -- Ensure k is a valid partition size
     (fun N => (ans N : ℝ)) =o[atTop] bestUpper ∧
     ¬ ∀ᶠ N in atTop, Property25 (ans N) N := by
   sorry
 
+def green_25.lower.answer : ℕ → ℝ := sorry
+
 /-- We conjecture that the best-known lower bound can be raised. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_25.lower :
-    let ans := (answer(sorry) : ℕ → ℝ)
+    let ans := green_25.lower.answer
     (bestLower =o[atTop] ans) ∧
     (∀ᶠ N in atTop, 1 ≤ ans N ∧ ans N ≤ N) ∧
     ∀ k : ℕ → ℕ,
@@ -104,19 +110,6 @@ theorem green_25.variants.upper_ess89 :
   ∃ k : ℕ → ℕ,
     (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧
     (fun N => (k N : ℝ)) =Θ[atTop] bestUpper ∧
-    ¬ ∀ᶠ N in atTop, Property25 (k N) N := by
-  sorry
-
-/--
-For $k \gg N / \log N$, it need not be true [Gr24].
-
-In this version, cases like $k(N) = N$ or $N-1$ can produce trivial counter examples.
--/
-@[category research solved, AMS 5 11]
-theorem green_25.variants.upper_ess89_trivial :
-  ∃ k : ℕ → ℕ,
-    (∀ᶠ N in atTop, 1 ≤ k N ∧ k N ≤ N) ∧
-    ((fun N => (k N : ℝ)) ≫ bestUpper) ∧
     ¬ ∀ᶠ N in atTop, Property25 (k N) N := by
   sorry
 

@@ -62,20 +62,24 @@ def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
   sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
+def green_35.lower.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
+
 /-- Lower bound for $c(p)$ for $1 < p \le \infty$, improving the known value $\sqrt{4/7}$ at
 $p = 2$ or the known value $0.64$ at $p = \infty$. -/
-@[category research open, AMS 26 28 42]
+@[category research open, question value, AMS 26 28 42]
 theorem green_35.lower :
-    let lb : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
+    let lb : ℝ≥0∞ → ℝ≥0∞ := green_35.lower.answer
     (∀ p, 1 < p → lb p ≤ c p) ∧
       (ENNReal.ofReal (Real.sqrt (4 / 7)) < lb 2 ∨ 0.64 < lb ∞) := by
   sorry
 
+def green_35.upper.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
+
 /-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value $0.7516$ at
 $p = \infty$. -/
-@[category research open, AMS 26 28 42]
+@[category research open, question value, AMS 26 28 42]
 theorem green_35.upper :
-    let ub : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
+    let ub : ℝ≥0∞ → ℝ≥0∞ := green_35.upper.answer
     (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7516 := by
   sorry
 

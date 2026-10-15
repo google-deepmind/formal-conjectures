@@ -62,6 +62,8 @@ cardinality of subset sums for $n$. -/
 noncomputable def subsetSumThreshold (n : ℕ): ℕ :=
   sSup { m | IsSubsetSumSeparatingCard n m }
 
+def erdos_789.answer : ℕ → ℝ := sorry
+
 /--
 Let $h(n)$ be maximal such that if $A\subseteq \mathbb{Z}$ with $\lvert A\rvert=n$
 then there is $B\subseteq A$ with $\lvert B\rvert \geq h(n)$ such that if
@@ -69,9 +71,9 @@ $a_1+\cdots+a_r=b_1+\cdots+b_s$ with $a_i,b_i\in B$ then $r=s$.
 
 Estimate $h(n)$.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_789 :
-    (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n ↦ (subsetSumThreshold n : ℝ)) =Θ[atTop] erdos_789.answer := by
   sorry
 
 /--

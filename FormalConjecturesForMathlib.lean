@@ -20,6 +20,7 @@ public import FormalConjecturesForMathlib.Algebra.GradedMonoid
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
 public import FormalConjecturesForMathlib.Algebra.Group.Indicator
+public import FormalConjecturesForMathlib.Algebra.Group.Pointwise.Finset.Basic
 public import FormalConjecturesForMathlib.Algebra.Homology.DerivedCategory.Ext.GradedAlgebra
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.PoissonBracket
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.RegularFunction
@@ -125,6 +126,7 @@ public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuring
 public import FormalConjecturesForMathlib.Data.Bool.Basic
 public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
+public import FormalConjecturesForMathlib.Data.Finset.Prod
 public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
 public import FormalConjecturesForMathlib.Data.Int.IntermediateValue
 public import FormalConjecturesForMathlib.Data.Int.Order.Basic
@@ -156,6 +158,7 @@ public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
 public import FormalConjecturesForMathlib.Geometry.Group.WordProd
 public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 public import FormalConjecturesForMathlib.Geometry.Metric
+public import FormalConjecturesForMathlib.Geometry.OrdinaryLines
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
 public import FormalConjecturesForMathlib.GroupTheory.Torsion
@@ -173,6 +176,7 @@ public import FormalConjecturesForMathlib.NumberTheory.AdditiveComplement
 public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 public import FormalConjecturesForMathlib.NumberTheory.AlmostPrime
 public import FormalConjecturesForMathlib.NumberTheory.Amicable
+public import FormalConjecturesForMathlib.NumberTheory.ArithmeticFunction.PrimeSeries
 public import FormalConjecturesForMathlib.NumberTheory.AutomaticNumber
 public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet
 public import FormalConjecturesForMathlib.NumberTheory.AutomorphicForm.BorelJacquet.CenterAction

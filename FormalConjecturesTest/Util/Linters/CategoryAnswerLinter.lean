@@ -26,18 +26,18 @@ set_option linter.style.category_answer true
 namespace CategoryAnswerLinter
 
 /--
-warning: Declarations tagged `@[category research solved]` should not use `answer(sorry)`: the answer should be filled in explicitly, e.g. `answer(True)`.
+warning: Declarations tagged `@[category research solved]` should not use `answer(sorry)`: the answer should be filled in explicitly, e.g. `answer(2)`.
 
 Note: This linter can be disabled with `set_option linter.style.category_answer false`
 -/
 #guard_msgs in
 /-- A solved problem should not leave its answer unfilled. -/
 @[category research solved]
-theorem flagged_solved_answer_sorry : answer(sorry) ↔ 1 + 1 = 2 := by
+theorem flagged_solved_answer_sorry : 1 + 1 = answer(sorry) := by
   sorry
 
 /--
-warning: Declarations tagged `@[category research solved]` should not use `answer(sorry)`: the answer should be filled in explicitly, e.g. `answer(True)`.
+warning: Declarations tagged `@[category research solved]` should not use `answer(sorry)`: the answer should be filled in explicitly, e.g. `answer(2)`.
 
 Note: This linter can be disabled with `set_option linter.style.category_answer false`
 -/
@@ -48,7 +48,7 @@ theorem flagged_ascribed_answer_sorry : answer((sorry : Nat)) = 2 := by
   sorry
 
 /--
-warning: Declarations tagged `@[category research solved]` should not use `answer(sorry)`: the answer should be filled in explicitly, e.g. `answer(True)`.
+warning: Declarations tagged `@[category research solved]` should not use `answer(sorry)`: the answer should be filled in explicitly, e.g. `answer(2)`.
 
 Note: This linter can be disabled with `set_option linter.style.category_answer false`
 -/
@@ -63,13 +63,13 @@ theorem flagged_let_answer_sorry :
 #guard_msgs in
 /-- A solved problem with an explicit answer is fine. -/
 @[category research solved]
-theorem not_flagged_explicit_answer : answer(True) ↔ 1 + 1 = 2 := by
-  simp
+theorem not_flagged_explicit_answer : 1 + 1 = answer(2) := by
+  rfl
 
 #guard_msgs in
 /-- An open problem may leave its answer unfilled. -/
 @[category research open]
-theorem not_flagged_open_answer_sorry : answer(sorry) ↔ 1 + 1 = 2 := by
+theorem not_flagged_open_answer_sorry : 1 + 1 = answer(sorry) := by
   sorry
 
 end CategoryAnswerLinter

@@ -85,10 +85,10 @@ the bound with it.)
 
 This is discussed in problems B26 and E2 of Guy's collection [Gu04].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos441.lean#L453"]
-theorem erdos_441 : answer(False) ↔
-    ∀ N : ℕ, 1 ≤ N → g N = (erdosConstruction N).card := by
+theorem erdos_441 :
+    ¬ ∀ N : ℕ, 1 ≤ N → g N = (erdosConstruction N).card := by
   sorry
 
 /--

@@ -70,9 +70,9 @@ zero $a(2) = 0$.
 The counterexample and formal proof were developed by Codex (GPT-6), prompted by
 Samuel Schlesinger.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/SamuelSchlesinger/a071532-counterexample/blob/818c9f6b3f1eed9ebd1b3b9481848dc21f3e3243/Counterexample.lean#L28-L35"]
-theorem conjecture1 : answer(False) ↔ ∀ n : ℕ, 2 < n → 0 < a n := by
+theorem conjecture1 : ¬ ∀ n : ℕ, 2 < n → 0 < a n := by
   sorry
 
 /--
@@ -91,12 +91,14 @@ theorem conjecture3 :
     ∃ C : ℝ, 0 < C ∧ (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
   sorry
 
+def conjecture3_value.answer : ℝ := sorry
+
 /--
 Conjecture: the constant $C$ in $a(n) \sim C \log(n)^2$ is approximately $1.4$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem conjecture3_value :
-    let C : ℝ := answer(sorry)
+    let C : ℝ := conjecture3_value.answer
     |C - 1.4| < 0.1 ∧
       (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
   sorry

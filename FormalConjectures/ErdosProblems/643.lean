@@ -34,6 +34,8 @@ namespace Erdos643
 
 open Filter Asymptotics
 
+def erdos_643.parts.i.answer : ℕ → ℕ → ℝ := sorry
+
 /--
 Let $f(n;t)$ be minimal such that if a $t$-uniform hypergraph on $n$ vertices contains at least
 $f(n;t)$ edges then there must be four edges $A,B,C,D$ such that
@@ -43,9 +45,9 @@ $$A\cap B=C\cap D=\emptyset.$$
 Estimate $f(n;t)$ - in particular, is it true that for $t\geq 3$
 $$f(n;t)=(1+o(1))\binom{n}{t-1}?$$
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_643.parts.i :
-    let f : ℕ → ℕ → ℝ := answer(sorry)
+    let f : ℕ → ℕ → ℝ := erdos_643.parts.i.answer
     ∀ t : ℕ, 1 ≤ t →
       (fun n ↦ ((Hypergraph.extremalNumber n t
         (fun H ↦ ¬ H.HasRepeatedDisjointUnion) + 1 : ℕ) : ℝ)) ~[atTop] f t := by
@@ -54,9 +56,9 @@ theorem erdos_643.parts.i :
 /--
 Is it true that $f(n;t)=(1+o(1))\binom{n}{t-1}$ for $t\geq 3$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_643.parts.ii :
-    answer(sorry) ↔ ∀ t : ℕ, 3 ≤ t →
+    ∀ t : ℕ, 3 ≤ t →
     (fun n ↦ ((Hypergraph.extremalNumber n t
       (fun H ↦ ¬ H.HasRepeatedDisjointUnion) + 1 : ℕ) : ℝ)) ~[atTop]
         (fun n ↦ (n.choose (t - 1) : ℝ)) := by
