@@ -51,8 +51,7 @@ The exact rational comparison is equivalent to the real-valued inequality.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/9bf6a9ca86495a241446cce10e013a8794af666f/Proofs/WOWII381Proof.lean"]
-theorem conjecture381 : answer(True) ↔
-    ∀ (W : Type) [Fintype W] [DecidableEq W]
+theorem conjecture381 : ∀ (W : Type) [Fintype W] [DecidableEq W]
       (T : SimpleGraph W) [DecidableRel T.Adj], T.IsTree → 2 < Fintype.card W →
       ((isolates T (neighbors T (supports T))).card : ℚ) /
         ((supportDegree T : ℚ) - 1) ≤ T.totalDominationNumber := by
