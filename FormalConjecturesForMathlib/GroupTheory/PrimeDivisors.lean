@@ -18,6 +18,8 @@ module
 public import Mathlib.Algebra.Group.Defs
 public import Mathlib.Data.Nat.PrimeFin
 public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
 
 @[expose] public section
 
@@ -32,12 +34,14 @@ namespace Group
 
 variable (G : Type*) [Group G]
 
+open scoped Nat ArithmeticFunction.sigma
+
 /-- The number of distinct primes dividing the order of `G`. -/
-noncomputable def numPrimeDivisors : ℕ := (Nat.card G).primeFactors.card
+noncomputable def numPrimeDivisors : ℕ := σ 0 (Nat.card G).primeFactors.card
 
 /-- The largest prime dividing the order of `G`, or `0` if there is none (`G` trivial or
 infinite). -/
-noncomputable def largestPrimeDivisor : ℕ := (Nat.card G).primeFactors.sup id
+noncomputable def largestPrimeDivisor : ℕ := (Nat.card G).maxPrimeFac
 
 
 @[simp]
@@ -45,7 +49,7 @@ theorem numPrimeDivisors_of_subsingleton [Subsingleton G] : numPrimeDivisors G =
   simp [numPrimeDivisors]
 
 @[simp]
-theorem largestPrimeDivisor_of_subsingleton [Subsingleton G] : largestPrimeDivisor G = 0 := by
+theorem largestPrimeDivisor_of_subsingleton [Subsingleton G] : largestPrimeDivisor G = 1 := by
   simp [largestPrimeDivisor]
 
 end Group

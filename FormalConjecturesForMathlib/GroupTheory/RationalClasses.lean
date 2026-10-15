@@ -54,9 +54,11 @@ noncomputable def numGaloisStableClasses : ℕ :=
     {g : G | ∀ k : ℕ, k.Coprime (orderOf g) → IsConj g (g ^ k)}).ncard
 
 
+instance [Finite G] : Finite (ConjClasses G) :=
+  Finite.of_surjective _ ConjClasses.mk_surjective
+
 theorem numGaloisStableClasses_le [Finite G] :
-    numGaloisStableClasses G ≤ Nat.card (ConjClasses G) := by
-  have : Finite (ConjClasses G) := Finite.of_surjective _ ConjClasses.mk_surjective
-  exact Set.ncard_le_card _
+    numGaloisStableClasses G ≤ Nat.card (ConjClasses G) :=
+  Set.ncard_le_card _
 
 end Group

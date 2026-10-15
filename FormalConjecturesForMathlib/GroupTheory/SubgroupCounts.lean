@@ -42,9 +42,14 @@ noncomputable def numNormalSubgroups : ℕ := {H : Subgroup G | H.Normal}.ncard
 noncomputable def numMaximalSubgroupClasses : ℕ :=
   ((fun H : Subgroup G => MulAction.orbit (ConjAct G) H) '' {H : Subgroup G | IsCoatom H}).ncard
 
+instance [Finite G] : Finite (Subgroup G) :=
+  Finite.of_injective _ SetLike.coe_injective
 
-theorem numNormalSubgroups_pos [Finite G] : 0 < numNormalSubgroups G := by
-  have : Finite (Subgroup G) := Finite.of_injective _ SetLike.coe_injective
-  exact (Set.ncard_pos (Set.toFinite _)).mpr ⟨⊥, Subgroup.normal_bot⟩
+theorem numNormalSubgroups_pos [Finite G] : 0 < numNormalSubgroups G :=
+  (Set.ncard_pos (Set.toFinite _)).mpr ⟨⊥, Subgroup.normal_bot⟩
+
+example [Finite G] : 1 ≤ numNormalSubgroups G := by
+  exact (Set.ncard_pos (Finite.of_injective _ Subtype.coe_injective)).mpr
+    ⟨⊥, Subgroup.normal_bot⟩
 
 end Group

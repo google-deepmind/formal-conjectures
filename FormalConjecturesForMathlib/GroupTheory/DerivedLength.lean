@@ -44,4 +44,17 @@ theorem derivedLength_of_not_isSolvable (h : ¬ IsSolvable G) : derivedLength G 
 theorem derivedLength_of_subsingleton [Subsingleton G] : derivedLength G = 0 :=
   Nat.sInf_eq_zero.mpr (Or.inl (by simpa using Subgroup.eq_bot_of_subsingleton ⊤))
 
+example [IsSimpleGroup G] : derivedLength G = 1 ↔ IsMulCommutative G := by
+  rw [←commutator_eq_bot_iff, derivedLength, ←derivedSeries_one]
+  refine ⟨fun hk => ?_, fun hk => ?_⟩
+  · change 1 ∈ {k : ℕ | derivedSeries G k = ⊥}
+    rw [←hk]
+    apply Nat.sInf_mem (by grind [Nat.nonempty_of_pos_sInf])
+  · apply le_antisymm
+    · apply Nat.sInf_le
+      grind
+    · by_contra! h
+      change 1 ∈ {k : ℕ | derivedSeries G k = ⊥} at hk
+      grind [ Nat.sInf_eq_zero, derivedSeries_zero, top_ne_bot]
+
 end Group
