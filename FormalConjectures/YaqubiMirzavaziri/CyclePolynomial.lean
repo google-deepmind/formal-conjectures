@@ -1,0 +1,60 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+public import FormalConjecturesUtil
+
+/-!
+# Real-rootedness of graphical cycle polynomials on chordal graphs
+
+*References:*
+- [M. Yaqubi and M. Mirzavaziri, On the Graphical r-Stirling Numbers of the First Kind for Specific Graph Families, version 1, Conjecture 6.2](https://arxiv.org/html/2602.02046v1)
+- [A. R. Barghi, graphical cycle polynomial and fan enumeration, Theorem 2.5 (2018)](https://ajc.maths.uq.edu.au/pdf/70/ajc_v70_p253.pdf)
+- [J. J. Gebendorfer, A chordal counterexample to graphical cycle polynomial real-rootedness, 12 October 2026; written disproof and source discrepancies](https://github.com/google-deepmind/formal-conjectures/issues/7239)
+
+We use edge-supported permutations: transpositions require edges and count once,
+longer cycles have both orientations and need not be induced. The source's
+omitted adjacency restatement and inconsistent wheel example are disclosed in
+the cited intake; alternative counting rules are not silently substituted.
+-/
+
+@[expose] public section
+namespace YaqubiMirzavaziri.CyclePolynomial
+open SimpleGraph Finset Polynomial
+variable {V : Type*} [Fintype V] [DecidableEq V]
+
+/-- Nontrivial permutation cycles plus fixed points, each counted once. -/
+noncomputable def cycleCount (σ : Equiv.Perm V) : ℕ := by
+  classical
+  exact σ.cycleFactorsFinset.card + (univ.filter fun v => σ v = v).card
+
+noncomputable def cyclePolynomial (G : SimpleGraph V) : Polynomial ℝ := by
+  classical
+  exact ∑ σ ∈ (univ : Finset (Equiv.Perm V)).filter
+    (fun σ => ∀ v, σ v = v ∨ G.Adj v (σ v)), X ^ cycleCount σ
+
+def IsRealRooted (p : Polynomial ℝ) : Prop :=
+  ∀ z : ℂ, p.eval₂ (algebraMap ℝ ℂ) z = 0 → z.im = 0
+
+/-- The unrestricted graphical cycle polynomial of a finite simple chordal
+graph need not have only real roots. This does not concern the restricted
+$r$-polynomial, stable partitions, or chordless-cycle enumeration. -/
+@[category research solved, AMS 5]
+theorem conjecture6_2 : ¬ ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
+    G.IsChordal → IsRealRooted (cyclePolynomial G) := by
+  sorry
+
+end YaqubiMirzavaziri.CyclePolynomial
