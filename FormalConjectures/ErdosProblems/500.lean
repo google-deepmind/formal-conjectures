@@ -87,9 +87,10 @@ the bound fails at $n=4$, where $\mathrm{ex}_3(4,K_4^3)=3>0.561666\binom{4}{3}$.
 [Ra10, (2)] gives this bound in complementary form, as a result that numerical computations
 suggest, not as a theorem. [BaTa11] reproduce the computation.
 
-Baber [Ba12, §5.1] gives $\pi(K_4^3)\leq 0.5615$, where $\pi(K_4^3)$ is the Turán density of
-`erdos_500.variants.asymptotic`. Jeong, Park, Im, Lee and Yang [JPILY26, Theorem 1.1] prove that
-$\pi(K_4^3)<0.557789$, with a formal proof in Lean 4. The bound above follows from either result.
+Baber [Ba12, §5.1, p. 14] gives $\pi(K_4^3)\leq 0.5615$, where $\pi(K_4^3)$ is the Turán density
+of `erdos_500.variants.asymptotic`. Jeong, Park, Im, Lee and Yang [JPILY26, Theorem 1.1] prove
+that $\pi(K_4^3)<0.557789$, with a formal proof in Lean 4. The bound above follows from either
+result.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/taeyool/tetrahedron-turan/blob/28b83b6f215cb886d2abdc89b33fdae3f17a7e3f/LeanFlagAlgebras/Core/Examples/FullSevenConverged/TetrahedronDifferential.lean#L251"]
