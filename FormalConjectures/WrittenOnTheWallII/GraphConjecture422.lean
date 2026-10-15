@@ -53,8 +53,7 @@ and right side $3$. The distinct proper-containment variant is not refuted.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/8949070c3c71b6c09c00f2fa43849a543b3399ab/Proofs/WOWII422dProof.lean"]
-theorem conjecture422d_upper : answer(False) ↔
-    ∀ (W : Type) [Fintype W] [DecidableEq W]
+theorem conjecture422d_upper : ¬ ∀ (W : Type) [Fintype W] [DecidableEq W]
       (G : SimpleGraph W) [DecidableRel G.Adj], G.Connected → 3 < Fintype.card W →
       G.indepDominationNumber ≤ bound G := by
   sorry
