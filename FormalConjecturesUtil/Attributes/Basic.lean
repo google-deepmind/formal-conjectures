@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public meta import FormalConjecturesUtil.Attributes.AMS
-public meta import FormalConjecturesUtil.Answer
 
 import Qq
 
@@ -126,8 +125,7 @@ its author expects it to be true. A question leaves the answer open. There are t
 
 A yes-or-no question is written `@[question]`, a value question `@[question value]`. The
 attribute checks the form against the statement: `value` requires the statement to refer to
-`<theorem>.answer` (or, in older files, to contain a non-`Prop` `answer(...)`), and plain
-`question` forbids both.
+`<theorem>.answer`, and plain `question` forbids it.
 
 The attribute is independent of `category`, but it only makes sense on a `research open` or
 `research solved` problem: a textbook exercise, a `test`, or an `API` statement is not a
@@ -336,7 +334,7 @@ def addSubjectEntry {m : Type → Type} [MonadEnv m] (name : Name)
 inductive QuestionKind
   /-- A yes-or-no question. The statement is the proposition asked about. -/
   | yesNo
-  /-- A question asking for a value. The statement marks the unknown with `answer(sorry)`. -/
+  /-- A question asking for a value. The unknown is the definition `<theorem>.answer`. -/
   | value
   deriving Inhabited, BEq, Hashable, Repr, ToExpr
 
@@ -577,15 +575,10 @@ initialize Lean.registerBuiltinAttribute {
     addSubjectEntry decl subjects.toList oldDoc
 }
 
-/-- Whether the statement of `decl`, of type `type`, has the unknown of a value question: it
-refers to the definition `decl.answer`, or, in older files, contains a non-`Prop`
-`answer(...)`. -/
-def hasValueAnswer (decl : Name) (type : Expr) : MetaM Bool := do
-  if type.getUsedConstants.contains (decl ++ `answer) then return true
-  let found ← IO.mkRef false
-  Google.forEachAnswer type fun ans => do
-    unless ← Meta.isProp ans do found.set true
-  found.get
+/-- Whether the statement of `decl`, of type `type`, refers to the definition `decl.answer`,
+the unknown of a value question. -/
+def hasValueAnswer (decl : Name) (type : Expr) : Bool :=
+  type.getUsedConstants.contains (decl ++ `answer)
 
 syntax (name := Question_attr) &"question" (&"value")? : attr
 
@@ -598,8 +591,7 @@ Usage, together with a `research` category:
   `<theorem>.answer`, which the statement refers to by that name.
 
 The attribute checks the form against the statement: `value` requires a reference to
-`<theorem>.answer` (or, in older files, a non-`Prop` `answer(...)`), and plain `question`
-forbids both. -/
+`<theorem>.answer`, and plain `question` forbids it. -/
 initialize Lean.registerBuiltinAttribute {
   name := `Question_attr
   descr := "Annotation that a statement is posed as a question."
@@ -617,7 +609,7 @@ initialize Lean.registerBuiltinAttribute {
         but the type of '{decl}' is not a proposition"
     if let some tag := (categoryExt.getState (← getEnv)).toArray.find? (·.declName == decl) then
       checkQuestionCategory decl tag.category
-    match kind, ← Meta.MetaM.run' (hasValueAnswer decl info.type) with
+    match kind, hasValueAnswer decl info.type with
     | .value, false =>
       throwError "`question value` requires the statement of '{decl}' to refer to the \
         definition `{decl ++ `answer}`; for a yes-or-no question use `question`"

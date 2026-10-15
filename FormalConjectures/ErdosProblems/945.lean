@@ -40,7 +40,7 @@ noncomputable def F (x : ℝ) : ℕ :=
   sSup {k | ∃ (n : ℕ), n + k ≤ x ∧ (Set.Ioc n (n + k)).InjOn τ}
 
 -- Implementation note: we define a Prop here and below to be able to easily formulate
--- the equivalence between the two variants. Because the theorems require `answer(sorry)` we
+-- the equivalence between the two variants. Because the theorems have an unknown `answer` we
 -- can't handle this with `type_of%`.
 def Erdos945Prop : Prop := ∃ O : ℝ → ℝ, O =O[atTop] (1 : ℝ → ℝ) ∧ ∀ᶠ x in atTop, F x ≤ log x ^ O x
 

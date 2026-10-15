@@ -24,7 +24,7 @@ In this problem, a function $h : \mathbb{N} \to\mathbb{N}$ is defined maximally 
 counting property.
 
 The problem asks to estimate $h(n)$. This has been interpreted here as asking for $\Theta(h(n))$.
-The principal version includes `answer(sorry)` for an unknown function. On the other hand, the best
+The principal version includes the unknown function `erdos_539.answer`. On the other hand, the best
 known upper bound is $n^{2/3}$ and the best known lower bound is $\sqrt{n}$ so we
 also provide these candidates as variants. Moreover, it suffices to show $O(h(n))$ and
 $O(\sqrt{n})$ respectively for each, so further variants are provided for those.

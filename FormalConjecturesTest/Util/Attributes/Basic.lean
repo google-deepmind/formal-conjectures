@@ -71,19 +71,6 @@ error: the `question` attribute only applies to theorems, but the type of 'not_a
 @[question]
 def not_a_theorem : Prop := True
 
--- A statement with a non-`Prop` answer is a value question.
-#guard_msgs in
-/-- What is `2 + 2`? -/
-@[category research open, question value, AMS 11]
-theorem a_value_question : 2 + 2 = answer(sorry) := by
-  sorry
-
--- The answer is found under binders too.
-#guard_msgs in
-@[category research open, question value, AMS 11]
-theorem a_value_question_under_binders : ∀ n : Nat, ∃ m : Fin (n + 3), m = answer(sorry) := by
-  sorry
-
 -- The unknown of a value question is a definition `<theorem>.answer`.
 def a_value_question_with_def.answer : Nat := sorry
 
@@ -94,14 +81,6 @@ theorem a_value_question_with_def : 2 + 2 = a_value_question_with_def.answer := 
   sorry
 
 -- The form is checked against the statement, in both directions.
-/--
-error: the statement of 'a_value_question_tagged_yes_no' refers to the unknown of a value question; use `question value`
--/
-#guard_msgs in
-@[category research open, question, AMS 11]
-theorem a_value_question_tagged_yes_no : 2 + 2 = answer(sorry) := by
-  sorry
-
 def a_value_question_with_def_tagged_yes_no.answer : Nat := sorry
 
 /--
@@ -120,11 +99,6 @@ error: `question value` requires the statement of 'a_yes_no_question_tagged_valu
 theorem a_yes_no_question_tagged_value : 2 + 2 = 4 := by
   sorry
 
--- A bound `Prop`-valued answer is a yes-or-no question, not a value question.
-#guard_msgs in
-@[category research solved, question, AMS 11]
-theorem a_bound_prop_answer : let P := True; answer(P) ↔ True := Iff.rfl
-
 open ProblemAttributes
 
 /-- info: some QuestionKind.yesNo -/
@@ -137,19 +111,7 @@ open ProblemAttributes
 
 /-- info: some QuestionKind.value -/
 #guard_msgs in
-#eval show Lean.CoreM _ from getQuestionKind? `a_value_question
-
-/-- info: some QuestionKind.value -/
-#guard_msgs in
-#eval show Lean.CoreM _ from getQuestionKind? `a_value_question_under_binders
-
-/-- info: some QuestionKind.value -/
-#guard_msgs in
 #eval show Lean.CoreM _ from getQuestionKind? `a_value_question_with_def
-
-/-- info: some QuestionKind.yesNo -/
-#guard_msgs in
-#eval show Lean.CoreM _ from getQuestionKind? `a_bound_prop_answer
 
 -- An untagged theorem has no kind.
 /-- info: none -/

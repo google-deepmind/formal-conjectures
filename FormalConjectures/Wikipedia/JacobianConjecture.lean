@@ -94,7 +94,6 @@ def JacobianConjectureProp (k σ : Type*) [CommRing k] [Fintype σ] [DecidableEq
     ∃ (G : RegularFunction k σ σ), G.comp F = id k σ ∧
     F.comp G = id k σ
 
-set_option linter.style.answer_attribute false in
 /-- The **Jacobian Conjecture**: any regular function
 (i.e. vector valued polynomial function from) `kⁿ → kᵐ`
 whose Jacobian is a non-zero constant has an inverse that
