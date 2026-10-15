@@ -67,8 +67,7 @@ set of size nine, contradicting the proposed lower bound $451/50$.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/603b96b621bbc34d366aa0091e8bc68e39a1e886/Proofs/WOWII363Proof.lean"]
-theorem conjecture363 : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V]
+theorem conjecture363 : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj], G.IsTree → 2 < Fintype.card V →
       ((isolatedSupports G).card : ℚ) + positiveBoundaryAverage G / 2 ≤
         G.totalDominationNumber := by
