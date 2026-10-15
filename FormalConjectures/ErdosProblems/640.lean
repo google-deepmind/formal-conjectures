@@ -24,8 +24,6 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/640](https://www.erdosproblems.com/640)
 - [Er97d] Erdős, Paul, *Some recent problems and results in graph theory*. Discrete Math.
   (1997), 81–85, p.84.
-- [Er97d] Erdős, Paul, *Some recent problems and results in graph theory*. Discrete Math.
-  (1997), 81–85.
 -/
 
 @[expose] public section
