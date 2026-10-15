@@ -134,8 +134,7 @@ and $n = 2^r - 3$ with $r \ge 4$.
 -/
 @[category research open, question value, AMS 11 12]
 theorem u_invariant_values :
-    let S : Set ℕ := u_invariant_values.answer
-    ∀ n, n ∈ S ↔ IsUInvariant n := by
+    ∀ n, n ∈ u_invariant_values.answer ↔ IsUInvariant n := by
   sorry
 
 /--

@@ -41,14 +41,13 @@ This problem is #34 in Ramsey Theory in the graphs problem collection.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_569 :
-    let c : ℕ → ℝ := erdos_569.answer
     ∀ (k : ℕ) (hk : 1 ≤ k),
       sInf {C : ℝ | 0 < C ∧
         ∀ (m : ℕ) (W : Type) [Fintype W] (H : SimpleGraph W) [DecidableRel H.Adj],
           (∀ v, 0 < H.degree v) →
           H.edgeSet.ncard = m →
           (SimpleGraph.graphRamsey (SimpleGraph.cycleGraph (2 * k + 1)) H : ℝ) ≤ C * m} =
-            c k := by
+            erdos_569.answer k := by
   sorry
 
 end Erdos569

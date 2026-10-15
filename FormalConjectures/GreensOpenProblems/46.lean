@@ -57,8 +57,8 @@ def green_46.improve_lower.answer : ℕ → ℝ := sorry
 /-- We conjecture that the best-known lower bound can be improved. -/
 @[category research open, question value, AMS 11]
 theorem green_46.improve_lower :
-    let ans := green_46.improve_lower.answer
-    (bestLower =o[atTop] ans) ∧ (ans ≪ maxY) := by
+    (bestLower =o[atTop] green_46.improve_lower.answer) ∧ (green_46.improve_lower.answer ≪ maxY)
+      := by
   sorry
 
 def green_46.improve_upper.answer : ℕ → ℝ := sorry
@@ -66,8 +66,8 @@ def green_46.improve_upper.answer : ℕ → ℝ := sorry
 /-- We conjecture that the best-known upper bound can be improved. -/
 @[category research open, question value, AMS 11]
 theorem green_46.improve_upper :
-    let ans := green_46.improve_upper.answer
-    (ans =o[atTop] bestUpper) ∧ (maxY ≪ ans) := by
+    (green_46.improve_upper.answer =o[atTop] bestUpper) ∧ (maxY ≪ green_46.improve_upper.answer)
+      := by
   sorry
 
 /-- It seems very likely that we must have $y \ll x^{1+o(1)}$ [Gr24]. -/

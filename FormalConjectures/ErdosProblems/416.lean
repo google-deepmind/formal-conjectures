@@ -70,8 +70,7 @@ Is there an asymptotic formula for `V(x)`?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_416.parts.ii :
-    let f : ℝ → ℝ := erdos_416.parts.ii.answer
-    Filter.Tendsto (fun x => V x / f x) atTop (𝓝 1) := by
+    Filter.Tendsto (fun x => V x / erdos_416.parts.ii.answer x) atTop (𝓝 1) := by
   sorry
 
 /--
@@ -103,9 +102,9 @@ Ref:Maier, Helmut and Pomerance, Carl, _On the number of distinct values of Eule
 -/
 @[category research solved, question value, AMS 11]
 theorem erdos_416.variants.Maier_Pomerance :
-    let C : ℝ := erdos_416.variants.Maier_Pomerance.answer
-    0 < C ∧ ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ → ℝ) ∧
-      ∀ᶠ x in Filter.atTop, (V x : ℝ) = x / x.log * (rexp <| (C + f x) * x.log.log.log ^ 2) := by
+    0 < erdos_416.variants.Maier_Pomerance.answer ∧ ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ → ℝ) ∧
+      ∀ᶠ x in Filter.atTop, (V x : ℝ) = x / x.log *
+        (rexp <| (erdos_416.variants.Maier_Pomerance.answer + f x) * x.log.log.log ^ 2) := by
   sorry
 
 -- TODO: add the constants `C₁, C₂, C₃` from the paper here

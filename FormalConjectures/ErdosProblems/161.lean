@@ -48,11 +48,11 @@ each color must occur, following the source's Ramsey convention.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_161.parts.i :
-    let E : ℕ → Set (ℝ × ℝ) := erdos_161.parts.i.answer
     ∀ t : ℕ, 1 ≤ t →
       {p | p.1 ∈ Set.Ico (0 : ℝ) (1 / 2) ∧ p.2 ∈ Set.Ico (0 : ℝ) (1 / 2) ∧
         (fun n ↦ (Hypergraph.balancedColoringThreshold n t p.1 : ℝ)) =Θ[atTop]
-          (fun n ↦ (Hypergraph.balancedColoringThreshold n t p.2 : ℝ))} = E t := by
+          (fun n ↦ (Hypergraph.balancedColoringThreshold n t p.2 : ℝ))} =
+        erdos_161.parts.i.answer t := by
   sorry
 
 /--

@@ -41,10 +41,9 @@ Determine $f(n,k)$.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_614 :
-    let f : ℕ → ℕ → ℕ := erdos_614.answer
     ∀ n k, IsLeast {m : ℕ | ∃ G : SimpleGraph (Fin n), G.edgeFinset.card = m ∧
       ∀ s : Finset (Fin n), s.card = k + 2 →
-        ∃ v : s, k ≤ (G.induce (s : Set (Fin n))).degree v} (f n k) := by
+        ∃ v : s, k ≤ (G.induce (s : Set (Fin n))).degree v} (erdos_614.answer n k) := by
   sorry
 
 end Erdos614

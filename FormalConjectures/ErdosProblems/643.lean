@@ -47,10 +47,10 @@ $$f(n;t)=(1+o(1))\binom{n}{t-1}?$$
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_643.parts.i :
-    let f : ℕ → ℕ → ℝ := erdos_643.parts.i.answer
     ∀ t : ℕ, 1 ≤ t →
       (fun n ↦ ((Hypergraph.extremalNumber n t
-        (fun H ↦ ¬ H.HasRepeatedDisjointUnion) + 1 : ℕ) : ℝ)) ~[atTop] f t := by
+        (fun H ↦ ¬ H.HasRepeatedDisjointUnion) + 1
+          : ℕ) : ℝ)) ~[atTop] erdos_643.parts.i.answer t := by
   sorry
 
 /--
