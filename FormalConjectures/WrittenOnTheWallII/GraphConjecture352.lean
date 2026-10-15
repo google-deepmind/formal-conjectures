@@ -52,8 +52,7 @@ dominating set of size seven and a proposed lower bound at least eight.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/8949070c3c71b6c09c00f2fa43849a543b3399ab/Proofs/WOWII352Proof.lean"]
-theorem conjecture352 : answer(False) ↔
-    ∀ (W : Type) [Fintype W] [DecidableEq W]
+theorem conjecture352 : ¬ ∀ (W : Type) [Fintype W] [DecidableEq W]
       (G : SimpleGraph W) [DecidableRel G.Adj], G.IsTree → 2 < Fintype.card W →
       Nat.card (G.induce (closedDegreeTwo G : Set W)).ConnectedComponent +
         ⌈averageMaxEccentricity G / 2⌉₊ ≤ G.totalDominationNumber := by
