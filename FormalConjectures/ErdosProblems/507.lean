@@ -83,8 +83,7 @@ Estimate a lower bound for$\alpha(n)$.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_507.lower:
-    let ans := erdos_507.lower.answer
-    (lowerBest =o[atTop] ans) ∧ (ans ≪ α) := by
+    (lowerBest =o[atTop] erdos_507.lower.answer) ∧ (erdos_507.lower.answer ≪ α) := by
   sorry
 
 def erdos_507.upper.answer : ℕ → ℝ := sorry
@@ -94,8 +93,7 @@ Estimate an upper bound for$\alpha(n)$.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_507.upper:
-    let ans := erdos_507.upper.answer
-    (α ≪ ans) ∧ (ans =o[atTop] upperBarrier) := by
+    (α ≪ erdos_507.upper.answer) ∧ (erdos_507.upper.answer =o[atTop] upperBarrier) := by
   sorry
 
 /--

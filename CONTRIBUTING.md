@@ -345,8 +345,6 @@ theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nels
 - Once the question is answered, fill in the definition, for example
   `def foo.answer : ℕ := 5`, and leave the statement unchanged. The proof then
   proves the statement for that value.
-- Do not use the `answer(sorry)` elaborator for new problems. It is being
-  replaced by this convention.
 
 ### Problems that require answers
 
@@ -394,8 +392,7 @@ is outside of the scope of this repository.
   This way the informal "Does ...", "Are there ..." or "Is it true that ..."
   is recorded by the tag, and the statement stays a plain proposition. Once
   the question is answered, keep the tag and state what holds: `P` if the
-  answer is yes, `¬ P` if the answer is no. Do not use a `Prop`-valued
-  `answer(sorry)` such as `answer(sorry) ↔ P`.
+  answer is yes, `¬ P` if the answer is no.
 
   If the problem is not stated as a question, the following style is preferred:
 

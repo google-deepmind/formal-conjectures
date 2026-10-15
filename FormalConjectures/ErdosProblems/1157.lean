@@ -41,9 +41,8 @@ $$\mathrm{ex}_r(n,\mathcal{F}).$$
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_1157 :
-    let f : ℕ → ℕ → ℕ → ℕ → ℕ := erdos_1157.answer
     ∀ r k s : ℕ, 2 ≤ r → 2 ≤ k → 2 ≤ s → ∀ n : ℕ,
-      Hypergraph.configurationExtremalNumber n r k s = f n r k s := by
+      Hypergraph.configurationExtremalNumber n r k s = erdos_1157.answer n r k s := by
   sorry
 
 end Erdos1157

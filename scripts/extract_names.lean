@@ -18,43 +18,26 @@ module
 public import Lean
 public meta import FormalConjecturesUtil.Metadata
 public import FormalConjecturesUtil.Attributes.Basic
-public import FormalConjecturesUtil.Answer
 
 /-!
 # Extract Names
 
 This script extracts metadata (theorem names, statements, categories, subjects,
-formal proof links, whether the source poses the statement as a question, and answer
-kinds) from formalized mathematical conjectures in the repository.
+formal proof links, and whether the source poses the statement as a question) from
+formalized mathematical conjectures in the repository.
 
 ### Usage
 
 The script reads the compiled `.olean` files, so build the problems first.
-
-If you do not need `answerKinds`, use the default build and exclude that field:
 ```bash
 lake build
-lake exe extract_names --exclude=answerKinds [directory-or-file] [--no-docstrings]
+lake exe extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]
 ```
-
-If you need `answerKinds`, build and run with `lakefile.extract.toml`:
-```bash
-lake -f lakefile.extract.toml build
-lake -f lakefile.extract.toml exe extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]
-```
-
-`lakefile.extract.toml` is `lakefile.toml` with `weak.google.answer = "postpone"`.
-In the default `always_true` mode, a `Prop`-valued `answer(sorry)` elaborates to a bare
-`True`. The `answer` annotation is then lost, so `answerKinds` is `[]` for such answers, and
-`statement` shows `True` instead of `sorry`.
-
-Both lakefiles write to the same `.lake/build`. Switching between them rebuilds all
-problem files.
 -/
 
 @[expose] public meta section
 
-open Lean ProblemAttributes Google
+open Lean ProblemAttributes
 
 def getModuleNameFromFile (file : System.FilePath) : IO Name := do
   let components := file.withExtension "" |>.components
@@ -83,17 +66,6 @@ def formalProofKindToString : FormalProofKind → String
   | .lean4 => "lean4"
   | .otherSystem => "other_system"
 
-/-- Determine the `answerKinds` for a theorem's type expression.
-
-For each `answer(...)` occurrence found in the type,
-returns `"Prop"` or `"non-Prop"` depending on the type
-of the annotated subexpression. -/
-def getAnswerKinds (type : Expr) : MetaM (List String) := do
-  let kinds ← IO.mkRef #[]
-  forEachAnswer type fun ansExpr => do
-    kinds.modify (·.push (if ← Meta.isProp ansExpr then "Prop" else "non-Prop"))
-  return (← kinds.get).toList
-
 /-- Run a git command and return its stdout, trimmed. Returns `none` on failure. -/
 def gitOutput (args : Array String) : IO (Option String) := do
   try
@@ -116,7 +88,7 @@ def getFileLastModified (file : System.FilePath) : IO (Option String) :=
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
   ["docstring", "statement", "subjects", "formalProofs",
-   "hasSorryFreeProof", "moduleDocstrings", "question", "answerKinds",
+   "hasSorryFreeProof", "moduleDocstrings", "question",
    "fileFirstAdded", "fileLastModified"]
 
 -- `FormalProofInfo` and its ordering live in `FormalConjecturesUtil.Metadata`,
@@ -136,7 +108,6 @@ structure TheoremInfo where
   /-- The kind of question (`"yes_no"` or `"value"`) if the declaration carries the
   `question` attribute. -/
   question : Option String
-  answerKinds : List String
   fileFirstAdded : Option String
   fileLastModified : Option String
 
@@ -158,8 +129,6 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (match info.question with
         | some kind => if exclude.contains "question" then [] else [("question", toJson kind)]
         | none => [])
-    ++ (if exclude.contains "answerKinds" then [] else
-        [("answerKinds", toJson info.answerKinds)])
     ++ (if exclude.contains "fileFirstAdded" then [] else
         [("fileFirstAdded", toJson info.fileFirstAdded)])
     ++ (if exclude.contains "fileLastModified" then [] else
@@ -217,8 +186,7 @@ unsafe def main (args : List String) : IO Unit := do
     | _ =>
       let usageMsg :=
         "Usage: extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]\n\n" ++
-        "Note: Build first. For correct `answerKinds`, build and run with " ++
-        "`lake -f lakefile.extract.toml`. Otherwise pass `--exclude=answerKinds`."
+        "Note: Build first."
       throw <| IO.userError usageMsg
 
   -- Pre-compute git timestamps for each file and build module name array (only when not excluded)
@@ -320,9 +288,6 @@ unsafe def main (args : List String) : IO Unit := do
                   IO.eprintln s!"WARNING: Theorem {name} is categorised as `API` but has no sorry-free proof"
                 | _, _ => pure ()
               let subsets := (theoremToSubsets.getD name []).toArray.qsort (· < ·) |>.toList
-              -- Determine answerKinds from the elaborated type
-              let answerKinds ← Meta.MetaM.run'
-                (getAnswerKinds info.type)
               let (fileFirstAdded, fileLastModified) :=
                 fileTimestamps.getD modName (none, none)
               allResults := {
@@ -336,7 +301,6 @@ unsafe def main (args : List String) : IO Unit := do
                 hasSorryFreeProof := hasSorryFreeProof,
                 subsets := subsets
                 question := (← getQuestionKind? name).map toString
-                answerKinds := answerKinds
                 fileFirstAdded := fileFirstAdded
                 fileLastModified := fileLastModified
               } :: allResults

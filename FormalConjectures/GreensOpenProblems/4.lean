@@ -36,8 +36,7 @@ def green_4.answer : (n : ℕ) → Set ↥(alternatingGroup (Fin n)) := sorry
 /-- What is the largest product-free set in the alternating group $A_n$? -/
 @[category research open, question value, AMS 20]
 theorem green_4 (n : ℕ) :
-    let S : ∀ n, Set (alternatingGroup <| Fin n) := green_4.answer
-    MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard (S n) := by
+    MaximalFor (ProdFree (M := alternatingGroup <| Fin n)) Set.ncard (green_4.answer n) := by
   sorry
 
 /-- Defines a family of subsets of $A_n$ where each permutation $\pi$ in a subset obeys $\pi(x)$

@@ -47,9 +47,9 @@ theorem erdos_357.parts.i : (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : �
 
 /-
 Formalisation note: the next 5 formalisations are an attempt at capturing the question "how does
-$f(n)$ grow?". In addition to trivial solutions (e.g. setting `answer(sorry) = 0` in some of these),
+$f(n)$ grow?". In addition to trivial solutions (e.g. setting the `answer` to `0` in some of these),
 it is possible that some of these admit easy solutions that shouldn't count as genuine solutions.
-As usual in this repo, solving this problem is not simply providing a term to replace `answer(sorry)`
+As usual in this repo, solving this problem is not simply filling in the `answer` definition
 together with a proof of the theorem, but providing a *mathematically interesting* answer.
 Note also that there might be other reasonable (and non equivalent) formal statements that capture this
 question.

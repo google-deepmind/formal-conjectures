@@ -66,8 +66,8 @@ def green_27.lower.answer : ℕ → ℝ := sorry
 /-- Propose a better lower bound along primes. -/
 @[category research open, question value, AMS 5 11]
 theorem green_27.lower :
-    let ans := green_27.lower.answer
-    (lowerBest =o[primesAtTop] ans) ∧ (ans =O[primesAtTop] m) := by
+    (lowerBest =o[primesAtTop] green_27.lower.answer) ∧ (green_27.lower.answer =O[primesAtTop] m)
+      := by
   sorry
 
 def green_27.upper.answer : ℕ → ℝ := sorry
@@ -75,8 +75,8 @@ def green_27.upper.answer : ℕ → ℝ := sorry
 /-- Propose a better upper bound along primes. -/
 @[category research open, question value, AMS 5 11]
 theorem green_27.upper :
-    let ans := green_27.upper.answer
-    (ans =o[primesAtTop] upperBest) ∧ (m =O[primesAtTop] ans) := by
+    (green_27.upper.answer =o[primesAtTop] upperBest) ∧ (m =O[primesAtTop] green_27.upper.answer)
+      := by
   sorry
 
 /--

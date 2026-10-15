@@ -44,10 +44,9 @@ $r$-edges.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_712 :
-    let L : ℕ → ℕ → ℝ := erdos_712.answer
     ∀ k r : ℕ, 2 < r → r < k →
       Tendsto (fun n ↦ (Hypergraph.cliqueExtremalNumber n r k : ℝ) / n.choose r)
-        atTop (𝓝 (L k r)) := by
+        atTop (𝓝 (erdos_712.answer k r)) := by
   sorry
 
 end Erdos712

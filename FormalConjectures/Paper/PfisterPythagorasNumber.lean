@@ -88,8 +88,7 @@ $n + 2 \le p(\mathbb{R}(X_1, \dots, X_n)) \le 2^n$ are known.
 -/
 @[category research open, question value, AMS 11 12 14]
 theorem pfister_problem :
-    let p : ℕ → ℕ := pfister_problem.answer
-    ∀ n, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (p n) := by
+    ∀ n, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (pfister_problem.answer n) := by
   sorry
 
 /--
