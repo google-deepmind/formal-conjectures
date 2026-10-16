@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 *References:*
 - M. Aouchiche, P. Hansen and M. Zheng, Variable neighborhood search for extremal graphs. 19. Further conjectures and results about the Randić index, Conjecture 4 (2007).
 - [X. Li, Y. Shi and L. Wang, On a Relation Between Randić Index and Algebraic Connectivity, Conjecture 1.1 (2012), p. 845](https://match.pmf.kg.ac.rs/electronic_versions/Match68/n3/match68n3_843-849.pdf)
-- [J. J. Gebendorfer, A Sharp Tadpole Threshold for the Randić Index–Algebraic Connectivity Ratio, 6 August 2026; written proof and intake](https://github.com/google-deepmind/formal-conjectures/issues/7253)
+- [J. J. Gebendorfer, A Sharp Tadpole Threshold for the Randić Index–Algebraic Connectivity Ratio, 6 August 2026; manuscript archive](https://github.com/user-attachments/files/33368118/AHZ_Intake_Gebendorfer_2026-10-13.zip)
 
 The printed conjecture has order at least THREE, as verified in the primary
 2012 restatement; the intake's order-two cutoff is corrected here. The path
