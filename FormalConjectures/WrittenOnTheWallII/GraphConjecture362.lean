@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjecture 362, 18 February 2009](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, A sharp support-component diameter bound proving Graffiti.pc Conjecture 362](https://github.com/google-deepmind/formal-conjectures/issues/7237)
+- [J. J. Gebendorfer, A sharp support-component diameter bound proving Graffiti.pc Conjecture 362](https://github.com/user-attachments/files/33357078/Gebendorfer_362_Intake_2026-10-12.zip)
 
 The manuscript proves the original tree claim through a stronger diameter bound
 for connected graphs. Its current copy is undated. Components include isolated
