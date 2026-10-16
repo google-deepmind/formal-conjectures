@@ -46,7 +46,9 @@ theorem degree_two_upper (m : ℕ) (hm : 4 ≤ m) (F : Finset (Finset (Fin m)))
   sorry
 
 /-- The degree-two bound is attained at every ground-set size at least four. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/e5cdfb9089efa85734d2b9930e08408409695484/Proofs/RegularMissCodesProof.lean#L202"]
 theorem degree_two_attained (m : ℕ) (hm : 4 ≤ m) :
     ∃ F : Finset (Finset (Fin m)), IsMissCode m 2 F ∧ F.card = 4 := by
   sorry
@@ -58,7 +60,9 @@ theorem degree_three_upper (m : ℕ) (hm : 4 ≤ m) (F : Finset (Finset (Fin m))
   sorry
 
 /-- The degree-three bound is attained at every ground-set size at least four. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/e5cdfb9089efa85734d2b9930e08408409695484/Proofs/RegularMissCodesProof.lean#L210"]
 theorem degree_three_attained (m : ℕ) (hm : 4 ≤ m) :
     ∃ F : Finset (Finset (Fin m)), IsMissCode m 3 F ∧ F.card = 6 := by
   sorry
