@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjecture 412e, June 2010](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, A neighborhood-exchange bound for maximum critical independent sets, 1 September 2026](https://github.com/google-deepmind/formal-conjectures/issues/7269)
+- [J. J. Gebendorfer, A neighborhood-exchange bound for maximum critical independent sets, 1 September 2026](https://github.com/user-attachments/files/33373335/Gebendorfer_WOWII_412e_Intake_2026-10-13.zip)
 
 The source defines the neighborhood of a set as the union of vertex
 neighborhoods. We state that literal convention first, then the stronger
