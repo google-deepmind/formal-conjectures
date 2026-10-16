@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 - [E. DeLaVina, Written on the Wall II, entry 397c and definitions
   90/46/66/49/75](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
 - [J. J. Gebendorfer, 2-domination and domination of the square: a constructive
-  proof of Written on the Wall II 397c, 14 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7331)
+  proof of Written on the Wall II 397c, 14 October 2026](https://github.com/user-attachments/files/33452211/Gebendorfer_New_Manuscripts_2026-10-14.zip)
 
 Support vertices are the union of open neighborhoods of all leaves. The square
 joins distinct vertices connected by one or two original edges. The linked
