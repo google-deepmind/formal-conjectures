@@ -33,6 +33,8 @@ namespace Erdos712
 open Filter Asymptotics
 open scoped Topology
 
+def erdos_712.answer : ℕ → ℕ → ℝ := sorry
+
 /--
 Determine, for any $k>r>2$, the limiting value as $n\to\infty$ of
 $$\frac{\mathrm{ex}_r(n,K_k^r)}{\binom{n}{r}},$$
@@ -40,12 +42,11 @@ where $\mathrm{ex}_r(n,K_k^r)$ is the largest number of $r$-edges which can plac
 so that there exists no set of $k$ vertices which is covered by all $\binom{k}{r}$ possible
 $r$-edges.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_712 :
-    let L : ℕ → ℕ → ℝ := answer(sorry)
     ∀ k r : ℕ, 2 < r → r < k →
       Tendsto (fun n ↦ (Hypergraph.cliqueExtremalNumber n r k : ℝ) / n.choose r)
-        atTop (𝓝 (L k r)) := by
+        atTop (𝓝 (erdos_712.answer k r)) := by
   sorry
 
 end Erdos712

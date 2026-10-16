@@ -58,8 +58,8 @@ vertices than chords. Is it true that $f(n)\ll n$?
 A problem of Hamburger and Szegedy. A chord is an edge between two vertices of the cycle which are
 not consecutive in the cycle.
 -/
-@[category research open, AMS 5]
-theorem erdos_642 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_642 :
     (fun n : ℕ => (maxEdges n : ℝ)) =O[atTop] (fun n : ℕ => (n : ℝ)) := by
   sorry
 

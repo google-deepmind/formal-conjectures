@@ -33,7 +33,7 @@ What is the largest $y$ for which one may cover the interval $[y]$ by residue cl
 - [Ra38] Rankin, R. A., *The difference between consecutive prime numbers*. J. London Math. Soc.
   (1938), 242--247.
 
-This is the same problem as Erdős Problem 687 (`Erdos687.Y`).
+This is the same problem as Erdős Problem 687.
 -/
 
 @[expose] public section
@@ -59,12 +59,17 @@ noncomputable def bestLower (x : ℕ) : ℝ :=
 /-- Best-known upper bound [Iw78]. -/
 noncomputable def bestUpper (x : ℕ) : ℝ := (x : ℝ) ^ 2
 
+def green_46.improve_lower.answer : ℕ → ℝ := sorry
+
 /-- We conjecture that the best-known lower bound can be improved. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem green_46.improve_lower :
-    let ans := (answer(sorry) : ℕ → ℝ)
-    (bestLower =o[atTop] ans) ∧ (ans ≪ maxY) := by
+    (bestLower =o[atTop] green_46.improve_lower.answer) ∧ (green_46.improve_lower.answer ≪ maxY)
+      := by
   sorry
+
+noncomputable def green_46.improve_upper.answer : ℕ → ℝ :=
+  fun x : ℕ ↦ ((x : ℝ) + 1) ^ 2 / (Real.log (Real.log (3 * ((x : ℝ) + 1)))) ^ 2
 
 /-- We conjecture that the best-known upper bound can be improved.
 
@@ -72,12 +77,11 @@ Yes. OpenAI [OAI26a] proved $h(k) \ll k^2 / (\log\log 3k)^2$ for Jacobsthal's fu
 (Erdős Problem 970). By the Chinese remainder theorem $\mathrm{maxY}(x) < h(\pi(x))$, which gives
 $\mathrm{maxY}(x) \ll (x+1)^2 / (\log\log 3(x+1))^2 = o(x^2)$. Whether $y \ll x^{1+o(1)}$ remains
 open, see `green_46.improve_upper_conjectured`. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/30k30/scholia/blob/af06f47d8ccf2247a3d1ebbb97fa261d103e7f83/erdos-687/glue/JacobsthalTo687.lean#L344"]
+@[category research solved, question value, AMS 11, formal_proof using lean4 at
+  "https://github.com/30k30/scholia/blob/b072c89c3edac06521868e32cc15b2bc91bd8533/erdos-687/glue/JacobsthalTo687.lean#L319"]
 theorem green_46.improve_upper :
-    let ans := (answer(fun x : ℕ ↦ ((x : ℝ) + 1) ^ 2 /
-      (Real.log (Real.log (3 * ((x : ℝ) + 1)))) ^ 2) : ℕ → ℝ)
-    (ans =o[atTop] bestUpper) ∧ (maxY ≪ ans) := by
+    (green_46.improve_upper.answer =o[atTop] bestUpper) ∧ (maxY ≪ green_46.improve_upper.answer)
+      := by
   sorry
 
 /-- It seems very likely that we must have $y \ll x^{1+o(1)}$ [Gr24]. -/
