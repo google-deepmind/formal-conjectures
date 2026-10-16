@@ -42,8 +42,8 @@ for all $x,y\in\mathbb{R}$ such that $f(x)=g(x)$ for almost all $x$.
 
 Proved independently by de Bruijn [dB66] and Jurkat [Ju65].
 -/
-@[category research solved, AMS 26 28, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1126.lean"]
-theorem erdos_1126 : answer(True) ↔ ∀
+@[category research solved, question, AMS 26 28, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1126.lean"]
+theorem erdos_1126 : ∀
     (f : ℝ → ℝ)
     (h :
       ∀ᵐ (p : ℝ × ℝ) ∂(volume.prod volume),
