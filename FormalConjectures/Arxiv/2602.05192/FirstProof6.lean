@@ -55,9 +55,9 @@ Does there exist a constant $c > 0$ so that for every graph $G$ and every $\epsi
 $0$ and $1$, $V$ contains an $\epsilon$-light subset $S$ of size at least $c \epsilon |V|$?
 
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/frenzymath/Archon-FirstProof-Results/blob/main/FirstProof/FirstProof6/Problem6.lean"]
-theorem epsilon_light_subset_exists : answer(True) ↔
+theorem epsilon_light_subset_exists :
     ∃ (c : ℝ), c > 0 ∧ ∀ (n : ℕ) (G : SimpleGraph (Fin n)) (ε : ℝ),
     0 < ε → ε < 1 →
     ∃ (S : Finset (Fin n)), IsEpsilonLight G ε S ∧ (S.card : ℝ) ≥ c * ε * n := by
