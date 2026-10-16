@@ -108,10 +108,9 @@ initial leaf delays $(1,1,2,3)$ and consecutive coefficients $9,8,9$ at degrees
 ten, eleven and twelve, giving the negative answer. The empty polynomial is
 unimodal under the stated weak-peak convention.
 -/
-@[category research solved, AMS 5 57, formal_proof using lean4 at
+@[category research solved, question, AMS 5 57, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/66d81217cd33c8c37a3b1846289423ccff5c9ba4/Proofs/PluckingAntiUnimodalAudit.lean"]
-theorem open_problem4_2 : answer(False) ↔
-    ∀ (n : ℕ) (p : Fin n → Option (Fin n)), Valid p → PreorderLabels p →
+theorem open_problem4_2 : ¬ ∀ (n : ℕ) (p : Fin n → Option (Fin n)), Valid p → PreorderLabels p →
       ∀ f : Fin n → ℕ, (∀ v, 0 < f v) →
       ∀ (m : ℕ) (order : Fin m → Fin n), StrictMono order →
         Finset.univ.image order = Finset.univ.filter (IsLeaf p Finset.univ) →
