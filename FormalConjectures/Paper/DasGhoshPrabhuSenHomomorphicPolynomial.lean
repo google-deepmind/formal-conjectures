@@ -70,10 +70,12 @@ def witnessG (u v : Fin 4) : Bool :=
 def witnessH (u v : Fin 4) : Bool :=
   (u == 0 && v == 1) || (u == 1 && v == 2) || (u == 0 && v == 3)
 
+@[category test, AMS 5]
 theorem witnessG_isOriented : IsOriented witnessG := by
   unfold IsOriented witnessG
   decide
 
+@[category test, AMS 5]
 theorem witnessH_isOriented : IsOriented witnessH := by
   unfold IsOriented witnessH
   decide
