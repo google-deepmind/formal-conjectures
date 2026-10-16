@@ -26,7 +26,7 @@ public import FormalConjecturesUtil
   [pdf](https://www-cdn.anthropic.com/95c246936988e43127bc6b2ceb7077c1dad2d68e.pdf),
   [Lean formalisation](https://github.com/anthropics/zeta-23-lean).
 - [Wikipedia](https://en.wikipedia.org/wiki/Riemann_hypothesis#Zeros_on_the_critical_line)
-- [J. J. Gebendorfer, Compatible local windows and a certified lower bound for simple critical-line zeros, audit revision 8 September 2026](https://doi.org/10.5281/zenodo.22661276), [cumulative variant and certificate-class intake](https://github.com/google-deepmind/formal-conjectures/issues/7277).
+- [J. J. Gebendorfer, Compatible local windows and a certified lower bound for simple critical-line zeros, audit revision 8 September 2026](https://doi.org/10.5281/zenodo.22661276), [cumulative variant and certificate-class source archive](https://github.com/user-attachments/files/33373834/Gebendorfer_WOWII_Zeta_Intake_2026-10-13.zip).
 
 For a nontrivial zero `ρ = β + iγ` of `ζ` (or of a Dirichlet `L`-function) with multiplicity
 `m_ρ`, and `0 ≤ T₁ < T₂`, write
