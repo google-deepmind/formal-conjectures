@@ -53,7 +53,9 @@ noncomputable def maximalMultiplicity (n : ℕ)
 on finite nonempty abstract simplicial complexes. The written counterfamily is
 formed by the one-dimensional odd cycle complexes; no minimum-order claim is
 included in this universal negative answer. -/
-@[question, category research solved, AMS 5 15]
+@[question, category research solved, AMS 5 15,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/a84289fd2c8cbdaf5c496230a71c59b116e1265d/Proofs/KnillGreenProof.lean#L205"]
 theorem questionB : ¬ ∀ (n : ℕ) (K : PreAbstractSimplicialComplex (Fin n)),
     K.faces.Nonempty → maximalMultiplicity n K = 1 := by
   sorry
