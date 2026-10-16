@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/64](https://www.erdosproblems.com/64)
-- [J. J. Gebendorfer, Power-of-Two Cycles in Cubic Bipartite Vertex-Transitive Graphs of Girth Six: A universal proof by alternating first returns and hexagonal fans, 8 September 2026; written proof and scoped intake](https://github.com/google-deepmind/formal-conjectures/issues/7281)
+- [J. J. Gebendorfer, Power-of-Two Cycles in Cubic Bipartite Vertex-Transitive Graphs of Girth Six: A universal proof by alternating first returns and hexagonal fans, 8 September 2026; written proof and scoped intake](https://github.com/user-attachments/files/33384106/Gebendorfer_EGC_GirthSix_Intake_2026-10-13.zip)
 - [P. Potočnik and J. Vidali, structural classification used in the written proof](https://arxiv.org/pdf/2005.01635)
 - [B. Alspach, honeycomb toroidal cycle spectrum used in the written proof](https://arxiv.org/pdf/2007.05133)
 -/
