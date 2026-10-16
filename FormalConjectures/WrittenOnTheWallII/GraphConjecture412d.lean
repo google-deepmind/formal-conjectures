@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjecture 412d, June 2010](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Total domination and the union of maximum critical independent sets in bipartite graphs, revision 11 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7226)
+- [J. J. Gebendorfer, Total domination and the union of maximum critical independent sets in bipartite graphs, revision 11 October 2026](https://github.com/user-attachments/files/33355645/wowii-412d-total-domination.pdf)
 
 The written proof extends the original connected graph statement to all finite
 bipartite graphs without isolated vertices. Critical differences use integer
