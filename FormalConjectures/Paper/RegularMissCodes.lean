@@ -21,7 +21,7 @@ public import FormalConjecturesUtil
 # Regular miss-codes of degrees two and three
 
 *References:*
-- [J. J. Gebendorfer, Regular union-closed families: a code reduction and the first fifteen rows, July 2026, Definition 4.1 and Section 9, Open Problem 3](https://drive.google.com/file/d/1G_95PE3AE_1OCaJHLnmKvI0xTZjtKBeD/view)
+- [J. J. Gebendorfer, Regular union-closed families: a code reduction and the first fifteen rows, July 2026, Definition 4.1 and Section 9, Open Problem 3; public original-source excerpt in the archive](https://github.com/user-attachments/files/33378404/Gebendorfer_MissCodes_Intake_2026-10-13.zip)
 - [J. J. Gebendorfer, Exact Extremal Sizes of Regular Miss-Codes of Degrees Two and Three, Theorem 1.2; manuscript archive](https://github.com/user-attachments/files/33378404/Gebendorfer_MissCodes_Intake_2026-10-13.zip)
 
 The July manuscript's Section 9, Open Problem 3, asks for the maximum code
