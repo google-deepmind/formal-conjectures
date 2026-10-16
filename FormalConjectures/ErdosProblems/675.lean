@@ -89,9 +89,9 @@ integer $t_n \geq 1$ such that, for all $1 \leq a \leq n$, $a \in A$ if and only
 $a + t_n \in A$. Does the set of sums of two squares $\{x^2 + y^2 : x, y \in \mathbb{N}\}$
 have the translation property?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_675.parts.i :
-    answer(sorry) ↔ HasTranslationProperty {m : ℕ | ∃ x y : ℕ, m = x ^ 2 + y ^ 2} := by
+    HasTranslationProperty {m : ℕ | ∃ x y : ℕ, m = x ^ 2 + y ^ 2} := by
   sorry
 
 /--
@@ -102,8 +102,8 @@ $P$ have the translation property?
 We read "can" as: is there such a partition for which this set (which contains $1$) has the
 translation property?
 -/
-@[category research open, AMS 11]
-theorem erdos_675.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_675.parts.ii :
     ∃ P : Set ℕ, P ⊆ {p : ℕ | p.Prime} ∧
       (fun x : ℕ ↦ (x : ℝ) / Real.log x) =O[atTop] (fun x ↦ ((P ∩ Set.Iic x).ncard : ℝ)) ∧
       (fun x : ℕ ↦ (x : ℝ) / Real.log x) =O[atTop]
@@ -121,8 +121,8 @@ Ho [Ho26] proved that the answer is yes: for every fixed $0 < c < 25/72$, $t_n >
 all sufficiently large $n$ (Theorem 1.2 and Corollary 3.2); see also the
 [forum discussion](https://www.erdosproblems.com/forum/thread/675#post-6002).
 -/
-@[category research solved, AMS 11]
-theorem erdos_675.parts.iii : answer(True) ↔
+@[category research solved, question, AMS 11]
+theorem erdos_675.parts.iii :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       Real.exp ((n : ℝ) ^ c) < (minTranslation {m : ℕ | Squarefree m} n : ℝ) := by
   sorry
