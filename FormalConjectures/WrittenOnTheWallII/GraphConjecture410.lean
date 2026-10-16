@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, A Regular-Graph Dichotomy for Maximum Critical Independent Sets, 31 August 2026](https://github.com/google-deepmind/formal-conjectures/issues/7268)
+- [J. J. Gebendorfer, A Regular-Graph Dichotomy for Maximum Critical Independent Sets, 31 August 2026](https://github.com/user-attachments/files/33373182/Gebendorfer_WOWII_410_Intake_2026-10-13.zip)
 
 Distance zero is counted as even. The certificate also proves that excluding
 it leaves both extremal vertex sets unchanged. The source already notes the
