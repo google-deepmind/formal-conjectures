@@ -21,7 +21,7 @@ public import FormalConjecturesUtil
 # Uniform energy–independence separation for imperfect graphs
 
 *References:*
-- [J. J. Gebendorfer, Uniform energy–independence separation for imperfect graphs, 21 September 2026, Theorem 1.1; manuscript and intake](https://github.com/google-deepmind/formal-conjectures/issues/7241)
+- [J. J. Gebendorfer, Uniform energy–independence separation for imperfect graphs, 21 September 2026, Theorem 1.1; manuscript archive](https://github.com/user-attachments/files/33357639/Energy_Independence_Intake_R1_2026-10-12.zip)
 - [H. Kumar, S. Pragada, underlying energy inequality, Theorem 1.2](https://arxiv.org/abs/2607.19817v1)
 - [S. A. Mojallal, equality classification, Theorem 1.3](https://arxiv.org/abs/2608.04367v1)
 
