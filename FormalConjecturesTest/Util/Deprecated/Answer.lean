@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Answer
+public import FormalConjecturesUtil.Deprecated.Answer -- deprecated_module: ignore
 import Lean.Expr
 
 @[expose] public section
