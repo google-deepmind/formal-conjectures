@@ -26,7 +26,7 @@ public import FormalConjecturesUtil
   unimodality of the plucking polynomial with delay function,
   arXiv:2311.18059v1, Definition 1.7 and Open Problem 4.2](https://arxiv.org/html/2311.18059v1)
 - [J. J. Gebendorfer, Nonunimodal plucking polynomials with anti-unimodal
-  delays, 14 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7332)
+  delays, 14 October 2026](https://github.com/user-attachments/files/33452211/Gebendorfer_New_Manuscripts_2026-10-14.zip)
 
 The root is implicit and each nonroot parent is either the root or a smaller
 label. Children are ordered by label. PreorderLabels ensures that increasing
