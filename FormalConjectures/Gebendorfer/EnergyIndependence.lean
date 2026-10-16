@@ -47,7 +47,7 @@ def IsImperfect {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) : Pr
 /-- There is one absolute positive real gap for all finite simple imperfect
 graphs, independent of their orders. Energy is the sum of absolute adjacency
 eigenvalues, not a sum of squares; the defect is computed over the reals. -/
-@[category research solved, AMS 5 15 90]
+@[category research open, AMS 5 15 90]
 theorem uniform_gap : ∃ ε : ℝ, 0 < ε ∧
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
       IsImperfect G → ε ≤ energy G / 2 - n + G.indepNum := by
