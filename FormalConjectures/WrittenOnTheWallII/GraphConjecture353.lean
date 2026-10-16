@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 - [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc,
   Conjecture 353, 18 February 2009](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
 - [J. J. Gebendorfer, An infinite family of counterexamples to Written on
-  the Wall II Conjecture 353, 13 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7304)
+  the Wall II Conjecture 353, 13 October 2026](https://github.com/user-attachments/files/33421512/Gebendorfer_New_Proofs_Intakes_2026-10-14.zip)
 
 The linked Lean certificate verifies the explicit 25-vertex counterexample.
 -/
