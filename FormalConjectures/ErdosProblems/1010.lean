@@ -49,9 +49,9 @@ for some constant $c>0$.
 This is true, and was proved independently by Lovász and Simonovits [LoSi76] and Nikiforov and
 Khadzhiivanov [NiKh81].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1010.lean#L612"]
-theorem erdos_1010 : answer(True) ↔ ∀ n t : ℕ, t < n / 2 → ∀ G : SimpleGraph (Fin n),
+theorem erdos_1010 : ∀ n t : ℕ, t < n / 2 → ∀ G : SimpleGraph (Fin n),
     G.edgeFinset.card = n ^ 2 / 4 + t → t * (n / 2) ≤ (G.cliqueFinset 3).card := by
   sorry
 

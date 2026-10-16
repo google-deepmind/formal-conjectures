@@ -128,7 +128,7 @@ divisors described in A005279." - _Omar E. Pol_, Dec 21 2024.
 "The conjecture 1 is true. For a proof see A379288." - _Hartmut F. W. Hoft_, Jan 21 2025.
 Equivalently, $a(n) = \text{A001227}(n) - \text{A239657}(n)$. - _Omar E. Pol_, Mar 23 2014
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA237271_conjecture_1.lean#L211"]
 theorem conjecture_1 (n : ℕ) (hn : 0 < n) :
     a n = A001227 n - A239657 n := by
   sorry
@@ -137,7 +137,7 @@ theorem conjecture_1 (n : ℕ) (hn : 0 < n) :
 Theorem: "a(p^k) = k + 1, where p is an odd prime and k >= 0."
 - _Hartmut F. W. Hoft_, Dec 26 2016
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA237271_a_odd_prime_pow.lean#L165"]
 theorem a_odd_prime_pow (p k : ℕ) (hp : p.Prime) (ho : Odd p) :
     a (p ^ k) = k + 1 := by
   sorry
@@ -198,7 +198,7 @@ at least $2$ and $a(k) \ge 3$. A Carmichael number is odd: it is composite by th
 of `IsCarmichael`, so $k > 2$, and if $k$ were even then the coprime base $k - 1 \equiv -1$
 would give $k \mid (-1)^{k-1} - 1 = -2$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA237271_observation_carmichael.lean#L260"]
 theorem observation_carmichael (k : ℕ) (hk : IsCarmichael k) :
     3 ≤ a k := by
   sorry

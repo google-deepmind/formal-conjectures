@@ -55,8 +55,8 @@ theorem a_4 : a 4 = 65551 := by rfl
 
 /--
 The first 5 entries are primes. Are there infinitely many primes in this sequence?-/
-@[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ Set.Infinite {n : ℕ | (a n).Prime} := by
+@[category research open, question, AMS 11]
+theorem conjecture : Set.Infinite {n : ℕ | (a n).Prime} := by
   sorry
 
 end OeisA119563
