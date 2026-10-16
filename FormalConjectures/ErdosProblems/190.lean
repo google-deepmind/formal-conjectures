@@ -108,18 +108,18 @@ the Palomar registry as PALOMAR-2026-09-15-000003.  A bridge deriving this exact
 (with the definitions above) from the registered proof is available at
 [jbaelaw/erdos190-fc-bridge](https://github.com/jbaelaw/erdos190-fc-bridge).
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/jbaelaw/erdos190-lean/blob/be43a3ead08a9d9af352cf296d284dd3468ca805/Erdos190/Eventually.lean"]
 theorem erdos_190 :
-    answer(True) ↔ ∀ C : ℕ, ∀ᶠ k in atTop, ∀ N, IsCanonical N k → (C * k) ^ k < N := by
+    ∀ C : ℕ, ∀ᶠ k in atTop, ∀ N, IsCanonical N k → (C * k) ^ k < N := by
   sorry
 
 /-- The same statement in terms of $H(k)$, assuming that a canonical `N` exists for every `k`
 (the Erdős–Graham theorem, via Szemerédi's theorem). -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/jbaelaw/erdos190-lean/blob/be43a3ead08a9d9af352cf296d284dd3468ca805/Erdos190/Eventually.lean"]
 theorem erdos_190.variants.H :
-    answer(True) ↔ (∀ k, {N | IsCanonical N k}.Nonempty) →
+    (∀ k, {N | IsCanonical N k}.Nonempty) →
       ∀ C : ℕ, ∀ᶠ k in atTop, (C * k) ^ k < H k := by
   sorry
 
