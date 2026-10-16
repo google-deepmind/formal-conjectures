@@ -29,8 +29,10 @@ public import FormalConjecturesUtil
 
 The archived statement uses the smallest modal degree class and the induced
 minimum degree after deleting ambient minimum-degree vertices. The remainder
-is required nonempty, avoiding an undefined source quantity. The certificate
-proves a connected fifteen-vertex counterexample with values six and five.
+is required nonempty, restricting the archived domain to avoid an undefined
+source quantity. The certificate proves a connected fifteen-vertex counterexample
+with values six and five and a nonempty remainder. It therefore also refutes
+any extension of the bound that agrees on this restricted domain.
 The archive's historical status is not a present curator confirmation.
 -/
 
