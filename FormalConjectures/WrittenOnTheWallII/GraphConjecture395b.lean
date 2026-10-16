@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 - [E. DeLaVina, Written on the Wall II, entry 395b and definitions
   90/45/100/56/66](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
 - [J. J. Gebendorfer, A fifteen-vertex counterexample to Written on the Wall II
-  Conjecture 395b, 14 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7330)
+  Conjecture 395b, 14 October 2026](https://github.com/user-attachments/files/33452211/Gebendorfer_New_Manuscripts_2026-10-14.zip)
 
 The archived statement uses the smallest modal degree class and the induced
 minimum degree after deleting ambient minimum-degree vertices. The remainder
