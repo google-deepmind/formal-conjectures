@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, exact counterexample certificate, 30 August 2026](https://github.com/google-deepmind/formal-conjectures/issues/7264)
+- [J. J. Gebendorfer, exact counterexample certificate, 30 August 2026](https://github.com/user-attachments/files/33372591/Gebendorfer_WOWII_352_Intake_2026-10-13.zip)
 - [S. Dubey, earlier public worklog](https://gist.github.com/siddhantdubey/22f22a7a23db5174ee59e32eaa8724aa)
 
 The linked certificate verifies an 18-vertex witness isomorphic to Dubey's
