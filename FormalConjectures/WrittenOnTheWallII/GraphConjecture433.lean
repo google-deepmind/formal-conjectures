@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, A counterexample to the independent domination bound in WOWII 433, 6 September 2026](https://github.com/google-deepmind/formal-conjectures/issues/7274)
+- [J. J. Gebendorfer, A counterexample to the independent domination bound in WOWII 433, 6 September 2026](https://github.com/user-attachments/files/33373628/Gebendorfer_WOWII_433_Intake_2026-10-13.zip)
 
 The primary row declares pendants P but displays M, omits the comparison sign,
 and occurs beneath a lower-bound heading. This file records the explicitly
