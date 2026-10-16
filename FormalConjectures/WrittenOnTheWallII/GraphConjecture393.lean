@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, January 2010](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Simultaneous sharpness of three pendant-neighborhood bounds for 2-domination](https://github.com/google-deepmind/formal-conjectures/issues/7266)
+- [J. J. Gebendorfer, Simultaneous sharpness of three pendant-neighborhood bounds for 2-domination](https://github.com/user-attachments/files/33373002/Gebendorfer_WOWII_393_Intake_2026-10-13.zip)
 
 393a has an intact source formula. The set-operation glyphs in393b/c are lost;
 we state their explicit intersection-normalized variants. The matching bound
