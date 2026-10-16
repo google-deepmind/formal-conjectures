@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjecture 91, 10 April 2004](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, The Bipartite–Forest Gap Is Unbounded in Claw-Free Graphs, 25 July 2026; written line-graph family and intake](https://github.com/google-deepmind/formal-conjectures/issues/7261)
+- [J. J. Gebendorfer, The Bipartite–Forest Gap Is Unbounded in Claw-Free Graphs, 25 July 2026; written line-graph family and intake](https://github.com/user-attachments/files/33372239/Gebendorfer_WOWII_91_Intake_2026-10-13.zip)
 
 The catalogue already records another refutation, obtained by bridging $K_{3,3}$
 to $K_8$. The cited line-graph family is not asserted to be the first refutation.
