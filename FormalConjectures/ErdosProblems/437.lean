@@ -56,9 +56,9 @@ be more than $x^{1-\epsilon}$ squares?
 The answer is yes, which follows from work of Bui, Pratt, and Zaharescu [BPZ24], as noted by
 Tao [Ta24].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos437.lean#L746"]
-theorem erdos_437 : answer(True) ↔
+theorem erdos_437 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℕ in atTop, (x : ℝ) ^ (1 - ε) < L x := by
   sorry
 
