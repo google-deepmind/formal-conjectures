@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 - [E. DeLaVina, Written on the Wall II, Conjecture 373,
   18 February 2009](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
 - [J. J. Gebendorfer, Peripheral distance and total domination in trees:
-  a counterexample to WOWII 373, 13 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7306)
+  a counterexample to WOWII 373, 13 October 2026](https://github.com/user-attachments/files/33421512/Gebendorfer_New_Proofs_Intakes_2026-10-14.zip)
 
 The linked Lean certificate verifies the explicit 150-vertex counterexample.
 -/
