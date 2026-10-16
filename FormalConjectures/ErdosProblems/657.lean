@@ -47,8 +47,8 @@ points determines $3$ distinct distances (that is, $A$ has no isosceles triangle
 ones included) then $A$ determines at least $f(n)n$ distinct distances, for some function $f$
 with $f(n)\to \infty$?
 -/
-@[category research open, AMS 52]
-theorem erdos_657 : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_657 :
     ∃ f : ℕ → ℝ, Tendsto f atTop atTop ∧
       ∀ n : ℕ, ∀ A : Finset ℝ², A.card = n → (A : Set ℝ²).IsIsoscelesFree →
         f n * (n : ℝ) ≤ (distinctDistances A : ℝ) := by
@@ -62,8 +62,8 @@ distances?
 
 Here the dimension $k$ is fixed and $f$ may depend on $k$.
 -/
-@[category research open, AMS 52]
-theorem erdos_657.variants.higher_dim : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_657.variants.higher_dim :
     ∀ k : ℕ, 1 ≤ k → ∃ f : ℕ → ℝ, Tendsto f atTop atTop ∧
       ∀ n : ℕ, ∀ A : Finset (ℝ^k), A.card = n → (A : Set (ℝ^k)).IsIsoscelesFree →
         f n * (n : ℝ) ≤ (distinctDistances A : ℝ) := by
@@ -78,8 +78,8 @@ lower bound of Dumitrescu [Du08].
 On the line, a set has no isosceles triangle exactly when it has no three-term arithmetic
 progression.
 -/
-@[category research solved, AMS 11 52]
-theorem erdos_657.variants.dim_one : answer(True) ↔
+@[category research solved, question, AMS 11 52]
+theorem erdos_657.variants.dim_one :
     ∃ f : ℕ → ℝ, Tendsto f atTop atTop ∧
       ∀ n : ℕ, ∀ A : Finset ℝ, A.card = n → (A : Set ℝ).IsIsoscelesFree →
         f n * (n : ℝ) ≤ (distinctDistances A : ℝ) := by
