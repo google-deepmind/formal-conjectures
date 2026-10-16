@@ -33,6 +33,8 @@ public import FormalConjecturesUtil
 
 namespace Erdos552
 
+def erdos_552.parts.i.answer : ℕ := sorry
+
 /--
 Determine the Ramsey number
 $$R(C_4, S_n),$$
@@ -42,20 +44,20 @@ A problem of Burr, Erdős, Faudree, Rousseau, and Schelp [BEFRS89].
 
 This problem is #19 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_552.parts.i :
     ∀ (n : ℕ),
       SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
         (completeBipartiteGraph (Fin 1) (Fin n)) =
-        answer(sorry) := by
+        erdos_552.parts.i.answer := by
   sorry
 
 /--
 In particular, is it true that, for any $c > 0$, there are infinitely many $n$ such that
 $$R(C_4, S_n) \leq n + \sqrt{n} - c?$$
 -/
-@[category research open, AMS 5]
-theorem erdos_552.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_552.parts.ii :
     ∀ (c : ℝ), 0 < c →
       Set.Infinite {n : ℕ |
         (SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)

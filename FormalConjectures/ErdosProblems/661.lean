@@ -70,8 +70,8 @@ The source adds that one can also ask this for points in $\mathbb{R}^3$. Taken l
 question is easy there, since a cubic grid of $2n$ points determines only $O(n^{2/3})$ distinct
 distances, so we do not state it.
 -/
-@[category research open, AMS 52]
-theorem erdos_661 : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_661 :
     (fun n => (minimalCrossDistances ℝ² n : ℝ)) =o[atTop]
       (fun (n : ℕ) => (n : ℝ) / (n : ℝ).log.sqrt) := by
   sorry
@@ -107,8 +107,8 @@ distances determined by any $2n$ points in $\mathbb{R}^2$. Is $F = o(f)$?
 Here $F(2n)$ of erdosproblems.com is `minimalCrossDistances ℝ² n` (indexed by $n$ points on each
 side) and $f(2n)$ is `minimalDistinctDistances ℝ² (2 * n)`. See also Erdős Problem 89.
 -/
-@[category research open, AMS 52]
-theorem erdos_661.variants.little_o_distinct_distances : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_661.variants.little_o_distinct_distances :
     (fun n => (minimalCrossDistances ℝ² n : ℝ)) =o[atTop]
       (fun n => (minimalDistinctDistances ℝ² (2 * n) : ℝ)) := by
   sorry
