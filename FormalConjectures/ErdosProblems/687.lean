@@ -41,6 +41,9 @@ public import FormalConjectures.GreensOpenProblems.«46»
 - [FGKMT18] Ford, Kevin and Green, Ben and Konyagin, Sergei and Maynard, James and Tao, Terence,
   *Long gaps between primes*. J. Amer. Math. Soc. 31 (2018), 65-105.
   [arXiv:1412.5029](https://arxiv.org/abs/1412.5029)
+- [OAI26a] OpenAI, *A quadratic bound for Jacobsthal's function*. OpenAI Math Release preprint
+  (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-quadratic-bound-for-Jacobsthals-function-September-25-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -164,8 +167,12 @@ theorem erdos_687.parts.i :
 
 /--
 In particular, can one prove that $Y(x)=o(x^2)$?
+
+Yes: an internal OpenAI model proved $h(k) \ll k^2$ for Jacobsthal's function $h$ [OAI26a]
+(see `Erdos970.erdos_970`). Since $Y(x) + 1$ is Jacobsthal's function of $\prod_{p \leq x} p$,
+which has $\pi(x) \ll x/\log x$ prime factors, this gives $Y(x) \ll x^2/(\log x)^2$.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_687.parts.ii :
     (fun x : ℕ ↦ (Y x : ℝ)) =o[atTop] (fun x : ℕ ↦ (x : ℝ) ^ 2) := by
   sorry
