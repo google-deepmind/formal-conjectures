@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Two upper-bound readings of WOWII 430c, 7 September 2026](https://github.com/google-deepmind/formal-conjectures/issues/7273)
+- [J. J. Gebendorfer, Two upper-bound readings of WOWII 430c, 7 September 2026](https://github.com/user-attachments/files/33373574/Gebendorfer_WOWII_430c_Intake_2026-10-13.zip)
 
 The primary row declares the center C but displays M, omits the comparison
 sign and occurs beneath a lower-bound heading. This file records the explicitly
