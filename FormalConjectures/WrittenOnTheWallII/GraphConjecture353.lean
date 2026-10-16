@@ -52,8 +52,7 @@ The rational comparison is equivalent to the printed real-valued inequality.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/c9f7e9b894fc0c979b57891f976c59f2b432273f/Proofs/WOWII353Proof.lean"]
-theorem conjecture353 : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V]
+theorem conjecture353 : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj], G.IsTree → 2 < Fintype.card V →
       (Nat.card (G.induce {v | G.degree v = 2}).ConnectedComponent : ℚ) +
         (largestComponentOrder (G.induce {v | G.degree v = G.maxDegree}) : ℚ) / 2 ≤
