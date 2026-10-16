@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [Jia and Song, Conjecture 3.8 (2018)](https://doi.org/10.1186/s13660-018-1663-5)
-- [J. J. Gebendorfer, Remoteness Plus the Second Distance Eigenvalue: Counterexamples and an Exact Extremal Theorem, v2, 24 August 2026; manuscript, prior report and intake](https://github.com/google-deepmind/formal-conjectures/issues/7257)
+- [J. J. Gebendorfer, Remoteness Plus the Second Distance Eigenvalue: Counterexamples and an Exact Extremal Theorem, v2, 24 August 2026; manuscript, prior report and source archive](https://github.com/user-attachments/files/33368385/Jia_Intake_Gebendorfer_2026-10-13.zip)
 
 The earlier public report of the bowtie/two-clique counterfamily dated 6 August
 2026 is disclosed in the intake; no exclusive first-disproof claim is made.
