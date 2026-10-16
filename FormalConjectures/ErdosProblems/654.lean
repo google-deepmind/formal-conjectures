@@ -47,9 +47,9 @@ a set of $n = 4m$ points with no four on a circle such that every point has fewe
 $\frac{3}{4}n$ distinct distances to the other points. This gives infinitely many $n$, which is
 enough to refute the statement with $\varepsilon = 1/8$. See `Erdos654.erdos_654.variants.feng`.
 -/
-@[category research solved, AMS 52]
-theorem erdos_654.parts.i : answer(False) ↔
-    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℝ², #A = n → NoFourConcyclic A →
+@[category research solved, question, AMS 52]
+theorem erdos_654.parts.i :
+    ¬ ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℝ², #A = n → NoFourConcyclic A →
       ∃ x ∈ A, (1 - ε) * (n : ℝ) < (distinctDistancesFrom A x : ℝ) := by
   sorry
 
@@ -57,8 +57,8 @@ theorem erdos_654.parts.i : answer(False) ↔
 Let $f(n)$ be as in `erdos_654.parts.i`. Is it true that $f(n) > (\frac{1}{3}+c)n$ for some
 constant $c>0$ and all large $n$?
 -/
-@[category research open, AMS 52]
-theorem erdos_654.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_654.parts.ii :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℝ², #A = n → NoFourConcyclic A →
       ∃ x ∈ A, (1 / 3 + c) * (n : ℝ) < (distinctDistancesFrom A x : ℝ) := by
   sorry
@@ -96,8 +96,8 @@ no three points on a line and no four points on a circle. Is there some $x_i$ wi
 $(\frac{1}{3}+c)n$ distinct distances to the other $x_j$, for some constant $c>0$ and all large
 $n$?
 -/
-@[category research open, AMS 52]
-theorem erdos_654.variants.general_position : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_654.variants.general_position :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℝ², #A = n → InGeneralPosition A →
       ∃ x ∈ A, (1 / 3 + c) * (n : ℝ) < (distinctDistancesFrom A x : ℝ) := by
   sorry
@@ -110,8 +110,8 @@ This is the general-position analogue of `Erdos654.erdos_654.parts.i`. The remar
 erdosproblems.com notes that the construction of [Fe26], which has all points on two lines, does
 not settle the version in general position.
 -/
-@[category research open, AMS 52]
-theorem erdos_654.variants.general_position_one_sub_eps : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_654.variants.general_position_one_sub_eps :
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℝ², #A = n → InGeneralPosition A →
       ∃ x ∈ A, (1 - ε) * (n : ℝ) < (distinctDistancesFrom A x : ℝ) := by
   sorry
@@ -128,8 +128,8 @@ in general position (no three on a line and no four on a circle [Er87b, p. 167])
 which [Er87b] and [ErPa90] ask the weaker question. Without the assumption of no three points on a
 line the statement is false: the sets of [Fe26] satisfy the circle condition.
 -/
-@[category research open, AMS 52]
-theorem erdos_654.variants.erdos_pach : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_654.variants.erdos_pach :
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℝ², #A = n → InGeneralPosition A →
       AtMostTwoPerCircle A → ∃ x ∈ A, (1 - ε) * (n : ℝ) < (distinctDistancesFrom A x : ℝ) := by
   sorry
