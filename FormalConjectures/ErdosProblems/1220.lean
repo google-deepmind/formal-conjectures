@@ -54,8 +54,8 @@ The affirmative answer is not provable in ZFC: [PALOMAR-2026-09-26-000001] is a 
 adapting the forcing of [ShSt87, §3], that some model of ZFC contains such a $\lambda$ with
 $\lambda \not\to (\lambda, \aleph_1)^2$.
 -/
-@[category research open, AMS 3 5]
-theorem erdos_1220 : answer(sorry) ↔
+@[category research open, question, AMS 3 5]
+theorem erdos_1220 :
     ∀ lam : Cardinal.{u}, lam.IsSingular →
       (∀ μ < lam, μ ^ ℵ₀ < lam) → (∀ μ < lam.ord.cof, μ ^ ℵ₀ < lam.ord.cof) →
       cardinalPartitionRel lam 2 2 (fun i => if (i : Ordinal) = 0 then lam else ℵ_ 1) := by
