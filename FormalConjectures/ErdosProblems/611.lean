@@ -72,12 +72,14 @@ vertices then $\tau(G) = o_c(n)$?
 
 Here $n$ is the number of vertices, and $o_c(n)$ is uniform over all such graphs on $n$ vertices.
 -/
-@[category research open, AMS 5]
-theorem erdos_611.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_611.parts.i :
     ∀ c > (0 : ℝ), ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
       AllMaximalCliquesAtLeast G (c * (n : ℝ)) →
         (cliqueTransversalNum G : ℝ) ≤ ε * (n : ℝ) := by
   sorry
+
+def erdos_611.parts.ii.answer : ℝ → ℕ → ℝ := sorry
 
 /--
 For $0 < c < 1$, estimate the minimal $k_c(n)$ such that if every maximal clique in a graph $G$
@@ -87,11 +89,10 @@ We require $c < 1$: for $c \geq 1$ the bound $\tau(G) < (1 - c)n \leq 0$ is impo
 $k_c(n)$ is degenerate. Erdős, Gallai, and Tuza [EGT92] proved a lower bound of the form
 $k_c(n) \geq n^{c'/\log\log n}$ for some $c' > 0$ (as reported on erdosproblems.com).
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_611.parts.ii :
-    let f : ℝ → ℕ → ℝ := answer(sorry)
     ∀ c : ℝ, 0 < c → c < 1 →
-      (fun n ↦ (cliqueThreshold c n : ℝ)) =Θ[atTop] f c := by
+      (fun n ↦ (cliqueThreshold c n : ℝ)) =Θ[atTop] erdos_611.parts.ii.answer c := by
   sorry
 
 /--
