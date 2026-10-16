@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 *References:*
 - [PHOEG CSD8 presentation, displayed slides 29–31](https://orbi.umons.ac.be/bitstream/20.500.12907/7470/1/Hauweele_CSD8.pdf)
 - [J. J. Gebendorfer, The Quasi-Complete Graph Minimizes Graphical Stirling Numbers at Fixed Order and Size, 25 July 2026](https://doi.org/10.5281/zenodo.21543038)
-- [Statement intake and source comparison](https://github.com/google-deepmind/formal-conjectures/issues/7230)
+- [Archived manuscript and source comparison](https://github.com/user-attachments/files/33356610/Gebendorfer_Graphical_Bell_Submission_Package_2026.zip)
 
 Blocks are nonempty, independent and unlabeled. The stronger comparison is in
 stable-partition counts, equivalently the falling-factorial chromatic basis;
