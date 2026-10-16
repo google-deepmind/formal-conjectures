@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, June 2010](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Pendant-Support Inequalities for Graph Coronas and Resolutions of WOWII 412a and 412b, 1 September 2026](https://github.com/google-deepmind/formal-conjectures/issues/7233)
+- [J. J. Gebendorfer, Pendant-Support Inequalities for Graph Coronas and Resolutions of WOWII 412a and 412b, 1 September 2026](https://github.com/user-attachments/files/33356703/Jonas_Gebendorfer_WOWII_412ab_submission_R1_2026-09-01.zip)
 
 Neighborhoods are literal unions of open vertex neighborhoods and can intersect
 the input set. The largest-component parameter counts vertices, with value zero
