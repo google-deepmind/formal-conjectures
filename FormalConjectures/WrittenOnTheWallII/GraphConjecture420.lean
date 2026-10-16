@@ -69,8 +69,7 @@ independent domination is bounded by the independence number outside the support
 neighborhood plus four times one less than the edge count in the closed minimum-degree neighborhood. W8 refutes this. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/86479d604b592946dc77246190b0f845517b6205/Proofs/WOWII420Proof.lean"]
-theorem conjecture420b : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V]
+theorem conjecture420b : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj], G.Connected → 3 < Fintype.card V →
       (G.indepDominationNumber : ℤ) ≤ bound420b G := by
   sorry
@@ -80,8 +79,7 @@ independent domination is bounded by the independence number outside the support
 neighborhood plus four times one less than the number of minimum-triangle vertices. W8 refutes this. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/86479d604b592946dc77246190b0f845517b6205/Proofs/WOWII420Proof.lean"]
-theorem conjecture420c : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V]
+theorem conjecture420c : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj], G.Connected → 3 < Fintype.card V →
       (G.indepDominationNumber : ℤ) ≤ bound420c G := by
   sorry
