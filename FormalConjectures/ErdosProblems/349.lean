@@ -204,8 +204,8 @@ This is the pure-$\mathbb{Z}$ core of `alpha_gt_two_not_isGoodPair`'s
 combinatorial fact about monotone integer sequences, phrased abstractly (no $t, \alpha$); the
 research content of Erdős Problem 349 is in its application below. -/
 @[category textbook, AMS 11,
-  formal_proof using formal_conjectures at
-  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-entire-gap-criterion-proof/FormalConjectures/ErdosProblems/349.lean"]
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/89b448c3644d1f6ca0f4eec0e381bde8daa317e1/FormalConjectures/ErdosProblems/349.lean#L574"]
 theorem entire_gap_not_complete (a : ℕ → ℤ) (hmono : Monotone a) (hnn : ∀ n, 0 ≤ a n)
     (r : ℕ) (m : ℤ) (hm : 1 ≤ m)
     (hlo : (∑ k ∈ Finset.range (r + 1), a k) < m) (hhi : m < a (r + 1)) :
@@ -253,11 +253,12 @@ This is the $r = 0$, $m = \lfloor t\rfloor + 1$ instance of `entire_gap_not_comp
 inequality comes from $t\alpha \ge t\cdot(5/3) = t + 2t/3 \ge t + 2 \ge \lfloor t\rfloor + 2$.
 The constant $5/3$ (not $\varphi$) is the sharp clean threshold uniform in $t \ge 3$: at
 $\alpha = \varphi$, $t = 3$ gives $\lfloor 3\varphi\rfloor = 4 = \lfloor t\rfloor+1$, so the first
-gap closes. This is *entire* (not eventual) incompleteness; the gap need not recur for
-$\varphi \le \alpha < 2$, where Erdős Problem 349 stays open. -/
+gap closes. This theorem states entire incompleteness. For $t \ge 3$ and $5/3 \le \alpha < 2$,
+eventual incompleteness also follows from van Doorn's Corollary 1 (arXiv:2602.23394; his
+coefficient is $t/\alpha$) but is not formalised here. -/
 @[category research solved, AMS 11,
-  formal_proof using formal_conjectures at
-  "https://github.com/cepadugato/formal-conjectures/blob/erdos-349-entire-gap-criterion-proof/FormalConjectures/ErdosProblems/349.lean"]
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/89b448c3644d1f6ca0f4eec0e381bde8daa317e1/FormalConjectures/ErdosProblems/349.lean#L665"]
 theorem floorSeq_not_entirelyComplete_of_le_two
     (t α : ℝ) (ht : 3 ≤ t) (hα : 5 / 3 ≤ α) (hα2 : α < 2) :
     ¬ IsEntirelyAddComplete (Set.range (fun n => ⌊t * α ^ n⌋)) := by
