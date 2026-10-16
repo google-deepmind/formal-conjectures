@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjecture 361, 18 February 2009](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, A Support–Center Lower Bound for Total Domination in Trees](https://github.com/google-deepmind/formal-conjectures/issues/7265)
+- [J. J. Gebendorfer, A Support–Center Lower Bound for Total Domination in Trees](https://github.com/user-attachments/files/33372731/Gebendorfer_WOWII_361_Intake_2026-10-13.zip)
 
 The manuscript proves the source statement and extends it to the two-vertex
 tree. Isolates are counted inside the induced support graph. The center consists
