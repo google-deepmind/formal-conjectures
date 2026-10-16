@@ -94,7 +94,9 @@ theorem witness_numeric_contradiction :
 $b(G)\le1+f(G)\lceil\operatorname{avg}_v\alpha(G[N(v)])\rceil/2$.
 Both induced-subgraph invariants maximize their vertex orders; the factor one
 half is retained as rational division after the ceiling of the average. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/90d12d635fe42fdb0bc0d021a0180f8565c764c9/Proofs/WOWII91Proof.lean#L365"]
 theorem conjecture91 : ¬ ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.Connected →
     (bipartiteNumber G : ℚ) ≤ 1 + (forestNumber G : ℚ) *
       (⌈averageLocalIndependence G⌉₊ : ℚ) / 2 := by
