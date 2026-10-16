@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Support neighborhoods and total domination: a proof of Written on the Wall II 381, 14 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7334)
+- [J. J. Gebendorfer, Support neighborhoods and total domination: a proof of Written on the Wall II 381, 14 October 2026](https://github.com/user-attachments/files/33452211/Gebendorfer_New_Manuscripts_2026-10-14.zip)
 -/
 
 @[expose] public section
