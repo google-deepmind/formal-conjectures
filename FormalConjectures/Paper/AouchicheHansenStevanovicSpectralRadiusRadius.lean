@@ -54,7 +54,9 @@ noncomputable def objective {V : Type*} [Fintype V] [DecidableEq V]
 
 /-- The printed bag candidate is not a maximizer at every connected order
 n>=3. This is the adjacency spectral-radius product, not a Laplacian product. -/
-@[category research solved, AMS 5 15]
+@[category research solved, AMS 5 15,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/13922a95fdbad38142e78075d4d43b75036cf17c/Proofs/RadiusProductProof.lean#L163"]
 theorem conjecture4_4 : ¬ ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
     3 ≤ n → G.Connected → objective G ≤ objective (bag (n / 2 + 2) ((n + 1) / 2)) := by
   sorry
