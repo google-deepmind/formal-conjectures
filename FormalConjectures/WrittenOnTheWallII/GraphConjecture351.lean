@@ -59,7 +59,9 @@ def closedNeighbors {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
  is false. Both terms count components of induced subgraphs, including isolates.
  The second neighborhood is closed, as explicitly printed in the source.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/c2509595b67c7b721337f998c2b3783157eba3d6/Proofs/WOWII351Proof.lean#L107"]
 theorem conjecture351 : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj], T.IsTree → 2 < Fintype.card V →
       componentsOn T (supports T ∪ leaves T) +
