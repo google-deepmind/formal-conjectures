@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [G. J. Clark, Comparing Eigenvector and Degree Dispersion with the Principal Ratio of a Graph, version 1, Section 4, Conjecture 2 (1 February 2022)](https://arxiv.org/abs/2202.00325v1)
-- [J. J. Gebendorfer, Degree dispersion and sharp universal bounds for Clark's irregularity measure, 7 September 2026, Theorem 2.1; written proof and intake](https://github.com/google-deepmind/formal-conjectures/issues/7244)
+- [J. J. Gebendorfer, Degree dispersion and sharp universal bounds for Clark's irregularity measure, 7 September 2026, Theorem 2.1; manuscript archive](https://github.com/user-attachments/files/33357655/Clark_Conjecture_2_Intake_2026-10-12.zip)
 
 The numerical bound also follows from de Caen's classical degree-square inequality.
 The target here is Conjecture 2. The arbitrary-order fixed-order star assertion in
