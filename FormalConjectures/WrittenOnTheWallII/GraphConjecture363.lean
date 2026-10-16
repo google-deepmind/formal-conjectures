@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Isolated supports and the periphery: A counterexample to Graffiti.pc Conjecture 363, 14 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7360)
+- [J. J. Gebendorfer, Isolated supports and the periphery: A counterexample to Graffiti.pc Conjecture 363, 14 October 2026](https://github.com/user-attachments/files/33503424/gebendorfer-wowii363.pdf)
 
 This records the explicitly transcribed half-average version. Older archived
 HTML can omit the multiplier. The linked certificate verifies a 27-vertex tree.
