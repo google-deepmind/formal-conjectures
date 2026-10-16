@@ -21,11 +21,16 @@ public import FormalConjecturesUtil
 # Regular miss-codes of degrees two and three
 
 *References:*
-- [J. J. Gebendorfer, Exact Extremal Sizes of Regular Miss-Codes of Degrees Two and Three, Theorem 1.2; manuscript and intake](https://github.com/google-deepmind/formal-conjectures/issues/7280)
+- [J. J. Gebendorfer, Regular union-closed families: a code reduction and the first fifteen rows, July 2026, Definition 4.1 and Section 9, Open Problem 3](https://drive.google.com/file/d/1G_95PE3AE_1OCaJHLnmKvI0xTZjtKBeD/view)
+- [J. J. Gebendorfer, Exact Extremal Sizes of Regular Miss-Codes of Degrees Two and Three, Theorem 1.2; manuscript archive](https://github.com/user-attachments/files/33378404/Gebendorfer_MissCodes_Intake_2026-10-13.zip)
 
-This author-posed subproblem concerns restricted union closure of miss-codes,
-not Frankl's conjecture or the general regular union-closed problem. Upper
-bounds and attainment are separate; no default maximum over an empty class.
+This is the degree-two and degree-three extremal subproblem of Definition 4.1
+and Section 9, Open Problem 3, in the author's regular union-closed programme,
+as identified in the archived manuscript. The closure condition is restricted
+to eligible unions, so this is not Frankl's conjecture or the full regular
+union-closed problem. Upper bounds and attainment are stated separately.
+The linked Lean proofs establish attainment; the upper bounds and small-order
+nonexistence are supplied by the manuscript's written proof.
 -/
 
 @[expose] public section
