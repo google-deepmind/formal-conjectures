@@ -116,8 +116,22 @@ theorem conjecture1 (n : ℕ) (hn : 0 < n) :
 The coefficients $c(n)$ of $A(x)^2 = (\sum_{n \ge 0} a(n) x^n)^2$ differ in sign from $c(n-1)$
 if and only if $n$ is a triangular number.
 - _Peter Bala_, Mar 17 2022
+
+**Proof sketch** (the kernel-checked development lives at the `formal_proof` permalink below).
+Write $a(n)/n! = \sum_j (-1)^j L_j(n)$, where $L_j(n)$ is the sum of $\prod_{s \in S} 1/s!$ over
+all sets $S$ of $j$ distinct positive integers with sum $n$. A "down map" (lowering by one the
+least element of $S$ above its first gap) gives $L_{k-1}(n) \le \frac{91}{100} L_k(n)$ for all
+$k \ge 1$ and $n \ge k(k+1)/2$. Hence the top nonzero layer $L_m(n)$ dominates, where
+$m(m+1)/2 \le n < (m+1)(m+2)/2$; this reproves `conjecture1` and gives
+$|a(n)| \ge \frac{9}{100} n! L_m(n)$. Since $c(n) = 2a(n) + \sum_{0<k<n} a(k)a(n-k)$, the sign of
+$c(n)$ equals that of $a(n)$ whenever $\sum_{0<k<n} |a(k)a(n-k)| < 2|a(n)|$. For $n \le 2500$,
+conjecture 2 is checked in the kernel from a certified table of $a(n)$; for $n > 2500$, explicit
+estimates (rational arithmetic and elementary bounds only) bound the cross sum by
+$0.18 \cdot n! L_m(n)$, which is less than $2|a(n)|$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/kei825/oeis-a185895-conjecture2/blob/8ddd5a7d2bde415940f944440921fd760283f79d/OeisA185895Conjecture2.lean#L4959-L4961"]
 theorem conjecture2 (n : ℕ) (hn : 0 < n) :
     c n * c (n - 1) < 0 ↔ IsTriangular n := by
   sorry

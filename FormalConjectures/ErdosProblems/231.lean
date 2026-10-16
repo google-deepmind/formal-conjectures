@@ -116,10 +116,10 @@ As stated, the answer is negative for every $k \geq 2$: the strings $121$ and $1
 length $2^k - 1$ for $k = 2, 3$ contain no abelian square. See `erdos_231.variants.two_pow` for
 strings of length $2^k$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos231.lean#L38"]
-theorem erdos_231 : answer(False) ↔
-    ∀ k : ℕ, 2 ≤ k → ∀ S : List (Fin k), S.length = 2 ^ k - 1 → ContainsAbelianSquare S := by
+theorem erdos_231 :
+    ¬ ∀ k : ℕ, 2 ≤ k → ∀ S : List (Fin k), S.length = 2 ^ k - 1 → ContainsAbelianSquare S := by
   sorry
 
 /--
@@ -128,11 +128,9 @@ $$1213121412132124.$$
 Every string of length $2^k$ over $k$ characters contains an abelian square for $k = 2, 3$, but
 not for $k \geq 4$.
 -/
-@[category research solved, AMS 5]
-theorem erdos_231.variants.two_pow : answer(False) ↔
-    ∀ k : ℕ, 2 ≤ k → ∀ S : List (Fin k), S.length = 2 ^ k → ContainsAbelianSquare S := by
-  show False ↔ _
-  simp only [false_iff]
+@[category research solved, question, AMS 5]
+theorem erdos_231.variants.two_pow :
+    ¬ ∀ k : ℕ, 2 ≤ k → ∀ S : List (Fin k), S.length = 2 ^ k → ContainsAbelianSquare S := by
   intro h
   exact not_containsAbelianSquare_example (h 4 (by norm_num) _ rfl)
 
