@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [V. A. Byzov and I. A. Pushkarev, version 2, Equation (17), Theorem 7 and Conjecture 8](https://arxiv.org/html/2603.07707v2)
-- [J. J. Gebendorfer, The Automorphism Group of the Byzov–Pushkarev Directed Strongly Regular Graph Family, 24 July 2026; written proof and intake](https://github.com/google-deepmind/formal-conjectures/issues/7254)
+- [J. J. Gebendorfer, The Automorphism Group of the Byzov–Pushkarev Directed Strongly Regular Graph Family, 24 July 2026; manuscript archive](https://github.com/user-attachments/files/33368206/Byzov_Intake_Gebendorfer_2026-10-13.zip)
 
 The domain is the formula-defined sequence, not every DSRG with those parameters.
 Exponent sets encode the exact circulant convention (i,z) -> (j,z+r). The binary
