@@ -42,18 +42,18 @@ $∏_{i= 1} ^ {n} p(n)$, then $F(n)$ tends to infinity when $n$ tends to infinit
 
 The answer is yes: Schinzel and Wirsing [ScWi87] proved $F(n) \gg \log n$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_1106.parts.i :
-    answer(True) ↔ Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
+    Tendsto (fun n => #(∏ i ∈ Icc 1 n, p i).primeFactors) atTop atTop := by
   sorry
 
 /--
 Let $p(n)$ be the partition number of $n$ and $F(n)$ be the number of distinct prime factors of
 $∏_{i= 1} ^ {n} p(n)$, $F(n)>n$ for sufficiently large $n$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1106.parts.ii :
-    answer(sorry) ↔ ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
+    ∀ᶠ n in atTop, #(∏ i ∈ Icc 1 n, p i).primeFactors > n := by
   sorry
 
 end Erdos1106
