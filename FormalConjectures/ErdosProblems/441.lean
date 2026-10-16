@@ -79,25 +79,27 @@ O\left(\left(\frac{N}{\log N}\right)^{1/2}\log\log N\right).$$
 
 In [ChDa07] the same authors prove that, infinitely often, Erdős' construction is not optimal: if
 $B$ is that construction and $A$ is such that $\lvert A\rvert=g(N)$ then, for infinitely many
-$N$, $\lvert A\rvert\geq \lvert B\rvert+t$, where $t\geq 0$ is defined such that the $t$-fold
-iterated logarithm of $N$ is in $[0,1)$.
+$N$, $\lvert A\rvert\geq \lvert B\rvert+t-2$, where $t\geq 0$ is defined such that the $t$-fold
+iterated logarithm of $N$ is in $[0,1)$. (erdosproblems.com omits the $-2$; [ChDa07] proves
+the bound with it.)
 
 This is discussed in problems B26 and E2 of Guy's collection [Gu04].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos441.lean#L453"]
-theorem erdos_441 : answer(False) ↔
-    ∀ N : ℕ, 1 ≤ N → g N = (erdosConstruction N).card := by
+theorem erdos_441 :
+    ¬ ∀ N : ℕ, 1 ≤ N → g N = (erdosConstruction N).card := by
   sorry
 
 /--
 Chen and Dai [ChDa07] proved that, infinitely often, Erdős' construction is not optimal: for
-infinitely many $N$, $g(N) \geq \lvert B\rvert+t$, where $B$ is the construction and $t\geq 0$ is
-such that the $t$-fold iterated logarithm of $N$ is in $[0,1)$.
+infinitely many $N$, $g(N) \geq \lvert B\rvert+t-2$, where $B$ is the construction and $t\geq 0$
+is such that the $t$-fold iterated logarithm of $N$ is in $[0,1)$. (erdosproblems.com omits the
+$-2$; [ChDa07] proves the bound with it.)
 -/
 @[category research solved, AMS 11]
 theorem erdos_441.variants.chen_dai_infinitely_often :
-    ∃ᶠ N : ℕ in atTop, (erdosConstruction N).card + Real.iteratedLog N ≤ g N := by
+    ∃ᶠ N : ℕ in atTop, (erdosConstruction N).card + Real.iteratedLog N ≤ g N + 2 := by
   sorry
 
 /-- Erdős' construction proves that $g(N) \geq \left(\tfrac{9}{8}N\right)^{1/2}+O(1)$. -/

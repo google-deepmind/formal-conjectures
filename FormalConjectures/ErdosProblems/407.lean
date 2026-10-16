@@ -57,9 +57,9 @@ $\{2^a,3^b,2^{c}3^d\}$ are distinct) then $w(n) \leq 4$ for all large $n$.
 This was made effective by Bajpai and Bennett [BaBe24], who proved that $w(n)\leq 4$ if
 $n\geq 131082$ and $w(n)\leq 9$ for all $n$. (The largest $n$ for which $w(n)=9$ is $299$.)
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos407.lean#L257"]
-theorem erdos_407 : answer(True) ↔ ∃ C : ℕ, ∀ n : ℕ, w n ≤ C := by
+theorem erdos_407 : ∃ C : ℕ, ∀ n : ℕ, w n ≤ C := by
   sorry
 
 end Erdos407
