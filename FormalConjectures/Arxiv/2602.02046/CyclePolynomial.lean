@@ -49,6 +49,20 @@ noncomputable def cyclePolynomial (G : SimpleGraph V) : Polynomial ℝ := by
 def IsRealRooted (p : Polynomial ℝ) : Prop :=
   ∀ z : ℂ, p.eval₂ (algebraMap ℝ ℂ) z = 0 → z.im = 0
 
+/-- The coefficient obstruction for the quartic factor of the five-vertex fan.
+If its four roots were real, their reciprocals would satisfy these
+two Vieta identities. The sum of four nonnegative squares would be -1. -/
+@[category API, AMS 5]
+theorem fan_reciprocal_coefficient_obstruction
+    (a b c d : ℝ)
+    (hsum : a + b + c + d = -4)
+    (hpairs : a*b + a*c + a*d + b*c + b*d + c*d = (13 : ℝ) / 2) : False := by
+  have hsq : (a + b + c + d)^2 = (16 : ℝ) := by
+    rw [hsum]
+    norm_num
+  nlinarith [sq_nonneg (a + 1), sq_nonneg (b + 1),
+    sq_nonneg (c + 1), sq_nonneg (d + 1)]
+
 /-- The unrestricted graphical cycle polynomial of a finite simple chordal
 graph need not have only real roots. This does not concern the restricted
 $r$-polynomial, stable partitions, or chordless-cycle enumeration. -/
