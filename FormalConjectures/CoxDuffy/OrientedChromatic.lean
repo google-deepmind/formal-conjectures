@@ -87,7 +87,9 @@ noncomputable def chromaticCount [Fintype V] (G : SimpleGraph V) (k : ℕ) : ℕ
 characterize absence of obstructing arc pairs in finite oriented graphs. The
 five-vertex manuscript witness and a four-vertex oriented path both disprove
 the characterization under the published obstruction convention. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/33c92b48ffe4ef192e2125ecf17681a62735e699/Proofs/CoxDuffyProof.lean#L49"]
 theorem conjecture12 : ¬ ∀ (n : ℕ) (A : Fin n → Fin n → Bool), IsOriented A →
     ((∃ (m : ℕ) (G : SimpleGraph (Fin m)),
       ∀ k : ℕ, 0 < k → orientedCount A k = chromaticCount G k) ↔
