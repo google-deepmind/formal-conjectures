@@ -38,9 +38,9 @@ of length $k ≥ 4$, with $(n, d) = 1$, be a perfect power?
 
 Erdős believed not, i.e. that `Erdos672With k l` holds for all $k ≥ 4$ and $l > 1$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_672 :
-    answer(sorry) ↔ ∃ᵉ (k ≥ 4) (l > 1), ¬ Erdos672With k l := by
+    ∃ᵉ (k ≥ 4) (l > 1), ¬ Erdos672With k l := by
   sorry
 
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/

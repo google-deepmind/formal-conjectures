@@ -51,8 +51,8 @@ $\sum_{n\in S}\frac{1}{n}=1$; Kovac (in the comments on the problem page) showed
 formulation above is equivalent. We state $\delta(N)=e^{-(c+o(1))N}$ as
 $-\log \delta(N) / N \to c$.
 -/
-@[category research open, AMS 11]
-theorem erdos_311 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_311 :
     ∃ c ∈ Set.Ioo (0 : ℝ) 1,
       Tendsto (fun N : ℕ => -Real.log (delta N) / N) atTop (𝓝 c) := by
   sorry
