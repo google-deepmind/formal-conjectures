@@ -121,8 +121,8 @@ in $[1,O_k(1)]$.
 The source also asks how large $\Lambda(k,2)$ and $\Lambda(k,3)$ are as functions of $k$. This part
 is not formalised.
 -/
-@[category research solved, AMS 11]
-theorem erdos_436.parts.i : answer(True) ↔ ∀ k : ℕ, 2 ≤ k → LambdaFinite k 2 := by
+@[category research solved, question, AMS 11]
+theorem erdos_436.parts.i : ∀ k : ℕ, 2 ≤ k → LambdaFinite k 2 := by
   sorry
 
 /--
@@ -133,8 +133,8 @@ Here $k \geq 2$, so the odd $k$ are $3, 5, 7, \ldots$. Lehmer, Lehmer, Mills, an
 for odd $k \geq 5$. For even $k$, $\Lambda(k,3)=\infty$ by
 `Erdos436.erdos_436.variants.even_three`.
 -/
-@[category research open, AMS 11]
-theorem erdos_436.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_436.parts.ii :
     ∀ k : ℕ, 2 ≤ k → Odd k → LambdaFinite k 3 := by
   sorry
 
