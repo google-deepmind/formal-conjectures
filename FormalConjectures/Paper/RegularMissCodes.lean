@@ -32,8 +32,8 @@ degree is possible at sizes two or three. This file states that solved problem.
 
 The closure condition is restricted to eligible unions. This is not Frankl's
 conjecture or the full regular union-closed problem. Upper bounds and attainment
-are stated separately. The linked Lean proofs establish attainment; the upper
-bounds and small-order nonexistence use the manuscript's written proof.
+are stated separately. The linked Lean proofs establish attainment. The small-order exclusion is proved
+below. The universal upper bounds still rely on the manuscript's written proof.
 -/
 
 @[expose] public section
@@ -79,6 +79,22 @@ theorem degree_three_attained (m : ℕ) (hm : 4 ≤ m) :
 @[category research solved, AMS 5]
 theorem small_orders (m b : ℕ) (hm : m = 2 ∨ m = 3) (hb : b = 2 ∨ b = 3) :
     ¬ ∃ F : Finset (Finset (Fin m)), IsMissCode m b F := by
-  sorry
+  rintro ⟨F, hF⟩
+  have hm0 : 0 < m := by omega
+  let x : Fin m := ⟨0, hm0⟩
+  have hsub : F.filter (fun S => x ∈ S) ⊆ {{x}} := by
+    intro S hS
+    obtain ⟨hSF, hxS⟩ := mem_filter.mp hS
+    have hcard : S.card ≤ 1 := by
+      have := (hF.1 S hSF).2
+      omega
+    have heq : S = {x} := by
+      symm
+      apply eq_of_subset_of_card_le (singleton_subset_iff.mpr hxS)
+      simpa using hcard
+    simp [heq]
+  have hle := card_le_card hsub
+  have hb1 : b ≤ 1 := by simpa [hF.2.1 x] using hle
+  omega
 
 end Gebendorfer.RegularMissCodes
