@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 - [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc,
   Conjecture 271, 23 February 2007](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
 - [J. J. Gebendorfer, Total domination and distance between maximum-degree
-  vertices, 12 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7235)
+  vertices, 12 October 2026](https://github.com/user-attachments/files/33357045/Gebendorfer_271_Intake_2026-10-12.zip)
 
 Gebendorfer's proof derives the classical diameter estimate of DeLaVina, Liu,
 Pepper, Waller and West, Some conjectures of Graffiti.pc on total domination
