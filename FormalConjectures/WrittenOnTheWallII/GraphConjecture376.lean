@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjecture 376, 18 February 2009](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Maximum-degree isolates and distance-sum minimizers: a proof of Graffiti.pc Conjecture 376, 13 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7307)
+- [J. J. Gebendorfer, Maximum-degree isolates and distance-sum minimizers: a proof of Graffiti.pc Conjecture 376, 13 October 2026](https://github.com/user-attachments/files/33421512/Gebendorfer_New_Proofs_Intakes_2026-10-14.zip)
 
 The minimizing set below uses transmission, the sum of distances to all
 vertices. It is distinct from the center defined by minimum eccentricity.
