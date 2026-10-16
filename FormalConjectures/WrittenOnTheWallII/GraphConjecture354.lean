@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Closed-Neighborhood Components, Open Packings, and Total Domination in Trees](https://github.com/google-deepmind/formal-conjectures/issues/7276)
+- [J. J. Gebendorfer, Closed-Neighborhood Components, Open Packings, and Total Domination in Trees](https://github.com/user-attachments/files/33373810/Gebendorfer_WOWII_354_Intake_2026-10-13.zip)
 - [Deposited manuscript](https://doi.org/10.5281/zenodo.21553771)
 
 These are independently stated closed-neighborhood results. The primary row354
