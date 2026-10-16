@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, A girth-five counterexample to Written on the Wall II Conjecture 253](https://github.com/google-deepmind/formal-conjectures/issues/7263)
+- [J. J. Gebendorfer, A girth-five counterexample to Written on the Wall II Conjecture 253](https://github.com/user-attachments/files/33372380/Gebendorfer_WOWII_253_Intake_2026-10-13.zip)
 
 Isolated vertices are excluded so that total dominating sets exist.
 -/
