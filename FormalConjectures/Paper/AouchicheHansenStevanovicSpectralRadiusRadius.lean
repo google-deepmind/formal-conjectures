@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [M. Aouchiche, P. Hansen, D. Stevanović, Variable neighborhood search for extremal graphs. 17. Further conjectures and results about the index, Conjecture 4.4 (2009)](https://doi.org/10.7151/dmgt.1430)
-- [J. J. Gebendorfer, On the Spectral Radius–Radius Product of Connected Graphs: A Refutation and Exact Correction of an AutoGraphiX Conjecture, 7 August 2026; written proof and intake](https://github.com/google-deepmind/formal-conjectures/issues/7231)
+- [J. J. Gebendorfer, On the Spectral Radius–Radius Product of Connected Graphs: A Refutation and Exact Correction of an AutoGraphiX Conjecture, 7 August 2026; manuscript archive](https://github.com/user-attachments/files/33356644/Gebendorfer_AGX_Conjecture_4_4_Source.zip)
 
 The original conjecture is transcribed in the attached manuscript; the original
 journal PDF was not freshly retrieved during the intake. The fixed-radius
