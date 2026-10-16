@@ -62,8 +62,8 @@ noncomputable def orientedColoringCount (A : V → V → Bool) (x : ℕ) : ℕ :
   Nat.card {c : V → Fin x // IsOrientedColoring A c}
 
 /-! Explicit four-vertex witnesses from the written counterexample.
-These finite orientation checks are kernel-reducible; the global counting
-identity needed for `question25` remains a separate proof obligation. -/
+These finite orientation checks are kernel-reducible. The complete counting
+argument for `question25` is linked through its formal_proof attribute below. -/
 def witnessG (u v : Fin 4) : Bool :=
   (u == 0 && v == 1) || (u == 0 && v == 2) || (u == 1 && v == 2)
 
@@ -85,7 +85,9 @@ chromatic polynomials for finite oriented graphs? The answer is negative.
 Both identities below range over every positive integer, representing full
 polynomial identity. The witness in the linked note has four vertices.
 -/
-@[question, category research solved, AMS 5]
+@[question, category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/90d12d635fe42fdb0bc0d021a0180f8565c764c9/Proofs/Q25Proof.lean#L283"]
 theorem question25 : ¬ ∀ (V W : Type) [Fintype V] [Fintype W]
     (A : V → V → Bool) (B : W → W → Bool), IsOriented A → IsOriented B →
       (∀ x : ℕ, 0 < x → homomorphicCount A x = homomorphicCount B x) →
