@@ -58,8 +58,8 @@ Yes: Frankl and Wilson [FrWi81] proved an exponential lower bound and Larman and
 [LaRo72] proved an exponential upper bound. Here exponential growth means that there are
 constants $1 < c \leq C$ such that $c^n \leq \chi(G_n) \leq C^n$ for all large $n$.
 -/
-@[category research solved, AMS 5 52]
-theorem erdos_704.parts.i : answer(True) ↔
+@[category research solved, question, AMS 5 52]
+theorem erdos_704.parts.i :
     (∃ c > (1 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ k : ℕ, (unitDistanceGraph n).Colorable k → c ^ n ≤ (k : ℝ)) ∧
     ∃ C : ℝ, ∀ᶠ n : ℕ in atTop,
@@ -75,8 +75,8 @@ exist?
 This generalises the Hadwiger–Nelson problem (Erdős Problem 508), the case $n = 2$. The
 chromatic number is finite (see `Erdos704.erdos_704.variants.cube_colouring`).
 -/
-@[category research open, AMS 5 52]
-theorem erdos_704.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5 52]
+theorem erdos_704.parts.ii :
     ∃ L : ℝ, Tendsto
       (fun n : ℕ ↦ ((unitDistanceGraph n).chromaticNumber.toNat : ℝ) ^ (1 / (n : ℝ)))
       atTop (𝓝 L) := by
