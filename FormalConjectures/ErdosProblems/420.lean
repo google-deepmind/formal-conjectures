@@ -94,8 +94,8 @@ for large $C$?
 for $n \geq 3$ and $F(f,n)$ is nondecreasing in $f(n)$, this is equivalent to asking for one
 such $C$.
 -/
-@[category research open, AMS 11]
-theorem erdos_420.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_420.parts.i :
     ∀ᶠ C : ℝ in atTop, Tendsto (F fun m ↦ Real.log m ^ C) atTop atTop := by
   sorry
 
@@ -105,8 +105,8 @@ Is it true that $F(\log n,n)$ is everywhere dense in $(1,\infty)$?
 This asks that every point of $(1,\infty)$ lies in the closure of the set of values
 $F(\log n, n)$. Note that $F(f,n) \geq 1$ always (`Erdos420.one_le_F`).
 -/
-@[category research open, AMS 11]
-theorem erdos_420.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_420.parts.ii :
     Set.Ioi (1 : ℝ) ⊆ closure (Set.range (F fun m ↦ Real.log m)) := by
   sorry
 
@@ -117,8 +117,8 @@ $n\to \infty$, then is $F(f,n)$ everywhere dense?
 "Everywhere dense" means dense in $(1,\infty)$, as in `Erdos420.erdos_420.parts.ii`. Asking for
 $f(n) \leq \log n$ for all $n$, rather than for all large $n$, gives an equivalent question.
 -/
-@[category research open, AMS 11]
-theorem erdos_420.parts.iii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_420.parts.iii :
     ∀ f : ℕ → ℝ, Monotone f → (∀ n, f n ≤ Real.log n) → Tendsto f atTop atTop →
       Set.Ioi (1 : ℝ) ⊆ closure (Set.range (F f)) := by
   sorry
