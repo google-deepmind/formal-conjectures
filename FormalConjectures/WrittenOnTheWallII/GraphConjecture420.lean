@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, A Common Counterexample Family for Two Graffiti.pc Bounds on Independent Domination, 1 September 2026](https://github.com/google-deepmind/formal-conjectures/issues/7234)
+- [J. J. Gebendorfer, A Common Counterexample Family for Two Graffiti.pc Bounds on Independent Domination, 1 September 2026](https://github.com/user-attachments/files/33356725/Jonas_J_Gebendorfer_WOWII_420b_420c_submission_package_R1_2026-09-01.zip)
 
 The archived comparison glyphs are absent. The source note on triangle-free
 420c determines the intended upper-bound direction. Both entries below use
