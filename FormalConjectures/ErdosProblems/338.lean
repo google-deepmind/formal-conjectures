@@ -69,18 +69,19 @@ $t$ exists. -/
 noncomputable def restrictedOrder (A : Set ℕ) : ℕ∞ :=
   ⨅ (t : ℕ) (_ : HasRestrictedOrder A t), (t : ℕ∞)
 
+def erdos_338.answer : Set ℕ → Prop := sorry
+
 /--
 The restricted order of a basis $A$ is the least integer $t$ (if it exists) such that every large
 integer is the sum of at most $t$ distinct summands from $A$. What are necessary and sufficient
 conditions that this exists?
 
-This uses the `answer(sorry)` mechanism. A solution must supply the condition and prove the
+A solution must fill in `Erdos338.erdos_338.answer` with the condition and prove the
 equivalence. Whether a condition is a satisfactory answer is up to human judgement.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_338 :
-    let P : Set ℕ → Prop := answer(sorry)
-    ∀ A : Set ℕ, (∃ h, HasOrder A h) → ((∃ t, HasRestrictedOrder A t) ↔ P A) := by
+    ∀ A : Set ℕ, (∃ h, HasOrder A h) → ((∃ t, HasRestrictedOrder A t) ↔ erdos_338.answer A) := by
   sorry
 
 /--
@@ -92,32 +93,34 @@ since $f$ can be replaced by its running maximum. Kelly [Ke57] showed that $f(2)
 Hennecart [He05] showed that $4$ is optimal. Hegyvári, Hennecart and Plagne [HHP07] showed that
 any such $f$ has $f(k) \geq 2^{k-2}+k-1$ for $k \geq 3$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_338.variants.bounded_by_order :
-    answer(sorry) ↔ ∃ f : ℕ → ℕ, ∀ (A : Set ℕ) (h : ℕ), HasOrder A h →
+    ∃ f : ℕ → ℕ, ∀ (A : Set ℕ) (h : ℕ), HasOrder A h →
       (∃ t, HasRestrictedOrder A t) → HasRestrictedOrder A (f h) := by
   sorry
+
+def erdos_338.variants.eq_order.answer : Set ℕ → Prop := sorry
 
 /--
 What are necessary and sufficient conditions that the restricted order of a basis $A$ is equal to
 the order of $A$?
 
 For a basis, `basisOrder A` is finite, so the equality also says that the restricted order exists.
-This uses the `answer(sorry)` mechanism, as in `Erdos338.erdos_338`.
+The condition is `Erdos338.erdos_338.variants.eq_order.answer`, as in `Erdos338.erdos_338`.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_338.variants.eq_order :
-    let P : Set ℕ → Prop := answer(sorry)
-    ∀ A : Set ℕ, (∃ h, HasOrder A h) → (restrictedOrder A = basisOrder A ↔ P A) := by
+    ∀ A : Set ℕ, (∃ h, HasOrder A h) →
+      (restrictedOrder A = basisOrder A ↔ erdos_338.variants.eq_order.answer A) := by
   sorry
 
 /--
 Is it true that if $A \setminus F$ is a basis for all finite sets $F$ then $A$ must have a
 restricted order?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_338.variants.basis_after_finite_removal :
-    answer(sorry) ↔ ∀ A : Set ℕ, (∀ F : Set ℕ, F.Finite → ∃ h, HasOrder (A \ F) h) →
+    ∀ A : Set ℕ, (∀ F : Set ℕ, F.Finite → ∃ h, HasOrder (A \ F) h) →
       ∃ t, HasRestrictedOrder A t := by
   sorry
 
@@ -130,9 +133,9 @@ equivalent to asking that the orders of the sets $A \setminus F$ are bounded. Re
 only raise the order, so if the orders are bounded, their maximum is attained at some $F_0$, and
 $A \setminus F_0 \subseteq A$ satisfies the literal hypothesis.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_338.variants.same_order_after_finite_removal :
-    answer(sorry) ↔ ∀ A : Set ℕ,
+    ∀ A : Set ℕ,
       (∃ h : ℕ, ∀ F : Set ℕ, F.Finite → basisOrder (A \ F) = (h : ℕ∞)) →
       ∃ t, HasRestrictedOrder A t := by
   sorry
@@ -169,9 +172,9 @@ Kelly [Ke57] conjectured that any basis of order $2$ has restricted order at mos
 This was disproved by Hennecart [He05], who constructed a basis of order $2$ with restricted
 order $4$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_338.variants.kelly_conjecture :
-    answer(False) ↔ ∀ A : Set ℕ, HasOrder A 2 → HasRestrictedOrder A 3 := by
+    ¬ ∀ A : Set ℕ, HasOrder A 2 → HasRestrictedOrder A 3 := by
   sorry
 
 /--
