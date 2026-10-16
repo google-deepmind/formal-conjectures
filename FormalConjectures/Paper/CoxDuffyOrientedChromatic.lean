@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 *References:*
 - [D. Cox, C. Duffy, Chromatic Polynomials of Oriented Graphs, Conjecture 12 (2019)](https://doi.org/10.37236/8240)
 - [arXiv version, Conjecture 2.8](https://arxiv.org/pdf/1810.05590)
-- [J. J. Gebendorfer, A Minimal Counterexample to Cox–Duffy Conjecture 12, 1 September 2026; written disproof and intake](https://github.com/google-deepmind/formal-conjectures/issues/7255)
+- [J. J. Gebendorfer, A Minimal Counterexample to Cox–Duffy Conjecture 12, 1 September 2026; manuscript archive](https://github.com/user-attachments/files/33368300/Cox_Intake_Gebendorfer_2026-10-13.zip)
 
 The domain is purely oriented graphs. The earlier mixed-graph counterexample and
 universal-vertex propagation idea are credited to Cox and Duffy. This does not
@@ -33,7 +33,9 @@ identity is expressed by equality of counting values at every positive integer.
 The obstruction convention here follows the published definition on p. 5:
 condition (3) excludes undirected edges in `E_G`, not arcs in `A_G`. In this
 purely oriented domain `E_G` is empty, so only the two-dipath exclusions remain.
-In particular, a cross-pair joined by an arc is allowed.
+In particular, a cross-pair joined by an arc is allowed. The archived manuscript
+uses the adjacency-excluding variant; its minimum-order-five claim applies only
+to that variant. Its five-vertex witness works under both conventions.
 -/
 
 @[expose] public section
