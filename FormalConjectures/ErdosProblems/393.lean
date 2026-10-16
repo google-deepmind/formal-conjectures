@@ -113,8 +113,8 @@ with $a_1<\cdots <a_t=a_1+m$. What is the behaviour of $f(n)$?
 We formalise the question as: does $f(n) \to \infty$? A result of Luca [Lu02] implies a positive
 answer, conditional on the $abc$ conjecture (see `Erdos393.erdos_393.variants.luca`).
 -/
-@[category research open, AMS 11]
-theorem erdos_393 : answer(sorry) ↔ Tendsto f atTop atTop := by
+@[category research open, question, AMS 11]
+theorem erdos_393 : Tendsto f atTop atTop := by
   sorry
 
 /--
@@ -122,9 +122,9 @@ Erdős and Graham [ErGr80, p. 76] write that they do not even know whether $f(n)
 many $n$, that is, whether a factorial is the product of two consecutive integers infinitely
 often.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_393.variants.infinitely_often_one :
-    answer(sorry) ↔ {n : ℕ | f n = 1}.Infinite := by
+    {n : ℕ | f n = 1}.Infinite := by
   sorry
 
 /--
