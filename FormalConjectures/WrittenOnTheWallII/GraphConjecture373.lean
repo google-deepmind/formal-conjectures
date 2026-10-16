@@ -61,8 +61,7 @@ The rational formulation is equivalent to the printed real-valued inequality.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/b45f7e0f6a05c2a8a483ee9695cba9de04730a3a/Proofs/WOWII373Proof.lean"]
-theorem conjecture373 : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V]
+theorem conjecture373 : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj],
       G.IsTree → 2 < Fintype.card V →
         (2 / 3 : ℚ) * positivePeripheralAverage G ≤ G.totalDominationNumber := by
