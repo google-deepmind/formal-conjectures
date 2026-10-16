@@ -45,6 +45,50 @@ noncomputable def averageLocalIndependence (G : SimpleGraph V) : ℚ := by
   classical
   exact (∑ v : V, ((G.induce (G.neighborSet v)).indepNum : ℚ)) / Fintype.card V
 
+/-! A finite graph witness: the line graph of three four-cycles
+joined by two bridges. The ordered endpoints encode the fourteen
+edges of the underlying twelve-vertex graph. -/
+def witnessEndpoints (i : Fin 14) : Fin 12 × Fin 12 :=
+  if i = 0 then (0, 1)
+  else if i = 1 then (1, 2)
+  else if i = 2 then (2, 3)
+  else if i = 3 then (3, 0)
+  else if i = 4 then (4, 5)
+  else if i = 5 then (5, 6)
+  else if i = 6 then (6, 7)
+  else if i = 7 then (7, 4)
+  else if i = 8 then (8, 9)
+  else if i = 9 then (9, 10)
+  else if i = 10 then (10, 11)
+  else if i = 11 then (11, 8)
+  else if i = 12 then (0, 4)
+  else (4, 8)
+
+def witnessGraph : SimpleGraph (Fin 14) where
+  Adj i j := i ≠ j ∧
+    ((witnessEndpoints i).1 = (witnessEndpoints j).1 ∨
+     (witnessEndpoints i).1 = (witnessEndpoints j).2 ∨
+     (witnessEndpoints i).2 = (witnessEndpoints j).1 ∨
+     (witnessEndpoints i).2 = (witnessEndpoints j).2)
+  symm := ⟨by
+    intro i j h
+    rcases h with ⟨hne, h⟩
+    refine ⟨hne.symm, ?_⟩
+    rcases h with h | h | h | h
+    · exact Or.inl h.symm
+    · exact Or.inr (Or.inr (Or.inl h.symm))
+    · exact Or.inr (Or.inl h.symm)
+    · exact Or.inr (Or.inr (Or.inr h.symm))⟩
+  loopless := ⟨by
+    intro i h
+    exact h.1 rfl⟩
+
+/-- The exact rational contradiction required after proving the
+finite witness's graph invariants. -/
+theorem witness_numeric_contradiction :
+    ¬ ((12 : ℚ) ≤ 1 + (10 : ℚ) * 2 / 2) := by
+  norm_num
+
 /-- It is false that every connected finite simple graph satisfies
 $b(G)\le1+f(G)\lceil\operatorname{avg}_v\alpha(G[N(v)])\rceil/2$.
 Both induced-subgraph invariants maximize their vertex orders; the factor one
