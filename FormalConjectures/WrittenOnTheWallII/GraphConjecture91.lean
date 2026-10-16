@@ -85,6 +85,7 @@ def witnessGraph : SimpleGraph (Fin 14) where
 
 /-- The exact rational contradiction required after proving the
 finite witness's graph invariants. -/
+@[category test, AMS 5]
 theorem witness_numeric_contradiction :
     ¬ ((12 : ℚ) ≤ 1 + (10 : ℚ) * 2 / 2) := by
   norm_num
