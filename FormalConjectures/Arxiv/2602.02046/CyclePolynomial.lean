@@ -23,12 +23,12 @@ public import FormalConjecturesUtil
 *References:*
 - [M. Yaqubi and M. Mirzavaziri, On the Graphical r-Stirling Numbers of the First Kind for Specific Graph Families, version 1, Conjecture 6.2](https://arxiv.org/html/2602.02046v1)
 - [A. R. Barghi, graphical cycle polynomial and fan enumeration, Theorem 2.5 (2018)](https://ajc.maths.uq.edu.au/pdf/70/ajc_v70_p253.pdf)
-- [J. J. Gebendorfer, A chordal counterexample to graphical cycle polynomial real-rootedness, 12 October 2026; written disproof and source discrepancies](https://github.com/google-deepmind/formal-conjectures/issues/7239)
+- [J. J. Gebendorfer, A chordal counterexample to graphical cycle polynomial real-rootedness, 12 October 2026; written disproof and source discrepancies](https://github.com/user-attachments/files/33357117/Gebendorfer_chordal_Intake_2026-10-12.zip)
 
 We use edge-supported permutations: transpositions require edges and count once,
 longer cycles have both orientations and need not be induced. The source's
 omitted adjacency restatement and inconsistent wheel example are disclosed in
-the cited intake; alternative counting rules are not silently substituted.
+the cited source archive; alternative counting rules are not silently substituted.
 -/
 
 @[expose] public section
