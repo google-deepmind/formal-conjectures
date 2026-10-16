@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [M. Aouchiche, P. Hansen, D. Stevanović, Variable neighborhood search for extremal graphs. 17. Further conjectures and results about the index, Conjecture 4.3 (2009)](https://doi.org/10.7151/dmgt.1430)
-- [J. J. Gebendorfer, The maximum adjacency spectral radius–diameter product of a connected graph; undated written proof and intake](https://github.com/google-deepmind/formal-conjectures/issues/7245)
+- [J. J. Gebendorfer, The maximum adjacency spectral radius–diameter product of a connected graph; undated manuscript archive](https://github.com/user-attachments/files/33357691/VNS17_Conjecture_4_3_Intake_2026-10-12.zip)
 - [P. Hansen and D. Stevanović, On bags and bugs, fixed-diameter theorem](https://doi.org/10.1016/j.dam.2007.05.044)
 
 A q-vertex attached path identifies one endpoint with a clique vertex and adds
