@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [S. Das, S. Ghosh, S. Prabhu and S. Sen, A Homomorphic Polynomial for Oriented Graphs, Question 25](https://doi.org/10.37236/10726)
-- [J. J. Gebendorfer, A Four-Vertex Counterexample to Refinement by the Homomorphic Polynomial of an Oriented Graph, 1 September 2026](https://github.com/google-deepmind/formal-conjectures/issues/7228)
+- [J. J. Gebendorfer, A Four-Vertex Counterexample to Refinement by the Homomorphic Polynomial of an Oriented Graph, 1 September 2026](https://github.com/user-attachments/files/33355710/Jonas_J_Gebendorfer_Q25_counterexample_reproducible_2026-09-01.zip)
 
 The polynomial invariants are represented extensionally by their counting
 functions on every positive integer. Equality therefore requires agreement at
