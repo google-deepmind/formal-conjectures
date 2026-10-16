@@ -69,8 +69,7 @@ The rational comparison is equivalent to the printed real-valued inequality.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/a95d2f088ec6384d1739aaa115b750ba61b874f8/Proofs/WOWII360Proof.lean"]
-theorem conjecture360 : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V]
+theorem conjecture360 : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj],
       G.IsTree → 2 < Fintype.card V →
       (Nat.card (G.induce (leafSupportVertices G)).ConnectedComponent : ℚ) +
