@@ -93,7 +93,9 @@ theorem fan_reciprocal_coefficient_obstruction
 /-- The unrestricted graphical cycle polynomial of a finite simple chordal
 graph need not have only real roots. This does not concern the restricted
 $r$-polynomial, stable partitions, or chordless-cycle enumeration. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/13922a95fdbad38142e78075d4d43b75036cf17c/Proofs/FanCycleProof.lean#L137"]
 theorem conjecture6_2 : ¬ ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
     G.IsChordal → IsRealRooted (cyclePolynomial G) := by
   sorry
