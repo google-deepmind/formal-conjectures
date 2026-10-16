@@ -46,6 +46,7 @@ def IsStar (G : SimpleGraph V) : Prop :=
 /-- At every connected order $n\ge2$, the star maximizes squared degree
 coefficient of variation. All subtractions in the numerical bound are real. -/
 @[category research solved, AMS 5 15]
+@[formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/bddd2b72f162be5b093fe85b29b4a1a27fb1d9bd/Proofs/DegreeDispersionProof.lean#L75"]
 theorem conjecture2 (G : SimpleGraph V) [DecidableRel G.Adj]
     (hG : G.Connected) (horder : 2 ≤ Fintype.card V) :
     dispersion G ≤ ((Fintype.card V : ℝ) - 2)^2 /
@@ -54,6 +55,7 @@ theorem conjecture2 (G : SimpleGraph V) [DecidableRel G.Adj]
 
 /-- Equality holds exactly for stars, expressed independently of vertex labels. -/
 @[category research solved, AMS 5 15]
+@[formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/bddd2b72f162be5b093fe85b29b4a1a27fb1d9bd/Proofs/DegreeDispersionProof.lean#L223"]
 theorem conjecture2_equality (G : SimpleGraph V) [DecidableRel G.Adj]
     (hG : G.Connected) (horder : 2 ≤ Fintype.card V) :
     dispersion G = ((Fintype.card V : ℝ) - 2)^2 /
