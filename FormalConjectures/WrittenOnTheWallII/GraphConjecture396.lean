@@ -28,6 +28,9 @@ public import FormalConjecturesUtil
   Conjecture 396, 13 October 2026](https://github.com/user-attachments/files/33421512/Gebendorfer_New_Proofs_Intakes_2026-10-14.zip)
 
 The linked Lean certificate verifies an explicit connected 39-vertex counterexample.
+The definition below assigns one modal degree in the unique-mode case. The
+certificate uses two tied modes, six and seven, so its negative answer also
+holds for any convention that agrees on graphs with multiple modal degrees.
 -/
 
 @[expose] public section
