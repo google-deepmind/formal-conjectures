@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [A. P. Kazemi, Total Dominator Coloring of the Hypercube Q_(2^n), Conjecture 6.1, p. 10](https://shahindp.com/Contrib_Math/v13/CM26_v13_pp1-10.pdf)
-- [J. J. Gebendorfer, Total dominator colorings of hypercubes of dimension 2^n+1, 14 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7336)
+- [J. J. Gebendorfer, Total dominator colorings of hypercubes of dimension 2^n+1, 14 October 2026](https://github.com/user-attachments/files/33452211/Gebendorfer_New_Manuscripts_2026-10-14.zip)
 
 This is Conjecture 6.1, not the separate Question 6.1 in the same source.
 The dimension is $2^n+1$. A total dominator coloring is proper, has nonempty
