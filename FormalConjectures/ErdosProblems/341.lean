@@ -49,15 +49,14 @@ exhibits such a sequence `a : ℕ → ℕ` (strictly increasing, with the greedy
 some index on, and with `n ↦ a (n + 1) - a n` not eventually periodic); casting it to `ℤ`
 gives a counterexample to the statement below.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos341.lean#L12"]
 theorem erdos_341 :
-    answer(False) ↔
-      ∀ (a : ℕ → ℤ),
-        (∀ᶠ n in atTop,
-          IsLeast { x | a n < x ∧ x ∉ { a i + a j | (i ≤ n) (j ≤ n) } } (a (n + 1))) →
-        let d := fun i ↦ a (i + 1) - a i
-        ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
+    ¬ ∀ (a : ℕ → ℤ),
+      (∀ᶠ n in atTop,
+        IsLeast { x | a n < x ∧ x ∉ { a i + a j | (i ≤ n) (j ≤ n) } } (a (n + 1))) →
+      let d := fun i ↦ a (i + 1) - a i
+      ∃ p > 0, ∀ᶠ m in atTop, d (m + p) = d m := by
   sorry
 
 end Erdos341

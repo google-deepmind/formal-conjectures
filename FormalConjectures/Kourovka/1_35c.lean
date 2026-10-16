@@ -49,8 +49,8 @@ def ProOrderable (G : Type*) [Group G] : Prop :=
 /--
 Do there exist simple pro-orderable groups?
 -/
-@[category research open, AMS 20]
-theorem kourovka_1_35c : answer(sorry) ↔
+@[category research open, question, AMS 20]
+theorem kourovka_1_35c :
     ∃ (G : Type) (_ : Group G), IsSimpleGroup G ∧ ProOrderable G := by
   sorry
 
