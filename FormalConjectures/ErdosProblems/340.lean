@@ -82,6 +82,8 @@ theorem erdos_340 (ε : ℝ) (hε : ε > 0) :
       fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ) := by
   sorry
 
+def erdos_340.variants.isTheta.answer : ℕ → ℝ := sorry
+
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
 we begin with $1$ and iteratively include the next smallest integer that preserves the
@@ -89,10 +91,10 @@ Sidon property (i.e. there are no non-trivial solutions to $a + b = c + d$). Wha
 order of growth of $A$? Is it true that $|A \cap \{1, \ldots, N\}| \gg N^{1/2 - \varepsilon}$
 for all $\varepsilon > 0$ and large $N$?
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_340.variants.isTheta (ε : ℝ) (hε : ε > 0) :
     (fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ)) =Θ[atTop]
-      (answer(sorry) : ℕ → ℝ) := by
+      erdos_340.variants.isTheta.answer := by
   sorry
 
 /--
@@ -133,8 +135,8 @@ theorem erdos_340.variants._22_mem_sub :
 /--
 The smallest integer which is unknown to be in $A - A$ is $33$.
  -/
-@[category research open, AMS 5]
-theorem erdos_340.variants._33_mem_sub : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_340.variants._33_mem_sub :
     33 ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
@@ -145,16 +147,16 @@ theorem erdos_340.variants._33_mem_sub : answer(sorry) ↔
 /--
 It may be true that all or almost all integers are in $A - A$.
 -/
-@[category research open, AMS 5]
-theorem erdos_340.variants.cofinite_sub : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_340.variants.cofinite_sub :
     ∀ᶠ n in cofinite, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 /--
 It may be true that all or almost all integers are in $A - A$.
 -/
-@[category research open, AMS 5]
-theorem erdos_340.variants.co_density_zero_sub : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_340.variants.co_density_zero_sub :
     ∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 

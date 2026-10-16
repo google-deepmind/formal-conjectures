@@ -43,9 +43,9 @@ def FugledeConjectureFor (n : ℕ) : Prop :=
 /--
 **Fuglede's conjecture** in one dimension: A bounded subset of ℝ with positive Lebesgue measure is spectral iff it tiles ℝ by translation.
 -/
-@[category research open, AMS 42 46 47]
+@[category research open, question, AMS 42 46 47]
 theorem FugledeConjecture.variants.dim_1 :
-    answer(sorry) ↔ FugledeConjectureFor 1 := by
+    FugledeConjectureFor 1 := by
   sorry
 
 /--
@@ -55,9 +55,9 @@ theorem FugledeConjecture.variants.dim_1 :
 explicit $60$-point subsets of $\mathbb{Z}_{60} \times \mathbb{Z}_{12}$ lifted to finite
 unions of unit squares in $\mathbb{R}^2$. It is not yet published.
 -/
-@[category research open, AMS 42 46 47]
+@[category research open, question, AMS 42 46 47]
 theorem FugledeConjecture.variants.dim_2 :
-    answer(sorry) ↔ FugledeConjectureFor 2 := by
+    FugledeConjectureFor 2 := by
   sorry
 
 /--
