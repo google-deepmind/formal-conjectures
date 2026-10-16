@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [Grosdos, Heaton, Kubjas, Kuznetsova, Scholten, Sorea, Exact solutions in log-concave maximum likelihood estimation, Definition 2.6 and Conjecture 3.4 (2023)](https://doi.org/10.1016/j.aam.2022.102448)
-- [J. J. Gebendorfer, Exact poles and reduced numerators of score equation determinants, 8 September 2026, Theorem 2.1; manuscript and intake](https://github.com/google-deepmind/formal-conjectures/issues/7243)
+- [J. J. Gebendorfer, Exact poles and reduced numerators of score equation determinants, 8 September 2026, Theorem 2.1; manuscript archive](https://github.com/user-attachments/files/33357627/Grosdos_Conjecture_3_4_Intake_2026-10-12.zip)
 
 We state the stronger positive-weight pure-complex theorem, which includes the
 source's regular triangulations. The unit convention is D=product(delta_j).
