@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjecture 365, 18 February 2009](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, Isolated support vertices and degree-two edges in total domination of trees](https://github.com/google-deepmind/formal-conjectures/issues/7238)
+- [J. J. Gebendorfer, Isolated support vertices and degree-two edges in total domination of trees](https://github.com/user-attachments/files/33357101/Gebendorfer_365_Intake_2026-10-12.zip)
 
 The manuscript proves the stronger integer inequality stated below. Its current
 copy is undated. Isolates are taken inside the induced support graph, and the
