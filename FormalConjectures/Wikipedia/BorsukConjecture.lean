@@ -29,9 +29,15 @@ Kahn and Kalai [KK93] disproved it for $n = 1325$ and for all $n > 2014$. Bondar
 gave a counterexample in dimension $65$, and Jenrich and Brouwer [JB14] one in dimension $64$,
 the smallest refereed counterexample. In 2026 Grinsztajn [Gr26] posted a 321-point
 counterexample in dimension $63$, obtained with AI assistance and verified by exact
-computation; the same configuration was found independently by Konz and by Ji [Ji26]. The
-cases $4 \leq n \leq 62$ are open. In dimension $4$, every bounded set can be partitioned into
-$9$ parts of smaller diameter [La82], and a 2026 preprint reduces this to $8$ parts [TV26].
+computation; the same configuration was found independently by Konz and by Ji [Ji26]. In
+September 2026 an internal OpenAI model gave a compact counterexample in dimension $9$
+[OAI26]: the set of rank-one orthogonal projectors on $\mathbb{R}^4$, viewed in the
+nine-dimensional affine space of trace-one symmetric $4 \times 4$ matrices with the Frobenius
+metric, has diameter $\sqrt{2}$ and cannot be covered by $10$ sets of smaller diameter. The
+paper extends this to every dimension $n \geq 9$ (Corollary 7.1); only the case $n = 9$ is
+formalized. The cases $4 \leq n \leq 8$ are open. In dimension $4$, every bounded set can be
+partitioned into $9$ parts of smaller diameter [La82], and a 2026 preprint reduces this to $8$
+parts [TV26].
 
 Erdős Problem 505 (`FormalConjectures.ErdosProblems.«505»`) points to this file.
 
@@ -59,6 +65,9 @@ Erdős Problem 505 (`FormalConjectures.ErdosProblems.«505»`) points to this fi
   https://arxiv.org/abs/2608.12561 (withdrawn as a duplicate of [Gr26])
 - [TV26] Tolmachev, A., Voronov, V. (2026). *Reducing the upper bound for the Borsuk number
   in $\mathbb{R}^4$ to 8*. https://arxiv.org/abs/2605.19068
+- [OAI26] OpenAI (2026). *A nine-dimensional counterexample to Borsuk's covering assertion*.
+  OpenAI Math Release preprint.
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-nine-dimensional-counterexample-to-Borsuks-covering-assertion-September-23-2026/paper.pdf
 - [OP28a] Tao, T. et al., *Optimization problems*, constant 28a (smallest Borsuk
   counterexample dimension). https://teorth.github.io/optimizationproblems/constants/28a.html
 - [Ka15] Kalai, G. (2015). *Some old and new problems in combinatorial geometry I: Around
@@ -96,14 +105,17 @@ def BorsukConjecture (n : ℕ) : Prop :=
   ∀ s : Set (ℝ^n), IsBounded s → s.Nontrivial → HasBorsukCover (n + 1) s
 
 /--
-**Borsuk's conjecture**, open range: every bounded subset of $\mathbb{R}^n$ with at least two
-points can be partitioned into $n + 1$ sets of strictly smaller diameter, for
-$4 \leq n \leq 62$.
+**Borsuk's conjecture** fails in the formerly open range $4 \leq n \leq 62$: it is not the case
+that every bounded subset of $\mathbb{R}^n$ with at least two points can be partitioned into
+$n + 1$ sets of strictly smaller diameter for every such $n$.
 
-The conjecture is known to be true for $n \leq 3$ and false for $n \geq 63$.
+The conjecture is true for $n \leq 3$ and false for $n \geq 63$. It was disproved in dimension
+$9$ by an internal OpenAI model in September 2026 [OAI26]; see `borsuk_conjecture.not_nine` and
+the linked Lean proof. The cases $4 \leq n \leq 8$ remain open.
 -/
-@[category research open, AMS 52]
-theorem borsuk_conjecture (n : ℕ) (hn : 4 ≤ n) (hn' : n ≤ 62) : BorsukConjecture n := by
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/Borsuk/Main.lean#L117"]
+theorem borsuk_conjecture : ¬ ∀ n, 4 ≤ n → n ≤ 62 → BorsukConjecture n := by
   sorry
 
 /-- **Borsuk's conjecture** in dimension $4$, the smallest open case. -/
@@ -192,13 +204,26 @@ theorem borsuk_conjecture.not_sixty_four : ¬ BorsukConjecture 64 := by
 
 /--
 **Borsuk's conjecture** fails in dimension $63$, by a 321-point configuration found in 2026
-by Grinsztajn [Gr26] and independently by Konz and Ji [Ji26]. This is the smallest dimension
-in which the conjecture is currently known to be false.
+by Grinsztajn [Gr26] and independently by Konz and Ji [Ji26]. This was the smallest dimension
+with a known counterexample before [OAI26].
 -/
 @[category research solved, AMS 52,
   formal_proof using formal_conjectures at
     "https://github.com/mo271/formal-conjectures/blob/07a6d25f07ba0e16a916be14e9830c36cfcb9777/FormalConjectures/Wikipedia/BorsukConjecture.lean#L166"]
 theorem borsuk_conjecture.not_sixty_three : ¬ BorsukConjecture 63 := by
+  sorry
+
+/--
+**Borsuk's conjecture** fails in dimension $9$: the set of rank-one orthogonal projectors on
+$\mathbb{R}^4$, a compact subset of the nine-dimensional Euclidean space of trace-one symmetric
+$4 \times 4$ matrices with the Frobenius metric, has diameter $\sqrt{2}$ and cannot be covered
+by $10$ sets of smaller diameter. This was proved by an internal OpenAI model in September 2026
+[OAI26]; see the linked Lean proof. This is the smallest dimension in which the conjecture is
+currently known to be false.
+-/
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/Borsuk/Main.lean#L117"]
+theorem borsuk_conjecture.not_nine : ¬ BorsukConjecture 9 := by
   sorry
 
 end Borsuk

@@ -56,10 +56,9 @@ Faudree and Simonovits.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1080.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1080.lean"]
 theorem erdos_1080 :
-    answer(False) ↔
-    ∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V) (X Y : Set V),
+    ¬ ∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V) (X Y : Set V),
       IsBipartition G X Y → X.ncard = ⌊(Fintype.card V : ℝ) ^ (2/3 : ℝ)⌋₊ →
       G.edgeSet.ncard ≥ c * Fintype.card V →
         ∃ (v : V) (walk : G.Walk v v), walk.IsCycle ∧ walk.length = 6 := by
