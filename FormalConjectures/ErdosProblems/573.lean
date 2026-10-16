@@ -61,8 +61,8 @@ cycle of length $3$. See also [574] for the general case, and [765] for $\mathrm
 
 This problem is #48 in Extremal Graph Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
-theorem erdos_573 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_573 :
     (fun n : ℕ ↦ (cycleExtremalNumber {3, 4} n : ℝ)) ~[atTop]
       fun n : ℕ ↦ ((n : ℝ) / 2) ^ (3 / 2 : ℝ) := by
   sorry
