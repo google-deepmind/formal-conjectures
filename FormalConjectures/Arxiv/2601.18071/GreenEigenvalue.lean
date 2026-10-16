@@ -55,7 +55,7 @@ formed by the one-dimensional odd cycle complexes; no minimum-order claim is
 included in this universal negative answer. -/
 @[question, category research solved, AMS 5 15,
   formal_proof using lean4 at
-    "https://github.com/RhudeJJJJ/formal-conjectures/blob/a84289fd2c8cbdaf5c496230a71c59b116e1265d/Proofs/KnillGreenProof.lean#L205"]
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/ff6ef371d4497a3d885da5053b91dd580f3a963c/Proofs/KnillGreenProof.lean#L213"]
 theorem questionB : ¬ ∀ (n : ℕ) (K : PreAbstractSimplicialComplex (Fin n)),
     K.faces.Nonempty → maximalMultiplicity n K = 1 := by
   sorry
