@@ -88,8 +88,7 @@ The linked certificate refutes this bound with $\gamma_2=6$ and right side five.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/66d81217cd33c8c37a3b1846289423ccff5c9ba4/Proofs/WOWII395bProof.lean"]
-theorem conjecture395b : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V]
+theorem conjecture395b : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj], G.Connected → 2 < Fintype.card V →
         (remaining G).Nonempty → twoDominationNumber G ≤ proposedBound G := by
   sorry
