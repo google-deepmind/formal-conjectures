@@ -84,7 +84,8 @@ That $c(p, q)$ is *nondecreasing* in $q$ for fixed $p$ is a straightforward cons
 definitions: enlarging $q$ shrinks the family of $(p, q)$-locally dense graphs, which can only
 increase the guaranteed clique size $H(n)$, and hence the exponent.
 -/
-@[category textbook, AMS 5]
+@[category textbook, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/d16a9d73d85f1377e83798f5d9585ee4c4140979/erdos-667/Solution.lean#L41"]
 theorem erdos_667.variants.monotoneOn (p : ℕ) :
     MonotoneOn (c p) (Set.Icc 1 (Nat.choose (p - 1) 2 + 1)) := by
   sorry
@@ -93,7 +94,8 @@ theorem erdos_667.variants.monotoneOn (p : ℕ) :
 The right endpoint: when $q = \binom{p-1}{2} + 1$ one has $c(p, q) = 1$
 (stated as "easy to see" on erdosproblems.com/667).
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/d16a9d73d85f1377e83798f5d9585ee4c4140979/erdos-667/Solution.lean#L45"]
 theorem erdos_667.variants.endpoint (p : ℕ) (hp : 2 ≤ p) :
     c p (Nat.choose (p - 1) 2 + 1) = 1 := by
   sorry
