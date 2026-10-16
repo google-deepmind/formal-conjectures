@@ -49,6 +49,29 @@ noncomputable def cyclePolynomial (G : SimpleGraph V) : Polynomial ℝ := by
 def IsRealRooted (p : Polynomial ℝ) : Prop :=
   ∀ z : ℂ, p.eval₂ (algebraMap ℝ ℂ) z = 0 → z.im = 0
 
+/-- The five-vertex fan, with universal vertex 4 and a path on 0,1,2,3. -/
+def fanGraph : SimpleGraph (Fin 5) where
+  Adj u v := u ≠ v ∧
+    (u = 4 ∨ v = 4 ∨ Nat.dist u.val v.val = 1)
+  symm := ⟨by
+    intro u v h
+    rcases h with ⟨hne, h⟩
+    refine ⟨hne.symm, ?_⟩
+    rcases h with h | h | h
+    · exact Or.inr (Or.inl h)
+    · exact Or.inl h
+    · exact Or.inr (Or.inr (by simpa [Nat.dist_comm] using h))⟩
+  loopless := ⟨by intro v h; exact h.1 rfl⟩
+
+/-- The fan is split: 1,2,4 form a clique and 0,3 are independent.
+In particular it is chordal, without enumerating induced cycles. -/
+@[category test, AMS 5]
+theorem fan_isChordal : fanGraph.IsChordal := by
+  apply SimpleGraph.IsSplitGraph.isChordal
+  refine ⟨({1, 2, 4} : Set (Fin 5)), ?_, ?_⟩
+  · decide
+  · decide
+
 /-- The coefficient obstruction for the quartic factor of the five-vertex fan.
 If its four roots were real, their reciprocals would satisfy these
 two Vieta identities. The sum of four nonnegative squares would be -1. -/
