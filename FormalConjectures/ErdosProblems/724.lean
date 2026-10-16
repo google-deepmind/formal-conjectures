@@ -65,8 +65,8 @@ that
 $$f(n) \gg n^{1/2}?$$
 This question is from [Er81].
 -/
-@[category research open, AMS 5]
-theorem erdos_724 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_724 :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, c * Real.sqrt (n : ℝ) ≤ (maxMOLS n : ℝ) := by
   sorry
 
@@ -74,9 +74,9 @@ theorem erdos_724 : answer(sorry) ↔
 Euler conjectured that $f(n) = 1$ when $n \equiv 2 \pmod{4}$. This is false: Bose, Parker, and
 Shrikhande [BPS60] proved $f(n) \geq 2$ for $n \geq 7$, so for example $f(10) \geq 2$.
 -/
-@[category research solved, AMS 5]
-theorem erdos_724.variants.euler_conjecture : answer(False) ↔
-    ∀ n : ℕ, n ≡ 2 [MOD 4] → maxMOLS n = 1 := by
+@[category research solved, question, AMS 5]
+theorem erdos_724.variants.euler_conjecture :
+    ¬ ∀ n : ℕ, n ≡ 2 [MOD 4] → maxMOLS n = 1 := by
   sorry
 
 /--
