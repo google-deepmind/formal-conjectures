@@ -26,7 +26,7 @@ public import FormalConjecturesUtil
   Exploring unimodality of the plucking polynomial with delay function,
   arXiv:2311.18059v1, Conjecture 4.1](https://arxiv.org/html/2311.18059v1)
 - [J. J. Gebendorfer, Unimodality of star plucking polynomials with delays
-  one and two, 13 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7309)
+  one and two, 13 October 2026](https://github.com/user-attachments/files/33421512/Gebendorfer_New_Proofs_Intakes_2026-10-14.zip)
 
 The operational recurrence follows the displayed recurrence, examples and
 Proposition 2.5. The isolated zero-initial-condition phrase in Definition 1.7
