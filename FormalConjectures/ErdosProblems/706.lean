@@ -83,8 +83,8 @@ and [705](https://www.erdosproblems.com/705).
 Here $L(r)\leq r^{O(1)}$ is read as: there is $C$ with $\chi(G)\leq r^C$ for all large $r$. Small
 $r$ must be excluded, since $L(1)\geq 5 > 1^C$.
 -/
-@[category research open, AMS 5 52]
-theorem erdos_706 : answer(sorry) ↔
+@[category research open, question, AMS 5 52]
+theorem erdos_706 :
     ∃ C : ℕ, ∀ᶠ r : ℕ in atTop, ∀ (P : Finset ℝ²) (A : Finset ℝ), A.card = r →
       (∀ a ∈ A, 0 < a) →
       (distanceGraph (A : Set ℝ) (P : Set ℝ²)).chromaticNumber ≤ (r ^ C : ℕ) := by
