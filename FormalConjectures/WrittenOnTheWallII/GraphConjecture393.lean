@@ -77,7 +77,9 @@ theorem conjecture393a [DecidableRel G.Adj] (hG : G.Connected)
 $\gamma_2(G)\le|U|+|E(G[S])|+|\{v:|N(v)\cap S|=1\}|$
 for connected finite simple graphs of order greater than two.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/91c08d593e6cec256e585630e31039b7847fea0d/Proofs/PendantTwoDominationProof.lean#L149"]
 theorem conjecture393b_intersection [DecidableRel G.Adj] (hG : G.Connected)
     (horder : 2 < Fintype.card V) :
     twoDominationNumber G ≤ (remainder G).card + edgesOn G (supports G) +
@@ -88,7 +90,9 @@ theorem conjecture393b_intersection [DecidableRel G.Adj] (hG : G.Connected)
 $\gamma_2(G)\le|U|+|S|+|\{v:|N(v)\cap(P\cup S)|=1\}|$
 for connected finite simple graphs of order greater than two.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/91c08d593e6cec256e585630e31039b7847fea0d/Proofs/PendantTwoDominationProof.lean#L59"]
 theorem conjecture393c_intersection [DecidableRel G.Adj] (hG : G.Connected)
     (horder : 2 < Fintype.card V) :
     twoDominationNumber G ≤ (remainder G).card + (supports G).card +
