@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, On the Publicly Archived Formulation of Graffiti.pc Conjecture 364](https://github.com/google-deepmind/formal-conjectures/issues/7275)
+- [J. J. Gebendorfer, On the Publicly Archived Formulation of Graffiti.pc Conjecture 364](https://github.com/user-attachments/files/33373713/Gebendorfer_WOWII_364_Intake_2026-10-13.zip)
 - [S. Dubey, earlier public P4 counterexample](https://gist.github.com/siddhantdubey/22f22a7a23db5174ee59e32eaa8724aa)
 
 This records the explicitly transcribed half-edge version. The factor applies
