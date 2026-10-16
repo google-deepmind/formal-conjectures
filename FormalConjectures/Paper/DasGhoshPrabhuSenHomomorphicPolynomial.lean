@@ -61,6 +61,23 @@ noncomputable def homomorphicCount (A : V → V → Bool) (x : ℕ) : ℕ :=
 noncomputable def orientedColoringCount (A : V → V → Bool) (x : ℕ) : ℕ :=
   Nat.card {c : V → Fin x // IsOrientedColoring A c}
 
+/-! Explicit four-vertex witnesses from the written counterexample.
+These finite orientation checks are kernel-reducible; the global counting
+identity needed for `question25` remains a separate proof obligation. -/
+def witnessG (u v : Fin 4) : Bool :=
+  (u == 0 && v == 1) || (u == 0 && v == 2) || (u == 1 && v == 2)
+
+def witnessH (u v : Fin 4) : Bool :=
+  (u == 0 && v == 1) || (u == 1 && v == 2) || (u == 0 && v == 3)
+
+theorem witnessG_isOriented : IsOriented witnessG := by
+  unfold IsOriented witnessG
+  decide
+
+theorem witnessH_isOriented : IsOriented witnessH := by
+  unfold IsOriented witnessH
+  decide
+
 /-- Does equality of homomorphic polynomials imply equality of oriented
 chromatic polynomials for finite oriented graphs? The answer is negative.
 Both identities below range over every positive integer, representing full
