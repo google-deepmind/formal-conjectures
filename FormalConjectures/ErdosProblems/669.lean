@@ -124,6 +124,8 @@ most $m$ such lines. See `Erdos669.lineCountsExactly_bddAbove`.
 noncomputable def maxLinesExactly (k n : ℕ) : ℕ :=
   sSup (lineCountsExactly k n)
 
+def erdos_669.parts.i.answer : ℕ → Option ℝ := sorry
+
 /--
 Let $F_k(n)$ be minimal such that for any $n$ points in $\mathbb{R}^2$ there exist at most
 $F_k(n)$ many distinct lines passing through at least $k$ of the points, and $f_k(n)$ similarly
@@ -134,15 +136,17 @@ $\lim f_k(n)/n^2$.
 
 This part asks for $\lim F_k(n)/n^2$ for $k \geq 3$ (the case $k = 2$ is trivial). The
 original question [Er97f, Problem 16] asks for the limits "if they exist", so the answer allows
-nonexistence: `L k = some x` if the limit exists and equals $x$, and `L k = none` otherwise.
+nonexistence: the answer at $k$ is `some x` if the limit exists and equals $x$, and `none`
+otherwise.
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem erdos_669.parts.i :
-    let L : ℕ → Option ℝ := answer(sorry)
     ∀ k : ℕ, 3 ≤ k → ∀ x : ℝ,
-      L k = some x ↔
+      erdos_669.parts.i.answer k = some x ↔
         Tendsto (fun n : ℕ => (maxLinesAtLeast k n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 x) := by
   sorry
+
+def erdos_669.parts.ii.answer : ℕ → Option ℝ := sorry
 
 /--
 Let $F_k(n)$ be minimal such that for any $n$ points in $\mathbb{R}^2$ there exist at most
@@ -154,13 +158,13 @@ $\lim f_k(n)/n^2$.
 
 This part asks for $\lim f_k(n)/n^2$ for $k \geq 3$ (the case $k = 2$ is trivial). The
 original question [Er97f, Problem 16] asks for the limits "if they exist", so the answer allows
-nonexistence: `L k = some x` if the limit exists and equals $x$, and `L k = none` otherwise.
+nonexistence: the answer at $k$ is `some x` if the limit exists and equals $x$, and `none`
+otherwise.
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem erdos_669.parts.ii :
-    let L : ℕ → Option ℝ := answer(sorry)
     ∀ k : ℕ, 3 ≤ k → ∀ x : ℝ,
-      L k = some x ↔
+      erdos_669.parts.ii.answer k = some x ↔
         Tendsto (fun n : ℕ => (maxLinesExactly k n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 x) := by
   sorry
 
