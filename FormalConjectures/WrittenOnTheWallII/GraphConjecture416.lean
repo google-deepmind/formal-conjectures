@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, A Universal-Vertex Reduction for Critical Independent Sets and WOWII Conjecture416, 31 August 2026](https://github.com/google-deepmind/formal-conjectures/issues/7270)
+- [J. J. Gebendorfer, A Universal-Vertex Reduction for Critical Independent Sets and WOWII Conjecture416, 31 August 2026](https://github.com/user-attachments/files/33373481/Gebendorfer_WOWII_416_Intake_2026-10-13.zip)
 
 The compressed source expression `isolates(N(N(P)))` is interpreted on the
 induced graph. The certificate proves the stronger bound without subtracting two.
