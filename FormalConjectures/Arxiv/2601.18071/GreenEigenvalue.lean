@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [O. Knill, Remarks about Connection and Dirac matrices, version 2, Sections 1.4 and 10.2, Question B](https://arxiv.org/html/2601.18071v2)
-- [J. J. Gebendorfer, Odd Cycles and the Maximal Green Eigenvalue of Connection Matrices, 9 August 2026; written counterexample and intake](https://github.com/google-deepmind/formal-conjectures/issues/7256)
+- [J. J. Gebendorfer, Odd Cycles and the Maximal Green Eigenvalue of Connection Matrices, 9 August 2026; manuscript archive](https://github.com/user-attachments/files/33368337/Knill_Intake_Gebendorfer_2026-10-13.zip)
 
 The target is simplicity of the largest ALGEBRAIC eigenvalue of the inverse
 connection matrix. It is not simplicity of the spectral-radius eigenvalue;
