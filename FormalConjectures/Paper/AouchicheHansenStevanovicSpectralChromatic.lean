@@ -22,9 +22,9 @@ public import FormalConjecturesUtil
 
 *References:*
 - [M. Aouchiche, P. Hansen, D. Stevanović, Variable neighborhood search for extremal graphs. 17. Further conjectures and results about the index, Table 1 (2009)](https://doi.org/10.7151/dmgt.1430)
-- [J. J. Gebendorfer, Maximizing the Difference Between the Spectral Radius and the Chromatic Number, 7 August 2026; source package](https://github.com/google-deepmind/formal-conjectures/issues/7232)
+- [J. J. Gebendorfer, Maximizing the Difference Between the Spectral Radius and the Chromatic Number, 7 August 2026; source package](https://github.com/user-attachments/files/33356664/VNS_Max_Rho_Minus_Chi_Intake_2026-10-12.zip)
 
-The original table transcription is recorded in the cited intake; the original
+The original table transcription is recorded in the cited source archive; the original
 journal PDF was unavailable during that intake. The fixed-chromatic-number
 spectral reduction is established literature and is not attributed as new here.
 -/
