@@ -157,6 +157,19 @@ theorem practicalH_twelve : practicalH 12 = 3 := by
           fin_cases ha <;> fin_cases hb <;> decide
         exact key B (Finset.mem_powerset.mpr hBp) hBsum.symm
 
+/-- $h(56) = 5$: the hard value is `55`, which needs five divisors of `56`. -/
+@[category test, AMS 11, formal_proof using formal_conjectures at
+  "https://github.com/AlperTheKing/formal-conjectures/blob/fae83fbe5662aa759b8570ca7d04bb118da64f1d/FormalConjectures/ErdosProblems/18.lean#L301"]
+theorem practicalH_fiftysix : practicalH 56 = 5 := by
+  sorry
+
+/-- $h(7200) = 6$. The upper bound uses `7200 = 60 * 120`;
+the hard value is `6667`. -/
+@[category test, AMS 11, formal_proof using formal_conjectures at
+  "https://github.com/AlperTheKing/formal-conjectures/blob/fae83fbe5662aa759b8570ca7d04bb118da64f1d/FormalConjectures/ErdosProblems/18.lean#L396"]
+theorem practicalH_7200 : practicalH 7200 = 6 := by
+  sorry
+
 /-- For any practical number $n$, $h(n)$ ≤ number of divisors of $n$. -/
 @[category test, AMS 11]
 theorem practicalH_le_divisors (n : ℕ) (hn : Nat.IsPractical n) :
@@ -217,8 +230,8 @@ Are there infinitely many practical numbers $m$ such that $h(m) < (\log \log m)^
 More precisely: does there exist a constant $C > 0$ such that for infinitely many
 practical numbers $m$, we have $h(m) < (\log \log m)^C$?
 -/
-@[category research open, AMS 11]
-theorem erdos_18a : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_18a :
     ∃ C : ℝ, 0 < C ∧ ∃ᶠ m in atTop, Nat.IsPractical m ∧
       (practicalH m : ℝ) < (log (log m)) ^ C := by
   sorry
@@ -228,8 +241,8 @@ theorem erdos_18a : answer(sorry) ↔
 Is it true that $h(n!) < n^{o(1)}$? That is, for all $\varepsilon > 0$,
 is $h(n!) < n^\varepsilon$ for sufficiently large $n$?
 -/
-@[category research open, AMS 11]
-theorem erdos_18b : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_18b :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (n : ℝ) ^ ε := by
   sorry
 
@@ -239,8 +252,8 @@ Or perhaps even $h(n!) < (\log n)^{O(1)}$?
 
 Erdős offered \$250 for a proof or disproof.
 -/
-@[category research open, AMS 11]
-theorem erdos_18c : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_18c :
     ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (log n) ^ C := by
   sorry
 

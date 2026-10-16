@@ -45,9 +45,9 @@ $\operatorname{dist}\_G(m, v)$ with $m \in M$ and $v \in V$.
 The conjecture is false: the source records an October 2005 counterexample with
 $\operatorname{path}(G) = 7$ and $\operatorname{dist}\_{\operatorname{avg}}(M, V) = 3.56$.
 -/
-@[category research solved, AMS 5]
-theorem conjecture33 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+@[category research solved, question, AMS 5]
+theorem conjecture33 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let M : Set α := {v | G.degree v = G.maxDegree}
       let distAvg : ℝ :=

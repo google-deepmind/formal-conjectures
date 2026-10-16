@@ -48,6 +48,27 @@ noncomputable def matrixHattoriStallingsTraceAt {R : Type*} [CommRing R] {G : Ty
     {n : Type*} [Fintype n] (A : Matrix n n (MonoidAlgebra R G)) (g : G) : R :=
   ∑ i, (A i i).coeff.sum fun h r ↦ if IsConj h g then r else 0
 
+/-- The universal trace is independent of the representative of a conjugacy class. -/
+@[category API, AMS 16 19 20]
+theorem matrixHattoriStallingsTraceAt_eq_of_isConj {R : Type*} [CommRing R] {G : Type*}
+    [Group G] {n : Type*} [Fintype n] (A : Matrix n n (MonoidAlgebra R G))
+    {g h : G} (hgh : IsConj g h) :
+    matrixHattoriStallingsTraceAt A g = matrixHattoriStallingsTraceAt A h := by
+  classical
+  have hconj (k : G) : IsConj k g ↔ IsConj k h :=
+    ⟨fun hkg ↦ hkg.trans hgh, fun hkh ↦ hkh.trans hgh.symm⟩
+  simp only [matrixHattoriStallingsTraceAt, hconj]
+
+/-- The order condition in Conjecture 0.6 includes infinite order and finite nonunit order. -/
+@[category API, AMS 16 19 20]
+theorem bass_order_condition_iff {R : Type*} [CommRing R] [Nontrivial R] {G : Type*}
+    [Group G] (g : G) :
+    ¬IsUnit (orderOf g : R) ↔
+      ¬IsOfFinOrder g ∨ (IsOfFinOrder g ∧ ¬IsUnit (orderOf g : R)) := by
+  by_cases hg : IsOfFinOrder g
+  · simp [hg]
+  · simp [hg, orderOf_eq_zero hg]
+
 /--
 **Vanishing of the reduced projective class group for integral group rings.**
 

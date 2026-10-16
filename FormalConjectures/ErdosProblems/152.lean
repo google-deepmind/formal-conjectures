@@ -48,9 +48,9 @@ Must `lim f n = ∞`?
 
 This was proved formally by the DeepMind prover agent [DM26a].
 -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/29c60aa79729701905cf9e92517af23f588971f2/FormalConjectures/ErdosProblems/152.lean#L485"]
-theorem erdos_152 : answer(True) ↔ Tendsto f atTop atTop := by
+theorem erdos_152 : Tendsto f atTop atTop := by
   sorry
 
 /--
@@ -58,9 +58,9 @@ Must `f n ≫ n ^ 2`?
 
 This stronger quadratic variant was also proved formally by the DeepMind prover agent [DM26b].
 -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/ff58c933d53bb807bf85d98a47402703f9f14ed3/FormalConjectures/ErdosProblems/152.lean#L496"]
-theorem erdos_152.variants.square : answer(True) ↔
+theorem erdos_152.variants.square :
     (fun n => f n : ℕ → ℝ) ≫ (fun n => n ^ 2 : ℕ → ℝ) := by
   sorry
 
