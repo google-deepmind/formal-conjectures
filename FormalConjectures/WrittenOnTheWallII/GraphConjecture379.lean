@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, C. E. Larson, R. Pepper and B. Waller, Graffiti.pc on the total domination number of a tree, Section 3, Conjecture 1](https://math1um.github.io/Research/r05.pdf)
-- [J. J. Gebendorfer, Maximum-degree components and degree diversity in totally dominated trees, 14 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7333)
+- [J. J. Gebendorfer, Maximum-degree components and degree diversity in totally dominated trees, 14 October 2026](https://github.com/user-attachments/files/33452211/Gebendorfer_New_Manuscripts_2026-10-14.zip)
 
 The primary paper states the conjecture for nontrivial trees. The written proof
 covers that domain, including $K_2$, and gives a stronger bound for every total
