@@ -62,8 +62,8 @@ for $k \geq 4$?
 The case $k = 4$ is Erdős Problem 101. The restriction $k \geq 4$ is needed: see
 `Erdos588.erdos_588.variants.three_not_isLittleO`.
 -/
-@[category research open, AMS 52]
-theorem erdos_588 : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_588 :
     ∀ k : ℕ, 4 ≤ k →
       (fun n : ℕ ↦ (numLinesWithPointsMax k n : ℝ)) =o[atTop] (fun n : ℕ ↦ (n : ℝ) ^ 2) := by
   sorry
