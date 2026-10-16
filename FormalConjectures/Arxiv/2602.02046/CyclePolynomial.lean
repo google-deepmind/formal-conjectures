@@ -69,8 +69,12 @@ In particular it is chordal, without enumerating induced cycles. -/
 theorem fan_isChordal : fanGraph.IsChordal := by
   apply SimpleGraph.IsSplitGraph.isChordal
   refine ⟨({1, 2, 4} : Set (Fin 5)), ?_, ?_⟩
-  · decide
-  · decide
+  · rw [SimpleGraph.isClique_iff]
+    unfold Set.Pairwise fanGraph
+    decide
+  · rw [SimpleGraph.isIndepSet_iff]
+    unfold Set.Pairwise fanGraph
+    decide
 
 /-- The coefficient obstruction for the quartic factor of the five-vertex fan.
 If its four roots were real, their reciprocals would satisfy these
