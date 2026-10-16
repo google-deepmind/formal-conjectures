@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, WOWII 422d: ein Gegenbeispiel auf zwölf Knoten und eine unbeschränkte Lücke, 7 September 2026](https://github.com/google-deepmind/formal-conjectures/issues/7271)
+- [J. J. Gebendorfer, WOWII 422d: ein Gegenbeispiel auf zwölf Knoten und eine unbeschränkte Lücke, 7 September 2026](https://github.com/user-attachments/files/33373499/Gebendorfer_WOWII_422d_Intake_2026-10-13.zip)
 
 The archived comparison glyph is missing and the containing heading says lower
 bounds. This file records the explicitly reconstructed upper reading with
