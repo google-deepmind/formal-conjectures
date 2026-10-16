@@ -56,27 +56,29 @@ Asked by Erdős and Szemerédi [ErSz83]. Solved in this form by Chang [Ch03].
 
 Erdős and Szemerédi proved that there exist arbitrarily large sets $A$ such that the number of
 integers which are the sum or product of distinct elements of $A$ is at most
-$$\exp\left(c (\log \lvert A\rvert)^2\log\log\lvert A\rvert\right)$$
-for some constant $c>0$.
+$$\exp\left(c \frac{(\log \lvert A\rvert)^2}{\log\log\lvert A\rvert}\right)$$
+for some constant $c>0$. (erdosproblems.com multiplies by $\log\log\lvert A\rvert$;
+[ErSz83, Theorem 2] divides by it.)
 
 See also [52](https://www.erdosproblems.com/52).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos53.lean#L3084"]
-theorem erdos_53 : answer(True) ↔ ∀ k : ℕ, ∃ N : ℕ, ∀ A : Finset ℤ, N ≤ A.card →
+theorem erdos_53 : ∀ k : ℕ, ∃ N : ℕ, ∀ A : Finset ℤ, N ≤ A.card →
     A.card ^ k ≤ (sumsAndProducts A).card := by
   sorry
 
 /--
 Erdős and Szemerédi [ErSz83] proved that there exist arbitrarily large sets $A$ such that the
 number of integers which are the sum or product of distinct elements of $A$ is at most
-$$\exp\left(c (\log \lvert A\rvert)^2\log\log\lvert A\rvert\right)$$
-for some constant $c>0$.
+$$\exp\left(c \frac{(\log \lvert A\rvert)^2}{\log\log\lvert A\rvert}\right)$$
+for some constant $c>0$. (erdosproblems.com multiplies by $\log\log\lvert A\rvert$;
+[ErSz83, Theorem 2] divides by it.)
 -/
 @[category research solved, AMS 11]
 theorem erdos_53.variants.upper : ∃ c : ℝ, 0 < c ∧ ∀ N : ℕ, ∃ A : Finset ℤ, N ≤ A.card ∧
     ((sumsAndProducts A).card : ℝ) ≤
-      Real.exp (c * Real.log A.card ^ 2 * Real.log (Real.log A.card)) := by
+      Real.exp (c * Real.log A.card ^ 2 / Real.log (Real.log A.card)) := by
   sorry
 
 end Erdos53

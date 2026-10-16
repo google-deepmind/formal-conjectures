@@ -36,10 +36,12 @@ namespace Erdos513
 noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
   (⨆ n, ‖iteratedDeriv n f 0 * (n ! : ℝ)⁻¹ * r ^ n‖) / (⨆ z : {z : ℂ // ‖z‖ = r}, ‖f z‖)
 
+def erdos_513.answer : ℝ := sorry
+
 /-- Let `f` be a transcendental entire function. What is the greatest possible value of
 `liminf (fun r : ℝ => ratio r f) atTop`? -/
-@[category research open, AMS 30]
-theorem erdos_513 : answer(sorry) =
+@[category research open, question value, AMS 30]
+theorem erdos_513 : erdos_513.answer =
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},
     (liminf (fun r : ℝ => ratio r f) atTop) := by
   sorry
@@ -52,7 +54,10 @@ theorem erdos_513.variants.upper_bound : ∃ c > 0,
     (liminf (fun r : ℝ => ratio r f) atTop) ≤ 2 / π - c := by
   sorry
 
-/-- For all transcendental entire function `f`, `liminf (fun r : ℝ => ratio r f) atTop > 1 / 2`. -/
+/-- The supremum $B$ over all transcendental entire $f$ satisfies $B > 1/2$: there is such an $f$
+with `liminf (fun r : ℝ => ratio r f) atTop > 1 / 2`. This was observed by Kövári (unpublished), and
+[ClHa64] proves the stronger bound `> 4 / 7`. It does not hold for every `f`: for `f = exp` the
+`liminf` is `0`. -/
 @[category research solved, AMS 30]
 theorem erdos_513.variants.lower_bound :
     ⨆ f : {f : ℂ → ℂ // Transcendental ℂ[X] f ∧ Differentiable ℂ f},

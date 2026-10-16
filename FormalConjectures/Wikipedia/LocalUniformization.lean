@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Local uniformization
@@ -76,6 +78,8 @@ are defined in `FormalConjecturesForMathlib.RingTheory.Valuation.LocalUniformiza
 - [Tem2013] M. Temkin, [Inseparable local
   uniformization](https://doi.org/10.1016/j.jalgebra.2012.09.023), J. Algebra 373 (2013), 65--119.
 -/
+
+@[expose] public section
 
 open IsLocalRing ValuationSubring
 
