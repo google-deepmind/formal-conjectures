@@ -56,17 +56,19 @@ $$
   \lim\frac{|S\cap[1, x]|}{x}
 $$
 exist? -/
-@[category research open, AMS 11]
-theorem erdos_1074.parts.i : answer(sorry) ↔ ∃ c, EHSNumbers.HasDensity c := by
+@[category research open, question, AMS 11]
+theorem erdos_1074.parts.i : ∃ c, EHSNumbers.HasDensity c := by
   sorry
+
+def erdos_1074.parts.ii.answer : ℝ := sorry
 
 /-- Let $S$ be the set of all $m\geq 1$ such that there exists a prime $p\not\equiv 1\pmod{m}$ such
 that $m! + 1 \equiv 0\pmod{p}$. What is
 $$
   \lim\frac{|S\cap[1, x]|}{x}?
 $$ -/
-@[category research open, AMS 11]
-theorem erdos_1074.parts.ii : EHSNumbers.HasDensity answer(sorry) := by
+@[category research open, question value, AMS 11]
+theorem erdos_1074.parts.ii : EHSNumbers.HasDensity erdos_1074.parts.ii.answer := by
   sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
@@ -75,18 +77,20 @@ $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}
 $$
 exist? -/
-@[category research open, AMS 11]
-theorem erdos_1074.parts.iii : answer(sorry) ↔ ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
+@[category research open, question, AMS 11]
+theorem erdos_1074.parts.iii : ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
   sorry
+
+def erdos_1074.parts.iv.answer : ℝ := sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
 $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$, then what is
 $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}?
 $$ -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_1074.parts.iv :
-    PillaiPrimes.HasDensity answer(sorry) {p | p.Prime} := by
+    PillaiPrimes.HasDensity erdos_1074.parts.iv.answer {p | p.Prime} := by
   sorry
 
 /-- Pillai [Pi30] raised the question of whether there exist any primes in $P$. This was answered
@@ -107,7 +111,7 @@ theorem erdos_1074.variants.EHSNumbers_infinite : EHSNumbers.Infinite := by
   sorry
 
 /-- Erdős, Hardy, and Subbarao proved that $P$ is infinite. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos1074_erdos_1074_variants_PillaiPrimes_infinite.lean#L178"]
 theorem erdos_1074.variants.PillaiPrimes_infinite : PillaiPrimes.Infinite := by
   sorry
 
