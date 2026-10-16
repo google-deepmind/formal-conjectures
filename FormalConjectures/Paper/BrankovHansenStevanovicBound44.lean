@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [V. Brankov, P. Hansen, D. Stevanović, Automated conjectures on upper bounds for the largest Laplacian eigenvalue of graphs, Bound 44 (2006)](https://doi.org/10.1016/j.laa.2005.10.017)
-- [J. J. Gebendorfer, Bound 44 Below Signless Radius Eleven: Exact Integer Collatz–Wielandt Certificates, and Bound 44 on the Degree-{1,b} Class: An Edge-Bound Reduction and a Perron–Core Refinement, 24 August 2026; manuscripts and intake](https://github.com/google-deepmind/formal-conjectures/issues/7282)
+- [J. J. Gebendorfer, Bound 44 Below Signless Radius Eleven: Exact Integer Collatz–Wielandt Certificates, and Bound 44 on the Degree-{1,b} Class: An Edge-Bound Reduction and a Perron–Core Refinement, 24 August 2026; manuscript archive](https://github.com/user-attachments/files/33384201/Gebendorfer_Bound44_Variants_Intake_2026-10-13.zip)
 
 These are two restricted infinite regions, not a resolution of unrestricted
 Bound 44 or Bound 46. The finite type-space argument, known edge/Collatz bounds,
