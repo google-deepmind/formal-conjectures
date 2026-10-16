@@ -42,9 +42,9 @@ question is yes for any $k\geq 3$.
 
 See also [219](https://www.erdosproblems.com/219).
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1187.lean#L246"]
-theorem erdos_1187.parts.i : answer(True) ↔ ∀ k : ℕ, 3 ≤ k →
+theorem erdos_1187.parts.i : ∀ k : ℕ, 3 ≤ k →
     ∀ (κ : Type) [Finite κ] (c : ℤ → κ), ∃ S : Set ℤ, S.IsAPOfLength k ∧
       (∀ n ∈ S, ∃ p : ℕ, p.Prime ∧ (p : ℤ) = n) ∧
         ∃ γ : κ, ∀ n ∈ S, c n = γ := by
@@ -59,9 +59,9 @@ $4$ creates a colouring in which there is not even any monochromatic pair of int
 difference is a prime. Alternatively, one can just use $2$ colours and avoid any $3$-term
 progressions whose difference is a prime by colouring $0,1\pmod{4}$ red and $2,3\pmod{4}$ blue.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1187.lean#L246"]
-theorem erdos_1187.parts.ii : answer(False) ↔ ∀ k : ℕ, 3 ≤ k →
+theorem erdos_1187.parts.ii : ¬ ∀ k : ℕ, 3 ≤ k →
     ∀ (κ : Type) [Finite κ] (c : ℤ → κ), ∃ (a : ℤ) (p : ℕ) (S : Set ℤ), p.Prime ∧
       S.IsAPOfLengthWith k a p ∧ ∃ γ : κ, ∀ n ∈ S, c n = γ := by
   sorry
