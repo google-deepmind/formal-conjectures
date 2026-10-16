@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjecture 351, 18 February 2009](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, An unbounded deficit in Graffiti.pc Conjecture 351](https://github.com/google-deepmind/formal-conjectures/issues/7236)
+- [J. J. Gebendorfer, An unbounded deficit in Graffiti.pc Conjecture 351](https://github.com/user-attachments/files/33357053/Gebendorfer_351_Intake_2026-10-12.zip)
 
 The source explicitly writes the second vertex set as $N(D_2)\cup D_2$.
 It is a closed neighborhood. The undated manuscript gives a 44-vertex tree
