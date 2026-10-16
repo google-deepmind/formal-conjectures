@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 *References:*
 - [Cs. Bujtás and M. Jakovac, Relating the total domination number and the annihilation number of cactus graphs and block graphs, Conjecture 1 (2019)](https://doi.org/10.26493/1855-3974.1378.11d)
 - [M. Jakovac, Conjecture 1, version 2](https://arxiv.org/abs/2609.10795v2)
-- [J. J. Gebendorfer, A mixed transversal bound and the total-domination–annihilation conjecture, 11 October 2026; written proof and intake](https://github.com/google-deepmind/formal-conjectures/issues/7242)
+- [J. J. Gebendorfer, A mixed transversal bound and the total-domination–annihilation conjecture, 11 October 2026; manuscript archive](https://github.com/user-attachments/files/33357596/Total_Domination_Annihilation_Intake_2026-10-12.zip)
 
 The reformulation is credited to Desormeaux–Haynes–Henning in the cited sources.
 This is the original +1 conjecture, including graphs with pendant vertices,
