@@ -88,6 +88,8 @@ theorem minExtremalNumber_le (n : ℕ) {k l : ℕ} (G : SimpleGraph (Fin k))
 theorem minExtremalNumber_zero_one (n : ℕ) : minExtremalNumber n 0 1 = ⊤ := by
   simp [minExtremalNumber, Set.eq_empty_of_isEmpty]
 
+def erdos_766.parts.i.answer : ℕ → ℕ → ℕ → ℝ := sorry
+
 /--
 Let $f(n;k,l)=\min \mathrm{ex}(n;G)$, where $G$ ranges over all graphs with $k$ vertices and $l$
 edges.
@@ -99,11 +101,10 @@ forces at least one graph with $k$ vertices and $l$ edges rather than one fixed 
 the source. The question for the function of erdosproblems.com is
 `Erdos766.erdos_766.variants.minExtremalNumber_estimate`.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_766.parts.i :
-    let g : ℕ → ℕ → ℕ → ℝ := answer(sorry)
     ∀ k l : ℕ, k < l → l ≤ k ^ 2 / 4 →
-      (fun n ↦ (forcingNumber n k l : ℝ)) =Θ[atTop] g k l := by
+      (fun n ↦ (forcingNumber n k l : ℝ)) =Θ[atTop] erdos_766.parts.i.answer k l := by
   sorry
 
 /--
@@ -114,8 +115,8 @@ $k<l\leq k^2/4$ in which the question is asked there; here `k ^ 2 / 4` is $\lflo
 The question for the function of erdosproblems.com is
 `Erdos766.erdos_766.variants.minExtremalNumber_strictMonoOn`.
 -/
-@[category research open, AMS 5]
-theorem erdos_766.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_766.parts.ii :
     ∀ k : ℕ, ∀ᶠ n : ℕ in atTop,
       StrictMonoOn (forcingNumber n k) (Set.Ioc k (k ^ 2 / 4)) := by
   sorry
@@ -132,23 +133,25 @@ theorem erdos_766.variants.dirac_erdos (n k : ℕ) (hk : 3 ≤ k) (hkn : k ≤ n
     forcingNumber n k (k ^ 2 / 4 + 1) ≤ n ^ 2 / 4 + 1 := by
   sorry
 
+def erdos_766.variants.minExtremalNumber_estimate.answer : ℕ → ℕ → ℕ → ℝ := sorry
+
 /--
 The estimate question of `Erdos766.erdos_766.parts.i` for the function
 $\min \mathrm{ex}(n;G)$ of erdosproblems.com (`Erdos766.minExtremalNumber`).
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_766.variants.minExtremalNumber_estimate :
-    let g : ℕ → ℕ → ℕ → ℝ := answer(sorry)
     ∀ k l : ℕ, k < l → l ≤ k ^ 2 / 4 →
-      (fun n ↦ ((minExtremalNumber n k l).toNat : ℝ)) =Θ[atTop] g k l := by
+      (fun n ↦ ((minExtremalNumber n k l).toNat : ℝ)) =Θ[atTop]
+        erdos_766.variants.minExtremalNumber_estimate.answer k l := by
   sorry
 
 /--
 The monotonicity question of `Erdos766.erdos_766.parts.ii` for the function
 $\min \mathrm{ex}(n;G)$ of erdosproblems.com (`Erdos766.minExtremalNumber`).
 -/
-@[category research open, AMS 5]
-theorem erdos_766.variants.minExtremalNumber_strictMonoOn : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_766.variants.minExtremalNumber_strictMonoOn :
     ∀ k : ℕ, ∀ᶠ n : ℕ in atTop,
       StrictMonoOn (minExtremalNumber n k) (Set.Ioc k (k ^ 2 / 4)) := by
   sorry
