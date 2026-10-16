@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, January 2010](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, The Corona of a Graph Is 2-Dominating, 31 August 2026, revision R2](https://github.com/google-deepmind/formal-conjectures/issues/7267)
+- [J. J. Gebendorfer, The Corona of a Graph Is 2-Dominating, 31 August 2026, revision R2](https://github.com/user-attachments/files/33373103/Gebendorfer_WOWII_404_407_Intake_2026-10-13.zip)
 
 Private external neighbors lie outside the input set and have exactly one
 neighbor in it. Maximum critical means largest cardinality among independent
