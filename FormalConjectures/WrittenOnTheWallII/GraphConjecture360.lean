@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 - [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc,
   Conjecture 360, 18 February 2009](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
 - [J. J. Gebendorfer, Center distance and total domination in trees:
-  a counterexample to Graffiti.pc Conjecture 360, 13 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7305)
+  a counterexample to Graffiti.pc Conjecture 360, 13 October 2026](https://github.com/user-attachments/files/33421512/Gebendorfer_New_Proofs_Intakes_2026-10-14.zip)
 
 This records the explicitly transcribed half-average version. Older archived
 HTML leaves the multiplier blank; the manuscript documents the source distinction.
