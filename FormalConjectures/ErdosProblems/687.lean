@@ -148,6 +148,8 @@ theorem Y_three : Y 3 = 3 := by
   rw [Y]
   exact IsGreatest.csSup_eq ⟨h1, h2⟩
 
+def erdos_687.parts.i.answer : ℕ → ℝ := sorry
+
 /--
 Let $Y(x)$ be the maximal $y$ such that there exists a choice of congruence classes $a_p$ for
 all primes $p\leq x$ such that every integer in $[1,y]$ is congruent to at least one of the
@@ -155,16 +157,16 @@ $a_p\pmod{p}$. Give good estimates for $Y(x)$.
 
 We formalise this as determining $Y(x)$ up to constant factors.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_687.parts.i :
-    (fun x : ℕ ↦ (Y x : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun x : ℕ ↦ (Y x : ℝ)) =Θ[atTop] erdos_687.parts.i.answer := by
   sorry
 
 /--
 In particular, can one prove that $Y(x)=o(x^2)$?
 -/
-@[category research open, AMS 11]
-theorem erdos_687.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_687.parts.ii :
     (fun x : ℕ ↦ (Y x : ℝ)) =o[atTop] (fun x : ℕ ↦ (x : ℝ) ^ 2) := by
   sorry
 
@@ -174,8 +176,8 @@ Or, even stronger, can one prove that $Y(x)\ll x^{1+o(1)}$?
 We read $Y(x)\ll x^{1+o(1)}$ as $Y(x) = O(x^{1+\varepsilon})$ for every fixed
 $\varepsilon > 0$.
 -/
-@[category research open, AMS 11]
-theorem erdos_687.parts.iii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_687.parts.iii :
     ∀ ε > (0 : ℝ), (fun x : ℕ ↦ (Y x : ℝ)) =O[atTop] (fun x : ℕ ↦ (x : ℝ) ^ (1 + ε)) := by
   sorry
 
