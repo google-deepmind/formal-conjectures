@@ -73,7 +73,9 @@ theorem conjecture362_diameter {V : Type*} [Fintype V] [DecidableEq V]
 /-- Adjoining each leaf to its unique support changes no component count in a
 connected finite simple graph of order at least three.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/0d1f9d08f4fa49d8d319cfe429fa54b36a267724/Proofs/SupportComponentsProof.lean#L88"]
 theorem support_components_eq {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hG : G.Connected)
     (horder : 2 < Fintype.card V) :
