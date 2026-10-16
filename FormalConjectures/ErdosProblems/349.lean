@@ -278,7 +278,7 @@ is the research content of Erdős Problem 349.
 The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
 the repository's proof-length guideline. -/
 @[category textbook, AMS 11,
-  formal_proof using formal_conjectures at
+  formal_proof using lean4 at
   "https://github.com/cepadugato/formal-conjectures/blob/6e869b32eccf185e6c57f3f5cae571a8ce1bb4fb/FormalConjectures/ErdosProblems/349.lean#L708"]
 theorem entirely_complete_of_doubling (a : ℕ → ℤ)
     (ha0 : a 0 = 1)
@@ -325,7 +325,7 @@ the integer-pair characterization `integer_isGoodPair_iff`. Proof: instantiate
 The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
 the repository's proof-length guideline. -/
 @[category research solved, AMS 11,
-  formal_proof using formal_conjectures at
+  formal_proof using lean4 at
   "https://github.com/cepadugato/formal-conjectures/blob/6e869b32eccf185e6c57f3f5cae571a8ce1bb4fb/FormalConjectures/ErdosProblems/349.lean#L864"]
 theorem isGoodPair_one_alpha_of_lt_three_halves (α : ℝ) (hα_lo : 1 < α) (hα_hi : α < 3 / 2) :
     IsGoodPair 1 α := by
