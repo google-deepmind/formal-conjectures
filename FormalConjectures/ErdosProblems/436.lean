@@ -49,20 +49,21 @@ open Filter
 
 namespace Erdos436
 
-/-- `IsPowerResidue k p a` means that $a$ is a $k$th power residue modulo $p$. -/
+/-- `IsPowerResidue k p a` means that $a$ is a $k$th power residue modulo $p$, that is,
+$p \nmid a$ and $a \equiv x^k \pmod{p}$ for some $x$. -/
 def IsPowerResidue (k p a : ℕ) : Prop :=
-  ∃ x : ZMod p, x ^ k = a
+  (a : ZMod p) ≠ 0 ∧ ∃ x : ZMod p, x ^ k = a
 
 /-- `r k m p` is the least $r \geq 1$ such that $r, r + 1, \ldots, r + m - 1$ are all $k$th
-power residues modulo $p$, or `⊤` if there is no such $r$.
-
-We require $r \geq 1$, since $0$ and $1$ are always $k$th power residues. -/
+power residues modulo $p$, or `⊤` if there is no such $r$. -/
 noncomputable def r (k m p : ℕ) : ℕ∞ :=
   ⨅ (n : ℕ) (_ : 1 ≤ n ∧ ∀ i < m, IsPowerResidue k p (n + i)), (n : ℕ∞)
 
 /-- $\Lambda(k, m) = \limsup_{p \to \infty} r(k, m, p)$, where $p$ runs over the primes. -/
-noncomputable def Λ (k m : ℕ) : ℕ∞ :=
+noncomputable def runLimsup (k m : ℕ) : ℕ∞ :=
   limsup (r k m) (atTop ⊓ 𝓟 {p | p.Prime})
+
+@[inherit_doc] local notation "Λ" => runLimsup
 
 /--
 If $p$ is a prime and $k, m \geq 2$, let $r(k, m, p)$ be the minimal $r$ such that
@@ -72,8 +73,8 @@ $\Lambda(k, m) = \limsup_{p \to \infty} r(k, m, p)$. Is $\Lambda(k, 2)$ finite f
 A question of Lehmer and Lehmer [LeLe62]. Hildebrand [Hi91] proved that $\Lambda(k, 2)$ is finite
 for all $k \geq 2$.
 -/
-@[category research solved, AMS 11]
-theorem erdos_436.parts.i : answer(True) ↔ ∀ k ≥ 2, Λ k 2 < ⊤ := by
+@[category research solved, question, AMS 11]
+theorem erdos_436.parts.i : ∀ k ≥ 2, Λ k 2 < ⊤ := by
   sorry
 
 /--
@@ -82,8 +83,8 @@ Is $\Lambda(k, 3)$ finite for all odd $k$?
 Lehmer, Lehmer, Mills and Selfridge [LLMS62] proved $\Lambda(3, 3) = 23532$. The question is open
 for odd $k \geq 5$.
 -/
-@[category research open, AMS 11]
-theorem erdos_436.parts.ii : answer(sorry) ↔ ∀ k ≥ 3, Odd k → Λ k 3 < ⊤ := by
+@[category research open, question, AMS 11]
+theorem erdos_436.parts.ii : ∀ k ≥ 3, Odd k → Λ k 3 < ⊤ := by
   sorry
 
 /-- Lehmer and Lehmer [LeLe62] proved $\Lambda(2, 2) = 9$. -/
@@ -142,8 +143,8 @@ theorem r_two_two_thirteen : r 2 2 13 = 3 := by
   · refine iInf₂_le 3 ⟨by norm_num, ?_⟩
     intro i hi
     interval_cases i
-    · exact ⟨4, by decide⟩
-    · exact ⟨2, by decide⟩
+    · exact ⟨by decide, 4, by decide⟩
+    · exact ⟨by decide, 2, by decide⟩
   · refine le_iInf₂ ?_
     rintro n ⟨hn, h⟩
     have : 3 ≤ n := by
