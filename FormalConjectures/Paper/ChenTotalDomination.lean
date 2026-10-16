@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [P. Chen, Refined Nordhaus–Gaddum-Type Bounds for Roman and Total Domination on delta-Complement Graphs, Mathematics 14 (2026), 1797, Conjecture 4](https://doi.org/10.3390/math14111797)
-- [J. J. Gebendorfer, Total domination under complementation within a vertex partition, 14 October 2026](https://github.com/google-deepmind/formal-conjectures/issues/7335)
+- [J. J. Gebendorfer, Total domination under complementation within a vertex partition, 14 October 2026](https://github.com/user-attachments/files/33452211/Gebendorfer_New_Manuscripts_2026-10-14.zip)
 
 The degree partition is computed in the original graph. Delta-complementation
 toggles edges within each original degree class and retains cross-class edges.
