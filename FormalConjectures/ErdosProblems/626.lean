@@ -81,8 +81,8 @@ exist?
 By `Erdos626.erdos_626.variants.kostochka` and `Erdos626.erdos_626.variants.erdos_upper`, the
 limit, if it exists, is a positive real number.
 -/
-@[category research open, AMS 5]
-theorem erdos_626.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_626.parts.i :
     ∀ k : ℕ, 4 ≤ k → ∃ L : ℝ,
       Tendsto (fun n : ℕ ↦ (g k n : ℝ) / Real.log n) atTop (𝓝 L) := by
   sorry
@@ -119,8 +119,8 @@ $$\lim_{n\to\infty}\frac{\log h^{(m)}(n)}{\log n}$$
 exist, and what is its value? The value is asked for in
 `Erdos626.erdos_626.variants.h_odd_conjecture` and `Erdos626.erdos_626.variants.h_even_conjecture`.
 -/
-@[category research open, AMS 5]
-theorem erdos_626.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_626.parts.ii :
     ∀ m : ℕ, ∃ L : ℝ,
       Tendsto (fun n : ℕ ↦ Real.log (h m n : ℝ) / Real.log n) atTop (𝓝 L) := by
   sorry
