@@ -203,9 +203,9 @@ Assume for $n>1$, $f:\mathbb{R}^n\to\mathbb{R}^n$ is a bijection, where $\mathbb
 with the standard topology. Does the connectedness of (the induced power set map) $f$ imply
 that of $f^{-1}$?
 -/
-@[category research open, AMS 26 54]
+@[category research open, question, AMS 26 54]
 theorem mathoverflow_235893 :
-    answer(sorry) ↔ ∀ n > 1, ∀ (f : ℝ^n ≃ ℝ^n), IsConnectedMap f → IsConnectedMap f.symm := by
+    ∀ n > 1, ∀ (f : ℝ^n ≃ ℝ^n), IsConnectedMap f → IsConnectedMap f.symm := by
   sorry
 
 /--
