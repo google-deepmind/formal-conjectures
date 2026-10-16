@@ -84,8 +84,8 @@ many $n$ (see `Erdos820.H_eq_three_iff`)?
 The request to estimate $H(n)$ is open-ended and not formalised; the variants below state the
 specific questions that are asked. See also Erdős Problem 770.
 -/
-@[category research open, AMS 11]
-theorem erdos_820 : answer(sorry) ↔ {n : ℕ | H n = 3}.Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_820 : {n : ℕ | H n = 3}.Infinite := by
   sorry
 
 /--
@@ -99,8 +99,8 @@ H(n) < \exp\left(n^{(c+\epsilon)/\log\log n}\right)
 $$
 for all large enough $n$?
 -/
-@[category research open, AMS 11]
-theorem erdos_820.variants.log_log_exponent : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_820.variants.log_log_exponent :
     ∃ c > (0 : ℝ), ∀ ε > (0 : ℝ),
       (∃ᶠ n : ℕ in atTop,
         Real.exp ((n : ℝ) ^ ((c - ε) / Real.log (Real.log (n : ℝ)))) < (H n : ℝ)) ∧
@@ -119,8 +119,8 @@ for all large enough $n$?
 We read "similar" as an upper bound of the same shape, with its own constant $c$, which need
 not be the same as in `Erdos820.erdos_820.variants.log_log_exponent`.
 -/
-@[category research open, AMS 11]
-theorem erdos_820.variants.two_pow_upper : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_820.variants.two_pow_upper :
     ∃ c > (0 : ℝ), ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       (K n : ℝ) < Real.exp ((n : ℝ) ^ ((c + ε) / Real.log (Real.log (n : ℝ)))) := by
   sorry
