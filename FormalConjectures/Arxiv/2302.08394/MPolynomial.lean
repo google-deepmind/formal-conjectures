@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [F. Burghart, Polynomial invariants for rooted trees related to their random destruction, Definition 3 and Conjecture 20, version 3 (2024)](https://arxiv.org/html/2302.08394v3)
-- [J. J. Gebendorfer, The Polynomial M Does Not Distinguish Rooted Trees, 31 August 2026; written counterexample and intake](https://github.com/google-deepmind/formal-conjectures/issues/7227)
+- [J. J. Gebendorfer, The Polynomial M Does Not Distinguish Rooted Trees, 31 August 2026; manuscript archive](https://github.com/user-attachments/files/33355697/Gebendorfer_M_counterexample_submission.zip)
 
 The definitions below enumerate actual admissible vertex sets, boundary vertices,
 and leaf subsets. They do not replace M by an assumed recurrence. Leaves have
