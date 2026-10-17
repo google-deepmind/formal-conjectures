@@ -36,6 +36,7 @@ public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Minima
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Regulator
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Tamagawa
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.TateShafarevich
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
 public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
 public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
@@ -43,8 +44,12 @@ public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 public import FormalConjecturesForMathlib.Analysis.HasGaps
 public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
+public import FormalConjecturesForMathlib.Analysis.Meromorphic.NormalForm
+public import FormalConjecturesForMathlib.Analysis.Normed.Module.Discrete
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
+public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Gamma.Deligne
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
@@ -150,6 +155,7 @@ public import FormalConjecturesForMathlib.Data.ZMod.Fp
 public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 public import FormalConjecturesForMathlib.Dynamics.SymbolicDynamics.BlockComplexity
 public import FormalConjecturesForMathlib.FieldTheory.AbsoluteGaloisGroup
+public import FormalConjecturesForMathlib.FieldTheory.IsAlgClosed.Basic
 public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
