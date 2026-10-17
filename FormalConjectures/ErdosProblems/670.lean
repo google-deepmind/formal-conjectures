@@ -108,7 +108,8 @@ theorem erdos_670.variants.ho :
 The version of the problem where the $o(1)$ term must be uniform in the dimension $d$ has a
 negative answer. This follows from `Erdos670.erdos_670.variants.ho` (Ho [Ho26]).
 -/
-@[category research solved, question, AMS 52]
+@[category research solved, question, AMS 52, formal_proof using lean4 at
+  "https://github.com/AItoBit/erdos670/blob/5b34bd5e9d0bcb3af86dbc5b65b6efe02e5bff30/DiameterConstruction/RepositoryBridge.lean"]
 theorem erdos_670.variants.uniform_in_dim :
     ¬ ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ d : ℕ,
       ∀ A : Finset (EuclideanSpace ℝ (Fin d)), A.card = n → HasSeparatedDistances A →
