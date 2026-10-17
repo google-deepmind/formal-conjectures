@@ -115,17 +115,95 @@ theorem erdos_1074.variants.EHSNumbers_infinite : EHSNumbers.Infinite := by
 theorem erdos_1074.variants.PillaiPrimes_infinite : PillaiPrimes.Infinite := by
   sorry
 
+/-- If a set agrees with a finset `S` below `N`, then `nth` agrees with `S` on its elements. -/
+@[category API, AMS 11]
+lemma nth_count_eq_of_mem_iff {P : Set ℕ} {S : Finset ℕ} {N : ℕ}
+    (h : ∀ k < N, k ∈ P ↔ k ∈ S) {v : ℕ} (hv : v ∈ S) (hvN : v < N) :
+    nth P (count (· ∈ S) v) = v := by
+  classical
+  have hc : count (· ∈ P) v = count (· ∈ S) v := by
+    simp only [count_eq_card_filter_range]
+    exact congrArg _ (Finset.filter_congr fun k hk => h k ((Finset.mem_range.1 hk).trans hvN))
+  rw [← hc]
+  exact nth_count (p := (· ∈ P)) ((h v hvN).2 hv)
+
+@[category API, AMS 11]
+lemma mem_EHSNumbers_iff (m : ℕ) :
+    m ∈ EHSNumbers ↔ 1 ≤ m ∧ ∃ p ∈ (m ! + 1).primeFactorsList, ¬p ≡ 1 [MOD m] := by
+  simp only [Set.mem_ofPred_eq, mem_primeFactorsList (succ_ne_zero _)]
+  grind
+
+@[category API, AMS 11]
+lemma mem_EHSNumbers_of_lt {k : ℕ} (hk : k < 18) :
+    k ∈ EHSNumbers ↔ k ∈ ({8, 9, 13, 14, 15, 16, 17} : Finset ℕ) := by
+  by_cases h14 : k = 14
+  · -- $14! + 1 = 23 \cdot 3790360487$; avoid certifying the large prime factor.
+    subst h14
+    refine iff_of_true ?_ (by simp)
+    exact ⟨by norm_num, 23, by norm_num, by decide, by norm_num [Nat.factorial]⟩
+  rw [mem_EHSNumbers_iff]
+  interval_cases k <;> first | exact absurd rfl h14 | simp [Nat.factorial, Nat.ModEq]
+
+/-- A prime $p$ with $p \mid m! + 1$ satisfies $m < p$, so membership in `PillaiPrimes` is
+decidable. -/
+@[category API, AMS 11]
+lemma mem_PillaiPrimes_iff (p : ℕ) :
+    p ∈ PillaiPrimes ↔ p.Prime ∧ ∃ m ∈ Finset.Ico 1 p, ¬p % m = 1 % m ∧ (m ! + 1) % p = 0 := by
+  simp only [Set.mem_ofPred_eq, Finset.mem_Ico, Nat.ModEq, Nat.dvd_iff_mod_eq_zero]
+  refine and_congr_right fun hp =>
+    ⟨fun ⟨m, hm, h⟩ => ⟨m, ⟨hm, ?_⟩, h⟩, fun ⟨m, hm, h⟩ => ⟨m, hm.1, h⟩⟩
+  by_contra hpm
+  have := (Nat.dvd_add_right (Nat.dvd_factorial hp.pos (not_lt.1 hpm))).1
+    (Nat.dvd_of_mod_eq_zero h.2)
+  exact hp.one_lt.ne' (Nat.dvd_one.1 this)
+
+@[category API, AMS 11]
+lemma mem_PillaiPrimes_of_lt {p : ℕ} (hp : p < 72) :
+    p ∈ PillaiPrimes ↔ p ∈ ({23, 29, 59, 61, 67, 71} : Finset ℕ) := by
+  rw [mem_PillaiPrimes_iff]
+  revert p
+  decide +kernel
+
 /-- The sequence $S$ begins $8, 9, 13, 14, 15, 16, 17, ...$ -/
 @[category test, AMS 11]
 theorem erdos_1074.variants.EHSNumbers_init :
     nth EHSNumbers '' (Set.Icc 0 6) = {8, 9, 13, 14, 15, 16, 17} := by
-  sorry
+  have h := fun v hv => nth_count_eq_of_mem_iff (fun _ => mem_EHSNumbers_of_lt) (v := v) hv
+  have h0 : nth EHSNumbers 0 = 8 := h 8 (by simp) (by norm_num)
+  have h1 : nth EHSNumbers 1 = 9 := h 9 (by simp) (by norm_num)
+  have h2 : nth EHSNumbers 2 = 13 := h 13 (by simp) (by norm_num)
+  have h3 : nth EHSNumbers 3 = 14 := h 14 (by simp) (by norm_num)
+  have h4 : nth EHSNumbers 4 = 15 := h 15 (by simp) (by norm_num)
+  have h5 : nth EHSNumbers 5 = 16 := h 16 (by simp) (by norm_num)
+  have h6 : nth EHSNumbers 6 = 17 := h 17 (by simp) (by norm_num)
+  ext x
+  simp only [Set.mem_image, Set.mem_Icc]
+  constructor
+  · rintro ⟨i, ⟨-, hi⟩, rfl⟩
+    interval_cases i <;> simp [h0, h1, h2, h3, h4, h5, h6]
+  · rintro (rfl | rfl | rfl | rfl | rfl | rfl | rfl)
+    exacts [⟨0, by simp, h0⟩, ⟨1, by simp, h1⟩, ⟨2, by simp, h2⟩, ⟨3, by simp, h3⟩,
+      ⟨4, by simp, h4⟩, ⟨5, by simp, h5⟩, ⟨6, by simp, h6⟩]
 
 /-- The sequence $P$ begins $23, 29, 59, 61, 67, 71, ...$ -/
 @[category test, AMS 11]
 theorem erdos_1074.variants.PillaiPrimes_init :
     nth PillaiPrimes '' (Set.Icc 0 5) = {23, 29, 59, 61, 67, 71} := by
-  sorry
+  have h := fun v hv => nth_count_eq_of_mem_iff (fun _ => mem_PillaiPrimes_of_lt) (v := v) hv
+  have h0 : nth PillaiPrimes 0 = 23 := h 23 (by simp) (by norm_num)
+  have h1 : nth PillaiPrimes 1 = 29 := h 29 (by simp) (by norm_num)
+  have h2 : nth PillaiPrimes 2 = 59 := h 59 (by simp) (by norm_num)
+  have h3 : nth PillaiPrimes 3 = 61 := h 61 (by simp) (by norm_num)
+  have h4 : nth PillaiPrimes 4 = 67 := h 67 (by simp) (by norm_num)
+  have h5 : nth PillaiPrimes 5 = 71 := h 71 (by simp) (by norm_num)
+  ext x
+  simp only [Set.mem_image, Set.mem_Icc]
+  constructor
+  · rintro ⟨i, ⟨-, hi⟩, rfl⟩
+    interval_cases i <;> simp [h0, h1, h2, h3, h4, h5]
+  · rintro (rfl | rfl | rfl | rfl | rfl | rfl)
+    exacts [⟨0, by simp, h0⟩, ⟨1, by simp, h1⟩, ⟨2, by simp, h2⟩, ⟨3, by simp, h3⟩,
+      ⟨4, by simp, h4⟩, ⟨5, by simp, h5⟩]
 
 /-- Regarding the first question, Hardy and Subbarao computed all EHS numbers up to $2^{10}$, and
 write "...if this trend conditions we expect [the limit] to be around 0.5, if it exists. The
