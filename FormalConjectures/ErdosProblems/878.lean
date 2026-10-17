@@ -61,7 +61,7 @@ $F(n)\gg n\log\log n$?
 The answer is yes; a Lean proof is given in [Ki26]. -/
 @[category research solved, question, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/erdos-878-lean/blob/d4a8eecf0606b3eee7342c2040a31c8c30eb5d76/lean4web/PartsILean4Web.lean#L34436"]
+    "https://github.com/KitaKen1/erdos-878-lean/blob/d4a8eecf0606b3eee7342c2040a31c8c30eb5d76/lean/Erdos878/FixedLoss.lean#L120"]
 theorem erdos_878.parts.i :
     ∃ A : Set ℕ, A.HasDensity 1 ∧
       (fun n : A ↦ (f n : ℝ)) =o[atTop]
@@ -75,7 +75,7 @@ theorem erdos_878.parts.i :
 The answer is yes; a Lean proof is given in [Ki26]. -/
 @[category research solved, question, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/erdos-878-lean/blob/d4a8eecf0606b3eee7342c2040a31c8c30eb5d76/lean4web/PartsIILean4Web.lean#L39917"]
+    "https://github.com/KitaKen1/erdos-878-lean/blob/d4a8eecf0606b3eee7342c2040a31c8c30eb5d76/lean/Erdos878/TrackBEndpointParameters.lean#L630"]
 theorem erdos_878.parts.ii :
     Tendsto (fun x : ℕ ↦
         (maxUpTo f x : ℝ) / ((x : ℝ) * Real.log x / Real.log (Real.log x)))
@@ -135,7 +135,7 @@ theorem erdos_878.variants.second_question_subsequence :
 A Lean proof is given in [Ki26]. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/erdos-878-lean/blob/d4a8eecf0606b3eee7342c2040a31c8c30eb5d76/lean4web/ProposedFirstQuestionSharpLean4Web.lean#L37288"]
+    "https://github.com/KitaKen1/erdos-878-lean/blob/d4a8eecf0606b3eee7342c2040a31c8c30eb5d76/lean/Erdos878/SharpFirstAsymptotic.lean#L168"]
 theorem erdos_878.variants.proposed_first_question_sharp :
     ∃ A : Set ℕ, A.HasDensity 1 ∧
       Tendsto (fun n : A ↦
@@ -182,7 +182,7 @@ noncomputable def m (x : ℕ) : ℕ := maxUpTo f x
 The answer is yes; a Lean proof is given in [Ki26]. -/
 @[category research solved, question, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/erdos-878-lean/blob/d4a8eecf0606b3eee7342c2040a31c8c30eb5d76/lean4web/OriginalFormula17Lean4Web.lean#L33050"]
+    "https://github.com/KitaKen1/erdos-878-lean/blob/d4a8eecf0606b3eee7342c2040a31c8c30eb5d76/lean/Erdos878/Formula17.lean#L192"]
 theorem erdos_878.variants.original_formula_17 :
     Tendsto (fun x : ℕ ↦
         ((x * h x - m x : ℕ) : ℝ) / (x : ℝ)) atTop atTop := by
