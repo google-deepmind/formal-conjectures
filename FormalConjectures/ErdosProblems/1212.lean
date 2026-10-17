@@ -63,9 +63,9 @@ The weaker version (only $\min(x,y) > 1$) was solved by C. Stewart via the prime
 $(p_k, p_{k+1}) \to (p_{k+1}, p_{k+2})$, as recounted in [Er80]; the compositeness condition
 forbids those anchors and the question is open.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1212 :
-    answer(sorry) ↔ ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧
+    ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧
       (∀ n, Valid (f n)) ∧
       Tendsto (fun n => (f n).1 + (f n).2) atTop atTop := by
   sorry
