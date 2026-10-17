@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil.Attributes.Basic
+public import FormalConjecturesUtil.Linters.Util
 public import Mathlib.Tactic.Lemma
 
 
@@ -62,21 +63,7 @@ cannot be given a test. A linter runs once the command has finished and works in
 check lives here and `findAsync?` waits on the elaboration task. -/
 def checkNotOpenIfSorryFree (mods : TSyntax ``Lean.Parser.Command.declModifiers)
     (declId : Syntax) : CommandElabM Unit := do
-  -- `Lean.Elab.expandDeclId` is the natural thing to reach for here, but it calls
-  -- `applyVisibility`, which throws `already been declared` once the declaration exists, and a
-  -- linter runs after that. `expandDeclIdCore` is the pure part of it: it accepts the
-  -- bare-identifier form of `declId`, which indexing `declId[0]` does not. The `_root_` and
-  -- `private` cases are then handled the way `mkDeclName` handles them, the second being where
-  -- the repository's categorised `private` declarations used to be missed.
-  let modifiers ← elabModifiers mods
-  let (shortName, _) := Lean.Elab.expandDeclIdCore declId
-  let declName ←
-    if (`_root_).isPrefixOf shortName then
-      pure <| shortName.replacePrefix `_root_ .anonymous
-    else
-      pure <| (← getCurrNamespace) ++ shortName
-  let env ← getEnv
-  let declName := if modifiers.isPrivate then mkPrivateName env declName else declName
+  let declName ← FormalConjectures.Linter.resolveDeclName mods declId
   unless ← hasConst declName do return
   unless (← ProblemAttributes.getTags).any
       (fun t => t.declName == declName && t.category == .research .open) do return
