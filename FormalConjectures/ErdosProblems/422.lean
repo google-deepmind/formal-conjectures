@@ -74,26 +74,28 @@ f(n) = f(n - f(n - 1)) + f(n - f(n - 2)).
 $$
 Does $f(n)$ miss infinitely many integers?
 -/
-@[category research open, AMS 11]
-theorem erdos_422 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_422 :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → Set.Infinite {n | ∀ x, f x ≠ n} := by
   sorry
 
 /--
 Is $f$ surjective?
 -/
-@[category research open, AMS 11]
-theorem erdos_422.variants.surjective : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_422.variants.surjective :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → f.Surjective := by
   sorry
+
+def erdos_422.variants.growth_rate.answer : ℕ+ → ℝ := sorry
 
 /--
 How does $f$ grow?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_422.variants.growth_rate :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f →
-    (fun n ↦ (f n : ℝ)) =O[atTop] (answer(sorry) : ℕ+ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =O[atTop] erdos_422.variants.growth_rate.answer := by
   sorry
 
 /--
@@ -137,6 +139,9 @@ Is $f(n)$ well-defined for all $n$?
 -/
 @[category research open, AMS 11]
 theorem erdos_422.variants.well_defined : answer(sorry) ↔ ∃ f : ℕ+ → ℕ+, IsHofstadterQ f := by
+@[category research open, question, AMS 11]
+theorem erdos_422.variants.eventually_const :
+    ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → EventuallyConst f atTop := by
   sorry
 
 end Erdos422

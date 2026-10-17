@@ -59,8 +59,8 @@ theorem one_not_mem_sumPrimeAndTwoPows (k : ℕ) : 1 ∉ sumPrimeAndTwoPows k :=
 Is there some $k$ such that every large integer is the sum of a prime and at most $k$
 powers of $2$?
 -/
-@[category research open, AMS 5 11]
-theorem erdos_10 : answer(sorry) ↔ ∃ k, ∀ᶠ n : ℕ in atTop, n ∈ sumPrimeAndTwoPows k := by
+@[category research open, question, AMS 5 11]
+theorem erdos_10 : ∃ k, ∀ᶠ n : ℕ in atTop, n ∈ sumPrimeAndTwoPows k := by
   sorry
 
 /--

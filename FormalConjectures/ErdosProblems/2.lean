@@ -43,11 +43,10 @@ Can the smallest modulus of a covering system be arbitrarily large?
 This problem has a negative answer: there is a universal bound on the least modulus of any
 distinct covering system.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/7caa4144741e10f96cf79d6f7313a0efd9a18b67/erdos-2/Solution.lean#L44"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/7caa4144741e10f96cf79d6f7313a0efd9a18b67/erdos-2/Solution.lean#L44"]
 theorem erdos_2 :
-    answer(False) ↔
-      ∀ B : ℕ, ∃ c : StrictCoveringSystem ℤ, ∀ i, ∃ m : ℕ,
-        c.moduli i = Ideal.span {(m : ℤ)} ∧ B < m := by
+    ¬ ∀ B : ℕ, ∃ c : StrictCoveringSystem ℤ, ∀ i, ∃ m : ℕ,
+      c.moduli i = Ideal.span {(m : ℤ)} ∧ B < m := by
   sorry
 
 end Erdos2
