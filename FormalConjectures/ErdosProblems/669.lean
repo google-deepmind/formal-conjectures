@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public import FormalConjectures.ErdosProblems.«101»
 
 /-!
 # Erdős Problem 669
@@ -38,7 +37,7 @@ namespace Erdos669
 
 /--
 The set of lines in $\mathbb{R}^2$ containing at least $k$ points of $S$. It is the analogue of
-`Erdos101.linesWithPointsFor`, which asks for exactly $k$ points. Only lines spanned by two
+`EuclideanGeometry.linesWithPointsFor`, which asks for exactly $k$ points. Only lines spanned by two
 distinct points of $S$ are counted, so the definition is meant for $k \geq 2$.
 -/
 noncomputable def linesWithAtLeastPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
@@ -57,7 +56,8 @@ The set of numbers of distinct lines through exactly $k$ points, taken over all 
 points in $\mathbb{R}^2$.
 -/
 noncomputable def lineCountsExactly (k n : ℕ) : Set ℕ :=
-  {m | ∃ S : Finset ℝ², S.card = n ∧ (Erdos101.linesWithPointsFor k (S : Set ℝ²)).ncard = m}
+  {m | ∃ S : Finset ℝ², S.card = n ∧
+    (EuclideanGeometry.linesWithPointsFor k (S : Set ℝ²)).ncard = m}
 
 /-- A set of lines, each spanned by two points of `S`, has at most `S.card ^ 2` elements. -/
 @[category API, AMS 52]
@@ -104,7 +104,7 @@ A line through exactly $k$ points of $S$ is a line through at least $k$ points o
 -/
 @[category test, AMS 52]
 theorem linesWithPointsFor_subset_linesWithAtLeastPointsFor (k : ℕ) (S : Set ℝ²) :
-    Erdos101.linesWithPointsFor k S ⊆ linesWithAtLeastPointsFor k S := by
+    EuclideanGeometry.linesWithPointsFor k S ⊆ linesWithAtLeastPointsFor k S := by
   rintro L ⟨hL, hk⟩
   exact ⟨hL, hk.ge⟩
 
