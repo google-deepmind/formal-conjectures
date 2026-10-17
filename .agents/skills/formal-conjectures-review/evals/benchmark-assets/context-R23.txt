@@ -1,0 +1,2 @@
+Authored rereview scenario, not a verbatim GitHub conversation.
+Earlier review: the integer domain is too broad; restrict k to natural numbers greater than 1. Contributor reply: please check the cited source, which explicitly discusses k=-1.
