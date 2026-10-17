@@ -171,8 +171,10 @@ In particular, can one prove that $Y(x)=o(x^2)$?
 Yes: an internal OpenAI model proved $h(k) \ll k^2$ for Jacobsthal's function $h$ [OAI26a]
 (see `Erdos970.erdos_970`). Since $Y(x) + 1$ is Jacobsthal's function of $\prod_{p \leq x} p$,
 which has $\pi(x) \ll x/\log x$ prime factors, this gives $Y(x) \ll x^2/(\log x)^2$.
+The linked Lean proof is by 30k30, from the bound of [OAI26a].
 -/
-@[category research solved, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/30k30/scholia/blob/b072c89c3edac06521868e32cc15b2bc91bd8533/erdos-687/glue/JacobsthalTo687.lean#L325"]
 theorem erdos_687.parts.ii :
     (fun x : ℕ ↦ (Y x : ℝ)) =o[atTop] (fun x : ℕ ↦ (x : ℝ) ^ 2) := by
   sorry
