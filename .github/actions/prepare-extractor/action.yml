@@ -1,0 +1,44 @@
+# Copyright 2026 The Formal Conjectures Authors.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     https://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Prepare the comparator extractor
+description: >-
+  Install elan at this repository's toolchain, restore the Mathlib cache,
+  build the comparator_facts extractor together with the source modules a
+  job needs elaborated, and run the extractor's self-test. The facts the
+  importer reads (ranges, binder boundaries, answer-slot types, category
+  tags) come from an elaborated environment, so every module a job imports
+  from has to be built first.
+
+inputs:
+  modules:
+    description: Space-separated Lake targets to build beside the extractor.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Install elan
+      uses: ./.github/actions/install-elan
+
+    - name: Build the extractor and the source modules
+      shell: bash
+      env:
+        MODULES: ${{ inputs.modules }}
+      run: |
+        lake exe cache get
+        # shellcheck disable=SC2086
+        lake build comparator_facts $MODULES
+        lake exe comparator_facts --self-test
