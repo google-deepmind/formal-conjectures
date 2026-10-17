@@ -16,9 +16,10 @@
 
 import contextlib
 import io
+import os
 import unittest
 
-from check_erdos_status import issues_to_close, problem_status, yaml_status_to_category
+from check_erdos_status import apply_fixes, fix_problem_content, issues_to_close, main as check_erdos_status_main, problem_status, yaml_status_to_category
 
 
 def issue(number, problem, repo="solved", site="formally solved"):
@@ -176,6 +177,101 @@ class IssuesToCloseTest(unittest.TestCase):
         issues = [issue(1, "71"), issue(2, "209"), issue(3, "353")]
         self.assertEqual(
             issues_to_close(issues, still_open={"209"}, known={"71", "209"}), [1])
+
+
+
+
+class AutoFixTest(unittest.TestCase):
+
+    def test_skips_when_target_category_equals_current_category(self):
+        sample = """@[category research solved, AMS 11]
+theorem erdos_1 : True := by trivial
+"""
+        new_content, status = fix_problem_content("1", "solved", "formally solved", sample)
+        self.assertEqual(new_content, sample)
+        self.assertIn("requires manual formal_proof link update", status)
+
+    def test_skips_downgrading_formally_solved_to_open(self):
+        sample = """@[category research solved, AMS 11, formal_proof using lean4 at "https://..."]
+theorem erdos_1 : True := by trivial
+"""
+        new_content, status = fix_problem_content("1", "formally solved", "open", sample)
+        self.assertEqual(new_content, sample)
+        self.assertIn("cannot safely downgrade formally solved to open", status)
+
+    def test_skips_multipart_problem(self):
+        sample = """@[category research solved, AMS 11]
+theorem erdos_692.parts.i : answer(False) := by sorry
+
+@[category research open, AMS 11]
+theorem erdos_692.parts.ii (n : Nat) : answer(sorry) := by sorry
+"""
+        new_content, status = fix_problem_content("692", "open", "solved", sample)
+        self.assertEqual(new_content, sample)
+        self.assertIn("multipart problem requires manual status decision", status)
+
+    def test_skips_unresolved_answer_sorry_when_target_is_solved(self):
+        sample = """@[category research open, AMS 11]
+theorem erdos_10 : answer(sorry) := by sorry
+"""
+        new_content, status = fix_problem_content("10", "open", "solved", sample)
+        self.assertEqual(new_content, sample)
+        self.assertIn("unresolved answer(sorry) requires manual answer update", status)
+
+    def test_allows_open_target_with_answer_sorry(self):
+        sample = """@[category research solved, AMS 11]
+theorem erdos_10 : answer(sorry) := by sorry
+"""
+        new_content, status = fix_problem_content("10", "solved", "open", sample)
+        self.assertEqual(status, "ok")
+        self.assertIn("@[category research open, AMS 11]", new_content)
+
+    def test_preserves_auxiliary_theorems(self):
+        sample = """@[category research solved, AMS 11]
+theorem erdos_100_aux : 1 = 1 := by trivial
+
+@[category research solved, AMS 11]
+theorem erdos_100 : True := by trivial
+"""
+        new_content, status = fix_problem_content("100", "solved", "open", sample)
+        self.assertEqual(status, "ok")
+        self.assertIn("@[category research open, AMS 11]\ntheorem erdos_100 :", new_content)
+        self.assertIn("@[category research solved, AMS 11]\ntheorem erdos_100_aux :", new_content)
+
+    def test_apply_fixes_modifies_eligible_file_in_dir(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmpdir:
+            file_path = os.path.join(tmpdir, "330.lean")
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write("""@[category research open, AMS 11]
+theorem erdos_330 : True := by trivial
+""")
+            mismatches = [{"number": "330", "lean_status": "open", "yaml_status": "solved"}]
+            with contextlib.redirect_stderr(io.StringIO()):
+                count = apply_fixes(mismatches, erdos_dir=tmpdir)
+            self.assertEqual(count, 1)
+            with open(file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn("@[category research solved, AMS 11]", content)
+
+    def test_main_returns_zero_on_auto_fix_even_with_mismatches(self):
+        from unittest.mock import patch
+        mismatches = [{"number": "330", "lean_status": "open", "yaml_status": "solved"}]
+        with patch("sys.argv", ["check_erdos_status.py", "--auto-fix"]), \
+             patch("check_erdos_status.find_mismatches", return_value=mismatches), \
+             patch("check_erdos_status.apply_fixes", return_value=1), \
+             patch("sys.stdout", io.StringIO()):
+            ret = check_erdos_status_main()
+            self.assertEqual(ret, 0)
+
+    def test_main_returns_one_without_auto_fix_when_mismatches_exist(self):
+        from unittest.mock import patch
+        mismatches = [{"number": "330", "lean_status": "open", "yaml_status": "solved"}]
+        with patch("sys.argv", ["check_erdos_status.py"]), \
+             patch("check_erdos_status.find_mismatches", return_value=mismatches), \
+             patch("sys.stdout", io.StringIO()):
+            ret = check_erdos_status_main()
+            self.assertEqual(ret, 1)
 
 
 if __name__ == "__main__":
