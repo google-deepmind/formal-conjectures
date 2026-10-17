@@ -74,7 +74,7 @@ def Coloring.mycielski (C : G.Coloring α) : G.mycielski.Coloring (Option α) :=
       | some (.inr v) => some (C v))
     (by
       rintro (_ | (_ | v)) (_ | (_ | w)) h <;>
-        simp_all [mycielskiAdj, C.valid h])
+        simp_all [mycielskiAdj, C.valid])
 
 /-- A `k`-coloring extends to a `(k + 1)`-coloring of the Mycielski graph. -/
 theorem Colorable.mycielski (h : G.Colorable k) : G.mycielski.Colorable (k + 1) := by
