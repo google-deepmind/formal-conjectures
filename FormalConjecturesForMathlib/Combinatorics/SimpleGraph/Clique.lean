@@ -56,4 +56,14 @@ noncomputable def trianglesContaining {α : Type*} [Fintype α] (G : SimpleGraph
   (G.cliqueFinset 3).filter (fun t ↦ uv.toFinset ⊆ t)
 
 
+/-- `T` is a family of edge-disjoint triangles in `G`: every member is a triangle of `G`, and
+two distinct members share at most one vertex. -/
+def IsTrianglePacking [DecidableEq V] (G : SimpleGraph V) (T : Finset (Finset V)) : Prop :=
+  (∀ t ∈ T, G.IsNClique 3 t) ∧ (T : Set (Finset V)).Pairwise (fun s t ↦ (s ∩ t).card ≤ 1)
+
+/-- `G` can be made triangle-free by deleting at most `m` of its edges. -/
+def CanBeMadeTriangleFree (G : SimpleGraph V) (m : ℕ) : Prop :=
+  ∃ S : Finset (Sym2 V), (S : Set (Sym2 V)) ⊆ G.edgeSet ∧ S.card ≤ m ∧
+    (G.deleteEdges (S : Set (Sym2 V))).CliqueFree 3
+
 end SimpleGraph
