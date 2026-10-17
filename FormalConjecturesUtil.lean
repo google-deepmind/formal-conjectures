@@ -29,6 +29,7 @@ public import FormalConjecturesUtil.Linters.ImportLinter
 public import FormalConjecturesUtil.Linters.LatexDocstringLinter
 public import FormalConjecturesUtil.Linters.ModuleDocstringLinter
 public import FormalConjecturesUtil.Linters.NamespaceLinter
+public import FormalConjecturesUtil.Linters.StatementSorryLinter
 public import FormalConjecturesUtil.Linters.StubLinter
 
 /-!

@@ -69,6 +69,9 @@ noncomputable def f (k : ℕ) : ℕ :=
   open scoped Classical in
   if hk : 0 < k then Nat.find (erdos_961.variants.well_defined k hk) else 0
 
+-- The definition `f` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /--
 It is conjectured that $f(k) \ll (\log k)^O(1)$.
 -/
@@ -76,6 +79,9 @@ It is conjectured that $f(k) \ll (\log k)^O(1)$.
 theorem erdos_961 : ∃ C : ℕ, ∀ᶠ k : ℕ in atTop, f k < log k ^ C := by
   sorry
 
+-- The definition `f` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /--
 Erdos [Er55d] proved $f(k) < 3 \frac{k}{\log k}$ for sufficiently large $k$.
 -/
@@ -84,6 +90,9 @@ theorem erdos_961.variants.erdos_upper_bound :
     ∀ᶠ k in atTop, f k < 3 * k / log k := by
   sorry
 
+-- The definition `f` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /--
 Jutila [Ju74], and Ramachandra--Shorey [RaSh73] proved a stronger upper bound
 $f(k) \ll \frac{\log \log \log k}{\log \log k} \frac{k}{\log k}$.
