@@ -128,6 +128,7 @@ public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
 public import FormalConjecturesForMathlib.Data.Finset.Prod
 public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
+public import FormalConjecturesForMathlib.Data.Finset.UniqueMulProducts
 public import FormalConjecturesForMathlib.Data.Int.IntermediateValue
 public import FormalConjecturesForMathlib.Data.Int.Order.Basic
 public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
