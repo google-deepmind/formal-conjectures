@@ -28,6 +28,8 @@ public import FormalConjecturesUtil
   349-370.
 - [KLS21] Keevash, P., Long, E. and Skokan, J., Cycle-complete Ramsey numbers.
   Int. Math. Res. Not. IMRN (2021), 277-302.
+- [OAI26] OpenAI, *Cycle–clique Ramsey numbers* (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Cycle-clique-Ramsey-numbers-September-25-2026/Cycle-clique-Ramsey-numbers-September-25-2026.pdf
 -/
 
 @[expose] public section
@@ -43,8 +45,9 @@ for $k\geq n\geq 3$ (except when $n=k=3$).
 
 Asked by Erdős, Faudree, Rousseau, and Schelp.
 This problem is #18 in Ramsey Theory in the graphs problem collection.
+OpenAI [OAI26, Theorem 1.1] establishes the full parameter range.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem erdos_551 :
     ∀ (k n : ℕ), 3 ≤ n → n ≤ k → ¬(n = 3 ∧ k = 3) →
       SimpleGraph.graphRamsey (SimpleGraph.cycleGraph k)
