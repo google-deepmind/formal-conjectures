@@ -153,6 +153,7 @@ public import FormalConjecturesForMathlib.FieldTheory.AbsoluteGaloisGroup
 public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
+public import FormalConjecturesForMathlib.Geometry.Holes
 public import FormalConjecturesForMathlib.Geometry.Group.Hyperbolic
 public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
 public import FormalConjecturesForMathlib.Geometry.Group.WordProd
