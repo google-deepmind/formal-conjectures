@@ -26,6 +26,7 @@ public import FormalConjecturesUtil
   [pdf](https://www-cdn.anthropic.com/95c246936988e43127bc6b2ceb7077c1dad2d68e.pdf),
   [Lean formalisation](https://github.com/anthropics/zeta-23-lean).
 - [Wikipedia](https://en.wikipedia.org/wiki/Riemann_hypothesis#Zeros_on_the_critical_line)
+- [J. J. Gebendorfer, Compatible local windows and a certified lower bound for simple critical-line zeros, audit revision 8 September 2026](https://doi.org/10.5281/zenodo.22661276), [cumulative variant and certificate-class source archive](https://github.com/user-attachments/files/33373834/Gebendorfer_WOWII_Zeta_Intake_2026-10-13.zip).
 
 For a nontrivial zero `ρ = β + iγ` of `ζ` (or of a Dirichlet `L`-function) with multiplicity
 `m_ρ`, and `0 ≤ T₁ < T₂`, write
@@ -137,6 +138,17 @@ theorem distinct_prop_one_hundred : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ �
     ∀ T > 0, (1 - o T) * N riemannZeta T (2 * T) ≤ Nd riemannZeta T (2 * T) := by
   sorry
 
+/-- The cumulative proportion of simple critical-line zeros in (0,T] has
+liminf at least the displayed exact rational, exceeding 0.6734775223. This
+unconditional cumulative statement is distinct from the dyadic statements
+above. The cited written proof uses the weighted pair-correlation formula and
+Riemann–von Mangoldt; its finite certificate replay is not a Lean proof. -/
+@[category research solved, AMS 11]
+theorem simple_prop_cumulative_gebendorfer :
+    (8269551442741204889710953 : ℝ) / 12278882618209750000000000 ≤
+      Filter.liminf (fun T : ℝ => (Ns riemannZeta 0 T : ℝ) / N riemannZeta 0 T) atTop := by
+  sorry
+
 end riemannZeta
 
 namespace DirichletCharacter
@@ -209,3 +221,64 @@ theorem distinct_prop_one_hundred (hχ : χ.IsPrimitive) : ∃ o : ℝ → ℝ, 
   sorry
 
 end DirichletCharacter
+
+
+namespace GebendorferZetaCertificateClass
+open MeasureTheory
+
+/-- The complete 25-mode cosine-window class, with free real integer modes 1–24. -/
+noncomputable def window (c : Fin 24 → ℝ) (t : ℝ) : ℝ := by
+  classical
+  let a : ℝ := 1 / Real.sqrt 2
+  let A := Real.sin a / a
+  exact if t ∈ Set.Icc (-1/2 : ℝ) (1/2) then
+    (Real.cos (Real.sqrt 2 * t) +
+      ∑ j : Fin 24, c j * Real.cos (2 * Real.pi * (j.val + 1) * t)) / A else 0
+
+/-- Normalization and nonnegativity of the actual window. Reality and evenness
+are already encoded by its cosine formula and symmetric support. -/
+def IsAdmissible (c : Fin 24 → ℝ) : Prop :=
+  (∀ t, 0 ≤ window c t) ∧ (∫ t : ℝ, window c t) = 1
+
+noncomputable def energyH (c : Fin 24 → ℝ) : ℝ :=
+  2 - ((∫ u : ℝ, (window c u)^2) +
+    ∫ u : ℝ, ∫ v : ℝ, |u - v| * window c u * window c v)
+
+/-- Real Fourier transform; the absolute frequency is harmless because cosine
+is even, and makes the symmetry of the actual Gram matrix explicit. -/
+noncomputable def kernel (c : Fin 24 → ℝ) (x : ℝ) : ℝ :=
+  ∫ t : ℝ, window c t * Real.cos (2 * Real.pi * |x| * t)
+
+def position {m : ℕ} (g : Fin (m - 1) → ℝ) (i : Fin m) : ℝ :=
+  ∑ k : Fin (m - 1), if k.val < i.val then g k else 0
+
+noncomputable def gram {m : ℕ} (c : Fin 24 → ℝ) (g : Fin (m - 1) → ℝ) :
+    Matrix (Fin m) (Fin m) ℝ := fun i j => kernel c (position g i - position g j)
+
+noncomputable def clipped (t : ℝ) : ℝ := if t ≤ 2 then (t - 1)^2 else 2 * t - 3
+
+/-- Trace of the clipped spectral function, with all Gram eigenvalues counted
+with multiplicities. The Gram matrix is defined on the actual cumulative gaps. -/
+noncomputable def clippedTrace {m : ℕ} (c : Fin 24 → ℝ) (g : Fin (m - 1) → ℝ) : ℝ :=
+  let h : (gram c g).IsHermitian := by
+    apply Matrix.ext
+    intro i j
+    simp [Matrix.conjTranspose_apply, gram, kernel, abs_sub_comm]
+  ∑ i : Fin m, clipped (h.eigenvalues i)
+
+/-- Every universal clipped-Gram certificate in the complete normalized
+nonnegative 25-mode class with nonnegative gap prices and 0<R<m has value
+strictly below 0.674034. This bounds the certificate class, not the actual
+simple-zero proportion. It asserts neither sharpness nor attainment of the
+class supremum. H may be replaced by any certified smaller real value. -/
+@[category research solved, AMS 11 15]
+theorem certificate_class_ceiling (c : Fin 24 → ℝ) (hc : IsAdmissible c)
+    (m : ℕ) (hm : 2 ≤ m) (p : Fin (m - 1) → ℝ) (hp : ∀ i, 0 ≤ p i)
+    (R : ℝ) (hR : 0 < R) (hRm : R < m) (H : ℝ) (hH : H ≤ energyH c)
+    (hblock : ∀ g : Fin (m - 1) → ℝ, (∀ i, 0 ≤ g i) →
+      R ≤ clippedTrace c g + ∑ i : Fin (m - 1), p i * g i) :
+    ((m : ℝ) * H - ∑ i : Fin (m - 1), p i) / ((m : ℝ) - R) <
+      (337017 : ℝ) / 500000 := by
+  sorry
+
+end GebendorferZetaCertificateClass
