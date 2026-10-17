@@ -25,24 +25,18 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Finset
-
 namespace Erdos129
 
-/-- Under the edge colouring `c` of $K_N$, every edge inside the vertex set `T` has colour `i`,
-i.e. `T` spans a monochromatic clique of colour `i`. -/
-def IsMonoClique {N r : ℕ} (c : Sym2 (Fin N) → Fin r) (i : Fin r) (T : Finset (Fin N)) : Prop :=
-  ∀ x ∈ T, ∀ y ∈ T, x ≠ y → c s(x, y) = i
+/-- Monochromatic clique predicate for the edge colourings used in this problem. -/
+abbrev IsMonoClique {N r : ℕ} (c : Sym2 (Fin N) → Fin r) (i : Fin r)
+    (T : Finset (Fin N)) : Prop := Combinatorics.ColorAvoidance.IsMonoClique c i T
 
-/-- `N` has the Ramsey property for `(n, k, r)`: for every `r`-colouring of the edges of $K_N$
-there is a set `S` of `n` vertices and a colour `i` such that `S` contains no $K_k$ all of whose
-edges have colour `i`. -/
-def HasRamseyProperty (n k r N : ℕ) : Prop :=
-  ∀ c : Sym2 (Fin N) → Fin r, ∃ S : Finset (Fin N), S.card = n ∧
-    ∃ i : Fin r, ∀ T ⊆ S, T.card = k → ¬ IsMonoClique c i T
+/-- The colour-avoidance Ramsey property. -/
+abbrev HasRamseyProperty (n k r N : ℕ) : Prop :=
+  Combinatorics.ColorAvoidance.HasRamseyProperty n k r N
 
-/-- $R(n; k, r)$: the smallest `N` with the Ramsey property for `(n, k, r)`. -/
-noncomputable def R (n k r : ℕ) : ℕ := sInf {N | HasRamseyProperty n k r N}
+/-- The colour-avoidance Ramsey number $R(n; k, r)$. -/
+noncomputable abbrev R (n k r : ℕ) : ℕ := Combinatorics.ColorAvoidance.ramseyNumber n k r
 
 /-- Exponential lower bound (Girao): $2 ^ {\lfloor n / 100 \rfloor} < R(n; 3, 2)$ for all
 $n \ge 100$. -/
@@ -69,7 +63,7 @@ indeed $R(n;3,2) \geq C^{n}$.
 -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/AItoBit/erdos-129-lean/blob/06e2f9ba62d7511e3d9ccfd96dcada975b6bd9e1/Erdos129.lean"]
-theorem erdos_129 : answer(False) ↔
+theorem erdos_129 : ¬
     ∀ r : ℕ, 2 ≤ r → ∃ C : ℝ, 1 < C ∧ ∀ n : ℕ, (R n 3 r : ℝ) < C ^ Real.sqrt n := by
   sorry
 
