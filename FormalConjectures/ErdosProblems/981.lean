@@ -22,14 +22,10 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/981](https://www.erdosproblems.com/981)
-
-*References:*
-- [erdosproblems.com/981](https://www.erdosproblems.com/981)
 - [El69] Elliott, P. D. T. A., *A conjecture of Erdős concerning character sums*.
   Indag. Math. 31 (1969), 164–171.
 - [TaZh25] [arxiv/2512.24631](https://arxiv.org/abs/2512.24631)
   **Average first-passage times for character sums** by *Quanyu Tang and Hao Zhang*
-
 -/
 
 @[expose] public section
@@ -39,28 +35,52 @@ open scoped Topology
 
 namespace Erdos981
 
-def Erdos981Property (ε : ℝ) {p : ℕ} (hp : p.Prime) (N : ℕ) :=
-   (∑ n ≤ N, @legendreSym p ⟨hp⟩ n) < ε * N
-
-noncomputable def f (ε : ℝ) {p : ℕ} (hp : p.Prime) : ℕ :=
-  sInf { m | ∀ N > m, Erdos981Property ε hp N }
-
-noncomputable def f' (ε : ℝ) {p : ℕ} (hp : p.Prime) : ℕ :=
-  sInf { m | Erdos981Property ε hp m }
-
-def S (n : ℕ) := { k | k.Prime ∧ k < n }
+/--
+Property of a natural $N$ to satisfy $\sum_{n\leq N} \left(\frac{n}{p}\right)<\epsilon N$,
+where $\left(\frac{n}{p}\right)$ is the Jacobi symbol. The theorem statement mentions Legendre symbol,
+however in formalization we use Jacobi symbol to avoid problem with passing the fact that $p$ is prime.
+For prime $p$ `jacobiSym n p = legendreSym p n`.
+-/
+def Erdos981Property (ε : ℝ) (p : ℕ) (N : ℕ) : Prop :=
+   (∑ n ≤ N, jacobiSym n p) < ε * N
 
 /--
-TODO: Add description
+The smallest integer $m$ such that
+$\sum_{n\leq N} \left(\frac{n}{p}\right)<\epsilon N$ for all $N\geq m$.
 -/
-@[category research solved, AMS 11]
+noncomputable def f (ε : ℝ) (p : ℕ) : ℕ :=
+  sInf { m | ∀ N ≥ m, Erdos981Property ε p N }
+
+/--
+The smallest integer $m$ such that $\sum_{n\leq m} \left(\frac{n}{p}\right)<\epsilon m$
+-/
+noncomputable def f' (ε : ℝ) (p : ℕ) : ℕ :=
+  sInf { m | Erdos981Property ε p m }
+
+/--
+Let $\epsilon > 0$ and $f_\epsilon(p)$ be the smallest integer $m$
+such that $\sum_{n\leq N} \left(\frac{n}{p}\right)<\epsilon N$ for all $N\geq m$. Prove that
+$$\sum_{p<x}f_\epsilon(p)\sim c_\epsilon \frac{x}{\log x}$$
+for some $c_\epsilon > 0$.
+
+Proved by Elliott [El69].
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos981.lean#L42"]
 theorem erdos_981 (ε : ℝ) (hε : 0 < ε) :
-    ∃ c > (0 : ℝ), Tendsto (fun x ↦ (∑' p : S ⌊x⌋₊, f ε p.prop.1) * log x / x) atTop (𝓝 c) := by
+    ∃ c > (0 : ℝ), Tendsto (fun x ↦ (∑ p : Nat.primesBelow ⌈x⌉₊, f ε p) * log x / x) atTop (𝓝 c) := by
   sorry
 
+/--
+Let $\epsilon > 0$ and $f_\epsilon(p)$ be the smallest integer $m$ such that $\sum_{n\leq m} \left(\frac{n}{p}\right)<\epsilon m$. Prove that
+$$\sum_{p<x}f_\epsilon(p)\sim c_\epsilon \frac{x}{\log x}$$
+for some $c_\epsilon > 0$.
+
+Proved by Tang and Zhang [TaZh25].
+-/
 @[category research solved, AMS 11]
-theorem erdos_981_alt (ε : ℝ) (hε : 0 < ε) :
-    ∃ c > (0 : ℝ), Tendsto (fun x ↦ (∑' p : S ⌊x⌋₊, f' ε p.prop.1) * log x / x) atTop (𝓝 c) := by
+theorem erdos_981.variants.first_time (ε : ℝ) (hε : 0 < ε) :
+    ∃ c > (0 : ℝ), Tendsto (fun x ↦ (∑ p : Nat.primesBelow ⌈x⌉₊, f' ε p) * log x / x) atTop (𝓝 c) := by
   sorry
 
 end Erdos981
