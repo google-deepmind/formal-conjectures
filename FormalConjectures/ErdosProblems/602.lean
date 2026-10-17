@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 602
 
 *Reference:* [erdosproblems.com/602](https://www.erdosproblems.com/602)
 -/
+
+@[expose] public section
 
 open Set
 
@@ -71,8 +74,8 @@ forbidden intersection size of 1.
 countably infinite set is in bijection with `ℕ`, the two formulations are equivalent, but
 working over an arbitrary ground type makes the statement apply immediately to, e.g.,
 almost-disjoint families of countable subsets of an uncountable space. -/
-@[category research open, AMS 3 5]
-theorem erdos_602 : answer(sorry) ↔
+@[category research open, question, AMS 3 5]
+theorem erdos_602 :
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
       (∀ i j, i ≠ j → (A i ∩ A j).Finite) →
@@ -92,14 +95,12 @@ particular satisfies `|A_i ∩ A_j| ≠ 1`), then Property B holds trivially.
 `a_i` and `b_i`. We can define a colouring that assigns colour 0 to `a_i` and colour 1
 to `b_i` for each `i` (using disjointness, these choices don't conflict), and extend
 arbitrarily elsewhere. Then no `A_i` is monochromatic. -/
-@[category research solved, AMS 3 5]
-theorem erdos_602.variants.disjoint : answer(True) ↔
+@[category research solved, question, AMS 3 5]
+theorem erdos_602.variants.disjoint :
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Infinite) →
       (∀ i j, i ≠ j → Disjoint (A i) (A j)) →
       HasPropertyB I A := by
-  show True ↔ _
-  simp only [true_iff]
   intro α I A hInfinite hDisjoint
   -- For each i, pick two distinct elements a_fn i, b_fn i ∈ A i.
   have ha_b : ∀ i, ∃ a b : α, a ∈ A i ∧ b ∈ A i ∧ a ≠ b := by
@@ -107,7 +108,7 @@ theorem erdos_602.variants.disjoint : answer(True) ↔
     obtain ⟨a, ha⟩ := (hInfinite i).nonempty
     have hA2 : (A i \ {a}).Nonempty := by
       apply Set.Infinite.nonempty
-      exact (hInfinite i).diff (Set.finite_singleton a)
+      exact (hInfinite i).sdiff (Set.finite_singleton a)
     obtain ⟨b, hbA, hba⟩ := hA2
     simp only [Set.mem_singleton_iff] at hba
     exact ⟨a, b, ha, hbA, fun h => hba h.symm⟩
@@ -151,8 +152,8 @@ If the index set is countable, the answer is yes, and the intersection
 condition is unnecessary. This is Bernstein's Lemma:
 every countable system of infinite sets has Property B.
 -/
-@[category research solved, AMS 3 5]
-theorem erdos_602.variants.countable_index : answer(True) ↔
+@[category research solved, question, AMS 3 5]
+theorem erdos_602.variants.countable_index :
     ∀ {α : Type*} (A : ℕ → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
       (∀ i j, i ≠ j → (A i ∩ A j).Finite) →
@@ -175,9 +176,9 @@ theorem erdos_602.variants.single_set {α : Type*} (A : Set α) (hA : A.Infinite
   -- Pick a second element different from a.
   have hA2 : (A \ {a}).Nonempty := by
     apply Set.Infinite.nonempty
-    exact hA.diff (Set.finite_singleton a)
+    exact hA.sdiff (Set.finite_singleton a)
   obtain ⟨b, hbA⟩ := hA2
-  simp only [Set.mem_diff, Set.mem_singleton_iff] at hbA
+  simp only [Set.mem_sdiff, Set.mem_singleton_iff] at hbA
   obtain ⟨hbA, hba⟩ := hbA
   -- Colour a with 0, b with 1, everything else with 0.
   refine ⟨fun n => if n = b then 1 else 0, ?_⟩
@@ -238,15 +239,13 @@ If the family consists of exactly two countably infinite sets `A₀` and `A₁` 
 - If `|A₀ ∩ A₁| ≥ 2`: the intersection contains two distinct points `x` and `y`.
   Assign `x` colour 0 and `y` colour 1. Both `A₀` and `A₁` contain `x` and `y`,
   so neither is monochromatic. -/
-@[category research solved, AMS 3 5]
-theorem erdos_602.variants.two_sets : answer(True) ↔
+@[category research solved, question, AMS 3 5]
+theorem erdos_602.variants.two_sets :
     ∀ {α : Type*} (A : Fin 2 → Set α),
       (∀ i, (A i).Infinite) →
       (A 0 ∩ A 1).Finite →
       Set.ncard (A 0 ∩ A 1) ≠ 1 →
       HasPropertyB (Fin 2) A := by
-  show True ↔ _
-  simp only [true_iff]
   intro α A hInfinite hFin hNcard
   classical
   -- Case split: intersection empty or size ≥ 2.
@@ -255,13 +254,13 @@ theorem erdos_602.variants.two_sets : answer(True) ↔
     -- Pick distinct a, b from A 0.
     obtain ⟨a, ha0⟩ := (hInfinite 0).nonempty
     have hA0' : (A 0 \ {a}).Nonempty :=
-      Set.Infinite.nonempty ((hInfinite 0).diff (Set.finite_singleton a))
+      Set.Infinite.nonempty ((hInfinite 0).sdiff (Set.finite_singleton a))
     obtain ⟨b, hbA0, hba⟩ := hA0'
     simp only [Set.mem_singleton_iff] at hba
     -- Pick distinct c, d from A 1.
     obtain ⟨c, hc1⟩ := (hInfinite 1).nonempty
     have hA1' : (A 1 \ {c}).Nonempty :=
-      Set.Infinite.nonempty ((hInfinite 1).diff (Set.finite_singleton c))
+      Set.Infinite.nonempty ((hInfinite 1).sdiff (Set.finite_singleton c))
     obtain ⟨d, hd1, hdc⟩ := hA1'
     simp only [Set.mem_singleton_iff] at hdc
     -- Disjointness facts: A 0 and A 1 are disjoint.
@@ -331,18 +330,18 @@ the hypotheses of the main theorem are non-vacuous. All goals are fully closed: 
 private lemma evens_infinite : Set.Infinite {n : ℕ | Even n} :=
   Set.infinite_of_injective_forall_mem (f := fun n : ℕ => 2 * n)
     (by intro a b h; simp only at h; omega)
-    (by intro n; simp only [Set.mem_setOf_eq]; exact ⟨n, by ring⟩)
+    (by intro n; simp only [Set.mem_ofPred_eq]; exact ⟨n, by ring⟩)
 
 @[category test, AMS 3 5]
 private lemma odds_infinite : Set.Infinite {n : ℕ | Odd n} :=
   Set.infinite_of_injective_forall_mem (f := fun n : ℕ => 2 * n + 1)
     (by intro a b h; simp only at h; omega)
-    (by intro n; simp only [Set.mem_setOf_eq]; exact ⟨n, by ring⟩)
+    (by intro n; simp only [Set.mem_ofPred_eq]; exact ⟨n, by ring⟩)
 
 @[category test, AMS 3 5]
 private lemma evens_inter_odds_empty : {n : ℕ | Even n} ∩ {n : ℕ | Odd n} = ∅ := by
   ext x
-  simp only [Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+  simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
   intro ⟨k, hk⟩ ⟨m, hm⟩; omega
 
 /-- The empty family vacuously has Property B, exercising `erdos_602.variants.empty_index`. -/
@@ -398,9 +397,9 @@ example : HasPropertyB (Fin 2) (![{n : ℕ | Even n}, {n | Odd n}] : Fin 2 → S
     have h0 : (fun n : ℕ => if n = 2 ∨ n = 1 then (1 : Fin 2) else 0) 0 = 0 := by decide
     have h2 : (fun n : ℕ => if n = 2 ∨ n = 1 then (1 : Fin 2) else 0) 2 = 1 := by decide
     have hmem0 : (0 : ℕ) ∈ (![{n : ℕ | Even n}, {n | Odd n}] : Fin 2 → Set ℕ) 0 := by
-      simp only [Matrix.cons_val_zero, Set.mem_setOf_eq]; exact ⟨0, by ring⟩
+      simp only [Matrix.cons_val_zero, Set.mem_ofPred_eq]; exact ⟨0, by ring⟩
     have hmem2 : (2 : ℕ) ∈ (![{n : ℕ | Even n}, {n | Odd n}] : Fin 2 → Set ℕ) 0 := by
-      simp only [Matrix.cons_val_zero, Set.mem_setOf_eq]; exact ⟨1, by ring⟩
+      simp only [Matrix.cons_val_zero, Set.mem_ofPred_eq]; exact ⟨1, by ring⟩
     have := hMono 0 hmem0 2 hmem2
     rw [h0, h2] at this; exact absurd this (by decide)
   · -- A 1 = odds: f(1) = 1 ≠ 0 = f(3)
@@ -420,7 +419,7 @@ This confirms the boundary condition is faithfully encoded. -/
 example : Set.ncard ({n : ℕ | Even n} ∩ {n : ℕ | n = 0 ∨ Odd n}) = 1 := by
   have heq : {n : ℕ | Even n} ∩ {n : ℕ | n = 0 ∨ Odd n} = {0} := by
     ext x
-    simp only [Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · rintro ⟨⟨k, hk⟩, rfl | ⟨m, hm⟩⟩ <;> omega
     · rintro rfl; exact ⟨⟨0, by ring⟩, Or.inl rfl⟩

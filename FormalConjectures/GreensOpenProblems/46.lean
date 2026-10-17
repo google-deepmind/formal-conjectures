@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 46
@@ -27,6 +28,8 @@ What is the largest $y$ for which one may cover the interval $[y]$ by residue cl
   Journal of the American Mathematical Society, 31(1), 65-105.
 - [Iw78] Iwaniec, Henryk. "On the problem of Jacobsthal." Demonstratio Mathematica 11.1 (1978): 225-232.
 -/
+
+@[expose] public section
 
 namespace Green46
 
@@ -49,18 +52,22 @@ noncomputable def bestLower (x : ℕ) : ℝ :=
 /-- Best-known upper bound [Iw78]. -/
 noncomputable def bestUpper (x : ℕ) : ℝ := (x : ℝ) ^ 2
 
+def green_46.improve_lower.answer : ℕ → ℝ := sorry
+
 /-- We conjecture that the best-known lower bound can be improved. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem green_46.improve_lower :
-    let ans := (answer(sorry) : ℕ → ℝ)
-    (bestLower =o[atTop] ans) ∧ (ans ≪ maxY) := by
+    (bestLower =o[atTop] green_46.improve_lower.answer) ∧ (green_46.improve_lower.answer ≪ maxY)
+      := by
   sorry
 
+def green_46.improve_upper.answer : ℕ → ℝ := sorry
+
 /-- We conjecture that the best-known upper bound can be improved. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem green_46.improve_upper :
-    let ans := (answer(sorry) : ℕ → ℝ)
-    (ans =o[atTop] bestUpper) ∧ (maxY ≪ ans) := by
+    (green_46.improve_upper.answer =o[atTop] bestUpper) ∧ (maxY ≪ green_46.improve_upper.answer)
+      := by
   sorry
 
 /-- It seems very likely that we must have $y \ll x^{1+o(1)}$ [Gr24]. -/

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 299
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/299](https://www.erdosproblems.com/299)
 - [Bl21] Bloom, T. F., On a density conjecture about unit fractions. arXiv:2112.03726 (2021).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -38,8 +41,8 @@ There does not exist such a sequence, which follows from the positive solution t
 
 This was formalized in Lean 3 by Bloom and Mehta.
 -/
-@[category research solved, AMS 11 40, formal_proof using other_system at "https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean"]
-theorem erdos_299 : answer(False) ↔ (∃ (a : ℕ → ℕ),
+@[category research solved, question, AMS 11 40, formal_proof using other_system at "https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean"]
+theorem erdos_299 : ¬ (∃ (a : ℕ → ℕ),
     StrictMono a ∧ (∀ n, 0 < a n) ∧
     (fun n ↦ (a (n + 1) : ℝ) - a n) =O[atTop] (1 : ℕ → ℝ) ∧
     ∀ S : Finset ℕ, ∑ i ∈ S, (1 : ℝ) / a i ≠ 1) := by

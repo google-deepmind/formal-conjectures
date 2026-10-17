@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 38
@@ -25,10 +26,13 @@ import FormalConjectures.Util.ProblemImports
   Colloque sur la Théorie des Nombres, Bruxelles, 1955 (1956), 127-137.)
 -/
 
-open Classical Set Pointwise
+@[expose] public section
+
+open Set Pointwise
 
 namespace Erdos38
 
+open scoped Classical in
 /--
 Does there exist $B \subset \mathbb{N}$ which is not an additive basis,
 but is such that for every set $A \subseteq \mathbb{N}$ of Schnirelmann density $\alpha$
@@ -47,9 +51,9 @@ A positive [solution](https://github.com/spicylemonade/erdos-38) was given by GP
 (prompted by gebyjaff, cleanup by Liam Price); in fact a sparse random set $B$ has this property,
 with $f(\alpha)\gg \alpha (1-\alpha)^2$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
 "https://www.erdosproblems.com/forum/thread/38#post-6131"]
-theorem erdos_38 : answer(True) ↔
+theorem erdos_38 :
     ∃ B : Set ℕ, ¬ B.IsWeakAddBasis ∧ ∃ f : ℝ → ℝ, (∀ α, 0 < α → α < 1 → f α > 0) ∧
       ∀ (A : Set ℕ) (N : ℕ),
         let α := schnirelmannDensity A

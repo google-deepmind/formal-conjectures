@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Büchi's problem
@@ -22,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/B%C3%BCchi%27s_problem)
 -/
+
+@[expose] public section
 
 namespace Buchi
 
@@ -35,9 +38,9 @@ def IsBuchi (M : ℕ) : Prop :=
 There exists a positive integer $M$ such that, for all integers $x$ and $a$,
 if $(x+n)^2 + a$ is a square for $M$ consecutive values of $n$, then $a = 0$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem buchi_problem :
-    answer(sorry) ↔ ∃ M : ℕ, 1 ≤ M ∧ IsBuchi M := by
+    ∃ M : ℕ, 1 ≤ M ∧ IsBuchi M := by
   sorry
 
 

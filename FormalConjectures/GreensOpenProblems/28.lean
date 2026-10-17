@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 28
@@ -24,6 +25,8 @@ References:
 - [Mathoverflow/339137](https://mathoverflow.net/questions/339137/why-do-polynomials-with-coefficients-0-1-like-to-have-only-factors-with-0-1) asked by user [Sil](https://mathoverflow.net/users/136794/sil)
 - [MathStackexchange/3325163](https://math.stackexchange.com/questions/3325163/) asked by user [Emmanuel Amiot](https://math.stackexchange.com/users/403309/emmanuel-amiot)
 -/
+
+@[expose] public section
 
 namespace Green28
 
@@ -45,8 +48,8 @@ Suppose that $X, Y$ are two finitely-supported independent random variables taki
 and such that $X + Y$ is uniformly distributed on its range. Are $X$ and $Y$ themselves uniformly
 distributed on their ranges?
 -/
-@[category research open, AMS 60]
-theorem green_28 : answer(sorry) ↔
+@[category research open, question, AMS 60]
+theorem green_28 :
   ∀ (X Y : PMF ℤ), -- marginals, independence is built into indepSum
     X.support.Finite ∧ Y.support.Finite ∧ IsUniformOnSupport (indepSum X Y) →
       IsUniformOnSupport X ∧ IsUniformOnSupport Y := by

@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1043
@@ -27,6 +29,8 @@ import FormalConjectures.Util.ProblemImports
 - [Po61] Pommerenke, Ch., On metric properties of complex polynomials. Michigan Math. J. (1961),
   97-115.
 -/
+
+@[expose] public section
 
 namespace Erdos1043
 
@@ -45,15 +49,18 @@ onto $\ell$ has measure at most $2$?
 
 Pommerenke [Po61] proved that the answer is no.
 
+The projection onto the line $\ell = \mathbb{R} u$ is measured with the Lebesgue measure of that
+line, so `volume` of the projected set is its length.
+
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 28 30,
+@[category research solved, question, AMS 28 30,
 formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1043.lean",
 formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/7db17471701f15b125d1c36bc1fa5bb9b702d6be/FormalConjectures/ErdosProblems/1043.lean#L214"]
 theorem erdos_1043 :
-    answer(False) ↔ ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
+    ¬ ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
-      volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) ≤ 2 := by
+      volume ((ℝ ∙ u).orthogonalProjectionOnto '' levelSet f) ≤ 2 := by
   sorry
 
 /--
@@ -64,7 +71,7 @@ measure at most 3.3.
 theorem erdos_1043.variants.weak :
     ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
-      volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) ≤ 3.3 := by
+      volume ((ℝ ∙ u).orthogonalProjectionOnto '' levelSet f) ≤ 3.3 := by
   sorry
 
 end Erdos1043

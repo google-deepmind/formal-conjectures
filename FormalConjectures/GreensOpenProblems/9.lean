@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 9
@@ -24,6 +25,8 @@ References:
 - [BlSi20] Bloom, Thomas F., and Olof Sisask. "Breaking the logarithmic barrier in Roth's theorem on
   arithmetic progressions." arXiv preprint arXiv:2007.03528 (2020).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -48,8 +51,8 @@ theorem green_9_i :
 /--
 Problem 9 (ii): is $r_5(N) \ll N(\log N)^{-c}$?
 -/
-@[category research open, AMS 5]
-theorem green_9_ii : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem green_9_ii :
     ∃ c > (0 : ℝ), (fun (N : ℕ) ↦ (r 5 N : ℝ))
       ≪ fun (N : ℕ) ↦ (N : ℝ) * (Real.log N) ^ (-c) := by
   sorry
@@ -57,9 +60,9 @@ theorem green_9_ii : answer(sorry) ↔
 /--
 Problem 9 (iii): is $r_4(\mathbf{F}_5^n) \ll N^{1-c}$, where $N=5^n$?
 -/
-@[category research open, AMS 5]
-theorem green_9_iii : answer(sorry) ↔
-    ∃ c > (0 : ℝ), (fun (n : ℕ) ↦ ((Finset.univ : Finset (Fin n → ZMod 5)).maxAPFreeCard 4 : ℝ))
+@[category research open, question, AMS 5]
+theorem green_9_iii :
+    ∃ c > (0 : ℝ), (fun (n : ℕ) ↦ ((Finset.univ : Finset (𝔽₅ n)).maxAPFreeCard 4 : ℝ))
       ≪ fun (n : ℕ) ↦ ((5 : ℝ) ^ n) ^ (1 - c) := by
   sorry
 

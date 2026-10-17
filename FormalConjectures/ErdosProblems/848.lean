@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 848
@@ -31,6 +32,8 @@ squarefree (for all $a, b \in A$) achieved by taking those $n \equiv 7 \pmod{25}
    https://www.math.columbia.edu/~msawhney/Problem_848.pdf
  - Full formal proof of asymptotic result: https://github.com/The-Obstacle-Is-The-Way/erdos-banger
 -/
+
+@[expose] public section
 
 namespace Erdos848
 
@@ -59,8 +62,8 @@ something slightly stronger, that there exists some constant $c>0$ such that if
 $\lvert A\rvert \geq (\frac{1}{25}-c)N$ and $N$ is large then $A$ is contained in either
 $\{ n\equiv 7\pmod{25}\}$ or $\{n\equiv 18\pmod{25}\}$.
 -/
-@[category research solved, AMS 11]
-theorem erdos_848 : answer(True) ↔ ∀ N, Erdos848For N := by
+@[category research solved, question, AMS 11]
+theorem erdos_848 : ∀ N, Erdos848For N := by
   sorry
 
 /-- There exists $N₀$ such that for all $N ≥ N₀$, if $A ⊆ \{1, \dots, N\}$ satisfies that $ab + 1$

@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«507»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«507»
 
 /-!
 # Ben Green's Open Problem 77
@@ -23,6 +24,8 @@ import FormalConjectures.ErdosProblems.«507»
 *Reference:*
 - [Ben Green's Open Problem 77](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.77)
 -/
+
+@[expose] public section
 
 open Erdos507 Filter Topology
 
@@ -32,9 +35,8 @@ namespace Green77
 Given $n$ points in the unit disc, must there be a triangle of area at most $n^{-2+o(1)}$
 determined by them?
 -/
-@[category research open, AMS 5 52]
+@[category research open, question, AMS 5 52]
 theorem green_77 :
-    answer(sorry) ↔
     ∃ (o : ℕ → ℝ), Tendsto o atTop (𝓝 0) ∧
       α ≪ fun n ↦ n ^ (-2 + o n) := by
   sorry

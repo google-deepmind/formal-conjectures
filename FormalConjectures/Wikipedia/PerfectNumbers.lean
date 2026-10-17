@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Perfect numbers
@@ -37,6 +38,8 @@ formalised here:
 - [Wikipedia, Odd perfect numbers](https://en.wikipedia.org/wiki/Perfect_number#Odd_perfect_numbers)
 -/
 
+@[expose] public section
+
 namespace PerfectNumbers
 
 open Nat
@@ -48,9 +51,9 @@ Are there infinitely many perfect numbers?
 *Reference:*
 [Wikipedia](https://en.wikipedia.org/wiki/Perfect_number)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_perfect :
-    answer(sorry) ↔ {n : ℕ | Perfect n}.Infinite := by
+    {n : ℕ | Perfect n}.Infinite := by
   sorry
 
 /--
@@ -64,9 +67,9 @@ has the form $2^{p-1}(2^p - 1)$ where $2^p - 1$ is a Mersenne prime.
 *Reference:*
 [Wikipedia](https://en.wikipedia.org/wiki/Perfect_number)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_even_perfect :
-    answer(sorry) ↔ {n : ℕ | Perfect n ∧ Even n}.Infinite := by
+    {n : ℕ | Perfect n ∧ Even n}.Infinite := by
   sorry
 
 /--

@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 972
 
 *Reference:* [erdosproblems.com/972](https://www.erdosproblems.com/972)
 -/
+
+@[expose] public section
 
 namespace Erdos972
 
@@ -34,8 +38,8 @@ def primeSet (α : ℝ) : Set ℕ :=
 Let $\alpha > 1$ be irrational. Are there infinitely many primes $p$
 such that $\lfloor p\alpha \rfloor$ is also prime?
 -/
-@[category research open, AMS 11]
-theorem erdos_972 : answer(sorry) ↔ ∀ α > 1, Irrational α → (primeSet α).Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_972 : ∀ α > 1, Irrational α → (primeSet α).Infinite := by
   sorry
 
 end Erdos972

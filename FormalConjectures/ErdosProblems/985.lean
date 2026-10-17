@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 985
@@ -22,13 +23,15 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/985](https://www.erdosproblems.com/985)
 -/
 
+@[expose] public section
+
 namespace Erdos985
 
 /--
 Is it true that, for every prime $p$, there is a prime $q \leq p$ which is a primitive root modulo $p$?
 -/
-@[category research open, AMS 11]
-theorem erdos_985 : answer(sorry) ↔ ∀ᵉ (p : ℕ) (hp_prime : p.Prime) (hp_nontrivial : p ≠ 2),
+@[category research open, question, AMS 11]
+theorem erdos_985 : ∀ᵉ (p : ℕ) (hp_prime : p.Prime) (hp_nontrivial : p ≠ 2),
     ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
   sorry
 

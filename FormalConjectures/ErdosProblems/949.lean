@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 949
 
 *Reference:* [erdosproblems.com/949](https://www.erdosproblems.com/949)
 -/
+
+@[expose] public section
 
 open Cardinal Filter
 open scoped Pointwise Topology
@@ -33,18 +36,17 @@ Let $S \subseteq \mathbb{R}$ be a set containing no solutions to $a + b = c$.
 Must there be a set $A \subseteq \mathbb{R} \setminus S$ of cardinality continuum such that
 $A + A \subseteq \mathbb{R}\setminus S$?
 -/
-@[category research open, AMS 5]
-theorem erdos_949 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_949 :
     ∀ S : Set ℝ, (∀ a ∈ S, ∀ b ∈ S, a + b ∉ S) → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by
   sorry
 
 /-- Let $S\sub \mathbb{R}$ be a Sidon set. Must there be a set $A\sub \mathbb{R}∖S$ of cardinality
 continuum such that $A + A \sub \mathbb{R}∖S$? -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at ""]
-theorem erdos_949.variants.sidon : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_949.variants.sidon :
     ∀ S : Set ℝ, IsSidon S → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by
-  show True ↔ _
-  simp only [true_iff, Set.add_subset_iff]
+  simp only [Set.add_subset_iff]
   rintro S hS
   -- We case on whether `S` has cardinality the continuum or strictly less.
   obtain hS𝔠 | hS𝔠 : #S < 𝔠 ∨ #S = 𝔠 := lt_or_eq_of_le <| by simpa using mk_set_le S
@@ -52,7 +54,7 @@ theorem erdos_949.variants.sidon : answer(True) ↔
   -- such that both `A` and `A + A` are disjoint from `S`.
   · obtain ⟨A, ⟨hAS, hAAS⟩, hAmax⟩ := by
       refine zorn_subset {A ⊆ Sᶜ | ∀ x ∈ A,∀ y ∈ A, x + y ∉ S} ?_
-      simp only [Set.setOf_and, Set.subset_inter_iff, Set.mem_inter_iff, Set.mem_setOf_eq, and_imp,
+      simp only [Set.ofPred_and, Set.subset_inter_iff, Set.mem_inter_iff, Set.mem_ofPred_eq, and_imp,
         and_assoc]
       refine fun C hCS hSC hC ↦ ⟨_, Set.iUnion₂_subset hCS, ?_, Set.subset_iUnion₂⟩
       simp only [Set.mem_iUnion, exists_prop, forall_exists_index, and_imp]
@@ -93,11 +95,11 @@ theorem erdos_949.variants.sidon : answer(True) ↔
   -- If `S` has cardinality the continuum, then we pick some `a ≠ 0` in `S` and set
   -- `A := (S \ {a} - a / 2) \ S`.
   have hSinf : S.Infinite := by simpa using aleph0_le_continuum.trans_eq hS𝔠.symm
-  obtain ⟨a, ha, ha₀⟩ : ∃ a ∈ S, a ≠ 0 := (hSinf.diff <| Set.finite_singleton 0).nonempty
-  refine ⟨(· - a / 2) '' (S \ {a}) \ S, Set.diff_subset_compl .., ?_, ?_⟩
+  obtain ⟨a, ha, ha₀⟩ : ∃ a ∈ S, a ≠ 0 := (hSinf.sdiff <| Set.finite_singleton 0).nonempty
+  refine ⟨(· - a / 2) '' (S \ {a}) \ S, Set.sdiff_subset_compl .., ?_, ?_⟩
   -- Since `S` is Sidon and `a ≠ 0`, `(S - a / 2) ∩ S ⊇ (S \ {a} - a / 2) ∩ S` has at most one
   -- element. In particular, `#A = #(S \ {a} - a / 2) = #S = 𝔠` as wanted.
-  · rw [mk_diff_eq_left_of_finite' ((hSinf.diff <| Set.finite_singleton _).image
+  · rw [mk_sdiff_eq_left_of_finite' ((hSinf.sdiff <| Set.finite_singleton _).image
       sub_left_injective.injOn)]
     · simp [Cardinal.mk_image_eq sub_left_injective, *]
     · refine Set.Subsingleton.finite ?_

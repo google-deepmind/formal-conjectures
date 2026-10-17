@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 347
 
 *Reference:* [erdosproblems.com/347](https://www.erdosproblems.com/347)
 -/
+
+@[expose] public section
 
 open Filter Set Topology
 
@@ -41,11 +44,11 @@ has density $1$ for every cofinite subsequence $A'$ of $A$?
 This has been solved in the affirmative by ebarschkis in the comments (based on idea of Tao and
 van Doorn, also in the comments).
 
-Thos was formalized in Lean by Barschkis using Aristotle.
+This was formalized in Lean by Barschkis using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem347/Formalization.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem347/Formalization.lean"]
 theorem erdos_347 :
-    answer(True) ↔ ∃ a : ℕ → ℕ, (Monotone a) ∧
+    ∃ a : ℕ → ℕ, (Monotone a) ∧
       (Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (𝓝 2)) ∧
       (∀ ι : ℕ → ℕ, (range ι)ᶜ.Finite → HasDensity (𝓟 (range (a ∘ ι))) 1) := by
   sorry

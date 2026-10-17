@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Agoh-Giuga conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Agoh-Giuga_conjecture)
 -/
+
+@[expose] public section
+
 open scoped Nat
 /-
 
@@ -50,7 +54,7 @@ def AgohGiugaCongr : Prop :=
 
 /--
 The **Agoh-Giuga Conjecture**, Giuga's formulation.
-An integer `p ≥ 2` is prime if and only if it satifies the congruence
+An integer `p ≥ 2` is prime if and only if it satisfies the congruence
 `∑_{i=1}^{p-1} i^{p-1} ≡ -1 [MOD p]`.
 -/
 def AgohGiugaSum : Prop := ∀ p ≥ 2, p.Prime ↔
@@ -109,26 +113,18 @@ theorem isWeakGiuga_iff_sum_primeFactors {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∃ m : ℕ, ∑ p ∈ n.primeFactors, (1 / p : ℚ) - 1 / n = m := by
   sorry
 
--- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
-/--
-A Carmichael number is a composite number `n` such that for all `b ≥ 1`,
-we have `b^n ≡ b (mod n)`.
--/
-def IsCarmichael (n : ℕ) : Prop :=
-  1 < n ∧ ¬ n.Prime ∧ ∀ b ≥ 1, n.Coprime b → n.FermatPsp b
-
 /-- A composite Carmichael number is squarefree. -/
 @[category textbook, AMS 11]
 theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCarmichael a) :
     Squarefree a := by
-  have ha₂_forall := ha₂.2.2
-  simp_all [Nat.Composite, a.squarefree_iff_prime_squarefree, Nat.FermatPsp, Nat.ProbablePrime]
+  have ha₂_forall := ha₂
+  simp_all [IsCarmichael, Nat.Composite, a.squarefree_iff_prime_squarefree, Nat.FermatPsp, Nat.ProbablePrime]
   rintro p hp ⟨N, rfl⟩
   apply absurd (ha₂_forall (p * N + 1) ((1).le_add_left _))
   have : Fact p.Prime := ⟨hp⟩
   rw [mul_assoc] at ha₁
   rw [mul_assoc, ← geom_sum_mul_of_one_le ((1).le_add_left (p * N)), p.coprime_mul_iff_left]
-  simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero']).not.mpr
+  simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero]).not.mpr
     ((ZMod.natCast_eq_zero_iff _ _).not.mp (by simp [le_of_lt ha₁.1]))
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
@@ -138,8 +134,8 @@ and, for all prime `p` dividing `a`, we have `p - 1 ∣ a - 1`. -/
 theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
     IsCarmichael a ↔ Squarefree a ∧
       ∀ p, p.Prime → p ∣ a → (p - 1 : ℕ) ∣ (a - 1 : ℕ) := by
-  refine ⟨fun h ↦ ⟨squarefree_of_isCarmichael ha₁ h, fun p hp hpa ↦ ?_⟩, fun h ↦ ⟨ha₁.1, ha₁.2, fun b hb hab ↦ ?_⟩⟩
-  · have h_forall := h.2.2
+  refine ⟨fun h ↦ ⟨squarefree_of_isCarmichael ha₁ h, fun p hp hpa ↦ ?_⟩, fun h b hb hab ↦ ?_⟩
+  · have h_forall := h
     have : Fact p.Prime := ⟨hp⟩
     let ⟨g, h⟩ := IsCyclic.exists_generator (α := (ZMod p)ˣ)
     obtain ⟨k, rfl⟩ := hpa
@@ -178,6 +174,28 @@ theorem korselts_criterion (a : ℕ) (ha₁ : a.Composite) :
       · simp [a.factorization_eq_zero_of_not_dvd hpa]
     · simp_all
 
+@[category test, AMS 11]
+lemma isCarmichael_561 : IsCarmichael 561 := by
+  have h_comp : Nat.Composite 561 := by
+    dsimp [Nat.Composite]
+    constructor <;> norm_num
+  apply (korselts_criterion 561 h_comp).mpr
+  constructor
+  · have h1 : 561 = 3 * 11 * 17 := by norm_num
+    rw [h1, Nat.squarefree_mul (by norm_num), Nat.squarefree_mul (by norm_num)]
+    refine ⟨⟨(Nat.prime_iff.mp (by norm_num : Nat.Prime 3)).squarefree, (Nat.prime_iff.mp (by norm_num : Nat.Prime 11)).squarefree⟩, (Nat.prime_iff.mp (by norm_num : Nat.Prime 17)).squarefree⟩
+  · intro p hp hp_dvd
+    have h1 : 561 = 3 * (11 * 17) := by norm_num
+    rw [h1] at hp_dvd
+    rcases (hp.dvd_mul.mp hp_dvd) with h3 | h11_17
+    · have : p = 3 := ((by norm_num : Nat.Prime 3).eq_one_or_self_of_dvd p h3).resolve_left hp.ne_one
+      subst this; norm_num
+    · rcases (hp.dvd_mul.mp h11_17) with h11 | h17
+      · have : p = 11 := ((by norm_num : Nat.Prime 11).eq_one_or_self_of_dvd p h11).resolve_left hp.ne_one
+        subst this; norm_num
+      · have : p = 17 := ((by norm_num : Nat.Prime 17).eq_one_or_self_of_dvd p h17).resolve_left hp.ne_one
+        subst this; norm_num
+
 /--
 Giuga showed that a number `n` is strong Giuga if and only if it is
 Carmichael and `∑_{p|n} 1/p - 1/n ∈ ℕ` (i.e., if and only if it is Carmichael
@@ -192,7 +210,7 @@ theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
 /--
 Every strong Giuga number is a Carmichael number.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/394ec1c1ff92bdf2fa10f30d62ae9d0455d3ce20/Proofs/T_AgohGiuga_agoh_giuga_variants_isStrongGiuga_implies_isCarmichael.lean#L283"]
 theorem agoh_giuga.variants.isStrongGiuga_implies_isCarmichael
     (a : ℕ) (ha : IsStrongGiuga a) : IsCarmichael a := by
   sorry
@@ -235,7 +253,7 @@ theorem agoh_giuga.variants._13000_le_digits_length_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) : 13000 ≤ (Nat.digits 10 a).length := by
   sorry
 
-open Classical in
+open scoped Classical in
 /--
 Let `G(X)` denote the number of exceptions `n ≤ X` to Giuga’s conjecture.
 Then for `X` larger than an absolute constant which can be made

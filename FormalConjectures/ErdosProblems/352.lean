@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 352
 
 *Reference:* [erdosproblems.com/352](https://www.erdosproblems.com/352)
 -/
+
+@[expose] public section
 
 open scoped EuclideanGeometry
 open scoped ProbabilityTheory
@@ -31,9 +34,9 @@ namespace Erdos352
 Is there some $c > 0$ such that every measurable $A \subseteq \mathbb{R}^2$ of measure $\geq c$
  contains the vertices of a triangle of area 1?
 -/
-@[category research open, AMS 51]
+@[category research open, question, AMS 51]
 theorem erdos_352 :
-    answer(sorry) ↔ ∃ c > (0: ℝ), ∀ A : Set ℝ², MeasurableSet A → ℙ A ≥ c.toEReal
+    ∃ c > (0: ℝ), ∀ A : Set ℝ², MeasurableSet A → ℙ A ≥ c.toEReal
        → (∃ t : Affine.Triangle ℝ ℝ²,
            (∀ p : Fin 3, t.points p ∈ A) ∧
            EuclideanGeometry.triangle_area (t.points 0) (t.points 1) (t.points 2) = 1) := by

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 145
@@ -47,9 +48,11 @@ $\lambda_{\min}(\overline{G})$ is the local independence minimum of the compleme
 $\overline{G}$.
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture145
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -71,11 +74,20 @@ independence number of the complement graph.
 We state the inequality in the form
 $\mathrm{tree}(G) \cdot \mathrm{lMin}(\overline{G}) \ge 2 \cdot \mathrm{ecc}(B)$
 to avoid division.
+
+## Provenance
+
+Solved by Dominic Dabish.
+
+ProofOrchestrator, using OpenAI GPT-5.6 Thinking, assisted with the mathematical
+argument and Lean formalization; all formal claims were checked by the pinned
+Lean compiler.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/DomTheDeveloper/crl/blob/2ee448baa80c98f0c8b9a0c1c3d9421200f99aa5/math/wowii145/WOW145/145.lean"]
 theorem conjecture145 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hlMin : 0 < localIndependenceMin Gᶜ) :
-    2 * eccSet G (boundaryVertices G : Set α) ≤
+    2 * eccSet G (maxEccentricityVertices G : Set α) ≤
     largestInducedTreeSize G * localIndependenceMin Gᶜ := by
   sorry
 
@@ -91,13 +103,13 @@ example (G : SimpleGraph (Fin 3)) : 0 ≤ localIndependenceMin G := Nat.zero_le 
 
 /-- For any graph on `Fin 3`, `eccSet` is nonneg. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ eccSet G (boundaryVertices G : Set (Fin 3)) :=
+example (G : SimpleGraph (Fin 3)) [DecidableRel G.Adj] : 0 ≤ eccSet G (maxEccentricityVertices G) :=
   Nat.zero_le _
 
-/-- `boundaryVertices` is a subset of all vertices. -/
+/-- `maxEccentricityVertices` is a subset of all vertices. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 4)) : boundaryVertices G ⊆ Finset.univ := by
-  intro v _; exact Finset.mem_univ v
+example (G : SimpleGraph (Fin 4)) : maxEccentricityVertices G ⊆ Set.univ := by
+  intro v _; exact Set.mem_univ v
 
 /-- `localIndependenceMin G` is at most `indepNeighborsCard G v` for any vertex `v`.
 This follows from the definition of `inf'` as the minimum. -/

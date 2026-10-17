@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Moser's Worm
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Moser%27s_worm_problem)
 -/
+
+@[expose] public section
 
 open EuclideanGeometry MeasureTheory
 
@@ -64,14 +67,16 @@ theorem disc_mem_worm_covers : Metric.closedBall 0 0.5 ∈ WormCovers := by
   rw [abs_le]
   constructor <;> linarith
 
+def mosers_worm_problem.answer : ENNReal := sorry
+
 /--
 **Moser's Worm Problem**
 What is the minimal area (or greatest lower bound on the area)
 of a shape that can cover every unit-length curve?
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem mosers_worm_problem :
-    IsGLB {v | ∃ X ∈ WormCovers, volume X = v} answer(sorry) := by
+    IsGLB {v | ∃ X ∈ WormCovers, volume X = v} mosers_worm_problem.answer := by
   sorry
 
 /--
@@ -86,14 +91,16 @@ theorem mosers_worm_problem_upper_bound :
     ∃ X ∈ WormCovers, volume X = 0.260437 := by
   sorry
 
+def convex_mosers_worm_problem.answer : ENNReal := sorry
+
 /--
 **Convex Moser's Worm Problem**
 What is the minimal area (or greatest lower bound on the area)
 of a *convex* shape that can cover every unit-length curve?
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem convex_mosers_worm_problem :
-    IsGLB {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} answer(sorry) := by
+    IsGLB {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} convex_mosers_worm_problem.answer := by
   sorry
 
 /--

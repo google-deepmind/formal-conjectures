@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 143
@@ -23,9 +24,11 @@ import FormalConjectures.Util.ProblemImports
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture143
 
-open Classical SimpleGraph
+open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
@@ -39,12 +42,44 @@ is the length of the shortest cycle, and
 $\sigma(G) = G.\mathrm{secondSmallestDegree}$ is the **second-smallest degree**
 of $G$'s degree sequence (per WOWII defEntry 65). We state the inequality in
 denominator-free form to avoid the $\sigma = 0$ corner case ($n \le 1$).
+
+The proof splits into the acyclic case and two cyclic cases. For an acyclic
+graph the girth is zero. If $\sigma \ge 2$, deleting two consecutive edges from
+a shortest cycle leaves an induced tree on $\mathrm{girth}(G)-1$ vertices, and
+the factor $\sigma \ge 2$ yields the required inequality. If $\sigma = 1$,
+there are two degree-one vertices. A maximal induced tree containing them must
+have an external vertex with two attachments; those attachments create a cycle
+whose length forces the tree to contain at least $\mathrm{girth}(G)+1$ vertices.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5]
 theorem conjecture143 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected)
     (hσ : 0 < secondSmallestDegree G) :
     (G.girth : ℝ) + 1 ≤ (largestInducedTreeSize G : ℝ) * (secondSmallestDegree G : ℝ) := by
-  sorry
+  have hnat : G.girth + 1 ≤
+      largestInducedTreeSize G * secondSmallestDegree G := by
+    by_cases hacyc : G.IsAcyclic
+    · have htpos : 0 < largestInducedTreeSize G := one_le_largestInducedTreeSize G
+      rw [hacyc.girth_eq_zero]
+      exact Nat.mul_pos htpos hσ
+    · have hgirth : 3 ≤ G.girth := G.three_le_girth hacyc
+      by_cases hσ1 : secondSmallestDegree G = 1
+      · obtain ⟨x, y, hxy, hx, hy⟩ :=
+          exists_distinct_degree_one_of_secondSmallestDegree_eq_one G
+            h.preconnected hσ1
+        simpa [hσ1] using
+          girth_add_one_le_largestInducedTreeSize_of_two_leaves
+            G h hacyc hxy hx hy
+      · have hσ2 : 2 ≤ secondSmallestDegree G := by omega
+        have htreebound : G.girth - 1 ≤ largestInducedTreeSize G :=
+          girth_sub_one_le_largestInducedTreeSize G hacyc
+        calc
+          G.girth + 1 ≤ 2 * (G.girth - 1) := by omega
+          _ ≤ 2 * largestInducedTreeSize G :=
+            Nat.mul_le_mul_left 2 htreebound
+          _ = largestInducedTreeSize G * 2 := by omega
+          _ ≤ largestInducedTreeSize G * secondSmallestDegree G :=
+            Nat.mul_le_mul_left _ hσ2
+  exact_mod_cast hnat
 
 -- Sanity checks
 

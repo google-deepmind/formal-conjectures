@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 16
@@ -27,8 +28,10 @@ import FormalConjectures.Util.ProblemImports
 - [Ro34] Romanoff, N. P., Über einige Sätze der additiven Zahlentheorie. Math. Ann. (1934), 668-678.
 -/
 
+@[expose] public section
+
 open Nat Filter Set
-open scoped Topology Classical
+open scoped Topology
 
 namespace Erdos16
 
@@ -42,7 +45,8 @@ def Erdos16Set : Set ℕ :=
 A set of natural numbers has density 0.
 -/
 def density_zero (S : Set ℕ) : Prop :=
-  Tendsto (fun x : ℕ ↦ (count S x : ℝ) / (x : ℝ)) atTop (𝓝 0)
+  open scoped Classical in
+  Tendsto (fun x : ℕ ↦ (count (· ∈ S) x : ℝ) / (x : ℝ)) atTop (𝓝 0)
 
 /--
 Is the set of odd integers not of the form $2^k+p$ the union of an infinite arithmetic progression
@@ -54,19 +58,19 @@ Chen [Ch23] has proved the answer is no.
 
 This was formalized in Lean by Chin using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielchin/proofs/blob/main/Proofs/ErdosProblems/Erdos16.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/danielchin/proofs/blob/main/Proofs/ErdosProblems/Erdos16.lean"]
 theorem erdos_16 :
-    answer(False) ↔
-      ∃ A B : Set ℕ, Erdos16Set = A ∪ B ∧
-        (∃ a d : ℕ, d > 0 ∧ A = { x | ∃ m : ℕ, x = a + m * d }) ∧
-        density_zero B := by
+    ¬ ∃ A B : Set ℕ, Erdos16Set = A ∪ B ∧
+      (∃ a d : ℕ, d > 0 ∧ A = { x | ∃ m : ℕ, x = a + m * d }) ∧
+      density_zero B := by
   sorry
 
 /--
 A set of natural numbers has positive lower density.
 -/
 def positive_lower_density (S : Set ℕ) : Prop :=
-  0 < atTop.liminf (fun n : ℕ ↦ ((count S n : ℝ) / (n : ℝ) : EReal))
+  open scoped Classical in
+  0 < atTop.liminf (fun n : ℕ ↦ ((count (· ∈ S) n : ℝ) / (n : ℝ) : EReal))
 
 /--
 Romanoff [Ro34] showed that the set of odd integers of this form has positive density.
@@ -81,7 +85,7 @@ theorem erdos_16.variant.romanoff :
 Using covering congruences Erdős [Er50] proved that the set of odd integers which are not of this
 form contains an infinite arithmetic progression.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos16_erdos_16_variant_erdos.lean#L103"]
 theorem erdos_16.variant.erdos :
     ∃ a d : ℕ, d > 0 ∧ { x | ∃ m : ℕ, x = a + m * d } ⊆ Erdos16Set := by
   sorry
