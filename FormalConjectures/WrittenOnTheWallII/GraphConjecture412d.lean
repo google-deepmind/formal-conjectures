@@ -72,9 +72,9 @@ theorem conjecture412d_isolate_free (hb : G.IsBipartite)
     G.totalDominationNumber ≤ (corona G).card ∧ corona G = criticalUnion G := by
   sorry
 
+set_option linter.unusedSectionVars false in
 /-- Connected graphs of order greater than two have no isolated vertices.
 This makes the original WOWII hypotheses an instance of the stronger theorem. -/
-set_option linter.unusedSectionVars false in
 @[category API, AMS 5]
 lemma connected_has_neighbor (hG : G.Connected)
     (horder : 2 < Fintype.card V) (v : V) : ∃ w, G.Adj v w := by
