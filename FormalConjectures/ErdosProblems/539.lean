@@ -60,6 +60,110 @@ noncomputable def cofactorThreshold (n : ℕ) : ℕ :=
 
 def erdos_539.answer : ℕ → ℝ := sorry
 
+/-- Key injectivity argument: fixing a positive $a \in A$, the map $b \mapsto (a/(a,b), b/(a,b))$
+is injective, so $|A| \le |D|^2$ where $D$ is the set of cofactors. -/
+lemma card_le_sq_card_cofactors (A : Finset ℕ) {a : ℕ} (ha : a ∈ A) (hpos : 0 < a) :
+    #A ≤ #((A ×ˢ A).image fun (a, b) ↦ a / a.gcd b) ^ 2 := by
+  set D := (A ×ˢ A).image fun (a, b) ↦ a / a.gcd b with hD
+  have hmem : ∀ x ∈ A, ∀ y ∈ A, x / x.gcd y ∈ D := fun x hx y hy =>
+    Finset.mem_image.2 ⟨(x, y), Finset.mem_product.2 ⟨hx, hy⟩, rfl⟩
+  let f : ℕ → ℕ × ℕ := fun b ↦ (a / a.gcd b, b / b.gcd a)
+  have hmaps : ∀ b ∈ A, f b ∈ D ×ˢ D := fun b hb =>
+    Finset.mem_product.2 ⟨hmem a ha b hb, hmem b hb a ha⟩
+  have hinj : Set.InjOn f A := by
+    intro b _ c _ hbc
+    simp only [f, Prod.mk.injEq] at hbc
+    obtain ⟨h1, h2⟩ := hbc
+    have hg : a.gcd b = a.gcd c := by
+      rw [← Nat.div_div_self (Nat.gcd_dvd_left a b) hpos.ne',
+        ← Nat.div_div_self (Nat.gcd_dvd_left a c) hpos.ne', h1]
+    rw [Nat.gcd_comm b a, Nat.gcd_comm c a, hg] at h2
+    rw [← Nat.div_mul_cancel (Nat.gcd_dvd_right a b), hg, h2,
+      Nat.div_mul_cancel (Nat.gcd_dvd_right a c)]
+  calc #A ≤ #(D ×ˢ D) := Finset.card_le_card_of_injOn f hmaps hinj
+    _ = #D ^ 2 := by rw [Finset.card_product, sq]
+
+/-- Lower bound: $\lfloor\sqrt n\rfloor$ is always a lower bound for the number of cofactors
+(the Erdős–Szemerédi lower bound). -/
+lemma isCofactorLowerBound_sqrt (n : ℕ) : IsCofactorLowerBound n (Nat.sqrt n) := by
+  intro A hA
+  set D := (A ×ˢ A).image fun (a, b) ↦ a / a.gcd b with hD
+  by_cases h : ∃ a ∈ A, 0 < a
+  · obtain ⟨a, ha, hpos⟩ := h
+    have h1 := card_le_sq_card_cofactors A ha hpos
+    have h2 := Nat.sqrt_le' n
+    rw [hA] at h1
+    exact (Nat.pow_le_pow_iff_left two_ne_zero).1 (h2.trans h1)
+  · simp only [not_exists, not_and, not_lt] at h
+    have hsub : A ⊆ {0} := fun x hx => by
+      simpa using Nat.le_zero.1 (h x hx)
+    have hn : n ≤ 1 := hA ▸ (Finset.card_le_card hsub).trans (by simp)
+    refine (Nat.sqrt_le_self n).trans ?_
+    rcases Nat.le_one_iff_eq_zero_or_eq_one.1 hn with rfl | rfl
+    · exact Nat.zero_le _
+    · obtain ⟨x, hx⟩ := Finset.card_pos.1 (by omega : 0 < #A)
+      exact Finset.card_pos.2 ⟨x / x.gcd x,
+        Finset.mem_image.2 ⟨(x, x), Finset.mem_product.2 ⟨hx, hx⟩, rfl⟩⟩
+
+/-- Upper bound: the cofactors of $\{1,2,\dots,2^{n-1}\}$ lie in the set itself, so a lower bound
+for the number of cofactors cannot exceed $n$. -/
+lemma le_of_isCofactorLowerBound {n m : ℕ} (h : IsCofactorLowerBound n m) : m ≤ n := by
+  set A := (Finset.range n).image (2 ^ ·) with hA
+  have hcard : #A = n := by
+    rw [hA, Finset.card_image_of_injective _ (Nat.pow_right_injective le_rfl),
+      Finset.card_range]
+  refine (h A hcard).trans (hcard ▸ Finset.card_le_card ?_)
+  intro d hd
+  obtain ⟨⟨x, y⟩, hxy, rfl⟩ := Finset.mem_image.1 hd
+  obtain ⟨hx, -⟩ := Finset.mem_product.1 hxy
+  obtain ⟨i, hi, rfl⟩ := Finset.mem_image.1 hx
+  have hdvd : 2 ^ i / (2 ^ i).gcd y ∣ 2 ^ i := Nat.div_dvd_of_dvd (Nat.gcd_dvd_left _ _)
+  obtain ⟨k, hk, hk'⟩ := (Nat.dvd_prime_pow Nat.prime_two).1 hdvd
+  show 2 ^ i / (2 ^ i).gcd y ∈ A
+  rw [hk']
+  exact Finset.mem_image.2 ⟨k, Finset.mem_range.2 (lt_of_le_of_lt hk (Finset.mem_range.1 hi)),
+    rfl⟩
+
+lemma bddAbove_isCofactorLowerBound (n : ℕ) : BddAbove {m | IsCofactorLowerBound n m} :=
+  ⟨n, fun _ hm => le_of_isCofactorLowerBound hm⟩
+
+/-- $\lfloor\sqrt n\rfloor \le h(n)$. -/
+lemma sqrt_le_cofactorThreshold (n : ℕ) : Nat.sqrt n ≤ cofactorThreshold n :=
+  le_csSup (bddAbove_isCofactorLowerBound n) (isCofactorLowerBound_sqrt n)
+
+/-- $h(n) \le n$. -/
+lemma cofactorThreshold_le (n : ℕ) : cofactorThreshold n ≤ n :=
+  csSup_le ⟨_, isCofactorLowerBound_sqrt n⟩ fun _ hm => le_of_isCofactorLowerBound hm
+
+/-- $h(n)$ itself is a lower bound (the maximum is attained). -/
+lemma isCofactorLowerBound_cofactorThreshold (n : ℕ) :
+    IsCofactorLowerBound n (cofactorThreshold n) :=
+  Nat.sSup_mem ⟨_, isCofactorLowerBound_sqrt n⟩ (bddAbove_isCofactorLowerBound n)
+
+/-- $\sqrt n \ll h(n)$ (formalisation of the Erdős–Szemerédi lower bound). -/
+lemma sqrt_isBigO_cofactorThreshold :
+    (fun n : ℕ ↦ √n) =O[atTop] fun n ↦ (cofactorThreshold n : ℝ) := by
+  refine Asymptotics.IsBigO.of_bound 2 ?_
+  filter_upwards [eventually_ge_atTop 1] with n hn
+  have hs : 1 ≤ Nat.sqrt n := Nat.sqrt_pos.2 hn
+  have hlt : (n : ℝ) ≤ ((Nat.sqrt n : ℝ) + 1) ^ 2 := by
+    exact_mod_cast (Nat.lt_succ_sqrt' n).le
+  have h1 : √(n : ℝ) ≤ (Nat.sqrt n : ℝ) + 1 := by
+    rw [← Real.sqrt_sq (by positivity : (0 : ℝ) ≤ (Nat.sqrt n : ℝ) + 1)]
+    exact Real.sqrt_le_sqrt hlt
+  have h2 : (Nat.sqrt n : ℝ) ≤ cofactorThreshold n := by
+    exact_mod_cast sqrt_le_cofactorThreshold n
+  have h3 : (1 : ℝ) ≤ Nat.sqrt n := by exact_mod_cast hs
+  rw [Real.norm_of_nonneg (Real.sqrt_nonneg _), Real.norm_of_nonneg (Nat.cast_nonneg _)]
+  linarith
+
+/-- $h(n) \ll n$ (the trivial upper bound). -/
+lemma cofactorThreshold_isBigO_id :
+    (fun n ↦ (cofactorThreshold n : ℝ)) =O[atTop] fun n : ℕ ↦ (n : ℝ) := by
+  refine Asymptotics.IsBigO.of_bound 1 (Eventually.of_forall fun n => ?_)
+  rw [Real.norm_of_nonneg (Nat.cast_nonneg _), Real.norm_of_nonneg (Nat.cast_nonneg _), one_mul]
+  exact_mod_cast cofactorThreshold_le n
+
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$. Estimate $h(n)$. -/
 @[category research open, question value, AMS 5 11]
@@ -81,7 +185,7 @@ theorem erdos_539.variants.sq :
 @[category research solved, AMS 5 11]
 theorem erdos_539.variants.sq_isBigO :
     (fun n : ℕ ↦ √n) =O[atTop] fun n ↦ (cofactorThreshold n : ℝ) := by
-  sorry
+  exact sqrt_isBigO_cofactorThreshold
 
 /-- Is $h(n) = O(\sqrt{n})$? -/
 @[category research solved, question, AMS 5 11,
