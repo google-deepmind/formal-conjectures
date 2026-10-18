@@ -390,12 +390,12 @@ lemma card_uniqueMulProducts_singleton_singleton (a b : ℕ) (ha : a ≠ 0) (hb 
     (uniqueMulProducts {a} {b}).card = 1 := by
   simp [uniqueMulProducts_singleton_singleton a b ha hb]
 
-/-- Nonzero left singleton: card of unique products equals `#B`. -/
+/-- Nonzero left singleton: the set of unique products has positive card iff `B` is nonempty. -/
 lemma card_pos_uniqueMulProducts_singleton_left_iff (a : ℕ) (B : Finset ℕ) (ha : a ≠ 0) :
     0 < (uniqueMulProducts {a} B).card ↔ B.Nonempty := by
   rw [card_pos, uniqueMulProducts_singleton_left_nonempty_iff a B ha]
 
-/-- Nonzero right singleton: card of unique products equals `#A` positivity. -/
+/-- Nonzero right singleton: the set of unique products has positive card iff `A` is nonempty. -/
 lemma card_pos_uniqueMulProducts_singleton_right_iff (A : Finset ℕ) (b : ℕ) (hb : b ≠ 0) :
     0 < (uniqueMulProducts A {b}).card ↔ A.Nonempty := by
   rw [card_pos, uniqueMulProducts_singleton_right_nonempty_iff A b hb]

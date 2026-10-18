@@ -26,7 +26,7 @@ public import FormalConjecturesUtil
 - [Er72] Erdős, Paul, *Extremal problems in number theory*. Proceedings of the 1972 Number Theory
   Conference (Univ. Colorado, Boulder, Colo.) (1972), 80-86.
 - [Fo08] Ford, Kevin, *The distribution of integers with a divisor in a given interval*. Ann. of
-  Math. (2) (2008), 367-433.
+  Math. (2) 168 (2008), 367-433.
 
 See also [490](https://www.erdosproblems.com/490).
 -/
@@ -90,7 +90,7 @@ theorem erdos_896.variants.F_two_representations : F {1, 2} {1, 2} = 2 := by
   decide
 
 /-- `F(A,B)` cannot exceed `|A|·|B|`. -/
-@[category test, AMS 11]
+@[category API, AMS 11]
 theorem erdos_896.variants.F_le_card_mul (A B : Finset ℕ) :
     F A B ≤ A.card * B.card := by
   simpa [F] using card_uniqueMulProducts_le A B
