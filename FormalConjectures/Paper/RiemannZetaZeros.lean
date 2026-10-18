@@ -139,10 +139,7 @@ theorem distinct_prop_one_hundred : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ �
   sorry
 
 /-- The cumulative proportion of simple critical-line zeros in (0,T] has
-liminf at least the displayed exact rational, exceeding 0.6734775223. This
-unconditional cumulative statement is distinct from the dyadic statements
-above. The cited written proof uses the weighted pair-correlation formula and
-Riemann–von Mangoldt; its finite certificate replay is not a Lean proof. -/
+liminf at least the displayed exact rational, exceeding 0.6734775223. -/
 @[category research solved, AMS 11]
 theorem simple_prop_cumulative_gebendorfer :
     (8269551442741204889710953 : ℝ) / 12278882618209750000000000 ≤
@@ -226,8 +223,8 @@ end DirichletCharacter
 namespace GebendorferZetaCertificateClass
 open MeasureTheory
 
-/-- The complete 25-mode cosine-window class, with free real integer modes 1–24. -/
 open scoped Classical in
+/-- The complete 25-mode cosine-window class, with free real integer modes 1–24. -/
 noncomputable def window (c : Fin 24 → ℝ) (t : ℝ) : ℝ :=
   let a : ℝ := 1 / Real.sqrt 2
   let A := Real.sin a / a
