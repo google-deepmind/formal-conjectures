@@ -82,7 +82,9 @@ theorem corona_two_dominating [DecidableRel G.Adj] :
 union has no private external neighbors. The KE equation uses the existing
 real-valued maximum-matching API.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/655979d3851eed2e08a900e17fd3fc500a11ef30/Proofs/KECriticalUnionProof.lean#L288"]
 theorem critical_union_private_neighbors [DecidableRel G.Adj]
     (hKE : (G.indepNum : ℝ) + G.matchingNumber = Fintype.card V) :
     privateExternalNeighborCount G (criticalUnion G) = 0 := by
