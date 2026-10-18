@@ -227,11 +227,11 @@ namespace GebendorferZetaCertificateClass
 open MeasureTheory
 
 /-- The complete 25-mode cosine-window class, with free real integer modes 1–24. -/
-noncomputable def window (c : Fin 24 → ℝ) (t : ℝ) : ℝ := by
-  classical
+open scoped Classical in
+noncomputable def window (c : Fin 24 → ℝ) (t : ℝ) : ℝ :=
   let a : ℝ := 1 / Real.sqrt 2
   let A := Real.sin a / a
-  exact if t ∈ Set.Icc (-1/2 : ℝ) (1/2) then
+  if t ∈ Set.Icc (-1/2 : ℝ) (1/2) then
     (Real.cos (Real.sqrt 2 * t) +
       ∑ j : Fin 24, c j * Real.cos (2 * Real.pi * (j.val + 1) * t)) / A else 0
 
