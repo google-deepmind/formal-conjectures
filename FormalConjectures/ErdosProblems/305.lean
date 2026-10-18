@@ -63,9 +63,9 @@ $$D(b)\ll b(\log b)(\log\log b)^4(\log\log\log b)^2.$$
 This was improved by Liu and Sawhney [LiSa24] to
 $$D(b)\ll b(\log b)(\log\log b)^3(\log\log\log b)^{O(1)}.$$
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos305.lean#L217"]
-theorem erdos_305 : answer(True) ↔ ∃ δ : ℕ → ℝ, Tendsto δ atTop (nhds 0) ∧
+theorem erdos_305 : ∃ δ : ℕ → ℝ, Tendsto δ atTop (nhds 0) ∧
     ∃ C : ℝ, 0 < C ∧ ∀ᶠ b : ℕ in atTop,
       (Dmax b : ℝ) ≤ C * b * (log b) ^ (1 + δ b) := by
   sorry

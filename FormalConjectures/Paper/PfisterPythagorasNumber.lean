@@ -77,6 +77,8 @@ theorem isLeast_pythagorasBounds_real : IsLeast (pythagorasBounds ℝ) 1 := by
       simp at hf
     · exact h
 
+def pfister_problem.answer : ℕ → ℕ := sorry
+
 /--
 **Pfister's problem** (Problem 1 of [Pfister1971, §4]): what is the true value of
 $p(\mathbb{R}(X_1, \dots, X_n))$, as a function of $n$? It is $1$, $2$, $4$ for $n = 0, 1, 2$
@@ -84,10 +86,9 @@ $p(\mathbb{R}(X_1, \dots, X_n))$, as a function of $n$? It is $1$, $2$, $4$ for 
 and open for every $n \ge 3$, where only the bounds
 $n + 2 \le p(\mathbb{R}(X_1, \dots, X_n)) \le 2^n$ are known.
 -/
-@[category research open, AMS 11 12 14]
+@[category research open, question value, AMS 11 12 14]
 theorem pfister_problem :
-    let p : ℕ → ℕ := answer(sorry)
-    ∀ n, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (p n) := by
+    ∀ n, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (pfister_problem.answer n) := by
   sorry
 
 /--
@@ -95,9 +96,9 @@ Pfister's problem in its common yes/no form (e.g. Question 0.2 of [Benoist2017])
 $p(\mathbb{R}(X_1, \dots, X_n)) = 2^n$ for every $n$, i.e. is Pfister's bound optimal? This
 holds for $n \le 2$ and is open for every $n \ge 3$.
 -/
-@[category research open, AMS 11 12 14]
+@[category research open, question, AMS 11 12 14]
 theorem pfister_problem.variants.eq_two_pow :
-    answer(sorry) ↔ ∀ n : ℕ, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (2 ^ n) := by
+    ∀ n : ℕ, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (2 ^ n) := by
   sorry
 
 /--
@@ -106,7 +107,7 @@ squares [Pfister1995, p. 95]; this is Corollary 1 of Theorem 2 in [Pfister1971].
 semidefinite polynomials it is [Pfister1967, Theorem 1], the quantitative refinement of Artin's
 theorem `Hilbert17.hilbert_17th_problem` in `FormalConjectures/HilbertProblems/17.lean`.
 -/
-@[category research solved, AMS 11 12 14]
+@[category research solved, AMS 11 12 14, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/a25a41b3e51f6987edeafcc1602e80e6d30e6f05/Proofs/T_PfisterPythagorasNumber_pfister_problem_variants_upper_bound.lean#L1006"]
 theorem pfister_problem.variants.upper_bound (n : ℕ) :
     2 ^ n ∈ pythagorasBounds (MvRatFunc (Fin n) ℝ) := by
   sorry
@@ -115,7 +116,7 @@ theorem pfister_problem.variants.upper_bound (n : ℕ) :
 **Cassels' theorem** [Cassels1964], as quoted in Problem 1 of [Pfister1971, §4]:
 $1 + X_1^2 + \dots + X_n^2$ is not a sum of $n$ squares in $\mathbb{R}(X_1, \dots, X_n)$.
 -/
-@[category research solved, AMS 11 12 14]
+@[category research solved, AMS 11 12 14, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/a25a41b3e51f6987edeafcc1602e80e6d30e6f05/Proofs/T_PfisterPythagorasNumber_pfister_problem_variants_cassels.lean#L434"]
 theorem pfister_problem.variants.cassels (n : ℕ) :
     ¬IsSumSqOfLength n (algebraMap (MvPolynomial (Fin n) ℝ) (MvRatFunc (Fin n) ℝ)
       (1 + ∑ i, MvPolynomial.X i * MvPolynomial.X i)) := by
