@@ -116,9 +116,9 @@ theorem erdos_446 :
 
 /-- The second question on its own: is it true that $\delta_1(n)=o(\delta(n))$? Ford [Fo08]
 proved that it is not. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos446.lean#L72"]
-theorem erdos_446.variants.delta_one : answer(False) ↔ deltaR 1 =o[atTop] delta := by
+theorem erdos_446.variants.delta_one : ¬ deltaR 1 =o[atTop] delta := by
   sorry
 
 end Erdos446
