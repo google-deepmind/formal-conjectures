@@ -68,8 +68,8 @@ theorem erdos_861.parts.i : answer(True) ↔
 Is it true that
 $$A(N) = 2^{(1+o(1))f(N)}?$$
 
-This is false: the lower bound $A(N)\ge 2^{1.16 f(N)}$ of Saxton and Thomason [SaTh15] already
-prevents the exponent $1+o(1)$.
+This is false: the lower bound $A(N)\ge 2^{(1.16+o(1)) f(N)}$ of Saxton and Thomason [SaTh15]
+already prevents the exponent $1+o(1)$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_861.parts.ii : answer(False) ↔
@@ -79,21 +79,26 @@ theorem erdos_861.parts.ii : answer(False) ↔
 
 /--
 The current best lower bound (for large $N$) is due to Saxton and Thomason [SaTh15]:
-$$2^{1.16 f(N)}\leq A(N).$$
+$$2^{(1.16+o(1)) f(N)}\leq A(N).$$
+We state it with an explicit $\varepsilon$ (as in `erdos_862.variants.lower_bound`), since the
+literature bound carries an $o(1)$ term in the exponent.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_861.variants.lower :
-    ∀ᶠ N : ℕ in atTop, (2 : ℝ) ^ ((1.16 : ℝ) * f N) ≤ Acount N := by
+theorem erdos_861.variants.lower (ε : ℝ) (hε : 0 < ε) :
+    ∀ᶠ N : ℕ in atTop, (2 : ℝ) ^ (((1.16 : ℝ) - ε) * f N) ≤ Acount N := by
   sorry
 
 /--
 The current best upper bound (for large $N$) is due to Kohayakawa, Lee, Rödl, and Samotij
 [KLRS15]:
-$$A(N)\leq 2^{6.442 f(N)}.$$
+$$A(N)\leq 2^{(c+o(1)) f(N)}, \qquad c = \log_2(32e) = 6.442\cdots.$$
+The truncated constant $6.442$ is strictly smaller than $\log_2(32e)$, so we state the bound
+with $\log_2(32e)+\varepsilon$ for every $\varepsilon>0$ rather than with $6.442$.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_861.variants.upper :
-    ∀ᶠ N : ℕ in atTop, (Acount N : ℝ) ≤ (2 : ℝ) ^ ((6.442 : ℝ) * f N) := by
+theorem erdos_861.variants.upper (ε : ℝ) (hε : 0 < ε) :
+    ∀ᶠ N : ℕ in atTop,
+      (Acount N : ℝ) ≤ (2 : ℝ) ^ ((Real.logb 2 (32 * Real.exp 1) + ε) * f N) := by
   sorry
 
 /-- The empty set is Sidon. -/
