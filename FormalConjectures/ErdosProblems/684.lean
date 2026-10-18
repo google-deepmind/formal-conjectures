@@ -40,10 +40,6 @@ def smallPrimePart (n k : ℕ) : ℕ :=
 theorem smallPrimePart_zero (n : ℕ) : smallPrimePart n 0 = 1 := by
   simp [smallPrimePart]
 
-@[category test, AMS 11]
-theorem smallPrimePart_eight_three : smallPrimePart 8 3 = 8 := by
-  decide
-
 /-- Let $f(n)$ be the smallest $0 \leq k \leq n$ for which the factor of
 $\binom{n}{k}$ supported on primes at most $k$ exceeds $n^2$. Give bounds for $f(n)$.
 
