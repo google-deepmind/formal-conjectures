@@ -53,7 +53,9 @@ $\gamma_t(T)\ge iso(T[S(T)])+|E(T[D_2(T)])|/3$.
 Here $S(T)$ is the set of neighbors of leaves and $D_2(T)$ is the set of
 vertices of degree two. The division is rational, with no downward rounding.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/4a333733850bee9229a445b2a610201f831dff35/Proofs/WOWII365Proof.lean#L320"]
 theorem conjecture365 {V : Type*} [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj] (hT : T.IsTree)
     (horder : 2 < Fintype.card V) :
@@ -66,7 +68,9 @@ $\gamma_t(T)\ge iso(T[S(T)])+\lfloor |E(T[D_2(T)])|/3\rfloor+1$.
 It improves the rounded original bound by one when the edge count is divisible
 by three. The tree hypothesis and order restriction are retained.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/4a333733850bee9229a445b2a610201f831dff35/Proofs/WOWII365Proof.lean#L309"]
 theorem conjecture365_strengthened {V : Type*} [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj] (hT : T.IsTree)
     (horder : 2 < Fintype.card V) :
