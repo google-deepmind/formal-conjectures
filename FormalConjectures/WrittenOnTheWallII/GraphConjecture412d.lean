@@ -61,17 +61,6 @@ noncomputable def corona (G : SimpleGraph V) : Finset V := by
   classical
   exact univ.filter fun v => ∃ I : Finset V, IsMaximumIndependent G I ∧ v ∈ I
 
-/-- For every connected finite bipartite graph of order greater than two,
-the union $H$ of all maximum critical independent sets has
-$|H|\ge\gamma_t(G)$. Total domination requires every selected vertex to have
-a selected neighbor as well.
--/
-@[category research solved, AMS 5]
-theorem conjecture412d (hG : G.Connected) (hb : G.IsBipartite)
-    (horder : 2 < Fintype.card V) :
-    G.totalDominationNumber ≤ (criticalUnion G).card := by
-  sorry
-
 /-- The stronger written result holds without connectedness or an order
 cutoff: in every finite bipartite graph without isolates,
 $\gamma_t(G)\le|corona(G)|=|H|$. The bipartite identification of the two unions
@@ -82,5 +71,24 @@ theorem conjecture412d_isolate_free (hb : G.IsBipartite)
     (hni : ∀ v, ∃ w, G.Adj v w) :
     G.totalDominationNumber ≤ (corona G).card ∧ corona G = criticalUnion G := by
   sorry
+
+/-- Connected graphs of order greater than two have no isolated vertices.
+This makes the original WOWII hypotheses an instance of the stronger theorem. -/
+theorem connected_has_neighbor (hG : G.Connected)
+    (horder : 2 < Fintype.card V) (v : V) : ∃ w, G.Adj v w := by
+  have hcard : 1 < Fintype.card V := by omega
+  obtain ⟨w, hw⟩ := Fintype.exists_ne_of_one_lt_card hcard v
+  obtain ⟨u, hu⟩ := (hG v w).nonempty_neighborSet_left hw.symm
+  exact ⟨u, hu⟩
+
+/-- The original connected formulation is a direct corollary of the
+isolate-free strengthened theorem, with no independent proof gap. -/
+@[category research solved, AMS 5]
+theorem conjecture412d (hG : G.Connected) (hb : G.IsBipartite)
+    (horder : 2 < Fintype.card V) :
+    G.totalDominationNumber ≤ (criticalUnion G).card := by
+  have hni : ∀ v, ∃ w, G.Adj v w := connected_has_neighbor G hG horder
+  exact (conjecture412d_isolate_free G hb hni).2 ▸
+    (conjecture412d_isolate_free G hb hni).1
 
 end WrittenOnTheWallII.GraphConjecture412d
