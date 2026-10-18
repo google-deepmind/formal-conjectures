@@ -74,8 +74,8 @@ theorem conjecture412d_isolate_free (hb : G.IsBipartite)
 
 /-- Connected graphs of order greater than two have no isolated vertices.
 This makes the original WOWII hypotheses an instance of the stronger theorem. -/
-@[category API, AMS 5]
 omit [DecidableEq V] in
+@[category API, AMS 5]
 theorem connected_has_neighbor (hG : G.Connected)
     (horder : 2 < Fintype.card V) (v : V) : ∃ w, G.Adj v w := by
   have hcard : 1 < Fintype.card V := by omega
