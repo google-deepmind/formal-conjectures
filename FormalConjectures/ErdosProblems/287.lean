@@ -39,8 +39,8 @@ Let $k\geq2$. Is it true that, for any distinct integers
 $1 < n_1 < \cdots < n_k$ such that $\sum_{i=1}^k \frac{1}{n_i} = 1$,
 we must have $\max(n_{i+1} - n_i) \geq 3$?
 -/
-@[category research open, AMS 11]
-theorem erdos_287 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_287 :
     ∀ (k : ℕ) (hk : 2 ≤ k) (s : Fin k → ℕ),
     StrictMono s → 1 < s ⟨0, by omega⟩ →
     ∑ i : Fin k, 1/ (s i : ℝ) = 1 →
@@ -87,8 +87,8 @@ For all large $N$, there exists a prime $p \in [N, 2N]$ such that $\frac{p+1}{2}
 This is an open conjecture. If true, it would imply `erdos_287` for all but at most finitely
 many exceptions (see `erdos_287.variants.prime_conjecture_implies`).
 -/
-@[category research open, AMS 11]
-theorem erdos_287.variants.prime_conjecture : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_287.variants.prime_conjecture :
     ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N →
       ∃ p : ℕ, Nat.Prime p ∧ N ≤ p ∧ p ≤ 2 * N ∧ Nat.Prime ((p + 1) / 2) := by
   sorry

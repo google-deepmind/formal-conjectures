@@ -32,12 +32,14 @@ namespace Erdos691
 of elements of $A$. -/
 def multiples (A : Set ℕ) : Set ℕ := {n | 1 ≤ n ∧ ∃ a ∈ A, a ∣ n}
 
+def erdos_691.answer : Set ℕ → Prop := sorry
+
 /-- Given $A \subseteq \mathbb{N}$, let
 $M_A = \{n \geq 1 : a \mid n \text{ for some } a \in A\}$. Find a necessary and sufficient
 condition on $A$ for $M_A$ to have density $1$. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_691 :
-    (answer(sorry) : Set ℕ → Prop) = fun A ↦ (multiples A).HasDensity 1 := by
+    erdos_691.answer = fun A ↦ (multiples A).HasDensity 1 := by
   sorry
 
 end Erdos691
