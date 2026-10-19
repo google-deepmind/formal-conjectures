@@ -40,8 +40,8 @@ $$\liminf_{x\to \infty} \frac{\lvert A\cap [1,x]\rvert}{x^{1/2}}(\log x)^{1/2}=0
 Here $x$ runs over $\mathbb{N}$ and the $\liminf$ is taken in `ℝ≥0∞`, so that it is $\infty$
 rather than $0$ when the sequence tends to infinity.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_1191.parts.i : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → IsSidon A →
+@[category research open, question, AMS 5 11]
+theorem erdos_1191.parts.i : ∀ A : Set ℕ, A.Infinite → IsSidon A →
     liminf (fun x : ℕ ↦ ENNReal.ofReal
       ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ (1 / 2 : ℝ))) atTop = 0 := by
   sorry
@@ -53,8 +53,8 @@ for some $c>0$?
 
 A positive answer would also give a positive answer to Erdős Problem 39.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_1191.parts.ii : answer(sorry) ↔ ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧
+@[category research open, question, AMS 5 11]
+theorem erdos_1191.parts.ii : ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧
     ∃ c > (0 : ℝ), 0 < liminf (fun x : ℕ ↦ ENNReal.ofReal
       ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ c)) atTop := by
   sorry
