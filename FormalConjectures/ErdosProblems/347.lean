@@ -46,9 +46,9 @@ van Doorn, also in the comments).
 
 This was formalized in Lean by Barschkis using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem347/Formalization.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/ebarschkis/ErdosProblem/blob/main/Problem347/Formalization.lean"]
 theorem erdos_347 :
-    answer(True) ↔ ∃ a : ℕ → ℕ, (Monotone a) ∧
+    ∃ a : ℕ → ℕ, (Monotone a) ∧
       (Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (𝓝 2)) ∧
       (∀ ι : ℕ → ℕ, (range ι)ᶜ.Finite → HasDensity (𝓟 (range (a ∘ ι))) 1) := by
   sorry

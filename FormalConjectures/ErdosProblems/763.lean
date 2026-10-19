@@ -49,9 +49,9 @@ Montgomery and Vaughan [MoVa90].
 
 See also [764](https://www.erdosproblems.com/764) for a generalisation to more summands.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos763.lean#L1464"]
-theorem erdos_763 : answer(False) ↔ ∃ (A : Set ℕ) (c : ℝ), 0 < c ∧
+theorem erdos_763 : ¬ ∃ (A : Set ℕ) (c : ℝ), 0 < c ∧
     (fun N : ℕ ↦ (∑ n ∈ Finset.range (N + 1), sumRep A n : ℝ) - c * N) =O[atTop]
       fun _ ↦ (1 : ℝ) := by
   sorry
