@@ -112,18 +112,12 @@ theorem HasBorsukCover.isometry_image_iff
       obtain ⟨i, hi⟩ := Set.mem_iUnion.mp (hcover ⟨x, hx, rfl⟩)
       exact Set.mem_iUnion.mpr ⟨i, hi⟩
     · intro i
-      calc
-        ediam (f ⁻¹' c i) = ediam (f '' (f ⁻¹' c i)) := (hf.ediam_image _).symm
-        _ ≤ ediam (c i) := ediam_mono (Set.image_preimage_subset _ _)
-        _ < ediam (f '' s) := hsmall i
-        _ = ediam s := hf.ediam_image s
+      grw [(hf.ediam_image _).symm, ediam_mono (Set.image_preimage_subset _ _), hsmall, hf.ediam_image s]
   · rintro ⟨c, hcover, hsmall⟩
-    refine ⟨fun i => f '' c i, ?_, ?_⟩
+    refine ⟨fun i => f '' c i, ?_, by grind [hf.ediam_image]⟩
     · rintro y ⟨x, hx, rfl⟩
       obtain ⟨i, hi⟩ := Set.mem_iUnion.mp (hcover hx)
       exact Set.mem_iUnion.mpr ⟨i, x, hi, rfl⟩
-    · intro i
-      simpa only [hf.ediam_image] using hsmall i
 
 /--
 **Borsuk's conjecture** in dimension `n`: every bounded subset of $\mathbb{R}^n$ with at
