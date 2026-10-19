@@ -57,9 +57,9 @@ in either the number of vertices or the number of edges?
 A problem of Erdős, Faudree, and Sós (although in [Er93] Erdős credits this question to Alon and
 Bollobás). This was proved by Kwan and Sudakov [KwSu21].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos636.lean#L739"]
-theorem erdos_636 : answer(True) ↔
+theorem erdos_636 :
     ∀ C > (0 : ℝ), ∃ γ > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
       (G.cliqueNum : ℝ) < C * Real.log n → (G.indepNum : ℝ) < C * Real.log n →
         HasManyDistinctInducedSubgraphs G (γ * (n : ℝ) ^ (5 / 2 : ℝ)) := by
