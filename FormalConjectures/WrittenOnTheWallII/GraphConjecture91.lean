@@ -26,7 +26,7 @@ import FormalConjecturesUtil
 
 This conjecture is **false**: Max Talwar found an 11-vertex counterexample
 (graph6 `JBza_CB?wF_`): take `K₃,₃` minus an edge together with a `K₅`, joined
-by two bridges into one `K₅`-vertex. There the average neighbourhood
+by two edges into one `K₅`-vertex. There the average neighbourhood
 independence number is exactly `2`, the largest induced forest has `6` vertices,
 and the largest induced bipartite subgraph has `8`, so the conjectured bound
 reads `8 ≤ 1 + 6·⌈2⌉/2 = 7`. We therefore record the statement as disproved,

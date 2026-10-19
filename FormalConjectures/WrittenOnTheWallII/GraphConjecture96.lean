@@ -38,11 +38,15 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 /--
 WOWII [Conjecture 96](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-For a simple connected graph `G`,
+For a simple connected graph `G` on at least two vertices,
 `α(G) ≤ 1 + min_v distEven(v) · (max_v l(v) - 1)`
 where `α(G) = G.indepNum` is the independence number,
 `distEven(v)` is the number of vertices at even distance from `v`, and
 `max_v l(v)` is the maximum independence number of a vertex neighbourhood.
+
+We record the nontrivial-graph version: the literal source inequality fails on $K_1$,
+where the independence number and even-distance count are both one, but the maximum
+local independence number is zero, giving $1 ≤ 0$.
 -/
 @[category research open, AMS 5]
 theorem conjecture96 (G : SimpleGraph α) (h : G.Connected) :
