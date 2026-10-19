@@ -33,63 +33,23 @@ def K3 : SimpleGraph (Fin 3) := completeGraph (Fin 3)
 
 @[category test, AMS 5]
 lemma K3_b : b K3 = 2 := by
-  rw [SimpleGraph.b, SimpleGraph.largestInducedBipartiteSubgraphSize]
+  simp only [GraphConjecture19.K3, b]
   norm_cast
-  apply le_antisymm
-  · -- b K3 <= 2
-    apply csSup_le
-    · use 0
-      use ∅
+  refine IsGreatest.csSup_eq ?_
+  constructor
+  · simp [SimpleGraph.IsBipartite]
+    use {0,1}
+    constructor
+    · use fun i => ite (i.1 = 0) 0 1
       simp
-      dsimp [SimpleGraph.IsBipartite]
-      apply SimpleGraph.Colorable.of_isEmpty
-    · rintro n ⟨s, hs⟩
-      by_contra h_gt
-      simp at h_gt
-      have h_card : s.card = 3 := by
-        have : s.card ≤ 3 := Finset.card_le_univ s
-        linarith
-      have h_univ : s = Finset.univ := Finset.eq_univ_of_card s h_card
-      rw [h_univ] at hs
-      have h_bip : K3.IsBipartite := by
-        have h_iso : K3.induce (Set.univ : Set (Fin 3)) ≃g K3 := SimpleGraph.induceUnivIso K3
-        rw [← Finset.coe_univ] at h_iso
-        exact hs.1.of_hom h_iso.symm.toHom
-      have h_not_bip : ¬ K3.IsBipartite := by
-        dsimp [SimpleGraph.IsBipartite]
-        rw [← SimpleGraph.chromaticNumber_le_iff_colorable]
-        simp [K3, completeGraph, SimpleGraph.chromaticNumber_top]
-        norm_num
-      contradiction
-  · -- b K3 >= 2
-    apply le_csSup
-    · use 3
-      rintro n ⟨s, hs⟩
-      rw [← hs.2]
-      exact Finset.card_le_univ s
-    · use {0, 1}
-      constructor
-      · -- K3.induce {0, 1} is bipartite (it's K2)
-        dsimp [SimpleGraph.IsBipartite]
-        fconstructor
-        refine SimpleGraph.Coloring.mk (fun x => if (x : Fin 3) = 0 then 0 else 1) ?_
-        intro u v huv
-        have huv_ne : u ≠ v := SimpleGraph.Adj.ne huv
-        have u_mem : (u : Fin 3) ∈ ({0, 1} : Finset (Fin 3)) := u.property
-        have v_mem : (v : Fin 3) ∈ ({0, 1} : Finset (Fin 3)) := v.property
-        simp only [Finset.mem_insert, Finset.mem_singleton] at u_mem v_mem
-        rcases u_mem with u_eq_0 | u_eq_1 <;> rcases v_mem with v_eq_0 | v_eq_1
-        · -- u = 0, v = 0
-          exfalso; apply huv_ne; ext; simp only [u_eq_0, v_eq_0]
-        · -- u = 0, v = 1
-          simp only [u_eq_0, v_eq_1, ↓reduceIte]
-          exact zero_ne_one
-        · -- u = 1, v = 0
-          simp only [u_eq_1, v_eq_0, ↓reduceIte, one_ne_zero]
-          exact zero_ne_one.symm
-        · -- u = 1, v = 1
-          exfalso; apply huv_ne; ext; simp only [u_eq_1, v_eq_1]
-      · simp
+      decide
+    · decide
+  · simp only [upperBounds, Finset.coe_sort_coe, completeGraph_eq_top, Set.mem_setOf_eq, forall_exists_index,
+      and_imp, forall_apply_eq_imp_iff₂]
+    intro a ha
+    cases ha
+    cases ‹_›
+    decide+revert   
 
 @[category test, AMS 5]
 lemma K3_ecc (v : Fin 3) : ecc K3 {v} = 1 := by
