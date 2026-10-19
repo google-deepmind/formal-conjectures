@@ -232,8 +232,7 @@ theorem a_10 : TermAt 10 9 := by
   exact ⟨by decide, initialPrefix, initialPrefix_valid, by decide⟩
 
 /--
-[OEIS A280864](https://oeis.org/A280864) states:
-"Conjectured to be a permutation of the positive integers."
+Conjectured to be a permutation of the positive integers.
 -/
 @[category research open, AMS 11]
 theorem conjecture :
