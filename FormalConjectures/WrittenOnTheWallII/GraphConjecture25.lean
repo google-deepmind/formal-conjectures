@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 25
@@ -24,13 +26,14 @@ import FormalConjecturesUtil
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj25
 
-This conjecture is **disproved** on the WOWII page (status F; "same
-counterexample as in #24"). Following the upstream pattern established in
-#3823 for Conjecture 23, we record the disproof using `answer(False) ↔ ...`.
+The WOWII page records this conjecture as disproved (status F), with the same
+counterexample as Conjecture 24.
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture25
 
@@ -49,8 +52,8 @@ The nontrivial vertex type excludes graphs with fewer than two vertices.
 The source gives the same counterexample as for Conjecture 24.
 -/
 @[category research solved, AMS 5]
-theorem conjecture25 : answer(False) ↔
-    ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+theorem conjecture25 :
+    ¬ ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
       ∀ (G : SimpleGraph α) (_ : G.Connected),
         let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
         2 * ⌈(1 + (minDistEven : ℝ)) / 3⌉ ≤ (b G : ℝ) := by

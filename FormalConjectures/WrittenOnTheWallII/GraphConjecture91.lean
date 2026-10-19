@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 91
@@ -29,13 +31,14 @@ This conjecture is **false**: Max Talwar found an 11-vertex counterexample
 by two edges into one `K₅`-vertex. There the average neighbourhood
 independence number is exactly `2`, the largest induced forest has `6` vertices,
 and the largest induced bipartite subgraph has `8`, so the conjectured bound
-reads `8 ≤ 1 + 6·⌈2⌉/2 = 7`. We therefore record the statement as disproved,
-using the `answer(False) ↔ ...` pattern of Conjectures 23/24/25.
+reads `8 ≤ 1 + 6·⌈2⌉/2 = 7`.
 
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 - [Counterexample certificate for WOWII 91 (Max Talwar)](https://github.com/maxtalwar/wowii91-counterexample/releases/tag/v1.0.0)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture91
 
@@ -58,8 +61,8 @@ Disproved by an 11-vertex counterexample (Max Talwar, 2026; graph6
 `8 ≤ 1 + 6·⌈2⌉/2 = 7`.
 -/
 @[category research solved, AMS 5]
-theorem conjecture91 : answer(False) ↔
-    ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+theorem conjecture91 :
+    ¬ ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
       ∀ (G : SimpleGraph α) (_ : G.Connected),
         b G ≤ 1 + (G.largestInducedForestSize : ℝ) * ⌈l G⌉ / 2 := by
   sorry

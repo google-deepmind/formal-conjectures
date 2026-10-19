@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 24
@@ -24,13 +26,13 @@ import FormalConjecturesUtil
 
 **Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj24
 
-This conjecture is **disproved** on the WOWII page (status F). Following the
-upstream pattern established in #3823 for the closely related Conjecture 23,
-we record the disproof using `answer(False) ↔ ...`.
+The WOWII page records this conjecture as disproved (status F).
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture24
 
@@ -48,8 +50,8 @@ number of the open neighbourhood of `v`, and `dist_even(v)` is the number of
 vertices at even distance from `v`.
 -/
 @[category research solved, AMS 5]
-theorem conjecture24 : answer(False) ↔
-    ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+theorem conjecture24 :
+    ¬ ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
       ∀ (G : SimpleGraph α) (_ : G.Connected),
         let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)
         let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
