@@ -69,9 +69,9 @@ This conjecture is **false**. Fischer gives a connected 24-vertex
 counterexample with maximum degree $3$; see
 [arXiv:2607.23664](https://arxiv.org/abs/2607.23664).
 -/
-@[category research solved, AMS 5]
-theorem tx_graffiti_conjecture_2 : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+@[category research solved, question, AMS 5]
+theorem tx_graffiti_conjecture_2 :
+    ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj] (_hConn : G.Connected)
       (_hDeg : G.maxDegree ≤ 3)
       (_hNotK4 : G = ⊤ → Fintype.card V ≠ 4),

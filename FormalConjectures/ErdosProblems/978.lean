@@ -71,10 +71,10 @@ $(k-2)$-power-free?
 
 This was disproved by the DeepMind prover agent.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
 formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/3b5d6ac2555cd63b83d418c29ff040876be9dee0/FormalConjectures/ErdosProblems/978.lean#L64"]
-theorem erdos_978.variants.allow_fixed_divisors : answer(False) ↔
-    ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
+theorem erdos_978.variants.allow_fixed_divisors :
+    ¬ ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
     (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
     (¬ ∃ p : ℕ, p.Prime ∧ ∀ n : ℕ, (p : ℤ) ^ (f.natDegree - 1) ∣ f.eval (n : ℤ)) →
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
@@ -87,9 +87,9 @@ then are there infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof,
 which gives positive density and does not need $k \neq 2^l$ or a positive leading coefficient.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PowerFree/Main.lean#L144"]
-theorem erdos_978.parts.ii : answer(True) ↔
+theorem erdos_978.parts.ii :
     ∀ {f : ℤ[X]}, Irreducible f → f.natDegree > 3 →
     (¬ ∃ l : ℕ, f.natDegree = 2 ^ l) → 0 < f.leadingCoeff →
     (∀ (p : ℕ), p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ (f.natDegree - 2) ∣ f.eval (n : ℤ)) →
@@ -100,9 +100,9 @@ theorem erdos_978.parts.ii : answer(True) ↔
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof,
 which gives positive density for every irreducible quartic with no fixed square divisor. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PowerFree/Main.lean#L144"]
-theorem erdos_978.parts.iii : answer(True) ↔ {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
+theorem erdos_978.parts.iii : {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
   sorry
 
 end Erdos978

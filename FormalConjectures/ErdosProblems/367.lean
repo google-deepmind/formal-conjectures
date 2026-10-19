@@ -42,8 +42,8 @@ Let $B_2(n)$ be the $2$-full part of $n$ (that is, $B_2(n)=n/n'$ where $n'$ is t
 primes that divide $n$ exactly once). Is it true that, for every fixed $k \geq 1$,
 $\prod_{n \leq m < n+k} B_2(m) \ll n^{2+o(1)}$?
 -/
-@[category research open, AMS 11]
-theorem erdos_367.parts.i : answer(sorry) ↔ ∀ k : ℕ, 1 ≤ k →
+@[category research open, question, AMS 11]
+theorem erdos_367.parts.i : ∀ k : ℕ, 1 ≤ k →
     ∃ e : ℕ → ℝ,
       e =o[atTop] (1 : ℕ → ℝ) ∧
       ∀ᶠ n in atTop,
@@ -55,8 +55,8 @@ Or perhaps even $\prod_{n \leq m < n+k} B_2(m) \ll_k n^2$?
 
 van Doorn notes in the comments that this fails for all $k \geq 3$.
 -/
-@[category research solved, AMS 11]
-theorem erdos_367.parts.ii : answer(False) ↔ ∀ k : ℕ, 1 ≤ k →
+@[category research solved, question, AMS 11]
+theorem erdos_367.parts.ii : ¬ ∀ k : ℕ, 1 ≤ k →
     (fun n ↦ ((∏ m ∈ .Ico n (n + k), B 2 m : ℕ) : ℝ)) =O[atTop]
       fun n ↦ (n : ℝ) ^ (2 : ℝ) := by
   sorry
@@ -93,9 +93,16 @@ The webpage writes "for every fixed $r,k \geq 2$ and $\epsilon > 0$", but van Do
 the [comments](https://www.erdosproblems.com/forum/thread/367#post-1766) that the intended
 reading lets $\epsilon$ depend on $r$ and $k$. Since $B_r(m) \mid m$, the product is at most
 $\prod_{n \leq m < n+k} m$, so the reading with $\epsilon$ universally quantified is false.
+
+The answer is yes: $\epsilon = 1/(2r)$ works. For $j \geq r$ let $x = 2^j + 1$ and $n = x^r - 1$;
+then $B_r(n+1) = x^r$ and $2^j \mid n$ gives $B_r(n) \geq 2^j$, so the product over $[n, n+k)$ is at
+least $2^j x^r \geq (\sqrt{x}/2)\, n^{1 + 1/(2r)}$, which is unbounded. A stronger exponent
+(any $\epsilon < (r+1)/r^2$) is claimed in the [forum](https://www.erdosproblems.com/forum/thread/367)
+but is not formalised.
 -/
-@[category research open, AMS 11]
-theorem erdos_367.variants.higher_full_parts : answer(sorry) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/kusasyu36/erdos367-higher-full-parts/blob/9c995fbb1ec62bd675ac9bc162f9e2337d6db4f9/Erdos367HigherFullParts.lean#L57"]
+theorem erdos_367.variants.higher_full_parts :
     ∀ r k : ℕ, 3 ≤ r → 2 ≤ k → ∃ ε : ℝ, 0 < ε ∧
       atTop.limsup (fun n ↦
         ((∏ m ∈ .Ico n (n + k), B r m : ℕ) / (n : ℝ) ^ (1 + ε) |>.toEReal)) = ⊤ := by

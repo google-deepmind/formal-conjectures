@@ -157,8 +157,8 @@ The problem asks for asymptotic lower bounds on `L(n)`. Two specific targets are
 
 /-- Erdős Problem 872, part (i) (weak form): there exists a constant $\epsilon > 0$ such that the
 game length is at least $\epsilon \cdot n$ for all sufficiently large $n$. -/
-@[category research open, AMS 5 11 91]
-theorem erdos_872.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 5 11 91]
+theorem erdos_872.parts.i :
     ∃ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ ε * n := by
   sorry
 
@@ -170,8 +170,8 @@ $L(n) \leq (23/48 + o(1)) \cdot n$ (described in the thread as accepted as corre
 formalization in progress) and a claimed $L(n) \leq 0.19 \cdot n$, either of which would answer this
 question negatively under the Prolonger-first convention. Neither is published, so the statement
 is recorded here as the original Erdős question. -/
-@[category research open, AMS 5 11 91]
-theorem erdos_872.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5 11 91]
+theorem erdos_872.parts.ii :
     ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
   sorry
 
@@ -198,9 +198,9 @@ comparable with two such prime powers, so $|A| \ge \pi(n)$. This argument was po
 by old-bielefelder (May 2026); the statement also appears as Theorem 2.3(i) of
 [El23] S. Elsakhawy, *Independence and domination in divisor graph and mod-difference graphs*,
 J. Egyptian Math. Soc. 31 (2023). -/
-@[category research solved, AMS 5 11 91, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11 91, formal_proof using lean4 at
   "https://github.com/mnn31/erdos-lean/blob/5cb725981b3ad137103ef908eb6ecff9e7ed9bdf/ErdosLean/Erdos872.lean#L114"]
-theorem erdos_872.variants.prime_question : answer(True) ↔
+theorem erdos_872.variants.prime_question :
     ∀ n ≥ 2, ∀ A : Finset ℕ, Maximal (IsPrimitive n) A →
       ((Finset.Icc 2 n).filter Nat.Prime).card ≤ A.card := by
   sorry
