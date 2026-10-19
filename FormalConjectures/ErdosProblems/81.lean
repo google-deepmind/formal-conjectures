@@ -37,9 +37,9 @@ open SimpleGraph
 
 /-- Let $G$ be a chordal graph on $n$ vertices - that is, $G$ has no induced cycles of
 length greater than $3$. Can the edges of $G$ be partitioned into $n^2/6+O(n)$ many cliques? -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_81 :
-    answer(sorry) ↔ ∃ C : ℝ, ∀ n : ℕ, ∀ G : SimpleGraph (Fin n), G.IsChordal →
+    ∃ C : ℝ, ∀ n : ℕ, ∀ G : SimpleGraph (Fin n), G.IsChordal →
       ∃ P : Finset (Finset (Fin n)), G.IsCliqueEdgePartition P ∧
         (P.card : ℝ) ≤ (n : ℝ) ^ 2 / 6 + C * n := by
   sorry

@@ -56,9 +56,9 @@ because subtraction on `ℕ` is truncated. The two forms agree for `k ≥ 1`.
 
 A longest cycle is a cycle whose length is the circumference of `G`.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem bondy_conjecture :
-    answer(sorry) ↔ ∀ (k : ℕ), 1 ≤ k → ∀ (V : Type) [Fintype V] [DecidableEq V]
+    ∀ (k : ℕ), 1 ≤ k → ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj], IsKConnected G k →
       ((Fintype.card V : ℝ) + k * (k - 1)) / (k + 1) ≤ G.minDegree →
       ∀ (a : V) (C : G.Walk a a), C.IsCycle → C.length = G.circumference →
