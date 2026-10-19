@@ -201,6 +201,7 @@ public import FormalConjecturesForMathlib.NumberTheory.DiophantineApproximation.
 public import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 public import FormalConjecturesForMathlib.NumberTheory.Divisors
 public import FormalConjecturesForMathlib.NumberTheory.ExpansionEntropy
+public import FormalConjecturesForMathlib.NumberTheory.GcdQuotient
 public import FormalConjecturesForMathlib.NumberTheory.Harmonic
 public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 public import FormalConjecturesForMathlib.NumberTheory.LegendreSymbol.Basic
