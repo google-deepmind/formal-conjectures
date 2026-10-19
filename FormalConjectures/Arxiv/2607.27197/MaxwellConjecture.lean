@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Maxwell conjecture
@@ -39,6 +40,8 @@ positive point charges — three unit charges at the vertices of an equilateral 
 with two small charges placed symmetrically on the axis of the triangle — whose potential has at
 least $24$ non-degenerate critical points, whereas $(5-1)^2 = 16$.
 -/
+
+@[expose] public section
 
 namespace Maxwell
 
@@ -96,17 +99,14 @@ theorem maxwell_conjecture.counterexample_morse :
   sorry
 
 /--
-Is it true that the electrostatic potential of $n$ point charges, all of whose critical points
-are non-degenerate, has at most $(n-1)^2$ critical points?
-
-The answer is no: Arathoon, Ball and Kvalheim exhibit five point charges whose potential is a
-Morse function with at least $24 > 16 = (5-1)^2$ critical points.
+Maxwell's conjecture is false: Arathoon, Ball and Kvalheim exhibit five point charges whose
+potential is a Morse function with at least $24 > 16 = (5-1)^2$ critical points.
 
 *Reference:* [arXiv:2607.27197](https://arxiv.org/abs/2607.27197)
 -/
 @[category research solved, AMS 31 78]
-theorem maxwell_conjecture : answer(False) ↔ Conjecture := by
-  refine ⟨False.elim, fun h => ?_⟩
+theorem maxwell_conjecture : ¬ Conjecture := by
+  intro h
   obtain ⟨q, a, hinj, hpos, hnd, _, h24⟩ := maxwell_conjecture.counterexample_morse
   have hb := h 5 (by norm_num) q a hinj (fun j => (hpos j).ne') hnd
   have : (24 : ℕ∞) ≤ ((5 - 1) ^ 2 : ℕ) := le_trans h24 hb
@@ -234,14 +234,14 @@ theorem maxwell_conjecture.variants.three_equal_magnitudes (q : Fin 3 → ℝ)
   sorry
 
 /--
-Is Maxwell's conjecture true for three point charges of arbitrary strengths, i.e. does the
-potential of three point charges, all of whose critical points are non-degenerate, have at most
-$(3-1)^2 = 4$ critical points? This remains open.
+Maxwell's conjecture for three point charges of arbitrary strengths: if all critical points of
+the potential of three point charges are non-degenerate, then there are at most $(3-1)^2 = 4$ of
+them. This remains open.
 
 *Reference:* [arXiv:2607.27197](https://arxiv.org/abs/2607.27197)
 -/
 @[category research open, AMS 31 78]
-theorem maxwell_conjecture.variants.three_charges : answer(sorry) ↔
+theorem maxwell_conjecture.variants.three_charges :
     ∀ (q : Fin 3 → ℝ) (a : Fin 3 → EuclideanSpace ℝ (Fin 3)), Function.Injective a →
       (∀ j, q j ≠ 0) →
       (∀ x ∈ equilibria q a, HasNondegenerateHessianAt (potential q a) x) →
@@ -260,8 +260,8 @@ Edelsbrunner–Fillmore–Oliveira — are all exponential in $n$.
 *References:* [arXiv:2607.27197](https://arxiv.org/abs/2607.27197),
 [Counting equilibria of the electrostatic potential](https://arxiv.org/abs/2501.05315)
 -/
-@[category research open, AMS 31 78]
-theorem maxwell_conjecture.variants.polynomial_bound : answer(sorry) ↔
+@[category research open, question, AMS 31 78]
+theorem maxwell_conjecture.variants.polynomial_bound :
     ∃ C d : ℕ, ∀ (n : ℕ), 0 < n → ∀ (q : Fin n → ℝ) (a : Fin n → EuclideanSpace ℝ (Fin 3)),
       Function.Injective a → (∀ j, q j ≠ 0) →
       (∀ x ∈ equilibria q a, HasNondegenerateHessianAt (potential q a) x) →
