@@ -54,9 +54,9 @@ $$\sum_i f(u_i)^2 \ll n^3\log n.$$
 
 See also [94](https://www.erdosproblems.com/94).
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at
+@[category research solved, question, AMS 5 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos95.lean#L1005"]
-theorem erdos_95 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, 0 < C ∧ ∀ P : Finset ℝ²,
+theorem erdos_95 : ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, 0 < C ∧ ∀ P : Finset ℝ²,
     ∑ u ∈ distanceSet P, (distanceMultiplicity P u : ℝ) ^ 2 ≤
       C * (P.card : ℝ) ^ (3 + ε) := by
   sorry

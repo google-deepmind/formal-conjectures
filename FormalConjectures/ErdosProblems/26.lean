@@ -94,8 +94,8 @@ for some $a\in A$?
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos26.lean"]
-theorem erdos_26 : answer(False) ↔ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos26.lean"]
+theorem erdos_26 : ¬ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
     ∃ k, IsBehrend (A · + k) := by
   sorry
 
@@ -115,9 +115,9 @@ divisor of the form $a+k$ for some $a\in A$.
 
 The DeepMind prover agent has found a formal disproof of this statement.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
 formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/09c54540aa51cb40dff73660c94a82e2631386f8/FormalConjectures/ErdosProblems/26.lean#L625"]
-theorem erdos_26.variants.tenenbaum : answer(False) ↔ ∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A →
+theorem erdos_26.variants.tenenbaum : ¬ ∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A →
     (∀ ε > (0 : ℝ), ∃ k, IsWeaklyBehrend (A · + k) ε) := by
   sorry
 
