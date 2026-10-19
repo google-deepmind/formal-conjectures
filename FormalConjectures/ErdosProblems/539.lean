@@ -20,24 +20,12 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 539
 
-In this problem, a function $h : \mathbb{N} \to\mathbb{N}$ is defined maximally by a specified
-counting property.
-
-The problem asks to estimate $h(n)$. This has been interpreted here as asking for $\Theta(h(n))$.
-The principal version includes the unknown function `erdos_539.answer`. On the other hand, the best
-known upper bound is $n^{2/3}$ and the best known lower bound is $\sqrt{n}$ so we
-also provide these candidates as variants. Moreover, it suffices to show $O(h(n))$ and
-$O(\sqrt{n})$ respectively for each, so further variants are provided for those.
-
-In the source paper [Er73], Erdős also remarks that it should not be too difficult
-to determine $\lim_{n\to\infty}\log(h(n))/\log(n)$. This does not appear on the website, and
-it is not clear whether this remains open, but we include it here either way.
-
 *References:*
 - [erdosproblems.com/539](https://www.erdosproblems.com/539)
 - [GR99] Granville, A., & Roesler, F. (1999). _The Set of Differences of a Given Set_. The American Mathematical Monthly, 106(4), 338–344.
 - [Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
 - [Sc+26] Schmitt, J., Gehrunger, T., Dekoninck, J., Bérczi, G., Kreitner, U., Price, L., & Holmes, D. (2026). _ProofCouncil: An LLM Agent for Solving Open Mathematical Problems_. [arXiv:2607.09474](https://arxiv.org/abs/2607.09474), Appendix A, Theorem A.1.
+- [SA26] Sarfraz, S., and Ahmed, W. (2026). _Gcd quotients: a quantitative lower bound and sharp fixed-dimensional orders_. [Preprint](https://zenodo.org/records/23481037).
 -/
 
 @[expose] public section
@@ -81,6 +69,20 @@ theorem erdos_539.variants.sq :
 @[category research solved, AMS 5 11]
 theorem erdos_539.variants.sq_isBigO :
     (fun n : ℕ ↦ √n) =O[atTop] fun n ↦ (cofactorThreshold n : ℝ) := by
+  sorry
+
+/-- Sarfraz and Ahmed [SA26] prove that, for all sufficiently large $n$,
+$$h(n) \geq \sqrt{n}\exp\!\left(\frac{1}{16000}
+  \sqrt{\frac{\log n}{\log\log n}}\right).$$
+The Lean proof uses the zero-inclusive `cofactorThreshold` defined in this file. -/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/sarimsarfraz/erdos539-results/blob/782930f5f0025558a2e6a6ecb1e5555d3337ed2f/Erdos539/SuperSqrt.lean#L22"]
+theorem erdos_539.variants.super_sqrt_explicit :
+    ∀ᶠ n : ℕ in atTop,
+      Real.sqrt n * Real.exp
+          ((1 / 16000 : ℝ) * Real.sqrt (Real.log n / Real.log (Real.log n)))
+        ≤ (cofactorThreshold n : ℝ) := by
   sorry
 
 /-- Is $h(n) = O(\sqrt{n})$? -/
