@@ -61,9 +61,9 @@ noncomputable def squareRootSum (l : List ℕ) (t : ℕ) : Bool :=
 **Is the square-root sum problem polynomial time (single sum version)?**
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
-@[category research open, AMS 68]
+@[category research open, question, AMS 68]
 theorem isPolyTime_squareRootSum :
-    answer(sorry) ↔ IsPolyTime (Function.uncurry squareRootSum) := by
+    IsPolyTime (Function.uncurry squareRootSum) := by
   sorry
 
 /--
@@ -81,9 +81,9 @@ noncomputable def squareRootSumTwoSided (l₁ l₂ : List ℕ) : Bool :=
 **Is the square-root sum problem polynomial time (two sum version)?**
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Square-root_sum_problem) -/
-@[category research open, AMS 68]
+@[category research open, question, AMS 68]
 theorem isPolyTime_squareRootSumTwoSided :
-    answer(sorry) ↔ IsPolyTime (Function.uncurry squareRootSumTwoSided) := by
+    IsPolyTime (Function.uncurry squareRootSumTwoSided) := by
   sorry
 
 end PolyTime

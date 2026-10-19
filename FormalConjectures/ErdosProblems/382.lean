@@ -47,7 +47,8 @@ def LargestPrimeRepeated (u v : ℕ) : Prop :=
 \cdot 7^2$, and the largest prime $7$ appears with exponent $2$. -/
 @[category test, AMS 11]
 theorem largestPrimeRepeated_48_50 : LargestPrimeRepeated 48 50 := by
-  sorry
+  unfold LargestPrimeRepeated
+  decide +kernel
 
 /-- If the condition holds, then $v < 2u$.
 
@@ -68,8 +69,8 @@ $v - u \leq v^{\epsilon}$. Cambie observed that this question reduces to old con
 between primes; for example, it follows from Cramér's conjecture. See also Erdős Problems 380 and
 383.
 -/
-@[category research open, AMS 11]
-theorem erdos_382.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_382.parts.i :
     ∀ ε > (0 : ℝ), ∀ᶠ v : ℕ in atTop, ∀ u : ℕ, LargestPrimeRepeated u v →
       ((v - u : ℕ) : ℝ) ≤ (v : ℝ) ^ ε := by
   sorry
@@ -81,8 +82,8 @@ exponent at least $2$. Can $v - u$ be arbitrarily large?
 That is, for every $k$, is there such a pair with $v - u \geq k$? Cambie gives a heuristic that
 suggests the answer is yes.
 -/
-@[category research open, AMS 11]
-theorem erdos_382.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_382.parts.ii :
     ∀ k : ℕ, ∃ u v : ℕ, LargestPrimeRepeated u v ∧ k ≤ v - u := by
   sorry
 
