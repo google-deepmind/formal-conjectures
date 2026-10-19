@@ -51,9 +51,9 @@ The answer is yes, as proved by Chen and Ding [ChDi22].
 Here `A` may contain $0$. This changes each $f(n)$ by at most one, so it does not affect the
 answer.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos237b.lean#L55"]
-theorem erdos_237 : answer(True) ↔ ∀ A : Set ℕ,
+theorem erdos_237 : ∀ A : Set ℕ,
     (fun N : ℕ ↦ Real.log N) =O[atTop] (fun N ↦ ((A ∩ .Icc 1 N).ncard : ℝ)) →
     limsup (fun n ↦ (f A n : ℕ∞)) atTop = ⊤ := by
   sorry
