@@ -35,20 +35,11 @@ open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- The vertex connectivity `κ(G)`: the minimum number of vertices whose removal
-disconnects the graph (or `n - 1` when the graph is complete).
-Vertex connectivity is not yet in Mathlib; we define it here as the minimum size of
-a vertex separator, where removing `S` leaves the induced subgraph on `Sᶜ` disconnected.
--- TODO: replace with a Mathlib definition when one becomes available. -/
-noncomputable def vertexConnectivity (G : SimpleGraph α) : ℕ :=
-  if Fintype.card α ≤ 1 then 0
-  else sInf { k | ∃ S : Finset α, S.card = k ∧
-    (¬(G.induce (↑Sᶜ : Set α)).Connected ∨ S.card = Fintype.card α - 1) }
-
 /--
 WOWII [Conjecture 199](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 For a simple connected graph `G`, if `tree(G) - 2 ≤ κ(G)`, then `G` has a Hamiltonian path.
+The nontrivial vertex type encodes the source assumption $n > 1$.
 Here `tree(G)` is the number of vertices in a largest induced tree and
 `κ(G) = vertexConnectivity G` is the vertex connectivity of `G`.
 -/
@@ -64,8 +55,33 @@ theorem conjecture199 (G : SimpleGraph α) (h : G.Connected)
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ largestInducedTreeSize G := Nat.zero_le _
 
-/-- The vertex connectivity is nonneg. -/
+/-- The empty graph has vertex connectivity zero. -/
 @[category test, AMS 5]
-example (G : SimpleGraph (Fin 3)) : 0 ≤ vertexConnectivity G := Nat.zero_le _
+theorem vertexConnectivity_empty : vertexConnectivity (⊥ : SimpleGraph (Fin 0)) = 0 := by
+  simp
+
+/-- A single vertex has vertex connectivity zero. -/
+@[category test, AMS 5]
+theorem vertexConnectivity_singleton : vertexConnectivity (⊤ : SimpleGraph (Fin 1)) = 0 := by
+  simp
+
+/-- Two isolated vertices have vertex connectivity zero. -/
+@[category test, AMS 5]
+theorem vertexConnectivity_disconnected : vertexConnectivity (⊥ : SimpleGraph (Fin 2)) = 0 := by
+  exact vertexConnectivity_eq_zero_of_not_connected _ not_connected_bot
+
+/-- The complete graph on three vertices has vertex connectivity two. -/
+@[category test, AMS 5]
+theorem vertexConnectivity_complete_three : vertexConnectivity (⊤ : SimpleGraph (Fin 3)) = 2 := by
+  classical
+  rw [vertexConnectivity, if_neg (by decide)]
+  apply le_antisymm
+  · exact csInf_le' ⟨{0, 1}, by decide, Or.inr (by decide)⟩
+  · refine le_csInf ?_ ?_
+    · exact ⟨2, {0, 1}, by decide, Or.inr (by decide)⟩
+    · rintro k ⟨S, rfl, hS⟩
+      exact (by decide +kernel : ∀ S : Finset (Fin 3),
+        (¬((⊤ : SimpleGraph (Fin 3)).induce ((S : Set (Fin 3))ᶜ)).Connected ∨
+          S.card = Fintype.card (Fin 3) - 1) → 2 ≤ S.card) S hS
 
 end WrittenOnTheWallII.GraphConjecture199

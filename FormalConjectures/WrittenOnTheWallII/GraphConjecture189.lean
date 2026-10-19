@@ -35,14 +35,6 @@ open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-/-- The **second-smallest degree** of `G`'s degree sequence — DeLaVina's
-`σ(G)` per the WOWII definitions popup (defEntry 65): "order the degree
-sequence in nondecreasing order `d_1 ≤ d_2 ≤ … ≤ d_n`, the second smallest
-degree of the sequence is the 2nd entry". For graphs with `n ≤ 1` we
-conventionally return `0`. -/
-noncomputable def secondSmallestDegree (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
-  (degreeSequence G).getD 1 0
-
 /--
 WOWII [Conjecture 189](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj189)
 (status O):

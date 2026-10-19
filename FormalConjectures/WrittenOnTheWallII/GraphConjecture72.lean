@@ -39,7 +39,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 WOWII [Conjecture 72](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
 For a simple connected graph `G`,
-`tree(G) ≥ ⌈(ecc_avg(G) + max_v l(v)) / 3⌉`
+$\operatorname{tree}(G) ≥ ⌈\operatorname{ecc}_{\mathrm{avg}}(G) + \max_v \lambda(v)/3⌉$
 where `tree(G)` is the number of vertices in a largest induced tree,
 `ecc_avg(G)` is the average eccentricity of `G`, and
 `max_v l(v) = max_v indepNeighborsCard G v` is the maximum over all vertices of
@@ -48,7 +48,7 @@ the independence number of the neighbourhood.
 @[category research open, AMS 5]
 theorem conjecture72 (G : SimpleGraph α) (h : G.Connected) :
     let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)
-    ⌈(averageEccentricity G + (maxL : ℝ)) / 3⌉ ≤ (largestInducedTreeSize G : ℝ) := by
+    ⌈averageEccentricity G + (maxL : ℝ) / 3⌉ ≤ (largestInducedTreeSize G : ℝ) := by
   sorry
 
 -- Sanity checks

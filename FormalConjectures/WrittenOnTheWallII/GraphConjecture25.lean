@@ -36,26 +36,24 @@ namespace WrittenOnTheWallII.GraphConjecture25
 
 open SimpleGraph
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
-
 /--
 WOWII [Conjecture 25](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj25)
 (status F, disproved):
 
-For a simple connected graph `G`, `b(G) ≥ ⌊α(G) + dist_avg(M, V) / 2⌋`, where `b(G)` is
-the size of a largest induced bipartite subgraph, `α(G)` is the independence number,
-and `M` is the set of maximum-degree vertices, and `dist_avg(M, V)` is the average
-distance from all vertices to `M`.
+For every finite simple connected graph $G$,
+$b(G) ≥ 2⌈(1 + \min_v \operatorname{dist}_{\mathrm{even}}(v))/3⌉$,
+where $b(G)$ is the size of a largest induced bipartite subgraph and
+$\operatorname{dist}_{\mathrm{even}}(v)$ counts the vertices at even distance from $v$.
 
-This conjecture is false; there is a counterexample with `b(G) = 19`, `α(G) = 15`,
-and `dist_avg(M, V) = 10`.
+The nontrivial vertex type excludes graphs with fewer than two vertices.
+The source gives the same counterexample as for Conjecture 24.
 -/
 @[category research solved, AMS 5]
-theorem conjecture23 : answer(False) ↔
-  ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
-    (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
-    let M : Set α := {v | G.degree v = G.maxDegree}
-    ⌊(G.indepNum : ℝ) + distavg G M / 2⌋ ≤ (b G : ℝ) := by
+theorem conjecture25 : answer(False) ↔
+    ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+      ∀ (G : SimpleGraph α) (_ : G.Connected),
+        let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
+        2 * ⌈(1 + (minDistEven : ℝ)) / 3⌉ ≤ (b G : ℝ) := by
   sorry
 
 -- Sanity checks
@@ -64,8 +62,9 @@ theorem conjecture23 : answer(False) ↔
 @[category test, AMS 5]
 example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
 
-/-- In `K₃`, the max degree is 2. -/
+/-- In $K_3$, only the vertex itself is at even distance. -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 3)).maxDegree = 2 := by decide +native
+theorem distEven_complete_three (v : Fin 3) : distEven (⊤ : SimpleGraph (Fin 3)) v = 1 := by
+  simp [distEven, SimpleGraph.dist_top, apply_ite, Finset.filter_eq]
 
 end WrittenOnTheWallII.GraphConjecture25
