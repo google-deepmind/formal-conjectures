@@ -66,6 +66,22 @@ instance Powerful.decide : ∀ n, Decidable (Powerful n) := by
 theorem full_of_le_full (k : ℕ) (n : ℕ) {m : ℕ} (hk : k ≤ m) (h : m.Full n) : k.Full n :=
   fun p a ↦ pow_dvd_of_le_of_pow_dvd hk (h p a)
 
+/-- A product of $k$-full numbers is $k$-full. -/
+theorem Full.mul {k a b : ℕ} (ha : k.Full a) (hb : k.Full b) : k.Full (a * b) := by
+  intro r hr
+  have hrp := Nat.prime_of_mem_primeFactors hr
+  have hab : a * b ≠ 0 := (Nat.mem_primeFactors.mp hr).2.2
+  rcases (Nat.Prime.dvd_mul hrp).mp (Nat.dvd_of_mem_primeFactors hr) with h | h
+  · exact (ha r (Nat.mem_primeFactors.mpr ⟨hrp, h, left_ne_zero_of_mul hab⟩)).mul_right b
+  · exact (hb r (Nat.mem_primeFactors.mpr ⟨hrp, h, right_ne_zero_of_mul hab⟩)).mul_left a
+
+/-- $m ^ j$ is $k$-full whenever $k \le j$. -/
+theorem full_pow {k j : ℕ} (m : ℕ) (hkj : k ≤ j) : k.Full (m ^ j) := by
+  intro r hr
+  have hm : r ∣ m :=
+    (Nat.prime_of_mem_primeFactors hr).dvd_of_dvd_pow (Nat.dvd_of_mem_primeFactors hr)
+  exact (pow_dvd_pow_of_dvd hm k).trans (pow_dvd_pow m hkj)
+
 /-- If $n \equiv p \pmod{p ^ (k + 1)}$, for a prime $p$ then $n$ is not $(k + 1)$-full. -/
 theorem not_full_of_prime_mod_prime_sq (n : ℕ) (k : ℕ) {p : ℕ} (hp : p.Prime)
     (h : n % p ^ (k + 1) = p) : ¬ (k + 1).Full n := by
