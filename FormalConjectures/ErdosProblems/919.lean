@@ -41,8 +41,6 @@ open scoped Cardinal Ordinal
 
 namespace Erdos919
 
--- The question is independent of ZFC (see the docstring), so the answer stays a placeholder.
-set_option linter.style.category_answer false in
 /--
 Is there a graph $G$ with vertex set $\omega_2^2$ and chromatic number $\aleph_2$ such that every
 subgraph whose vertices have a lesser type has chromatic number $\leq \aleph_0$?
@@ -51,16 +49,16 @@ The vertex set is the ordinal $\omega_2^2$ with its usual order, and a set of ve
 type when its order type is less than $\omega_2^2$. A subgraph on a vertex set has chromatic
 number at most that of the induced subgraph, so the statement uses induced subgraphs.
 
-This question is **independent of ZFC**, relative to a huge cardinal, so the answer stays
-`answer(sorry)`. By `erdos_919.variants.iff_erdos_918_i` it is equivalent in ZFC to the first
-question of Problem 918 (`Erdos918.erdos_918.parts.i`): is there a graph with $\aleph_2$ vertices
-and chromatic number $\aleph_2$ all of whose subgraphs on $\aleph_1$ vertices have chromatic
-number $\leq \aleph_0$? Such a graph exists if $V = L$ [Sh90] and in a model of GCH due to
-Baumgartner [Ba84]. Foreman and Laver [FoLa88] showed, starting from a huge cardinal, that it is
-consistent with GCH that no such graph exists.
+This question is **independent of ZFC**, relative to a huge cardinal, so neither the statement
+nor its negation can be proved. By `erdos_919.variants.iff_erdos_918_i` it is equivalent in ZFC
+to the first question of Problem 918 (`Erdos918.erdos_918.parts.i`): is there a graph with
+$\aleph_2$ vertices and chromatic number $\aleph_2$ all of whose subgraphs on $\aleph_1$
+vertices have chromatic number $\leq \aleph_0$? Such a graph exists if $V = L$ [Sh90] and in a
+model of GCH due to Baumgartner [Ba84]. Foreman and Laver [FoLa88] showed, starting from a huge
+cardinal, that it is consistent with GCH that no such graph exists.
 -/
-@[category research solved, AMS 3 5]
-theorem erdos_919 : answer(sorry) ↔
+@[category research solved, question, AMS 3 5]
+theorem erdos_919 :
     ∃ G : SimpleGraph (ω_ 2 ^ 2 : Ordinal.{u}).ToType, G.chromaticCardinal = ℵ_ 2 ∧
       ∀ X : Set (ω_ 2 ^ 2 : Ordinal.{u}).ToType, typeLT X < ω_ 2 ^ 2 →
         (G.induce X).chromaticCardinal ≤ ℵ₀ := by
@@ -74,8 +72,8 @@ uncountable chromatic number all of whose subgraphs on $\aleph_1$ vertices have 
 $\leq \aleph_0$. The answer is yes under CH (`erdos_919.variants.aleph_1_of_CH`) and whenever
 the $\aleph_2$ question has a positive answer (`erdos_919.variants.aleph_2_imp_aleph_1`).
 -/
-@[category research open, AMS 3 5]
-theorem erdos_919.variants.aleph_1 : answer(sorry) ↔
+@[category research open, question, AMS 3 5]
+theorem erdos_919.variants.aleph_1 :
     ∃ G : SimpleGraph (ω_ 2 ^ 2 : Ordinal.{u}).ToType, G.chromaticCardinal = ℵ₁ ∧
       ∀ X : Set (ω_ 2 ^ 2 : Ordinal.{u}).ToType, typeLT X < ω_ 2 ^ 2 →
         (G.induce X).chromaticCardinal ≤ ℵ₀ := by
