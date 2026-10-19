@@ -47,8 +47,8 @@ many vertices?
 
 A conjecture of Ajtai, Erdős, Komlós, and Szemerédi [AEKS81].
 -/
-@[category research open, AMS 5]
-theorem erdos_802 : answer(sorry) ↔ ∀ r : ℕ, ∃ c > (0 : ℝ), ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
+@[category research open, question, AMS 5]
+theorem erdos_802 : ∀ r : ℕ, ∃ c > (0 : ℝ), ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
     G.CliqueFree r →
       c * (log G.averageDegree / G.averageDegree) * n ≤ G.indepNum := by
   sorry
