@@ -51,8 +51,8 @@ Here $T(n^k)$ means the threshold of the positive $k$-th powers. Least-threshold
 ensure that the thresholds exist. We restrict to $k\geq 1$, since the zeroth powers form
 $\{1\}$, which is incomplete. Positive powers are complete [Ki17].
 -/
-@[category research open, AMS 5 11]
-theorem erdos_345 : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem erdos_345 :
     {k : ℕ | 0 < k ∧ ∃ a b : ℕ, IsLeast (thresholds (kthPowers k)) a ∧
       IsLeast (thresholds (kthPowers (k + 1))) b ∧ b < a}.Infinite := by
   sorry

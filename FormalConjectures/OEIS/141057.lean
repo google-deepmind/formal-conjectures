@@ -91,8 +91,12 @@ Conjecture (Peter Bala, 2022):
 The supercongruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^{3k}}$ hold
 for the integer-indexed extension $a(n)$ for all $n \in \mathbb{Z} \setminus \{0\}$, primes $p \ge 5$,
 and $k \ge 1$.
+
+Proved in Lean by Jensen Kohlmeyer and Liam Kruer, extending the positive-index
+proof by Epoch Research.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/JENW1N/complete-math-solutions/blob/8b9db1d8c0ded5398d5e4e4bbdf8f2ec14ce5c23/proofs/BalaA141057Conjecture.lean#L1416"]
 theorem conjecture2 (p k : ℕ) (n : ℤ) (hp : p.Prime) (h_p_ge_5 : 5 ≤ p) (h_k_pos : 1 ≤ k)
     (hn : n ≠ 0) :
     aInt (n * (p ^ k : ℤ)) ≡ aInt (n * (p ^ (k - 1) : ℤ)) [ZMOD (p ^ (3 * k) : ℤ)] := by

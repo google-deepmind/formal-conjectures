@@ -151,10 +151,10 @@ The answer is no. There is a commutative Hopf algebra of rank $4$ over a finite 
 whose fourth power map is not trivial; its eighth power map is trivial. The formalised
 counterexample lives in `Type`, so the statement quantifies over rings and algebras in `Type`.
 -/
-@[category research solved, AMS 14 16, formal_proof using lean4 at
+@[category research solved, question, AMS 14 16, formal_proof using lean4 at
   "https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Counterexamples/GrothendieckPower.lean#L882-L892"]
 theorem killed_by_rank :
-    answer(False) ↔ ∀ n : ℕ+, IsUniversalKillingExponent.{0, 0} n n := by
+    ¬ ∀ n : ℕ+, IsUniversalKillingExponent.{0, 0} n n := by
   sorry
 
 /--
@@ -192,6 +192,8 @@ theorem killed_by_rank.variants.commutative (n : ℕ+) (R : Type*) [CommRing R] 
     IsKilledBy R A n := by
   sorry
 
+def optimal_exponent.answer : ℕ+ → ℕ := sorry
+
 /--
 Determine the function assigning to each positive integer $n$ the least positive integer $m$
 such that every finite locally free group scheme of rank $n$, over every commutative ring, is
@@ -202,10 +204,10 @@ Grothendieck asked whether this least exponent is $n$ itself. It is not, already
 If some positive exponent kills every group scheme of rank $n$, then these exponents are the
 multiples of the least one, so minimality for $\le$ agrees with minimality for divisibility.
 -/
-@[category research open, AMS 14 16]
+@[category research open, question value, AMS 14 16]
 theorem optimal_exponent :
-    let exponent : ℕ+ → ℕ := answer(sorry)
-    ∀ n, sInf ((↑) '' {m | IsUniversalKillingExponent.{0, 0} n m} : Set ℕ) = exponent n := by
+    ∀ n, sInf ((↑) '' {m | IsUniversalKillingExponent.{0, 0} n m} : Set ℕ) = optimal_exponent.answer
+      n := by
   sorry
 
 end FiniteLocallyFreeGroupSchemeExponent
