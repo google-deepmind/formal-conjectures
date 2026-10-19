@@ -38,7 +38,9 @@ open SimpleGraph
 /-- Every connected finite simple graph of order at least two satisfies
 $\gamma_t(G)\le a(G)+1$. The annihilation number maximizes the cardinality
 of a degree submultiset whose sum is at most the number of edges. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/51b0c45f2609d78f90ce74bc88f704355e178657/Proofs/TDAFull.lean#L74"]
 theorem total_domination_annihilation {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hG : G.Connected)
     (horder : 2 ≤ Fintype.card V) :
