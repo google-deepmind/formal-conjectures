@@ -131,7 +131,7 @@ def BorsukConjecture (n : ℕ) : Prop :=
 that every bounded subset of $\mathbb{R}^n$ with at least two points can be partitioned into
 $n + 1$ sets of strictly smaller diameter for every such $n$.
 
-The conjecture is true for $n \leq 3$ and false for $n \geq 63$. It was disproved in dimension
+The conjecture is true for $n \leq 3$ and false for $n \geq 9$. It was disproved in dimension
 $9$ by an internal OpenAI model in September 2026 [OAI26]; see `borsuk_conjecture.not_nine` and
 the linked Lean proof. The cases $4 \leq n \leq 8$ remain open.
 -/
