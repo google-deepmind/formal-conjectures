@@ -146,9 +146,9 @@ Suppose $A\subset \mathbb{R}^2$ has $\lvert A\rvert=n$ and minimises the number 
 distances between points in $A$. Prove that for large $n$ there are at least two
 (and probably many) such $A$ which are non-similar.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_91 :
-    (∀ᶠ n : ℕ in atTop, ¬ UniqueMinimizer n) ↔ answer(sorry) := by
+    ∀ᶠ n : ℕ in atTop, ¬ UniqueMinimizer n := by
   sorry
 
 

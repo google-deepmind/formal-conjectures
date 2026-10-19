@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Simultaneously Small Entropies
@@ -33,6 +35,8 @@ once, by an explicit construction.
     "Schmidt's game, fractals, and numbers normal to no base."
     Mathematical Research Letters 17.2 (2010): 307-321.
 -/
+
+@[expose] public section
 
 namespace Bugeaud53
 
