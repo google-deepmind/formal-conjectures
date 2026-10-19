@@ -144,7 +144,7 @@ theorem distinct_prop_one_hundred : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ �
 
 /-- The cumulative proportion of simple critical-line zeros in (0,T] has
 liminf at least the displayed exact rational, exceeding 0.6734775223. -/
-@[category research solved, AMS 11]
+@[category research open, AMS 11]
 theorem simple_prop_cumulative_gebendorfer :
     (8269551442741204889710953 : ℝ) / 12278882618209750000000000 ≤
       Filter.liminf (fun T : ℝ => (Ns riemannZeta 0 T : ℝ) / N riemannZeta 0 T) atTop := by
@@ -272,7 +272,7 @@ nonnegative 25-mode class with nonnegative gap prices and 0<R<m has value
 strictly below 0.674034. This bounds the certificate class, not the actual
 simple-zero proportion. It asserts neither sharpness nor attainment of the
 class supremum. H may be replaced by any certified smaller real value. -/
-@[category research solved, AMS 11 15]
+@[category research open, AMS 11 15]
 theorem certificate_class_ceiling (c : Fin 24 → ℝ) (hc : IsAdmissible c)
     (m : ℕ) (hm : 2 ≤ m) (p : Fin (m - 1) → ℝ) (hp : ∀ i, 0 ≤ p i)
     (R : ℝ) (hR : 0 < R) (hRm : R < m) (H : ℝ) (hH : H ≤ energyH c)
