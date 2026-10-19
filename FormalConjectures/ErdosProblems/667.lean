@@ -74,10 +74,9 @@ complement of a $(6, 10)$-locally dense graph is $C_6$-free, so Bondy–Simonovi
 $\alpha(F) \geq n^2 / (2e(F) + n)$ gives $c(6, 10) \geq 2/3$. That remark is therefore not
 formalised here.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_667 :
-    answer(sorry) ↔
-      ∀ p : ℕ, StrictMonoOn (c p) (Set.Icc 1 (Nat.choose (p - 1) 2 + 1)) := by
+    ∀ p : ℕ, StrictMonoOn (c p) (Set.Icc 1 (Nat.choose (p - 1) 2 + 1)) := by
   sorry
 
 /--

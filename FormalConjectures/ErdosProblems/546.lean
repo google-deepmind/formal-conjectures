@@ -40,8 +40,8 @@ This is true, and was proved by Sudakov [Su11].
 
 This problem is #11 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/7caa4144741e10f96cf79d6f7313a0efd9a18b67/erdos-546/Proofs/OriginalStatement546.lean#L33"]
-theorem erdos_546 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/7caa4144741e10f96cf79d6f7313a0efd9a18b67/erdos-546/Proofs/OriginalStatement546.lean#L33"]
+theorem erdos_546 :
     ∃ C > (0 : ℝ), ∀ (m : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
       (∀ v, 0 < G.degree v) →
       G.edgeSet.ncard = m →

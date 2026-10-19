@@ -16,22 +16,33 @@ limitations under the License.
 module
 
 public meta import Lean.Elab.SyntheticMVars
-public import FormalConjecturesUtil.Answer.Syntax
 
 import Batteries.Lean.Expr
 
+deprecated_module "no problem file uses `answer( )` any more; see `CONTRIBUTING.md`" (since := "2026-10-15")
 
 /-!
-# The `answer( )` elaborator
+# The `answer( )` elaborator (deprecated)
 
-This file provides syntax for marking up answers in a problem statement.
+This module is deprecated and `FormalConjecturesUtil` does not import it. It is kept for
+projects that still use the `answer( )` elaborator on statements taken from this repository.
 
-Note: certain problems also providing an answer, and can be formalised
-using `answer(sorry)` as a placeholder. While providing a proof simply requires
-finding any way to replace `:= sorry`, providing an answer is not just finding
-any way to replace `answer(sorry)`: it requires evaluation of mathematical meaning,
-which is a job for human mathematicians, not Lean alone.
+The repository no longer states problems with it. A yes-or-no question is a plain proposition
+tagged `@[question]`, and the unknown of a question that asks for a value is a definition
+`<theorem>.answer`, tagged `@[question value]`. See `CONTRIBUTING.md`.
+
+The elaborator marks the answer in a problem statement, so that `answer(sorry)` can stand for
+an unknown. While providing a proof simply requires finding any way to replace `:= sorry`,
+providing an answer is not just finding any way to replace `answer(sorry)`: it requires
+evaluation of mathematical meaning, which is a job for human mathematicians, not Lean alone.
 -/
+
+public section
+
+/-- Indicates where the answer is in a problem statement. -/
+syntax (name := Google.answer) "answer(" term ")" : term
+
+end
 
 public meta section
 
@@ -91,6 +102,29 @@ where
     | .forallE _ t b _ => go b (go t acc)
     | .letE _ t v b _ => go b (go v (go t acc))
     | _ => acc
+
+/-- Run `f` on the inner expression of every `answer` annotation in `e`, in order of
+occurrence. Unlike `findAnswerExprs`, the binders above an annotation are in the local context
+when `f` runs, so an answer that mentions a bound variable can be examined with `inferType`
+or `isProp`. -/
+partial def forEachAnswer (e : Expr) (f : Expr → MetaM Unit) : MetaM Unit :=
+  match e with
+  | .mdata m inner => do
+    if m.contains `answer then f inner
+    forEachAnswer inner f
+  | .app fn a => do forEachAnswer fn f; forEachAnswer a f
+  | .lam n t b bi => do
+    forEachAnswer t f
+    withLocalDecl n bi t fun x => forEachAnswer (b.instantiate1 x) f
+  | .forallE n t b bi => do
+    forEachAnswer t f
+    withLocalDecl n bi t fun x => forEachAnswer (b.instantiate1 x) f
+  | .letE n t v b _ => do
+    forEachAnswer t f
+    forEachAnswer v f
+    withLetDecl n t v fun x => forEachAnswer (b.instantiate1 x) f
+  | .proj _ _ s => forEachAnswer s f
+  | _ => pure ()
 
 def elabTermAndAnnotate (stx : TSyntax `term) (expectedType? : Option Expr)
     (postpone : Bool := false) :=
