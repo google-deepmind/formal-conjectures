@@ -248,7 +248,8 @@ theorem a_17 : TermAt 17 15 := by
 
 /--
 [OEIS A331631](https://oeis.org/A331631) states:
-"This is conjectured to be a permutation of the positive integers (see the Crossrefs section)."
+The sequence is conjectured to be a permutation of the positive integers
+(see the Crossrefs section).
 -/
 @[category research open, AMS 11]
 theorem conjecture :
