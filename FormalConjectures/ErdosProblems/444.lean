@@ -59,9 +59,9 @@ This is asked in [ErGr80, p.88]. The answer is yes, proved by Erdős and Sárkö
 
 The maximum is over $1 \le n < x$, since every $a \in A$ divides $0$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos444.lean#L38"]
-theorem erdos_444 : answer(True) ↔ ∀ A : Set ℕ, A.Infinite → ∀ k : ℕ,
+theorem erdos_444 : ∀ A : Set ℕ, A.Infinite → ∀ k : ℕ,
     atTop.limsup (fun x : ℝ ↦ (((Ico 1 ⌈x⌉₊).sup (divisorCount A) /
       (∑ n ∈ Ico 1 ⌈x⌉₊ with n ∈ A, (n : ℝ)⁻¹) ^ k : ℝ) : EReal)) = ⊤ := by
   sorry
