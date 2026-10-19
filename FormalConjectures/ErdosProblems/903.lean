@@ -41,9 +41,9 @@ true that if $t>n$ then $t\geq n+p$?
 
 This is true, and was proved by Erdős, Fowler, Sós, and Wilson [EFSW85].
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_903 :
-    answer(True) ↔ ∀ p : ℕ, IsPrimePow p →
+    ∀ p : ℕ, IsPrimePow p →
     ∀ H : Finset (Finset (Fin (p ^ 2 + p + 1))),
       H.IsPairwiseBalancedDesign → p ^ 2 + p + 1 < H.card →
         p ^ 2 + p + 1 + p ≤ H.card := by
