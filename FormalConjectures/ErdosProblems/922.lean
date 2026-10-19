@@ -46,9 +46,9 @@ This is true, and was proved by Folkman [Fo70b].
 
 See also [73](https://www.erdosproblems.com/73).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos922.lean#L5595"]
-theorem erdos_922 : answer(True) ↔ ∀ (k : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
+theorem erdos_922 : ∀ (k : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
     (∀ S : Finset V, ∃ I : Finset V, I ⊆ S ∧ (G.induce (I : Set V)).edgeSet = ∅ ∧
       (I.card : ℝ) ≥ (S.card - k : ℝ) / 2) →
     G.chromaticNumber ≤ k + 2 := by

@@ -61,8 +61,8 @@ That is, is it true that for every $\epsilon > 0$ we have $h(x) > x^{2-\epsilon}
 $x$? According to erdosproblems.com, Erdős [Er74b] proved that $\limsup h(x)/x = \infty$ and
 claimed a similar proof for this problem.
 -/
-@[category research open, AMS 11]
-theorem erdos_824 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_824 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℕ in atTop, (x : ℝ) ^ (2 - ε) < (h x : ℝ) := by
   sorry
 
@@ -80,8 +80,8 @@ A similar question can be asked if the condition $(a,b)=1$ is replaced by the co
 and $b$ are squarefree. Let $h'(x)$ count the number of squarefree integers $1\leq a<b<x$ with
 $\sigma(a)=\sigma(b)$. Is it true that $h'(x)>x^{2-o(1)}$?
 -/
-@[category research open, AMS 11]
-theorem erdos_824.variants.squarefree : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_824.variants.squarefree :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℕ in atTop, (x : ℝ) ^ (2 - ε) < (hSquarefree x : ℝ) := by
   sorry
 
