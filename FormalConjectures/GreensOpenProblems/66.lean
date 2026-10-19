@@ -61,31 +61,19 @@ theorem green_66.variants.trivial_bound :
   have hs4 : s ^ 4 = X := by
     rw [hs, ← Real.rpow_natCast, ← Real.rpow_mul (by linarith)]
     norm_num
-  have hs0 : 0 ≤ s := by linarith
-  have hsq0 : 0 ≤ s ^ 2 := by positivity
   obtain ⟨a, ha⟩ : ∃ a : ℕ, a = ⌊s ^ 2⌋₊ := ⟨_, rfl⟩
-  have ha1 : (a : ℝ) ≤ s ^ 2 := ha ▸ Nat.floor_le hsq0
-  have ha2 : s ^ 2 < a + 1 := ha ▸ Nat.lt_floor_add_one _
+  have ha1 : (a : ℝ) ≤ s ^ 2 := ha ▸ Nat.floor_le (by nlinarith)
   have ha0 : (0 : ℝ) ≤ a := Nat.cast_nonneg a
   set r : ℝ := X - (a : ℝ) ^ 2 with hr
   have hr0 : 0 ≤ r := by nlinarith
-  have hr1 : r < 2 * s ^ 2 := by
-    have h1 : r = (s ^ 2 - a) * (s ^ 2 + a) := by rw [hr, ← hs4]; ring
-    have h2 : (s ^ 2 - a) * (s ^ 2 + a) < 1 * (s ^ 2 + a) :=
-      mul_lt_mul_of_pos_right (by linarith) (by nlinarith)
-    linarith
   obtain ⟨b, hb⟩ : ∃ b : ℕ, b = ⌊Real.sqrt r⌋₊ := ⟨_, rfl⟩
-  have hb1 : (b : ℝ) ≤ Real.sqrt r := hb ▸ Nat.floor_le (Real.sqrt_nonneg r)
-  have hb2 : Real.sqrt r < b + 1 := hb ▸ Nat.lt_floor_add_one _
-  have hb0 : (0 : ℝ) ≤ b := Nat.cast_nonneg b
-  have hsr : Real.sqrt r ^ 2 = r := Real.sq_sqrt hr0
-  have hbr : (b : ℝ) ^ 2 ≤ r := by nlinarith [Real.sqrt_nonneg r]
-  have hrb : r < ((b : ℝ) + 1) ^ 2 := by nlinarith [Real.sqrt_nonneg r]
-  have hb3 : (b : ℝ) < 2 * s := by nlinarith
-  refine ⟨a ^ 2 + b ^ 2, ⟨a, b, rfl⟩, ?_, ?_⟩
-  · push_cast
-    nlinarith
-  · push_cast
-    nlinarith
+  have hbr : (b : ℝ) ^ 2 ≤ r := by
+    nlinarith [Real.sqrt_nonneg r, Real.sq_sqrt hr0, hb ▸ Nat.floor_le (Real.sqrt_nonneg r)]
+  have hrb : r < ((b : ℝ) + 1) ^ 2 := by
+    nlinarith [Real.sqrt_nonneg r, Real.sq_sqrt hr0, hb ▸ Nat.lt_floor_add_one _]
+  have hb3 : (b : ℝ) < 2 * s := by
+    suffices (s ^ 2 - a) * (s ^ 2 + a) < 1 * (s ^ 2 + a) by nlinarith
+    exact mul_lt_mul_of_pos_right (by linarith [ha ▸ Nat.lt_floor_add_one _]) (by nlinarith)
+  refine ⟨a ^ 2 + b ^ 2, ⟨a, b, rfl⟩, ?_, ?_⟩ <;> grind
 
 end Green66
