@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 849
 
 *Reference:* [erdosproblems.com/849](https://www.erdosproblems.com/849)
 -/
+
+@[expose] public section
 
 open Nat
 
@@ -29,8 +33,8 @@ namespace Erdos849
 Is it true that, for every integer $t\geq1$, there is some integer $a$ such that ${n \choose k} = a$
 with $1\leq k \le \frac{n}{2}$ has exactly $t$ solutions?
 -/
-@[category research open, AMS 11]
-theorem erdos_849 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_849 :
     ∀ t ≥ 1, ∃ a : ℕ,
       {n : ℕ | ∃ k ≥ 1, 2 * k ≤ n ∧ choose n k = a}.ncard = t := by
   sorry

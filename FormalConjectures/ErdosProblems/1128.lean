@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1128
 
 *Reference:* [erdosproblems.com/1128](https://www.erdosproblems.com/1128)
 -/
+
+@[expose] public section
 
 open Cardinal Set Ordinal Order
 
@@ -39,7 +42,7 @@ These establish key countability and boundedness properties of ω₁.
 -/
 
 /-- The set of countable ordinals, expressed using Mathlib's `ω_ 1`. -/
-private abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
+abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
 
 /-- The set of ordinals strictly below any $\gamma < \omega_1$ is countable. -/
 @[category API, AMS 5]
@@ -144,30 +147,24 @@ Note: The positive statement asserts that every 2-colouring of every $\aleph_1^3
 contains a monochromatic countably infinite box. Since the answer is False, this
 positive statement fails.
 -/
-@[category research solved, AMS 3 5]
-theorem erdos_1128 : answer(False) ↔
-    ∀ (A B C : Type) (_ : #A = aleph 1) (_ : #B = aleph 1) (_ : #C = aleph 1)
+@[category research solved, question, AMS 3 5]
+theorem erdos_1128 :
+    ¬ ∀ (A B C : Type) (_ : #A = aleph 1) (_ : #B = aleph 1) (_ : #C = aleph 1)
       (f : A → B → C → Fin 2),
       ∃ (A₁ : Set A) (B₁ : Set B) (C₁ : Set C),
         #A₁ = aleph 0 ∧ #B₁ = aleph 0 ∧ #C₁ = aleph 0 ∧
         IsMonochromaticBox f A₁ B₁ C₁ := by
-  -- `answer(False)` reduces to `False` in the default elaborator mode.
-  -- The goal is: False ↔ ∀ A B C, |A| = ℵ₁ → |B| = ℵ₁ → |C| = ℵ₁ →
-  --               ∀ f, ∃ monochromatic countable box.
-  -- (→): False implies anything.
-  -- (←): The Prikry–Mills theorem provides A B C of size ℵ₁ and a 2-colouring
-  --      with no monochromatic countable box, contradicting the hypothesis.
-  constructor
-  · intro h; exact h.elim
-  · intro h
-    -- Obtain the Prikry–Mills counterexample: a type X of cardinality ℵ₁ with a
-    -- 2-colouring f : X → X → X → Fin 2 having no monochromatic countable box.
-    obtain ⟨X, hX, f, hf⟩ := erdos_1128.prikryMills
-    -- Apply h to X (playing the roles of A, B, C), using |X| = ℵ₁.
-    obtain ⟨A₁, B₁, C₁, hA, hB, hC, hbox⟩ := h X X X hX hX hX f
-    -- The Prikry–Mills theorem says no countably infinite box is monochromatic.
-    -- Since #A₁ = aleph 0, #B₁ = aleph 0, #C₁ = aleph 0, this is a contradiction.
-    exact hf A₁ B₁ C₁ hA hB hC hbox
+  -- The Prikry–Mills theorem provides A B C of size ℵ₁ and a 2-colouring
+  -- with no monochromatic countable box, contradicting the hypothesis.
+  intro h
+  -- Obtain the Prikry–Mills counterexample: a type X of cardinality ℵ₁ with a
+  -- 2-colouring f : X → X → X → Fin 2 having no monochromatic countable box.
+  obtain ⟨X, hX, f, hf⟩ := erdos_1128.prikryMills
+  -- Apply h to X (playing the roles of A, B, C), using |X| = ℵ₁.
+  obtain ⟨A₁, B₁, C₁, hA, hB, hC, hbox⟩ := h X X X hX hX hX f
+  -- The Prikry–Mills theorem says no countably infinite box is monochromatic.
+  -- Since #A₁ = aleph 0, #B₁ = aleph 0, #C₁ = aleph 0, this is a contradiction.
+  exact hf A₁ B₁ C₁ hA hB hC hbox
 
 /--
 **Explicit form of Prikry–Mills**:
