@@ -54,9 +54,9 @@ where the upper bound is due to Bannai, Bannai and Stanton [BBS83] and the lower
 construction of Aletheia (generalising constructions for Problem 502), so that
 $g_d(n) / d^{n-1} \to 1/(n-1)!$ as $d \to \infty$.
 -/
-@[category research solved, AMS 51 52, formal_proof using lean4 at
+@[category research solved, question, AMS 51 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1089.lean#L769"]
-theorem erdos_1089 : answer(True) ↔
+theorem erdos_1089 :
     ∀ n : ℕ, 2 ≤ n → ∃ L : ℝ,
       Tendsto (fun d : ℕ => (g d n : ℝ) / (d : ℝ) ^ (n - 1)) atTop (𝓝 L) := by
   sorry

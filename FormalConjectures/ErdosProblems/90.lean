@@ -82,8 +82,8 @@ by an internal model at OpenAI, which constructed (for infinitely many $n$) a se
 in $\mathbb{R}^2$ such that the number of unit distance pairs in $P$ is at least $n^{1+c}$, where
 $c > 0$ is an absolute constant.
 -/
-@[category research solved, AMS 52]
-theorem erdos_90 : answer(False) ↔ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log)),
+@[category research solved, question, AMS 52]
+theorem erdos_90 : ¬ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n : ℝ).log.log)),
     (fun n => (maxUnitDistances n : ℝ)) =ᶠ[atTop] fun (n : ℕ) => (n : ℝ) ^ (1 + O n) := by
   sorry
 
@@ -130,8 +130,7 @@ exponent $c$ is incompatible with the conjectured $O(1 / \log \log n)$ growth. -
 theorem erdos_90.variants.polynomial_lower_bound_implies_erdos_90 :
     type_of% erdos_90.variants.polynomial_lower_bound →
     type_of% erdos_90 := by
-  rintro ⟨c, hc, hInf⟩
-  refine ⟨fun h => h.elim, fun ⟨O_fn, hO_bigO, hO_eq⟩ => ?_⟩
+  rintro ⟨c, hc, hInf⟩ ⟨O_fn, hO_bigO, hO_eq⟩
   -- 1/log(log(n)) → 0, so O_fn = O(1/log log n) implies O_fn → 0
   have hg : Tendsto (fun n : ℕ => (1 : ℝ) / (↑n : ℝ).log.log) atTop (nhds 0) := by
     simp_rw [one_div]
