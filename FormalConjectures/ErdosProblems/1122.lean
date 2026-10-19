@@ -51,8 +51,8 @@ for some $c>0$, and if $f(p)$ does not have very large values (in a certain tech
 
 See also `erdos_491`.
 -/
-@[category research open, AMS 11]
-theorem erdos_1122 : answer(sorry) ↔ ∀ f : ℕ → ℝ,
+@[category research open, question, AMS 11]
+theorem erdos_1122 : ∀ f : ℕ → ℝ,
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     {n | 1 ≤ n ∧ f (n + 1) < f n}.HasDensity 0 →
     ∃ c : ℝ, ∀ n > 0, f n = c * Real.log n := by
