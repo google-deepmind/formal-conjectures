@@ -107,6 +107,41 @@ theorem a_44 : a 44 = 411 := by
   norm_num [a, decimalAppend, decimalDigitCount, Nat.maxPrimeFac,
     Nat.primeFactorsList, List.getLastI]
 
+@[category test, AMS 11]
+theorem a_49 : a 49 = 77 := by decide +kernel
+
+@[category test, AMS 11]
+theorem a_77 : a 77 = 711 := by decide +kernel
+
+@[category test, AMS 11]
+theorem a_711 : a 711 = 979 := by decide +kernel
+
+@[category test, AMS 11]
+theorem a_979 : a 979 = 1189 := by decide +kernel
+
+@[category test, AMS 11]
+theorem a_1189 : a 1189 = 2941 := by decide +kernel
+
+@[category test, AMS 11]
+theorem a_2941 : a 2941 = 17173 := by
+  have hf : Nat.maxPrimeFac (17 * 173) = 173 := by
+    rw [Nat.maxPrimeFac_mul (by decide) (by decide),
+      (by norm_num : Nat.Prime 17).maxPrimeFac_eq_self,
+      (by norm_num : Nat.Prime 173).maxPrimeFac_eq_self]
+    norm_num
+  change Nat.maxPrimeFac 2941 = 173 at hf
+  norm_num [a, hf, decimalAppend, decimalDigitCount]
+
+@[category test, AMS 11]
+theorem a_17173 : a 17173 = 131321 := by
+  have hf : Nat.maxPrimeFac (13 * 1321) = 1321 := by
+    rw [Nat.maxPrimeFac_mul (by decide) (by decide),
+      (by norm_num : Nat.Prime 13).maxPrimeFac_eq_self,
+      (by norm_num : Nat.Prime 1321).maxPrimeFac_eq_self]
+    norm_num
+  change Nat.maxPrimeFac 17173 = 1321 at hf
+  norm_num [a, hf, decimalAppend, decimalDigitCount]
+
 /-- Decimal append is larger than the corresponding product when both inputs are positive. -/
 @[category API, AMS 11]
 theorem mul_lt_decimal_append {x y : ℕ} (hx : 0 < x) (hy : 0 < y) :
@@ -143,17 +178,33 @@ theorem not_reaches_prime_one : ¬ ReachesPrime 1 := by
   rw [Function.iterate_fixed a_one k] at hk
   exact Nat.not_prime_one hk
 
-set_option maxRecDepth 10000 in
+@[category test, AMS 11]
+theorem prime_131321 : Nat.Prime 131321 := by norm_num
+
 /-- The orbit starting from $49$ reaches the prime $131321$ after seven steps. -/
 @[category test, AMS 11]
 theorem reaches_prime_49 : ReachesPrime 49 := by
-  refine ⟨7, ?_⟩
-  norm_num [Function.iterate_succ_apply, a, decimalAppend, decimalDigitCount,
-    Nat.maxPrimeFac, Nat.primeFactorsList, List.getLastI]
+  have orbit : (a^[7]) 49 = 131321 := calc
+    (a^[7]) 49 = (a^[6]) (a 49) := Function.iterate_succ_apply a 6 49
+    _ = (a^[6]) 77 := congrArg (a^[6]) a_49
+    _ = (a^[5]) (a 77) := Function.iterate_succ_apply a 5 77
+    _ = (a^[5]) 711 := congrArg (a^[5]) a_77
+    _ = (a^[4]) (a 711) := Function.iterate_succ_apply a 4 711
+    _ = (a^[4]) 979 := congrArg (a^[4]) a_711
+    _ = (a^[3]) (a 979) := Function.iterate_succ_apply a 3 979
+    _ = (a^[3]) 1189 := congrArg (a^[3]) a_979
+    _ = (a^[2]) (a 1189) := Function.iterate_succ_apply a 2 1189
+    _ = (a^[2]) 2941 := congrArg (a^[2]) a_1189
+    _ = (a^[1]) (a 2941) := Function.iterate_succ_apply a 1 2941
+    _ = (a^[1]) 17173 := congrArg (a^[1]) a_2941
+    _ = (a^[0]) (a 17173) := Function.iterate_succ_apply a 0 17173
+    _ = (a^[0]) 131321 := congrArg (a^[0]) a_17173
+    _ = 131321 := rfl
+  exact ⟨7, (congrArg Nat.Prime orbit).mpr prime_131321⟩
 
 /--
-"Conjecture: if we start at n >= 2, and repeatedly apply the map k -> a(k), we will eventually
-reach a prime, which is then a fixed point."
+If we start at $n \ge 2$, and repeatedly apply the map $k \mapsto a(k)$, we will eventually
+reach a prime, which is then a fixed point.
 
 — [OEIS A401006](https://oeis.org/A401006)
 -/
