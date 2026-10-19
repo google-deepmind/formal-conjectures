@@ -45,9 +45,9 @@ The answer is yes, proved by Pollack [Po15b].
 
 We take $n_k$ and $m_k$ to be positive integers.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos823.lean#L72"]
-theorem erdos_823 : answer(True) ↔ ∀ α : ℝ, 1 ≤ α →
+theorem erdos_823 : ∀ α : ℝ, 1 ≤ α →
     ∃ n m : ℕ → ℕ, (∀ k, 0 < n k) ∧ (∀ k, 0 < m k) ∧ (∀ k, σ 1 (n k) = σ 1 (m k)) ∧
       Tendsto (fun k ↦ (n k : ℝ) / m k) atTop (𝓝 α) := by
   sorry
