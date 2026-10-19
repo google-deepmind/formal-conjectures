@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 *References:*
 - [S. Radenković and I. Gutman, Total π-electron energy and Laplacian energy: how far the analogy goes?, Rule 2 (2007)](https://www.shd.org.rs/JSCS/Vol72/No12/JSCS_V72_No12-18.pdf)
 - [J. J. Gebendorfer, Laplacian energy of trees and pendant-path fusion: A computer-assisted proof of the Radenković–Gutman conjecture, 5 September 2026](https://doi.org/10.5281/zenodo.22342611)
-- [Partial Lean reductions and reproduction instructions](https://github.com/RhudeJJJJ/formal-conjectures/blob/fff0db6a8acfbc69836fff23e547a26d284b3730/Proofs/README_RG_Reductions_20261015.md)
+- [Partial Lean reductions and reproduction instructions](https://github.com/RhudeJJJJ/formal-conjectures/blob/758afccf094d20534eb7be08297b0e5a22111aae/Proofs/RG_Lean_20261019/README.md)
 
 The written universal proof uses computer-assisted analytic certificates. Their
 reproduction and the existing partial Lean infrastructure do not by themselves
