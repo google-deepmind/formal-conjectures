@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Optimal monotone families for the discrete isoperimetric inequality
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   and *Huy Tuan Pham* (2022)
 
 -/
+
+@[expose] public section
 
 namespace Mathoverflow10799
 
@@ -140,6 +143,22 @@ noncomputable def IsOptimal {n : ℕ} (p : ℝ) (F : Finset (Finset (Fin n))) : 
   let m := μFamily p F
   edgeBoundary n p F ≤ 1000 * Real.log (1 / p) * (m * Real.logb p m / p)
 
+/--
+Following Kahn–Kalai, a family is $(C \log(1/p), p)$-optimal if the isoperimetric inequality
+(IR) is sharp up to the multiplicative constant $C \log(1/p)$, i.e.
+$$I^p(\mathcal F) \le \frac{C}{p} \cdot \mu_p(\mathcal F) \cdot \log \frac{1}{\mu_p(\mathcal F)}.$$
+`IsOptimal` is the special case $C = 1000$.
+-/
+noncomputable def IsOptimalWith {n : ℕ} (C p : ℝ) (F : Finset (Finset (Fin n))) : Prop :=
+  let m := μFamily p F
+  edgeBoundary n p F ≤ C * Real.log (1 / p) * (m * Real.logb p m / p)
+
+/-- `IsOptimal` is `IsOptimalWith` for the constant $C = 1000$. -/
+@[category test, AMS 5]
+theorem isOptimal_iff_isOptimalWith {n : ℕ} (p : ℝ) (F : Finset (Finset (Fin n))) :
+    IsOptimal p F ↔ IsOptimalWith 1000 p F :=
+  Iff.rfl
+
 
 /--
 Problem: For every monotone increasing family $F$, given an interval $[s,t]$ of real numbers so
@@ -153,10 +172,10 @@ properties. The related [Kahn–Kalai conjecture](https://arxiv.org/abs/math/060
 **This conjecture is false** without the additional assumption $\mu_t(F) = 1/2$.
 A counterexample was found by Shlomo Perles (April 7, 2026).
 -/
-@[category research solved, AMS 5 60, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 60, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/408f53dc0856c0882a5e77acd24fc83b978f0bc9/FormalConjectures/Mathoverflow/10799.lean#L252"]
-theorem mathoverflow_10799 : answer(False) ↔
-    ∀ (n : ℕ) (_ : 2 ≤ n)
+theorem mathoverflow_10799 :
+    ¬ ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
     (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
     (_ : t / s > 1000 * Real.log n),
@@ -175,11 +194,11 @@ Their construction was adapted to this exact Formal Conjectures statement and
 [formalized in Lean](https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample)
 by Kenta Kitamura (KitaKen1).
 -/
-@[category research solved, AMS 5 60,
+@[category research solved, question, AMS 5 60,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/kahn-kalai-conjecture-7-counterexample/blob/5446d2f/lean/MO10799CounterexampleFC.lean#L2597-L2604"]
-theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(False) ↔
-    ∀ (n : ℕ) (_ : 2 ≤ n)
+theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 :
+    ¬ ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
     (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
     (_ : μFamily t F = 1 / 2)
@@ -188,22 +207,24 @@ theorem mathoverflow_10799.variants.kahn_kalai_conjecture_7 : answer(False) ↔
   sorry
 
 /--
-Weaker version proven by Kahn–Kalai: the same conclusion holds when $1000 \log n$ is replaced by
-$C_\varepsilon \, n^\varepsilon$ for every fixed $\varepsilon > 0$.
+Weaker version proven by Kahn–Kalai (2006): for every fixed $\varepsilon > 0$ there is a constant
+$C = C_\varepsilon$ such that for every monotone increasing family $F$ with critical probability
+$t$, i.e. $\mu_t(F) = 1/2$, there is some $p \in [n^{-\varepsilon} t, t]$ for which $F$ is
+$(C \log(1/p), p)$-optimal.
 -/
 @[category research solved, AMS 5 60]
 theorem mathoverflow_10799.variants.weak_kahn_kalai :
     ∀ ε > (0 : ℝ), ∃ C > (0 : ℝ), ∀ (n : ℕ) (_ : 2 ≤ n)
     (F : Finset (Finset (Fin n))) (_ : IsMonotoneIncreasing F)
-    (s t : ℝ) (_ : 0 < s) (_ : s ≤ t) (_ : t < 1)
-    (_ : t / s > C * (n : ℝ) ^ ε),
-    ∃ p, s ≤ p ∧ p ≤ t ∧ IsOptimal p F := by
+    (t : ℝ) (_ : 0 < t) (_ : t < 1) (_ : μFamily t F = 1 / 2),
+    ∃ p, (n : ℝ) ^ (-ε) * t ≤ p ∧ p ≤ t ∧ IsOptimalWith C p F := by
   sorry
 
 /--
 Now a famous isoperimetric relation asserts that
 (IR) $I^p(F) \ge \frac{1}{p} \mu_p(F) \log_p \mu_p(F)$
-This relation is true for every family $F$ and every $p$. It is especially famous and simple when
+This relation holds for monotone increasing families $F$ and $0 < p < 1$.
+It is especially famous and simple when
 $p=1/2$ and $\mu_p(F)=1/2$. In this case, it says that given a set of half the vertices of the
 discrete cube $2^X$, the number of edges between $F$ and its complement is at least $2^{n-1}$.
 
@@ -213,7 +234,7 @@ definition of `IsOptimal` used in the counterexample proof.
 -/
 @[category textbook, AMS 5 60]
 theorem discrete_isoperimetric_inequality (n : ℕ) (p : ℝ) (hp : 0 < p) (hp' : p < 1)
-    (F : Finset (Finset (Fin n))) :
+    (F : Finset (Finset (Fin n))) (hF : IsMonotoneIncreasing F) :
     let m := μFamily p F
     edgeBoundary n p F ≥ m * Real.logb p m / p := by
   sorry

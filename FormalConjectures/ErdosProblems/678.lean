@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 678
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Er92e] Erdős, Pál, Some Unsolved problems in Geometry, Number Theory and Combinatorics. Eureka
   (1992), 44-48.
 -/
+
+@[expose] public section
 
 open Asymptotics Filter Finset
 
@@ -78,8 +81,8 @@ See `erdos_678.variants.infinitely_many_triples` for the reading in which the in
 stated directly, and `erdos_678.variants.not_infinitely_many_pairs` for why it cannot be asked
 of a single $k$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
-theorem erdos_678 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
+theorem erdos_678 :
     ∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Nonempty := by
   sorry
 

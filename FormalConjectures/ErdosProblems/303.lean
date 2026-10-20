@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 303
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [BrRo91] Brown, Tom C. and Rödl, Voijtech, Monochromatic solutions to equations with unit
   fractions. Bull. Austral. Math. Soc. (1991), 387-392.
 -/
+
+@[expose] public section
 
 namespace Erdos303
 
@@ -35,9 +38,8 @@ This is true, as proved by Brown and Rödl [BrRo91].
 
 This was formalized in Lean by Yuan using Seed-Prover.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/303"]
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/303"]
 theorem erdos_303 :
-    answer(True) ↔
     -- For any finite colouring of the integers
     ∀ (𝓒 : ℤ → ℤ), (Set.range 𝓒).Finite →
       -- There exists integers `a, b, c`

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 545
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Er84b] Erdős, P., On some problems in graph theory, combinatorial analysis and combinatorial
   number theory. Graph theory and combinatorics (Cambridge, 1983) (1984), 1-17.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -58,8 +61,8 @@ small counterexamples recorded on the source page.
 
 This problem is #10 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
-theorem erdos_545 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_545 :
     ∀ᶠ m : ℕ in atTop, ∀ (n t : ℕ), t < n → m = n.choose 2 + t →
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
         (∀ v, 0 < G.degree v) →

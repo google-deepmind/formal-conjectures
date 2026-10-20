@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Number of times $n$ occurs as a binary sub-pattern of $n^2$
@@ -24,6 +26,8 @@ sublist (infix) in the binary expansion of $n^2$.
 
 *References:*
 - [A076141](https://oeis.org/A076141)-/
+
+@[expose] public section
 
 namespace OeisA76141
 
@@ -41,36 +45,38 @@ def a (n : ℕ) : ℕ :=
 /-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 0 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 0 := by
-  decide +native
+  decide +kernel
 
 /--
 Is $a(n) \le 1$ for all $n$?-/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a076141-binary-word/blob/b4e179767fa3041c43e019b559ee77e6737317aa/lean/OeisA76141FC.lean#L1229-L1253"]
 theorem conjecture (n : ℕ) : a n ≤ 1 := by
   sorry
 

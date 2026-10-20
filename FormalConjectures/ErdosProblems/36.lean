@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 36
@@ -23,6 +24,9 @@ import FormalConjecturesUtil
  - [erdosproblems.com/36](https://www.erdosproblems.com/36)
  - [Wikipedial: Minimum overlap problem](https://en.wikipedia.org/wiki/Minimum_overlap_problem)
 -/
+
+@[expose] public section
+
 open scoped Topology
 open Filter
 namespace Erdos36
@@ -140,6 +144,7 @@ private lemma maxOverlap_eq_maxOverlapC (A B : Finset ℤ) :
 
 /-- The `n`-element subsets of `{1, …, 2n}`. -/
 private def parts (n : ℕ) : Finset (Finset ℤ) :=
+  letI : Preorder ℤ := Int.instLinearOrder.toPreorder
   (Finset.Icc (1 : ℤ) (2 * n)).powerset.filter fun A => A.card = n
 
 @[category API, AMS 5 11]
@@ -295,12 +300,13 @@ theorem minimum_overlap.variants.lower.haugland_1996 :
   sorry
 
 /--
-A lower bound of $0.379005$.
+A lower bound of $0.379005$: the minimum overlap constant is at least $0.379005$.
 See [Erdős' minimum overlap problem](https://arxiv.org/abs/2201.05704)
 by *Ethan Patrick White*, 2022
 -/
 @[category research solved, AMS 5 11]
-theorem minimum_overlap.variants.lower.white_2022 : 0.379005 < atTop.liminf MinOverlapQuotient := by
+theorem minimum_overlap.variants.lower.white_2022 :
+    0.379005 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
 /--
@@ -342,20 +348,26 @@ by *Jan Kristian Haugland*
 theorem minimum_overlap.variants.upper.haugland_2022 :
     atTop.limsup MinOverlapQuotient ≤ 0.3809268534330870 := by sorry
 
+def erdos_36.variants.lower.answer : ℝ := sorry
+
 /--
 Find a better lower bound!
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem erdos_36.variants.lower:
-    ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c = answer(sorry) := by
+    ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c =
+      erdos_36.variants.lower.answer := by
   sorry
+
+def erdos_36.variants.upper.answer : ℝ := sorry
 
 /--
 Find a better upper bound!
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem erdos_36.variants.upper :
-    ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c = answer(sorry) := by
+    ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c =
+      erdos_36.variants.upper.answer := by
   sorry
 
 /--
@@ -365,11 +377,13 @@ The limit of `MinOverlapQuotient` exists and it is less than $0.385694$.
 theorem erdos_36.variants.exists : ∃ c, atTop.Tendsto MinOverlapQuotient (𝓝 c) ∧ c < 0.385694 := by
   sorry
 
+def erdos_36.answer : ℝ := sorry
+
 /--
 Find the value of the limit of `MinOverlapQuotient`!
 -/
-@[category research open, AMS 5 11]
-theorem erdos_36 : atTop.Tendsto MinOverlapQuotient (𝓝 answer(sorry)) := by
+@[category research open, question value, AMS 5 11]
+theorem erdos_36 : atTop.Tendsto MinOverlapQuotient (𝓝 erdos_36.answer) := by
   sorry
 
 end Erdos36
