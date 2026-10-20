@@ -117,32 +117,23 @@ excluded for the principal character, where $L(\chi, s)$ has a pole. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/Nonvanishing.lean#L19"]
 theorem quasi_generalized_riemann_hypothesis :
-    ∃ θ < 1, ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q) (s : ℂ),
+    ∃ θ < 1, ∀ q [NeZero q] (χ : DirichletCharacter ℂ q) (s : ℂ),
       θ < s.re → ¬(χ = 1 ∧ s = 1) → χ.LFunction s ≠ 0 := by
   sorry
 
 /-- The Riemann hypothesis implies the quasi-Riemann hypothesis with $\theta = 1/2$. -/
 @[category test, AMS 11]
-theorem of_riemannHypothesis (h : RiemannHypothesis) : type_of% quasi_riemann_hypothesis := by
-  refine ⟨1 / 2, by norm_num, fun s hs hz => ?_⟩
-  have hs1 : s ≠ 1 := by
-    rintro rfl
-    exact riemannZeta_one_ne_zero hz
-  have htriv : ¬∃ n : ℕ, s = -2 * (n + 1) := by
-    rintro ⟨n, rfl⟩
-    norm_num at hs
-    linarith [n.cast_nonneg (α := ℝ)]
-  exact hs.ne' (h s hz htriv hs1)
+theorem of_riemannHypothesis (h : RiemannHypothesis) : type_of% quasi_riemann_hypothesis :=
+  ⟨1 / 2, by norm_num, fun s hs hz => hs.ne' <| h s hz
+    (by rintro ⟨n, rfl⟩; norm_num at hs; linarith) fun h1 => riemannZeta_one_ne_zero (h1 ▸ hz)⟩
 
 /-- The Dirichlet version implies the version for $\zeta$, taking $q = 1$. -/
 @[category test, AMS 11]
 theorem of_quasi_generalized_riemann_hypothesis
-    (h : type_of% quasi_generalized_riemann_hypothesis) : type_of% quasi_riemann_hypothesis := by
-  obtain ⟨θ, hθ, H⟩ := h
-  refine ⟨θ, hθ, fun s hs => ?_⟩
-  by_cases hs1 : s = 1
-  · exact hs1 ▸ riemannZeta_one_ne_zero
-  · simpa using H 1 1 s hs (by simp [hs1])
+    (h : type_of% quasi_generalized_riemann_hypothesis) : type_of% quasi_riemann_hypothesis :=
+  let ⟨θ, hθ, H⟩ := h
+  ⟨θ, hθ, fun s hs => (eq_or_ne s 1).elim (· ▸ riemannZeta_one_ne_zero)
+    fun hs1 => by simpa using H 1 1 s hs (by simp [hs1])⟩
 
 end QuasiRiemannHypothesis
 
