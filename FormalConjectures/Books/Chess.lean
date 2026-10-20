@@ -19,22 +19,32 @@ import FormalConjecturesUtil
 /-!
 # Perfect play in chess
 
-This file models the part of the FIDE Laws of Chess needed to assign a game-theoretic value to
-the standard initial position. It includes legal moves, checkmate, stalemate, dead positions,
-draw claims, fivefold repetition, and the 75-move rule. It excludes clocks, resignation, and
-draws by agreement because these are not properties of the abstract game tree.
+This file models the part of the FIDE Laws of Chess effective 1 January 2023 needed to assign
+a game-theoretic value to the standard initial position. It includes legal moves, checkmate,
+stalemate, dead positions, draw claims, fivefold repetition, and the 75-move rule. It excludes
+clocks, resignation, and draws by agreement because these are not properties of the abstract
+game tree.
+
+Valid draw claims are atomic actions. The model includes claims based on the current position
+or an intended legal move, but omits scoresheet and arbiter procedures, physical move procedures,
+and penalties for invalid claims.
+
+`Position` stores raw board and historical data without a validity constraint. The intended game
+histories are those satisfying `Reachable`, starting from the standard initial game and extending
+it only by legal play before an automatic result. Predicates and updates on a supplied position
+do not independently certify that it occurs in such a history.
 
 The conjecture says that both White and Black have strategies that avoid a loss. Equivalently,
 the game-theoretic value of the initial position is a draw.
 
 An early published version of this conjecture appears in the 1775 *Traité des Amateurs*. Its
 authors argue that, when both sides play correctly, the game is drawn. The present statement uses
-the current FIDE rules.
+the 2023 FIDE rules cited below.
 
 *References:*
 - [Société d'Amateurs, *Traité théorique et pratique du jeu des échecs*, pp. 162–163
   (1775)](https://archive.org/details/traitthoriqueet00damgoog)
-- [FIDE Laws of Chess](https://handbook.fide.com/chapter/E012023)
+- [FIDE Laws of Chess effective 1 January 2023](https://handbook.fide.com/chapter/E012023)
 - [Wikipedia, Solving chess](https://en.wikipedia.org/wiki/Solving_chess)
 - [Wikipedia, First-move advantage in chess](https://en.wikipedia.org/wiki/First-move_advantage_in_chess)
 -/
@@ -129,7 +139,9 @@ structure Ply where
   promotion : Option PieceKind := none
   deriving DecidableEq
 
-/-- The information needed to determine legal moves from a chess position. -/
+/-- Raw data used to determine legal moves and update a chess position.
+This structure imposes no validity constraint on the board or historical data. The intended
+legal histories are specified by `Reachable`. -/
 structure Position where
   board : Board
   turn : Color
@@ -376,7 +388,8 @@ noncomputable def applyBoard (position : Position) (ply : Ply) : Board :=
 
 end
 
-/-- Whether a ply is legal in the given position. -/
+/-- Whether a ply is legal relative to the supplied position data.
+This predicate does not assert that the position occurs in a reachable game. -/
 def IsLegalPly (position : Position) (ply : Ply) : Prop :=
   IsPseudoLegal position ply ∧ ¬InCheck (applyBoard position ply) position.turn
 
@@ -627,7 +640,7 @@ theorem initial_position_sanity :
 Under perfect play from the standard initial position, chess ends in a draw: both White and Black
 have a strategy that avoids losing.
 
-This is a current-rules version of the conclusion stated in the 1775 *Traité des Amateurs*.
+This states the conclusion of the 1775 *Traité des Amateurs* under the 2023 FIDE rules.
 
 References: [Société d'Amateurs, *Traité théorique et pratique du jeu des échecs*, pp. 162–163
 (1775)](https://archive.org/details/traitthoriqueet00damgoog) and
