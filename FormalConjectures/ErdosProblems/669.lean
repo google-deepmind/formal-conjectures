@@ -174,7 +174,15 @@ Trivially $f_k(n)\leq F_k(n)$.
 @[category research solved, AMS 52]
 theorem erdos_669.variants.exactly_le_atLeast (k n : ℕ) :
     maxLinesExactly k n ≤ maxLinesAtLeast k n := by
-  sorry
+  refine csSup_le' ?_
+  rintro _ ⟨S, hS, rfl⟩
+  have hfin : (linesWithAtLeastPointsFor k (S : Set ℝ²)).Finite := by
+    refine ((S.finite_toSet.prod S.finite_toSet).image
+      (fun pq : ℝ² × ℝ² => affineSpan ℝ {pq.1, pq.2})).subset ?_
+    rintro L ⟨⟨p, hp, q, hq, -, rfl⟩, -⟩
+    exact ⟨(p, q), Set.mk_mem_prod hp hq, rfl⟩
+  exact le_csSup_of_le (lineCountsAtLeast_bddAbove k n) ⟨S, hS, rfl⟩
+    (Set.ncard_le_ncard (linesWithPointsFor_subset_linesWithAtLeastPointsFor k _) hfin)
 
 /--
 $f_2(n)=F_2(n)=\binom{n}{2}$.
