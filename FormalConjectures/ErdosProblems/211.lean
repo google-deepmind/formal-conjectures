@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Geometry.«2d»
 
 /-!
 # Erdős Problem 211

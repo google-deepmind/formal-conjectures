@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.PerfectPower
 meta import Mathlib.Combinatorics.Enumerative.Partition.Basic
 
 

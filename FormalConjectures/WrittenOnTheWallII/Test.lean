@@ -16,6 +16,16 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.AnnihilationNumber
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cvetkovic
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SzegedIndex
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WienerIndex
 meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
 meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue

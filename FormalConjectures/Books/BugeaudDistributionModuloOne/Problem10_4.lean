@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Spectrum of Sequence
 *References:*

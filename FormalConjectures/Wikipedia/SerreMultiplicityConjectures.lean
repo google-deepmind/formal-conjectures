@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.RingTheory.IntersectionMultiplicity
 
 /-!
 # Serre's multiplicity conjectures

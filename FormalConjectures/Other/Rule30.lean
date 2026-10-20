@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # The Rule 30 Prize Problems

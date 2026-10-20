@@ -13,26 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-module
+module -- shake: keep-downstream
 
-public import Mathlib
-public import FormalConjecturesForMathlib
-public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
-public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
-public import FormalConjecturesUtil.Linters.AMSLinter
-public import FormalConjecturesUtil.Linters.CategoryDocstringLinter
-public import FormalConjecturesUtil.Linters.CategoryLinter
-public import FormalConjecturesUtil.Linters.CopyrightLinter
-public import FormalConjecturesUtil.Linters.ExistsImplicationLinter
-public import FormalConjecturesUtil.Linters.FormalProofLinter
-public import FormalConjecturesUtil.Linters.ImportLinter
-public import FormalConjecturesUtil.Linters.LatexDocstringLinter
-public import FormalConjecturesUtil.Linters.ModuleDocstringLinter
-public import FormalConjecturesUtil.Linters.NamespaceLinter
-public import FormalConjecturesUtil.Linters.StubLinter
+public import Mathlib -- shake: keep
+public import FormalConjecturesUtil.Linters.AMSLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.CategoryDocstringLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.CategoryLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.CopyrightLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.ExistsImplicationLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.FormalProofLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.ImportLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.LatexDocstringLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.ModuleDocstringLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.NamespaceLinter -- shake: keep
+public import FormalConjecturesUtil.Linters.StubLinter -- shake: keep
 
 /-!
 # Standard imports for open problems
 
-This file provides a standard set of imports used by problem files throughout the project.
+This file provides Mathlib, the attributes and the linters to every problem file. Problem files
+add `public import` lines for the `FormalConjecturesForMathlib` modules they use, so that a change
+to one of those modules rebuilds only its importers.
+
+The `shake: keep` annotations tell `scripts/shake_imports.lean` to leave these imports alone.
 -/
