@@ -62,14 +62,14 @@ with $1$ replaced by any rational $\alpha>0$.
 
 This was formalized in Lean by Ammanamanchi using Opus 4.6 and GPT 5.5 Pro.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/Shashi456/erdos-formalizations/blob/286f856aa3fc08957b80950fd18a45aab8d045ea/Erdos/P283/Proof_flat.lean#L9738-L9746"]
-theorem erdos_283 : answer(True) ↔ ∀ p : ℚ[X], Condition p := by
+@[category research solved, question, AMS 11, formal_proof using formal_conjectures at "https://github.com/Shashi456/erdos-formalizations/blob/286f856aa3fc08957b80950fd18a45aab8d045ea/Erdos/P283/Proof_flat.lean#L9738-L9746"]
+theorem erdos_283 : ∀ p : ℚ[X], Condition p := by
   sorry
 
 /--
 Graham [Gr63] has proved this when $p(x)=x$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos283_erdos_283_variants_graham.lean#L383"]
 theorem erdos_283.variants.graham : Condition X := by
   sorry
 

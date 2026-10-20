@@ -36,18 +36,17 @@ Let $S \subseteq \mathbb{R}$ be a set containing no solutions to $a + b = c$.
 Must there be a set $A \subseteq \mathbb{R} \setminus S$ of cardinality continuum such that
 $A + A \subseteq \mathbb{R}\setminus S$?
 -/
-@[category research open, AMS 5]
-theorem erdos_949 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_949 :
     ∀ S : Set ℝ, (∀ a ∈ S, ∀ b ∈ S, a + b ∉ S) → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by
   sorry
 
 /-- Let $S\sub \mathbb{R}$ be a Sidon set. Must there be a set $A\sub \mathbb{R}∖S$ of cardinality
 continuum such that $A + A \sub \mathbb{R}∖S$? -/
-@[category research solved, AMS 5]
-theorem erdos_949.variants.sidon : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_949.variants.sidon :
     ∀ S : Set ℝ, IsSidon S → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by
-  show True ↔ _
-  simp only [true_iff, Set.add_subset_iff]
+  simp only [Set.add_subset_iff]
   rintro S hS
   -- We case on whether `S` has cardinality the continuum or strictly less.
   obtain hS𝔠 | hS𝔠 : #S < 𝔠 ∨ #S = 𝔠 := lt_or_eq_of_le <| by simpa using mk_set_le S

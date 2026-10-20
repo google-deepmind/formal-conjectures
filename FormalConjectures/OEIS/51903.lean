@@ -65,9 +65,9 @@ $p^{e-1} \mid e$, which forces $p = 2$ and $e = 2$. Now $n = 4m$ with $m$ odd an
 and $2\phi(m) \mid 4m - 2$ makes $\phi(m)$ odd, so $m = 1$ and $n = 4$. Hence $e = 1$ and the
 condition is $\phi(n) \mid n - 1$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture1 :
-    answer(sorry) ↔ ∃ n : ℕ, 4 < n ∧ ¬ n.Prime ∧ n.totient ∣ (n - a n) := by
+    ∃ n : ℕ, 4 < n ∧ ¬ n.Prime ∧ n.totient ∣ (n - a n) := by
   sorry
 
 /--

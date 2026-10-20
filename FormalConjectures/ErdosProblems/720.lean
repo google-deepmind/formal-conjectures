@@ -58,10 +58,10 @@ Is it true that, if $P_n$ is the path of length $n$, then $\hat{R}(P_n)/n\to \in
 
 The answer is no: Beck [Be83b] proved that in fact $\hat{R}(P_n)\ll n$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos720.lean#L39"]
-theorem erdos_720.parts.i : answer(False) ↔
-    Tendsto (fun n : ℕ ↦ (sizeRamseyNumber (pathGraph (n + 1)) : ℝ) / n) atTop atTop := by
+theorem erdos_720.parts.i :
+    ¬ Tendsto (fun n : ℕ ↦ (sizeRamseyNumber (pathGraph (n + 1)) : ℝ) / n) atTop atTop := by
   sorry
 
 /--
@@ -69,9 +69,9 @@ Is it true that, if $P_n$ is the path of length $n$, then $\hat{R}(P_n)/n^2 \to 
 
 The answer is yes: Beck [Be83b] proved that in fact $\hat{R}(P_n)\ll n$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos720.lean#L39"]
-theorem erdos_720.parts.ii : answer(True) ↔
+theorem erdos_720.parts.ii :
     Tendsto (fun n : ℕ ↦ (sizeRamseyNumber (pathGraph (n + 1)) : ℝ) / (n : ℝ) ^ 2) atTop
       (nhds 0) := by
   sorry
@@ -81,9 +81,9 @@ Is it true that, if $C_n$ is the cycle with $n$ edges, then $\hat{R}(C_n) =o(n^2
 
 The answer is yes: Beck [Be83b] proved that in fact $\hat{R}(C_n)\ll n$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos720.lean#L39"]
-theorem erdos_720.parts.iii : answer(True) ↔
+theorem erdos_720.parts.iii :
     Tendsto (fun n : ℕ ↦ (sizeRamseyNumber (cycleGraph n) : ℝ) / (n : ℝ) ^ 2) atTop
       (nhds 0) := by
   sorry
