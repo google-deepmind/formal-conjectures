@@ -43,8 +43,7 @@ many block-compatible sequences for $\{1,\ldots,n\}$?
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_732.parts.i :
-    let P : ℕ → List ℕ → Prop := erdos_732.parts.i.answer
-    ∀ (n : ℕ) (s : List ℕ), s ∈ Hypergraph.blockSizeProfiles n ↔ P n s := by
+    ∀ (n : ℕ) (s : List ℕ), s ∈ Hypergraph.blockSizeProfiles n ↔ erdos_732.parts.i.answer n s := by
   sorry
 
 /--

@@ -54,7 +54,7 @@ theorem erdos_321 (N : ℕ) :
 Formalisation note: it's possible that solution to `erdos_321` needs to be
 expressed asymptotically. To handle this we include `IsTheta`, `IsBigO`
 and `IsLittleO` variants below. Since a solution is not known this necessitates
-the use of an `answer(sorry)` placeholder. Trivial or sub-optimal solutions
+the use of an `answer` definition left as `sorry`. Trivial or sub-optimal solutions
 will therefore exist to the asymptotic formalisations. A true solution to
 the asymptotic variants should have a degree of optimality or non-triviality to it.
 -/

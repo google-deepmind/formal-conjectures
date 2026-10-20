@@ -24,7 +24,7 @@ In this problem, a function $h : \mathbb{N} \to\mathbb{N}$ is defined maximally 
 some counting property.
 
 The problem asks to estimate $h(n)$. This has been interpreted here as asking for $\Theta(h(n))$.
-The principal version includes `answer(sorry)` for an unknown function.
+The principal version includes the unknown function `erdos_789.answer`.
 
 Straus [Str66] proved that $h(n) \ll \sqrt{n}$. Erdős [Er62c] and Choi [Ch74b] proved that
 $(n\log(n))^{1/3} \ll h(n)$. Korsky [Ko26] improved this to $h(n) \gg \sqrt{n\log\log n/\log n}$.

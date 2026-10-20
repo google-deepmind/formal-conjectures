@@ -74,9 +74,8 @@ Find reasonable bounds for $N_0(r)$. The goal is to improve upon the Green-Sawhn
 -/
 @[category research open, question value, AMS 5 11]
 theorem green_22 :
-    let ans := green_22.answer
-    ∀ᶠ r in atTop, N₀ r ≤ ans r ∧
-    ans =o[atTop] GreenSawhneyBound := by
+    ∀ᶠ r in atTop, N₀ r ≤ green_22.answer r ∧
+    green_22.answer =o[atTop] GreenSawhneyBound := by
   sorry
 
 /--

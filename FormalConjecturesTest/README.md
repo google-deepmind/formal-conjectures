@@ -2,7 +2,7 @@
 
 This directory is the `lake test` driver of the repository. It tests the repository's own
 tooling in `FormalConjecturesUtil/`: the `category`, `AMS`, `formal_proof`, and `question`
-attributes, the `answer( )` elaborator, and the linters.
+attributes, and the linters.
 
 ## What belongs here
 

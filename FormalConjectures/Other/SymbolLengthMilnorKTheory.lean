@@ -120,9 +120,9 @@ characterised by: `k` is such a bound if and only if `sl m n p ≤ k`.
 -/
 @[category research open, question value, AMS 12 19]
 theorem symbol_length_problem :
-    let sl : ℕ → ℕ → ℕ → ℕ∞ := symbol_length_problem.answer
     ∀ m n p : ℕ, p.Prime → ∀ k : ℕ,
-      k ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n ↔ sl m n p ≤ k := by
+      k ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n ↔ symbol_length_problem.answer m n p ≤ k
+        := by
   sorry
 
 /--

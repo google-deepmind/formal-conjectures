@@ -31,6 +31,7 @@ public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.Algebra.Ring.PythagorasNumber
+public import FormalConjecturesForMathlib.Algebra.WeylAlgebra
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.MinimalDiscriminant
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Regulator
@@ -75,6 +76,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Chordal
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.List
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
@@ -161,6 +163,15 @@ public import FormalConjecturesForMathlib.Geometry.Metric
 public import FormalConjecturesForMathlib.Geometry.OrdinaryLines
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
+public import FormalConjecturesForMathlib.GroupTheory.DerivedLength
+public import FormalConjecturesForMathlib.GroupTheory.ElementOrders
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.InvolutionFixedPoints
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.MovedPoints
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.OrbitCounts
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.TransitivityDegree
+public import FormalConjecturesForMathlib.GroupTheory.PrimeDivisors
+public import FormalConjecturesForMathlib.GroupTheory.RationalClasses
+public import FormalConjecturesForMathlib.GroupTheory.SubgroupCounts
 public import FormalConjecturesForMathlib.GroupTheory.Torsion
 public import FormalConjecturesForMathlib.InformationTheory.FiniteEntropy
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
@@ -213,6 +224,7 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.RepresentationTheory.CharacterDegree
 public import FormalConjecturesForMathlib.RepresentationTheory.Homological.ContCohomology.Sha
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.TrivialModule

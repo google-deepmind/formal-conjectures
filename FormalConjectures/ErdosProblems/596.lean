@@ -47,7 +47,7 @@ true that
 
 Erdős and Hajnal originally conjectured that no such pair exists; but $(C_4, C_6)$
 witnesses it (Nešetřil–Rödl + Erdős–Hajnal). The full question is to characterise the
-class of all such pairs, recorded here as `answer(sorry)`.
+class of all such pairs, recorded here as the unknown `erdos_596.answer`.
 
 See Problem 595 for the specific case $(G_1, G_2) = (K_4, K_3)$.
 -/
