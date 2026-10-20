@@ -26,7 +26,7 @@ public import FormalConjecturesUtil
 The linked definitions specify the smallest degree mode when there is a tie.
 
 *Counterexample:* [J. J. Gebendorfer, Double brooms refute Graffiti.pc Conjecture 340
-on total domination in trees (2026)](https://github.com/RhudeJJJJ/formal-conjectures/blob/30bae94df72b735e3729bfba1bd9ade5513566ac/Sources/WOWII340/wowii340.pdf).
+on total domination in trees (2026)](https://github.com/RhudeJJJJ/formal-conjectures/blob/c83bae78200bf3277ec9fe8e4a3f61d7ee37da82/Sources/WOWII340/wowii340.pdf).
 
 Gebendorfer's double broom $D(5,5)$ refutes the inequality: its total domination
 number is $8$, whereas the proposed upper bound is $2+1\cdot5=7$.
@@ -57,7 +57,7 @@ def conjecture340Statement : Prop :=
 
 /-- The proposed total-domination bound for all trees of order greater than two is false. -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/30bae94df72b735e3729bfba1bd9ade5513566ac/Proofs/WOWII340Proof.lean#L176"]
+  formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/c83bae78200bf3277ec9fe8e4a3f61d7ee37da82/Proofs/WOWII340Proof.lean#L176"]
 theorem conjecture340 : ¬ conjecture340Statement := by
   sorry
 
