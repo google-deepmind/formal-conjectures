@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Perfect play in chess
@@ -48,6 +50,8 @@ the 2023 FIDE rules cited below.
 - [Wikipedia, Solving chess](https://en.wikipedia.org/wiki/Solving_chess)
 - [Wikipedia, First-move advantage in chess](https://en.wikipedia.org/wiki/First-move_advantage_in_chess)
 -/
+
+@[expose] public section
 
 namespace Chess
 
