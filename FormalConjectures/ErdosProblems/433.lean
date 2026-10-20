@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 433
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - J. Dixmier, *Proof of a conjecture by Erdős and Graham on Frobenius' coin problem*,
   Proceedings of the AMS 109 (1990), 567–577.
 -/
+
+@[expose] public section
 
 namespace Erdos433
 
@@ -46,8 +49,8 @@ noncomputable def g (k n : ℕ) : ℕ :=
 /-- For every fixed $k \geq 2$, Erdős and Graham conjectured that
 $$g(k,n) \sim \frac{n^2}{k-1}.$$
 The conjecture was proved by Dixmier [Di90]. -/
-@[category research solved, AMS 11]
-theorem erdos_433 : answer(True) ↔ ∀ k, 2 ≤ k →
+@[category research solved, question, AMS 11]
+theorem erdos_433 : ∀ k, 2 ≤ k →
     Tendsto (fun n : ℕ => (g k n : ℝ) / ((n : ℝ) ^ 2 / ((k : ℝ) - 1))) atTop (𝓝 1) := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 609
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
 - [JaYi25] Janzer, O. and Yip, F., Short monochromatic odd cycles.
   arXiv:2506.14910 (2025).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -55,13 +58,15 @@ then there must be a monochromatic odd cycle of length at most $m$.
 noncomputable def f (n : ℕ) : ℕ :=
   sInf {m : ℕ | ∀ (c : Sym2 (Fin (2 ^ n + 1)) → Fin n), MonochromaticHasOddCycleLe n m c}
 
+def erdos_609.answer : ℕ → ℝ := sorry
+
 /--
 Let $f(n)$ be the minimal $m$ such that if the edges of $K_{2^n+1}$ are coloured with $n$ colours
 then there must be a monochromatic odd cycle of length at most $m$. Estimate $f(n)$.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_609 :
-    (fun n ↦ (f n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =Θ[atTop] erdos_609.answer := by
   sorry
 
 -- TODO: Add variants of the problem.

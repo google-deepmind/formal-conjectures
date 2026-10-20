@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Can a prime $p$ satisfy $2^{p-1} \equiv 1 \pmod{p^2}$ and $3^{p-1} \equiv 1 \pmod{p^2}$?
@@ -34,6 +35,8 @@ satisfy both congruences simultaneously. Lenstra gave a heuristic argument again
 * [OEIS A014127](https://oeis.org/A014127) (Mirimanoff primes)
 -/
 
+@[expose] public section
+
 namespace WieferichMirimanoffPrime
 
 /--
@@ -43,18 +46,18 @@ Mirimanoff prime? Wikipedia's list of unsolved problems poses this question, cit
 J. B. Dobson, [On Lerch's formula for the Fermat quotient](https://arxiv.org/abs/1103.3907v6).
 Lenstra gave a heuristic argument against the existence of such a prime (see Dobson, Section 9).
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem exists_isWieferichPrime_and_isMirimanoffPrime :
-    answer(sorry) ↔ ∃ p : ℕ, IsWieferichPrime p ∧ IsMirimanoffPrime p := by
+    ∃ p : ℕ, IsWieferichPrime p ∧ IsMirimanoffPrime p := by
   sorry
 
 /--
 Are $11$ and $1006003$ the only Mirimanoff primes? They are the only known ones: Dorais and Klyve
 found no other below $9.7 \times 10^{14}$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem isMirimanoffPrime_iff :
-    answer(sorry) ↔ ∀ p, IsMirimanoffPrime p ↔ p = 11 ∨ p = 1006003 := by
+    ∀ p, IsMirimanoffPrime p ↔ p = 11 ∨ p = 1006003 := by
   sorry
 
 /-- The prime $11$ is a Mirimanoff prime but not a Wieferich prime. -/

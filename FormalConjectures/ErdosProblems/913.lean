@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 913
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 
 Reviewed by @b-mehta on 2025-05-27
 -/
+
+@[expose] public section
 
 namespace Erdos913
 
@@ -33,8 +36,8 @@ $$
 $$
 is the factorisation into distinct primes then all exponents $k_i$ are distinct?
 -/
-@[category research open, AMS 11]
-theorem erdos_913 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_913 :
     { n | Set.InjOn (n * (n + 1)).factorization (n * (n + 1)).primeFactors }.Infinite := by
   sorry
 

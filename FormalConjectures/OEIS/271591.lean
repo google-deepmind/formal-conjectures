@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Maximal run lengths in the second MSB of Tribonacci numbers $T(n)$
@@ -30,6 +31,8 @@ This is formalized by extracting the bit at position $\lfloor \log_2 T_n \rfloor
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A000073](https://oeis.org/A000073)
 -/
+
+@[expose] public section
 
 namespace OeisA271591
 
