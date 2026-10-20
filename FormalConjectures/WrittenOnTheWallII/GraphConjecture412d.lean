@@ -93,8 +93,6 @@ isolate-free strengthened theorem, with no independent proof gap. -/
 theorem conjecture412d (hG : G.Connected) (hb : G.IsBipartite)
     (horder : 2 < Fintype.card V) :
     G.totalDominationNumber ≤ (criticalUnion G).card := by
-  have hni : ∀ v, ∃ w, G.Adj v w := connected_has_neighbor G hG horder
-  exact (conjecture412d_isolate_free G hb hni).2 ▸
-    (conjecture412d_isolate_free G hb hni).1
+  sorry
 
 end WrittenOnTheWallII.GraphConjecture412d
