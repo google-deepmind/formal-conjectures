@@ -67,7 +67,8 @@ theorem erdos_617 (r : ℕ) (hr : r ≥ 3) {V : Type} [Fintype V] [DecidableEq V
 /--
 Erdős and Gyárfás [ErGy99] proved the conjecture for $r=3$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/c452cb7948677a419244c7609d926dbce70f241c/Proofs/Erdos617ThreeProof.lean"]
 theorem erdos_617.variants.r_eq_3 (r : ℕ) (hr : r ≥ 3) {V : Type} [Fintype V] [DecidableEq V]
     (hV : Fintype.card V = 3^2 + 1) (coloring : Sym2 V → Fin 3) :
     ∃ (S : Finset V) (k : Fin 3),
@@ -90,7 +91,8 @@ theorem erdos_617.variants.r_eq_4 (r : ℕ) (hr : r ≥ 3) {V : Type} [Fintype V
 Erdős and Gyárfás [ErGy99] showed this property fails for infinitely many $r$ if we replace $r^2+1$
 by $r^2$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/c452cb7948677a419244c7609d926dbce70f241c/Proofs/Erdos617AffineProof.lean"]
 theorem erdos_617.variants.r2 :
     {r : ℕ | ∃ (V : Type) (_ : Fintype V) (_ : DecidableEq V), Fintype.card V = r^2 ∧
       ∃ (coloring : Sym2 V → Fin r),
