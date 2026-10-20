@@ -13,9 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Data.Nat.Squarefree
-import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.Squarefree
+public import FormalConjecturesForMathlib.Data.Nat.Factorization.Basic
+
+public meta import Mathlib.Data.Nat.Factorization.Basic
+
+import Mathlib.Tactic
+
+@[expose] public section
 
 namespace Nat
 
@@ -52,7 +59,7 @@ theorem squarefreePart_zero : squarefreePart 0 = 1 := by
 /-- If `n` is squarefree, then its squarefree part is itself. -/
 theorem squarefreePart_of_squarefree {n : ℕ} (hn : Squarefree n) :
     squarefreePart n = n := by
-  nth_rw 2 [← n.factorization_prod_pow_eq_self fun _ ↦ by simp_all]
+  nth_rw 2 [← n.prod_factorization_pow_eq_self fun _ ↦ by simp_all]
   simp only [squarefreePart, Finsupp.prod, support_factorization]
   exact Finset.prod_congr rfl fun p hp ↦ by
     rw [factorization_eq_one_of_squarefree hn (mem_primeFactors.1 hp).1 (mem_primeFactors.1 hp).2.1]
@@ -98,6 +105,6 @@ theorem squarefreePart_mul_squarePart (n : ℕ) : n.squarefreePart * n.squarePar
   Nat.mul_div_eq_iff_dvd.2 n.squarefreePart_dvd
 
 theorem squarefree_infinite : Set.Infinite { n : ℕ | Squarefree n } :=
-  Set.Infinite.mono (fun _ hp ↦ hp.squarefree) Nat.infinite_setOf_prime
+  Set.Infinite.mono (fun _ hp ↦ hp.squarefree) Nat.infinite_setOfPred_prime
 
 end Nat

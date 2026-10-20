@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
-import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
-import Mathlib.Analysis.SpecificLimits.Basic
+module
+
+public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
+public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Order
+public import Mathlib.Analysis.SpecificLimits.Basic
+
+@[expose] public section
 
 /-!
 # Sequences with Large Gaps

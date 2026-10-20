@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 931
 
 *Reference:* [erdosproblems.com/931](https://www.erdosproblems.com/931)
 -/
+
+@[expose] public section
 
 namespace Erdos931
 
@@ -32,8 +35,8 @@ $$
 $$
 have the same prime factors?
 -/
-@[category research open, AMS 11]
-theorem erdos_931 : answer(sorry) ↔ ∀ᵉ (k₁ : ℕ) (k₂ ≥ 3), k₂ ≤ k₁ →
+@[category research open, question, AMS 11]
+theorem erdos_931 : ∀ᵉ (k₁ : ℕ) (k₂ ≥ 3), k₂ ≤ k₁ →
     { (n₁, n₂) | n₁ + k₁ ≤ n₂ ∧
       (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
       (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors }.Finite := by
@@ -44,8 +47,8 @@ Erdős thought perhaps if the two products have the same factors then
 $n_2 > 2(n_1 + k_1)$.
 It is an open question whether this is true when allowing a finite number of counterexamples.
 -/
-@[category research open, AMS 11]
-theorem erdos_931.variants.additional_condition : answer(sorry) ↔ ∀ᵉ (k₁ : ℕ) (k₂ ≥ 3), k₂ ≤ k₁ →
+@[category research open, question, AMS 11]
+theorem erdos_931.variants.additional_condition : ∀ᵉ (k₁ : ℕ) (k₂ ≥ 3), k₂ ≤ k₁ →
     {(n₁, n₂) | n₁ + k₁ ≤ n₂ ∧ n₂ ≤ 2 * (n₁ + k₁) ∧
       (∏ i ∈ Finset.Icc 1 k₁, (n₁ + i)).primeFactors =
       (∏ j ∈ Finset.Icc 1 k₂, (n₂ + j)).primeFactors}.Finite := by

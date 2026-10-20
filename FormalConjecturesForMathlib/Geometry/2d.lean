@@ -13,18 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.LinearAlgebra.Orientation
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
-import Mathlib.Geometry.Euclidean.Triangle
+public import Mathlib.LinearAlgebra.Orientation
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
+public import Mathlib.Geometry.Euclidean.Triangle
+public import Mathlib.Data.Set.Card
+public import Mathlib.Geometry.Euclidean.Sphere.Basic
 
-import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
-import FormalConjecturesForMathlib.Data.Set.Triplewise
+public import FormalConjecturesForMathlib.Geometry.Metric
+public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
+public import FormalConjecturesForMathlib.Data.Set.Triplewise
+
+@[expose] public section
 
 scoped[EuclideanGeometry] notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
-open scoped EuclideanGeometry
+open scoped EuclideanGeometry Finset
 
 /-- Oriented angles make sense in 2d.
 
@@ -53,6 +59,17 @@ variable [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] {p : 
 if it contains no three points that lie on the same line. -/
 def NonTrilinear (A : Set P) : Prop :=
   A.Triplewise (fun x y z ↦ ¬ Collinear ℝ {x, y, z})
+
+/-- We say a subset `S` of points is non-collinear for $n$ points
+if it contains no $n$ points that lie on the same line. -/
+def NonCollinearFor (n : ℕ) (S : Set P) : Prop :=
+  ∀ (A : Set P), A ⊆ S → A.Finite → A.ncard = n → ¬ Collinear ℝ A
+
+omit [Module.Oriented ℝ V (Fin 2)] [Fact (Module.finrank ℝ V = 2)] in
+lemma NonCollinearFor.subset {n : ℕ} {S T : Set P} (h : S ⊆ T) (hS : NonCollinearFor n T) :
+    NonCollinearFor n S := by
+  intro A hA hFin hCard
+  exact hS A (hA.trans h) hFin hCard
 
 /-- `ConvexIndep S` means that `S` consists of extremal points of its convex hull,
 i.e., the point set encloses a convex shape.
@@ -187,18 +204,63 @@ lemma triangle_area_eq_det (a b c : ℝ²) :
     simp [Matrix.det_fin_two, Matrix.det_fin_three, Module.Basis.toMatrix, this]
   ring
 
+/-- Let $x_1,\ldots,x_n\in \mathbb{R}^2$ and let $R(x_i)=\#\{ \lvert x_j-x_i\rvert : j\neq i\}$,
+where the points are ordered such that
+$$R(x_1)\leq \cdots \leq R(x_n).$$
+Let $g(n)$ be the maximum number of distinct values the $R(x_i)$ can take.-/
+noncomputable def maximalDistinctDistancesFrom (n : ℕ) : ℕ :=
+  sSup {#(X.image (distinctDistancesFrom X)) | (X : Finset ℝ²) (_ : #X = n)}
+
+/-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
+if no three are collinear and no four lie on a circle.
+
+Stated for `Set ℝ²` so that infinite collections are covered; a `Finset` argument coerces. -/
+def InGeneralPosition (X : Set ℝ²) : Prop :=
+  NonTrilinear X ∧ ∀ T ⊆ X, T.ncard = 4 → ¬Cospherical T
+
+/-- `a b c` are the vertices of a right-angled triangle: the (unoriented) angle at one of the
+three vertices equals `π / 2`. -/
+def IsRightAngled (a b c : P) : Prop :=
+  ∠ b a c = π / 2 ∨ ∠ a b c = π / 2 ∨ ∠ b c a = π / 2
+
 /--
-Given a finite set of points in the plane, we define the number of distinct distances between pairs
-of points.
+`a b c d` are the vertices, in counter-clockwise order, of an isosceles trapezoid: they are in
+strictly convex position, the side `ab` is parallel to the side `cd` (the two bases), and the
+diagonals `ac` and `bd` have equal length. One pair of parallel sides together with equal
+diagonals is the classical characterization of an isosceles trapezoid; in particular it rules
+out non-rectangular parallelograms.
 -/
-noncomputable def distinctDistances (points : Finset ℝ²) : ℕ :=
-  (points.offDiag.image fun (pair : ℝ² × ℝ²) => dist pair.1 pair.2).card
+def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
+  IsCcwConvexPolygon ![a, b, c, d] ∧
+  (affineSpan ℝ {a, b}).Parallel (affineSpan ℝ {c, d}) ∧
+  dist a c = dist b d
+
+/-- A line in the plane: an affine subspace of `ℝ²` whose direction is one-dimensional. -/
+def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
+  Module.finrank ℝ L.direction = 1
+
+/--
+The set of lines in $\mathbb{R}^2$ containing exactly $k$ points from a given set $S$.
+
+Only lines through two distinct points of $S$ are considered, so a line with fewer than two
+points of $S$ is never counted.
+-/
+noncomputable def linesWithPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
+  let determined_lines := { affineSpan ℝ {p, q} | (p ∈ S) (q ∈ S) (_ : p ≠ q) }
+  { L ∈ determined_lines | (↑L ∩ S).ncard = k }
 
 end EuclideanGeometry
-
 
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
   dist p q = dist q r ∨ dist q r = dist r p ∨ dist r p = dist p q
 
 nonrec def Set.IsIsosceles {α : Type} [Dist α] (A : Set α) :=
   Nonempty A ∧ A.Triplewise (IsIsosceles · · ·)
+
+/-- A set is isosceles-free if no three distinct points in it form an isosceles triangle. -/
+def Set.IsIsoscelesFree {α : Type*} [Dist α] (A : Set α) : Prop :=
+  A.Triplewise fun x y z ↦ ¬ _root_.IsIsosceles x y z
+
+theorem Set.IsIsoscelesFree.mono {α : Type*} [Dist α] {s t : Set α} (h : t ⊆ s)
+    (hs : s.IsIsoscelesFree) : t.IsIsoscelesFree :=
+  Set.Triplewise.mono h hs

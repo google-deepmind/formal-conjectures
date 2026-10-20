@@ -13,10 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-open Finset SimpleGraph
-open scoped Nat
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 835
@@ -25,6 +24,11 @@ open scoped Nat
  - [erdosproblems.com/835](https://www.erdosproblems.com/835)
  - [MT25](https://github.com/QuanyuTang/erdos-problem-835/blob/main/On_Problem_835.pdf)
 -/
+
+@[expose] public section
+
+open Finset SimpleGraph
+open scoped Nat
 namespace Erdos835
 
 variable {n k : ℕ}
@@ -44,10 +48,9 @@ Does there exist a $k>2$ such that the $k$-sized subsets of {1,...,2k} can be co
 $k+1$ colours such that for every $A\subset \{1,\ldots,2k\}$ with $\lvert A\rvert=k+1$ all $k+1$
 colours appear among the $k$-sized subsets of $A$?
 -/
-@[category research open, AMS 5]
-theorem erdos_835 : (∃ k > 2, Property k) ↔ answer(sorry) := by
+@[category research open, question, AMS 5]
+theorem erdos_835 : ∃ k > 2, Property k := by
   sorry
-
 
 @[category test, AMS 5]
 theorem property_iff_chromaticNumber (k : ℕ) (hk : 0 < k) :
@@ -60,11 +63,11 @@ Alternative statement of Erdős Problem 835 using the chromatic number of the Jo
 This is equivalent to asking whether there exists $k > 2$ such that the chromatic number of the
 Johnson graph $J(2k, k)$ is $k+1$.
 -/
-@[category research open, AMS 5]
-theorem erdos_835.variants.johnson : (∃ l,
+@[category research open, question, AMS 5]
+theorem erdos_835.variants.johnson : ∃ l,
     -- making sure k > 2
     letI k := l + 3
-    J(2 * k, k).chromaticNumber = k + 1) ↔ answer(sorry) := by
+    J(2 * k, k).chromaticNumber = k + 1 := by
   sorry
 
 /--
@@ -84,7 +87,6 @@ The chromatic number of $J(18, 9)$ is at least $11$.
 @[category research solved, AMS 5]
 theorem johnsonGraph_18_9_chromaticNumber : J(18, 9).chromaticNumber > 9 + 1 := by
   sorry
-
 
 /-- Johnson's upper bound on the maximum size `A(n, d, w)` of a `n`-dimensional binary code of
 distance `d` and weight `w` is as follows:
@@ -156,8 +158,8 @@ theorem johnsonGraph_chromaticNumber_odd_of_johnson_chromaticNumber_composite :
   · omega
 
 /-- Is the chromatic number of `J(2 * k, k)` always at least `k + 2`? -/
-@[category research open, AMS 5]
-theorem johnson_chromaticNumber : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem johnson_chromaticNumber :
     ∀ k ≥ 3, k + 2 ≤ J(2 * k, k).chromaticNumber :=
   sorry
 

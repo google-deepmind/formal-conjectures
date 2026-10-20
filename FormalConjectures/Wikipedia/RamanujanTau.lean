@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ramanujan τ-function
@@ -29,6 +30,8 @@ There are two conjectures related to the Ramanujan τ-function:
 - [Ramanujan-Petersson conjecture](https://en.wikipedia.org/wiki/Ramanujan%E2%80%93Petersson_conjecture)
 - [Lehmer's conjecture](https://en.wikipedia.org/wiki/Ramanujan_tau_function#Conjectures_on_the_tau_function)
 -/
+
+@[expose] public section
 
 namespace RamanujanTau
 
@@ -56,10 +59,12 @@ lemma τ_two : τ 2 = -24 := by
   sorry
 
 
+/-- The Ramanujan-Petersson conjecture: $|\tau(p)| \le 2 p^{11/2}$ for primes $p$. -/
 @[category research solved, AMS 11]
 theorem ramanujan_petersson : ∀ p : ℕ, Prime p → abs (τ p) ≤ 2 * (p : ℝ) ^ ((11 : ℝ) / 2) := by
   sorry
 
+/-- Lehmer's conjecture: $\tau(n) \ne 0$ for all $n > 0$. -/
 @[category research open, AMS 11]
 theorem lehmer_ramanujan_tau : ∀ n > 0, τ n ≠ 0 := by
   sorry

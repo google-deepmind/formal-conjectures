@@ -13,5 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«398»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«398»
+
+/-!
+# Brocard's Problem
+
+Brocard's problem asks whether the only solutions to $n! + 1 = m^2$ are
+$n = 4, 5, 7$.
+
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Brocard%27s_problem)
+
+This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«398»`.
+-/
+
+@[expose] public section

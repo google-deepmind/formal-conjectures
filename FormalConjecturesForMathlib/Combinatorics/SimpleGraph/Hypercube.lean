@@ -13,22 +13,37 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import Mathlib.Combinatorics.SimpleGraph.Basic
+module
 
-open Finset symmDiff
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Data.Fintype.Pi
+
+@[expose] public section
+
+/-!
+# The hypercube graph
+
+`SimpleGraph.hypercube n` is the graph `Qₙ` on the `n`-bit vectors, with two vectors adjacent when
+they differ in exactly one coordinate. It has `2 ^ n` vertices and `n * 2 ^ (n - 1)` edges.
+-/
 
 namespace SimpleGraph
 
-/--
-The hypercube graph `Q(n)` has as vertices the subsets of `Fin n` (represented as `Finset (Fin n)`).
-Two vertices are adjacent if and only if they differ by exactly one element, i.e., their symmetric
-difference has cardinality one.
+open scoped Finset
 
-- [Hypercube graph](https://en.wikipedia.org/wiki/Hypercube_graph)
--/
-def hypercubeGraph (n : ℕ) : SimpleGraph (Finset (Fin n)) :=
-  fromRel fun a b => (a ∆ b).card = 1
+/-- `hypercube n` is the `n`-dimensional hypercube graph `Qₙ`: the vertices are the `n`-bit
+vectors, and two vertices are adjacent when they differ in exactly one coordinate. -/
+def hypercube (n : ℕ) : SimpleGraph (Fin n → Bool) where
+  Adj u v := #{i | u i ≠ v i} = 1
+  symm.symm _ _ := by simp [eq_comm]
+  loopless.irrefl _ := by simp
 
-scoped notation "Q(" n ")" => hypercubeGraph n
+instance (n : ℕ) : DecidableRel (hypercube n).Adj :=
+  fun u v ↦ inferInstanceAs (Decidable (#{i | u i ≠ v i} = 1))
+
+@[simp]
+theorem hypercube_adj {n : ℕ} {u v : Fin n → Bool} :
+    (hypercube n).Adj u v ↔ #{i | u i ≠ v i} = 1 := Iff.rfl
 
 end SimpleGraph

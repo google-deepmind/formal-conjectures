@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 351
 
 *Reference:* [erdosproblems.com/351](https://www.erdosproblems.com/351)
 -/
+
+@[expose] public section
 
 open Polynomial
 
@@ -46,20 +49,20 @@ def HasCompleteImage (P : ℚ[X]) : Prop := IsStronglyComplete (imageSet P)
 
 /--
 Let $p(x) \in \mathbb{Q}[x]$ be a non-constant rational polynomial with positive leading
-coefficient. Is it true that \[A=\{ p(n)+1/n : n \in \mathbb{N}\}\] is strongly complete,
+coefficient. Is it true that $$A=\{ p(n)+1/n : n \in \mathbb{N}\}$$ is strongly complete,
 in the sense that, for any finite set $B$,
-\[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
+$$\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}$$
 contains all sufficiently large integers? -/
-@[category research open, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos351.lean"]
 theorem erdos_351 :
-    answer(sorry) ↔ ∀ P : ℚ[X], 0 < P.natDegree → 0 < P.leadingCoeff → HasCompleteImage P := by
+    ∀ P : ℚ[X], 0 < P.natDegree → 0 < P.leadingCoeff → HasCompleteImage P := by
   sorry
 
 /--
 Let $p(x) = x \in \mathbb{Q}[x]$. It has been shown that
-\[A=\{ p(n)+1/n : n \in \mathbb{N}\}\]
+$$A=\{ p(n)+1/n : n \in \mathbb{N}\}$$
 is strongly complete, in the sense that, for any finite set $B$,
-\[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
+$$\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}$$
 contains all sufficiently large integers.
 -/
 @[category research solved, AMS 11]
@@ -67,9 +70,9 @@ protected theorem erdos_351.variants.X : HasCompleteImage X := by
   sorry
 
 /-- Let $p(x) = x ^ 2 \in \mathbb{Q}[x]$. It has been shown that
-\[A=\{ p(n)+1/n : n \in \mathbb{N}\}\]
+$$A=\{ p(n)+1/n : n \in \mathbb{N}\}$$
 is strongly complete, in the sense that, for any finite set $B$,
-\[\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}\]
+$$\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}$$
 contains all sufficiently large integers. -/
 @[category research solved, AMS 11]
 theorem erdos_351.variants.X_sq : HasCompleteImage (X ^ 2) := by

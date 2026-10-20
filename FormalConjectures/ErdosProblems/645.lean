@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 645
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [BrLa99] Brown, Tom C. and Landman, Bruce M., Monochromatic arithmetic progressions with large
   differences. Bull. Austral. Math. Soc. (1999), 21--35.
 -/
+
+@[expose] public section
 
 
 namespace Erdos645
@@ -37,8 +40,7 @@ with $d>f(x)$ for any increasing function $f$.
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos645.lean", AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos645.lean"]
 theorem erdos_645 (c : ℕ → Bool) : ∃ x d, 0 < x ∧ x < d ∧
     (∃ C, c x = C ∧ c (x + d) = C ∧ c (x + 2 * d) = C) := by
   sorry

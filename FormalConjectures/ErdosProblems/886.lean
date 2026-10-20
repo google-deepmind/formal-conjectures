@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 886
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [ErRo97] Erdős, Paul and Rosenfeld, Moshe, The factor-difference set of integers. Acta Arith.
   (1997), 353--359.
 -/
+
+@[expose] public section
 
 open Nat Filter
 
@@ -42,9 +45,9 @@ $(n^{1/2},n^{1/2}+n^{1/2-\epsilon})$ is $O_\epsilon(1)$?
 
 Erdős attributes this conjecture to Ruzsa.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_886 :
-    answer(sorry) ↔ ∀ ε > 0, ∃ K : ℕ, ∀ᶠ n in atTop, (Erdos886Divisors n ε 1).card ≤ K := by
+    ∀ ε > 0, ∃ K : ℕ, ∀ᶠ n in atTop, (Erdos886Divisors n ε 1).card ≤ K := by
   sorry
 
 /--
@@ -52,7 +55,7 @@ Erdős and Rosenfeld [ErRo97] proved that there are infinitely many $n$ such tha
 four divisors of $n$ in $(n^{1/2},n^{1/2}+16n^{1/4})$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_886_variants_rosenfeld_infinite :
+theorem erdos_886.variants.rosenfeld_infinite :
     Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4) 16).card} := by
   sorry
 
@@ -61,7 +64,7 @@ Erdős and Rosenfeld [ErRo97] proved that, for any constant $C>0$, all large $n$
 $1+C^2$ many divisors in $[n^{1/2}, n^{1/2}+Cn^{1/4}]$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_886_variants_rosenfeld_bound :
+theorem erdos_886.variants.rosenfeld_bound :
     ∀ C > 0, ∀ᶠ (n : ℕ) in atTop,
     ((divisors n).filter (fun (d : ℕ) =>
       (n : ℝ) ^ (1 / 2 : ℝ) ≤ (d : ℝ) ∧ (d : ℝ) ≤ (n : ℝ) ^ (1 / 2 : ℝ) + C * (n : ℝ) ^ (1 / 4 : ℝ))).card

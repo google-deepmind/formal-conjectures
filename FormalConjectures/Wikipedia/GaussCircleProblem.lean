@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Gauss circle problem
@@ -22,11 +23,13 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Gauss_circle_problem)
 -/
 
+@[expose] public section
+
 open Filter
 
 open scoped EuclideanGeometry Real Topology
 
-/-! # Gauss Circle Problem
+/-  # Gauss Circle Problem
 
 Consider a circle in $\mathbb{R}^2$ with center at the origin and radius $r\geq 0$.
 Gauss's circle problem asks how many points there are inside this circle of the form

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 455
@@ -23,14 +24,16 @@ import FormalConjectures.Util.ProblemImports
  - [Ri76] Richter, Bernd, Über die Monotonie von Differenzenfolgen. Acta Arith. (1976), 225-227.
 -/
 
+@[expose] public section
+
 open Filter ENNReal
 
 namespace Erdos455
 
 /-- Let `q : ℕ → ℕ` be a strictly increasing sequence of primes such that
 `q (n + 2) - q (n + 1) ≥ q (n + 1) - q n`. Must `lim q n / (n ^ 2) = ∞`? -/
-@[category research open, AMS 11]
-theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
+@[category research open, question, AMS 11]
+theorem erdos_455: ∀ q : ℕ → ℕ, StrictMono q →
     (∀ n, (q n).Prime ∧ q (n + 2) - q (n + 1) ≥ q (n + 1) - q n) →
     Tendsto (fun n : ℕ => (q n : ℝ) / n ^ 2) atTop atTop := by
   sorry
@@ -39,7 +42,7 @@ theorem erdos_455: answer(sorry) ↔ ∀ q : ℕ → ℕ, StrictMono q →
 `q (n + 2) - q (n + 1) ≥ q (n + 1) - q n`. Then `liminf q n / (n ^ 2) > 0.352`, and this is proved in
 [Ri76]. -/
 @[category research solved, AMS 11]
-theorem erdos_455.liminf : ∀ q : ℕ → ℕ, StrictMono q →
+theorem erdos_455.variants.liminf : ∀ q : ℕ → ℕ, StrictMono q →
     (∀ n, (q n).Prime ∧ q (n + 2) - q (n + 1) ≥ q (n + 1) - q n) →
     liminf (fun n : ℕ => (q n : ℝ≥0∞) / n ^ 2) atTop > 0.352 := by
   sorry

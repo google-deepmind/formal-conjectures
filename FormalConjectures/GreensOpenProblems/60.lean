@@ -13,10 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-
-open scoped Pointwise
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 60
@@ -24,15 +23,18 @@ open scoped Pointwise
 *Reference:* [Ben Green's Open Problem 60](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 60)
 -/
 
+@[expose] public section
+
+open scoped Pointwise
 namespace Green60
 
 /--
 Is there an absolute constant $c > 0$ such that, whenever $A ⊆ \mathbb{N}$ is a set of squares
 with $|A| ≥ 2$, the sumset $A + A$ satisfies $|A + A| ≥ |A|^{1 + c}$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_60 :
-    answer(sorry) ↔ ∃ c > (0 : ℝ),
+    ∃ c > (0 : ℝ),
       ∀ (A : Finset ℕ),
         (∀ a ∈ A, IsSquare a) →
         2 ≤ A.card →

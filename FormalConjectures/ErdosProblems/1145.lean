@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-import FormalConjectures.ErdosProblems.«28»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«28»
 
 /-!
 # Erdős Problem 1145
@@ -24,6 +25,8 @@ import FormalConjectures.ErdosProblems.«28»
 - [erdosproblems.com/28](https://www.erdosproblems.com/28)
 - [erdosproblems.com/1145](https://www.erdosproblems.com/1145)
 -/
+
+@[expose] public section
 
 open Set Filter Pointwise Topology AdditiveCombinatorics
 
@@ -58,15 +61,15 @@ $\limsup 1_A\ast 1_B(n)=\infty$?
 
 A conjecture of Erdős and Sárközy.
 -/
-@[category research open, AMS 5]
-theorem erdos_1145 : answer(sorry) ↔ Erdos1145Prop := by
+@[category research open, question, AMS 5]
+theorem erdos_1145 : Erdos1145Prop := by
   sorry
 
 /--
 A stronger form of [erdosproblems.com/28].
 -/
 @[category test, AMS 11]
-theorem erdos_1145_implies_erdos_28 : Erdos1145Prop → type_of% Erdos28.erdos_28 := by
+theorem erdos_1145.test_implies_erdos_28 : Erdos1145Prop → type_of% Erdos28.erdos_28 := by
   delta sumRep
   intro h1145 s hs
   rcases hs.exists_le with ⟨m, hm⟩

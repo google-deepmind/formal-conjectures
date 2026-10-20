@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Inscribed square problem
@@ -30,8 +31,12 @@ There are several open and solved variants of this conjecture.
  - [arxiv/2005.09193](https://arxiv.org/abs/2005.09193)
 -/
 
+@[expose] public section
+
 open Topology ContDiff Manifold
 open scoped EuclideanGeometry
+
+namespace InscribedSquare
 
 /-- Four points `a b c d` in the plane form a rectangle with `a` opposite to `c` iff the line
 segments from `a` to `c` and from `b` to `d` have both the same length and the same midpoint, acting
@@ -48,9 +53,9 @@ structure IsRectangle (a b c d : ℝ²) (ratio : ℝ) : Prop where
 **Inscribed square problem**
 Does every Jordan curve admit an inscribed square?
 -/
-@[category research open, AMS 51]
+@[category research open, question, AMS 51]
 theorem inscribed_square_problem :
-    answer(sorry) ↔ ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ),
+    ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ),
       ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 := by
   sorry
 
@@ -58,9 +63,9 @@ theorem inscribed_square_problem :
 **Inscribed rectangle problem**
 Does every Jordan curve admit inscribed rectangles of any given aspect ratio?
 -/
-@[category research open, AMS 51]
+@[category research open, question, AMS 51]
 theorem inscribed_rectangle_problem :
-    answer(sorry) ↔ ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ) (r : ℝ) (hr : r > 0),
+    ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ) (r : ℝ) (hr : r > 0),
       ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r := by
   sorry
 
@@ -74,18 +79,24 @@ theorem exists_inscribed_rectangle (γ : Circle → ℝ²) (hγ : IsEmbedding γ
 
 /--
 It is known that every *smooth* Jordan curve admits inscribed rectangles of all aspect ratios.
+Here a smooth Jordan curve is a smooth embedding of the circle into the plane, i.e. a smooth
+simple closed curve with nowhere vanishing velocity.
 -/
 @[category research solved, AMS 51]
 theorem exists_inscribed_rectangle_of_smooth (γ : Circle → ℝ²)
-    (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) ∞ γ) (r : ℝ) (hr : r > 0) :
+    (hγ : IsSmoothEmbedding (𝓡 1) (𝓡 2) ∞ γ) (r : ℝ) (hr : r > 0) :
     ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r := by
   sorry
 
 /--
 It is also known that every $C^2$ Jordan curve admits an inscribed square.
+Here a $C^2$ Jordan curve is a $C^2$ embedding of the circle into the plane, i.e. a $C^2$
+simple closed curve with nowhere vanishing velocity.
 -/
 @[category research solved, AMS 51]
 theorem exists_inscribed_square_of_C2 (γ : Circle → ℝ²)
-    (hγ : IsEmbedding γ) (hγ' : ContMDiff (𝓡 1) (𝓡 2) 2 γ) :
+    (hγ : IsSmoothEmbedding (𝓡 1) (𝓡 2) 2 γ) :
     ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 := by
   sorry
+
+end InscribedSquare

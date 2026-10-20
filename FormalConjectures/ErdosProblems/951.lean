@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 951
@@ -25,20 +26,24 @@ import FormalConjectures.Util.ProblemImports
     New York, 1976) (1977), 43-72.
 -/
 
+@[expose] public section
+
 open scoped Finsupp Nat.Prime Topology
 open Filter
 
 namespace Erdos951
 
-/-- A sequence `a : ℕ → ℝ` is said to have property `Erdos951_prop` if for any pair of distinct
-Beuring integers `x, y`, `|x - y| ≥ 1`. -/
-def Erdos951_prop (a : ℕ → ℝ) : Prop :=
-  ∀ ⦃x y : ℝ⦄, x ≠ y → x ∈ BeurlingInteger a → y ∈ BeurlingInteger a → |x - y| ≥ 1
+/-- A sequence `a : ℕ → ℝ` is said to have property `Erdos951Prop` if for any pair of distinct
+finitely supported sequences `k l : ℕ →₀ ℕ` their corresponding Beurling integers are of distance
+at least one apart. -/
+def Erdos951Prop (a : ℕ → ℝ) : Prop :=
+  ∀ (k ℓ : ℕ →₀ ℕ), k ≠ ℓ → |beurlingInteger a k - beurlingInteger a ℓ| ≥ 1
 
-/-- If `a` has property `Erdos951_prop` and `1 < a 0`, then `a` is a set of Beurling prime numbers. -/
+/-- If a strictly increasing sequence `a : ℕ → ℝ` has property `Erdos951Prop`
+and `1 < a 0`, then `a` is a sequence of Beurling prime numbers. -/
 @[category API, AMS 11]
-theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
-    (hm : StrictMono a) (he : Erdos951_prop a) :
+theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
+    (hm : StrictMono a) (he : Erdos951Prop a) :
     IsBeurlingPrimes a := by
   refine ⟨ha, hm, tendsto_atTop_atTop.2 fun x => ?_⟩
   by_contra h_contra
@@ -49,21 +54,24 @@ theorem erdos_951.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
   have := hm (by linarith : N < N + 1)
   have h_diff : a (N + 1) - a N ≥ 1 := by
     rw [← abs_of_nonneg (by linarith : 0 ≤ a _ - _)]
-    exact he (by grind) (generator_mem_beurling a (N + 1)) (generator_mem_beurling a N)
+    simpa using he (.single (N + 1) 1) (.single N 1) (by simpa [Finsupp.ext_iff] using ⟨N, by simp⟩)
   linarith [abs_lt.1 (hN N le_rfl), abs_lt.1 (hN (N + 1) (by grind))]
 
-/-- If `a` has property `Erdos951_prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
-@[category research open, AMS 11]
-theorem erdos_951 : answer(sorry) ↔
-    ∀ a : ℕ → ℝ, Erdos951_prop a → ∀ (x : ℝ), {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
+/-- If `1 < a 0 < ...` has property `Erdos951Prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
+@[category research open, question, AMS 11]
+theorem erdos_951 :
+    ∀ a : ℕ → ℝ, 1 < a 0 → StrictMono a → Erdos951Prop a →
+      ∀ᶠ (x : ℝ) in Filter.atTop, {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry
 
-/-- Beurling conjectured that if the number of Beurling integer in `[1, x]`
-is `x + o(log x)`, then `a` must be the sequence of primes. -/
+/-- Beurling conjectured that if `1 < a 0 < a 1 < ⋯` has property `Erdos951Prop` and the number
+of reals in $[1, x]$ of the form $\prod_i a_i^{k_i}$ is $x + o(\log x)$, then `a` must be the
+sequence of primes. Property `Erdos951Prop` makes distinct exponent vectors give distinct
+Beurling integers, so counting the set `BeurlingIntegers a` counts the generalised integers. -/
 @[category research solved, AMS 11]
 theorem erdos_951.variants.beurling :
-    ∀ a : ℕ → ℝ, IsBeurlingPrimes a →
-    ((fun x => (BeurlingInteger a ∩ .Iic x).ncard - x) =o[atTop] Real.log) →
+    ∀ a : ℕ → ℝ, IsBeurlingPrimes a → Erdos951Prop a →
+    ((fun x => (BeurlingIntegers a ∩ .Iic x).ncard - x) =o[atTop] Real.log) →
     a = Nat.cast ∘ Nat.nth Nat.Prime := by
   sorry
 

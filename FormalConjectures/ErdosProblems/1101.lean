@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1101
 
 *Reference:* [erdosproblems.com/1101](https://www.erdosproblems.com/1101)
 -/
+
+@[expose] public section
 
 open Nat Filter
 
@@ -55,13 +58,13 @@ def IsGood (u : ℕ → ℕ) : Prop :=
 
 /-- 1. There is NO good sequence with polynomial growth. -/
 @[category research open, AMS 11]
-theorem erdos_1101.polynomial :
+theorem erdos_1101.parts.i :
     ¬ ∃ u, IsGood u ∧ ∃ k : ℕ, (fun n => (u n : ℝ)) =O[atTop] (fun n => (n : ℝ) ^ k) := by
   sorry
 
 /-- 2. There is a good sequence with sub-exponential growth. -/
 @[category research open, AMS 11]
-theorem erdos_1101.subexponential :
+theorem erdos_1101.parts.ii :
     ∃ u, IsGood u ∧ (fun n => Real.log (u n : ℝ)) =o[atTop] (fun n => (n : ℝ)) := by
   sorry
 

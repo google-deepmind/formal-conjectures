@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Polynomial.HasseDeriv
+
+public import Mathlib.Algebra.Polynomial.HasseDeriv
+
+@[expose] public section
 
 open scoped Polynomial in -- probably removable in the mathlib file
 theorem Polynomial.hasseDeriv_map {R S : Type*} [Semiring R] [Semiring S]

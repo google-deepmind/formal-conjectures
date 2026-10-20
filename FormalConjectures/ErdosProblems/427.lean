@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 427
 
 *Reference:* [erdosproblems.com/427](https://www.erdosproblems.com/427)
 -/
+
+@[expose] public section
 
 namespace Erdos427
 
@@ -38,17 +41,6 @@ def erdos427 : Prop := ∀ (n d : ℕ),
     d ∣ ∑ i ∈ Finset.Ico n (n + k), i.nth Nat.Prime
 
 /--
-**Erdős Problem 427**: is it true that, for every $n$ and $d$, there exists $k$ such that
-$$
-  d \mid p_{n + 1} + \cdots + p_{n + k},
-$$
-where $p_r$ denotes the $r$th prime?
--/
-@[category research solved, AMS 11]
-theorem erdos_427 : answer(True) ↔ erdos427 := by
-  sorry
-
-/--
 The statement of Shiu's theorem:
 for any $k \geq 1$ and $(a, q) = 1$ there exist infinitely many $k$-tuples of consecutive primes
 $p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
@@ -63,10 +55,27 @@ def ShiuTheorem : Prop := ∀ (k a q : ℕ), 1 ≤ k → 1 ≤ q → a.gcd q = 1
 **Shiu's theorem**: for any $k \geq 1$ and $(a, q) = 1$ there exist infinitely many $k$-tuples of consecutive primes
 $p_m, \dots, p_{m + k - 1}$ all of which are congruent to $a$ modulo $q$.
 
+This is stated ahead of `erdos_427` because the formal proof linked there assumes it, and the
+`assuming` clause must name a declaration that already exists.
+
 [Sh00] Shiu, D. K. L., _Strings of congruent primes_. J. London Math. Soc. (2) (2000), 359-373.
 -/
 @[category research solved, AMS 11]
-theorem erdos_427.shiu : ShiuTheorem := by
+theorem erdos_427.variants.shiu : ShiuTheorem := by
+  sorry
+
+
+/--
+**Erdős Problem 427**: is it true that, for every $n$ and $d$, there exists $k$ such that
+$$
+  d \mid p_{n + 1} + \cdots + p_{n + k},
+$$
+where $p_r$ denotes the $r$th prime?
+-/
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Jayyhk/erdos-lean/blob/main/problems/427/Erdos427.lean"]
+theorem erdos_427 : erdos427 := by
   sorry
 
 
@@ -74,7 +83,7 @@ theorem erdos_427.shiu : ShiuTheorem := by
 Cedric Pilatte has observed that a positive solution to Erdős Problem 427 follows from Shiu's theorem.
 -/
 @[category research solved, AMS 11]
-theorem erdos_427.of_shiu (H : ShiuTheorem) : erdos427 := by
+theorem erdos_427.variants.of_shiu (H : ShiuTheorem) : erdos427 := by
   sorry
 
 end Erdos427

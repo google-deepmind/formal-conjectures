@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 694
@@ -22,7 +23,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/694](https://www.erdosproblems.com/694)
 -/
 
+@[expose] public section
+
 namespace Erdos694
+
+open Filter Topology Real
 
 /--
 Let $f_\max(n)$ be the largest $m$ such that $\phi(m) = n$, and
@@ -31,24 +36,37 @@ totient function. Investigate
 $$
   \max_{n\leq x}\frac{f_\max(n)}{f_\min(n)}.
 $$
+
+GPT-5.5 Pro (prompted by Price) has proved (see also the comments for a summary) that
+$$
+\max_{n\leq x}\frac{f_{\max}(n)}{f_{\min}(n)}=(e^\gamma+o(1))\log\log x.
+$$
+
+A Lean formalisation of the reduction exists, conditional on Mertens' product theorem and
+Linnik's theorem; see the
+[formal proof](https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P694/Proof.lean).
+
+The extrema are only required on nonempty fibres of the totient (values such as $3$ have no
+preimage), and the identity is asked for sufficiently large $x$: at $x = 1$ the maximum is
+$f_\max(1) / f_\min(1) = 2$ while $\log \log 1 = 0$.
 -/
-@[category research open, AMS 11]
-theorem erdos_694 (max min : ℕ → ℕ)
-    (hmax : ∀ n, IsGreatest (Nat.totient ⁻¹' {n}) (max n))
-    (hmin : ∀ n, IsLeast (Nat.totient ⁻¹' {n}) (min n))
-    (x : ℕ) :
-    IsGreatest
-      { (max n : ℚ) / min n | (n : ℕ) (_ : n ≤ x) }
-      answer(sorry) := by
+@[category research solved, AMS 11]
+theorem erdos_694 : ∀ᵉ (fmax : ℕ → ℕ) (fmin : ℕ → ℕ),
+      (∀ n, (∃ m, Nat.totient m = n) → IsGreatest (Nat.totient ⁻¹' {n}) (fmax n)) →
+      (∀ n, (∃ m, Nat.totient m = n) → IsLeast (Nat.totient ⁻¹' {n}) (fmin n)) →
+      ∃ o : ℕ → ℝ, Tendsto o atTop (𝓝 0) ∧
+        ∀ᶠ x : ℕ in atTop,
+          sSup { (fmax n : ℝ) / fmin n | (n : ℕ) (_ : n ≤ x) (_ : ∃ m, Nat.totient m = n) } =
+            (exp eulerMascheroniConstant + o x) * log (log (x : ℝ)) := by
   sorry
 
 /--
 Carmichael has asked whether there is an integer $n$ for which $\phi(m) = n$ has
 exactly one solution, that is $\frac{f_\max(n)}{f_\min(n)} = 1$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_694.variants.carmichael :
-    answer(sorry) ↔ ∃ n > 0, ∃! m, Nat.totient m = n := by
+    ∃ n > 0, ∃! m, Nat.totient m = n := by
   sorry
 
 /--

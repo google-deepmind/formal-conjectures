@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 /-!
 # Mathoverflow 486451
 
 *Reference:* [mathoverflow/486451](https://mathoverflow.net/questions/486451)
 asked by user [*Junyan Xu*](https://mathoverflow.net/users/3332/junyan-xu)
 -/
+
+@[expose] public section
 
 namespace Mathoverflow486451
 
@@ -32,10 +35,15 @@ theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
   sorry
 
 /-- There exists a semiring with a unique left maximal ideal and a unique right maximal ideal
-which are not the same as sets. -/
-@[category research open, AMS 16]
+which are not the same as sets.
+
+This has been shown by Goran Žužić and Moritz Firsching using an experimental pipeline:
+An example is the monoid algebra of the monoid of maps from $\mathbb{N}$ to $\mathbb{N}$
+over $\mathbb{N}$.
+ -/
+@[category research solved, question, AMS 16, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/f7502b9ed3e32d193ab8fee53d2e28f7d67f2dc3/FormalConjectures/Mathoverflow/486451.lean#L333"]
 theorem exists_semiring_unique_left_right_maximal_ne :
-    answer(sorry) ↔ ∃ (R : Type) (_ : Semiring R) (hI : ∃! I : Ideal R, I.IsMaximal)
+    ∃ (R : Type) (_ : Semiring R) (hI : ∃! I : Ideal R, I.IsMaximal)
       (hJ : ∃! J : Ideal Rᵐᵒᵖ, J.IsMaximal),
         (hI.choose : Set R) ≠ MulOpposite.op ⁻¹' hJ.choose := by
   sorry

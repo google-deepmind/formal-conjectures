@@ -13,11 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Data.Nat.Lattice
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Set.Card
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Data.Set.Card
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
 
 /-!
 # Size Ramsey Number
@@ -44,14 +46,5 @@ noncomputable def sizeRamsey {α β : Type*} [Fintype α] [Fintype β]
     F.edgeSet.ncard = m ∧
     ∀ (R : SimpleGraph (Fin n)), R ≤ F →
       G.IsContained R ∨ H.IsContained (F \ R) }
-
-/--
-A graph `G` is **Ramsey size linear** if there exists a constant `c > 0` such that
-for all graphs `H` with `m` edges and no isolated vertices, `r̂(G, H) ≤ c · m`.
--/
-def IsRamseySizeLinear {α : Type*} [Fintype α] (G : SimpleGraph α) : Prop :=
-  ∃ c > (0 : ℝ), ∀ (n : ℕ) (H : SimpleGraph (Fin n)) [DecidableRel H.Adj],
-    (∀ v, 0 < H.degree v) →
-    (sizeRamsey G H : ℝ) ≤ c * H.edgeSet.ncard
 
 end SimpleGraph

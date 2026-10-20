@@ -13,18 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-open scoped Topology
+public import FormalConjecturesUtil
+
 /-!
 # Erdős Problem 442
 
 *Reference:* [erdosproblems.com/442](https://www.erdosproblems.com/442)
 -/
 
+@[expose] public section
+
 namespace Erdos442
 
-open Filter Erdos442
+open Filter Set Erdos442
+open scoped Topology
 
 section Prelims
 
@@ -45,10 +49,13 @@ of elements of `A` that are `≤ x`. Specifically, it is the set
 -/
 @[inline]
 abbrev bddProdUpper : Set (ℕ × ℕ) :=
-  {y ∈ A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊ | y.fst < y.snd}
+  {y ∈ (A ∩ Icc 1 ⌊x⌋₊) ×ˢ (A ∩ Icc 1 ⌊x⌋₊) | y.fst < y.snd}
 
-noncomputable instance : Fintype (A.bddProdUpper x) := Set.Finite.fintype <|
-  (Set.finite_interIcc.prod Set.finite_interIcc).subset (fun _ ha ↦ ha.left)
+noncomputable instance : Fintype (A.bddProdUpper x) :=
+  (((Set.finite_Icc 1 ⌊x⌋₊).prod (Set.finite_Icc 1 ⌊x⌋₊)).subset <| by grind).fintype
+
+noncomputable instance : Fintype (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ) :=
+  ((Set.finite_Icc 1 ⌊x⌋₊).subset Set.inter_subset_right).fintype
 
 end Set
 
@@ -76,11 +83,12 @@ arXiv:2407.04226 (2024).
 
 Note: the informal and formal statements follow the solution paper https://arxiv.org/pdf/2407.04226
 -/
-@[category research solved, AMS 11]
-theorem erdos_442 : answer(False) ↔ ∀ (A : Set ℕ),
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos442.lean#L995"]
+theorem erdos_442 : ¬ ∀ (A : Set ℕ),
     Tendsto (fun (x : ℝ) =>
-      1 / x.maxLogOne.maxLogOne * ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) atTop atTop →
-    Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 *
+      1 / x.maxLogOne.maxLogOne * ∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n) atTop atTop →
+    Tendsto (fun (x : ℝ) => 1 / (∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n) ^ 2 *
       ∑ nm ∈ A.bddProdUpper x, (1 : ℝ) / nm.1.lcm nm.2) atTop atTop := by
   sorry
 
@@ -105,10 +113,10 @@ $$
 theorem erdos_442.variants.tao :
     ∃ (A : Set ℕ) (f : ℝ → ℝ) (C: ℝ) (hC : 0 < C) (hf : f =o[atTop] (1 : ℝ → ℝ)),
       ∀ᶠ (x : ℝ) in atTop,
-        ∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n =
+        ∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n =
           Real.exp ((1 / 2 + f x) * √x.maxLogOne.maxLogOne * x.maxLogOne.maxLogOne.maxLogOne) ∧
-        |∑ nm ∈ (A.interIcc 1 ⌊x⌋₊ ×ˢ A.interIcc 1 ⌊x⌋₊).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤
-          C * (∑ n ∈ A.interIcc 1 ⌊x⌋₊, (1 : ℝ) / n) ^ 2 := by
+        |∑ nm ∈ ((A ∩ Icc 1 ⌊x⌋₊) ×ˢ (A ∩ Icc 1 ⌊x⌋₊)).toFinset, (1 : ℝ) / nm.1.lcm nm.2| ≤
+          C * (∑ n ∈ (A ∩ Icc 1 ⌊x⌋₊ : Set ℕ), (1 : ℝ) / n) ^ 2 := by
   sorry
 
 end Erdos442

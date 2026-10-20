@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1051
@@ -31,14 +32,19 @@ import FormalConjectures.Util.ProblemImports
   Problems. arXiv:2601.22401 (2026).
 -/
 
+@[expose] public section
+
 namespace Erdos1051
 
 /--
 A sequence of integers `a` satisfies the growth condition if
 $\liminf a_n^{\frac{1}{2^n}} > 1$.
+
+The `liminf` is taken in `EReal` so that the case $\liminf a_n^{1/2^n} = \infty$ is included; the
+real-valued `liminf` of a sequence that is unbounded above defaults to $0$ instead.
 -/
 def GrowthCondition (a : ℕ → ℤ) : Prop :=
-  Filter.liminf (fun n => ((a n : ℝ) ^ (1 / 2 ^ n : ℝ))) Filter.atTop > 1
+  Filter.liminf (fun n => (((a n : ℝ) ^ (1 / 2 ^ n : ℝ) : ℝ) : EReal)) Filter.atTop > 1
 
 /--
 The series $\sum_{n=0}^\infty \frac{1}{a_n \cdot a_{n+1}}$.
@@ -62,10 +68,9 @@ $1\leq a_1<\cdots$ such that $\lim a_n^{1/\phi^{n}}=C$ where this infinite sum i
 
 This was formalized in Lean by Baretto.
 -/
-@[category research formally solved using lean4 at
-"https://www.erdosproblems.com/forum/thread/1051", AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/1051"]
 theorem erdos_1051 :
-    answer(True) ↔ ∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
+    ∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
       Irrational (ErdosSeries a) := by
   sorry
 
@@ -74,7 +79,7 @@ Erdős [Er88c] notes that if the sequence grows rapidly to infinity (specificall
 $a_{n+1} \geq C \cdot a_n^2$ for some constant $C > 0$), then the series is irrational.
 -/
 @[category research solved, AMS 11]
-theorem erdos_1051.rapid_growth (a : ℕ → ℤ) (h_mono : StrictMono a)
+theorem erdos_1051.variants.rapid_growth (a : ℕ → ℤ) (h_mono : StrictMono a)
     (h_rapid : ∃ C > 0, ∀ n, (a (n + 1) : ℝ) ≥ C * (a n : ℝ) ^ 2) :
     Irrational (ErdosSeries a) := by
   sorry

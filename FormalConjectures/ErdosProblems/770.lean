@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 770
@@ -27,44 +28,51 @@ import FormalConjectures.Util.ProblemImports
     Second Series 18.3 (1966): 259-269.
 -/
 
+@[expose] public section
+
 open Set ENat Filter
 
 namespace Erdos770
 
-/-- Let `h n` be the minimal number such that `2 ^ n - 1, ..., (h n) ^ n - 1` are mutually
-coprime. -/
+
+/-- Let $h n$ be the minimal number such that $2 ^ n - 1, \dots, h(n) ^ n - 1$
+are collectively coprime. -/
 noncomputable def h (n : ℕ) : ℕ∞ := sInf {m | 2 < m ∧
-  (Set.Icc 2 m).Pairwise fun i j => (i.toNat ^ n - 1).Coprime (j.toNat ^ n - 1)}
+  ((Finset.Icc 2 m.toNat).image fun i => (i ^ n - 1)).gcd id = 1}
 
-/-- `n + 1` is prime iff `h n = n + 1`. #TODO: prove this theorem. -/
-@[category test, AMS 11]
-theorem Nat.Prime.h_eq_add_one {n : ℕ} : h n = n + 1 ↔ (n + 1).Prime := by sorry
+/-- `n + 1` is prime iff `h n = n + 1`. This is described as 'easy to see' in [Er74b]. -/
+@[category textbook, AMS 11]
+theorem Nat.Prime.h_eq_add_one {n : ℕ} (hn : 2 < n) : h n = n + 1 ↔ (n + 1).Prime := by
+  sorry
 
-/-- If `n` is odd, then `h n = ∞`. #TODO: prove this theorem. -/
-@[category test, AMS 11]
-theorem Odd.h_unbounded {n : ℕ} (pn : Odd n) : h n = ⊤ := by sorry
+/-- For odd `n`, the values of `h n` form an unbounded set.
+This is described as 'easy to see' in [Er74b]. -/
+@[category textbook, AMS 11]
+theorem erdos_770.variants.odd_h_unbounded : Unbounded (· ≤ ·) (ENat.toNat '' (h '' Odd)):= by
+  sorry
+
 
 /-- For every prime `p`, does the density of integers with `h n = p` exist? -/
-@[category research open, AMS 11]
-theorem erdos_770.density : answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∃ a, HasDensity {n | h n = p} a := by
+@[category research open, question, AMS 11]
+theorem erdos_770.parts.i : ∀ p : ℕ, p.Prime → ∃ a, HasDensity {n | h n = p} a := by
   sorry
 
 /-- Does `liminf h n = ∞`? -/
-@[category research open, AMS 11]
-theorem erdos_770.liminf : answer(sorry) ↔ liminf h atTop = ⊤ := by
+@[category research open, question, AMS 11]
+theorem erdos_770.parts.ii : liminf h atTop = ⊤ := by
   sorry
 
 /-- Is it true that if `p` is the greatest prime such that `p - 1 ∣ n` and `p > n ^ ε`, then
 `h n = p`? -/
-@[category research open, AMS 11]
-theorem erdos_770.prime : answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
+@[category research open, question, AMS 11]
+theorem erdos_770.parts.iii : ∀ ε > 0, ∀ᶠ n in atTop,
     let p := sSup {m : ℕ | m.Prime ∧ m - 1 ∣ n}
     p > (n : ℝ) ^ (ε : ℝ) → h n = p := by
   sorry
 
 /-- It is probably true that `h n = 3` for infinitely many `n`. -/
 @[category research open, AMS 11]
-theorem erdos_770.three : {n | h n = 3}.Infinite := by
+theorem erdos_770.variants.three : {n | h n = 3}.Infinite := by
   sorry
 
 end Erdos770

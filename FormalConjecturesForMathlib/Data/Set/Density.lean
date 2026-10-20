@@ -13,12 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
-import FormalConjecturesForMathlib.Data.Set.Bdd
-import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
-import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
-import Batteries.Util.ProofWanted
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
+public import FormalConjecturesForMathlib.Data.Set.Interval
+public import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
+public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
+public import Batteries.Util.ProofWanted
+public import Mathlib.Tactic
+
+@[expose] public section
 
 open Filter
 
@@ -36,7 +41,7 @@ This definition was inspired from https://github.com/b-mehta/unit-fractions
 @[inline]
 noncomputable abbrev partialDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : ℝ :=
-  (Set.interIio (S ∩ A) b).ncard / (Set.interIio A b).ncard
+  ((S ∩ A) ∩ Iio b).ncard / (A ∩ Iio b).ncard
 
 theorem partialDensity_le_one {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) (b : β) : S.partialDensity A b ≤ 1 := by
@@ -96,6 +101,31 @@ def HasPosDensity {β : Type*} [Preorder β] [LocallyFiniteOrderBot β]
     (S : Set β) (A : Set β := Set.univ) : Prop :=
   ∃ α > 0, S.HasDensity α A
 
+/--
+The two-sided partial natural density of a set of integers, counted inside the interval
+`[-N, N]`.
+-/
+noncomputable def intPartialDensity (S : Set ℤ) (N : ℕ) : ℝ :=
+  open scoped Classical in
+  (((Finset.Icc (-(N : ℤ)) (N : ℤ)).filter (fun m => m ∈ S)).card : ℝ) /
+    (2 * (N : ℝ) + 1)
+
+/-- A set of integers has two-sided natural density `α`. -/
+def HasIntDensity (S : Set ℤ) (α : ℝ) : Prop :=
+  Tendsto (fun N : ℕ => S.intPartialDensity N) atTop (𝓝 α)
+
+@[simp]
+theorem intPartialDensity_empty (N : ℕ) : intPartialDensity (∅ : Set ℤ) N = 0 := by
+  simp [intPartialDensity]
+
+namespace HasIntDensity
+
+@[simp]
+theorem empty : HasIntDensity (∅ : Set ℤ) 0 := by
+  simp [HasIntDensity]
+
+end HasIntDensity
+
 namespace HasDensity
 
 -- TODO(mercuris): generalise these to non-univ `A`
@@ -143,7 +173,7 @@ open Set
 The natural density of the set of even numbers is `1 / 2`.
 -/
 theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
-  simp [HasDensity, partialDensity, Set.interIio]
+  simp [HasDensity, partialDensity]
   have h {n : ℕ} (hn : 1 ≤ n) : (({n : ℕ | Even n} ∩ Iio n).ncard : ℝ) / n =
       if Even n then 2⁻¹ else (n + 1 : ℝ) /  n * 2⁻¹ := by
     split_ifs with h
@@ -164,7 +194,7 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
 
 /-- A finite set has natural density zero. -/
 theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) : S.HasDensity 0 := by
-  simp [HasDensity, partialDensity, Set.interIio]
+  simp [HasDensity, partialDensity]
   have (n : ℕ) : ((S ∩ Set.Iio n).ncard : ℝ) / n ≤ S.ncard / n := by
     by_cases h₀ : n = 0; simp [h₀]
     exact div_le_div₀ (by simp) (by simpa using Set.ncard_inter_le_ncard_left _ _ h)
@@ -172,6 +202,27 @@ theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) : S.HasDensity 0 
   exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds
     (tendsto_const_div_atTop_nhds_zero_nat _)
     (fun _ => div_nonneg (cast_nonneg _) (cast_nonneg _)) this
+
+/-- A finite set of natural numbers has density `0` relative to any infinite set `A` of natural
+numbers, because the number of elements of `A` below `b` tends to infinity. -/
+lemma hasDensity_zero_of_finite_of_infinite {T A : Set ℕ} (hT : T.Finite) (hA : A.Infinite) :
+    T.HasDensity 0 A := by
+  have hden : Filter.Tendsto (fun b : ℕ => ((A ∩ Set.Iio b).ncard : ℝ)) Filter.atTop
+      Filter.atTop := by
+    refine tendsto_natCast_atTop_atTop.comp (Filter.tendsto_atTop_atTop_of_monotone
+      (fun m n hmn => Set.ncard_le_ncard (Set.inter_subset_inter_right _
+        (Set.Iio_subset_Iio hmn)) ((Set.finite_Iio n).inter_of_right A)) fun N => ?_)
+    obtain ⟨t, htA, htc⟩ := hA.exists_subset_card_eq N
+    refine ⟨t.sup id + 1, ?_⟩
+    have hsub : (t : Set ℕ) ⊆ A ∩ Set.Iio (t.sup id + 1) := fun x hx =>
+      ⟨htA hx, Nat.lt_succ_of_le (Finset.le_sup (f := id) hx)⟩
+    simpa [htc] using Set.ncard_le_ncard hsub ((Set.finite_Iio _).inter_of_right A)
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds
+    (hden.const_div_atTop (T.ncard : ℝ)) (fun b => ?_) (fun b => ?_)
+  · exact div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)
+  · refine div_le_div_of_nonneg_right ?_ (Nat.cast_nonneg _)
+    refine Nat.cast_le.2 ?_
+    exact Set.ncard_le_ncard (fun x hx => hx.1.1) hT
 
 /-- A set of positive natural density is infinite. -/
 theorem infinite_of_hasDensity_pos {S : Set ℕ} {α : ℝ} (h : S.HasDensity α) (hα : α ≠ 0) :
@@ -184,7 +235,7 @@ end Nat
 
 section LogarithmicDensity
 
-open Finset Real Classical
+open Finset Real
 
 /--
 A set `A` of natural numbers has logarithmic density `d` if the sequence
@@ -194,6 +245,7 @@ then it also has logarithmic density `d` (see `Set.HasDensity.hasLogDensity`), b
 is false.
 -/
 def Set.HasLogDensity (A : Set ℕ) (d : ℝ) : Prop :=
+  open scoped Classical in
   Tendsto (fun n : ℕ => (∑ k ≤ n with k ∈ A, (k : ℝ)⁻¹ / .log n : ℝ)) atTop (𝓝 d)
 
 /-- If a set has natural density `d`, then it also has logarithmic density `d`. -/

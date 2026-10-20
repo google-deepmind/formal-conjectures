@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Schanuel's Conjecture
@@ -22,18 +23,12 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schanuel%27s_conjecture)
 -/
 
+@[expose] public section
+
 open scoped Real Complex
 open IntermediateField
 
 namespace Schanuel
-
-/--
-The transcendence degree of $A$ adjoined $\{x_1, \dots, x_n\}$ is $\leq n$.
--/
-@[category graduate, AMS 12 13 14]
-theorem adjoin_trdeg_le_of_finite {A B : Type*} [Field A] [Field B] [Algebra A B]
-    (n : ℕ) (z : Fin n → B) : n ≤ Algebra.trdeg A (adjoin A (Set.range z)) := by
-  sorry
 
 /--
 Given any set of $n$ complex numbers $\{z_1, ..., z_n\}$ that are linearly independent over
@@ -42,7 +37,6 @@ has transcendence degree at least $n$ over $\mathbb{Q}$.
 -/
 @[category research open, AMS 11 33]
 theorem schanuel_conjecture (n : ℕ) (z : Fin n → ℂ) (h : LinearIndependent ℚ z) :
-    let hinj := algebraMap ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) |>.injective
     n ≤ Algebra.trdeg ℚ (adjoin ℚ (Set.range z ∪ Set.range (cexp ∘ z))) := by
   sorry
 
