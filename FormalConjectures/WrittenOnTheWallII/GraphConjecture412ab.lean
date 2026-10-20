@@ -77,7 +77,9 @@ Here $c_L$ is the order of a largest component and $H$ is the maximum critical
 independent-set union. The graph is connected, finite, bipartite and has order
 greater than two.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/773d2ad877c643319608009a72a4c39eb71b5e86/Proofs/WOWII412FamilyProof.lean#L107"]
 theorem conjecture412a [DecidableRel G.Adj] (hG : G.Connected)
     (hb : G.IsBipartite) (horder : 2 < Fintype.card V) :
     largestComponentOrder G (neighbors G (pendants G)) +
@@ -89,7 +91,9 @@ theorem conjecture412a [DecidableRel G.Adj] (hG : G.Connected)
 $|H|\ge c_L(G[S])+\alpha(G[A_2])$, with $S=N(P)$ and $A_2$ the degree-two
 set, for connected finite bipartite graphs of order greater than two.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/773d2ad877c643319608009a72a4c39eb71b5e86/Proofs/WOWII412FamilyProof.lean#L116"]
 theorem conjecture412b [DecidableRel G.Adj] (hG : G.Connected)
     (hb : G.IsBipartite) (horder : 2 < Fintype.card V) :
     largestComponentOrder G (neighbors G (pendants G)) + independentOn G (degreeTwo G) ≤
@@ -99,7 +103,9 @@ theorem conjecture412b [DecidableRel G.Adj] (hG : G.Connected)
 /-- The corona version of412a holds for every connected finite simple graph
 of order greater than two, without a bipartite hypothesis.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/773d2ad877c643319608009a72a4c39eb71b5e86/Proofs/WOWII412FamilyProof.lean#L90"]
 theorem conjecture412a_corona [DecidableRel G.Adj] (hG : G.Connected)
     (horder : 2 < Fintype.card V) :
     largestComponentOrder G (neighbors G (pendants G)) +
@@ -109,7 +115,9 @@ theorem conjecture412a_corona [DecidableRel G.Adj] (hG : G.Connected)
 /-- The corona version of412b holds for every connected finite simple graph
 of order greater than two, without a bipartite hypothesis.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/773d2ad877c643319608009a72a4c39eb71b5e86/Proofs/WOWII412FamilyProof.lean#L99"]
 theorem conjecture412b_corona [DecidableRel G.Adj] (hG : G.Connected)
     (horder : 2 < Fintype.card V) :
     largestComponentOrder G (neighbors G (pendants G)) + independentOn G (degreeTwo G) ≤
