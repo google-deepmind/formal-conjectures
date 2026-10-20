@@ -1742,8 +1742,8 @@ level than the proof in Rocq, which is based on dependent type theory. -/
 theorem c14_lower_bound : 6 ≤ C14 := by sorry
 
 /-- Can the current best lower bound be improved? -/
-@[category research open, AMS 3 68]
-theorem c14_lower_bound_improved : answer(sorry) ↔ 6 < C14 := by sorry
+@[category research open, question, AMS 3 68]
+theorem c14_lower_bound_improved : 6 < C14 := by sorry
 
 /-- The first known upper bound, proved by Yedidia and Aaronson in [YS2016]. Their construction
 reduces the independence problem to a graph-theoretic setting. -/
@@ -1766,8 +1766,8 @@ a certain 230-state Turing machine halts if and only if ZFC is inconsistent. -/
 theorem c14_upper_bound : C14 ≤ 230 := by sorry
 
 /-- Can the current best upper bound be improved? -/
-@[category research open, AMS 3 68]
-theorem c14_upper_bound_improved : answer(sorry) ↔ C14 < 230 := by sorry
+@[category research open, question, AMS 3 68]
+theorem c14_upper_bound_improved : C14 < 230 := by sorry
 
 /-- Conjecture 11 in [A2020] by Scott Aaronson -/
 @[category research open, AMS 3 68]
