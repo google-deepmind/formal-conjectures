@@ -104,7 +104,7 @@ theorem exists_multiple_in_window
 
 /-- Erdős Problem 709 holds for a singleton input: the multiplier `1` suffices. -/
 @[category textbook, AMS 5 11]
-theorem works_one : Works 1 1 := by
+theorem erdos_709.variants.singleton : Works 1 1 := by
   intro A M hcard hM hbound htwo start
   have hA : A = {M} := by
     obtain ⟨z, hz⟩ := Finset.card_eq_one.mp hcard
@@ -126,6 +126,6 @@ theorem works_one : Works 1 1 := by
 /-- For singleton inputs, every multiplier at least `1` works. -/
 @[category API, AMS 5 11]
 theorem works_one_of_one_le (k : ℕ) (hk : 1 ≤ k) : Works 1 k :=
-  works_mono 1 1 k hk works_one
+  works_mono 1 1 k hk erdos_709.variants.singleton
 
 end Erdos709
