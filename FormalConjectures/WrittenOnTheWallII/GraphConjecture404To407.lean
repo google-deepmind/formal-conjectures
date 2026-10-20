@@ -103,7 +103,9 @@ theorem conjecture404 [DecidableRel G.Adj] (hT : G.IsTree)
 /-- On finite simple trees of order greater than two,405 asserts
 $peN(H)\le2\alpha(T[V\setminus L])$, where $L$ is the leaf set.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/a4b3b22c9d4c7d5904210fc20b676430dd4ab7c4/Proofs/WOWII405407Proof.lean#L69"]
 theorem conjecture405 [DecidableRel G.Adj] (hT : G.IsTree)
     (horder : 2 < Fintype.card V) :
     privateExternalNeighborCount G (criticalUnion G) ≤
@@ -124,7 +126,9 @@ theorem conjecture406 [DecidableRel G.Adj] (hT : G.IsTree)
 $peN(H)\le2p(T)$, where $p(T)$ is the minimum number of vertex-disjoint
 paths covering all vertices, as in the existing path-cover API.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/a4b3b22c9d4c7d5904210fc20b676430dd4ab7c4/Proofs/WOWII405407Proof.lean#L76"]
 theorem conjecture407 [DecidableRel G.Adj] (hT : G.IsTree)
     (horder : 2 < Fintype.card V) :
     privateExternalNeighborCount G (criticalUnion G) ≤ 2 * G.pathCoverNumber := by
