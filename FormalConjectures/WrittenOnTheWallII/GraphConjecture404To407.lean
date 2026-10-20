@@ -93,7 +93,9 @@ theorem critical_union_private_neighbors [DecidableRel G.Adj]
 /-- On finite simple trees of order greater than two,404 asserts
 $peN(H)\le2(|S|-1)$, with $S$ the support set. Subtraction is in the integers.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/243826dd990147445ee0023b90ce064ffec7c724/Proofs/WOWII404406Proof.lean#L90"]
 theorem conjecture404 [DecidableRel G.Adj] (hT : G.IsTree)
     (horder : 2 < Fintype.card V) :
     (privateExternalNeighborCount G (criticalUnion G) : ℤ) ≤
@@ -115,7 +117,9 @@ theorem conjecture405 [DecidableRel G.Adj] (hT : G.IsTree)
 /-- On finite simple trees of order greater than two,406 asserts
 $peN(H)\le peN(V\setminus L)-2$. Subtraction is in the integers.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/243826dd990147445ee0023b90ce064ffec7c724/Proofs/WOWII404406Proof.lean#L97"]
 theorem conjecture406 [DecidableRel G.Adj] (hT : G.IsTree)
     (horder : 2 < Fintype.card V) :
     (privateExternalNeighborCount G (criticalUnion G) : ℤ) ≤
