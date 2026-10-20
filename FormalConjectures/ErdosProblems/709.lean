@@ -32,6 +32,8 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
+open Filter Asymptotics
+
 namespace Erdos709
 
 /-- The block of `length` consecutive positive integers immediately after `start`. -/
@@ -127,5 +129,82 @@ theorem erdos_709.variants.singleton : Works 1 1 := by
 @[category API, AMS 5 11]
 theorem works_one_of_one_le (k : ℕ) (hk : 1 ≤ k) : Works 1 k :=
   works_mono 1 1 k hk erdos_709.variants.singleton
+
+/-- `IsAdmissible n c` says that for every set $A \subseteq [2,\infty)$ of $n$ natural numbers,
+every block of at least $c \max(A)$ consecutive positive integers contains distinct multiples of
+the elements of $A$. Restricting to positive integers loses nothing: translating a block by a
+multiple of $\operatorname{lcm}(A)$ does not change which of its elements each $a \in A$ divides.
+`Works` above is the same condition with an integer multiplier. -/
+def IsAdmissible (n : ℕ) (c : ℝ) : Prop :=
+  ∀ A : Finset ℕ, A.card = n → (∀ a ∈ A, 2 ≤ a) →
+    ∀ start length : ℕ, c * ((A.sup id : ℕ) : ℝ) ≤ (length : ℝ) →
+      HasDistinctMultiples A start length
+
+/-- $f(n)$ is the infimum of the admissible $c$. Since $c\max(A)$ need not be an integer, "an
+interval of $c\max(A)$ consecutive integers" is read as "at least $c\max(A)$ consecutive
+integers" (a longer interval contains a shorter one). For $n \geq 1$ the set of admissible $c$
+contains $n$ and is bounded below by $0$, so `sInf` is the true infimum. The value $f(0)=0$ is
+a junk value and plays no role. -/
+noncomputable def f (n : ℕ) : ℝ := sInf {c : ℝ | IsAdmissible n c}
+
+/-- The integers $5, 6, 7$ contain no distinct multiples of $2$ and $3$, since $6$ is the only
+multiple of each. So three consecutive integers are not enough for $A=\{2,3\}$. -/
+@[category test, AMS 11]
+theorem not_hasDistinctMultiples_two_three : ¬ HasDistinctMultiples {2, 3} 4 3 := by
+  rintro ⟨x, hinj, h⟩
+  obtain ⟨h2w, h2d⟩ := h 2 (by simp)
+  obtain ⟨h3w, h3d⟩ := h 3 (by simp)
+  simp only [window, Finset.mem_Icc] at h2w h3w
+  have h23 : x 2 = x 3 := by omega
+  have := hinj (by simp) (by simp) h23
+  omega
+
+def erdos_709.answer : ℕ → ℝ := sorry
+
+/--
+Let $f(n)$ be minimal such that, for any $A=\{a_1,\ldots,a_n\}\subseteq [2,\infty)\cap\mathbb{N}$
+of size $n$, in any interval $I$ of $f(n)\max(A)$ consecutive integers there exist distinct
+$x_1,\ldots,x_n\in I$ such that $a_i\mid x_i$.
+
+Obtain good bounds for $f(n)$, or even an asymptotic formula.
+
+We read "good bounds" as determining the order of magnitude of $f(n)$.
+-/
+@[category research open, question value, AMS 11]
+theorem erdos_709 : f =Θ[atTop] erdos_709.answer := by
+  sorry
+
+/--
+A problem of Erdős and Surányi [ErSu59], who proved
+$$(\log n)^c \ll f(n) \ll n^{1/2}$$
+for some constant $c>0$.
+
+This is the lower bound.
+-/
+@[category research solved, AMS 11]
+theorem erdos_709.variants.ersu_lower :
+    ∃ c > (0 : ℝ), (fun n : ℕ ↦ Real.log n ^ c) =O[atTop] f := by
+  sorry
+
+/--
+A problem of Erdős and Surányi [ErSu59], who proved
+$$(\log n)^c \ll f(n) \ll n^{1/2}$$
+for some constant $c>0$.
+
+This is the upper bound.
+-/
+@[category research solved, AMS 11]
+theorem erdos_709.variants.ersu_upper :
+    f =O[atTop] fun n : ℕ ↦ (n : ℝ) ^ (1 / 2 : ℝ) := by
+  sorry
+
+/--
+The lower bound here can be improved, using van Doorn's lower bound for [711] from [vD26], to
+$$\frac{\log n}{\log\log n}\ll f(n).$$
+-/
+@[category research solved, AMS 11]
+theorem erdos_709.variants.van_doorn_lower :
+    (fun n : ℕ ↦ Real.log n / Real.log (Real.log n)) =O[atTop] f := by
+  sorry
 
 end Erdos709
