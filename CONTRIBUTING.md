@@ -219,14 +219,7 @@ the module that defines it, for example
 `FormalConjecturesForMathlib` or a Mathlib module directly is not allowed. A
 file that evaluates a definition with `native_decide` or `#eval` also needs a
 `meta import` of the Mathlib or `FormalConjecturesForMathlib` module that
-defines it; the error message names the module to add. To check or minimize
-the imports of a problem file that builds, run
-
-```bash
-lake env lean --run scripts/shake_imports.lean --add-public --fix \
-    --only FormalConjectures.ErdosProblems.«361» \
-    FormalConjectures.ErdosProblems.«361» FormalConjecturesUtil
-```
+defines it; the error message names the module to add.
 
 ## The `@[category]` attribute
 
