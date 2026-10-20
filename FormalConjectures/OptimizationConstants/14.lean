@@ -35,8 +35,9 @@ public import FormalConjecturesUtil
   [*metamath-turing-machines*](https://github.com/sorear/metamath-turing-machines) (2016).
 - [W2025] Wade, A. J.,
   [*turing_machine_explorer*](https://codeberg.org/ajwade/turing_machine_explorer) (2025).
-- [MK2026] Mira-Cult and Ketchersid, J., [*A verified 254-state Turing machine that halts iff ZFC
-  is inconsistent*](https://github.com/jeff87654/busy-beaver/tree/zf-254/ZF/m254) (2026).
+- [G2026] Glazer, E., [*K230: a 230-state Turing machine for the consistency of
+  ZFC*](https://github.com/elliotglazer/k230-rocq) (2026).
+  [Announcement](https://x.com/ElliotGlazer/status/2112179703687856497)
 - [A2020] Aaronson, S., [*The Busy Beaver
   Frontier*](https://doi.org/10.1145/3427361.3427369). ACM SIGACT News **51** (2020), 32–54.
 
@@ -1759,14 +1760,14 @@ machine construction from [O2016]. -/
 @[category research solved, AMS 3 68]
 theorem c14_le_432 : C14 ≤ 432 := by sorry
 
-/-- The current best known upper bound, from [MK2026]. The machine was built by Mira-Cult.
-Ketchersid proved in Rocq, without axioms, that it halts if and only if ZFC is inconsistent. -/
+/-- The current best known upper bound, from [G2026]. Glazer proved in Rocq, without axioms, that
+a certain 230-state Turing machine halts if and only if ZFC is inconsistent. -/
 @[category research solved, AMS 3 68]
-theorem c14_upper_bound : C14 ≤ 254 := by sorry
+theorem c14_upper_bound : C14 ≤ 230 := by sorry
 
 /-- Can the current best upper bound be improved? -/
 @[category research open, AMS 3 68]
-theorem c14_upper_bound_improved : answer(sorry) ↔ C14 < 254 := by sorry
+theorem c14_upper_bound_improved : answer(sorry) ↔ C14 < 230 := by sorry
 
 /-- Conjecture 11 in [A2020] by Scott Aaronson -/
 @[category research open, AMS 3 68]
