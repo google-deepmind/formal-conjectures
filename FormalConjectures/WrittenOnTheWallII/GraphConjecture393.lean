@@ -66,7 +66,9 @@ $\gamma_2(G)\le|U|+\mu(G[R])+|P|$. Two-domination constrains only vertices
 outside the selected set. The matching parameter uses the existing real-valued
 maximum-matching API, with no change in its integer mathematical value.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/4ddd6919482e4413053f24c632297cfff5ad1c5e/Proofs/WOWII393aProof.lean#L18"]
 theorem conjecture393a [DecidableRel G.Adj] (hG : G.Connected)
     (horder : 2 < Fintype.card V) :
     (twoDominationNumber G : ℝ) ≤ (remainder G).card +
