@@ -66,7 +66,9 @@ cutoff: in every finite bipartite graph without isolates,
 $\gamma_t(G)\le|corona(G)|=|H|$. The bipartite identification of the two unions
 is standard and is credited separately in the source.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/ffe433085107fab2c155e7b21cfd0d9eeb3b005a/Proofs/WOWII412dProof.lean#L33"]
 theorem conjecture412d_isolate_free (hb : G.IsBipartite)
     (hni : ∀ v, ∃ w, G.Adj v w) :
     G.totalDominationNumber ≤ (corona G).card ∧ corona G = criticalUnion G := by
@@ -85,7 +87,9 @@ lemma connected_has_neighbor (hG : G.Connected)
 
 /-- The original connected formulation is a direct corollary of the
 isolate-free strengthened theorem, with no independent proof gap. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/ffe433085107fab2c155e7b21cfd0d9eeb3b005a/Proofs/WOWII412dProof.lean#L43"]
 theorem conjecture412d (hG : G.Connected) (hb : G.IsBipartite)
     (horder : 2 < Fintype.card V) :
     G.totalDominationNumber ≤ (criticalUnion G).card := by
