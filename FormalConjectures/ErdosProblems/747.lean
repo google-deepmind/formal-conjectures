@@ -45,12 +45,11 @@ for the general problem over $r$-uniform hypergraphs).
 -/
 @[category research solved, question value, AMS 5 60]
 theorem erdos_747 :
-    let threshold : ℕ → ℝ := erdos_747.answer
     ∀ ε : ℝ, 0 < ε → ε < 1 →
     Tendsto (fun n ↦ Hypergraph.matchingProbability (3 * n) 3
-      ⌊(1 + ε) * threshold n⌋₊ n) atTop (𝓝 1) ∧
+      ⌊(1 + ε) * erdos_747.answer n⌋₊ n) atTop (𝓝 1) ∧
     Tendsto (fun n ↦ Hypergraph.matchingProbability (3 * n) 3
-      ⌊(1 - ε) * threshold n⌋₊ n) atTop (𝓝 0) := by
+      ⌊(1 - ε) * erdos_747.answer n⌋₊ n) atTop (𝓝 0) := by
   sorry
 
 end Erdos747

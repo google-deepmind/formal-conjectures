@@ -47,8 +47,7 @@ Estimate `m(n,k)`, or better give an asymptotic formula.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_857 :
-    let f : ℕ → ℕ → ℝ := erdos_857.answer
-    ∀ k : ℕ, 3 ≤ k → Tendsto (fun n : ℕ => (m n k : ℝ) / f k n) atTop (nhds 1) := by
+    ∀ k : ℕ, 3 ≤ k → Tendsto (fun n : ℕ => (m n k : ℝ) / erdos_857.answer k n) atTop (nhds 1) := by
   sorry
 
 end Erdos857

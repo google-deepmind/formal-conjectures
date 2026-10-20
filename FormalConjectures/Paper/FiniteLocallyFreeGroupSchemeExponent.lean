@@ -206,8 +206,8 @@ multiples of the least one, so minimality for $\le$ agrees with minimality for d
 -/
 @[category research open, question value, AMS 14 16]
 theorem optimal_exponent :
-    let exponent : ℕ+ → ℕ := optimal_exponent.answer
-    ∀ n, sInf ((↑) '' {m | IsUniversalKillingExponent.{0, 0} n m} : Set ℕ) = exponent n := by
+    ∀ n, sInf ((↑) '' {m | IsUniversalKillingExponent.{0, 0} n m} : Set ℕ) = optimal_exponent.answer
+      n := by
   sorry
 
 end FiniteLocallyFreeGroupSchemeExponent

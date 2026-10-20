@@ -59,9 +59,8 @@ application, so the coercion lands on `n` and the `lcm` is taken in `ℝ`, where
 non-zero elements is `1` and the whole comparator collapses to `k`. -/
 @[category research open, question value, AMS 11]
 theorem erdos_1063.better_upper :
-    let upper_bound : ℕ → ℝ := erdos_1063.better_upper.answer
-    (fun k => (n k : ℝ)) =O[atTop] upper_bound ∧
-    upper_bound =o[atTop] fun k =>
+    (fun k => (n k : ℝ)) =O[atTop] erdos_1063.better_upper.answer ∧
+    erdos_1063.better_upper.answer =o[atTop] fun k =>
       (k : ℝ) * (((Finset.Icc 1 (k - 1)).lcm id : ℕ) : ℝ) := by
   sorry
 

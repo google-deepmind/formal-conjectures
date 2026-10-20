@@ -68,9 +68,9 @@ def green_35.lower.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
 $p = 2$ or the known value $0.64$ at $p = \infty$. -/
 @[category research open, question value, AMS 26 28 42]
 theorem green_35.lower :
-    let lb : ℝ≥0∞ → ℝ≥0∞ := green_35.lower.answer
-    (∀ p, 1 < p → lb p ≤ c p) ∧
-      (ENNReal.ofReal (Real.sqrt (4 / 7)) < lb 2 ∨ 0.64 < lb ∞) := by
+    (∀ p, 1 < p → green_35.lower.answer p ≤ c p) ∧
+      (ENNReal.ofReal (Real.sqrt (4 / 7)) < green_35.lower.answer 2 ∨
+        0.64 < green_35.lower.answer ∞) := by
   sorry
 
 def green_35.upper.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
@@ -79,8 +79,7 @@ def green_35.upper.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
 $p = \infty$. -/
 @[category research open, question value, AMS 26 28 42]
 theorem green_35.upper :
-    let ub : ℝ≥0∞ → ℝ≥0∞ := green_35.upper.answer
-    (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7516 := by
+    (∀ p, 1 < p → c p ≤ green_35.upper.answer p) ∧ green_35.upper.answer ∞ < 0.7516 := by
   sorry
 
 /-  Known bounds and comparisons. -/

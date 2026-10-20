@@ -49,7 +49,7 @@ Let $A\subseteq \mathbb{N}$ and $D(A)$ be the set of those numbers which occur i
 $a_1 - a_2$ with $a_1, a_2\in A$. What conditions on $A$ are sufficient to ensure $D(A)$ has bounded
 gaps?
 
-This is formalised here using the `answer(sorry)` mechanism. In order to solve this problem one
+The sufficient conditions are the unknown `erdos_332.answer`. In order to solve this problem one
 has to provide what the sufficient conditions are, and proof that they imply the desired condition.
 If the condition is a solution to the problem is up to human judgement.
 -/

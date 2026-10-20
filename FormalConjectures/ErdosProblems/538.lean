@@ -59,8 +59,7 @@ admissible `A`.
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_538 :
-    let f : ℕ → ℕ → ℝ := erdos_538.answer
-    ∀ r : ℕ, 2 ≤ r → maxMass r ~[atTop] f r := by
+    ∀ r : ℕ, 2 ≤ r → maxMass r ~[atTop] erdos_538.answer r := by
   sorry
 
 /--

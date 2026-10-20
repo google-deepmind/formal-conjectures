@@ -239,6 +239,16 @@ def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
 def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
   Module.finrank ℝ L.direction = 1
 
+/--
+The set of lines in $\mathbb{R}^2$ containing exactly $k$ points from a given set $S$.
+
+Only lines through two distinct points of $S$ are considered, so a line with fewer than two
+points of $S$ is never counted.
+-/
+noncomputable def linesWithPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
+  let determined_lines := { affineSpan ℝ {p, q} | (p ∈ S) (q ∈ S) (_ : p ≠ q) }
+  { L ∈ determined_lines | (↑L ∩ S).ncard = k }
+
 end EuclideanGeometry
 
 def IsIsosceles {α : Type*} [Dist α] (p q r : α) : Prop :=
