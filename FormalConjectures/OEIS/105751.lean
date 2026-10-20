@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Imaginary part of $\prod_{k=0}^n (1 + k \cdot i)$, $i = \sqrt{-1}$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A105751](https://oeis.org/A105751)
 -/
+
+@[expose] public section
 
 open Complex Filter Topology Nat
 
@@ -67,7 +70,7 @@ In particular, if $p$ is an odd prime then $p$ divides $a(p)$. For $p=2$, $2$ di
 -/
 @[category textbook, AMS 11]
 theorem prime_divides_some_term (p : ℕ) (hp : p.Prime) :
-    ∃ n : ℕ, (p : ℤ) ∣ a n := by
+    ∃ n : ℕ, a n ≠ 0 ∧ (p : ℤ) ∣ a n := by
   sorry
 
 /--

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 47
@@ -39,6 +40,8 @@ import FormalConjecturesUtil
   arXiv:2404.07113 (2024).
 -/
 
+@[expose] public section
+
 namespace Erdos47
 
 open Filter
@@ -49,9 +52,9 @@ If $\delta>0$ and $N$ is sufficiently large in terms of $\delta$, and $A\subsete
 
 Bloom [Bl21] proved this in the affirmative.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos47.lean"]
-theorem erdos_47 : answer(True) ↔
+theorem erdos_47 :
     ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℕ,
       A ⊆ Finset.Icc 1 N →
       δ * Real.log (N : ℝ) < A.reciprocalSum →

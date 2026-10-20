@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 907
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [dB51] de Bruijn, N. G., *Functions whose differences belong to a given class*. Nieuw Arch.
   Wiskunde (2) (1951), 194-218.
 -/
+
+@[expose] public section
 
 namespace Erdos907
 
@@ -35,8 +38,8 @@ for some continuous $g$ and additive $h$ (i.e. $h(x+y)=h(x)+h(y)$)?
 
 A conjecture of Erdős from the early 1950s. Answered in the affirmative by de Bruijn [dB51].
 -/
-@[category research solved, AMS 26 39, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos907.lean"]
-theorem erdos_907 : answer(True) ↔
+@[category research solved, question, AMS 26 39, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos907.lean"]
+theorem erdos_907 :
     ∀ f : ℝ → ℝ, (∀ h : ℝ, 0 < h → Continuous fun x => f (x + h) - f x) →
       ∃ g a : ℝ → ℝ, Continuous g ∧ (∀ x y, a (x + y) = a x + a y) ∧ f = g + a := by
   sorry

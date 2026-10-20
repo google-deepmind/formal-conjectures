@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1136
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Mu11] Müller, Helmut, *Über ein additiv-zahlentheoretisches Problem von P. Erdős*.
   Mitt. Math. Ges. Hamburg (2011), 75-78.
 -/
+
+@[expose] public section
 
 namespace Erdos1136
 
@@ -45,8 +48,8 @@ Müller [Mu11] settled this question in the affirmative: in fact one can take $A
 the set of all integers congruent to $3\cdot 2^i\pmod{2^{i+2}}$ for any $i\geq 0$, which has
 density $1/2$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1136.lean"]
-theorem erdos_1136 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1136.lean"]
+theorem erdos_1136 :
     ∃ A : Set ℕ, (1 / 3 : ℝ) < A.lowerDensity ∧ AvoidsPowersOfTwo A := by
   sorry
 

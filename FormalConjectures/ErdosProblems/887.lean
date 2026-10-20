@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 887
@@ -23,16 +24,21 @@ import FormalConjecturesUtil
 * [erdosproblems.com/887](https://www.erdosproblems.com/887)
 * [ErRo97] Erdős, Paul and Rosenfeld, Moshe, The factor-difference set of integers. Acta Arith. (1997), 353--359.
 -/
+
+@[expose] public section
+
 open Filter Finset Real
 namespace Erdos887
+
+def erdos_887.parts.i.answer : ℕ := sorry
 
 /--
 Is there an absolute constant $K$ such that, for every $C > 0$, if $n$ is sufficiently large then
 $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{1}{4}})$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_887.parts.i : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
-    #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ answer(sorry) := by
+    #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ erdos_887.parts.i.answer := by
   sorry
 
 /--

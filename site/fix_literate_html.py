@@ -6,13 +6,24 @@ Fixes:
 1. Adds KaTeX for LaTeX rendering in docstrings
 2. Creates stub JS files for missing search infrastructure
 3. Fixes domain-mappers.js module syntax
+4. Installs the shared Verso syntax theme
+5. Adds a root index page that redirects to the website's module index
+6. Links parent breadcrumbs to the filtered module index
 
 Usage: python3 fix_literate_html.py <literate-html-dir>
 """
 
 import os
 import re
+import shutil
 import sys
+from html import escape, unescape
+from urllib.parse import quote, unquote
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+HIGHLIGHT_STYLESHEET = 'lean-syntax.css'
+HIGHLIGHT_STYLESHEET_SOURCE = os.path.join(SCRIPT_DIR, 'src', 'css', HIGHLIGHT_STYLESHEET)
+HIGHLIGHT_HEAD = f'<link rel="stylesheet" href="{HIGHLIGHT_STYLESHEET}">\n'
 
 KATEX_HEAD = '''
     <!-- KaTeX for LaTeX in docstrings -->
@@ -38,31 +49,56 @@ document.addEventListener("DOMContentLoaded", function() {
 '''
 
 
+def fix_breadcrumbs(html):
+    """Point Verso's parent-folder links to the website's module index."""
+    def fix_list(match):
+        def fix_link(link):
+            href = unescape(link.group(1))
+            if not href.endswith('/') or href.startswith(('../', '/', '#')) or ':' in href:
+                return link.group(0)
+            # The trailing dot keeps similarly named libraries out of the results.
+            prefix = unquote(href).replace('/', '.')
+            target = '../modules/?q=' + quote(prefix, safe='')
+            return f'href="{escape(target, quote=True)}"'
+
+        return re.sub(r'href="([^"]*)"', fix_link, match.group(0))
+
+    # Limit rewriting to navigation; source-code and sidebar links stay intact.
+    return re.sub(r'<ol\b[^>]*class="breadcrumbs"[^>]*>.*?</ol>',
+                  fix_list, html, flags=re.DOTALL)
+
+
 def fix_html_file(path):
-    """Inject KaTeX into a Verso HTML file."""
+    """Install the syntax theme and KaTeX in a Verso HTML file."""
     with open(path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    modified = False
+    fixed_html = fix_breadcrumbs(html)
+    modified = fixed_html != html
+    html = fixed_html
 
-    # Skip if KaTeX already present
-    if 'katex' in html.lower():
-        return False
-
-    # Add KaTeX CSS+JS before </head>
-    if '</head>' in html:
-        html = html.replace('</head>', KATEX_HEAD + '  </head>')
+    # Add these independently: cached pages may already contain KaTeX.
+    if f'href="{HIGHLIGHT_STYLESHEET}"' not in html and '</head>' in html:
+        html = html.replace('</head>', HIGHLIGHT_HEAD + '  </head>')
         modified = True
 
-    # Add auto-render script before </body>
-    if '</body>' in html:
-        html = html.replace('</body>', KATEX_BODY_SCRIPT + '</body>')
+    # Add KaTeX CSS+JS before </head>
+    if 'katex' not in html.lower() and '</head>' in html:
+        html = html.replace('</head>', KATEX_HEAD + '  </head>')
+        if '</body>' in html:
+            html = html.replace('</body>', KATEX_BODY_SCRIPT + '</body>')
         modified = True
 
     if modified:
         with open(path, 'w', encoding='utf-8') as f:
             f.write(html)
     return modified
+
+
+def install_highlight_stylesheet(literate_dir):
+    """Install the shared Verso theme."""
+    shutil.copyfile(HIGHLIGHT_STYLESHEET_SOURCE,
+                    os.path.join(literate_dir, HIGHLIGHT_STYLESHEET))
 
 
 def create_stubs(literate_dir):
@@ -94,6 +130,36 @@ def create_stubs(literate_dir):
             with open(dm_path, 'w') as f:
                 f.write(fixed)
             print('  Fixed domain-mappers.js (removed export statements)')
+
+
+# `verso-html` writes one page per module but no landing page, so the root of
+# the literate output is a 404. The website has a module index of its own, one
+# directory up from where this tree is deployed (`/src/` next to `/modules/`),
+# and this page sends the visitor there. The link is relative so that it works
+# under any base path.
+ROOT_REDIRECT_HTML = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=../modules/">
+  <link rel="canonical" href="../modules/">
+  <title>Redirecting to the module index</title>
+</head>
+<body>
+  <p>The annotated source pages are listed on the <a href="../modules/">module index</a>.</p>
+</body>
+</html>
+'''
+
+
+def create_root_index(literate_dir):
+    """Write a redirect page at the root unless Verso already produced one."""
+    path = os.path.join(literate_dir, 'index.html')
+    if os.path.exists(path):
+        return
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(ROOT_REDIRECT_HTML)
+    print('  Created root index.html (redirect to /modules/)')
 
 
 def fix_code_css(literate_dir):
@@ -149,6 +215,9 @@ def main():
     # Fix code.css layout rules
     fix_code_css(literate_dir)
 
+    # Verso's <base> points to this root even on deeply nested source pages.
+    install_highlight_stylesheet(literate_dir)
+
     # Fix all HTML files
     count = 0
     for dirpath, _, filenames in os.walk(literate_dir):
@@ -158,7 +227,10 @@ def main():
                 if fix_html_file(path):
                     count += 1
 
-    print(f'  Injected KaTeX into {count} Verso HTML files.')
+    print(f'  Updated rendering assets in {count} Verso HTML files.')
+
+    # Written last so that the redirect page is not treated as a module page.
+    create_root_index(literate_dir)
 
 
 if __name__ == '__main__':

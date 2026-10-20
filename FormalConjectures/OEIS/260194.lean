@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # A GCD-Driven Sequence with Universal Jumps
@@ -26,6 +27,8 @@ an adjacent difference.
 *References:*
 - [OEIS A260194](https://oeis.org/A260194)
 -/
+
+@[expose] public section
 
 namespace OeisA260194
 
@@ -72,9 +75,9 @@ theorem a_9 : a 9 = 12 := by rfl
 /--
 Does every positive integer occur as a difference in this sequence?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∀ d > 0, ∃ n, a (n + 1) = a n + d := by
+    ∀ d > 0, ∃ n, a (n + 1) = a n + d := by
   sorry
 
 end OeisA260194
