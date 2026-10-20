@@ -48,7 +48,9 @@ $\gamma_t(T)\ge c(T[M])+dd(T)/3$, where $M$ is the full ambient
 maximum-degree set and $dd(T)$ counts distinct degree values. The fraction is
 rational and the component count includes isolates.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/4ddd6919482e4413053f24c632297cfff5ad1c5e/Proofs/WOWII379Proof.lean#L174"]
 theorem conjecture379 (T : SimpleGraph V) [DecidableRel T.Adj]
     (hT : T.IsTree) (horder : 1 < Fintype.card V) :
     (componentsOn T (maximumVertices T) : ℚ) + (degreeDiversity T : ℚ) / 3 ≤
@@ -60,7 +62,9 @@ least three, $|D|\ge c(T[M])+\max\{1,(dd(T)-1)/2\}$.
 The rational difference and half are retained, without natural subtraction
 or downward rounding.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/4ddd6919482e4413053f24c632297cfff5ad1c5e/Proofs/WOWII379Proof.lean#L161"]
 theorem conjecture379_strengthened (T : SimpleGraph V) [DecidableRel T.Adj]
     (hT : T.IsTree) (horder : 2 < Fintype.card V) (D : Finset V)
     (hD : T.IsTotalDominating (D : Set V)) :
