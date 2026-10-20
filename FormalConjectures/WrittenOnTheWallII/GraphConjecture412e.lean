@@ -67,7 +67,9 @@ be its pendant set and $H$ the union of all maximum critical independent sets.
 Then $|H|\ge1+\Delta(G[N(N(P))])$ under the source's literal union of
 neighborhoods. The induced empty graph has maximum degree zero.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/773d2ad877c643319608009a72a4c39eb71b5e86/Proofs/WOWII412FamilyProof.lean#L65"]
 theorem conjecture412e [DecidableRel G.Adj] (hG : G.Connected)
     (hb : G.IsBipartite) (horder : 2 < Fintype.card V) :
     1 + inducedMaxDegree G (neighbors G (neighbors G (pendants G))) ≤
@@ -79,7 +81,9 @@ $|H|\ge\alpha(G)\ge\Delta(G[N^\circ(N^\circ(P))])+\max\{2,|P|\}$.
 Critical differences use integer subtraction; the two neighborhood conventions
 agree on independent sets. The empty induced graph has maximum degree zero.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/773d2ad877c643319608009a72a4c39eb71b5e86/Proofs/WOWII412FamilyProof.lean#L73"]
 theorem conjecture412e_external [DecidableRel G.Adj] (hG : G.Connected)
     (hb : G.IsBipartite) (horder : 2 < Fintype.card V) :
     inducedMaxDegree G (externalNeighbors G (externalNeighbors G (pendants G))) +
