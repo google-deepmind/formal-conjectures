@@ -89,10 +89,12 @@ theorem erdos_878.parts.iii_all :
     ¬ ∀ x : ℕ, maxUpTo f x = maxUpTo F x := by
   sorry
 
-/-- Is it true that, for all large $x$, $\max_{n\le x}f(n)=\max_{n\le x}F(n)$? -/
-@[category research open, question, AMS 11]
+/-- Is it true that, for all large $x$, $\max_{n\le x}f(n)=\max_{n\le x}F(n)$?
+
+This is false, as formalized in Lean 4 by Ilia Pauzner using Gemini 4 Argon. -/
+@[category research solved, question, AMS 11, formal_proof using formal_conjectures at "https://github.com/ilpauzner/formal-conjectures/blob/b7742e7d900ca30503c0dd4c940625a6d9cf0a0c/FormalConjectures/ErdosProblems/878.lean#L435"]
 theorem erdos_878.parts.iii_eventually :
-    ∀ᶠ x : ℕ in atTop, maxUpTo f x = maxUpTo F x := by
+    ¬ ∀ᶠ x : ℕ in atTop, maxUpTo f x = maxUpTo F x := by
   sorry
 
 def erdos_878.parts.iv.answer : ℕ → ℝ := by sorry
