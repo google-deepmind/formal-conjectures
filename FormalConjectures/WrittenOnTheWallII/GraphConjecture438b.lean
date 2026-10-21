@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 438b
@@ -31,6 +33,8 @@ true. In fact, the same inequality holds with an arbitrary vertex subset in
 place of `H₂`.
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture438b
 
 open SimpleGraph Finset
@@ -40,9 +44,9 @@ WOWII 438b states that every connected graph of order greater than three
 satisfies
 `alpha₂(G) ≤ alpha(G) + alpha(G[V \ H₂]) + |E(G[H₂])|`.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
 "https://github.com/Kuberwastaken/c5-k4/blob/e62f216625438bc099707e466d2825ab483717a4/lean/GraphConjecture438b.lean"]
-theorem conjecture438b : answer(True) ↔
+theorem conjecture438b :
     ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], G.Connected → 3 < Fintype.card V →
       alphaTwo G ≤ G.indepNum +

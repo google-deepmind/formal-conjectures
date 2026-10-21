@@ -64,9 +64,9 @@ $\ll (\log\log n)^{-1}$.
 Pólya [Po28] showed the upper bound $\lvert\{ z: \lvert p(z)\rvert <1\}\rvert \leq \pi$ always
 holds, and this is achieved only when the $z_i$ are identical.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at
+@[category research solved, question, AMS 30, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos116.lean#L918"]
-theorem erdos_116 : answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∃ C : ℕ, ∀ n : ℕ, 0 < n →
+theorem erdos_116 : ∃ c : ℝ, 0 < c ∧ ∃ C : ℕ, ∀ n : ℕ, 0 < n →
     ∀ z : Fin n → ℂ, (∀ i, ‖z i‖ ≤ 1) →
       ENNReal.ofReal (c / n ^ C) ≤ volume {w : ℂ | ‖∏ i, (w - z i)‖ < 1} := by
   sorry

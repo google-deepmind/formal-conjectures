@@ -63,6 +63,8 @@ theorem minCopies_set_nonempty (ε : ℝ) (hε : 0 < ε) :
     (coveringCopies ε).Nonempty := by
   sorry
 
+def green_41.answer : ℝ → ℕ := sorry
+
 /--
 How many rotated (about the origin) copies of the 'pyjama set'
 $\\{(x, y) \in \mathbb{R}^2 : \text{dist}(x, \mathbb{Z}) \leq \varepsilon\\}$ are needed to cover
@@ -70,8 +72,8 @@ $\mathbb{R}^2$?
 
 That is, determine the minimal number of rotations as a function of $\varepsilon > 0$.
 -/
-@[category research open, AMS 51 52]
-theorem green_41 : ∀ ε > 0, minCopies ε = (answer(sorry) : ℝ → ℕ) ε := by
+@[category research open, question value, AMS 51 52]
+theorem green_41 : ∀ ε > 0, minCopies ε = green_41.answer ε := by
   sorry
 
 /--
@@ -83,10 +85,10 @@ which of them one might hope to save.
 Kenta Kitamura [Ki26] gave a Lean proof that the answer is yes, with $C = 102$; the README of
 [Ki26] explains the argument.
 -/
-@[category research solved, AMS 51 52,
+@[category research solved, AMS 51 52, questions,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/green-41-double-exponential/blob/e2b49ac630b116f49661f5f701a38fac238cda76/lean/Green41DoubleExponentialFC.lean#L4845-L4849"]
-theorem green_41.variants.double_exponential_bound : answer(True) ↔
+theorem green_41.variants.double_exponential_bound :
     ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ Real.exp (Real.exp (ε ^ (-C))) := by
   sorry
 
@@ -105,8 +107,8 @@ theorem green_41.variants.quasi_polynomial_bound : answer(True) ↔
   sorry
 
 /-- Is $\varepsilon^{-C}$ rotations enough? -/
-@[category research open, AMS 51 52]
-theorem green_41.variants.polynomial_bound : answer(sorry) ↔
+@[category research open, question, AMS 51 52]
+theorem green_41.variants.polynomial_bound :
     ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀, (minCopies ε : ℝ) ≤ ε ^ (-C) := by
   sorry
 
