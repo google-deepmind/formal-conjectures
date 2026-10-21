@@ -52,6 +52,7 @@ instance (m n k : ℕ) : Decidable (Admissible m n k) :=
 /-- Least positive admissible multiplier, with value zero if none exists. -/
 noncomputable def aFamily (m n : ℕ) : ℕ := sInf {k | Admissible m n k}
 
+@[category API, AMS 11]
 private theorem a_family_eq (m n k : ℕ) (hk : Admissible m n k)
     (hsmall : ∀ j ∈ Finset.range k, ¬ Admissible m n j) : aFamily m n = k := by
   apply IsLeast.csInf_eq
