@@ -62,25 +62,27 @@ This project follows
    **Longer proofs (i.e. more than 25-50 lines) are not to be included in this
    repository.** Instead, we welcome you to host your proof in your own
    repository and link to it using the `formal_proof` mechanism described
-   below. This does not apply to `FormalConjecturesForMathlib`, where we want
+   below. For formal proofs of research problems, we strongly recommend
+   linking to a [Palomar](https://palomar-registry.org/) entry.
+   This does not apply to `FormalConjecturesForMathlib`, where we want
    all statements to have proofs.
 
-2. **Open issues** describing problems you'd like to see formalised. Such an
+3. **Open issues** describing problems you'd like to see formalised. Such an
    issue should contain links to suitable references, and ideally a precise
    informal statement of the conjecture.
 
-3. **Improve referencing and tagging** of existing problems — for example,
+4. **Improve referencing and tagging** of existing problems — for example,
    adding pointers to references in already existing files, or adding
    additional relevant `AMS` subject attributes to statements.
 
-4. **Mark a problem as solved.** If you become aware that a problem currently
+5. **Mark a problem as solved.** If you become aware that a problem currently
    tagged `@[category research open]` has been solved, update its tag to
    `@[category research solved]` and add a `@[formal_proof using <kind> at
    "<url>"]` attribute pointing to the proof (formal or informal). See
    [The `@[formal_proof]` attribute](#the-formal_proof-attribute) for the
    accepted `<kind>` values.
 
-5. **Fix misformalisations.** PRs fixing incorrect formal statements and issues
+6. **Fix misformalisations.** PRs fixing incorrect formal statements and issues
    flagging problems are especially appreciated.
 
 ## Contribution process
@@ -184,13 +186,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Problem Title
 *Reference:* [source](https://…)
 -/
+
+@[expose] public section
 
 namespace MyProblem
 
@@ -203,6 +208,9 @@ end MyProblem
 
 Replace `YYYY` with the current year, and consider adding yourself to the list
 of authors in the `AUTHORS` file.
+
+Problem files are modules. Without `@[expose] public section`, all declarations
+of a module are private.
 
 ## The `@[category]` attribute
 
@@ -273,32 +281,84 @@ Within a Lean file, you can use the `#AMS` command to list all the possible
 values. To determine the subject associated to a tag in VS Code, you can hover
 over the number.
 
-## The `answer( )` elaborator
+## The `@[question]` attribute
 
-Some open questions are formulated in a way that requires a user-provided
-answer, for instance the
-[Hadwiger–Nelson problem](https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem)
-asks for the minimum number of colours needed to colour the plane such that
-no two points exactly one unit distance apart have the same colour. The
-`answer( )` elaborator allows us to formulate the problem without deciding
-for an answer.
+The `question` tag records that the source asks a question rather than makes
+a claim. A conjecture is a claim: its author expects it to be true. A question
+leaves the answer open. The tag is independent of the `category` attribute,
+but it only belongs on a `research open` or `research solved` problem.
+
+There are two kinds of question, written `@[question]` and `@[question value]`.
+The attribute checks the form against the statement.
+
+- A yes-or-no question ("Is it true that...?", "Does...?", "Are there...?").
+  The Lean statement is the proposition the question asks about. Once the
+  question is answered, the statement is the one that holds: unchanged if the
+  answer is yes, and negated with `¬` if the answer is no. Keep every
+  quantifier inside the statement, so that a negative answer only prepends
+  `¬`. Not a question: a conjecture that is merely phrased as one. "Is every
+  even integer greater than 2 the sum of two primes?" is Goldbach's
+  conjecture, a claim, and is stated without the tag.
+- A question that asks for a value ("What is...?", "How large can...be?"),
+  written `@[question value]`. The unknown is a definition `<theorem>.answer`,
+  see below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
+  question, stated as `R(5, 5) = ramsey_5_5.answer` with
+  `def ramsey_5_5.answer : ℕ := sorry`;
+  "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43` without the tag.
 
 ```lean
-@[category research open]
-theorem HadwigerNelsonProblem :
-    UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+/-- Is every aliquot sequence bounded? Catalan and Dickson conjectured that it is;
+Guy and Selfridge conjectured that it is not. -/
+@[category research open, question, AMS 11]
+theorem catalan_dickson :
+    ∀ n, ∃ B, ∀ k, (fun m => ∑ d ∈ m.properDivisors, d)^[k] n ≤ B := by
+  sorry
+
+def hadwiger_nelson.answer : ℕ := sorry
+
+/-- What is the chromatic number of the plane? -/
+@[category research open, question value, AMS 5]
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nelson.answer := by
   sorry
 ```
 
-### Problems that require answers
+## The unknown of a value question
 
-Note that providing a term inside the `answer( )` elaborator together with a
-proof that the statement is true *does not* by itself mean that the problem
-has been solved. For example, a question of the form "Which natural numbers
-satisfy the predicate $P$?" might be formalised as
+Some questions ask for a value, for instance the
+[Hadwiger–Nelson problem](https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem)
+asks for the minimum number of colours needed to colour the plane such that
+no two points exactly one unit distance apart have the same colour. Such a
+question is tagged `@[question value]`. Its unknown is a plain definition
+named `<theorem>.answer`, declared with `sorry` right before the theorem, and
+the theorem refers to it by that name:
 
 ```lean
-theorem myOpenProblem : {n : ℕ | P n} = answer(sorry) := by
+def hadwiger_nelson.answer : ℕ := sorry
+
+/-- What is the chromatic number of the plane? -/
+@[category research open, question value, AMS 5]
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nelson.answer := by
+  sorry
+```
+
+- Give the definition the type of the unknown. If that type depends on
+  parameters of the theorem, make them parameters of the definition and apply
+  it to them in the statement.
+- Once the question is answered, fill in the definition, for example
+  `def foo.answer : ℕ := 5`, and leave the statement unchanged. The proof then
+  proves the statement for that value.
+
+### Problems that require answers
+
+Note that filling in the definition together with a proof that the statement
+is true *does not* by itself mean that the problem has been solved. For
+example, a question of the form "Which natural numbers satisfy the predicate
+$P$?" might be formalised as
+
+```lean
+def myOpenProblem.answer : Set ℕ := sorry
+
+theorem myOpenProblem : {n : ℕ | P n} = myOpenProblem.answer := by
   sorry
 ```
 
@@ -321,19 +381,20 @@ is outside of the scope of this repository.
 - Every file should be put in the corresponding directory of the repository,
   e.g. a problem sourced from Wikipedia should live in
   `FormalConjectures/Wikipedia`.
-- When a problem is stated as a question in English, the preferred style is
-  to use `answer(sorry)`:
+- When a problem is stated as a yes-or-no question in English, tag it with
+  `@[question]` and state the proposition the question asks about:
 
   ```lean
   /-- English version: "Does P hold?" -/
-  theorem myConjecture : answer(sorry) ↔ P := by
+  @[category research open, question]
+  theorem myConjecture : P := by
     sorry
   ```
 
   This way the informal "Does ...", "Are there ..." or "Is it true that ..."
-  corresponds to the `answer(sorry)` in the formalised statement. If the
-  problem has been solved, `answer(sorry)` should be replaced by
-  `answer(True)` or `answer(False)` accordingly.
+  is recorded by the tag, and the statement stays a plain proposition. Once
+  the question is answered, keep the tag and state what holds: `P` if the
+  answer is yes, `¬ P` if the answer is no.
 
   If the problem is not stated as a question, the following style is preferred:
 

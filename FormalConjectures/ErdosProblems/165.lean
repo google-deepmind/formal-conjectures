@@ -51,12 +51,14 @@ namespace Erdos165
 
 local notation "R(" k ", " l ")" => SimpleGraph.classicalRamsey k l
 
+def erdos_165.answer : ℕ → ℝ := sorry
+
 /--
 Give an asymptotic formula for $R(3,k)$.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_165 :
-    (fun k : ℕ ↦ (R(3, k) : ℝ)) ~[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun k : ℕ ↦ (R(3, k) : ℝ)) ~[atTop] erdos_165.answer := by
   sorry
 
 /--
