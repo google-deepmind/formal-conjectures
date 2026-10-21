@@ -36,22 +36,6 @@ open Filter
 
 namespace Erdos611
 
-/--
-`IsCliqueTransversal G S` means that the vertex set `S` meets every maximal clique of `G`.
-
-A maximal clique is a `Finset` of vertices that is a clique and is maximal under inclusion among
-cliques.
--/
-def IsCliqueTransversal {V : Type*} (G : SimpleGraph V) (S : Finset V) : Prop :=
-  ∀ C : Finset V, Maximal (fun T : Finset V ↦ G.IsClique (T : Set V)) C → ∃ v ∈ C, v ∈ S
-
-/--
-`cliqueTransversalNum G` is the clique transversal number $\tau(G)$: the least number of vertices
-that include at least one vertex from each maximal clique of `G`.
--/
-noncomputable def cliqueTransversalNum {V : Type*} (G : SimpleGraph V) : ℕ :=
-  sInf {k | ∃ S : Finset V, S.card = k ∧ IsCliqueTransversal G S}
-
 /-- `AllMaximalCliquesAtLeast G k` means that every maximal clique of `G` has at least `k`
 vertices. -/
 def AllMaximalCliquesAtLeast {V : Type} (G : SimpleGraph V) (k : ℝ) : Prop :=
@@ -63,7 +47,7 @@ maximal cliques all have at least $k$ vertices satisfies $\tau(G) < (1 - c)n$.
 -/
 noncomputable def cliqueThreshold (c : ℝ) (n : ℕ) : ℕ :=
   sInf {k : ℕ | ∀ G : SimpleGraph (Fin n), AllMaximalCliquesAtLeast G (k : ℝ) →
-    (cliqueTransversalNum G : ℝ) < (1 - c) * (n : ℝ)}
+    (G.cliqueTransversalNumber : ℝ) < (1 - c) * (n : ℝ)}
 
 /--
 For a graph $G$ let $\tau(G)$ denote the minimal number of vertices that include at least one
@@ -71,12 +55,15 @@ from each maximal clique of $G$. Is it true that if all maximal cliques in $G$ h
 vertices then $\tau(G) = o_c(n)$?
 
 Here $n$ is the number of vertices, and $o_c(n)$ is uniform over all such graphs on $n$ vertices.
+$\tau(G)$ is `SimpleGraph.cliqueTransversalNumber`, which (as in Erdős Problem 151) ignores
+maximal cliques on one vertex; this makes no difference here, since for large $n$ every maximal
+clique has at least $cn \geq 2$ vertices.
 -/
 @[category research open, question, AMS 5]
 theorem erdos_611.parts.i :
     ∀ c > (0 : ℝ), ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
       AllMaximalCliquesAtLeast G (c * (n : ℝ)) →
-        (cliqueTransversalNum G : ℝ) ≤ ε * (n : ℝ) := by
+        (G.cliqueTransversalNumber : ℝ) ≤ ε * (n : ℝ) := by
   sorry
 
 def erdos_611.parts.ii.answer : ℝ → ℕ → ℝ := sorry
@@ -103,7 +90,7 @@ least $n + 3 - 2\sqrt{n}$ vertices then $\tau(G) = 1$ (as reported on erdosprobl
 theorem erdos_611.variants.bollobas_erdos :
     ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
       AllMaximalCliquesAtLeast G ((n : ℝ) + 3 - 2 * Real.sqrt (n : ℝ)) →
-        cliqueTransversalNum G = 1 := by
+        G.cliqueTransversalNumber = 1 := by
   sorry
 
 /--
@@ -115,7 +102,7 @@ have at least $n + 2 - 2\sqrt{n} = m^2 + 2 - 2m$ vertices and with $\tau(G) \geq
 theorem erdos_611.variants.bollobas_erdos_sharp :
     ∀ m : ℕ, 2 ≤ m → ∃ G : SimpleGraph (Fin (m ^ 2)),
       AllMaximalCliquesAtLeast G ((m : ℝ) ^ 2 + 2 - 2 * (m : ℝ)) ∧
-        2 ≤ cliqueTransversalNum G := by
+        2 ≤ G.cliqueTransversalNumber := by
   sorry
 
 end Erdos611

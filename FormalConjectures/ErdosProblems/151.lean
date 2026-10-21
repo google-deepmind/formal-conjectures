@@ -36,19 +36,6 @@ open SimpleGraph
 
 variable {V : Type*}
 
-/-- `s` is a maximal clique of `G` with at least two vertices. -/
-def IsBigMaximalClique (G : SimpleGraph V) (s : Finset V) : Prop :=
-  Maximal (fun t : Finset V ↦ G.IsClique (t : Set V)) s ∧ 2 ≤ s.card
-
-/-- `T` meets every maximal clique of `G` with at least two vertices. -/
-def IsCliqueTransversal (G : SimpleGraph V) (T : Finset V) : Prop :=
-  ∀ s, IsBigMaximalClique G s → ∃ v ∈ s, v ∈ T
-
-/-- The clique transversal number $\tau(G)$: the minimal number of vertices that meet every
-maximal clique of `G` with at least two vertices. -/
-noncomputable def cliqueTransversalNumber (G : SimpleGraph V) : ℕ :=
-  sInf {k | ∃ T : Finset V, IsCliqueTransversal G T ∧ T.card = k}
-
 /-- $H(n)$: the largest `k` such that every triangle-free graph on `n` vertices contains an
 independent set on `k` vertices. -/
 noncomputable def H (n : ℕ) : ℕ :=
