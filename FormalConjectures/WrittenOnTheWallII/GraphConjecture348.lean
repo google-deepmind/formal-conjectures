@@ -46,8 +46,12 @@ def externalDegreeTwoNeighbors {V : Type} [Fintype V] [DecidableEq V]
 WOWII 348 asks whether every tree of order greater than two satisfies
 $3\gamma_t(T)\geq2|N_T(D_2(T))\setminus D_2(T)|$.
 Here $N_T$ denotes the open neighborhood and $D_2(T)$ the ambient degree-two vertices.
+The external Lean proof establishes $3|D|\geq2|N_T(D_2(T))\setminus D_2(T)|+2$
+for every total dominating set $D$.
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/432062b98c51996c0d55eb3785ee1f4c3290e50d/Proofs/Potential348.lean#L417"]
 theorem conjecture348 :
     ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], G.IsTree → 2 < Fintype.card V →
