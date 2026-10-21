@@ -99,7 +99,21 @@ theorem H_eq_three_iff (n : ℕ) : H n = 3 ↔ Nat.Coprime (2 ^ n - 1) (3 ^ n - 
 theorem H_one_to_ten :
     H 1 = 3 ∧ H 2 = 3 ∧ H 3 = 3 ∧ H 4 = 6 ∧ H 5 = 3 ∧ H 6 = 18 ∧ H 7 = 3 ∧ H 8 = 6 ∧
       H 9 = 3 ∧ H 10 = 12 := by
-  sorry
+  have key : ∀ n m : ℕ, (∃ k, 2 ≤ k ∧ k < m ∧ Nat.Coprime (k ^ n - 1) (m ^ n - 1)) →
+      (∀ l < m, ∀ k < l, 2 ≤ k → ¬ Nat.Coprime (k ^ n - 1) (l ^ n - 1)) → H n = m := by
+    intro n m hm hlt
+    unfold H
+    refine le_antisymm (Nat.sInf_le hm) (le_csInf ⟨m, hm⟩ ?_)
+    rintro l ⟨k, hk2, hkl, hk⟩
+    by_contra! h
+    exact hlt l h k hkl hk2 hk
+  have three (n : ℕ) (h : Nat.Coprime (2 ^ n - 1) (3 ^ n - 1)) : H n = 3 :=
+    (H_eq_three_iff n).2 h
+  exact ⟨three 1 (by decide), three 2 (by decide), three 3 (by decide),
+    key 4 6 ⟨5, by decide⟩ (by decide +kernel), three 5 (by decide),
+    key 6 18 ⟨14, by decide⟩ (by decide +kernel), three 7 (by decide),
+    key 8 6 ⟨5, by decide⟩ (by decide +kernel), three 9 (by decide),
+    key 10 12 ⟨11, by decide⟩ (by decide +kernel)⟩
 
 /--
 Let $H(n)$ be the smallest integer $l$ such that there exists $k < l$ with $(k^n-1, l^n-1) = 1$.
