@@ -69,6 +69,7 @@ private instance pathFourDecidable : DecidableRel (pathGraph 4).Adj :=
   fun u v => decidable_of_iff (u.val + 1 = v.val ∨ v.val + 1 = u.val)
     pathGraph_adj.symm
 
+@[category test, AMS 5]
 private theorem path_four_tree : (pathGraph 4).IsTree := by
   apply SimpleGraph.isTree_iff_connected_and_card.mpr
   refine ⟨pathGraph_connected 3, ?_⟩
@@ -77,6 +78,7 @@ private theorem path_four_tree : (pathGraph 4).IsTree := by
     Nat.card_eq_fintype_card]
   decide
 
+@[category test, AMS 5]
 private theorem path_four_total_upper : (pathGraph 4).totalDominationNumber ≤ 2 := by
   apply csInf_le (OrderBot.bddBelow _)
   refine ⟨({1, 2} : Finset (Fin 4)), ?_⟩
@@ -90,7 +92,10 @@ vertices, two degree-two vertices, and a total dominating set of size two. -/
 @[category research solved, question, AMS 5]
 theorem not_tied_mode_statement : ¬ tiedModeStatement := by
   intro h
-  have hm : TwoIsMode (pathGraph 4) := by decide +kernel
+  have hm : TwoIsMode (pathGraph 4) := by
+    change ∀ v : Fin 4, degreeCount (pathGraph 4) ((pathGraph 4).degree v) ≤
+      degreeCount (pathGraph 4) 2
+    decide +kernel
   have hd : distinctDegreeCount (pathGraph 4) = 2 := by decide +kernel
   have hb := h (Fin 4) (pathGraph 4) path_four_tree (by decide +kernel) hm
   rw [hd] at hb
@@ -102,8 +107,8 @@ The unique-mode interpretation of WOWII 367: a tree on more than two vertices wh
 unique most frequent degree is two has $3\gamma_t(T)\geq4\operatorname{dd}(T)$.
 The source does not specify whether ties are admitted.
 -/
-@[category research open, AMS 5]
-theorem unique_mode : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem unique_mode :
     ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], G.IsTree → 2 < Fintype.card V → TwoIsUniqueMode G →
         4 * distinctDegreeCount G ≤ 3 * G.totalDominationNumber := by
