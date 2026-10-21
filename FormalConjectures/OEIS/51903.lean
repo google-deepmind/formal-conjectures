@@ -97,7 +97,7 @@ prime; $3511$ works because $\operatorname{ord}_{3511^2}(2) = 1755$ is odd and $
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/anshM123/OEIS-A051903/blob/c0104e7a9cc2d76d86c3a277c372f91a9553a0f6/lean/DMSolutions/OEIS_A051903/Solution.lean#L27-L30"]
 theorem conjecture3 :
-    answer(True) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ 2 ^ n ≡ 2 ^ (a n) [MOD n] := by
+    ∃ n : ℕ, Odd n ∧ 1 < a n ∧ 2 ^ n ≡ 2 ^ (a n) [MOD n] := by
   sorry
 
 end OeisA51903
