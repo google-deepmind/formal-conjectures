@@ -31,6 +31,7 @@ public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.Algebra.Ring.PythagorasNumber
+public import FormalConjecturesForMathlib.Algebra.WeylAlgebra
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.MinimalDiscriminant
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Regulator
@@ -75,6 +76,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Chordal
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.List
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity

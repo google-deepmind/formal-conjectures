@@ -144,7 +144,8 @@ There exists a bounded linear operator `T` on the l1 space `(lp (fun (_ : ℕ) =
 non-trivial closed `T`-invariant subspace [Read 1985](https://doi.org/10.1112/blms/17.4.305), see
 also the first counterexample by Enflo [Enflo 1987](https://doi.org/10.1007%2FBF02392260), submitted
 in 1981. -/
-@[category research solved, AMS 47]
+@[category research solved, AMS 47, formal_proof using lean4 at
+"https://github.com/zblore/fc-read-l1/blob/57ceaa0ecdea86e90d82c1fd241c17e3bdb93e2d/ReadL1/Main.lean#L24-L27"]
 theorem Invariant_subspace_problem_l1 :
     ∃ (T : (lp (fun (_ : ℕ) => ℂ) 1) →L[ℂ] (lp (fun (_ : ℕ) => ℂ) 1)),
     IsEmpty (ClosedInvariantSubspace T) := by
