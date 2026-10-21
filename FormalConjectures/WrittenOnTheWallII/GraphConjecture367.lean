@@ -105,9 +105,12 @@ theorem not_tied_mode_statement : ¬ tiedModeStatement := by
 /--
 The unique-mode interpretation of WOWII 367: a tree on more than two vertices whose
 unique most frequent degree is two has $3\gamma_t(T)\geq4\operatorname{dd}(T)$.
-The source does not specify whether ties are admitted.
+The source does not specify whether ties are admitted. A complete external Lean proof
+establishes the stronger statement under $n_2>n_1$ for arbitrary finite trees.
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/9f6a02f91a022c93d676a9be0db676e693c46300/Proofs/TreeBounds.lean#L294"]
 theorem unique_mode :
     ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], G.IsTree → 2 < Fintype.card V → TwoIsUniqueMode G →
