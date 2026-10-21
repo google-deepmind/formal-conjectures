@@ -70,17 +70,16 @@ theorem isNormalInBase_iff_isEquidistributedModuloOne (b : ℕ) (hb : 2 ≤ b) (
   sorry
 
 /-- Borel's normality conjecture [Bor50]: every irrational algebraic real is absolutely normal. -/
-@[category research open, AMS 11 12 41]
+@[category research open, question, AMS 11 12 41]
 theorem irrational_algebraic_absolutely_normal :
-    answer(sorry) ↔ ∀ x : ℝ, IsIrrationalAlgebraic x → IsAbsolutelyNormal x := by
+    ∀ x : ℝ, IsIrrationalAlgebraic x → IsAbsolutelyNormal x := by
   sorry
 
 /-- The weaker normality conjecture: every irrational algebraic real is normal in at least one
 integer base `b ≥ 2`. -/
-@[category research open, AMS 11 12 41]
+@[category research open, question, AMS 11 12 41]
 theorem irrational_algebraic_normal_in_some_base :
-    answer(sorry) ↔
-      ∀ x : ℝ, IsIrrationalAlgebraic x → ∃ b : ℕ, 2 ≤ b ∧ IsNormalInBase b x := by
+    ∀ x : ℝ, IsIrrationalAlgebraic x → ∃ b : ℕ, 2 ≤ b ∧ IsNormalInBase b x := by
   sorry
 
 /-- Absolute normality implies normality in at least one base. -/

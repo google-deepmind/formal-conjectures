@@ -28,8 +28,10 @@ the union of at most $n + 1$ sets of diameter strictly less than 1?
 
 Erdős [Er44] suspected this is false for sufficiently large $n$. Confirmed
 by Kahn–Kalai [KK93], who disproved the conjecture for $n \geq 2015$.
-The current best is $n \geq 63$ (Grinsztajn, 2026); the smallest refereed
-counterexample is $n = 64$ (Jenrich–Brouwer, 2014).
+Grinsztajn (2026) gave a counterexample for $n = 63$; the smallest refereed
+counterexample was $n = 64$ (Jenrich–Brouwer, 2014). In September 2026 an
+internal OpenAI model gave a counterexample for $n = 9$ [OAI26], with a
+formal Lean proof; see `Borsuk.borsuk_conjecture.not_nine`.
 
 The conjecture is true for $n \leq 3$ (Eggleston [Eg55] for $n = 3$).
 
@@ -42,6 +44,9 @@ The conjecture is true for $n \leq 3$ (Eggleston [Eg55] for $n = 3$).
   smaller diameter*. J. London Math. Soc. 30, 11–24.
 - [KK93] Kahn, J., Kalai, G. (1993). *A counterexample to Borsuk's conjecture*.
   Bull. Amer. Math. Soc. 29, 60–62.
+- [OAI26] OpenAI (2026). *A nine-dimensional counterexample to Borsuk's covering assertion*.
+  OpenAI Math Release preprint.
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-nine-dimensional-counterexample-to-Borsuks-covering-assertion-September-23-2026/paper.pdf
 
 This file points to the canonical formalization in
 `FormalConjectures.Wikipedia.BorsukConjecture`.
@@ -64,8 +69,8 @@ $S \subseteq \mathbb{R}^n$ with at least two points that cannot be
 covered by $n + 1$ subsets each of strictly smaller diameter.
 
 Erdős [Er44] suspected this. Disproved by Kahn–Kalai [KK93] for
-$n \geq 2015$. Currently known to be false for $n \geq 63$.
-A formal proof was formalised by Boris Alexeev using Aristotle. -/
+$n \geq 2015$. Currently known to be false for $n = 9$ [OAI26] and for
+$n \geq 63$. A formal proof was formalised by Boris Alexeev using Aristotle. -/
 @[category research solved, AMS 52,
   formal_proof using lean4 at
     "https://github.com/plby/lean-proofs/blob/96cd54930d844e3655e6bb89b96b65516397dae9/src/v4.24.0/ErdosProblems/Erdos505.lean#L1153"]
