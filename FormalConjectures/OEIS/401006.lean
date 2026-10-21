@@ -23,10 +23,12 @@ public import FormalConjecturesUtil
 
 For a composite positive integer $n$, let $p$ be its largest prime factor. The sequence value
 $a(n)$ concatenates the decimal representations of $n/p$ and $p$, in that order. It fixes primes
-and one, and is extended here by $a(0)=0$.
+and one, and is extended here by $a(0)=0$. OEIS A397122 records the prime reached by iterating
+this map from each starting value, or $-1$ if no prime is reached.
 
 *References:*
 - [OEIS A401006](https://oeis.org/A401006)
+- [OEIS A397122](https://oeis.org/A397122)
 -/
 
 @[expose] public section
