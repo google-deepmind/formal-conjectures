@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 
 /-!
 # Vizing's conjecture (1968)

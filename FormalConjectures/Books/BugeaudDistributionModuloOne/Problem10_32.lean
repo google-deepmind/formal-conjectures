@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.NumberTheory.AutomaticNumber
+public import FormalConjecturesForMathlib.NumberTheory.MultiplicativelyIndependent
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Automatic Expansions in Two Bases

@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 
 /-!
 # Independent Domination of Regular Graphs, Conjecture 1.6

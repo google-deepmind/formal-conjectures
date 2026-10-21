@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.NumberTheory.DirichletCharacter.Basic
 
 /-!
 # Riemann Hypothesis and its generalizations

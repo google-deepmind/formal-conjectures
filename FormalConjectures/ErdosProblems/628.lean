@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
 
 /-!
 # Erdős Problem 628

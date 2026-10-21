@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
+public import FormalConjecturesForMathlib.Geometry.«2d»
+public import FormalConjecturesForMathlib.Geometry.«3d»
 
 /-!
 # VCₙ dimension of convex sets in ℝⁿ, ℝⁿ⁺¹, ℝⁿ⁺²

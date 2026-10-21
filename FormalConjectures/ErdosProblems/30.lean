@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Algebra.Group.Pointwise.Finset.Basic
+public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Data.Finset.Prod
 
 /-!
 # Erdős Problem 30

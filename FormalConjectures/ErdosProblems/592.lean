@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 
 /-!
 # Erdős Problem 592

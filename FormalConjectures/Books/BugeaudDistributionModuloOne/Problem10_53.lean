@@ -17,6 +17,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Real.NearestInt
+public import FormalConjecturesForMathlib.NumberTheory.ExpansionEntropy
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Simultaneously Small Entropies

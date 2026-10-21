@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Confined Powers of Non-Pisot Numbers
