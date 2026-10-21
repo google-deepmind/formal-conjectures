@@ -38,20 +38,6 @@ def factorDifferenceSet (n : ℕ) : Set ℕ :=
   {d | ∃ a b : ℕ, n = a * b ∧ (d : ℤ) = |(a : ℤ) - b|}
 
 /--
-For $n \geq 1$ the factor difference set is finite: any factorisation $n = ab$ has
-$a, b \leq n$, so every element of $D(n)$ is at most $n$.
--/
-@[category API, AMS 11]
-theorem factorDifferenceSet_finite {n : ℕ} (hn : 1 ≤ n) :
-    (factorDifferenceSet n).Finite := by
-  refine (Set.finite_Iic n).subset ?_
-  rintro d ⟨a, b, hab, hd⟩
-  have ha : a ≤ n := Nat.le_of_dvd (by omega) ⟨b, hab⟩
-  have hb : b ≤ n := Nat.le_of_dvd (by omega) ⟨a, hab.trans (Nat.mul_comm a b)⟩
-  have hd' : (d : ℤ) ≤ n := by rw [hd]; exact abs_le.mpr ⟨by omega, by omega⟩
-  exact Set.mem_Iic.mpr (by exact_mod_cast hd')
-
-/--
 Is it true that, for every $k \geq 1$, there exist integers $N_1 < \dots < N_k$ such that
 $|\cap_i D(N_i)| \geq k$?
 -/
