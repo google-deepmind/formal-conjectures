@@ -61,13 +61,38 @@ is nonempty. For $n = 1$, take $k = 2$, $l = 3$. -/
 @[category API, AMS 11]
 theorem H_spec {n : ℕ} (hn : 1 ≤ n) :
     ∃ k : ℕ, 2 ≤ k ∧ k < H n ∧ Nat.Coprime (k ^ n - 1) (H n ^ n - 1) := by
-  sorry
+  have hne : {l : ℕ | ∃ k : ℕ, 2 ≤ k ∧ k < l ∧ Nat.Coprime (k ^ n - 1) (l ^ n - 1)}.Nonempty := by
+    obtain rfl | hn2 := hn.eq_or_lt
+    · exact ⟨3, 2, le_rfl, by norm_num, by decide⟩
+    · have h4 : 4 ≤ 2 ^ n :=
+        calc 4 = 2 ^ 2 := by norm_num
+          _ ≤ 2 ^ n := Nat.pow_le_pow_right (by norm_num) hn2
+      refine ⟨2 ^ n - 1, 2, le_rfl, by omega, ?_⟩
+      have h1 : 1 ≤ (2 ^ n - 1) ^ n := Nat.one_le_pow _ _ (by omega)
+      exact Nat.Coprime.coprime_dvd_left (dvd_pow_self _ (by omega))
+        ((Nat.coprime_self_sub_right h1).2 (Nat.coprime_one_right _))
+  exact Nat.sInf_mem hne
 
 /-- $H(n) = 3$ if and only if $(2^n-1, 3^n-1) = 1$. This holds for every $n$, including
 $n = 0$, where both sides are false. -/
 @[category API, AMS 11]
 theorem H_eq_three_iff (n : ℕ) : H n = 3 ↔ Nat.Coprime (2 ^ n - 1) (3 ^ n - 1) := by
-  sorry
+  constructor
+  · intro h
+    have hne : {l : ℕ | ∃ k : ℕ, 2 ≤ k ∧ k < l ∧ Nat.Coprime (k ^ n - 1) (l ^ n - 1)}.Nonempty :=
+      Nat.nonempty_of_pos_sInf (by unfold H at h; omega)
+    have hmem : H n ∈ {l : ℕ | ∃ k : ℕ, 2 ≤ k ∧ k < l ∧ Nat.Coprime (k ^ n - 1) (l ^ n - 1)} :=
+      Nat.sInf_mem hne
+    rw [h] at hmem
+    obtain ⟨k, hk2, hk3, hk⟩ := hmem
+    obtain rfl : k = 2 := by omega
+    exact hk
+  · intro h
+    unfold H
+    refine le_antisymm (Nat.sInf_le ⟨2, le_rfl, by norm_num, h⟩)
+      (le_csInf ⟨3, 2, le_rfl, by norm_num, h⟩ ?_)
+    rintro l ⟨k, hk2, hkl, -⟩
+    omega
 
 /-- The first values of $H(n)$, for $1 \leq n \leq 10$, are $3, 3, 3, 6, 3, 18, 3, 6, 3, 12$. -/
 @[category test, AMS 11]
