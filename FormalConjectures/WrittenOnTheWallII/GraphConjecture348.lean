@@ -47,8 +47,8 @@ WOWII 348 asks whether every tree of order greater than two satisfies
 $3\gamma_t(T)\geq2|N_T(D_2(T))\setminus D_2(T)|$.
 Here $N_T$ denotes the open neighborhood and $D_2(T)$ the ambient degree-two vertices.
 -/
-@[category research open, AMS 5]
-theorem conjecture348 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem conjecture348 :
     ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], G.IsTree → 2 < Fintype.card V →
         2 * (externalDegreeTwoNeighbors G).card ≤ 3 * G.totalDominationNumber := by
