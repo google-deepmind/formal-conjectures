@@ -62,25 +62,27 @@ This project follows
    **Longer proofs (i.e. more than 25-50 lines) are not to be included in this
    repository.** Instead, we welcome you to host your proof in your own
    repository and link to it using the `formal_proof` mechanism described
-   below. This does not apply to `FormalConjecturesForMathlib`, where we want
+   below. For formal proofs of research problems, we strongly recommend
+   linking to a [Palomar](https://palomar-registry.org/) entry.
+   This does not apply to `FormalConjecturesForMathlib`, where we want
    all statements to have proofs.
 
-2. **Open issues** describing problems you'd like to see formalised. Such an
+3. **Open issues** describing problems you'd like to see formalised. Such an
    issue should contain links to suitable references, and ideally a precise
    informal statement of the conjecture.
 
-3. **Improve referencing and tagging** of existing problems — for example,
+4. **Improve referencing and tagging** of existing problems — for example,
    adding pointers to references in already existing files, or adding
    additional relevant `AMS` subject attributes to statements.
 
-4. **Mark a problem as solved.** If you become aware that a problem currently
+5. **Mark a problem as solved.** If you become aware that a problem currently
    tagged `@[category research open]` has been solved, update its tag to
    `@[category research solved]` and add a `@[formal_proof using <kind> at
    "<url>"]` attribute pointing to the proof (formal or informal). See
    [The `@[formal_proof]` attribute](#the-formal_proof-attribute) for the
    accepted `<kind>` values.
 
-5. **Fix misformalisations.** PRs fixing incorrect formal statements and issues
+6. **Fix misformalisations.** PRs fixing incorrect formal statements and issues
    flagging problems are especially appreciated.
 
 ## Contribution process
