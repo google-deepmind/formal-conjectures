@@ -44,12 +44,8 @@ theorem erdos_243 (a : ℕ → ℕ) (ha₀ : StrictMono a)
       ∀ᶠ n in atTop, a n = a (n - 1) ^ 2 - a (n - 1) + 1 := by
   sorry
 
-open scoped BigOperators
-
-namespace erdos_243.variants
-
 /-- The prefix product of a positive integer sequence. -/
-noncomputable def prefixProduct (a : ℕ → ℕ) (n : ℕ) : ℕ :=
+def prefixProduct (a : ℕ → ℕ) (n : ℕ) : ℕ :=
   ∏ j ∈ Finset.range n, a j
 
 /-- The increment of the prefix-product ratio, expressed using consecutive terms. -/
@@ -58,7 +54,7 @@ noncomputable def productDefect (a : ℕ → ℕ) (n : ℕ) : ℝ :=
     ((a n : ℝ) ^ 2 / (a (n + 1) : ℝ) - 1)
 
 /-- The truncated base-two iterated logarithm. -/
-noncomputable def recordLogLog (x : ℝ) : ℝ :=
+noncomputable def logLogTwo (x : ℝ) : ℝ :=
   Real.log (Real.log (max 4 x) / Real.log 2) / Real.log 2
 
 /--
@@ -81,8 +77,8 @@ uses an LCM prefactor rather than this prefix-product hypothesis.
 This sufficient condition leaves the unrestricted parent open.
 -/
 @[category research solved, AMS 11 40, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos-lean/blob/d1fe386ff1d6f6ca49bbad2e8a309fea2b58cb85/verification/FC243DualCurrent/FC6523Solutions.lean#L24-L41"]
-theorem slow_growth_product_defect
+  "https://github.com/wcook04/plectis-erdos-lean/blob/76c3a0cb0934068c76a9ebb5a4fc3ac045e3692f/verification/FC243DualCurrent/FC6523Solutions.lean#L22-L39"]
+theorem erdos_243.variants.slow_growth_product_defect
     (a : ℕ → ℕ) (ha : StrictMono a) (hpos : ∀ n, 0 < a n)
     (p : ℤ) (q : ℕ) (hq : 0 < q)
     (hs : HasSum (fun n ↦ 1 / (a n : ℝ)) ((p : ℝ) / (q : ℝ)))
@@ -91,12 +87,10 @@ theorem slow_growth_product_defect
     (δ : ℝ) (hδ : 0 < δ)
     (hslow : ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
       productDefect a n ≤ (1 - δ) / (q : ℝ) *
-        recordLogLog ((prefixProduct a n : ℝ) / (a n : ℝ))) :
+        logLogTwo ((prefixProduct a n : ℝ) / (a n : ℝ))) :
     ∃ N, ∀ n, N ≤ n →
       (a (n + 1) : ℤ) = (a n : ℤ) ^ 2 - (a n : ℤ) + 1 := by
   sorry
-
-end erdos_243.variants
 
 /--
 Let $(a_n)_{n\geq 0}$ be a strictly increasing sequence of positive integers. If
@@ -113,7 +107,7 @@ shifting $n$ would change its lower-order terms.
 This variant does not settle the unrestricted Erdős problem above.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/wcook04/plectis-erdos-lean/blob/d1fe386ff1d6f6ca49bbad2e8a309fea2b58cb85/verification/FC243DualCurrent/FC6523Solutions.lean#L45-L50"]
+  "https://github.com/wcook04/plectis-erdos-lean/blob/76c3a0cb0934068c76a9ebb5a4fc3ac045e3692f/verification/FC243DualCurrent/FC6523Solutions.lean#L41-L46"]
 theorem erdos_243.variants.cubic_rate (a : ℕ → ℕ)
     (ha : StrictMono a) (hpos : ∀ n, 0 < a n)
     (hrate : Tendsto (fun n : ℕ => (n : ℝ) ^ 3 *
