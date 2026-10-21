@@ -34,8 +34,6 @@ namespace Erdos151
 
 open SimpleGraph
 
-variable {V : Type*}
-
 /-- $H(n)$: the largest `k` such that every triangle-free graph on `n` vertices contains an
 independent set on `k` vertices. -/
 noncomputable def H (n : ℕ) : ℕ :=

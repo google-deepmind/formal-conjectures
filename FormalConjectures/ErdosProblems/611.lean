@@ -44,6 +44,9 @@ def AllMaximalCliquesAtLeast {V : Type} (G : SimpleGraph V) (k : ℝ) : Prop :=
 /--
 `cliqueThreshold c n` is $k_c(n)$: the least $k$ such that every graph on $n$ vertices whose
 maximal cliques all have at least $k$ vertices satisfies $\tau(G) < (1 - c)n$.
+
+For large $n$ only $k \geq 2$ matters, since some triangle-free graph has $\tau(G) \geq (1 - c)n$;
+so ignoring maximal cliques on one vertex does not change $k_c(n)$ asymptotically.
 -/
 noncomputable def cliqueThreshold (c : ℝ) (n : ℕ) : ℕ :=
   sInf {k : ℕ | ∀ G : SimpleGraph (Fin n), AllMaximalCliquesAtLeast G (k : ℝ) →
