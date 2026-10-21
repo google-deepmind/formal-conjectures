@@ -125,6 +125,38 @@ This is classical; see OEIS A001438.
 @[category textbook, AMS 5]
 theorem erdos_724.variants.le_sub_one :
     ∀ n : ℕ, 2 ≤ n → maxMOLS n ≤ n - 1 := by
-  sorry
+  intro n hn
+  apply csSup_le'
+  rintro k ⟨S, rfl, hS⟩
+  let i0 : Fin n := ⟨0, by omega⟩
+  let i1 : Fin n := ⟨1, by omega⟩
+  have h01 : i0 ≠ i1 := by simp [i0, i1, Fin.ext_iff]
+  -- `c L` is the column of row `i0` that holds the symbol of cell `(i1, i0)`.
+  let c : LatinSquare n → Fin n := fun L ↦
+    (Equiv.ofBijective (L.mat i0) (Finite.injective_iff_bijective.1 (L.row_injective i0))).symm
+      (L.mat i1 i0)
+  have hc : ∀ L : LatinSquare n, L.mat i0 (c L) = L.mat i1 i0 := fun L ↦
+    Equiv.ofBijective_apply_symm_apply _ _ _
+  -- `c L ≠ i0`, since column `i0` has no repeated symbol.
+  have hc0 : ∀ L : LatinSquare n, c L ≠ i0 := by
+    intro L h
+    have h' := hc L
+    rw [h] at h'
+    exact h01 (L.col_injective i0 h')
+  -- Orthogonal squares have different `c`: otherwise their pairs agree at `(i0, c)` and `(i1, i0)`.
+  have hinj : Set.InjOn c S := by
+    intro L hL M hM hLM
+    by_contra hne
+    have horth : IsOrthogonal L M := hS hL hM hne
+    have := @horth (i0, c L) (i1, i0)
+      (show (L.mat i0 (c L), M.mat i0 (c L)) = (L.mat i1 i0, M.mat i1 i0) by
+        rw [hc L, hLM, hc M])
+    exact h01 (congrArg Prod.fst this)
+  calc #S = #(S.image c) := (Finset.card_image_of_injOn hinj).symm
+    _ ≤ #((Finset.univ : Finset (Fin n)).erase i0) := Finset.card_le_card fun x hx ↦ by
+        obtain ⟨L, -, rfl⟩ := Finset.mem_image.1 hx
+        exact Finset.mem_erase.2 ⟨hc0 L, Finset.mem_univ _⟩
+    _ = n - 1 := by rw [Finset.card_erase_of_mem (Finset.mem_univ _), Finset.card_univ,
+        Fintype.card_fin]
 
 end Erdos724
