@@ -82,7 +82,7 @@ $q^{E-1} \mid n$, we get $q^{E-1} \mid E$, which is impossible for $q \ge 3$.
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/anshM123/OEIS-A051903/blob/c0104e7a9cc2d76d86c3a277c372f91a9553a0f6/lean/DMSolutions/OEIS_A051903/Solution.lean#L21-L24"]
 theorem conjecture2 :
-    answer(False) ↔ ∃ n : ℕ, Odd n ∧ 1 < a n ∧ ∀ b : ℕ, b ^ n ≡ b ^ (a n) [MOD n] := by
+    ∃ n : ℕ, Odd n ∧ 1 < a n ∧ ∀ b : ℕ, b ^ n ≡ b ^ (a n) [MOD n] := by
   sorry
 
 /--
