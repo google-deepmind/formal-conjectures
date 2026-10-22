@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 96
 
 *Reference:* [erdosproblems.com/96](https://www.erdosproblems.com/96)
 -/
+
+@[expose] public section
 
 open Filter
 open EuclideanGeometry
@@ -58,9 +61,9 @@ noncomputable def maxConvexUnitDistances (n : ℕ) : ℕ :=
 If $n$ points in $\mathbb{R}^2$ form a convex polygon then there are $O(n)$ many pairs which are
 distance $1$ apart.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_96 :
-    answer(sorry) ↔ (fun n => (maxConvexUnitDistances n : ℝ)) =O[atTop] fun n => (n : ℝ) := by
+    (fun n => (maxConvexUnitDistances n : ℝ)) =O[atTop] fun n => (n : ℝ) := by
   sorry
 
 end Erdos96

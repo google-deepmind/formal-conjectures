@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Subword complexity of the morphism a → aab, b → b
@@ -34,6 +35,8 @@ $$\sum_{n \geq 0} a_n x^n = \frac{1}{1-x} + \frac{x}{(1-x)^2}\left(\frac{1}{1-x}
   and generalizations," arXiv:1605.02361 [math.CO], 2016.
 - N. J. A. Sloane and Simon Plouffe, *The Encyclopedia of Integer Sequences*, Academic Press, 1995.
 -/
+
+@[expose] public section
 
 namespace OeisA6697
 
