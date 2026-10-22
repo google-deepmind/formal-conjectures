@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 386
 *Reference:* [erdosproblems.com/386](https://www.erdosproblems.com/386)
 -/
+
+@[expose] public section
 
 
 namespace Erdos386
@@ -27,12 +30,13 @@ namespace Erdos386
 open Nat
 
 /--
-There is a $k$, such that $2 \le k \le n - 2$ and
-$\binom{n}{k}$ can be the product of consecutive primes infinitely often?
+Let $2 \le k \le n - 2$. Can $\binom{n}{k}$ be the product of consecutive primes infinitely
+often? Here $k$ may vary with $n$: the question asks for infinitely many admissible binomial
+coefficients, not for a single $k$ that works infinitely often.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_386 :
-    answer(sorry) ↔ ∃ k ≥ 2, ∃ᶠ n in .atTop,
+    ∃ᶠ n in .atTop, ∃ k ≥ 2,
       k ≤ n - 2 ∧ ∃ p q : ℕ, n.choose k = ∏ i ∈ .Ico p q, nth Nat.Prime i := by
     sorry
 
@@ -40,18 +44,18 @@ theorem erdos_386 :
 For all $2 \le k \le n - 2$,
 can $\binom{n}{k}$ be the product of consecutive primes infinitely often?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_386.variants.forall :
-    answer(sorry) ↔ ∀ k ≥ 2, ∃ᶠ n in .atTop,
+    ∀ k ≥ 2, ∃ᶠ n in .atTop,
       k ≤ n - 2 ∧ ∃ p q : ℕ, n.choose k = ∏ i ∈ .Ico p q, nth Nat.Prime i := by
     sorry
 
 /--
 Can $\binom{n}{2}$ be the product of consecutive primes infinitely often?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_386.variants.two :
-    answer(sorry) ↔ ∃ᶠ n in .atTop,
+    ∃ᶠ n in .atTop,
       2 ≤ n - 2 ∧ ∃ p q : ℕ, n.choose 2 = ∏ i ∈ .Ico p q, nth Nat.Prime i := by
     sorry
 

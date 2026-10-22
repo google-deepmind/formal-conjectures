@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Suffix-prefix avoidance bound
@@ -30,6 +32,8 @@ $$|A| \cdot |B| \leq \frac{q^{2n}}{en}.$$
 - [An isoperimetric inequality for word overlap](https://arxiv.org/abs/2602.20143)
   by *Dmitrii Zakharov* (2026)
 -/
+
+@[expose] public section
 
 open Finset Real
 

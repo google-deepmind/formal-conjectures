@@ -13,29 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.RamseyNumbers
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 165
-
-Give an asymptotic formula for the off-diagonal Ramsey number $R(3,k)$.
-
-It is known that
-$$(c + o(1)) \frac{k^2}{\log k} \leq R(3,k) \leq (1 + o(1)) \frac{k^2}{\log k}$$
-for some constant $c > 0$. The upper bound is due to Shearer [Sh83], improving an earlier
-bound of Ajtai, Komlós and Szemerédi [AKS80]; the lower bound (with $c = 1/162$) is due to
-Kim [Ki95], which settled the order of magnitude. The bound $c \geq 1/4$ was proved
-independently by Bohman–Keevash [BoKe21] and Fiz Pontiveros–Griffiths–Morris [PGM20] via the
-triangle-free process; the latter authors conjectured that $1/4$ is the correct constant.
-This was disproved by Campos–Jenssen–Michelen–Sahasrabudhe [CJMS25], who proved
-$c \geq 1/3$, and improved further by Hefty–Horn–King–Pfender [HHKP25] to $c \geq 1/2$.
-Both of the latter papers conjecture that $c = 1/2$ is the correct asymptotic.
-
-We express the asymptotics in terms of the normalised quotient
-$k \mapsto R(3,k) \log k / k^2$. Note that the set defining `graphRamseyNumber` is nonempty
-by Ramsey's theorem, so the `sInf` is a genuine minimum, and the junk values of the quotient
-at $k = 0, 1$ (where $\log k \leq 0$) do not affect any of the limit statements below.
 
 *References:*
 - [erdosproblems.com/165](https://www.erdosproblems.com/165)
@@ -55,20 +38,26 @@ at $k = 0, 1$ (where $\log k \leq 0$) do not affect any of the limit statements 
   arXiv:2510.19718 (2025).
 -/
 
+@[expose] public section
+
 namespace Erdos165
 
-open Filter Real RamseyNumbers Topology
+open Filter Real Topology
+open scoped Asymptotics
 
-/--
-Give an asymptotic formula for $R(3,k)$: does
-$$\lim_{k \to \infty} \frac{R(3,k) \log k}{k^2}$$
-exist as a positive constant $c$?
+local notation "R(" k ", " l ")" => SimpleGraph.classicalRamsey k l
 
-Here $R(3,k)$ is the off-diagonal Ramsey number: the least $N$ such that every simple graph
-on $N$ vertices contains a triangle or an independent set of size $k$.
--/
-@[category research open, AMS 5]
-theorem erdos_165 : answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧
+def erdos_165.answer : ℕ → ℝ := sorry
+
+/-- Give an asymptotic formula for $R(3,k)$. -/
+@[category research open, question value, AMS 5]
+theorem erdos_165 :
+    (fun k : ℕ ↦ (R(3, k) : ℝ)) ~[atTop] erdos_165.answer := by
+  sorry
+
+/-- Does the normalised Ramsey number converge to a positive constant? -/
+@[category research open, question, AMS 5]
+theorem erdos_165.variants.limit_exists : ∃ c : ℝ, 0 < c ∧
     Tendsto (fun k : ℕ ↦ (R(3, k) : ℝ) * log k / k ^ 2) atTop (𝓝 c) := by
   sorry
 
@@ -138,24 +127,23 @@ $$\lim_{k \to \infty} \frac{R(3,k) \log k}{k^2} = \frac{1}{2}?$$
 This is conjectured in both [CJMS25] and [HHKP25].
 -/
 @[category research open, AMS 5]
-theorem erdos_165.variants.limit_eq_half : answer(sorry) ↔
+theorem erdos_165.variants.limit_eq_half :
     Tendsto (fun k : ℕ ↦ (R(3, k) : ℝ) * log k / k ^ 2) atTop (𝓝 (1 / 2)) := by
   sorry
 
-/--
-Degenerate case as a sanity check: $R(3,0) = 0$, since no graph has a $0$-independent set
-to avoid (`CliqueFree 0` is false), so every $N$ works and the infimum is $0$.
--/
+/-- The empty independent set gives $R(3,0)=0$. -/
 @[category test, AMS 5]
-theorem graphRamseyNumber_three_zero : R(3, 0) = 0 :=
-  Nat.sInf_eq_zero.mpr <| Or.inl fun _ h ↦ SimpleGraph.not_cliqueFree_zero h.2
+theorem classicalRamsey_three_zero : R(3, 0) = 0 := by
+  apply Nat.sInf_eq_zero.mpr
+  exact Or.inl fun _ ↦ Or.inr SimpleGraph.IsContained.of_isEmpty
 
-/--
-Sanity check: $R(3,1) \leq 1$, since any graph on one vertex contains an independent set of
-size one.
--/
+/-- Every graph on one vertex contains an independent set of size one. -/
 @[category test, AMS 5]
-theorem graphRamseyNumber_three_one_le : R(3, 1) ≤ 1 :=
-  Nat.sInf_le fun _ h ↦ (SimpleGraph.cliqueFree_one.mp h.2).elim ⟨0, Nat.zero_lt_one⟩
+theorem classicalRamsey_three_one_le : R(3, 1) ≤ 1 := by
+  apply Nat.sInf_le
+  intro G
+  refine Or.inr (SimpleGraph.IsContained.of_le ?_)
+  intro x y h
+  exact (h (Subsingleton.elim x y)).elim
 
 end Erdos165

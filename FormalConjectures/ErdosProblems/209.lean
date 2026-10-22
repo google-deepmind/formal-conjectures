@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 209
@@ -30,13 +31,11 @@ import FormalConjecturesUtil
   plane*. C. R. Math. Acad. Sci. Paris (2016), 551-554.
 -/
 
+@[expose] public section
+
 open EuclideanGeometry Affine
 
 namespace Erdos209
-
-/-- A line in the plane: an affine subspace whose direction is one-dimensional. -/
-def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
-  Module.finrank ℝ L.direction = 1
 
 /-- The number of lines from `A` that pass through the point `p`. -/
 noncomputable def pointMultiplicity (A : Finset (AffineSubspace ℝ ℝ²)) (p : ℝ²) : ℕ :=
@@ -62,9 +61,9 @@ each of these intersection points only intersects two lines from $A$?
 Füredi and Palásti [FuPa84] showed this is false when $d\geq 4$ is not divisible by $9$.
 Escudero [Es16] showed this is false for all $d\geq 4$.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/209/Erdos209.lean"]
-theorem erdos_209 : answer(False) ↔
-    ∀ d : ℕ, 4 ≤ d → ∀ A : Finset (AffineSubspace ℝ ℝ²), A.card = d →
+@[category research solved, question, AMS 52, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/209/Erdos209.lean"]
+theorem erdos_209 :
+    ¬ ∀ d : ℕ, 4 ≤ d → ∀ A : Finset (AffineSubspace ℝ ℝ²), A.card = d →
       (∀ L ∈ A, IsLine L) →
       ((A : Set (AffineSubspace ℝ ℝ²)).Pairwise fun L₁ L₂ => ¬ L₁ ∥ L₂) →
       (∀ p : ℝ², pointMultiplicity A p ≤ 3) →
