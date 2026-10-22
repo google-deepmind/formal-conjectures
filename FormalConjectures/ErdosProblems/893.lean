@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 893
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/893](https://www.erdosproblems.com/893)
 - [KoLu25] V. Kovač and F. Luca, On the number of divisors of Mersenne numbers. arXiv:2506.04883 (2025).
 -/
+
+@[expose] public section
 
 open Filter Finset
 open scoped ArithmeticFunction.sigma
@@ -40,9 +43,9 @@ Does the limit $\lim_{n\to\infty} \frac{f(2n)}{f(n)}$ tend to infinity?
 
 (Other finite limits have been ruled out by [KoLu25], see below)
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_893 :
-    answer(sorry) ↔ Tendsto (fun n : ℕ => (f (2 * n) : ℝ) / (f n : ℝ)) atTop atTop := by
+    Tendsto (fun n : ℕ => (f (2 * n) : ℝ) / (f n : ℝ)) atTop atTop := by
   sorry
 
 

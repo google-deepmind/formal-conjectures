@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 961
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 - [Ju74] Jutila, Matti, On numbers with a large prime factor. {II}. J. Indian Math. Soc. (N.S.) (1974), 125--130.
 - [RaSh73](https://eudml.org/doc/urn:eudml:doc:205214) Ramachandra, K. and Shorey, T. N., On gaps between numbers with a large prime factor. Acta Arith. (1973), 99--111.
 -/
+
+@[expose] public section
 
 open Filter Real
 
@@ -68,8 +72,8 @@ noncomputable def f (k : ℕ) : ℕ :=
 /--
 It is conjectured that $f(k) \ll (\log k)^O(1)$.
 -/
-@[category research open, AMS 11]
-theorem erdos_961 : answer(sorry) ↔ ∃ C : ℕ, ∀ᶠ k : ℕ in atTop, f k < log k ^ C := by
+@[category research open, question, AMS 11]
+theorem erdos_961 : ∃ C : ℕ, ∀ᶠ k : ℕ in atTop, f k < log k ^ C := by
   sorry
 
 /--
