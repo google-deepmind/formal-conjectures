@@ -148,6 +148,7 @@ public import FormalConjecturesForMathlib.Data.Nat.Prime.Infinite
 public import FormalConjecturesForMathlib.Data.Nat.Squarefree
 public import FormalConjecturesForMathlib.Data.Real.Constants
 public import FormalConjecturesForMathlib.Data.Real.NearestInt
+public import FormalConjecturesForMathlib.Data.Set.CountUpTo
 public import FormalConjecturesForMathlib.Data.Set.Density
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
