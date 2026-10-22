@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Balister–Győri–Schelp conjecture
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
   by *P. N. Balister, E. Győri, and R. H. Schelp*, European Journal of Combinatorics 32(4),
   533–537 (2011)
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2607.08630»
 
