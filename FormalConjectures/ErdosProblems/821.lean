@@ -51,6 +51,8 @@ noncomputable def g (n : ℕ) : ℕ :=
 /--
 Is it true that, for every $\epsilon>0$, there exist infinitely many $n$ such that
 $g(n) > n^{1-\epsilon}$?
+
+This was proved in [OpenAI26]; see the linked formal proof for more explanations.
 -/
 @[category research solved, question, AMS 11,
   formal_proof using lean4 at "https://github.com/cadamcat/totient-fibers-lean4/blob/dfce35707a67fce7362cb2bd95af8b80a0b0373e/Erdos821/Theorem.lean#L18"]
