@@ -18,7 +18,7 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# Forced checkmate with rooks in higher dimensions
+# Mathoverflow 99124
 
 The board is $\mathbb Z^d$. A rook moves by changing one coordinate to any value, and the king
 moves by changing any set of coordinates by $\pm 1$. Does some finite number of white rooks
@@ -38,15 +38,18 @@ White wins, and there is no move-count draw rule.
 
 *References:*
 
-- [Original question](https://math.stackexchange.com/q/155777)
-- [Lowther's construction](https://math.stackexchange.com/a/156693)
-- [Tesseract's impossibility argument](https://math.stackexchange.com/a/5093617)
-- [Related MathOverflow discussion](https://mathoverflow.net/q/99124)
+- [mathoverflow/99124](https://mathoverflow.net/questions/99124)
+  asked by user [*ivan*](https://mathoverflow.net/users/3773/ivan), which asks for the minimum
+  number of rooks when $d = 3$
+- [math.stackexchange/155777](https://math.stackexchange.com/q/155777), the same question for
+  every $d$
+- [Lowther's construction](https://math.stackexchange.com/a/156693) for $d = 3$
+- [Tesseract's impossibility argument](https://math.stackexchange.com/a/5093617) for $d \ge 5$
 -/
 
 @[expose] public section
 
-namespace HighDimensionalRooks
+namespace Mathoverflow99124
 
 /-- A square on the infinite board $\mathbb Z^d$. The inherited metric is Chebyshev distance. -/
 abbrev Square (d : ℕ) := Fin d → ℤ
@@ -227,15 +230,15 @@ theorem exists_initial_position (hd : 2 ≤ d) (R D : ℕ) :
 Can some finite number of rooks force checkmate on $\mathbb Z^4$ when the king starts far from
 every rook?
 -/
-@[category research open, AMS 5 91]
-theorem four_dimensions : answer(sorry) ↔ RooksCanForceMate 4 := by
+@[category research open, question, AMS 5 91]
+theorem four_dimensions : RooksCanForceMate 4 := by
   sorry
 
 /--
 On $\mathbb Z^3$, a finite number of rooks can force checkmate when the king starts far from every
 rook. [Lowther's construction](https://math.stackexchange.com/a/156693) (2012) uses $96$ rooks.
 -/
-@[category research solved, AMS 5 91]
+@[category research solved, question, AMS 5 91]
 theorem four_dimensions.variants.three : RooksCanForceMate 3 := by
   sorry
 
@@ -249,8 +252,8 @@ For $5 \le d \le 7$, it relies on results about the angel game from an archived 
 Oddvar Kloster. A comment by Bolan derives $d \ge 8$ from published proofs that the angel of
 power $2$ wins in the plane.
 -/
-@[category research solved, AMS 5 91]
+@[category research solved, question, AMS 5 91]
 theorem four_dimensions.variants.at_least_five (hd : 5 ≤ d) : ¬RooksCanForceMate d := by
   sorry
 
-end HighDimensionalRooks
+end Mathoverflow99124
