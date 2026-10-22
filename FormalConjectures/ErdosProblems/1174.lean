@@ -14,15 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1174
 
 *References:*
 - [erdosproblems.com/1174](https://www.erdosproblems.com/1174)
-- [Va99] Vaughan, J.E. *Open problems in topology II*, problem 7.91 (1999).
+- [Va99] Various, *Some of Paul's favorite problems*. Booklet produced for the conference
+  "Paul Erdős and his mathematics", Budapest, July 1999 (1999), problem 7.91.
 -/
+
+@[expose] public section
 
 open Cardinal
 open scoped Cardinal
@@ -41,8 +46,8 @@ edges alone.
 Shelah proved that a graph with this property can consistently exist, so the
 problem is not disprovable in ZFC; whether such a graph exists outright remains open.
 -/
-@[category research open, AMS 3 5]
-theorem erdos_1174.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 3 5]
+theorem erdos_1174.parts.i :
     ∃ (V : Type) (G : SimpleGraph V), G.CliqueFree 4 ∧
       ∀ c : Sym2 V → ℕ, ∃ x y z : V,
         G.Adj x y ∧ G.Adj y z ∧ G.Adj x z ∧
@@ -62,8 +67,8 @@ only the values on the edges of $G$ matter.
 Shelah proved that a graph with this property can consistently exist, so the
 problem is not disprovable in ZFC; whether such a graph exists outright remains open.
 -/
-@[category research open, AMS 3 5]
-theorem erdos_1174.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 3 5]
+theorem erdos_1174.parts.ii :
     ∃ (V : Type) (G : SimpleGraph V),
       (∀ S : Set V, G.IsClique S → #S ≤ ℵ₀) ∧
       ∀ c : Sym2 V → ℕ, ∃ S : Set V, G.IsClique S ∧ S.Infinite ∧
