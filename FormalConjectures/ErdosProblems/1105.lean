@@ -48,8 +48,8 @@ Montellano-Ballesteros and Neumann-Lara [MoNe05] gave an exact formula for $\mat
 which implies in particular that
 $\mathrm{AR}(n,C_k)=\left(\frac{k-2}{2}+\frac{1}{k-1}\right)n+O(1).$
 -/
-@[category research solved, AMS 5]
-theorem erdos_1105.parts.i : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_1105.parts.i :
     ∀ k, 3 ≤ k →
     ((fun n => (antiRamseyNum (cycleGraph k) n : ℝ) - ((k - 2 : ℝ) / 2 + 1 / (k - 1)) * n)
       =O[atTop] (fun _ => (1 : ℝ))) := by
@@ -64,8 +64,8 @@ $\epsilon=2$ otherwise?
 A proof of the formula for $\mathrm{AR}(n,P_k)$ for all $n\geq k\geq 5$ has been announced by
 Yuan [Yu21].
 -/
-@[category research solved, AMS 5]
-theorem erdos_1105.parts.ii : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_1105.parts.ii :
     ∀ (k n : ℕ), 5 ≤ k → k ≤ n →
     let ℓ := (k - 1) / 2
     let ε := if Odd k then 1 else 2

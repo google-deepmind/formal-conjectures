@@ -45,9 +45,9 @@ $$
 $$
 is not a perfect power?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_930 :
-    answer(sorry) ↔ ∀ r > 0, ∃ k, ∀ I₁ I₂ : Fin r → ℕ,
+    ∀ r > 0, ∃ k, ∀ I₁ I₂ : Fin r → ℕ,
       (∀ i : Fin r, 0 < I₁ i ∧ I₁ i + k ≤ I₂ i + 1) →
         (∀ i j : Fin r, i < j → I₂ i < I₁ j) →
           ¬ IsPower (∏ i : Fin r, ∏ m ∈ Icc (I₁ i) (I₂ i), m) := by
