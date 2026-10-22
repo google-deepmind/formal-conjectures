@@ -50,11 +50,11 @@ The corollaries of the paper (Corollary 2.2 and 2.3, on leaf numbers of
 triangle-free graphs) remain true; Corollary 2.2 is Graffiti.pc Conjecture 1.1,
 recorded as `WrittenOnTheWallII.GraphConjecture2.conjecture2`.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using formal_conjectures at
     "https://github.com/henrykmichalewski/formal-conjectures/blob/238fcea04077aee1d63c9201aa4b4b794f3a674d/FormalConjectures/Paper/SizeOrderConnectedDomination.lean#L156"]
-theorem mukwembi_theorem_2_1 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+theorem mukwembi_theorem_2_1 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj],
       G.Connected → G.CliqueFree 3 →
       (G.edgeFinset.card : ℝ) ≤
