@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 457
 
 *Reference:* [erdosproblems.com/457](https://www.erdosproblems.com/457)
 -/
+
+@[expose] public section
 
 namespace Erdos457
 
@@ -33,8 +36,8 @@ $$
 
 This was formalized in Lean by Baretto and van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem457.lean"]
-theorem erdos_457 : answer(True) ↔ ∃ ε > (0 : ℝ),
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem457.lean"]
+theorem erdos_457 : ∃ ε > (0 : ℝ),
     { (n : ℕ) | ∀ (p : ℕ), p ≤ (2 + ε) * Real.log n → p.Prime →
       p ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) }.Infinite := by
   sorry
@@ -42,7 +45,7 @@ theorem erdos_457 : answer(True) ↔ ∃ ε > (0 : ℝ),
 /-- Let $q(n, k)$ denote the least prime which does not divide
 $\prod_{1 \le i \le k}(n + i)$. -/
 noncomputable abbrev q (n : ℕ) (k : ℝ) : ℕ :=
-    Nat.find (Nat.exists_prime_not_dvd (∏ i ∈ Finset.Icc 1 ⌊k⌋₊, (n + i))
+    Nat.find (Nat.exists_prime_not_dvd (n := ∏ i ∈ Finset.Icc 1 ⌊k⌋₊, (n + i))
       (Finset.prod_ne_zero_iff.2 fun a ha => by aesop))
 
 /--
@@ -50,11 +53,22 @@ More generally, let $q(n, k)$ denote the least prime which
 does not divide $\prod_{1 \le i \le k}(n + i)$. This
 problem asks whether $q(n, \log n) \ge (2 + \epsilon) \log n$
 infinitely often.
+
+This follows from `erdos_457`: if every prime $p \le (2 + \epsilon) \log n$
+divides $\prod_{1 \le i \le \log n} (n + i)$, then $q(n, \log n)$, the least
+prime not dividing this product, must exceed $(2 + \epsilon) \log n$.
 -/
-@[category research open, AMS 11]
-theorem erdos_457.variants.qnk : answer(sorry) ↔ ∃ ε > (0 : ℝ),
+@[category research solved, question, AMS 11]
+theorem erdos_457.variants.qnk : ∃ ε > (0 : ℝ),
     { (n : ℕ) | (2 + ε) * Real.log n ≤ q n (Real.log n) }.Infinite := by
-  sorry
+  obtain ⟨ε, hε, hinf⟩ := erdos_457
+  refine ⟨ε, hε, hinf.mono ?_⟩
+  intro n hn
+  by_contra h
+  obtain ⟨hp, hndvd⟩ : (q n (Real.log n)).Prime ∧
+      ¬q n (Real.log n) ∣ ∏ i ∈ Finset.Icc 1 ⌊Real.log n⌋₊, (n + i) :=
+    Nat.find_spec (Nat.exists_prime_not_dvd (Finset.prod_ne_zero_iff.2 fun a ha => by aesop))
+  exact hndvd (hn _ (not_le.1 h).le hp)
 
 /--
 Taking $n$ to be the product of primes
@@ -65,8 +79,8 @@ $$
 Can one prove that $q(n, \log n) < (1 - \epsilon) (\log n)^2$
 for all large $n$ and some $\epsilon > 0$?
 -/
-@[category research open, AMS 11]
-theorem erdos_457.variants.one_sub : answer(sorry) ↔ ∃ ε > (0 : ℝ),
+@[category research open, question, AMS 11]
+theorem erdos_457.variants.one_sub : ∃ ε > (0 : ℝ),
     ∀ᶠ n in Filter.atTop, q n (Real.log n) < (1 - ε) * Real.log n ^ 2 := by
   sorry
 

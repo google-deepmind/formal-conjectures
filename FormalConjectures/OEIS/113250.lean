@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Expansion of g.f. $-(1 - 48x^2 - 256x^3) / ((1 - 4x)(1 + 4x)(1 + 4x + 16x^2))$
@@ -28,6 +29,8 @@ The recurrence is $a(n) = -4 a(n-1) + 64 a(n-3) + 256 a(n-4)$.
 *References:*
 - [A113250](https://oeis.org/A113250)
 -/
+
+@[expose] public section
 
 namespace OeisA113250
 
@@ -59,7 +62,9 @@ theorem a_4 : a 4 = -256 := by rfl
 Conjecture: $a(m, 2n+1)$ is a perfect square for all $m$ (see A113249).
 Specialized to $m = 4$, which is A113250.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a113249-family-square-terms-lean/blob/9b999db08344184285e8050c2722c845fd5f5309/lean/OeisA113249FamilyFC.lean#L106-L114"]
 theorem conjecture : ∀ n : ℕ, IsSquare (a (2 * n + 1)) := by
   sorry
 

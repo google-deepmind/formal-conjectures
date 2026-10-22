@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 322
@@ -27,6 +28,8 @@ also follows from the characterization of minimal total dominating sets of compl
 graphs in [M. Subramanian and A. Selvakumar, *Total Domination and Minimal Total Domination
 Polynomial of H-Join Graphs*](https://doi.org/10.2298/FIL2501267S).
 -/
+
+@[expose] public section
 
 
 namespace WrittenOnTheWallII.GraphConjecture322
@@ -44,9 +47,10 @@ the neighborhood `N(v)` of `v` — is at most 1, then `G` is well totally domina
 
 Here `l(v) = α(Gᶜ[N(v)])` is the independence number of the subgraph induced by the
 open neighborhood of `v` in `Gᶜ`.
+
+This proof was provided by Samuel Schlesinger.
 -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at
-  "https://github.com/SamuelSchlesinger/formal-conjectures/blob/78f39db3ea9f5a8b2e6841e7769f538ff263dbf2/FormalConjectures/WrittenOnTheWallII/GraphConjecture322.lean#L50-L111"]
+@[category research solved, AMS 5]
 theorem conjecture322 (G : SimpleGraph α) [DecidableRel G.Adj] (_hG : G.Connected)
     (hn : 5 ≤ Fintype.card α)
     (h : ∀ v : α, indepNeighborsCard Gᶜ v ≤ 1) :
@@ -114,10 +118,10 @@ theorem conjecture322 (G : SimpleGraph α) [DecidableRel G.Adj] (_hG : G.Connect
 
 /-- In `K₄`, all vertices have degree 3. -/
 @[category test, AMS 5]
-example : (⊤ : SimpleGraph (Fin 4)).maxDegree = 3 := by decide +native
+example : (⊤ : SimpleGraph (Fin 4)).maxDegree = 3 := by decide
 
 /-- In the edgeless graph `⊥` on 5 vertices, the minimum degree is 0. -/
 @[category test, AMS 5]
-example : (⊥ : SimpleGraph (Fin 5)).minDegree = 0 := by decide +native
+example : (⊥ : SimpleGraph (Fin 5)).minDegree = 0 := by decide
 
 end WrittenOnTheWallII.GraphConjecture322

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Packing
@@ -34,7 +35,12 @@ In each case, we provide a known upper bound, and ask for the least such size.
   Mathematische Nachrichten, 40: 111–124
 - A website with visualizations of packings:
   [link](https://erich-friedman.github.io/packing/)
+- [Erich Friedman, Squares in Circles](https://erich-friedman.github.io/packing/squincir/)
+- [The-Anh Vu-Le, Lean 4 proof of Squares in Circles](https://github.com/vltanh/lean4-squares-in-circles)
+- [Kenta Kitamura, Lean proof of the exact three-square minimum for Formal Conjectures](https://github.com/KitaKen1/three-squares-in-a-circle-lean/blob/87bd2b6915933cf608a3cae6263c2500fe81f7ec/lean/ThreeSquares/Compressed/Main.lean#L216-L219)
 -/
+
+@[expose] public section
 
 open EuclideanGeometry
 
@@ -90,7 +96,7 @@ The degenerate circle is empty.
 @[category test, AMS 51]
 theorem circle_zero : Circle 0 = ∅ := by
   ext p
-  simp only [Circle, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_lt,
+  simp only [Circle, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_lt,
     NNReal.coe_zero, zero_pow, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true]
   positivity
 
@@ -104,14 +110,17 @@ theorem eleven_square_packing_in_square_bound :
     Nonempty (Packing 11 UnitSquare (Square 3.877084)) := by
   sorry
 
+def least_eleven_square_packing_in_square.answer : ℝ := sorry
+
 /--
 What is the smallest square that can contain 11 unit squares?
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem least_eleven_square_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 11 UnitSquare (Square x))} answer(sorry) := by
+    IsLeast {x : ℝ | Nonempty (Packing 11 UnitSquare (Square x))}
+      least_eleven_square_packing_in_square.answer := by
   sorry
 
 /--
@@ -124,14 +133,17 @@ theorem seventeen_square_packing_in_square_bound :
     Nonempty (Packing 17 UnitSquare (Square 4.6756)) := by
   sorry
 
+def least_seventeen_square_packing_in_square.answer : ℝ := sorry
+
 /--
 What is the smallest square that can contain 17 unit squares?
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_square)
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem least_seventeen_square_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 17 UnitSquare (Square x))} answer(sorry) := by
+    IsLeast {x : ℝ | Nonempty (Packing 17 UnitSquare (Square x))}
+      least_seventeen_square_packing_in_square.answer := by
   sorry
 
 /--
@@ -144,14 +156,26 @@ theorem three_square_packing_in_circle_bound :
     Nonempty (Packing 3 UnitSquare (Circle ((5 * NNReal.sqrt 17) / 16))) := by
   sorry
 
+noncomputable def least_three_square_packing_in_circle.answer : ℝ≥0 := (5 * NNReal.sqrt 17) / 16
+
 /--
 What is the smallest circle that can contain 3 unit squares?
 
-Reference: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle)
+The least radius is $5\sqrt{17}/16$. The-Anh Vu-Le proved optimality in
+September 2026. Kenta Kitamura gave a separate Lean proof of this exact
+`IsLeast` statement using the `SquarePacking` definitions in this file.
+
+References: [Wikipedia](https://en.wikipedia.org/wiki/Square_packing#In_a_circle),
+[Friedman's table](https://erich-friedman.github.io/packing/squincir/),
+[Vu-Le's Lean proof](https://github.com/vltanh/lean4-squares-in-circles), and
+[Kitamura's FC-target Lean proof](https://github.com/KitaKen1/three-squares-in-a-circle-lean/blob/87bd2b6915933cf608a3cae6263c2500fe81f7ec/lean/ThreeSquares/Compressed/Main.lean#L216-L219).
 -/
-@[category research open, AMS 51]
+@[category research solved, question value, AMS 51,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/three-squares-in-a-circle-lean/blob/87bd2b6915933cf608a3cae6263c2500fe81f7ec/lean/ThreeSquares/Compressed/Main.lean#L216-L219"]
 theorem least_three_square_packing_in_circle :
-    IsLeast {r : ℝ≥0 | Nonempty (Packing 3 UnitSquare (Circle r))} answer(sorry) := by
+    IsLeast {r : ℝ≥0 | Nonempty (Packing 3 UnitSquare (Circle r))}
+      least_three_square_packing_in_circle.answer := by
   sorry
 
 /--
@@ -164,12 +188,15 @@ theorem twenty_one_circle_packing_in_square_bound :
     Nonempty (Packing 21 UnitCircle (Square 9.359)) := by
   sorry
 
+def least_twenty_one_circle_packing_in_square.answer : ℝ := sorry
+
 /--
 What is the smallest square that can contain 21 unit circles?
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem least_twenty_one_circle_packing_in_square :
-    IsLeast {x : ℝ | Nonempty (Packing 21 UnitCircle (Square x))} answer(sorry) := by
+    IsLeast {x : ℝ | Nonempty (Packing 21 UnitCircle (Square x))}
+      least_twenty_one_circle_packing_in_square.answer := by
   sorry
 
 /--
@@ -187,6 +214,8 @@ theorem fifteen_circle_packing_in_circle_bound :
         4 * NNReal.sqrt (1 + 2 / NNReal.sqrt 5))))) := by
   sorry
 
+def least_fifteen_circle_packing_in_circle.answer : ℝ≥0 := sorry
+
 /--
 What is the smallest circle that can contain 15 unit circles?
 
@@ -195,9 +224,10 @@ Graham RL, Lubachevsky BD, Nurmela KJ, Ostergard PRJ.
 Dense packings of congruent circles in a circle. Discrete Math 1998;181:139–154.
 [Pirl (1969)](https://doi.org/10.1002/mana.19690400110) conjectured this configuration to be optimal.
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem least_fifteen_circle_packing_in_circle :
-    IsLeast {r : ℝ≥0 | Nonempty (Packing 15 UnitCircle (Circle r))} answer(sorry) := by
+    IsLeast {r : ℝ≥0 | Nonempty (Packing 15 UnitCircle (Circle r))}
+      least_fifteen_circle_packing_in_circle.answer := by
   sorry
 
 end SquarePacking

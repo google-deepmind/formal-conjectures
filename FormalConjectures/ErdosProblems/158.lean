@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 158
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
  - [ESS94] Erdős, P. and Sárközy, A. and Sós, T., On Sum Sets of Sidon Sets, I. Journal of Number
     Theory (1994), 329-347.
 -/
+
+@[expose] public section
 
 open Filter Real
 
@@ -52,8 +56,8 @@ lemma b2_one {A : Set ℕ} : B2 1 A ↔ IsSidon A where
     grind
 
 /-- Let `A` be an infinite `B₂[2]` set. Must `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) = 0`? -/
-@[category research open, AMS 5]
-theorem erdos_158 : answer(sorry) ↔ ∀ A : Set ℕ, A.Infinite → B2 2 A →
+@[category research open, question, AMS 5]
+theorem erdos_158 : ∀ A : Set ℕ, A.Infinite → B2 2 A →
     liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
   sorry
 
@@ -86,7 +90,7 @@ theorem erdos_158.variants.isSidon {A : Set ℕ} (hAinf : A.Infinite) (hAsid : I
   · filter_upwards [hc] with n hn
     grw [hn]
   · refine .const_mul_atTop hc_pos ?_
-    simpa using (tendsto_rpow_atTop (by linarith : 0 < 1 / (2 : ℝ))).comp
+    simpa [Function.comp_def] using (tendsto_rpow_atTop (by linarith : 0 < 1 / (2 : ℝ))).comp
       (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop)
 
 end Erdos158

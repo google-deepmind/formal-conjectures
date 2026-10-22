@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A113252
@@ -28,6 +29,8 @@ Initial values are a(0) = -1, a(1) = 4, a(2) = 92, a(3) = 784.
 *References:*
 - [A113252](https://oeis.org/A113252)
 -/
+
+@[expose] public section
 
 namespace OeisA113252
 
@@ -61,7 +64,9 @@ theorem a_4 : a 4 = -3856 := by rfl
 Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
 Specialized for $m=6$, which is A113252.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a113249-family-square-terms-lean/blob/9b999db08344184285e8050c2722c845fd5f5309/lean/OeisA113249FamilyFC.lean#L116-L124"]
 theorem conjecture : ∀ n : ℕ, IsSquare (a (2 * n + 1)) := by
   sorry
 

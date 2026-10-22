@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Divisibility of $2^n + 1$ by $n$
@@ -27,6 +29,8 @@ well as congruences satisfied by the members of A56777.
 *References:*
 - [A56777](https://oeis.org/A56777)
 -/
+
+@[expose] public section
 
 namespace OeisA56777
 
@@ -126,7 +130,7 @@ theorem mod_72_of_comesFromPrimeQuadruple {n : ℕ} (h : ComesFromPrimeQuadruple
     n % 72 = 65 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
   have hp5 : 5 ≤ p := by
-    by_contra hlt; push_neg at hlt
+    by_contra! hlt
     interval_cases p <;> simp_all (config := { decide := true })
   have h2 : ¬ (2 ∣ p) := by
     intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega
@@ -160,7 +164,7 @@ theorem mod_100_of_comesFromPrimeQuadruple {n : ℕ} (h65 : 65 < n) (h : ComesFr
     n % 100 = 9 := by
   obtain ⟨p, hp, hp2, hp6, hp8, rfl⟩ := h
   have hp5 : 5 ≤ p := by
-    by_contra hlt; push_neg at hlt
+    by_contra hlt; push Not at hlt
     interval_cases p <;> simp_all (config := { decide := true })
   have h2 : ¬ (2 ∣ p) := by
     intro hdvd; cases hp.eq_one_or_self_of_dvd 2 hdvd with | inl h => omega | inr h => omega

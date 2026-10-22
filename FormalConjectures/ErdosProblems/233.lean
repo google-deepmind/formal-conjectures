@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 233
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
   - [A74741](https://oeis.org/A74741)
   - [Wikipedia](https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_conjecture)
 -/
+
+@[expose] public section
 
 open Filter Real
 

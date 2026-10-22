@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Floor of sum of $\{n/k\}$
@@ -26,6 +27,8 @@ Conjecture: a(n) ~ (1-EulerGamma)n.
 *References:*
 - [A102722](https://oeis.org/A102722)
 -/
+
+@[expose] public section
 
 namespace OeisA102722
 
@@ -94,7 +97,9 @@ theorem a_4 : a 4 = 0 := by eval_a
 theorem a_5 : a 5 = 1 := by eval_a
 
 /-- A102722 Conjecture: $a(n) \sim (1-\gamma)n$. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-102722-asymptotic/blob/0e3bf1bc6dfd04627f926b07fb8d25f4395a5072/lean/OEIS102722FC.lean#L18-L24"]
 theorem conjecture :
     (fun n : ℕ => (a n : ℝ)) ~[atTop]
       (fun n : ℕ => (1 - Real.eulerMascheroniConstant) * (n : ℝ)) := by
