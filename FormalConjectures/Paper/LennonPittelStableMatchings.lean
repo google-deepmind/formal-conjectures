@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Lennon–Pittel conjecture on random stable matchings
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
 
 Let $S_n$ be the number of stable matchings under uniformly random complete strict preferences.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
