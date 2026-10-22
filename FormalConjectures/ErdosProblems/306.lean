@@ -23,10 +23,10 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/306](https://www.erdosproblems.com/306)
+- [Li26] S. Li, *Unit fractions with semiprime denominators: an elementary proof of Erdős
+  Problem 306*. arXiv:2609.32140 (2026).
 - [Ta26] [Tang, Yuren, *A Lean 4 formalisation of Erdős Problem
-  306*](https://github.com/Yuren-Tang/erdos-306), which derives the statement below from two
-  results of Rosser and Schoenfeld, *Approximate formulas for some functions of prime numbers*,
-  Illinois J. Math. **6** (1962), 64-94, declared there as axioms
+  306*](https://github.com/Yuren-Tang/erdos-306), a proof modulo two Rosser–Schoenfeld axioms.
 -/
 
 @[expose] public section
@@ -39,6 +39,8 @@ namespace Erdos306
 /--
 Let $\frac a b\in \mathbb{Q}_{>0}$ with $b$ squarefree. Are there integers $1 < n_1 < \dots < n_k$,
 each the product of two distinct primes, such that $\frac{a}{b}=\frac{1}{n_1}+\cdots+\frac{1}{n_k}$?
+
+The answer is yes [Li26].
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/linrock/math-proofs/blob/e1a5e2a3317007f0e31b98bf2e80383187b31238/erdos-306/Solution.lean#L34"]
