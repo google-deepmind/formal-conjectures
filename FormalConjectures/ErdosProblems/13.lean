@@ -55,8 +55,8 @@ $A \subseteq \{1, ..., N\}$ has no $a \in A$ and $b_1, ..., b_r \in A$ such that
 $a | (b_1 + ... + b_r)$ and $a < \min(b_1, ..., b_r)$, then is it true that
 $|A| \le N/(r+1) + O(1)$?
 -/
-@[category research open, AMS 5 11]
-theorem erdos_13.variants.general : answer(sorry) ↔ ∀ r : ℕ, ∃ C : ℝ, ∀ N : ℕ,
+@[category research open, question, AMS 5 11]
+theorem erdos_13.variants.general : ∀ r : ℕ, ∃ C : ℝ, ∀ N : ℕ,
     ∀ A ⊆ Icc 1 N,
     (∀ a ∈ A, ∀ (b : Fin r → ℕ), (∀ i, b i ∈ A) → (∀ i, a < b i) →
       ¬ (a ∣ ∑ i, b i)) →

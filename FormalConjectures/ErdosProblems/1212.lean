@@ -71,7 +71,7 @@ and the accompanying
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/blob/400001f0847afe36a26c588d34445210dbdc116e/kernel/Erdos1212Kernel/AlgebraicCorridorKernelAudit.lean"]
 theorem erdos_1212 :
-    answer(True) ↔ ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧
+    ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧
       (∀ n, Valid (f n)) ∧
       Tendsto (fun n => (f n).1 + (f n).2) atTop atTop := by
   sorry

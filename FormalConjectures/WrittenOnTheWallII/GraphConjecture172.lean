@@ -57,10 +57,10 @@ graph `G` satisfies
 `Ls G ≥ -1 + Δ(B(G)) + dist_min(G, M(G²))`.
 The answer is no, witnessed by `D₉`.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/Kuberwastaken/c5-k4/blob/a948106ad2d2a5d291b6b99575fe78bf373e7e02/lean/GraphConjecture172.lean#L1-L384"]
-theorem conjecture172 : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V] [Nontrivial V]
+theorem conjecture172 :
+    ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] [Nontrivial V]
       (G : SimpleGraph V) [DecidableRel G.Adj], G.Connected →
         Ls G ≥ (-1 : ℝ) + peripheryMaxDegree G +
           distMin G (squareMaximumDegreeVertices G) := by
