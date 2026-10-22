@@ -1719,7 +1719,7 @@ nor disprove that the machine halts (assuming ZFC is sound).
 
 Using the Shoenfield's absoluteness theorem, one can show that one can replace "ZFC" with "ZF"
 without the value of this constant changing. -/
-@[optimization_constant "14"]
+@[optimization_constant "14a"]
 noncomputable def C14 : ℕ :=
   sInf {n | ∃ _ : NeZero n, ∃ M : Machine (Fin 2) (Fin n),
     𝗭𝗙𝗖 ⊬ halts M ∧ 𝗭𝗙𝗖 ⊬ ∼halts M}
