@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Decimal encoding of the prime factorization of $n$
@@ -25,6 +27,8 @@ then its decimal encoding is $p_1 e_1 \dots p_r e_r$.
 *References:*
 - [A067599](https://oeis.org/A067599)
 -/
+
+@[expose] public section
 
 namespace OeisA67599
 
@@ -42,31 +46,31 @@ def a (n : ℕ) : ℕ :=
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 21 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 31 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 22 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 51 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 11]
 theorem a_6 : a 6 = 2131 := by
-  decide +native
+  decide +kernel
 
 /--
 "$a(31) = a(177147) = 311$. Is there any solution to $a(n) = n$?
 - _Franklin T. Adams-Watters_, Dec 18 2006"
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∃ n : ℕ, 2 ≤ n ∧ a n = n := by
+    ∃ n : ℕ, 2 ≤ n ∧ a n = n := by
   sorry
 
 end OeisA67599

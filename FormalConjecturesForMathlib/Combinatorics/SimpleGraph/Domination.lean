@@ -17,6 +17,8 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.Prod
+public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
 
@@ -157,5 +159,49 @@ theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
       exact Finset.inf'_le _
         (Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
           hD.isDominating⟩)
+
+/-! ### Domination number of Cartesian products -/
+
+omit [DecidableEq α] in
+/-- The set `Finset.univ` is a dominating set of any graph, so the set of sizes of dominating
+sets is nonempty and `dominationNumber` is attained by some dominating set. -/
+lemma exists_isNDominatingSet_dominationNumber
+    (G : SimpleGraph α) :
+    ∃ D : Finset α, G.IsNDominatingSet G.dominationNumber D := by
+  have hne : {n | ∃ D : Finset α, G.IsNDominatingSet n D}.Nonempty :=
+    ⟨_, Finset.univ, ⟨fun v => Or.inl (Finset.mem_univ v), rfl⟩⟩
+  exact Nat.sInf_mem hne
+
+omit [Fintype α] [DecidableEq α] in
+/-- If `D` is a dominating set of `G` with `n` elements then `γ(G) ≤ n`. -/
+lemma dominationNumber_le_of_isDominating
+    (G : SimpleGraph α) (D : Finset α) (hD : G.IsDominating D) :
+    G.dominationNumber ≤ D.card :=
+  Nat.sInf_le ⟨D, hD, rfl⟩
+
+/--
+**Projection bound: `γ(G) ≤ γ(G □ H)` whenever `H` has a vertex.**
+
+Projecting a dominating set of `G □ H` onto the first coordinate yields a dominating set of
+`G` of no larger size: a vertex `(v, b)` is dominated by some `(w, c)` with either `v = w`
+(so `v` lies in the projection) or `G.Adj v w` (so `v` is dominated by `w` in the projection).
+-/
+theorem dominationNumber_le_dominationNumber_boxProd
+    {β : Type*} [Fintype β] [DecidableEq β] [Nonempty β]
+    (G : SimpleGraph α) (H : SimpleGraph β) :
+    G.dominationNumber ≤ (G □ H).dominationNumber := by
+  obtain ⟨D, hD, hcard⟩ := exists_isNDominatingSet_dominationNumber (G □ H)
+  refine le_trans (dominationNumber_le_of_isDominating G (D.image Prod.fst) ?_) ?_
+  · intro v
+    obtain ⟨b⟩ := ‹Nonempty β›
+    rcases hD (v, b) with h | ⟨⟨w, c⟩, hw, hadj⟩
+    · exact Or.inl (Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp h)))
+    · rw [boxProd_adj] at hadj
+      rcases hadj with ⟨hvw, -⟩ | ⟨-, hvw⟩
+      · exact Or.inr ⟨w, Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp hw)),
+          hvw⟩
+      · obtain rfl : v = w := hvw
+        exact Or.inl (Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp hw)))
+  · exact hcard ▸ Finset.card_image_le
 
 end SimpleGraph

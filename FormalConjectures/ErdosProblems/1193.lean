@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1193
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
   (1980), 89-115.
 -/
+
+@[expose] public section
 
 open AdditiveCombinatorics Set
 
@@ -40,9 +43,9 @@ The answer is trivially no to both questions: indeed if $A=\mathbb{N}$ (assuming
 then $1_A\ast 1_A(n)=n+1$ for all $n$. Presumably Erdős had some additional restrictions on either
 $g$ or $A$ in mind, but these are not recorded in [Er80].
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_1193.parts.i : answer(False) ↔
-    ∀ (A : Set ℕ) (g : ℕ → ℕ), Monotone g → (∀ n, 0 < g n) →
+@[category research solved, question, AMS 5 11]
+theorem erdos_1193.parts.i :
+    ¬ ∀ (A : Set ℕ) (g : ℕ → ℕ), Monotone g → (∀ n, 0 < g n) →
       {n : ℕ | sumRep A n = g n}.lowerDensity = 0 := by
   sorry
 
@@ -57,9 +60,9 @@ The answer is trivially no to both questions: indeed if $A=\mathbb{N}$ (assuming
 then $1_A\ast 1_A(n)=n+1$ for all $n$. Presumably Erdős had some additional restrictions on either
 $g$ or $A$ in mind, but these are not recorded in [Er80].
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_1193.parts.ii : answer(False) ↔
-    ∃ c < (1 : ℝ), ∀ (A : Set ℕ) (g : ℕ → ℕ), Monotone g → (∀ n, 0 < g n) →
+@[category research solved, question, AMS 5 11]
+theorem erdos_1193.parts.ii :
+    ¬ ∃ c < (1 : ℝ), ∀ (A : Set ℕ) (g : ℕ → ℕ), Monotone g → (∀ n, 0 < g n) →
       {n : ℕ | sumRep A n = g n}.upperDensity < c := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Numerator of $\zeta(4n)/\zeta(2n)^2$ (with $a(0)=2$ instead of $-2$)
@@ -27,6 +28,8 @@ with $a(0)$ defined as $2$.
 *References:*
 - [A114362](https://oeis.org/A114362)
 -/
+
+@[expose] public section
 
 namespace OeisA114362
 
