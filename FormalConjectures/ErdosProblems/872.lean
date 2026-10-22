@@ -173,9 +173,9 @@ question negatively under the Prolonger-first convention.
 The $23/48$ upper bound for `C`-respecting plays (following old-bielefelder's strategy in the
 forum thread) was formalized in Lean 4 by Pommeret using Aristotle and Claude Opus 4.7, and
 completed to a proof for the full minimax game value `L n` by Ilia Pauzner using Gemini 4 Argon. -/
-@[category research solved, AMS 5 11 91, formal_proof using formal_conjectures at "https://github.com/ilpauzner/formal-conjectures/blob/d9299da16287d2347e375d9eec253eec455bae75/FormalConjectures/ErdosProblems/872.lean#L1180"]
-theorem erdos_872.parts.ii : answer(False) ↔
-    ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
+@[category research solved, question, AMS 5 11 91, formal_proof using formal_conjectures at "https://github.com/ilpauzner/formal-conjectures/blob/d9299da16287d2347e375d9eec253eec455bae75/FormalConjectures/ErdosProblems/872.lean#L1180"]
+theorem erdos_872.parts.ii :
+    ¬ ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
   sorry
 
 /-- A trivial upper bound: a play can claim at most the $n - 1$ elements of $\{2, \dots, n\}$, so
