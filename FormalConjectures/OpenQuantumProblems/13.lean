@@ -120,14 +120,27 @@ $k$ is the maximum number of mutually unbiased orthonormal bases in dimension $d
   *The maximum number of mutually unbiased bases in dimension six*.
   OpenAI Math Release preprint (2026).
   https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-maximum-number-of-mutually-unbiased-bases-in-dimension-six-September-24-2026/The-maximum-number-of-mutually-unbiased-bases-in-dimension-six-September-24-2026.pdf
+- [Jas26] M. Jaswal,
+  *An independent certified computation excluding four mutually unbiased bases in dimension six*,
+  Zenodo, doi:10.5281/zenodo.23255857 (paper); programs, logs and data: doi:10.5281/zenodo.23255817
+  (CC BY 4.0).
+- [MR26] maximusrufus,
+  *Independent certified re-run of the computer search for $N(6) = 3$*,
+  GitHub repository (MIT license), https://github.com/maximusrufus/mub6-certified-rerun,
+  commit 7e6ed79f9c1713e06596e5908d596eae29179b8f.
 
 ## Remark on the status of $d = 6$
 
-The dimension-six case is not known to be solved. At present, the best-known general picture is:
+The dimension-six case is not known to be solved by an accepted proof. At present, the best-known general picture is:
 - $3 \le \mu(6) \le 5$, where the upper bound was proved by an internal OpenAI model in
   September 2026 [OAI26a] with a formal Lean proof,
 - a companion preprint [OAI26b] claims $\mu(6) = 3$ by a computer-assisted argument that is not
   formalised,
+- two independent re-implementations of the computer search in [OAI26b], written from its text, report
+  that every cell is excluded and no case is left unresolved: [Jas26] (whose stated assumption is that the
+  machine carried out binary64 arithmetic correctly) and [MR26] (outward-rounded interval arithmetic, with
+  the seed cover checked separately). Both run the discretization of [OAI26b] under its hand-proved
+  normal-form reduction, which neither formalises or reviews, and neither is peer reviewed,
 - and several analytic and numerical works give strong evidence that one cannot go beyond $3$.
 
 This is why the theorem `mutuallyUnbiasedBases_dim6` is marked as an open research statement.
@@ -549,7 +562,8 @@ theorem mutuallyUnbiasedBases_dim6_bounds.variants.upper_five :
 def mutuallyUnbiasedBases_dim6.answer : ℕ := sorry
 
 /-- Special case in dimension $6$: determine the maximal number of mutually unbiased
-orthonormal bases in $\mathbb{C}^6$. -/
+orthonormal bases in $\mathbb{C}^6$. See the remark on the status of $d = 6$ in the module docstring
+for the claimed value $3$ and its independent reruns. -/
 @[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim6 :
     IsMaxMUBCount 6 (mutuallyUnbiasedBases_dim6.answer) := by
