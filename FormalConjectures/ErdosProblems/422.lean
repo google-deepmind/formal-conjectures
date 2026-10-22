@@ -130,18 +130,15 @@ No: see `IsHofstadterQ.not_eventuallyConst`. The statement is existential, so th
 not depend on whether $f(n)$ is well-defined for all $n$.
 -/
 @[category textbook, AMS 11]
-theorem erdos_422.variants.eventually_const : answer(False) ↔
-    ∃ f : ℕ+ → ℕ+, IsHofstadterQ f ∧ EventuallyConst f atTop :=
-  ⟨False.elim, fun ⟨_, hf, h⟩ ↦ hf.not_eventuallyConst h⟩
+theorem erdos_422.variants.eventually_const :
+    ¬ ∃ f : ℕ+ → ℕ+, IsHofstadterQ f ∧ EventuallyConst f atTop :=
+  fun ⟨_, hf, h⟩ ↦ hf.not_eventuallyConst h
 
 /--
 Is $f(n)$ well-defined for all $n$?
 -/
-@[category research open, AMS 11]
-theorem erdos_422.variants.well_defined : answer(sorry) ↔ ∃ f : ℕ+ → ℕ+, IsHofstadterQ f := by
 @[category research open, question, AMS 11]
-theorem erdos_422.variants.eventually_const :
-    ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → EventuallyConst f atTop := by
+theorem erdos_422.variants.well_defined : ∃ f : ℕ+ → ℕ+, IsHofstadterQ f := by
   sorry
 
 end Erdos422
