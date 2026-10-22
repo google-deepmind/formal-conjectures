@@ -18,7 +18,7 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# Erdős Problem 721: statement candidates
+# Erdős Problem 721
 
 *References:*
 - [erdosproblems.com/721](https://www.erdosproblems.com/721)
@@ -81,5 +81,27 @@ def HunterLowerBound : Prop :=
 
 /-- The conjunction of Hunter's lower bound and the subexponential upper bound. -/
 def BoundsTarget : Prop := HunterLowerBound ∧ SubexponentialUpperBound
+
+/-- Erdős Problem 721, upper bound: prove that $W(3,k) < \exp(k^c)$ for some
+constant $c<1$.
+
+The first to show that $W(3,k) < \exp(k^c)$ for some $c<1$ was Schoen [Sc21].
+Source: [erdosproblems.com/721](https://www.erdosproblems.com/721).
+The exponent is fixed independently of $k$, and the bound holds for all
+sufficiently large $k$. -/
+@[category research solved, AMS 5 11]
+theorem erdos_721.upper_bound : SubexponentialUpperBound := by
+  sorry
+
+/-- Erdős Problem 721, lower bound: Hunter [Hu22] improved this to
+$W(3,k) \geq \exp\left(c\frac{(\log k)^2}{\log\log k}\right)$
+for some constant $c>0$.
+
+Source: [erdosproblems.com/721](https://www.erdosproblems.com/721).
+This eventual bound uses a nonforcing interval of length $N$ and the
+successor $N+1$ as a lower bound for the least forcing integer. -/
+@[category research solved, AMS 5 11]
+theorem erdos_721.lower_bound : HunterLowerBound := by
+  sorry
 
 end Erdos721
