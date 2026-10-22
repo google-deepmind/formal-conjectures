@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1203
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/1203](https://www.erdosproblems.com/1203)
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped ArithmeticFunction.omega
@@ -38,9 +41,9 @@ noncomputable def F (n : ℕ) : ℝ :=
 /--
 Prove that $F(n)\to \infty$ as $n\to \infty$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1203 :
-    answer(sorry) ↔ Tendsto F atTop atTop := by
+    Tendsto F atTop atTop := by
   sorry
 
 /--

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Largest odd divisor of $a(n-1) + \textrm{prime}(n)$
@@ -24,6 +25,8 @@ $a(0)=0$; thereafter $a(n)$ = largest odd divisor of $a(n-1) + \textrm{prime}(n)
 *References:*
 - [A114216](https://oeis.org/A114216)
 -/
+
+@[expose] public section
 
 namespace OeisA114216
 
@@ -78,9 +81,9 @@ theorem a_5 : a 5 = 1 := by
 /--
 Is $a(33900)$ the last term equal to $1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-  answer(sorry) ↔ ∀ n > 33900, a n ≠ 1 := by
+  ∀ n > 33900, a n ≠ 1 := by
   sorry
 
 end OeisA114216

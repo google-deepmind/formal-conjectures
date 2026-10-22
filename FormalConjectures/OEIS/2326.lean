@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Multiplicative order of 2 mod $2n+1$
@@ -24,6 +25,8 @@ In other words, the least $m > 0$ such that $2n+1$ divides $2^m - 1$.
 
 *References:*
 - [A002326](https://oeis.org/A002326)-/
+
+@[expose] public section
 
 namespace OeisA2326
 
@@ -82,6 +85,12 @@ then $a((p^{k+1}-1)/2) = p \cdot a((p^k-1)/2)$.
 Computer testing of this generalized conjecture shows that there is no counterexample for $k$
 and $p$ both up to 1000.
 - [Ahmad J. Masad](https://oeis.org/wiki/User:Ahmad_J._Masad), Oct 17 2020
+
+The two are in fact equivalent. Its $k = 2$ instance is `conjecture1`. Conversely, write
+$d = \operatorname{ord}_{p^2}(2)$. `conjecture1` for $p$ says
+$v_p(2^d - 1) = 2$, and lifting the exponent for the odd prime $p$ then gives
+$v_p(2^{d p^t} - 1) = 2 + t$, hence $\operatorname{ord}_{p^{2+t}}(2) = d p^t$ for every
+$t \ge 0$, which is every instance for that $p$.
 -/
 @[category research open, AMS 11]
 theorem conjecture2 (k : ℕ) (hk : 2 ≤ k) (p : ℕ) (hp : p.Prime) (hp_odd : p ≠ 2) :
