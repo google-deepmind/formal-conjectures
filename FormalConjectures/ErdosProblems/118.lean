@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 118
@@ -32,6 +34,8 @@ import FormalConjecturesUtil
 - [HST10] Hajnal, A.; Larson, J. A. *Partition relations.* Handbook of set theory,
   Springer (2010), 129–213.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal
 open scoped Cardinal
@@ -66,9 +70,9 @@ Larson [La00] gave the concrete counterexample $\alpha = \omega^{\omega^2}$, for
 $\alpha \to (\alpha, 3)^2$ holds yet $\alpha \not\to (\alpha, 5)^2$. See Chapter 2.9 of
 [HST10] for further background.
 -/
-@[category research solved, AMS 3]
+@[category research solved, question, AMS 3]
 theorem erdos_118 :
-    answer(False) ↔ ∀ α : Ordinal.{0}, OrdinalRamsey α α 3 →
+    ¬ ∀ α : Ordinal.{0}, OrdinalRamsey α α 3 →
       ∀ n : ℕ, 3 ≤ n → OrdinalRamsey α α n := by
   sorry
 
@@ -93,8 +97,8 @@ end erdos_118.variants
 
 /-- **Monotonicity in the blue side.** If the ordinal Ramsey relation holds with blue
 target $\gamma$, it holds with any smaller blue target $\gamma' \le \gamma$. In
-particular a failure of $\alpha \to (\alpha, n)^2$ for some $n \ge 3$ is genuinely
-stronger than a failure of $\alpha \to (\alpha, 3)^2$. -/
+particular, a failure of $\alpha \to (\alpha, 3)^2$ implies a failure of
+$\alpha \to (\alpha, n)^2$ for every $n \ge 3$. -/
 @[category test, AMS 3]
 theorem ordinalRamsey_mono_blue {α β γ γ' : Ordinal.{u}}
     (hγ : γ' ≤ γ) (h : OrdinalRamsey α β γ) :
