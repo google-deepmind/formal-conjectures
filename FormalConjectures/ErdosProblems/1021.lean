@@ -67,9 +67,9 @@ have $c_k \to 0$ as $k \to \infty$. The graph $G_k$ is the $1$-subdivision of $K
 it is the $6$-cycle. This was proved by Conlon and Lee [CoLe21] with $c_k = 6^{-k}$, improved to
 $c_k = \frac{1}{4k - 6}$ by Janzer [Ja19]; see `erdos_1021.variants.janzer`.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1021.lean#L2359"]
-theorem erdos_1021 : answer(True) ↔
+theorem erdos_1021 :
     ∀ k : ℕ, 3 ≤ k → ∃ c : ℝ, 0 < c ∧
       (fun n : ℕ ↦ (SimpleGraph.extremalNumber n (cliqueSubdivision k) : ℝ)) =O[atTop]
         fun n : ℕ ↦ (n : ℝ) ^ (3 / 2 - c) := by

@@ -52,9 +52,9 @@ always. Note that $f(\binom{n}{2})= 0$, taking $K_n$. Solved by Alon [Al96], who
 $f(n^2/2)\gg n^{1/2}$, and also showed that $f(m)\ll m^{1/4}$ for all $m$. The best possible
 constant in $f(m)\leq Cm^{1/4}$ is unknown.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos127.lean#L585"]
-theorem erdos_127 : answer(True) ↔ ∃ m : ℕ → ℕ, Tendsto m atTop atTop ∧
+theorem erdos_127 : ∃ m : ℕ → ℕ, Tendsto m atTop atTop ∧
     Tendsto (fun i => f (m i)) atTop atTop := by
   sorry
 

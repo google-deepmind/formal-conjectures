@@ -51,6 +51,8 @@ noncomputable def maxBoundaryLength (f : ℂ[X]) : ℝ≥0∞ :=
   ⨆ z ∈ {w : ℂ | ‖f.eval w‖ < 1},
     Erdos1041.length (frontier (connectedComponentIn {w : ℂ | ‖f.eval w‖ < 1} z))
 
+def erdos_1044.answer : ℝ≥0∞ := 2
+
 /--
 Let $f(z)=\prod_{i=1}^n(z-z_i)\in\mathbb{C}[x]$ where $\lvert z_i\rvert\leq 1$ for all $i$.
 If $\Lambda(f)$ is the maximum of the lengths of the boundaries of the connected components of
@@ -64,9 +66,9 @@ A problem of Erdős, Herzog, and Piranian [EHP58].
 This has been resolved by Tang, who proved that the infimum of $\Lambda(f)$ over all such $f$
 is $2$.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1044.lean"]
+@[category research solved, question value, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1044.lean"]
 theorem erdos_1044 :
-    IsGLB {L : ℝ≥0∞ | ∃ f : ℂ[X], IsAdmissible f ∧ maxBoundaryLength f = L} answer(2) := by
+    IsGLB {L : ℝ≥0∞ | ∃ f : ℂ[X], IsAdmissible f ∧ maxBoundaryLength f = L} erdos_1044.answer := by
   sorry
 
 /--
