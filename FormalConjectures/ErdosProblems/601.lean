@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 601
@@ -22,11 +24,15 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/601](https://www.erdosproblems.com/601)
 
 *References:*
-- [EHM70] Erdős, P.; Hajnal, A.; Milner, E.C. *On sets of almost disjoint subsets of a set.*
-  Acta Math. Acad. Sci. Hungar. (1968), 209–218.
+- [EHM70] Erdős, P.; Hajnal, A.; Milner, E.C. *Set mappings and polarized partition relations.*
+  Combinatorial theory and its applications, I–III (Balatonfüred, 1969) (1970), 327–363.
+- [Er81] Erdős, P. *On the combinatorial problems which I would most like to see solved.*
+  Combinatorica 1 (1981), 25–42, Section VII.
 - [La90] Larson, J.A. *Martin's Axiom and ordinal graphs: large independent sets or infinite
-  paths.* European J. Combin. (1990), 117–124.
+  paths.* Ann. Pure Appl. Logic 47 (1990), 31–39.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal SimpleGraph
 
@@ -49,24 +55,25 @@ def HasPathOrIndepSetOfType (α : Ordinal.{u}) : Prop :=
     (∃ f : ℕ → α.ToType, Function.Injective f ∧ ∀ n, G.Adj (f n) (f (n + 1))) ∨
     (∃ s : Set α.ToType, G.IsIndepSet s ∧ typeLT s = α)
 
+def erdos_601.answer : Ordinal.{0} → Prop := by sorry
+
 /--
 **Erdős Problem 601** ($500 prize).
 
 For which limit ordinals $\alpha$ does `HasPathOrIndepSetOfType α` hold?
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_601 :
     ∀ α : Ordinal.{0}, Order.IsSuccLimit α →
       (HasPathOrIndepSetOfType α ↔
-        (answer(sorry) : Ordinal.{0} → Prop) α) := by
+        erdos_601.answer α) := by
   sorry
 
 /--
-**Universal variant**: the strong statement that `HasPathOrIndepSetOfType α` holds for
-*every* limit ordinal $\alpha$. -/
+**Erdős–Hajnal–Milner conjecture** [Er81, Section VII]: every graph on a limit ordinal
+$\alpha$ contains an infinite path or an independent set of order type $\alpha$. -/
 @[category research open, AMS 5]
 theorem erdos_601.variants.universal :
-    answer(sorry) ↔
     ∀ α : Ordinal.{0}, Order.IsSuccLimit α → HasPathOrIndepSetOfType α := by
   sorry
 
@@ -86,10 +93,10 @@ theorem erdos_hajnal_milner_1970 :
   sorry
 
 /--
-**$250 sub-question at $\omega_1^{\omega+2}$**: Does `HasPathOrIndepSetOfType (ω₁^{ω+2})` hold?
-
-Erdős offered $250 specifically for this case, the first ordinal not covered by the
-Erdős–Hajnal–Milner theorem.
+**Erdős–Hajnal–Milner conjecture at $\omega_1^{\omega+2}$** [Er81, Section VII]: every
+graph on $\omega_1^{\omega+2}$ contains an infinite path or an independent set of that
+order type. Erdős conjectured the positive answer. This is the first limit ordinal not
+covered by the Erdős–Hajnal–Milner theorem.
 -/
 @[category research open, AMS 5]
 theorem omega_1_omega_plus_2 :
