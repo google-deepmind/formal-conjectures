@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 905
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   maximum number of triangles with a common edge in a graph*. C. R. Acad. Bulgare Sci. (1979),
   1315-1318.
 -/
+
+@[expose] public section
 
 namespace Erdos905
 

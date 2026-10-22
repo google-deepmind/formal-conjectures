@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 470
 
 *Reference:* [erdosproblems.com/470](https://www.erdosproblems.com/470)
 -/
+
+@[expose] public section
 
 namespace Erdos470
 
@@ -37,15 +40,15 @@ def AbundancyIndex (n : ℕ) : ℚ := (∑ d ∈ n.divisors, d) / n
 /--
 Are there any odd weird numbers?
 -/
-@[category research open, AMS 11]
-theorem erdos_470.parts.i : answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
+@[category research open, question, AMS 11]
+theorem erdos_470.parts.i : ∃ n : ℕ, n.Weird ∧ Odd n := by
   sorry
 
 /--
 Are there infinitely many primitive weird numbers?
 -/
-@[category research open, AMS 11]
-theorem erdos_470.parts.ii : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
+@[category research open, question, AMS 11]
+theorem erdos_470.parts.ii : Set.Infinite PrimitiveWeird := by
   sorry
 
 /--

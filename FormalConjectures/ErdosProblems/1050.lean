@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1050
@@ -35,6 +36,8 @@ A formal Lean proof is given in an external repository,
 [`gotrevor/lean-gallery`](https://github.com/gotrevor/lean-gallery), formalized by Trevor Morris with
 Claude Code and Harmonic's Aristotle.
 -/
+
+@[expose] public section
 
 namespace Erdos1050
 
@@ -77,11 +80,10 @@ stronger than the irrationality established by Borwein [Bo91]. This remains open
 Two exclusions make the series well-posed and the claim non-vacuous, exactly as in Borwein's theorem:
 $t \ne -2^n$ for all $n \ge 1$ (so no denominator vanishes), and $t \ne 0$ (at $t = 0$ the series is
 the rational $\sum_{n \ge 1} 2^{-n} = 1$, hence not transcendental). -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1050.variants.transcendental :
-    answer(sorry) ↔
-      ∀ t : ℤ, t ≠ 0 → (∀ n : ℕ, 1 ≤ n → t ≠ -(2 : ℤ) ^ n) →
-        Transcendental ℚ (∑' n : ℕ, (1 : ℝ) / ((2 : ℝ) ^ (n + 1) + (t : ℝ))) := by
+    ∀ t : ℤ, t ≠ 0 → (∀ n : ℕ, 1 ≤ n → t ≠ -(2 : ℤ) ^ n) →
+      Transcendental ℚ (∑' n : ℕ, (1 : ℝ) / ((2 : ℝ) ^ (n + 1) + (t : ℝ))) := by
   sorry
 
 end Erdos1050

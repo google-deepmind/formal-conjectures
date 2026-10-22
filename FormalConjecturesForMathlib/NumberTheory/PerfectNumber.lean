@@ -17,6 +17,13 @@ module
 
 public import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
+/-!
+# Iterated perfect numbers
+
+A positive integer is $(m,k)$-perfect if the $m$-fold iterate of the sum-of-divisors
+function equals $k$ times that integer.
+-/
+
 @[expose] public section
 
 open scoped ArithmeticFunction.sigma
@@ -29,5 +36,10 @@ the $m$-th iterate of the sum-of-divisors function $\sigma$.
 -/
 def IsPerfectFor (n m k : ℕ) : Prop :=
   0 < n ∧ Nat.iterate (fun x => σ 1 x) m n = k * n
+
+/-- Zero is excluded from the definition of an iterated perfect number. -/
+@[simp]
+theorem not_isPerfectFor_zero (m k : ℕ) : ¬ IsPerfectFor 0 m k := by
+  simp [IsPerfectFor]
 
 end Nat

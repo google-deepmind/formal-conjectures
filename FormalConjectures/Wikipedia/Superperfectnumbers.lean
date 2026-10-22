@@ -13,19 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # (m,k)-perfect numbers
 
-An integer `n : ℤ` is `(m,k)-perfect` if `σᵐ(n) = kn` where `σᵐ` is the mᵗʰ iterate of the
-sum of divisors function.
+A positive integer $n$ is $(m,k)$-perfect if $\sigma^m(n)=kn$, where $\sigma^m$ is the
+$m$-th iterate of the sum-of-divisors function.
 
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Superperfect_number#Generalizations)
  - [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#General)
 -/
+
+@[expose] public section
 
 open ArithmeticFunction.sigma
 
