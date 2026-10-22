@@ -39,7 +39,9 @@ vertex-disjoint $4$-cycles.
 
 A conjecture of Erdős and Faudree. Proved by Wang [Wa10].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos577.lean"]
 theorem erdos_577 (k : ℕ) (G : SimpleGraph (Fin (4 * k)))
     (hG : 2 * k ≤ G.minDegree) :
     ∃ cycles : Fin k → (cycleGraph 4).Copy G,
