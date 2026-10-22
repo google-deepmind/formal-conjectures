@@ -75,6 +75,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.SetTheory.PartitionRelation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.AnnihilationNumber
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Boundary
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Chordal
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
@@ -95,6 +96,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColourin
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Homogeneous
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Hypercube
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
