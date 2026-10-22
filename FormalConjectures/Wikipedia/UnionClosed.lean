@@ -64,6 +64,16 @@ theorem union_closed
   sorry
 
 /--
+The **union-closed sets constant**: the largest $c$ such that every union-closed family of subsets
+of a nonempty finite ground set, other than $\{\emptyset\}$, has an element that belongs to at
+least a $c$ fraction of its sets. The union-closed sets conjecture states that $c = 1/2$.
+-/
+@[optimization_constant "6a"]
+noncomputable def unionClosedConstant : ℝ :=
+  sSup {c : ℝ | ∀ (N : ℕ) (A : Finset (Finset (Fin (N + 1)))), A ≠ {∅} → IsUnionClosed A →
+    ∃ i, c * #A ≤ #{x ∈ A | i ∈ x}}
+
+/--
 Yu [Yu23] showed that the union-closed sets conjecture holds with a constant of approximately
 0.38234 instead of 1/2.
 [Yu23] Yu, Lei (2023). "Dimension-free bounds for the union-closed sets conjecture". Entropy. 25 (5): 767.
