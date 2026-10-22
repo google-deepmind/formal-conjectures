@@ -77,7 +77,7 @@ This weak formulation was proved by OpenAI [OAI26].
 -/
 @[category research solved, question, AMS 52,
   formal_proof using lean4 at
-    "https://github.com/MendozaLab/erdos-experiments/blob/09f72c57ed2d98906b9cf03bff2091f6fe73807f/proofs/erdos604/Erdos604Proof/ExternalApplication.lean"]
+    "https://github.com/MendozaLab/erdos-experiments/blob/09f72c57ed2d98906b9cf03bff2091f6fe73807f/proofs/erdos604/Erdos604Proof/ExternalApplication.lean#L17"]
 theorem erdos_604 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
       (n : ℝ) ^ (1 - ε) ≤ (pinnedDistinctDistances n : ℝ) := by
