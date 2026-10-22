@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 597
@@ -24,9 +26,9 @@ import FormalConjecturesUtil
 *References:*
 - [Er87] Erdős, P., *Some problems on finite and infinite graphs*. Logic and combinatorics
   (Arcata, Calif., 1985) (1987), 223-228.
-- [Va99] Various, *Some of Paul's favorite problems*. Booklet produced for the conference
-  "Paul Erdős and his mathematics", Budapest, July 1999 (1999), problem 7.84.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal
 open scoped Cardinal Ordinal
@@ -52,13 +54,13 @@ def OrdinalGraphRamsey {W : Type*} (α β : Ordinal.{0}) (G : SimpleGraph W) : P
       ∀ a b, G.Adj a b → blue.Adj (f a) (f b))
 
 /--
-**Erdős Problem 597** [Er87] [Va99, 7.84]. Let $G$ be a graph on at most $\aleph_1$
+**Erdős Problem 597** [Er87]. Let $G$ be a graph on at most $\aleph_1$
 vertices which contains no $K_4$ and no $K_{\aleph_0,\aleph_0}$ (the complete bipartite
 graph with $\aleph_0$ vertices in each class). Is it true that
 $$\omega_1^2 \to (\omega_1 \omega, G)^2?$$
 -/
-@[category research open, AMS 3 5]
-theorem erdos_597 : answer(sorry) ↔
+@[category research open, question, AMS 3 5]
+theorem erdos_597 :
     ∀ (W : Type) (G : SimpleGraph W), #W ≤ ℵ_ 1 → G.CliqueFree 4 →
       (¬ ∃ A B : Set W, Disjoint A B ∧ A.Infinite ∧ B.Infinite ∧
         ∀ a ∈ A, ∀ b ∈ B, G.Adj a b) →
@@ -66,12 +68,12 @@ theorem erdos_597 : answer(sorry) ↔
   sorry
 
 /--
-**Erdős Problem 597, finite case** [Er87] [Va99, 7.84]. Is it true that
+**Erdős Problem 597, finite case** [Er87]. Is it true that
 $\omega_1^2 \to (\omega_1 \omega, G)^2$ for every finite $K_4$-free graph $G$?
 (A finite graph contains no $K_{\aleph_0,\aleph_0}$, so that hypothesis is vacuous.)
 -/
-@[category research open, AMS 3 5]
-theorem erdos_597.variants.finite : answer(sorry) ↔
+@[category research open, question, AMS 3 5]
+theorem erdos_597.variants.finite :
     ∀ (W : Type) [Fintype W] (G : SimpleGraph W), G.CliqueFree 4 →
       OrdinalGraphRamsey ((ω_ 1) ^ (2 : ℕ)) ((ω_ 1) * ω) G := by
   sorry
