@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Twin prime conjecture
@@ -24,15 +25,17 @@ import FormalConjecturesUtil
 - [Twin Primes Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Twin_prime#Twin_prime_conjecture)
 -/
 
+@[expose] public section
+
 
 namespace TwinPrimes
 
 /--
 Are there infinitely many primes p such that p + 2 is prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem twin_primes :
-    answer(sorry) ↔ {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite := by
+    {p : ℕ | Prime p ∧ Prime (p + 2)}.Infinite := by
   sorry
 
 end TwinPrimes

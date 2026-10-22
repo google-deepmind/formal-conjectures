@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 818
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [So09d] Solymosi, József, *Bounding multiplicative energy by the sumset*. Adv. Math. (2009),
   402-408.
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 
@@ -38,8 +41,8 @@ This was proved by Solymosi [So09d], in the strong form
 $$\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{\log \lvert A\rvert}.$$
 See also [52].
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos818.lean"]
-theorem erdos_818 : answer(True) ↔
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos818.lean"]
+theorem erdos_818 :
     ∀ K : ℝ, 0 < K → ∃ C : ℝ, 0 < C ∧ ∃ c : ℝ, 0 < c ∧
       ∀ A : Finset ℤ, 2 ≤ A.card → ((A + A).card : ℝ) ≤ K * (A.card : ℝ) →
         c * (A.card : ℝ) ^ 2 / (Real.log (A.card : ℝ)) ^ C ≤ ((A * A).card : ℝ) := by
