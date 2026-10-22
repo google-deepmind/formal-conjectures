@@ -28,9 +28,11 @@ public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
+public import FormalConjecturesForMathlib.Algebra.Polynomial.Irreducible
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.Algebra.Ring.PythagorasNumber
+public import FormalConjecturesForMathlib.Algebra.WeylAlgebra
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.MinimalDiscriminant
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Regulator
@@ -56,6 +58,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumse
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
+public import FormalConjecturesForMathlib.Combinatorics.Enumerative.Partition.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Extremal
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Finite
@@ -75,6 +78,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Chordal
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.List
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
@@ -91,6 +95,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColourin
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Homogeneous
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Hypercube
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
