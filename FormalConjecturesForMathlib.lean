@@ -95,6 +95,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColourin
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Homogeneous
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Hypercube
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
