@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 521
 
 *Reference:* [erdosproblems.com/521](https://www.erdosproblems.com/521)
 -/
+
+@[expose] public section
 
 namespace Erdos521
 
@@ -77,8 +80,8 @@ The answer is no: this almost-sure limit fails. This result was obtained first b
 deserve the credit for the problem; the link is to an independent machine-checked proof by
 Star Fleet Math.
 -/
-@[category research solved, AMS 11 60, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-521/Research/LateFourthFinal.lean"]
-theorem erdos_521 : answer(False) ↔ Claim := by
+@[category research solved, question, AMS 11 60, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-521/Research/LateFourthFinal.lean"]
+theorem erdos_521 : ¬ Claim := by
   sorry
 
 end Erdos521

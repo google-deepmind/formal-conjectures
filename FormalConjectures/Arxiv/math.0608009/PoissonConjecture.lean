@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.JacobianConjecture
+public import FormalConjecturesUtil
 
 /-!
 # The Poisson Conjecture
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
   by *Hyman Bass, Edwin H. Connell, David Wright*, Bull. Amer. Math. Soc. 7 (1982), 287–330.
 - [Alp26] [Counterexample to the Jacobian conjecture](https://x.com/__alpoge__/status/2079028340955197566)
   by *Levent Alpöge* (2026), disproving the Jacobian conjecture in dimension $3$
+- [Lon26] [An Explicit Counterexample to the Rank-Two Poisson Conjecture](https://arxiv.org/abs/2608.23777)
+  by *Christopher D. Long* (2026), disproving $PC_2$
 
 The Poisson Conjecture $PC_n$ ([AvdE07], Notations 5) asserts that, over a field of
 characteristic zero, every endomorphism of the `n`-th canonical Poisson algebra
@@ -44,7 +48,8 @@ dimension $n ≥ 3$ by padding with identity coordinates — $PC_n$ is false for
 composing the counterexample's failure of $JC_3$ through $PC_3 \Longrightarrow DC_3 \Longrightarrow JC_3$ refutes
 $PC_3$, and directly, the cotangent (symplectic) lift of the counterexample map
 ([AvdE07], Theorem 1 in reverse) is a non-invertible Poisson endomorphism of $P_3(K)$.
-The cases $n = 1$ and $n = 2$ remain open.
+$PC_2$ is false as well, by the explicit rank-two counterexample of [Lon26]. Only $n = 1$
+remains open.
 
 Indexing note: we index the $2n$ variables of $P_n(K)$ by `Fin n ⊕ Fin n`, with
 `Sum.inl i` playing the role of $X_i$ and `Sum.inr i` the role of $X_{i+n}$ of [AvdE07],
@@ -52,9 +57,11 @@ so that the canonical bracket reads $\{X_i, X_{i+n}\} = 1$; see
 `MvPolynomial.poissonBracket`.
 -/
 
+@[expose] public section
+
 namespace Arxiv.«math.0608009»
 
-open MvPolynomial
+open MvPolynomial JacobianConjecture
 
 variable {K : Type*} [Field K] [CharZero K]
 
@@ -76,16 +83,34 @@ def PoissonConjectureFor (n : ℕ) : Prop :=
   ∀ φ : MvPolynomial (Fin n ⊕ Fin n) K →ₐ[K] MvPolynomial (Fin n ⊕ Fin n) K,
     IsPoissonEndomorphism φ → Function.Bijective φ
 
-variable (K) in
-/-- The Jacobian Conjecture in dimension `m`: every polynomial endomorphism of $K^m$ with
-unit Jacobian determinant has a polynomial inverse. This is the per-dimension form of the
-statement in `FormalConjectures.Wikipedia.JacobianConjecture`, which quantifies over all
-finite variable types at once. -/
-def JacobianConjectureFor (m : ℕ) : Prop :=
-  ∀ F : RegularFunction K (Fin m) (Fin m), IsUnit F.Jacobian.det →
-    ∃ G : RegularFunction K (Fin m) (Fin m),
-      G.comp F = RegularFunction.id K (Fin m) ∧
-      F.comp G = RegularFunction.id K (Fin m)
+omit [CharZero K] in
+/-- With one canonical pair, the Poisson endomorphism condition is one bracket equation. -/
+@[category API, AMS 17]
+theorem isPoissonEndomorphism_one_iff
+    (φ : MvPolynomial (Fin 1 ⊕ Fin 1) K →ₐ[K] MvPolynomial (Fin 1 ⊕ Fin 1) K) :
+    IsPoissonEndomorphism φ ↔
+      poissonBracket (φ (X (Sum.inl 0))) (φ (X (Sum.inr 0))) = 1 := by
+  constructor
+  · intro h
+    simpa using h (Sum.inl 0) (Sum.inr 0)
+  · intro h v w
+    rcases v with v | v <;> rcases w with w | w <;>
+      have hv : v = 0 := Subsingleton.elim _ _ <;>
+      have hw : w = 0 := Subsingleton.elim _ _ <;> subst v <;> subst w
+    · simp
+    · simpa using h
+    · rw [poissonBracket_swap]
+      simp [h]
+    · simp
+
+omit [CharZero K] in
+/-- The dimension-one conjecture asks for bijectivity from a single bracket equation. -/
+@[category API, AMS 14 17]
+theorem poissonConjectureFor_one_iff : PoissonConjectureFor K 1 ↔
+    ∀ φ : MvPolynomial (Fin 1 ⊕ Fin 1) K →ₐ[K] MvPolynomial (Fin 1 ⊕ Fin 1) K,
+      poissonBracket (φ (X (Sum.inl 0))) (φ (X (Sum.inr 0))) = 1 →
+        Function.Bijective φ := by
+  simp only [PoissonConjectureFor, isPoissonEndomorphism_one_iff]
 
 /--
 The **Poisson Conjecture** ([AvdE07], the characteristic zero case): for every `n`, every
@@ -109,13 +134,22 @@ theorem poisson_conjecture.variants.dimension_one : PoissonConjectureFor K 1 := 
   sorry
 
 /--
-The Poisson Conjecture in dimension $2$ ($PC_2$) is open. Since the Jacobian conjecture is
-false in every dimension $n ≥ 3$ [Alp26], no known implication bounds $PC_2$ from above
-any more; the chain of [AvdE07], Theorem 7 places it as the strongest of the remaining
-open conjectures $PC_2 \Longrightarrow DC_2 \Longrightarrow JC_2 \Longrightarrow PC_1 \Longrightarrow DC_1$.
+The Poisson Conjecture is false in dimension $2$ ($PC_2$). [Lon26] gives four explicit
+polynomials $R, T, D, S \in \mathbb{Q}[x, q, p, z]$ with
+$\{R, D\} = \{T, S\} = 1$ and $\{R, T\} = \{R, S\} = \{D, T\} = \{D, S\} = 0$, so that
+$X_1 \mapsto R$, $X_2 \mapsto T$, $X_3 \mapsto D$, $X_4 \mapsto S$ is a Poisson endomorphism of
+$P_2(K)$. It is not surjective: in the coordinates $(X_1, X_2, X_3, X_4)$ the two rational
+points $(0, 0, 1/24, -1/8)$ and $(1, 2/3, 247/96, -89/64)$ have the same image under
+$(R, T, D, S)$, so every polynomial in the image of the endomorphism takes equal values at
+them, while $X_1$ does not. The formulas have rational coefficients and the two points are
+rational, so the argument applies over every field of characteristic zero.
+
+This does not settle any conjecture further down the chain of [AvdE07], Theorem 7, which only
+propagates falsity upwards: $\lnot PC_2$ gives $\lnot JC_4$, already known from [Alp26].
+$DC_2$, $JC_2$ (Keller's problem), $PC_1$ and $DC_1$ all remain open.
 -/
-@[category research open, AMS 14 17]
-theorem poisson_conjecture.variants.dimension_two : PoissonConjectureFor K 2 := by
+@[category research solved, AMS 14 17]
+theorem poisson_conjecture.variants.dimension_two : ¬ PoissonConjectureFor K 2 := by
   sorry
 
 /--
@@ -132,11 +166,11 @@ theorem poisson_conjecture.variants.dimension_three : ¬ PoissonConjectureFor K 
   sorry
 
 /--
-The Poisson Conjecture is false in every dimension $n ≥ 3$, by padding the dimension $3$
-counterexample with identity coordinates.
+The Poisson Conjecture is false in every dimension $n ≥ 2$, by padding the dimension $2$
+counterexample of [Lon26] with identity canonical pairs.
 -/
 @[category research solved, AMS 14 17]
-theorem poisson_conjecture.variants.dimension_ge_three (n : ℕ) (hn : 3 ≤ n) :
+theorem poisson_conjecture.variants.dimension_ge_two (n : ℕ) (hn : 2 ≤ n) :
     ¬ PoissonConjectureFor K n := by
   sorry
 
@@ -146,7 +180,7 @@ The Jacobian conjecture in dimension $2n$ implies the Poisson conjecture in dime
 -/
 @[category research solved, AMS 14 17]
 theorem poisson_conjecture.variants.jacobian_implication (n : ℕ)
-    (h : JacobianConjectureFor K (2 * n)) : PoissonConjectureFor K n := by
+    (h : JacobianConjectureProp K (Fin (2 * n))) : PoissonConjectureFor K n := by
   sorry
 
 section Tests
