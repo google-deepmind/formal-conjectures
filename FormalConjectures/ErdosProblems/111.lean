@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 111
@@ -42,6 +44,8 @@ See also Erdős Problem [74].
   formulation: "any subgraph of $G$ on $n$ vertices can be made bipartite after deleting at most
   $h_G(n)$ edges."
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Cardinal SimpleGraph Set
 
