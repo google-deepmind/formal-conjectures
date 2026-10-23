@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
    Lockhart, E., Le, Q. V., Gokturk, B., Luong, T., Pfister, T., & Peng, N. (2026). _LEAP:
    Supercharging LLMs for Formal Mathematics with Agentic Frameworks_.
    [arXiv:2606.03303](https://arxiv.org/abs/2606.03303).
+ * [PALOMAR-2026-10-23-000014](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-23-000014&version=1)
 -/
 
 @[expose] public section
@@ -177,7 +178,7 @@ $\lfloor \log_p (k/2) \rfloor$ in the exponent and then with $\lfloor \log_p (k 
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/Paulee314/erdos1063/blob/6b4f9666c8834395ef1669634536350223fb270f/lean/Erdos1063Lower.lean#L513"]
+    "https://github.com/Paulee314/erdos1063-lean/blob/ba104cbcf0bb7c555a8b2f0d58018989a08c638e/Solution.lean#L34"]
 theorem erdos_1063.variants.lower_bound {k : ℕ} (hk : 2 ≤ k) :
     ∏ p ∈ k.primeFactors, p ^ (padicValNat p k + Nat.log p (k - 1)) ≤ n k := by
   sorry
@@ -192,7 +193,7 @@ The user rickyc proved this in the comments at
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/Paulee314/erdos1063/blob/6b4f9666c8834395ef1669634536350223fb270f/lean/Erdos1063Lower.lean#L524"]
+    "https://github.com/Paulee314/erdos1063-lean/blob/ba104cbcf0bb7c555a8b2f0d58018989a08c638e/Solution.lean#L42"]
 theorem erdos_1063.variants.exception_dvd {n k e : ℕ} (hk : 2 ≤ k) (h : 2 * k ≤ n) (he : e < k)
     (hgood : ∀ i < k, i ≠ e → (n - i) ∣ n.choose k) :
     e = n % k ∧
