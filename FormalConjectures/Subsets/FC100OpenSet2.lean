@@ -135,7 +135,7 @@ def problems : List Name := [
   decl_name% RiemannHypothesis.riemannHypothesis,
   decl_name% ComplexityTheory.P_ne_NP,
   decl_name% GRH.generalized_riemann_hypothesis,
-  decl_name% BSD.weak_birch_swinnerton_dyer_conjecture,
+  decl_name% WeierstrassCurve.Affine.Rat.weakBSD,
   decl_name% NavierStokes.navier_stokes_existence_and_smoothness_R3,
   decl_name% ABC.abc,
   decl_name% AlgebraicGeometry.resolution_of_singularities,

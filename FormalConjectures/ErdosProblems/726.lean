@@ -53,7 +53,8 @@ theorem erdos_726 :
 /--
 The classical estimate of Mertens states that $\sum_{p\leq n}\frac{1}{p}\sim \log\log n$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/74888affffcf320d798f78a2fb45d13c86704d89/erdos-726/Solution.lean#L36"]
 theorem erdos_726.variants.mertens_estimate :
     (fun n : ℕ ↦ ∑ p ∈ (range (n + 1)).filter (fun p ↦ p.Prime), (1 : ℝ) / ((p : ℕ) : ℝ))
     ~[atTop] (fun n : ℕ ↦ Real.log (Real.log (n : ℝ))) := by
