@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Lovász's conjecture on Hamiltonian paths in vertex-transitive graphs (1970)
@@ -31,6 +33,8 @@ import FormalConjecturesUtil
 * [KM09] Kutnar, K. and Marušič, D. (2009). "Hamilton cycles and paths in vertex-transitive
   graphs — current directions." *Discrete Math.* 309, pp. 5491--5500.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
