@@ -25,8 +25,8 @@ public import FormalConjecturesUtil
 * [BJR16] Bonato, A., Janssen, J., and Roshanbin, E. (2016). "How to burn a graph."
   *Internet Math.* 12, pp. 85--100.
   [arXiv:1507.06524](https://arxiv.org/abs/1507.06524)
-* [NT25] Norin, S. and Turcotte, J. (2025). "The burning number conjecture holds
-  asymptotically." *J. Combin. Theory Ser. B* 171, pp. 208--235.
+* [NT24] Norin, S. and Turcotte, J. (2024). "The burning number conjecture holds
+  asymptotically." *J. Combin. Theory Ser. B* 168, pp. 208--235.
   [arXiv:2207.04035](https://arxiv.org/abs/2207.04035)
 -/
 
@@ -86,12 +86,12 @@ theorem burning_number_conjecture.variants.path (n : ℕ) (hn : 1 ≤ n) :
   sorry
 
 /--
-**Norin–Turcotte (2025): the burning number conjecture holds asymptotically.**
+**Norin–Turcotte (2024): the burning number conjecture holds asymptotically.**
 
 For every `ε > 0`, every sufficiently large connected graph on `n` vertices can be burned in
 at most `(1 + ε) √n` rounds.
 
-*Reference:* [NT25].
+*Reference:* [NT24].
 -/
 @[category research solved, AMS 5]
 theorem burning_number_conjecture.variants.norin_turcotte (ε : ℝ) (hε : 0 < ε) :
