@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Six standard deviations suffice (Spencer's theorem)
@@ -47,6 +48,8 @@ not just $n$ of them.
   SIAM J. Comput. **44** (2015), 1573–1582](https://doi.org/10.1137/130929400)
 -/
 
+@[expose] public section
+
 namespace SixStandardDeviations
 
 /--
@@ -75,11 +78,30 @@ the benchmark that Spencer's theorem improves upon by removing the logarithmic
 factor. (The shift $n + 2$ inside the logarithm is a harmless normalization keeping
 it positive for $n \in \{0, 1\}$.)
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/Lemmy00/spencer-random-coloring-lean/blob/a691214a7263c1010fdd10560091e9f8cfce903a/SpencerRandomColoring/RandomBound.lean#L37"]
 theorem six_standard_deviations.variants.random_bound :
     ∃ K : ℝ, 0 < K ∧ ∀ (n : ℕ) (S : Fin n → Finset (Fin n)),
       ∃ χ : Fin n → ℝ, (∀ j, χ j = 1 ∨ χ j = -1) ∧
         ∀ i, |∑ j ∈ S i, χ j| ≤ K * Real.sqrt (n * Real.log (n + 2)) := by
+  sorry
+
+/--
+**A universal discrepancy bound**
+
+There is a positive universal constant $K$ such that every family of $n$ subsets
+of the `n` points has a colouring with discrepancy at most $K\sqrt{n}$ in every
+row. This qualitative form has the optimal order of growth, but it does not assert
+the constant $6$ in Spencer's theorem.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/Lemmy00/spencer-universal-bound-lean/blob/e8d83c0a99f7c1be5a04aa155164bc477d2c6df3/Spencer/UniversalBound.lean#L15"]
+theorem six_standard_deviations.variants.universal_bound :
+    ∃ K : ℝ, 0 < K ∧ ∀ (n : ℕ) (S : Fin n → Finset (Fin n)),
+      ∃ χ : Fin n → ℝ, (∀ j, χ j = 1 ∨ χ j = -1) ∧
+        ∀ i, |∑ j ∈ S i, χ j| ≤ K * Real.sqrt n := by
   sorry
 
 /--

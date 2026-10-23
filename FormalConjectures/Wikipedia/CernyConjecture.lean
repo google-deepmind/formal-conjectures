@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Černý Conjecture
@@ -46,6 +47,8 @@ We use Mathlib's `DFA α σ` (from `Mathlib.Computability.DFA`), together with t
   J. Autom. Lang. Comb. Vol. 24 (2019), 367--373.
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace CernyConjecture
@@ -53,9 +56,9 @@ namespace CernyConjecture
 /-- **Černý Conjecture**: Every synchronizing DFA with $n$ states admits a
 synchronizing word of length at most $(n - 1)^2$.
 -/
-@[category research open, AMS 68]
+@[category research open, question, AMS 68]
 theorem cerny_conjecture :
-    answer(sorry) ↔ ∀ {α : Type*} {σ : Type*} [Fintype σ] (M : DFA α σ) (hM : M.IsSynchronizing) ,
+    ∀ {α : Type*} {σ : Type*} [Fintype σ] (M : DFA α σ) (hM : M.IsSynchronizing) ,
     ∃ w : List α, M.IsSynchronizingWord w ∧ w.length ≤ (Fintype.card σ - 1)^2 := by
   sorry
 

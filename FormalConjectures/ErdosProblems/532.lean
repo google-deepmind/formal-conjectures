@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 532
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [Hi74] Hindman, Neil, *Finite sums from sequences within cells of a partition of $\mathbb{N}$*. J. Combinatorial Theory Ser. A (1974), 1-11.
 -/
 
+@[expose] public section
+
 namespace Erdos532
 
 /--
@@ -36,9 +39,9 @@ are monochromatic?
 
 Asked by Graham and Rothschild. Proved by Hindman [Hi74] (for any number of colours).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos532.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos532.lean"]
 theorem erdos_532 :
-    answer(True) ↔ ∀ (c : ℕ → Fin 2),
+    ∀ (c : ℕ → Fin 2),
       ∃ A : Set ℕ, A.Infinite ∧
         ∃ color : Fin 2,
           ∀ S : Finset ℕ, S.Nonempty → ↑S ⊆ A →

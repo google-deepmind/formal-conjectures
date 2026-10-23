@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 22
@@ -40,6 +41,8 @@ and Zhao [FLZ15].
   Ramsey-Turán problem*. Combinatorica 35 (2015), 435--476.
 -/
 
+@[expose] public section
+
 open Filter SimpleGraph
 
 namespace Erdos22
@@ -52,8 +55,9 @@ independent set has size at most $\epsilon n$?
 
 This is true, as proved by Fox, Loh, and Zhao [FLZ15].
 -/
-@[category research solved, AMS 5]
-theorem erdos_22 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos22.lean#L880"]
+theorem erdos_22 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ (n : ℕ) in atTop,
       ∃ G : SimpleGraph (Fin n), G.CliqueFree 4 ∧
         (G.indepNum : ℝ) ≤ ε * n ∧ (n : ℝ) ^ 2 / 8 ≤ G.edgeFinset.card := by
