@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Komlós conjecture
@@ -24,10 +25,14 @@ that for all $n, m$ and all vectors $v\_1, \dots, v\_n \in \mathbb{R}^m$ with
 $\|v\_i\|\_2 \le 1$, there exist signs $\varepsilon\_i \in \{-1, +1\}$ such that
 $$\left\|\sum\_{i=1}^n \varepsilon\_i v\_i\right\|\_\infty \le K.$$
 
-The best known bound is due to Banaszczyk, who proved that one can always achieve
-$O(\sqrt{\log n})$. The Beck–Fiala theorem on the discrepancy of sparse set systems
-is a special case (up to scaling), and the conjecture would imply the Beck–Fiala
+For a long time the best known bound was due to Banaszczyk, who proved that one can always
+achieve $O(\sqrt{\log n})$. The Beck–Fiala theorem on the discrepancy of sparse set systems
+is a special case (up to scaling), and the conjecture implies the Beck–Fiala
 conjecture that set systems of degree $t$ have discrepancy $O(\sqrt{t})$.
+
+The conjecture was proved in September 2026 by Guo, Fang and Lu with $K = 3\sqrt{2\pi}$.
+Karingula and Lovett gave an elementary proof with $K = 36$. A formalisation of their proof is
+recorded in the `formal_proof` attributes below.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Discrepancy_theory#Major_open_problems)
@@ -35,7 +40,13 @@ conjecture that set systems of degree $t$ have discrepancy $O(\sqrt{t})$.
   Random Structures & Algorithms **12** (1998), 351–360](https://doi.org/10.1002/(SICI)1098-2418(199807)12:4%3C351::AID-RSA3%3E3.0.CO;2-S)
 - [J. Spencer, *Six standard deviations suffice*,
   Trans. Amer. Math. Soc. **289** (1985), 679–706](https://doi.org/10.1090/S0002-9947-1985-0784009-0)
+- [S. Guo, E. X. Fang and J. Lu, *Vector balancing via directional total variation*,
+  arXiv:2609.11189](https://arxiv.org/abs/2609.11189)
+- [S. R. Karingula and S. Lovett, *An elementary proof of the Komlós conjecture*,
+  arXiv:2609.20979](https://arxiv.org/abs/2609.20979)
 -/
+
+@[expose] public section
 
 namespace KomlosConjecture
 
@@ -47,8 +58,11 @@ all vectors $v\_1, \dots, v\_n \in \mathbb{R}^m$ with $\|v\_i\|\_2 \le 1$ (encod
 $\sum\_j v\_{ij}^2 \le 1$), there exist signs $\varepsilon\_i \in \{-1, +1\}$ such that
 $\left\|\sum\_i \varepsilon\_i v\_i\right\|\_\infty \le K$, i.e.
 $\left|\sum\_i \varepsilon\_i v\_{ij}\right| \le K$ for every coordinate $j$.
+
+Proved by Guo, Fang and Lu with $K = 3\sqrt{2\pi}$ and by Karingula and Lovett with $K = 36$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/416b6597cb193b6745748fdfef0d64342c71dae9/FormalConjectures/Wikipedia/KomlosConjecture.lean#L64"]
 theorem komlos_conjecture :
     ∃ K : ℝ, 0 < K ∧ ∀ (n m : ℕ) (v : Fin n → Fin m → ℝ),
       (∀ i, ∑ j, (v i j) ^ 2 ≤ 1) →
@@ -63,13 +77,15 @@ There exists a constant $C > 0$ such that for all $n, m \in \mathbb{N}$ and all 
 $v\_1, \dots, v\_n \in \mathbb{R}^m$ with $\|v\_i\|\_2 \le 1$, there exist signs
 $\varepsilon\_i \in \{-1, +1\}$ such that
 $\left\|\sum\_i \varepsilon\_i v\_i\right\|\_\infty \le C \sqrt{\log(n + 2)}$.
-This is the best known bound towards the Komlós conjecture. (The shift $n + 2$ inside
-the logarithm is a harmless normalization keeping it positive for $n \in \{0, 1\}$.)
+This was the best known bound towards the Komlós conjecture before its solution. (The shift
+$n + 2$ inside the logarithm is a harmless normalization keeping it positive for
+$n \in \{0, 1\}$.) It follows from the Komlós conjecture with $C = 36 / \sqrt{\log 2}$.
 
 [W. Banaszczyk, *Balancing vectors and Gaussian measures of n-dimensional convex bodies*,
 Random Structures & Algorithms **12** (1998), 351–360.]
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at
+"https://github.com/mo271/formal-conjectures/blob/416b6597cb193b6745748fdfef0d64342c71dae9/FormalConjectures/Wikipedia/KomlosConjecture.lean#L86"]
 theorem komlos_conjecture.variants.banaszczyk :
     ∃ C : ℝ, 0 < C ∧ ∀ (n m : ℕ) (v : Fin n → Fin m → ℝ),
       (∀ i, ∑ j, (v i j) ^ 2 ≤ 1) →

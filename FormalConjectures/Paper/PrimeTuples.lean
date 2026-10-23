@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Prime Tuples Conjecture
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [FLC07] Friedlander, J. B. and Luca, F. and Stoiciu, M., On the irrationality of a
 divisor function series. Integers (2007).
 -/
+
+@[expose] public section
 
 open Nat
 
