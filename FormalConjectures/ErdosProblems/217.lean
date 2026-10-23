@@ -34,7 +34,8 @@ def erdos_217.answer : Set ℕ := sorry
 
 /-- For which $n$ do there exist $n$ points in $\mathbb{R}^2$, no three on a line and no four on
 a circle, that determine $n-1$ distinct distances whose multiplicities are
-$1,2,\ldots,n-1$? -/
+$1,2,\ldots,n-1$? The condition $n>0$ excludes the empty configuration, since the
+requested number $n-1$ of distances is nonnegative. -/
 @[category research open, question value, AMS 5 52]
 theorem erdos_217 : erdos_217.answer = {n : ℕ | 0 < n ∧ ∃ P : Finset ℝ²,
     P.card = n ∧ InGeneralPosition (P : Set ℝ²) ∧
