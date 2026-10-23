@@ -45,20 +45,18 @@ namespace Erdos1154
 Does there exist, for every $\alpha \in [0, 1]$, a ring in $\mathbb{R}$ with Hausdorff dimension
 $\alpha$?
 -/
-@[category research open, AMS 28]
+@[category research open, question, AMS 28]
 theorem erdos_1154.parts.i :
-    answer(sorry) ↔
-      ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subring ℝ, dimH (R : Set ℝ) = a := by
+    ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subring ℝ, dimH (R : Set ℝ) = a := by
   sorry
 
 /--
 Does there exist, for every $\alpha \in [0, 1]$, a field in $\mathbb{R}$ with Hausdorff dimension
 $\alpha$?
 -/
-@[category research open, AMS 28]
+@[category research open, question, AMS 28]
 theorem erdos_1154.parts.ii :
-    answer(sorry) ↔
-      ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subfield ℝ, dimH (R : Set ℝ) = a := by
+    ∀ a ∈ Icc (0 : ℝ≥0∞) 1, ∃ R : Subfield ℝ, dimH (R : Set ℝ) = a := by
   sorry
 
 /--
