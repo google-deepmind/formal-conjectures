@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Asymptotics of subsets of $\{1, 2, \dots, n\}$ with integer average
@@ -30,6 +31,8 @@ where the coefficients $1, 1, 3, 13, 75, 541, \dots$ are the Fubini numbers (pre
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 - [A000670](https://oeis.org/A000670)
 -/
+
+@[expose] public section
 
 namespace OeisA51293
 

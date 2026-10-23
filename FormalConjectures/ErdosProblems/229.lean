@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 229
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   derivatives of an entire function. Proc. Amer. Math. Soc. (1972), 229--232.
 - [Ha74] Hayman, W. K., Research problems in function theory: new problems. (1974), 155--180.
 -/
+
+@[expose] public section
 
 namespace Erdos229
 
@@ -39,10 +42,10 @@ Solved in the affirmative by Barth and Schneider [BaSc72].
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos229.lean"]
+@[category research solved, question, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos229.lean"]
 theorem erdos_229 :
     letI := Polynomial.algebraPi ℂ ℂ ℂ
-    answer(True) ↔ ∀ (S : ℕ → Set ℂ), (∀ n, derivedSet (S n) = ∅) →
+    ∀ (S : ℕ → Set ℂ), (∀ n, derivedSet (S n) = ∅) →
     ∃ (f : ℂ → ℂ), Transcendental (Polynomial ℂ) f ∧ Differentiable ℂ f ∧ ∀ n ≥ 1,
       ∃ k, ∀ z ∈ S n, iteratedDeriv k f z = 0 := by
   sorry

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1052
 
 *Reference:* [erdosproblems.com/1052](https://www.erdosproblems.com/1052)
 -/
+
+@[expose] public section
 
 namespace Erdos1052
 
@@ -35,9 +38,9 @@ def IsUnitaryPerfect (n : ℕ) : Prop :=
 
 /--
 Are there only finitely many unitary perfect numbers? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1052 :
-    answer(sorry) ↔ {n | IsUnitaryPerfect n}.Finite := by
+    {n | IsUnitaryPerfect n}.Finite := by
   sorry
 
 /--
