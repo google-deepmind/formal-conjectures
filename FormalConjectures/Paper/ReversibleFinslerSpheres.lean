@@ -62,11 +62,12 @@ structure ReversibleMetric (n : ℕ) where
   strongConvex : ∀ (x : Sphere n) (v w : Fiber n x), v ≠ 0 → w ≠ 0 →
     0 < fderiv ℝ (fderiv ℝ (fun u : Fiber n x => value ⟨x, u⟩ ^ 2 / 2)) v w w
 
-/-- The Riemannian subclass: the squared tangent norm is a positive quadratic form. -/
+/-- The Riemannian subclass, using Mathlib's smooth Riemannian metrics. -/
 def IsRiemannian {n : ℕ} (F : ReversibleMetric n) : Prop :=
-  ∀ x : Sphere n, ∃ g : Fiber n x →ₗ[ℝ] Fiber n x →ₗ[ℝ] ℝ,
-    (∀ v w, g v w = g w v) ∧ (∀ v, v ≠ 0 → 0 < g v v) ∧
-      ∀ v, F.value ⟨x, v⟩ ^ 2 = g v v
+  ∃ g : Bundle.ContMDiffRiemannianMetric
+      (𝓡 n) ∞ (EuclideanSpace ℝ (Fin n)) (Fiber n),
+    ∀ (x : Sphere n) (v : Fiber n x),
+      F.value ⟨x, v⟩ ^ 2 = g.inner x v v
 
 /-- The actual energy over one period, using the manifold derivative of the curve. -/
 def energy {n : ℕ} (F : ReversibleMetric n) (γ : ℝ → Sphere n) : ℝ :=
