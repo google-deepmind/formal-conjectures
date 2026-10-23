@@ -79,11 +79,11 @@ theorem lovasz_conjecture.variants.babai
   sorry
 
 /--
-**Christofides–Hladký–Máthé (2014): the dense case.**
+**Christofides–Hladký–Máthé (2014): Hamiltonian-path corollary of the dense case.**
 
 For every $\varepsilon > 0$ there is $n_0$ such that every connected vertex-transitive graph on
-$n \ge n_0$ vertices with minimum degree at least $\varepsilon n$ has a Hamiltonian cycle (and
-hence a Hamiltonian path).
+$n \ge n_0$ vertices with minimum degree at least $\varepsilon n$ has a Hamiltonian path.
+This is a corollary of the Hamiltonian-cycle result in [CHM14, Theorem 2].
 
 *Reference:* [CHM14].
 -/
