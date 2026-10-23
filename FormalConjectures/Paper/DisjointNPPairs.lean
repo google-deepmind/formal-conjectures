@@ -54,7 +54,7 @@ structure IsDisjointCoNPPair (A B : DecisionProblem) : Prop where
   disjoint : ∀ x, ¬(A x = true ∧ B x = true)
 
 /-- The pair `(A, B)` **reduces** to the pair `(A', B')`: a polynomial-time map sends `A` into
-`A'` and `B` into `B'` (a many-one reduction of pairs, [GSSZ04, Definition 3.1]). -/
+`A'` and `B` into `B'` (a many-one reduction of pairs, [GSSZ04, Theorem 2.14]). -/
 def PairReducible (A B A' B' : DecisionProblem) : Prop :=
   ∃ f : List Bool → List Bool, IsPolyTime f ∧
     (∀ x, A x = true → A' (f x) = true) ∧ (∀ x, B x = true → B' (f x) = true)
