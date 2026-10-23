@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős–Hanani conjecture
@@ -44,6 +46,8 @@ satisfying the necessary divisibility conditions.
 - [Ro85] V. Rödl, *On a packing and covering problem*,
   European J. Combin. **6** (1985), 69–78
 -/
+
+@[expose] public section
 
 namespace ErdosHanani
 
