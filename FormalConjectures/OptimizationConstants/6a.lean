@@ -44,11 +44,11 @@ open Finset
 namespace Constant6a
 
 /-- **Tao's Optimization Constant 6a / The union-closed sets conjecture**: the largest $c$ such
-that every union-closed family $A \ne \{\emptyset\}$ of subsets of a finite ground set with $N + 1$
-elements has an element that belongs to at least a $c$ fraction of its sets. -/
+that every union-closed family $A \ne \{\emptyset\}$ of finite subsets of $\mathbb{N}$ has an
+element that belongs to at least a $c$ fraction of its sets. -/
 @[optimization_constant "6a"]
 noncomputable def C6a : ℝ :=
-  sSup {c : ℝ | ∀ (N : ℕ) (A : Finset (Finset (Fin (N + 1)))), A ≠ {∅} →
+  sSup {c : ℝ | ∀ (A : Finset (Finset ℕ)), A ≠ {∅} →
     (∀ᵉ (X ∈ A) (Y ∈ A), X ∪ Y ∈ A) → ∃ i, c * #A ≤ #{x ∈ A | i ∈ x}}
 
 /-- The union-closed sets conjecture of Frankl: $C_{6a} = 1/2$. -/
