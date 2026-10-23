@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1169
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
   pp. 142–144.
 - [Va99] Vaughan, J.E. *Open problems in topology II*, problem 7.85 (1999).
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal
 open scoped Cardinal
