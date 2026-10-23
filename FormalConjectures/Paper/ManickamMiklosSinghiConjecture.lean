@@ -22,13 +22,13 @@ public import FormalConjecturesUtil
 # The Manickam–Miklós–Singhi conjecture (1988)
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/Manickam%E2%80%93Mikl%C3%B3s%E2%80%93Singhi_conjecture)
 * [MM88] Manickam, N. and Miklós, D. (1988). "On the number of nonnegative partial sums of a
   nonnegative sum." *Colloq. Math. Soc. János Bolyai* 52, pp. 385--392.
 * [MS88] Manickam, N. and Singhi, N. M. (1988). "First distribution invariants and EKR theorems."
   *J. Combin. Theory Ser. A* 48, pp. 91--103.
 * [CSS14] Chowdhury, A., Sarkis, G. and Shahriari, S. (2014). "The Manickam–Miklós–Singhi
   conjectures for sets and vector spaces." *J. Combin. Theory Ser. A* 128, pp. 84--103.
+  [arXiv:1309.2212](https://arxiv.org/abs/1309.2212)
 * [Po15] Pokrovskiy, A. (2015). "A linear bound on the Manickam–Miklós–Singhi conjecture."
   *J. Combin. Theory Ser. A* 133, pp. 280--306. [arXiv:1308.2176](https://arxiv.org/abs/1308.2176)
 -/
