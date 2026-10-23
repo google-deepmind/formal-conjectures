@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 775
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [MoMo65] Moon, J. W. and Moser, L., *On cliques in graphs*. Israel J. Math. (1965), 23-28.
 - [Sp71] Spencer, J. H., *On cliques in graphs*. Israel J. Math. (1971), 419-421.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -38,10 +41,10 @@ The answer is no, as proved by Gao [Ga25]: more generally, for any $k\geq 3$, ev
 hypergraph on $n$ vertices contains at most $n-f_k(n)$ different sizes of cliques, where
 $f_k(n)\to \infty$ as $n\to \infty$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos775.lean"]
-theorem erdos_775 : answer(False) ↔
-    ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : ThreeUniformHypergraph (Fin n),
-      n - C ≤ (ThreeUniformHypergraph.cliqueSizes H).ncard := by
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos775.lean"]
+theorem erdos_775 :
+    ¬ ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : UniformHypergraph (Fin n) 3,
+      n - C ≤ (UniformHypergraph.cliqueSizes H).ncard := by
   sorry
 
 /--
@@ -52,8 +55,8 @@ $f_k(n)\to \infty$ as $n\to \infty$.
 @[category research solved, AMS 5]
 theorem erdos_775.variants.gao :
     ∃ f : ℕ → ℕ, Tendsto f atTop atTop ∧
-      ∀ᶠ n : ℕ in atTop, ∀ H : ThreeUniformHypergraph (Fin n),
-        (ThreeUniformHypergraph.cliqueSizes H).ncard + f n ≤ n := by
+      ∀ᶠ n : ℕ in atTop, ∀ H : UniformHypergraph (Fin n) 3,
+        (UniformHypergraph.cliqueSizes H).ncard + f n ≤ n := by
   sorry
 
 /--
