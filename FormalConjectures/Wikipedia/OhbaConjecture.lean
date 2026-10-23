@@ -56,7 +56,7 @@ Every graph $G$ with at most $2\chi(G) + 1$ vertices is *chromatic-choosable*: i
 $\chi(G)$-choosable, so its choice number equals its chromatic number.
 -/
 @[category research solved, AMS 5]
-theorem ohba_conjecture : answer(True) ↔
+theorem ohba_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       (Fintype.card V : ℕ∞) ≤ 2 * G.chromaticNumber + 1 →
       Choosable G G.chromaticNumber.toNat := by
@@ -65,10 +65,8 @@ theorem ohba_conjecture : answer(True) ↔
 /--
 **Complete multipartite graphs with parts of size at most $2$ (Erdős–Rubin–Taylor 1979).**
 
-Ohba's conjecture is sharp: the complete multipartite graph $K_{2,2,\dots,2}$ with $k$ parts
-has $2k$ vertices and is $k$-choosable, while adding a further vertex to a part of size $2$ can
-break chromatic-choosability. Erdős, Rubin and Taylor showed $K_{2,\dots,2}$ is
-$k$-choosable.
+The complete multipartite graph $K_{2,2,\dots,2}$ with $k$ parts has $2k$ vertices
+and is $k$-choosable, as shown by Erdős, Rubin and Taylor.
 
 *Reference:* [ERT79].
 -/
