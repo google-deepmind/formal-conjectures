@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Gyárfás–Sumner conjecture
@@ -32,6 +34,8 @@ import FormalConjecturesUtil
 * [SS20] Scott, A. and Seymour, P. (2020). "A survey of χ-boundedness." *J. Graph Theory* 95,
   pp. 473--504. [arXiv:1812.07500](https://arxiv.org/abs/1812.07500)
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
