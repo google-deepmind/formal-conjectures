@@ -36,9 +36,10 @@ namespace BurningNumberConjecture
 
 variable {V : Type*}
 
-/-- `x` is a **burning sequence** for `G`: fires started at `x 0, x 1, …` in successive rounds,
-each spreading to all neighbours every round, burn every vertex of `G` within `k` rounds.
-Equivalently, every vertex is within distance `k - 1 - i` of the `i`-th source. -/
+/-- The ball-cover condition for burning a graph: every vertex is reachable from some
+centre `x i` at distance at most `k - 1 - i`. The centres may repeat or already be burning
+when their round starts. For finite graphs, the least such `k` is the usual burning number
+[BJR16, Corollary 3]. -/
 def IsBurningSequence (G : SimpleGraph V) {k : ℕ} (x : Fin k → V) : Prop :=
   ∀ v, ∃ i, G.Reachable (x i) v ∧ G.dist (x i) v + (i : ℕ) < k
 
