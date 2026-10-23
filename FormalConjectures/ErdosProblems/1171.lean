@@ -39,10 +39,9 @@ there is a color-0 set of order type $\omega_1 \cdot \omega$, or there is a
 monochromatic triangle $K_3$ in some non-zero color. The case $k = 1$
 (`erdos_1171.variants.k_one`) is the Erdős–Hajnal theorem [EH74].
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1171 :
-    answer(sorry) ↔
-      ∀ k : ℕ, OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 k := by
+    ∀ k : ℕ, OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 k := by
   sorry
 
 namespace erdos_1171.variants
