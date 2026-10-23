@@ -144,7 +144,8 @@ theorem sat_no_p_optimal_proof_system (L : DecisionProblem) (hL : IsCompleteFor 
 
 No total NP search problem is complete under polynomial-time many-one reductions of search
 problems. Equivalently [Pu17], for every consistent polynomial-time axiomatized theory
-`T ⊇ S¹₂` some total NP search problem is not provably total in `T`.
+`T ⊇ S¹₂` some total NP search problem is not polynomially reducible to any total NP
+search problem provably total in `T`.
 -/
 @[category research open, AMS 3 68]
 theorem tfnp_no_complete_problem : ¬∃ T : TFNPProblem, T.IsComplete := by
