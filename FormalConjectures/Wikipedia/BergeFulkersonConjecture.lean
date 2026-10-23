@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Berge–Fulkerson conjecture
@@ -32,6 +34,8 @@ import FormalConjecturesUtil
 * [Pe91] Petersen, J. (1891). "Die Theorie der regulären graphs." *Acta Math.* 15,
   pp. 193--220.
 -/
+
+@[expose] public section
 
 open SimpleGraph Finset
 
