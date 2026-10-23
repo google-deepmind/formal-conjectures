@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Hedetniemi's conjecture (1966)
@@ -32,6 +34,8 @@ import FormalConjecturesUtil
 * [Zh21] Zhu, X. (2021). "Relatively small counterexamples to Hedetniemi's conjecture."
   *J. Combin. Theory Ser. B* 146, pp. 141--150.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
