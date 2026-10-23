@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Numbers $n$ such that the perfect deficiency of $n$ is $\le 10$.
@@ -27,6 +28,8 @@ current remainder.
 - [A108864](https://oeis.org/A108864)
 - [A109883](https://oeis.org/A109883)
 -/
+
+@[expose] public section
 
 namespace OeisA108864
 
@@ -98,9 +101,9 @@ theorem a_4 : a 4 = 5 := by
 Is $1155$ the last odd number in this sequence?
 ($1155$ is the $59$th term starting from $1$, corresponding to $a(58) = 1155$).
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∀ n > 58, Even (a n) := by
+    ∀ n > 58, Even (a n) := by
   sorry
 
 end OeisA108864

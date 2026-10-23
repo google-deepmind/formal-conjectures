@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Open questions regarding the existence of Euler bricks
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 - [stackexchange](https://math.stackexchange.com/questions/2264401/euler-bricks-and-the-4th-dimension)
 - [Sh12] Sharipov, Ruslan. Perfect cuboids and irreducible polynomials. https://arxiv.org/abs/1108.5348
 -/
+
+@[expose] public section
 
 namespace EulerBrick
 
@@ -47,25 +51,25 @@ def IsEulerHyperBrick (n : ℕ) (sides : Fin n → ℕ+) : Prop :=
 /--
 Is there a perfect Euler brick?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem perfect_euler_brick_existence :
-    answer(sorry) ↔ ∃ a b c : ℕ+, IsPerfectCuboid a b c := by
+    ∃ a b c : ℕ+, IsPerfectCuboid a b c := by
   sorry
 
 /--
 Is there an Euler brick in $4$-dimensional space?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem four_dim_euler_brick_existence :
-    answer(sorry) ↔ ∃ sides : Fin 4 → ℕ+, IsEulerHyperBrick 4 sides:= by
+    ∃ sides : Fin 4 → ℕ+, IsEulerHyperBrick 4 sides:= by
   sorry
 
 /--
 Is there an Euler brick in $n$-dimensional space for any $n > 3$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem n_dim_euler_brick_existence :
-answer(sorry) ↔ ∀ n > 3, ∃ sides : Fin n → ℕ+, IsEulerHyperBrick n sides := by
+∀ n > 3, ∃ sides : Fin n → ℕ+, IsEulerHyperBrick n sides := by
   sorry
 
 section Cuboid

@@ -13,13 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1167
 
-*Reference:* [erdosproblems.com/1167](https://www.erdosproblems.com/1167)
+*References:*
+- [erdosproblems.com/1167](https://www.erdosproblems.com/1167)
+- [EHMR84] P. Erdős, A. Hajnal, A. Máté and R. Rado, *Combinatorial set theory: partition
+  relations for cardinals*. Studies in Logic and the Foundations of Mathematics 106,
+  North-Holland (1984).
 
 The original Erdős–Hajnal problem list gives the additional conditions $\gamma \geq 2$, $r < \omega$,
 and $\kappa_\alpha > r$. Without $\gamma \geq 2$, the statement is false: taking $\gamma = 1$ and
@@ -29,6 +34,8 @@ Without $\kappa_\alpha > r$ it is also false: with $r = 2$, $\lambda = \aleph_0$
 $(2, \aleph_1)$, the premise $2^{\aleph_0} \to (3, \aleph_1)^3$ holds, but a constant colouring
 of the pairs of $\aleph_0$ has neither a red pair nor a blue set of size $\aleph_1$.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal Combinatorics
 
@@ -48,8 +55,8 @@ if $\kappa_\alpha$ is infinite.
 
 A problem of Erdős, Hajnal, and Rado.
 -/
-@[category research open, AMS 5]
-theorem erdos_1167 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_1167 :
     ∀ (r : ℕ), 2 ≤ r →
     ∀ (lam : Cardinal.{u}), ℵ₀ ≤ lam →
     ∀ (γ : Ordinal.{u}), 2 ≤ γ →
@@ -63,8 +70,14 @@ namespace erdos_1167.variants
 /--
 **Finite-target case.** When all $\kappa_\alpha$ are finite, $\kappa_\alpha + 1$
 is the ordinary natural-number successor. Special case of `erdos_1167`.
+
+This case was proved by Erdős, Hajnal, Máté and Rado [EHMR84], using the Erdős–Rado tree
+argument and the negative stepping-up lemma. The statement omits the condition $n_\alpha > r$.
+This is harmless, since a colouring that witnesses
+$\lambda \not\to (n_\alpha)^r_{\alpha < \gamma}$ can only use colours $\alpha$ with $n_\alpha > r$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/5cb725981b3ad137103ef908eb6ecff9e7ed9bdf/ErdosLean/Erdos1167.lean#L990"]
 theorem finite_targets (r : ℕ) (hr : 2 ≤ r) (lam : Cardinal.{u}) (hlam : ℵ₀ ≤ lam)
     (γ : Ordinal.{u}) (hγ : 2 ≤ γ) (n : γ.ToType → ℕ) :
     cardinalPartitionRel ((2 : Cardinal.{u}) ^ lam) (r + 1) γ
