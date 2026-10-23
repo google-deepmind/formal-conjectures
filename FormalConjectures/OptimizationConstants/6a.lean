@@ -62,6 +62,11 @@ finite set, every element belongs to exactly half of the sets. -/
 theorem c6a_upper_bound : C6a ≤ 1 / 2 := by
   sorry
 
+/-- Can the best known upper bound $1/2$ be improved? -/
+@[category research open, question, AMS 5]
+theorem c6a_upper_bound_improved : C6a < 1 / 2 := by
+  sorry
+
 /-- The first lower bound, $(3 - \sqrt 5) / 2$, proved independently in [AHS2022], [CL2022] and
 [S2022]. -/
 @[category research solved, AMS 5]
