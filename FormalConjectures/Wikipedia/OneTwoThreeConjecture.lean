@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The 1-2-3 conjecture (Karoński–Łuczak–Thomason 2004; proved by Keusch 2024)
@@ -29,6 +31,8 @@ import FormalConjecturesUtil
   *J. Combin. Theory Ser. B* 166, pp. 183--202.
   [arXiv:2303.02611](https://arxiv.org/abs/2303.02611)
 -/
+
+@[expose] public section
 
 open SimpleGraph Finset
 
