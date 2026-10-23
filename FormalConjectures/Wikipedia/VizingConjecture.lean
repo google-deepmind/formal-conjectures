@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Vizing's conjecture (1968)
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   *J. Graph Theory* 69, pp. 46--76.
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace VizingConjecture
@@ -42,8 +45,8 @@ namespace VizingConjecture
 For all finite simple graphs $G$ and $H$, the domination number of the Cartesian (box)
 product satisfies $\gamma(G \,\square\, H) \ge \gamma(G)\,\gamma(H)$.
 -/
-@[category research open, AMS 5]
-theorem vizing_conjecture : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem vizing_conjecture :
     ∀ {α β : Type} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β]
       (G : SimpleGraph α) (H : SimpleGraph β),
       G.dominationNumber * H.dominationNumber ≤ (G □ H).dominationNumber := by

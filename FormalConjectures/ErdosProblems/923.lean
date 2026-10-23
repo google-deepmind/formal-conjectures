@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 923
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er69b] Erdős, P., *Problems and results in chromatic graph theory*. Proof Techniques in Graph Theory (1969), 27-35.
 - [Ro77] Rödl, V., *On the chromatic number of subgraphs of a given graph*. Proc. Amer. Math. Soc. (1977), 370-371.
 -/
+
+@[expose] public section
 
 namespace Erdos923
 
@@ -35,8 +38,8 @@ $\geq f(k)$ then $G$ contains a triangle-free subgraph with chromatic number $\g
 
 This is true, as shown by Rödl [Ro77].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos923.lean"]
-theorem erdos_923 : answer(True) ↔ ∀ (V : Type*) (n : ℕ),
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos923.lean"]
+theorem erdos_923 : ∀ (V : Type*) (n : ℕ),
     ∃ k : ℕ, ∀ G : SimpleGraph V, k ≤ G.chromaticNumber →
     ∃ H ≤ G, n ≤ H.chromaticNumber ∧ H.CliqueFree 3 := by
   sorry

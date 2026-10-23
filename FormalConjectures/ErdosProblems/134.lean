@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 134
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/134](https://www.erdosproblems.com/134)
 - [Er97b] Erdős, Paul, *Some old and new problems in various branches of combinatorics*. Discrete Math. (1997), 227-231.
 -/
+
+@[expose] public section
 
 namespace Erdos134
 
@@ -33,8 +36,8 @@ Can $G$ be made into a triangle-free graph with diameter $2$ by adding at most $
 
 Asked by Erdős and Gyárfás, who proved that this is the case when $G$ has maximum degree $\ll \log n/\log\log n$. A construction of Simonovits shows that this conjecture is false if we just have maximum degree $\leq Cn^{1/2}$, for some large enough $C$. In this note Alon solves this problem in a strong form, in particular proving that a triangle-free graph on $n$ vertices with maximum degree $<n^{1/2-\epsilon}$ can be made into a triangle-free graph with diameter $2$ by adding at most $O(n^{2-\epsilon})$ edges.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos134.lean"]
-theorem erdos_134 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos134.lean"]
+theorem erdos_134 :
     ∀ (ε δ : ℝ) (hε : 0 < ε) (hδ : 0 < δ),
     ∃ N : ℕ, ∀ n ≥ N, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
       G.CliqueFree 3 →

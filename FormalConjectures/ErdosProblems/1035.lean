@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1035
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er93] Erdős, Paul, *Some of my favorite solved and unsolved problems in graph theory*.
   Quaestiones Math. (1993), 333-350.
 -/
+
+@[expose] public section
 
 namespace Erdos1035
 
@@ -35,8 +38,8 @@ This is Erdős's question [Er93, p. 345].
 
 See also [576] for the extremal number of edges that guarantee a $Q_n$.
 -/
-@[category research open, AMS 5]
-theorem erdos_1035 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_1035 :
     ∃ c > 0, ∀ n : ℕ, ∀ (G : SimpleGraph (Fin (2 ^ n))) [DecidableRel G.Adj],
       (∀ v, (G.degree v : ℝ) > (1 - c) * 2 ^ n) →
         (SimpleGraph.hypercube n).IsContained G := by

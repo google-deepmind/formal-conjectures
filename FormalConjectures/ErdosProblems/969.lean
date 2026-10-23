@@ -14,13 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 969
 
 *Reference:* [Erdős Problem 969](https://www.erdosproblems.com/969)
 -/
+
+@[expose] public section
 
 namespace Erdos969
 
@@ -34,13 +38,15 @@ def squarefreeCounting (x : ℕ) : ℕ :=
 noncomputable def squarefreeCountingError (x : ℕ) : ℝ :=
   (squarefreeCounting x : ℝ) - 6 / Real.pi ^ 2 * x
 
+def erdos_969.answer : ℕ → ℝ := sorry
+
 /-- Let $Q(x)$ count the squarefree integers in $[1,x]$, and define $E(x)$ by
 $$Q(x)=\frac{6}{\pi^2}x+E(x).$$
 Determine the order of magnitude of $E(x)$. The two estimates below explicitly say that the
 answer is both an asymptotic upper and lower bound for $|E(x)|$. -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_969 :
-    let g := (answer(sorry) : ℕ → ℝ)
+    let g := erdos_969.answer
     (fun x => |squarefreeCountingError x|) =O[atTop] g ∧
       g =O[atTop] (fun x => |squarefreeCountingError x|) := by
   sorry
