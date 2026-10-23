@@ -55,7 +55,9 @@ vertices, then $\gamma_t(G)+\gamma_t(G_\delta)\le n+2k$, where $k$ counts
 the distinct degree values in the original $G$. No connectedness hypothesis
 or condition on isolates within individual degree classes is imposed.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/8b0b125596f7f76cc42ce2a381cd2606361b83cd/Proofs/ChenFull.lean#L217"]
 theorem conjecture4 (G : SimpleGraph V) [DecidableRel G.Adj]
     (hG : ∀ v, ∃ w, G.Adj v w)
     (hDelta : ∀ v, ∃ w, (deltaComplement G).Adj v w) :
