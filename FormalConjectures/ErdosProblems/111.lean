@@ -23,13 +23,13 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/111](https://www.erdosproblems.com/111)
-- [Er81] Erdős, P., Some combinatorial problems in graph theory. (1981)
+- [Er81] Erdős, P., On the combinatorial problems which I would most like to see solved. (1981)
 - [EHS82] Erdős, P., Hajnal, A., and Szemerédi, E., On almost bipartite large chromatic graphs.
-  Annals of Discrete Math. (1982), 117–123.
-- [Er87] Erdős, P., Problems and results on chromatic numbers in finite and infinite graphs. (1987)
-- [Er90] Erdős, P., Some of my favourite problems in various branches of combinatorics. (1990)
-- [Er97d] Erdős, P., Some problems on elementary geometry. (1997)
-- [Er97f] Erdős, P., Some of my favourite unsolved problems. (1997)
+  Theory and practice of combinatorics (1982), 117–123.
+- [Er87] Erdős, P., Some problems on finite and infinite graphs. (1987)
+- [Er90] Erdős, P., Some of my favourite unsolved problems. (1990)
+- [Er97d] Erdős, P., Some recent problems and results in graph theory. (1997)
+- [Er97f] Erdős, P., Some unsolved problems. (1997)
 
 See also Erdős Problem [74].
 
@@ -76,11 +76,11 @@ noncomputable def hG {V : Type*} (G : SimpleGraph V) (n : ℕ) : ℕ :=
 If $G$ is a graph with chromatic number $\aleph_1$, is it true that $h_G(n)/n \to \infty$?
 
 Formally: for every graph $G$ (on a type $V$) with chromatic cardinal $\aleph_1$, the ratio
-$h_G(n)/n$ is unbounded, i.e., for every constant $C$, there are arbitrarily large $n$ such
-that $h_G(n) > C \cdot n$.
+$h_G(n)/n$ tends to infinity: for every constant $C$, all sufficiently large $n$ satisfy
+$h_G(n) > C \cdot n$.
 -/
-@[category research open, AMS 5]
-theorem erdos_111 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_111 :
     ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       Filter.Tendsto (fun n : ℕ => (hG G n : ℝ) / n) Filter.atTop Filter.atTop := by
   sorry
@@ -113,9 +113,6 @@ theorem erdos_111.variants.lower_bound :
 **Upper bound existence (Erdős-Hajnal-Szemerédi [EHS82])**: There exists a graph $G$ with
 chromatic number $\aleph_1$ such that $h_G(n) \ll n^{3/2}$, i.e., there is a constant $C > 0$
 with $h_G(n) \leq C \cdot n^{3/2}$ for all $n$.
-
-This shows that Erdős's conjecture (if true) would be essentially tight in its exponent:
-the true exponent lies in $(1, 3/2]$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_111.variants.upper_bound_existence :
@@ -124,25 +121,15 @@ theorem erdos_111.variants.upper_bound_existence :
   sorry
 
 /--
-**Erdős conjecture (stronger upper bound)**: For every graph $G$ with chromatic number
-$\geq \aleph_1$ and every $\varepsilon > 0$, the function $h_G(n)$ satisfies
-$h_G(n) \ll_\varepsilon n^{1+\varepsilon}$.
-
-That is, for every $\varepsilon > 0$ there exists $C(\varepsilon) > 0$ such that for every graph
-$G$ with $\chi(G) \geq \aleph_1$, we have $h_G(n) \leq C(\varepsilon) \cdot n^{1 + \varepsilon}$
-for all $n$.
-
-This conjecture (if true) would mean that $h_G(n)$ grows only barely super-linearly. The
-quantification is over graphs with $\chi(G) \geq \aleph_1$ (matching the source); using
-$\chi(G) \geq \aleph_1$ is strictly stronger than $\chi(G) = \aleph_1$ as a hypothesis on the
-class of graphs since the bound must hold uniformly for any larger chromatic cardinal too.
+Erdős conjectured [Er81] that for every $\varepsilon > 0$ there is a graph $G$ with
+$\chi(G) = \aleph_1$ such that $h_G(n) \ll n^{1+\varepsilon}$.
+The graph is chosen after $\varepsilon$.
 -/
 @[category research open, AMS 5]
-theorem erdos_111.variants.erdos_conjecture : answer(sorry) ↔
-    ∀ (ε : ℝ), 0 < ε →
-      ∃ C : ℝ, 0 < C ∧
-        ∀ (V : Type) (G : SimpleGraph V), ℵ_ 1 ≤ G.chromaticCardinal →
-          ∀ n : ℕ, (hG G n : ℝ) ≤ C * (n : ℝ) ^ (1 + ε) := by
+theorem erdos_111.variants.erdos_conjecture :
+    ∀ ε : ℝ, 0 < ε → ∃ (V : Type) (G : SimpleGraph V),
+      G.chromaticCardinal = ℵ_ 1 ∧
+        (fun n : ℕ => (hG G n : ℝ)) =O[atTop] (fun n : ℕ => (n : ℝ) ^ (1 + ε)) := by
   sorry
 
 end Erdos111
