@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Ohba's conjecture (2002; proved by Noel, Reed and Wu 2015)
@@ -27,6 +29,8 @@ import FormalConjecturesUtil
 * [ERT79] Erdős, P., Rubin, A. L. and Taylor, H. (1979). "Choosability in graphs."
   *Congr. Numer.* 26, pp. 125--157.
 -/
+
+@[expose] public section
 
 open SimpleGraph Finset
 
