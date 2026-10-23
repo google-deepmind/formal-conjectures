@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Alon–Saks–Seymour conjecture (disproved)
@@ -30,6 +32,8 @@ import FormalConjecturesUtil
   conjecture and related problems." *Combinatorica* 32, pp. 205--219.
   [arXiv:1002.4687](https://arxiv.org/abs/1002.4687)
 -/
+
+@[expose] public section
 
 open SimpleGraph Finset
 
