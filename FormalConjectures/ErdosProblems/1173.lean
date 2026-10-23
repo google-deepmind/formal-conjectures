@@ -51,8 +51,8 @@ $f : \omega_{\omega+1} \to [\omega_{\omega+1}]^{\leq \aleph_\omega}$
 be a set mapping such that $|f(\alpha) \cap f(\beta)| < \aleph_\omega$ for all
 $\alpha \neq \beta$. Does there exist a free set of cardinality $\aleph_{\omega+1}$?
 -/
-@[category research open, AMS 3]
-theorem erdos_1173 : answer(sorry) ↔
+@[category research open, question, AMS 3]
+theorem erdos_1173 :
     GCH →
     ∀ f : (ω_ (ω + 1)).ToType → Set (ω_ (ω + 1)).ToType,
       IsSetMapping f →
