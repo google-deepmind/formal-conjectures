@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Babai–Seress Conjectures on the Diameter of Finite Groups
@@ -37,6 +38,8 @@ Conjecture 1.7 generalises Conjecture 1.5, since for $G = A_n$ we have
 $\log |A_n| \approx n \log n$, so a polylogarithmic bound in $|G|$ implies a polynomial
 bound in $n$.
 -/
+
+@[expose] public section
 
 namespace BabaiSeressConjectures
 

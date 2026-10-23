@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = 2^(2^n)$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A001146](https://oeis.org/A001146)
 -/
+
+@[expose] public section
 
 namespace OeisA1146
 
