@@ -63,8 +63,8 @@ theorem gyarfas_sumner_conjecture :
 /--
 **Paths (Gyárfás 1987).**
 
-For every $n$, the class of $P_n$-free graphs is $\chi$-bounded; Gyárfás's argument gives
-$\chi(G) \le (n-1)^{\omega(G) - 1}$.
+For every $n$, the class of $P_n$-free graphs is $\chi$-bounded. For $n \ge 2$ and
+nonempty $G$, Gyárfás's argument gives $\chi(G) \le (n-1)^{\omega(G) - 1}$.
 
 *Reference:* [Gy87].
 -/
