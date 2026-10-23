@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 217
@@ -22,15 +24,19 @@ import FormalConjecturesUtil
 *Reference:* [Erdős Problem 217](https://www.erdosproblems.com/217)
 -/
 
+@[expose] public section
+
 namespace Erdos217
 
 open EuclideanGeometry
 
+def erdos_217.answer : Set ℕ := sorry
+
 /-- For which $n$ do there exist $n$ points in $\mathbb{R}^2$, no three on a line and no four on
 a circle, that determine $n-1$ distinct distances whose multiplicities are
 $1,2,\ldots,n-1$? -/
-@[category research open, AMS 5 52]
-theorem erdos_217 : answer(sorry) = {n : ℕ | 0 < n ∧ ∃ P : Finset ℝ²,
+@[category research open, question value, AMS 5 52]
+theorem erdos_217 : erdos_217.answer = {n : ℕ | 0 < n ∧ ∃ P : Finset ℝ²,
     P.card = n ∧ InGeneralPosition (P : Set ℝ²) ∧
       (distanceSet P).card = n - 1 ∧
       (distanceSet P).image (distanceMultiplicity P) = Finset.Icc 1 (n - 1)} := by
