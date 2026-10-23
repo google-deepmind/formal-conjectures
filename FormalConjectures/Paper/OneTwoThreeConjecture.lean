@@ -22,9 +22,10 @@ public import FormalConjecturesUtil
 # The 1-2-3 conjecture (Karoński–Łuczak–Thomason 2004; proved by Keusch 2024)
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/1-2-3_conjecture)
 * [KLT04] Karoński, M., Łuczak, T. and Thomason, A. (2004). "Edge weights and vertex colours."
   *J. Combin. Theory Ser. B* 91, pp. 151--157.
+* [ABDMRT07] Addario-Berry, L., Dalal, K., McDiarmid, C., Reed, B. A. and Thomason, A.
+  (2007). "Vertex-colouring edge-weightings." *Combinatorica* 27, pp. 1--12.
 * [KKP10] Kalkowski, M., Karoński, M. and Pfender, F. (2010). "Vertex-coloring edge-weightings:
   towards the 1-2-3-conjecture." *J. Combin. Theory Ser. B* 100, pp. 347--349.
 * [Ke24] Keusch, R. (2024). "A solution to the 1-2-3 conjecture."
@@ -83,9 +84,9 @@ theorem one_two_three_conjecture.variants.one_to_five
   sorry
 
 /--
-**The original bound (Karoński–Łuczak–Thomason 2004): weights in $\{1, \dots, 30\}$ suffice.**
+**Addario-Berry–Dalal–McDiarmid–Reed–Thomason (2007): weights in $\{1, \dots, 30\}$ suffice.**
 
-*Reference:* [KLT04].
+*Reference:* [ABDMRT07]; see also the introduction of [KKP10].
 -/
 @[category research solved, AMS 5]
 theorem one_two_three_conjecture.variants.one_to_thirty
