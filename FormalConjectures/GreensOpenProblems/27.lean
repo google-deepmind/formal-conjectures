@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 27
@@ -24,6 +25,8 @@ References:
 - [Be23] Bedert, Benjamin. "On unique sums in Abelian groups." Combinatorica 44.2 (2024): 269-298.
 - [St76] Straus, E. G. "Differences of residues (mod p)." Journal of Number Theory 8.1 (1976): 40-42.
 -/
+
+@[expose] public section
 
 open Asymptotics Filter
 
@@ -47,27 +50,33 @@ noncomputable def lowerBest (p : ℕ) : ℝ :=
 /-- Best-known upper bound [Be23, Theorem 5]. -/
 noncomputable def upperBest (p : ℕ) : ℝ := (Real.log (p : ℝ)) ^ 2
 
+def green_27.equivalent.answer : ℕ → ℝ := sorry
+
 /--
 What is the size of the smallest set $A \subset \mathbb{Z} / p\mathbb{Z}$ (with at least two elements)
 for which no element in the sumset $A + A$ has a unique representation?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_27.equivalent :
-  (answer(sorry) : ℕ → ℝ) ~[primesAtTop] m := by
+  green_27.equivalent.answer ~[primesAtTop] m := by
   sorry
+
+def green_27.lower.answer : ℕ → ℝ := sorry
 
 /-- Propose a better lower bound along primes. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_27.lower :
-    let ans := (answer(sorry) : ℕ → ℝ)
-    (lowerBest =o[primesAtTop] ans) ∧ (ans =O[primesAtTop] m) := by
+    (lowerBest =o[primesAtTop] green_27.lower.answer) ∧ (green_27.lower.answer =O[primesAtTop] m)
+      := by
   sorry
 
+def green_27.upper.answer : ℕ → ℝ := sorry
+
 /-- Propose a better upper bound along primes. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_27.upper :
-    let ans := (answer(sorry) : ℕ → ℝ)
-    (ans =o[primesAtTop] upperBest) ∧ (m =O[primesAtTop] ans) := by
+    (green_27.upper.answer =o[primesAtTop] upperBest) ∧ (m =O[primesAtTop] green_27.upper.answer)
+      := by
   sorry
 
 /--
@@ -81,7 +90,8 @@ theorem green_27.variants.lower_be23 :
   sorry
 
 /-- Upper bound: $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/mkwatson/unique-sums-notes/blob/d4383f93a52e3a916ccce78d5fb7739c3bf3dabc/Green27Upper/Theorem.lean#L26"]
 theorem green_27.variants.upper_be23 :
   m =O[primesAtTop] upperBest := by
   sorry
