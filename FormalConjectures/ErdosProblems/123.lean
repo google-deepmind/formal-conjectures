@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 123
@@ -31,6 +33,8 @@ import FormalConjecturesUtil
 - [MaCh16] Ma, Mi-Mi and Chen, Yong-Gao, On {$d$}-complete sequences of integers. J. Number Theory
   (2016), 1--12.
 -/
+
+@[expose] public section
 
 open Filter
 open Submonoid
@@ -76,15 +80,15 @@ Equivalently: is the set $\{a^k b^l c^m : k, l, m \geq 0\}$ d-complete?
 Note: For this not to reduce to the two-integer case, we need the integers
 to be greater than one and distinct.
 
-The prize of $250 is offered by Erdős in [Er97] and [Er97e] for a 'proof or disproof'.
+The prize of \$250 is offered by Erdős in [Er97] and [Er97e] for a 'proof or disproof'.
 
 The main problem was resolved in the affirmative by GPT 5.6 (prompted by Snyder).
 
 This was formalized in Lean by Alexeev.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/a28a04b6b8ce43d5260a7466677c1f23833bfc38/src/latest/ErdosProblems/Erdos123.lean"]
-theorem erdos_123 : answer(True) ↔ ∀ a > 1, ∀ b > 1, ∀ c > 1, PairwiseCoprime a b c →
+theorem erdos_123 : ∀ a > 1, ∀ b > 1, ∀ c > 1, PairwiseCoprime a b c →
     IsDComplete (↑(powers a) * ↑(powers b) * ↑(powers c)) := by sorry
 
 /--
@@ -111,9 +115,9 @@ In [Er92b] Erdős makes the stronger conjecture (for $a=2$, $b=3$, and $c=5$) th
 $\epsilon>0$, all large integers $n$ can be written as the sum of distinct integers
 $b_1<\cdots <b_t$ of the form $2^k3^l5^m$ where $b_t<(1+\epsilon)b_1$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_123.variants.powers_2_3_5_snug :
-    answer(sorry) ↔ ∀ ε > 0, ∀ᶠ n in atTop,
+    ∀ ε > 0, ∀ᶠ n in atTop,
       ∃ A : Finset ℕ, (A : Set ℕ) ⊆ ↑(powers 2) * ↑(powers 3) * ↑(powers 5) ∧ IsSnug ε A ∧
         ∑ x ∈ A, x = n := by sorry
 

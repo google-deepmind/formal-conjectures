@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 865
@@ -23,7 +24,11 @@ import FormalConjecturesUtil
 - [erdosproblems.com/865](https://www.erdosproblems.com/865)
 - [CES75] Choi, S. L. G. and Erdős, P. and Szemerédi, E., Some additive and multiplicative problems
   in number theory. Acta Arith. (1975), 37--50.
+- [Ci26] R. Cipollini, [A sharp $5/8$ bound for an Erdős–Sós pairwise-sums problem](https://arxiv.org/html/2606.29361)
+  (2026).
 -/
+
+@[expose] public section
 
 open Finset Filter
 open scoped Asymptotics
@@ -36,8 +41,17 @@ size at least $\frac{5}{8}N+C$ then there are distinct $a,b,c\in A$ such that $a
 
 A problem of Erdős and Sós (also earlier considered by Choi, Erdős, and Szemerédi [CES75], but Erdős
 had forgotten this).
+
+This problem was solved in the affirmative by Cipollini and GPT Pro [Ci26].
+
+This is true. The linked proof gives it in the contrapositive and with the constant cleared:
+every triple-free $A\subseteq\{1,\ldots,N\}$ satisfies $8\lvert A\rvert\leq 5N+C$ for a fixed
+$C$, for every $N$ rather than only for large $N$. It also shows the threshold is sharp, by
+exhibiting triple-free sets of size $(5N+16)/8$ for every $N$ divisible by $8$.
 -/
-@[category research open, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/865/Erdos865.lean",
+  formal_proof using lean4 at "https://github.com/mrricky22/erdos-865-lean/blob/f861539107a7adeaa97462ce7c7171127696b63a/RequestProject/Main.lean#L45"]
 theorem erdos_865 :
     ∃ C > 0, ∀ᶠ (N : ℕ) in atTop,
       ∀ A ⊆ Icc 1 N, A.card ≥ (5 / 8 : ℝ) * N + C →
@@ -53,7 +67,35 @@ there are distinct $a,b\in A$ such that $a+b\in A$, which establishes the $k=2$ 
 theorem erdos_865.variants.k2 (N : ℕ) :
     ∀ A ⊆ Icc 1 (2 * N), A.card ≥ N + 2 →
     ∃ a ∈ A, ∃ b ∈ A, a ≠ b ∧ a + b ∈ A := by
-  sorry
+  intro A hA hcard
+  have hne : A.Nonempty := by
+    rw [← Finset.card_pos]; omega
+  set m := A.max' hne with hm
+  have hmA : m ∈ A := Finset.max'_mem A hne
+  have hmle : m ≤ 2 * N := by
+    have := hA hmA
+    rw [Finset.mem_Icc] at this
+    omega
+  have hcard' : (Icc 1 N).card < (A.erase m).card := by
+    rw [Finset.card_erase_of_mem hmA, Nat.card_Icc]
+    omega
+  have hmaps : ∀ x ∈ A.erase m, min x (m - x) ∈ Icc 1 N := by
+    intro x hx
+    obtain ⟨hxm, hxA⟩ := Finset.mem_erase.mp hx
+    have hxle : x ≤ m := Finset.le_max' A x hxA
+    have hx1 := (Finset.mem_Icc.mp (hA hxA)).1
+    rw [Finset.mem_Icc]
+    omega
+  obtain ⟨x, hx, y, hy, hxy, hxyeq⟩ :=
+    Finset.exists_ne_map_eq_of_card_lt_of_maps_to hcard' hmaps
+  obtain ⟨hxm, hxA⟩ := Finset.mem_erase.mp hx
+  obtain ⟨hym, hyA⟩ := Finset.mem_erase.mp hy
+  have hxle : x ≤ m := Finset.le_max' A x hxA
+  have hyle : y ≤ m := Finset.le_max' A y hyA
+  refine ⟨x, hxA, y, hyA, hxy, ?_⟩
+  have : x + y = m := by omega
+  rw [this]
+  exact hmA
 
 noncomputable def f (N k : ℕ) : ℕ :=
   sInf {m | ∀ A ⊆ Icc 1 N, A.card ≥ m →

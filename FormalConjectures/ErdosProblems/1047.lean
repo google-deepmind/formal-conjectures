@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1047
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Po61] Pommerenke, Ch., *On metric properties of complex polynomials*. Michigan Math. J.
   (1961), 97-115.
 -/
+
+@[expose] public section
 
 open Polynomial
 
@@ -56,10 +59,13 @@ The answer is no, as shown by Pommerenke [Po61], who showed that, if $k$ is suff
 and $f(z)=z^k(z-a)$ where $a$ is sufficiently close to $(1+\frac{1}{k})k^{\frac{1}{k+1}}$, then
 $\{ z: \lvert f(z)\rvert\leq 1\}$ has two components, and the component which contains $0$ is
 not convex.
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 30 52]
-theorem erdos_1047 : answer(False) ↔
-    ∀ (f : ℂ[X]) (m : ℕ) (c : ℝ), f.Monic → (f.rootSet ℂ).ncard = m → 0 < c →
+@[category research solved, question, AMS 30 52, formal_proof using lean4 at
+"https://github.com/plby/lean-proofs/blob/main/src/latest/ErdosProblems/Erdos1047.lean"]
+theorem erdos_1047 :
+    ¬ ∀ (f : ℂ[X]) (m : ℕ) (c : ℝ), f.Monic → (f.rootSet ℂ).ncard = m → 0 < c →
       (componentsIn (sublevelSet f c)).ncard = m →
         ∀ t ∈ componentsIn (sublevelSet f c), Convex ℝ t := by
   sorry
@@ -113,15 +119,22 @@ theorem erdos_1047.variants.referee :
         (5 * (6 : ℝ) ^ (-(6 : ℝ) / 5))), ¬ Convex ℝ t := by
   sorry
 
+def erdos_1047.variants.max_non_convex_components.answer (n : ℕ) : ℕ :=
+  if n ≤ 1 then 0 else if n = 2 then 1 else if n = 3 then 2 else n
+
 /--
-Goodman raises the question of the maximum number of non-convex components that are possible as
-a function of the degree of $f$.
+Goodman raises the question of the maximum number of non-convex components of
+$\{ z: \lvert f(z)\rvert < c\}$ that are possible as a function of the degree of $f$, where
+$f$ ranges over all monic polynomials of degree $n$ and $c$ over all positive constants.
+
+The maximum is $0$ for $n \le 1$, $1$ for $n = 2$, $2$ for $n = 3$, and $n$ for $n \ge 4$.
 -/
-@[category research open, AMS 30 52]
+@[category research solved, question value, AMS 30 52, formal_proof using lean4 at
+"https://github.com/KitaKen1/erdos-1047-max-nonconvex-components/blob/87cc8666968b8228778fae5c5e54465128a864f6/lean/Erdos1047MaxNonConvexFC.lean#L31160-L31164"]
 theorem erdos_1047.variants.max_non_convex_components (n : ℕ) :
     IsGreatest {k : ℕ | ∃ (f : ℂ[X]) (c : ℝ), f.Monic ∧ f.natDegree = n ∧ 0 < c ∧
-      (componentsIn (sublevelSet f c)).ncard = (f.rootSet ℂ).ncard ∧
-      {t ∈ componentsIn (sublevelSet f c) | ¬ Convex ℝ t}.ncard = k} answer(sorry) := by
+      {t ∈ componentsIn (strictSublevelSet f c) | ¬ Convex ℝ t}.ncard = k}
+      (erdos_1047.variants.max_non_convex_components.answer n) := by
   sorry
 
 end Erdos1047

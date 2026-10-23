@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Linters.ModuleDocstringLinter
+public meta import FormalConjecturesUtil.Linters.ModuleDocstringLinter
 
 /-!
 # Tests for the module docstring linter

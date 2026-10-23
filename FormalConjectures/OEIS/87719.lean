@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A087719
@@ -25,8 +26,11 @@ of numbers with $k \le \varsigma(k)^n$.
 
 The conjecture states that $a_n = 3^n + 3 \cdot 2^n + 6$ for $n \ge 1$.
 
-*Reference:* [A87719](https://oeis.org/A87719)
+*References:*
+- [A087719](https://oeis.org/A087719)
 -/
+
+@[expose] public section
 
 namespace OeisA87719
 
@@ -74,7 +78,9 @@ theorem a_3 : a 3 = 57 := by
   interval_cases m <;> decide +native
 
 /-- We have the following formula: $a(n) = 3^n + 3 * 2^n + 6$ for $n \geq 1$. -/
-@[category textbook, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/pull/1894/commits/7a286754f623759d69a3dd18f482c53c1d70959b"]
+@[category textbook, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/google-deepmind/formal-conjectures/blob/7a286754f623759d69a3dd18f482c53c1d70959b/FormalConjectures/OEIS/87719.lean#L640"]
 theorem a_formula {n : ℕ} (hn : n ≥ 1) : a n = 3 ^ n + 3 * 2 ^ n + 6 := by
   sorry
 

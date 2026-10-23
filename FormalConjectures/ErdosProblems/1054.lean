@@ -13,14 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1054
 
-*Reference:* [erdosproblems.com/1054](https://www.erdosproblems.com/1054)
+*References:*
+- [erdosproblems.com/1054](https://www.erdosproblems.com/1054)
+- [PALOMAR-2026-10-05-000005](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000005&version=1)
 -/
+
+@[expose] public section
 
 namespace Erdos1054
 
@@ -35,22 +40,34 @@ noncomputable def f (n : ℕ) : ℕ :=
   else 0
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
-of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$?-/
-@[category research open, AMS 11]
-theorem erdos_1054.parts.i : answer(sorry) ↔ (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
+of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$?
+
+The strong claim that $f(n)=o(n)$ was disproved by Tao in the comments to
+[468](https://www.erdosproblems.com/468), in which he proves that the upper density of
+$\{ n : f(n)\leq \delta n\}$ is $\ll \delta^2$.
+-/
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/0917cd01090b52088aa82b09c8c84689047b8171/erdos-1054/Solution.lean#L97"]
+theorem erdos_1054.parts.i : ¬ (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
-of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$ for almost all $n$? -/
-@[category research open, AMS 11]
-theorem erdos_1054.parts.ii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity 1 ∧
+of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$ for almost all $n$?
+
+No: combining the Tao–Kovač small-ratio bound $\#\{n \leq X : 0 < f(n) \leq \delta n\} \ll \delta^2 X$
+with the fact that almost all odd integers are represented (or via the lower-density bound below),
+$f(n)$ is not $o(n)$ along any density-one set $A$. -/
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/0917cd01090b52088aa82b09c8c84689047b8171/erdos-1054/Solution.lean#L103"]
+theorem erdos_1054.parts.ii : ¬ ∃ (A : Set ℕ), A.HasDensity 1 ∧
     (fun (n : A) ↦ (f ↑n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
-of $m$ for some $k\geq 1$. Is it true that $\limsup f(n)/n=\infty$? -/
-@[category research open, AMS 11]
-theorem erdos_1054.parts.iii : answer(sorry) ↔ ∃ (A : Set ℕ), A.HasDensity 1 ∧
+of $m$ for some $k\geq 1$. Is it true that $\limsup f(n)/n=\infty$?
+
+Yes: for every $A \geq 1$, a positive lower density of odd integers satisfy $f(n) > A n$, so
+$\limsup f(n)/n = \infty$. -/
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/0917cd01090b52088aa82b09c8c84689047b8171/erdos-1054/Solution.lean#L110"]
+theorem erdos_1054.parts.iii : ∃ (A : Set ℕ), A.HasDensity 1 ∧
     atTop.limsup (fun n ↦ (f n : EReal) / n) = ⊤ := by
   sorry
 
@@ -82,7 +99,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
   rcases eq_or_ne m 0 with rfl | hm
   · simp at hsum
   · set p : ℕ → Prop := fun x => x ∈ m.divisors with hpdef
-    have hfin : (setOf p).Finite := Set.finite_mem_finset m.divisors
+    have hfin : (Set.ofPred p).Finite := Set.finite_mem_finset m.divisors
     have hg0 : Nat.nth p 0 = 1 := Nat.nth_divisors_zero hm
     -- The `j`-th smallest divisor is at least `j + 1` (for `j` below the number of divisors).
     have hlb : ∀ j, j < hfin.toFinset.card → j + 1 ≤ Nat.nth p j := by
@@ -101,8 +118,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
       intro h
       have hne : Nat.nth p 1 ≠ 0 := by rw [h]; norm_num
       have hcard1 : 1 < hfin.toFinset.card := by
-        by_contra hcon
-        push_neg at hcon
+        by_contra! hcon
         exact hne (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
       have hmem : p (Nat.nth p 1) := Nat.nth_mem_of_lt_card hfin hcard1
       rw [h] at hmem
@@ -138,8 +154,7 @@ theorem f_undefined_at_3 : f 5 = 0 := by
         · intro x hx hx2; simp only [Finset.mem_Iio] at *; exact hz x (by omega)
       · -- Three distinct divisors `1 < d₁ < d₂` force the sum to be at least `6`.
         have hc3 : 2 < hfin.toFinset.card := by
-          by_contra hcon
-          push_neg at hcon
+          by_contra! hcon
           exact hg2 (Nat.nth_eq_zero.mpr (Or.inr ⟨hfin, hcon⟩))
         have hg1 := hlb 1 (by omega)
         have hg2' := hlb 2 (by omega)
@@ -149,7 +164,6 @@ theorem f_undefined_at_3 : f 5 = 0 := by
           · intros; positivity
         rw [Nat.Iio_eq_range, Finset.sum_range_succ, Finset.sum_range_succ,
           Finset.sum_range_one, hg0] at hsub
-        rw [Nat.Iio_eq_range] at hsum
-        omega
+        lia
 
 end Erdos1054

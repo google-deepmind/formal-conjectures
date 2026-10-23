@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Busy Beaver
@@ -27,6 +28,8 @@ machine can take before halting, when started on an empty tape.
 - [The Busy Beaver Challenge](https://wiki.bbchallenge.org/wiki/Main_Page)
 -/
 
+@[expose] public section
+
 universe u v
 
 open Turing BusyBeaver
@@ -37,10 +40,10 @@ structure Candidate (n : ℕ) where
   Γ : Type
   Λ : Type
   Γ_fintype : Fintype Γ
-  Γ_card : Fintype.card Γ = n
+  Γ_card : Fintype.card Γ = 2
   Γ_inhabited : Inhabited Γ
   Λ_fintype : Fintype Λ
-  Λ_card : Fintype.card Λ = 2
+  Λ_card : Fintype.card Λ = n
   Λ_inhabited : Inhabited Λ
   M : Machine Γ Λ
   M_isHalting : M.IsHalting
@@ -62,7 +65,7 @@ To compute `BB n`, we need only consider machines with states and symbols indexe
 -/
 @[category API, AMS 3]
 theorem sanity_check (n : ℕ) [NeZero n] :
-    BB n = sSup {N | ∃ (M : Machine (Fin n) (Fin 2)) (_ : M.IsHalting),
+    BB n = sSup {N | ∃ (M : Machine (Fin 2) (Fin n)) (_ : M.IsHalting),
       M.haltingNumber = N} := by
   sorry
 
@@ -91,11 +94,13 @@ theorem BB_4 : BB 4 = 107 := by
 theorem BB_5 : BB 5 = 47176870 := by
   sorry
 
+def BB_6.answer : ℕ := sorry
+
 /--
 Determine the value of the Busy Beaver function at n = 6.
 -/
-@[category research open, AMS 3]
-theorem BB_6 : BB 6 = answer(sorry) := by
+@[category research open, question value, AMS 3]
+theorem BB_6 : BB 6 = BB_6.answer := by
   sorry
 
 end BusyBeaver
