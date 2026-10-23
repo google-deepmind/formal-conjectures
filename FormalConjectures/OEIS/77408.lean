@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+
 
 /-!
 # Trajectory of 103 under the Reverse and Add! operation in base 3
@@ -25,6 +27,8 @@ $a(0) = 103$, and $a(n+1) = a(n) + \text{rev}_3(a(n))$.
 
 *References:*
 - [A077408](https://oeis.org/A077408)-/
+
+@[expose] public section
 
 namespace OeisA77408
 
@@ -50,27 +54,27 @@ theorem a_0 : a 0 = 103 := by
 /-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 230 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 436 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 776 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 2424 := by
-  decide +native
+  decide +kernel
 
 /-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 3856 := by
-  decide +native
+  decide +kernel
 
 /--
 $103$ is conjectured to be the smallest number such that the Reverse and Add! algorithm in base $3$

@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«342»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«342»
 
 /-!
 # Ben Green's Open Problem 7
@@ -28,6 +29,8 @@ Can one explain the curious Fourier properties of Ulam's sequence?
 - [erdosproblems.com/342](https://www.erdosproblems.com/342)
 -/
 
+@[expose] public section
+
 open Nat Set Filter
 open scoped Topology
 
@@ -36,11 +39,10 @@ namespace Green7
 /--
 Does Ulam's sequence have positive density?
 -/
-@[category research open, AMS 11 42]
+@[category research open, question, AMS 11 42]
 theorem green_7.variants.positive_density :
-    answer(sorry) ↔
-      ∀ a : ℕ → ℕ, Erdos342.IsUlamSequence a →
-        Set.upperDensity (Set.range a) > 0 := by
+    ∀ a : ℕ → ℕ, Erdos342.IsUlamSequence a →
+      Set.upperDensity (Set.range a) > 0 := by
   sorry
 
 end Green7

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A109909
@@ -24,6 +25,8 @@ $a(n)$ = number of primes of the form $k(n-k)-1$.
 *References:*
 - [A109909](https://oeis.org/A109909)
 -/
+
+@[expose] public section
 
 namespace OeisA109909
 

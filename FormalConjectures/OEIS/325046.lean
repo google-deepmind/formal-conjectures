@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Pronic indices for odd coefficients of $\sum_{n \ge 0} x^n \frac{(1+x^n)^n}{(1-x^{n+1})^{n+1}}$
@@ -30,6 +31,8 @@ where $j = \frac{N - n(k+1)}{n+1}$.
 - [A325046](https://oeis.org/A325046)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA325046
 
@@ -86,6 +89,10 @@ Conjecture: Odd terms occur only at positions $n(n+1)$ for $n \ge 0$.
 
 A formal proof has been found with the methods described in
 [arxiv/2605.22763](https://arxiv.org/abs/2605.22763).
+
+This statement is equivalent to `OeisA323557.odd_a_implies_pronic`. The two sequences differ
+only by the sign $(-1)^j$ on each summand, so they agree modulo $2$ and have the same odd
+indices.
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/a32396489dcb8f86c3549b93aa358ac6a10a3a1f/FormalConjectures/OEIS/325046.wip.lean#L166"]

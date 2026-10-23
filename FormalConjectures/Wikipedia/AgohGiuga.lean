@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Agoh-Giuga conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Agoh-Giuga_conjecture)
 -/
+
+@[expose] public section
+
 open scoped Nat
 /-
 
@@ -206,7 +210,7 @@ theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
 /--
 Every strong Giuga number is a Carmichael number.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/394ec1c1ff92bdf2fa10f30d62ae9d0455d3ce20/Proofs/T_AgohGiuga_agoh_giuga_variants_isStrongGiuga_implies_isCarmichael.lean#L283"]
 theorem agoh_giuga.variants.isStrongGiuga_implies_isCarmichael
     (a : ℕ) (ha : IsStrongGiuga a) : IsCarmichael a := by
   sorry
