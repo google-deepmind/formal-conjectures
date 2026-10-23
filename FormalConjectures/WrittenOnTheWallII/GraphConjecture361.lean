@@ -45,7 +45,9 @@ def isolatedSupports {V : Type*} [Fintype V] (G : SimpleGraph V)
 $\gamma_t(T)\ge iso(T[S(T)])+|C(T)|$, where $S(T)$ consists of neighbors
 of leaves and $C(T)$ is the eccentricity/radius center.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/640d46c0f41b1c0c06704ed206e7241bea7b506b/Proofs/WOWII361362/WOWII361Full.lean#L139"]
 theorem conjecture361 {V : Type*} [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj] (hT : T.IsTree)
     (horder : 2 < Fintype.card V) :
@@ -55,7 +57,9 @@ theorem conjecture361 {V : Type*} [Fintype V] [DecidableEq V]
 /-- The same inequality holds on all nontrivial finite simple trees, including
 $K_2$, whose two support vertices are adjacent and are both centers.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/640d46c0f41b1c0c06704ed206e7241bea7b506b/Proofs/WOWII361362/WOWII361Full.lean#L132"]
 theorem conjecture361_nontrivial {V : Type*} [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj] (hT : T.IsTree)
     (horder : 1 < Fintype.card V) :
