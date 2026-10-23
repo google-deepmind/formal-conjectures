@@ -14,13 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1168
 
 *Reference:* [erdosproblems.com/1168](https://www.erdosproblems.com/1168)
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal SimpleGraph
 
