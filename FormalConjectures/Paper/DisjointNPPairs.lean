@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Complete disjoint NP pairs
@@ -32,6 +34,8 @@ import FormalConjecturesUtil
   in the finite domain." *J. Symbolic Logic* 87, pp. 912--937.
   [arXiv:1904.01362](https://arxiv.org/abs/1904.01362)
 -/
+
+@[expose] public section
 
 namespace DisjointNPPairs
 
