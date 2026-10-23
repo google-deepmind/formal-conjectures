@@ -107,6 +107,7 @@ theorem irrationalityExponent_of_algebraic {x : ℝ} (hx : IsAlgebraic ℚ x) :
   sorry
 
 /-- **Tao's Optimization Constant 7a / The irrationality measure of $\pi$**. -/
+@[optimization_constant "7a"]
 noncomputable def C7a : ℝ≥0∞ := irrationalityExponent π
 
 /-- The sharp lower bound, given by Dirichlet's theorem [D1842]. This bound
