@@ -48,7 +48,9 @@ $\gamma_t(T)\ge c(T[S(T)\cup L(T)])+(1+rad(T))/3$.
 The fraction is rational and is not rounded down. The radius is finite on this
 domain, so its natural value is obtained from Mathlib's extended radius.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/640d46c0f41b1c0c06704ed206e7241bea7b506b/Proofs/WOWII361362/WOWII362Full.lean#L32"]
 theorem conjecture362 {V : Type*} [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj] (hT : T.IsTree)
     (horder : 2 < Fintype.card V) :
@@ -62,7 +64,9 @@ $diam(G)+1\le5(\gamma_t(G)-c(G[S(G)]))$.
 The subtraction is expressed in the integers, preserving its meaning even
 before deriving that the domination number exceeds the component count.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/640d46c0f41b1c0c06704ed206e7241bea7b506b/Proofs/WOWII361362/WOWII362Full.lean#L20"]
 theorem conjecture362_diameter {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hG : G.Connected)
     (horder : 2 < Fintype.card V) :
