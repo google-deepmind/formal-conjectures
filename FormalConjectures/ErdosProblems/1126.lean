@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1126
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [dB66] de Bruijn, N. G., *On almost additive functions*. Colloq. Math. (1966), 59-63.
 - [Ju65] Jurkat, Wolfgang B., *On Cauchy's functional equation*. Proc. Amer. Math. Soc. (1965), 683-686.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 
@@ -39,8 +42,8 @@ for all $x,y\in\mathbb{R}$ such that $f(x)=g(x)$ for almost all $x$.
 
 Proved independently by de Bruijn [dB66] and Jurkat [Ju65].
 -/
-@[category research solved, AMS 26 28, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1126.lean"]
-theorem erdos_1126 : answer(True) ↔ ∀
+@[category research solved, question, AMS 26 28, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1126.lean"]
+theorem erdos_1126 : ∀
     (f : ℝ → ℝ)
     (h :
       ∀ᵐ (p : ℝ × ℝ) ∂(volume.prod volume),

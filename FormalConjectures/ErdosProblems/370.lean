@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 370
 
 *Reference:* [erdosproblems.com/370](https://www.erdosproblems.com/370)
 -/
+
+@[expose] public section
 
 namespace Erdos370
 
@@ -32,10 +35,10 @@ Steinerberger has pointed out this problem has a trivial solution.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos370.lean",
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos370.lean",
 formal_proof using formal_conjectures at
 "https://github.com/XC0R/formal-conjectures/blob/f58dea7d2cc5c9da2e050ec80a73e838b54a6dd2/FormalConjectures/ErdosProblems/370.lean#L73"]
-theorem erdos_370 : answer(True) ↔
+theorem erdos_370 :
     { n | Nat.maxPrimeFac n < √n ∧ Nat.maxPrimeFac (n + 1) < √(n + 1) }.Infinite := by
   sorry
 

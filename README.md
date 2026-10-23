@@ -62,14 +62,14 @@ There are two special directories:
 
 -   `FormalConjecturesUtil` contains utilities like the
     [`category` attribute](./FormalConjecturesUtil/Attributes/Basic.lean), the
-    [`answer( )` elaborator](./FormalConjecturesUtil/Answer.lean) and some
+    [`question` attribute](./FormalConjecturesUtil/Attributes/Basic.lean) and some
     linters.
 -   `FormalConjecturesForMathlib` contains code potentially suitable to be upstreamed to
     [mathlib](https://github.com/leanprover-community/mathlib4). Here we follow
     mathlib's directory structure.
 
-For details on the `@[category]`, `@[formal_proof]`, `@[AMS]` attributes and
-the `answer( )` elaborator that statements in this repository use, see
+For details on the `@[category]`, `@[formal_proof]`, `@[AMS]`, `@[question]` attributes
+that statements in this repository use, see
 [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Versioning
@@ -102,7 +102,7 @@ benchmark version but instead go into `v{N+1}`.
 If your work has used formal-conjectures, please consider citing it via
 ```
 @misc{FormalConjectures,
-  author       = {{The Formal Conjectures Authors}}
+  author       = {{The Formal Conjectures Authors}},
   title        = {{T}he {F}ormal {C}onjectures {R}epository},
   year         = {2025},
   url          = {https://github.com/google-deepmind/formal-conjectures},

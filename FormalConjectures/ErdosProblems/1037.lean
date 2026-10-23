@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1037
@@ -25,16 +26,11 @@ import FormalConjecturesUtil
   Quaestiones Math. (1993), 333-350.
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace Erdos1037
-
-/--
-A set `s` of vertices of a graph `G` is *trivial* if the subgraph it induces is empty or
-complete, that is, if `s` is an independent set or a clique of `G`.
--/
-def IsTrivialSet {V : Type*} (G : SimpleGraph V) (s : Set V) : Prop :=
-  G.IsIndepSet s ∨ G.IsClique s
 
 /--
 Let $G$ be a graph on $n$ vertices in which every degree occurs at most twice, and the number of
@@ -47,13 +43,13 @@ The answer is no - Cambie, Chan, and Hunter have in the comment section given a 
 construction of a graph on $n$ vertices with at least $\frac{3}{4}n$ distinct degrees, every
 degree appears at most twice, and the largest trivial subgraph has size $O(\log n)$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1037.lean"]
-theorem erdos_1037 : answer(False) ↔
-    ∀ ε : ℝ, 0 < ε → ∀ C : ℝ, ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1037.lean"]
+theorem erdos_1037 :
+    ¬ ∀ ε : ℝ, 0 < ε → ∀ C : ℝ, ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
       (∀ d : ℕ, {v : Fin n | (G.neighborSet v).ncard = d}.ncard ≤ 2) →
       ((1 / 2 + ε) * (n : ℝ) <
         ((Set.range fun v : Fin n => (G.neighborSet v).ncard).ncard : ℝ)) →
-      ∃ s : Set (Fin n), IsTrivialSet G s ∧ (C * Real.log (n : ℝ) < (s.ncard : ℝ)) := by
+      ∃ s : Set (Fin n), G.IsHomogeneous s ∧ (C * Real.log (n : ℝ) < (s.ncard : ℝ)) := by
   sorry
 
 /--
@@ -67,7 +63,7 @@ theorem erdos_1037.variants.cambie_chan_hunter :
       (∀ d : ℕ, {v : Fin n | (G.neighborSet v).ncard = d}.ncard ≤ 2) ∧
       (3 / 4 * (n : ℝ) ≤
         ((Set.range fun v : Fin n => (G.neighborSet v).ncard).ncard : ℝ)) ∧
-      ∀ s : Set (Fin n), IsTrivialSet G s → ((s.ncard : ℝ) ≤ C * Real.log (n : ℝ)) := by
+      ∀ s : Set (Fin n), G.IsHomogeneous s → ((s.ncard : ℝ) ≤ C * Real.log (n : ℝ)) := by
   sorry
 
 end Erdos1037
