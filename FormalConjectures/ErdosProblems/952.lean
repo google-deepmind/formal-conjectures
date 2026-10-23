@@ -39,10 +39,10 @@ such that $\lvert x_{n+1}-x_n\rvert \ll 1$?
 No. This was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
 Lean proof.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/GaussianMoat/Main.lean#L102"]
-theorem erdos_952 : answer(False) ↔
-  ∃ (x : ℕ → GaussianInt) (C : ℤ),
+theorem erdos_952 :
+  ¬ ∃ (x : ℕ → GaussianInt) (C : ℤ),
     Function.Injective x ∧
       ∀ n, Prime (x n) ∧ (x (n + 1) - x n).norm < C := by
   sorry

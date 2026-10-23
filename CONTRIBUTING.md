@@ -62,25 +62,27 @@ This project follows
    **Longer proofs (i.e. more than 25-50 lines) are not to be included in this
    repository.** Instead, we welcome you to host your proof in your own
    repository and link to it using the `formal_proof` mechanism described
-   below. This does not apply to `FormalConjecturesForMathlib`, where we want
+   below. For formal proofs of research problems, we strongly recommend
+   linking to a [Palomar](https://palomar-registry.org/) entry.
+   This does not apply to `FormalConjecturesForMathlib`, where we want
    all statements to have proofs.
 
-2. **Open issues** describing problems you'd like to see formalised. Such an
+3. **Open issues** describing problems you'd like to see formalised. Such an
    issue should contain links to suitable references, and ideally a precise
    informal statement of the conjecture.
 
-3. **Improve referencing and tagging** of existing problems — for example,
+4. **Improve referencing and tagging** of existing problems — for example,
    adding pointers to references in already existing files, or adding
    additional relevant `AMS` subject attributes to statements.
 
-4. **Mark a problem as solved.** If you become aware that a problem currently
+5. **Mark a problem as solved.** If you become aware that a problem currently
    tagged `@[category research open]` has been solved, update its tag to
    `@[category research solved]` and add a `@[formal_proof using <kind> at
    "<url>"]` attribute pointing to the proof (formal or informal). See
    [The `@[formal_proof]` attribute](#the-formal_proof-attribute) for the
    accepted `<kind>` values.
 
-5. **Fix misformalisations.** PRs fixing incorrect formal statements and issues
+6. **Fix misformalisations.** PRs fixing incorrect formal statements and issues
    flagging problems are especially appreciated.
 
 ## Contribution process
@@ -286,8 +288,8 @@ a claim. A conjecture is a claim: its author expects it to be true. A question
 leaves the answer open. The tag is independent of the `category` attribute,
 but it only belongs on a `research open` or `research solved` problem.
 
-There are two kinds of question. Both are written `@[question]`; the kind is
-recorded from the statement.
+There are two kinds of question, written `@[question]` and `@[question value]`.
+The attribute checks the form against the statement.
 
 - A yes-or-no question ("Is it true that...?", "Does...?", "Are there...?").
   The Lean statement is the proposition the question asks about. Once the
@@ -297,11 +299,12 @@ recorded from the statement.
   `¬`. Not a question: a conjecture that is merely phrased as one. "Is every
   even integer greater than 2 the sum of two primes?" is Goldbach's
   conjecture, a claim, and is stated without the tag.
-- A question that asks for a value ("What is...?", "How large can...be?").
-  The Lean statement marks the unknown with a non-`Prop` `answer(sorry)`, see
-  below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
-  question, stated as `R(5, 5) = answer(sorry)`; "$R(5,5) = 43$" is a claim,
-  stated as `R(5, 5) = 43` without the tag.
+- A question that asks for a value ("What is...?", "How large can...be?"),
+  written `@[question value]`. The unknown is a definition `<theorem>.answer`,
+  see below. Not a question: a conjectured value. "What is $R(5,5)$?" is a
+  question, stated as `R(5, 5) = ramsey_5_5.answer` with
+  `def ramsey_5_5.answer : ℕ := sorry`;
+  "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43` without the tag.
 
 ```lean
 /-- Is every aliquot sequence bounded? Catalan and Dickson conjectured that it is;
@@ -311,38 +314,51 @@ theorem catalan_dickson :
     ∀ n, ∃ B, ∀ k, (fun m => ∑ d ∈ m.properDivisors, d)^[k] n ≤ B := by
   sorry
 
+def hadwiger_nelson.answer : ℕ := sorry
+
 /-- What is the chromatic number of the plane? -/
-@[category research open, question, AMS 5]
-theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+@[category research open, question value, AMS 5]
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nelson.answer := by
   sorry
 ```
 
-## The `answer( )` elaborator
+## The unknown of a value question
 
-Some open questions are formulated in a way that requires a user-provided
-answer, for instance the
+Some questions ask for a value, for instance the
 [Hadwiger–Nelson problem](https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem)
 asks for the minimum number of colours needed to colour the plane such that
-no two points exactly one unit distance apart have the same colour. The
-`answer( )` elaborator allows us to formulate the problem without deciding
-for an answer.
+no two points exactly one unit distance apart have the same colour. Such a
+question is tagged `@[question value]`. Its unknown is a plain definition
+named `<theorem>.answer`, declared with `sorry` right before the theorem, and
+the theorem refers to it by that name:
 
 ```lean
-@[category research open]
-theorem HadwigerNelsonProblem :
-    UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+def hadwiger_nelson.answer : ℕ := sorry
+
+/-- What is the chromatic number of the plane? -/
+@[category research open, question value, AMS 5]
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nelson.answer := by
   sorry
 ```
+
+- Give the definition the type of the unknown. If that type depends on
+  parameters of the theorem, make them parameters of the definition and apply
+  it to them in the statement.
+- Once the question is answered, fill in the definition, for example
+  `def foo.answer : ℕ := 5`, and leave the statement unchanged. The proof then
+  proves the statement for that value.
 
 ### Problems that require answers
 
-Note that providing a term inside the `answer( )` elaborator together with a
-proof that the statement is true *does not* by itself mean that the problem
-has been solved. For example, a question of the form "Which natural numbers
-satisfy the predicate $P$?" might be formalised as
+Note that filling in the definition together with a proof that the statement
+is true *does not* by itself mean that the problem has been solved. For
+example, a question of the form "Which natural numbers satisfy the predicate
+$P$?" might be formalised as
 
 ```lean
-theorem myOpenProblem : {n : ℕ | P n} = answer(sorry) := by
+def myOpenProblem.answer : Set ℕ := sorry
+
+theorem myOpenProblem : {n : ℕ | P n} = myOpenProblem.answer := by
   sorry
 ```
 
@@ -366,19 +382,19 @@ is outside of the scope of this repository.
   e.g. a problem sourced from Wikipedia should live in
   `FormalConjectures/Wikipedia`.
 - When a problem is stated as a yes-or-no question in English, tag it with
-  `@[question]` and use `answer(sorry)`:
+  `@[question]` and state the proposition the question asks about:
 
   ```lean
   /-- English version: "Does P hold?" -/
   @[category research open, question]
-  theorem myConjecture : answer(sorry) ↔ P := by
+  theorem myConjecture : P := by
     sorry
   ```
 
   This way the informal "Does ...", "Are there ..." or "Is it true that ..."
-  corresponds to the `answer(sorry)` in the formalised statement. If the
-  problem has been solved, `answer(sorry)` should be replaced by
-  `answer(True)` or `answer(False)` accordingly; the `question` tag stays.
+  is recorded by the tag, and the statement stays a plain proposition. Once
+  the question is answered, keep the tag and state what holds: `P` if the
+  answer is yes, `¬ P` if the answer is no.
 
   If the problem is not stated as a question, the following style is preferred:
 

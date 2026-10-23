@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public meta import FormalConjecturesUtil.Attributes.AMS
-public meta import FormalConjecturesUtil.Answer
 
 import Qq
 
@@ -119,13 +118,14 @@ its author expects it to be true. A question leaves the answer open. There are t
   statement is the one that holds: unchanged if the answer is yes, negated with `¬` if the
   answer is no. Not a question: a conjecture that is merely phrased as one. "Is every even
   integer greater than 2 the sum of two primes?" is Goldbach's conjecture, a claim.
-- A question that asks for a value ("What is...?", "How large can...be?"). The Lean statement
-  marks the unknown with `answer(sorry)`, see `FormalConjecturesUtil.Answer`. Not a question:
-  a conjectured value. "What is $R(5,5)$?" is a question, stated as `R(5, 5) = answer(sorry)`;
-  "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43`.
+- A question that asks for a value ("What is...?", "How large can...be?"). The unknown is a
+  definition `<theorem>.answer`, declared with `sorry` before the theorem, which refers to it
+  by that name. Not a question: a conjectured value. "What is $R(5,5)$?" is a question, stated
+  as `R(5, 5) = ramsey_5_5.answer`; "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43`.
 
-The attribute records the kind itself: a statement containing a non-`Prop` `answer(...)` is a
-value question, any other is a yes-or-no question. Both are written `@[question]`.
+A yes-or-no question is written `@[question]`, a value question `@[question value]`. The
+attribute checks the form against the statement: `value` requires the statement to refer to
+`<theorem>.answer`, and plain `question` forbids it.
 
 The attribute is independent of `category`, but it only makes sense on a `research open` or
 `research solved` problem: a textbook exercise, a `test`, or an `API` statement is not a
@@ -140,9 +140,11 @@ theorem catalan_dickson :
     ∀ n, ∃ B, ∀ k, (fun m => ∑ d ∈ m.properDivisors, d)^[k] n ≤ B := by
   sorry
 
+def hadwiger_nelson.answer : ℕ := sorry
+
 /-- What is the chromatic number of the plane? -/
-@[category research open, question, AMS 5]
-theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = answer(sorry) := by
+@[category research open, question value, AMS 5]
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nelson.answer := by
   sorry
 ```
 
@@ -332,7 +334,7 @@ def addSubjectEntry {m : Type → Type} [MonadEnv m] (name : Name)
 inductive QuestionKind
   /-- A yes-or-no question. The statement is the proposition asked about. -/
   | yesNo
-  /-- A question asking for a value. The statement marks the unknown with `answer(sorry)`. -/
+  /-- A question asking for a value. The unknown is the definition `<theorem>.answer`. -/
   | value
   deriving Inhabited, BEq, Hashable, Repr, ToExpr
 
@@ -573,26 +575,31 @@ initialize Lean.registerBuiltinAttribute {
     addSubjectEntry decl subjects.toList oldDoc
 }
 
-/-- The kind of question a statement of type `type` asks: a value question if it contains a
-non-`Prop` `answer(...)`, a yes-or-no question otherwise. -/
-def questionKindOfType (type : Expr) : MetaM QuestionKind := do
-  let hasValueAnswer ← IO.mkRef false
-  Google.forEachAnswer type fun ans => do
-    unless ← Meta.isProp ans do hasValueAnswer.set true
-  return if ← hasValueAnswer.get then .value else .yesNo
+/-- Whether the statement of `decl`, of type `type`, refers to the definition `decl.answer`,
+the unknown of a value question. -/
+def hasValueAnswer (decl : Name) (type : Expr) : Bool :=
+  type.getUsedConstants.contains (decl ++ `answer)
 
-syntax (name := Question_attr) &"question" : attr
+syntax (name := Question_attr) &"question" (&"value")? : attr
 
 /-- Records that the source asks a question rather than makes a claim.
 
-Usage: `@[question]`, together with a `research` category. A statement containing a non-`Prop`
-`answer(...)` is recorded as a value question, any other as a yes-or-no question. For a
-yes-or-no question the statement is the proposition asked about; once answered, it is the one
-that holds: unchanged for a yes, negated with `¬` for a no. -/
+Usage, together with a `research` category:
+- `@[question]` for a yes-or-no question. The statement is the proposition asked about; once
+  answered, it is the one that holds: unchanged for a yes, negated with `¬` for a no.
+- `@[question value]` for a question that asks for a value. The unknown is a definition
+  `<theorem>.answer`, which the statement refers to by that name.
+
+The attribute checks the form against the statement: `value` requires a reference to
+`<theorem>.answer`, and plain `question` forbids it. -/
 initialize Lean.registerBuiltinAttribute {
   name := `Question_attr
   descr := "Annotation that a statement is posed as a question."
-  add decl _stx _attrKind := do
+  add decl stx _attrKind := do
+    let kind ← match stx with
+      | `(attr| question) => pure QuestionKind.yesNo
+      | `(attr| question value) => pure QuestionKind.value
+      | _ => throwUnsupportedSyntax
     -- Inside a `module`, a theorem is still registered as an axiom when attributes run, so
     -- the check is on the type rather than on the kind of the constant.
     let some info := (← getEnv).find? decl
@@ -602,7 +609,15 @@ initialize Lean.registerBuiltinAttribute {
         but the type of '{decl}' is not a proposition"
     if let some tag := (categoryExt.getState (← getEnv)).toArray.find? (·.declName == decl) then
       checkQuestionCategory decl tag.category
-    addQuestionEntry decl (← Meta.MetaM.run' (questionKindOfType info.type))
+    match kind, hasValueAnswer decl info.type with
+    | .value, false =>
+      throwError "`question value` requires the statement of '{decl}' to refer to the \
+        definition `{decl ++ `answer}`; for a yes-or-no question use `question`"
+    | .yesNo, true =>
+      throwError "the statement of '{decl}' refers to the unknown of a value question; \
+        use `question value`"
+    | _, _ => pure ()
+    addQuestionEntry decl kind
   applicationTime := .afterTypeChecking
 }
 

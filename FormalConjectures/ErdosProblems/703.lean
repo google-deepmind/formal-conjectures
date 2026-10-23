@@ -63,9 +63,9 @@ $$T(n,r)<(2-\delta)^n?$$
 
 The answer is yes, proved by Frankl and Rödl [FrRo87].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos703.lean#L331"]
-theorem erdos_703 : answer(True) ↔
+theorem erdos_703 :
     ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧
       ∀ (n r : ℕ), ε * n < r → r < (1 / 2 - ε) * n → (T n r : ℝ) < (2 - δ) ^ n := by
   sorry
@@ -73,7 +73,30 @@ theorem erdos_703 : answer(True) ↔
 /-- It is trivial that $T(n,0)=2^{n-1}$. -/
 @[category textbook, AMS 5]
 theorem erdos_703.variants.zero (n : ℕ) (hn : 1 ≤ n) : T n 0 = 2 ^ (n - 1) := by
-  sorry
+  have : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+  have hcard : Fintype.card (Finset (Fin n)) = 2 * 2 ^ (n - 1) := by
+    rw [Fintype.card_finset, Fintype.card_fin, ← pow_succ']
+    congr 1
+    omega
+  have hiff : ∀ A B : Finset (Fin n), (A ∩ B).card ≠ 0 ↔ ¬ Disjoint A B := by
+    intro A B
+    rw [Ne, Finset.card_eq_zero, Finset.disjoint_iff_inter_eq_empty]
+  unfold T
+  apply le_antisymm
+  · refine csSup_le' ?_
+    rintro _ ⟨𝓕, h𝓕, rfl⟩
+    have h : (𝓕 : Set (Finset (Fin n))).Intersecting := by
+      intro A hA B hB
+      exact (hiff A B).1 (h𝓕 A (Finset.mem_coe.1 hA) B (Finset.mem_coe.1 hB))
+    have := h.card_le
+    omega
+  · have h0 : ((∅ : Finset (Finset (Fin n))) : Set (Finset (Fin n))).Intersecting := by
+      simp [Set.intersecting_empty]
+    obtain ⟨t, -, ht, hti⟩ := h0.exists_card_eq
+    refine le_csSup ⟨2 ^ n, ?_⟩ ⟨t, fun A hA B hB ↦ (hiff A B).2
+      (hti (Finset.mem_coe.2 hA) (Finset.mem_coe.2 hB)), by omega⟩
+    rintro _ ⟨𝓕, -, rfl⟩
+    exact (Finset.card_le_univ 𝓕).trans (by rw [Fintype.card_finset, Fintype.card_fin])
 
 /--
 Frankl and Füredi [FrFu84b] proved that, for fixed $r$ and $n$ sufficiently large in terms of

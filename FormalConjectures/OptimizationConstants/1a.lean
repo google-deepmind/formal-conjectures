@@ -63,22 +63,28 @@ theorem c1a_lower_bound : 1.2748 ≤ C1a := by
 theorem c1a_upper_bound : C1a ≤ 1.5029 := by
   sorry
 
+def mem_Ico_c1a.answer : ℝ := sorry
+
 /-- How can the best known upper bound $1.5028628587\ldots$ of [T2026] be improved?
 
 The step function published with [T2026] gives $1.50286285870\ldots$. The figure $1.502862$ in
 the table of the first reference is this value truncated, so it is not a known upper bound. -/
-@[category research open, AMS 5 11 26]
-theorem mem_Ico_c1a : answer(sorry) ∈ Set.Ico C1a 1.5028628587 := by
+@[category research open, question value, AMS 5 11 26]
+theorem mem_Ico_c1a : mem_Ico_c1a.answer ∈ Set.Ico C1a 1.5028628587 := by
   sorry
+
+def mem_Ioc_c1a.answer : ℝ := sorry
 
 /-- How can the best known lower bound $1.292$ of [PBV2026] be improved? -/
-@[category research open, AMS 5 11 26]
-theorem mem_Ioc_c1a : answer(sorry) ∈ Set.Ioc 1.292 C1a := by
+@[category research open, question value, AMS 5 11 26]
+theorem mem_Ioc_c1a : mem_Ioc_c1a.answer ∈ Set.Ioc 1.292 C1a := by
   sorry
 
+def c1a_eq.answer : ℝ := sorry
+
 /-- What is the exact value of the constant? -/
-@[category research open, AMS 5 11 26]
-theorem c1a_eq : C1a = answer(sorry) := by
+@[category research open, question value, AMS 5 11 26]
+theorem c1a_eq : C1a = c1a_eq.answer := by
   sorry
 
 -- TODO: Formalise relationship to Sidon sets.

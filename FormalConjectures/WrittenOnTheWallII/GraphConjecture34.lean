@@ -52,11 +52,10 @@ are $154$ and $266$, so the bound is $\lceil (154 + 266) / 38 \rceil = 12$.
 
 Lean formalization by Wentao Li, with AI assistance.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/b60c2e548910b32eb3b602f6a8e67af806e4b9f6/LeanGraphProofs/WOWII34.lean#L350"]
 theorem conjecture34 :
-  answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected),
       let C : Set α := center G
       let M : Set α := {v | G.degree v = G.maxDegree}

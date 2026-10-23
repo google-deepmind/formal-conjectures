@@ -22,6 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/604](https://www.erdosproblems.com/604)
+- [OAI26] OpenAI, [*The weak pinned planar distance theorem*](https://github.com/openai/math/blob/1581d4cbdd69a0faf34b2089614fe2a814316a6a/preprints/The-weak-pinned-planar-distance-theorem-September-23-2026/paper.pdf) (2026).
 - [Er46] Erdős, Paul, *On sets of distances of $n$ points*. Amer. Math. Monthly (1946), 248--250.
 - [Er57] Erdős, Paul, *Some unsolved problems*. Michigan Math. J. (1957), 291-300.
 - [Er61] Erdős, Paul, *Some unsolved problems*. Magyar Tud. Akad. Mat. Kutató Int. Közl. (1961),
@@ -71,9 +72,13 @@ $$\#\{ d(x,y) : y \in A\} \gg n^{1-o(1)}?$$
 This is the pinned distance problem, a stronger form of Problem 89. Here $n^{1-o(1)}$ means: for
 every $\varepsilon > 0$ and all large $n$, the bound is at least $n^{1-\varepsilon}$. We do not
 count the distance $d(x, x) = 0$; this changes the count by one.
+
+This weak formulation was proved by OpenAI [OAI26].
 -/
-@[category research open, AMS 52]
-theorem erdos_604 : answer(sorry) ↔
+@[category research solved, question, AMS 52,
+  formal_proof using lean4 at
+    "https://github.com/MendozaLab/erdos-experiments/blob/09f72c57ed2d98906b9cf03bff2091f6fe73807f/proofs/erdos604/Erdos604Proof/ExternalApplication.lean#L17"]
+theorem erdos_604 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
       (n : ℝ) ^ (1 - ε) ≤ (pinnedDistinctDistances n : ℝ) := by
   sorry
@@ -82,8 +87,8 @@ theorem erdos_604 : answer(sorry) ↔
 Given $n$ distinct points $A\subset\mathbb{R}^2$, must there be a point $x\in A$ such that
 $$\#\{ d(x,y) : y \in A\} \gg \frac{n}{\sqrt{\log n}}?$$
 -/
-@[category research open, AMS 52]
-theorem erdos_604.variants.sqrt_log : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_604.variants.sqrt_log :
     (fun n : ℕ => (n : ℝ) / (n : ℝ).log.sqrt) =O[atTop]
       (fun n => (pinnedDistinctDistances n : ℝ)) := by
   sorry
