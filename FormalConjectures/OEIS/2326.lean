@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Multiplicative order of 2 mod $2n+1$
@@ -24,6 +25,8 @@ In other words, the least $m > 0$ such that $2n+1$ divides $2^m - 1$.
 
 *References:*
 - [A002326](https://oeis.org/A002326)-/
+
+@[expose] public section
 
 namespace OeisA2326
 

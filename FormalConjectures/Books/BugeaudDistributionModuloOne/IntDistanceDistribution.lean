@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Fractional Parts of Powers
@@ -38,6 +39,8 @@ Chapter 10 of the book collects open questions. This file formalizes Problems 10
     June 28–July 6, 2000. Berlin, Heidelberg: Springer Berlin Heidelberg, 2003. 249-344.
 -/
 
+@[expose] public section
+
 namespace Bugeaud01
 
 /--
@@ -45,8 +48,8 @@ Problem 10.1. Are there a transcendental number $\alpha$ and a positive real
 number $\xi$ such that $\lVert \xi \alpha^n \rVert$ tends to~$0$ as~$n$ tends to infinity? [Har19]
 (Trivial for $|\alpha| < 1$)
 -/
-@[category research open, AMS 11]
-theorem problem_10_1 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem problem_10_1 :
     ∃ (α ξ : ℝ), 1 < |α| ∧ Transcendental ℚ α ∧ 0 < ξ ∧
       Filter.Tendsto (fun n : ℕ ↦ distToNearestInt (ξ * α ^ n)) Filter.atTop (nhds 0) := by
   sorry

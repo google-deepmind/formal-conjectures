@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Catch-Up game and conjecture
@@ -47,6 +48,8 @@ A. Isaksen, M. Ismail, S. J. Brams, A. Nealen,
 *Catch-Up: A Game in Which the Lead Alternates,* Game & Puzzle Design 1(2), 38–49 (2015).
 
 -/
+
+@[expose] public section
 
 namespace CatchUp
 

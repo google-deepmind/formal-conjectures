@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 951
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
  - [Er77c] Erdős, Paul, Problems and results on combinatorial number theory. III. Number theory day (Proc. Conf., Rockefeller Univ.,
     New York, 1976) (1977), 43-72.
 -/
+
+@[expose] public section
 
 open scoped Finsupp Nat.Prime Topology
 open Filter
@@ -55,8 +58,8 @@ theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
   linarith [abs_lt.1 (hN N le_rfl), abs_lt.1 (hN (N + 1) (by grind))]
 
 /-- If `1 < a 0 < ...` has property `Erdos951Prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
-@[category research open, AMS 11]
-theorem erdos_951 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_951 :
     ∀ a : ℕ → ℝ, 1 < a 0 → StrictMono a → Erdos951Prop a →
       ∀ᶠ (x : ℝ) in Filter.atTop, {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry
