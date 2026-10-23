@@ -70,11 +70,9 @@ lemma triangleCoverNumber_eq_zero (G : SimpleGraph V) (h : G.CliqueFree 3) :
   Nat.le_zero.mp (Nat.sInf_le ⟨∅, isTriangleCover_empty G h, Set.ncard_empty _⟩)
 
 /--
-**Tuza's conjecture (1981).**
-
-In every finite graph, if every set of pairwise edge-disjoint triangles has size at most `ν`,
-then all triangles can be met by at most `2ν` edges: `τ(G) ≤ 2ν(G)`. The bound would be sharp,
-e.g. for `K₄` and `K₅`.
+Tuza's conjecture (1981): every finite graph $G$ satisfies $\tau(G) \le 2\nu(G)$,
+where $\tau(G)$ is its triangle covering number and $\nu(G)$ is its triangle packing number.
+The bound would be sharp, for example for $K_4$ and $K_5$.
 -/
 @[category research open, AMS 5]
 theorem tuza_conjecture {V : Type} [Fintype V] (G : SimpleGraph V) :
@@ -82,9 +80,7 @@ theorem tuza_conjecture {V : Type} [Fintype V] (G : SimpleGraph V) :
   sorry
 
 /--
-**Haxell (1999): the best known general bound.**
-
-In every finite graph, `τ(G) ≤ (66/23) ν(G) ≈ 2.87 ν(G)`.
+Haxell (1999): every finite graph satisfies $\tau(G) \le (66/23)\nu(G)$.
 
 *Reference:* [Ha99].
 -/
