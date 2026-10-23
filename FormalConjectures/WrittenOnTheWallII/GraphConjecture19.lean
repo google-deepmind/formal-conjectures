@@ -41,8 +41,24 @@ If `G` is connected then the size `b(G)` of a largest induced bipartite subgraph
 satisfies
 `b(G) ≥ FLOOR((∑ ecc(v))/(|V|) + sSup (range (l G)))`, where `ecc(v)` denotes
 eccentricity and `l(G)` is the independence number of neighbourhoods.
+
+**Proof outline.** Pick `u` maximising `l(u)`, let `e = ecc(u)` and `D = diam(G)`, and let
+`I ⊆ N(u)` be an independent set with `|I| = l(u)`. Any family of sets `B d`, each
+independent and contained in the distance sphere `{v | dist(u, v) = d}`, induces a bipartite
+subgraph (colour by the parity of `dist(u, ·)`), so `b(G) ≥ ∑ |B d|`.
+* If `D ≤ e`, every eccentricity is at most `e`, so the average is at most `e`. Take
+  `B 0 = {u}`, `B 1 = I`, and one vertex of a geodesic from `u` to an eccentric vertex on
+  each sphere `2 ≤ d ≤ e`; this gives `b(G) ≥ e + l(u)`.
+* If `e < D`, the average eccentricity is strictly less than `D`. Take a diametral pair
+  `x, y`. On each sphere `d` in a suitable range, the vertices of geodesics `u → x` and
+  `u → y` at distance `d` from `u` are at distance at least `2` from each other (triangle
+  inequality with `dist(x, y) = D`), so they can share `B d`; counting gives
+  `b(G) ≥ D - 1 + l(u)`.
+In both cases the floor of the average plus `l(u)` is at most `b(G)`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/hamsade-google/formal-conjectures/blob/a94666dbdeef42d593a6c1aecf388c396db7c3fb/FormalConjectures/WrittenOnTheWallII/GraphConjecture19.lean"]
 theorem conjecture19 (G : SimpleGraph α) [Nontrivial α] (h_conn : G.Connected) :
     ⌊(∑ v ∈ Finset.univ, ((G.eccent v).toNat : ℝ)) / (Fintype.card α : ℝ) +
       sSup (Set.range (indepNeighbors G))⌋ ≤ b G := by
