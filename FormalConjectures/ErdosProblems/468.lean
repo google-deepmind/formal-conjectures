@@ -49,10 +49,20 @@ def D (n : ℕ) : Finset ℕ := by
   classical
   exact ((Nat.divisors n).filter fun d => 1 < d).image fun d => divisorPrefixSum n d
 
+/-- The divisor $1$ is omitted, while $n$ itself is included in the final prefix sum. -/
+@[category test, AMS 11]
+theorem D_twelve : D 12 = {2, 5, 9, 15, 27} := by
+  decide +kernel
+
 /-- The elements of $D_n$ which do not occur in any earlier $D_m$. -/
 def newDivisorPrefixSums (n : ℕ) : Finset ℕ := by
   classical
-  exact (D n).filter fun x => ∀ m : ℕ, m < n → x ∉ D m
+  exact D n \ (Finset.range n).biUnion D
+
+/-- At $n=12$, precisely $9$, $15$ and $27$ have not occurred at any earlier index. -/
+@[category test, AMS 11]
+theorem newDivisorPrefixSums_twelve : newDivisorPrefixSums 12 = {9, 15, 27} := by
+  decide +kernel
 
 /-- The natural number $n$ is the least index such that $N\in D_n$. -/
 def IsMinimalDPreimage (N n : ℕ) : Prop :=
@@ -65,7 +75,7 @@ def Erdos468MinimalPreimageLittleO : Prop :=
       (fun N : ℕ => (f N : ℝ)) =o[atTop] (fun N : ℕ => (N : ℝ))
 
 /--
-The weaker "almost all" version: there is a function which is the minimal preimage function on a
+The "almost all" version: there is a function which is the minimal preimage function on a
 set of natural density one and is still $o(N)$.
 -/
 def Erdos468MinimalPreimageLittleOAlmostAll : Prop :=
