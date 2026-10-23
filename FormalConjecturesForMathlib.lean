@@ -20,6 +20,7 @@ public import FormalConjecturesForMathlib.Algebra.GradedMonoid
 public import FormalConjecturesForMathlib.Algebra.Group.Action.Pointwise.Set.Basic
 public import FormalConjecturesForMathlib.Algebra.Group.GrowthFunction
 public import FormalConjecturesForMathlib.Algebra.Group.Indicator
+public import FormalConjecturesForMathlib.Algebra.Group.Pointwise.Finset.Basic
 public import FormalConjecturesForMathlib.Algebra.Homology.DerivedCategory.Ext.GradedAlgebra
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.PoissonBracket
 public import FormalConjecturesForMathlib.Algebra.MvPolynomial.RegularFunction
@@ -27,9 +28,11 @@ public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Algebra
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Basic
 public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
+public import FormalConjecturesForMathlib.Algebra.Polynomial.Irreducible
 public import FormalConjecturesForMathlib.Algebra.Powerfree
 public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 public import FormalConjecturesForMathlib.Algebra.Ring.PythagorasNumber
+public import FormalConjecturesForMathlib.Algebra.WeylAlgebra
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.MinimalDiscriminant
 public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Regulator
@@ -55,6 +58,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumse
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
+public import FormalConjecturesForMathlib.Combinatorics.Enumerative.Partition.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Extremal
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Finite
@@ -71,9 +75,11 @@ public import FormalConjecturesForMathlib.Combinatorics.SetFamily.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.SetTheory.PartitionRelation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.AnnihilationNumber
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Balanced
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Boundary
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Chordal
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Clique
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.List
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
@@ -90,6 +96,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.EdgeColourin
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalAlpha
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Homogeneous
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Hypercube
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
@@ -109,6 +116,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SubgraphIsomorphism
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SzegedIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Temperature
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.TotalColouring
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.UnitDistancePlaneGraph
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
@@ -125,6 +133,7 @@ public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuring
 public import FormalConjecturesForMathlib.Data.Bool.Basic
 public import FormalConjecturesForMathlib.Data.Finset.Card
 public import FormalConjecturesForMathlib.Data.Finset.Powerset
+public import FormalConjecturesForMathlib.Data.Finset.Prod
 public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
 public import FormalConjecturesForMathlib.Data.Int.IntermediateValue
 public import FormalConjecturesForMathlib.Data.Int.Order.Basic
@@ -140,6 +149,7 @@ public import FormalConjecturesForMathlib.Data.Nat.Prime.Infinite
 public import FormalConjecturesForMathlib.Data.Nat.Squarefree
 public import FormalConjecturesForMathlib.Data.Real.Constants
 public import FormalConjecturesForMathlib.Data.Real.NearestInt
+public import FormalConjecturesForMathlib.Data.Set.CountUpTo
 public import FormalConjecturesForMathlib.Data.Set.Density
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Data.Set.Triplewise
@@ -156,9 +166,20 @@ public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
 public import FormalConjecturesForMathlib.Geometry.Group.WordProd
 public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 public import FormalConjecturesForMathlib.Geometry.Metric
+public import FormalConjecturesForMathlib.Geometry.OrdinaryLines
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
+public import FormalConjecturesForMathlib.GroupTheory.DerivedLength
+public import FormalConjecturesForMathlib.GroupTheory.ElementOrders
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.InvolutionFixedPoints
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.MovedPoints
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.OrbitCounts
+public import FormalConjecturesForMathlib.GroupTheory.GroupAction.TransitivityDegree
+public import FormalConjecturesForMathlib.GroupTheory.PrimeDivisors
+public import FormalConjecturesForMathlib.GroupTheory.RationalClasses
+public import FormalConjecturesForMathlib.GroupTheory.SubgroupCounts
 public import FormalConjecturesForMathlib.GroupTheory.Torsion
+public import FormalConjecturesForMathlib.InformationTheory.FiniteEntropy
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
 public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 public import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
@@ -193,6 +214,7 @@ public import FormalConjecturesForMathlib.NumberTheory.MultiplicativelyIndepende
 public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.FundamentalDiscriminant
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.Quadratic
+public import FormalConjecturesForMathlib.NumberTheory.PerfectNumber
 public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
@@ -209,6 +231,7 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.RepresentationTheory.CharacterDegree
 public import FormalConjecturesForMathlib.RepresentationTheory.Homological.ContCohomology.Sha
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.TrivialModule
@@ -223,7 +246,9 @@ public import FormalConjecturesForMathlib.RingTheory.SystemOfParameters
 public import FormalConjecturesForMathlib.RingTheory.Valuation.LocalUniformization
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
+public import FormalConjecturesForMathlib.SetTheory.Cardinal.ContinuumHypothesis
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
+public import FormalConjecturesForMathlib.SetTheory.Ordinal.PartitionRelation
 public import FormalConjecturesForMathlib.Tactic.Linter.Term
 public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group

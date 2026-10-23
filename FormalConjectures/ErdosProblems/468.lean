@@ -73,10 +73,12 @@ def Erdos468MinimalPreimageLittleOAlmostAll : Prop :=
     {N : ℕ | IsMinimalDPreimage N (f N)}.HasDensity 1 ∧
       (fun N : ℕ => (f N : ℝ)) =o[atTop] (fun N : ℕ => (N : ℝ))
 
+def erdos_468.parts.i.answer : ℕ → ℕ := sorry
+
 /-- What is the size of $D_n\setminus\bigcup_{m<n}D_m$? -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_468.parts.i :
-    (fun n : ℕ => (newDivisorPrefixSums n).card) = answer(sorry) := by
+    (fun n : ℕ => (newDivisorPrefixSums n).card) = erdos_468.parts.i.answer := by
   sorry
 
 /--
@@ -90,8 +92,8 @@ Vinogradov's counting theorem [Ku, equation (1)] implies that all sufficiently l
 $N$ are representable: they are sums of three distinct primes greater than $\sqrt{N}$.
 Thus the represented values have positive lower density, which rules out $f(N)=o(N)$.
 -/
-@[category research solved, AMS 11]
-theorem erdos_468.parts.ii : answer(False) ↔ Erdos468MinimalPreimageLittleO := by
+@[category research solved, question, AMS 11]
+theorem erdos_468.parts.ii : ¬ Erdos468MinimalPreimageLittleO := by
   sorry
 
 /--
@@ -101,9 +103,9 @@ The answer is no by Kovač's counting bound [Ko26, Lemma 2 and the proof of Theo
 After shifting prefix sums by one to account for the omitted divisor $1$, this bound rules
 out a set of density one on which the minimal preimage is $o(N)$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_468.variants.almost_all :
-    answer(False) ↔ Erdos468MinimalPreimageLittleOAlmostAll := by
+    ¬ Erdos468MinimalPreimageLittleOAlmostAll := by
   sorry
 
 end Erdos468
