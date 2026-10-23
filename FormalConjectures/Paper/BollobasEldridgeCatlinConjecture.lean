@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Bollobás–Eldridge–Catlin conjecture on graph packing (1978)
@@ -30,6 +32,8 @@ import FormalConjecturesUtil
 * [CSS03] Csaba, B., Shokoufandeh, A. and Szemerédi, E. (2003). "Proof of a conjecture of
   Bollobás and Eldridge for graphs of maximum degree three." *Combinatorica* 23, pp. 35--72.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
