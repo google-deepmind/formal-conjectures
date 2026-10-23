@@ -13,14 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 416
 
-*Reference:* [erdosproblems.com/416](https://www.erdosproblems.com/416)
+*References:*
+- [erdosproblems.com/416](https://www.erdosproblems.com/416)
+- [OAI26a] OpenAI, *An asymptotic formula for the number of totients*. OpenAI Math Release
+  preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/An-asymptotic-formula-for-the-number-of-totients-September-25-2026/An-asymptotic-formula-for-the-number-of-totients-September-25-2026.pdf
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology Real
@@ -34,20 +41,36 @@ noncomputable abbrev V (x : ℝ) : ℝ :=
 
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. Does `V(2x)/V(x)→2` ?
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
+Lean proof, which gives `V(cx)/V(x)→c` for every fixed `c>0`.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/TotientAsymptotic/UnconditionalMain.lean#L12"]
 theorem erdos_416.parts.i :
     Filter.Tendsto (fun x => (V (2 * x) / V (x))) Filter.atTop (𝓝 2) := by
   sorry
 
 /--
+Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. Then `V(cx)/V(x)→c` for
+every fixed `c>0`, which answers a question of Erdős and Hall. This was proved by an internal
+OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/TotientAsymptotic/UnconditionalMain.lean#L12"]
+theorem erdos_416.variants.regularly_varying (c : ℝ) (hc : 0 < c) :
+    Filter.Tendsto (fun x => V (c * x) / V x) Filter.atTop (𝓝 c) := by
+  sorry
+
+def erdos_416.parts.ii.answer : ℝ → ℝ := sorry
+
+/--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 Is there an asymptotic formula for `V(x)`?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_416.parts.ii :
-    let f : ℝ → ℝ := answer(sorry)
-    Filter.Tendsto (fun x => V x / f x) atTop (𝓝 1) := by
+    Filter.Tendsto (fun x => V x / erdos_416.parts.ii.answer x) atTop (𝓝 1) := by
   sorry
 
 /--
@@ -69,26 +92,32 @@ theorem erdos_416.variants.Erdos : ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ →
     ∀ᶠ x in Filter.atTop, V x = x * x.log ^ (-1 + f x) := by
   sorry
 
+-- TODO: define the constant from the paper, 0.8178146... here and add it in the statement
+def erdos_416.variants.Maier_Pomerance.answer : ℝ := sorry
+
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x)=x/logx * e^((C+o(1))(log log log x)^2)`, for some explicit constant `C>0`.
 Ref:Maier, Helmut and Pomerance, Carl, _On the number of distinct values of Euler's $\phi$-function_.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question value, AMS 11]
 theorem erdos_416.variants.Maier_Pomerance :
-    let C : ℝ := answer(sorry)
-    0 < C ∧ ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ → ℝ) ∧
-      ∀ᶠ x in Filter.atTop, (V x : ℝ) = x / x.log * (rexp <| (C + f x) * x.log.log.log ^ 2) := by
+    0 < erdos_416.variants.Maier_Pomerance.answer ∧ ∃ f : ℝ → ℝ, f =o[atTop] (1 : ℝ → ℝ) ∧
+      ∀ᶠ x in Filter.atTop, (V x : ℝ) = x / x.log *
+        (rexp <| (erdos_416.variants.Maier_Pomerance.answer + f x) * x.log.log.log ^ 2) := by
   sorry
+
+-- TODO: add the constants `C₁, C₂, C₃` from the paper here
+def erdos_416.variants.Ford.answer : ℝ × ℝ × ℝ := sorry
 
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable.
 `V(x) ≍ x/log x*e^(C_1*(log log log x − log log log log x)^2+C_2 log log log x − C_3 log log log log x)`
 Ref: Ford, Kevin, _The distribution of totients_.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question value, AMS 11]
 theorem erdos_416.variants.Ford :
-    let (C₁, C₂, C₃) : ℝ × ℝ × ℝ := answer(sorry)
+    let (C₁, C₂, C₃) : ℝ × ℝ × ℝ := erdos_416.variants.Ford.answer
     0 < C₁ ∧ 0 < C₂ ∧ 0 < C₃ ∧
     let G (x : ℝ) : ℝ := x / x.log * (rexp <| C₁ * (x.log.log.log - x.log.log.log.log) ^ 2
         + C₂* x.log.log.log - C₃ * x.log.log.log.log)

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 760
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [AKS97] Alon, Noga and Krivelevich, Michael and Sudakov, Benny, *Subgraphs with a large
   cochromatic number*. J. Graph Theory (1997), 295-297.
 -/
+
+@[expose] public section
 
 namespace Erdos760
 
@@ -45,8 +48,8 @@ The proposed bound would be best possible, as shown by taking $G$ to be a comple
 
 The answer is yes, proved by Alon, Krivelevich, and Sudakov.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos760.lean"]
-theorem erdos_760 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos760.lean"]
+theorem erdos_760 :
     ∃ c > (0 : ℝ), ∀ (V : Type*) [Finite V] (G : SimpleGraph V) (m : ℕ),
       G.chromaticNumber = (m : ℕ∞) →
         ∃ H : G.Subgraph, ∃ k : ℕ, ((k : ℕ∞) ≤ H.coe.cochromaticNumber) ∧

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 85
 
 *Reference:* [erdosproblems.com/85](https://www.erdosproblems.com/85)
 -/
+
+@[expose] public section
 
 open SimpleGraph Finset Filter
 
@@ -37,8 +40,8 @@ noncomputable def f (n : ℕ) : ℕ :=
 /--
 Is it true that, for all large $n$, $f(n + 1) \ge f(n)$?
 -/
-@[category research open, AMS 5]
-theorem erdos_85 : answer(sorry) ↔ ∀ᶠ n in atTop, f n ≤ f (n + 1) := by
+@[category research open, question, AMS 5]
+theorem erdos_85 : ∀ᶠ n in atTop, f n ≤ f (n + 1) := by
   sorry
 
 -- TODO: add connection to Ramsey number, weaker version and implied bounds from additional material.
