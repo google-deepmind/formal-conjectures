@@ -44,7 +44,7 @@ namespace Erdos542
 def IsLcmFree (n : ℕ) (A : Finset ℕ) : Prop :=
   A ⊆ Finset.Icc 1 n ∧ (A : Set ℕ).Pairwise fun a b ↦ n < Nat.lcm a b
 
-/-- The integers `m ≤ n` which do not divide any element of `A`. -/
+/-- The integers `1 ≤ m ≤ n` which are not divisible by any element of `A`. -/
 def uncovered (n : ℕ) (A : Finset ℕ) : Finset ℕ :=
   (Finset.Icc 1 n).filter fun m ↦ ∀ a ∈ A, ¬ a ∣ m
 
@@ -56,9 +56,9 @@ $$\sum_{a\in A}\frac{1}{a}\leq \frac{31}{30}?$$
 The answer is yes, proved by Schinzel and Szekeres [ScSz59]. The bound is best possible as
 $A=\{2,3,5\}$ demonstrates.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
-theorem erdos_542.parts.i : answer(True) ↔
+theorem erdos_542.parts.i :
     ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → ∑ a ∈ A, (1 : ℝ) / a ≤ 31 / 30 := by
   sorry
 
@@ -70,37 +70,40 @@ theorem erdos_542.variants.sharp :
   sorry
 
 /--
-Is it true that if $A\subseteq\{1,\ldots,n\}$ is a set such that $[a,b]>n$ for all $a\neq b$,
-then there must be $\gg n$ many $m\leq n$ which do not divide any $a\in A$?
+Is it true that if $A\subseteq\{2,\ldots,n\}$ is a set such that $[a,b]>n$ for all $a\neq b$,
+then there must be $\gg n$ many $m\leq n$ which are not divisible by any $a\in A$?
 
 The answer is no, proved by Schinzel and Szekeres [ScSz59].
+
+The element $1$ is excluded: $A=\{1\}$ satisfies the hypothesis and leaves no such $m$, so
+without this restriction the answer would be negative for a trivial reason.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
-theorem erdos_542.parts.ii : answer(False) ↔
-    ∃ c > 0, ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A →
+theorem erdos_542.parts.ii :
+    ¬ ∃ c > 0, ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → 1 ∉ A →
       c * n ≤ ((uncovered n A).card : ℝ) := by
   sorry
 
 /--
-Schinzel and Szekeres [ScSz59] proved that, for any $\epsilon>0$, there are sets $A$ as in
-the problem with $o(n)$ many uncovered $m\leq n$ and for which
+Schinzel and Szekeres [ScSz59] proved that, for any $\epsilon>0$, there are sets
+$A\subseteq\{2,\ldots,n\}$ as in the problem with $o(n)$ many uncovered $m\leq n$ and for which
 $\sum_{a\in A}\frac{1}{a}>1-\epsilon$.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
 theorem erdos_542.variants.schinzel_szekeres :
-    ∀ ε > 0, ∀ δ > 0, ∃ (n : ℕ) (A : Finset ℕ), IsLcmFree n A ∧
+    ∀ ε > 0, ∀ δ > 0, ∃ (n : ℕ) (A : Finset ℕ), IsLcmFree n A ∧ 1 ∉ A ∧
       ((uncovered n A).card : ℝ) ≤ δ * n ∧ 1 - ε < ∑ a ∈ A, (1 : ℝ) / a := by
   sorry
 
 /--
-Schinzel and Szekeres [ScSz59] proved that there are examples with at most $n/(\log n)^c$
-many such $m$, for some constant $c>0$.
+Schinzel and Szekeres [ScSz59] proved that there are examples $A\subseteq\{2,\ldots,n\}$ with at
+most $n/(\log n)^c$ many such $m$, for some real constant $c>0$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_542.variants.log_power : ∃ c > 0, ∃ᶠ n : ℕ in atTop, ∃ A : Finset ℕ,
-    IsLcmFree n A ∧ ((uncovered n A).card : ℝ) ≤ n / (log n) ^ c := by
+theorem erdos_542.variants.log_power : ∃ c > (0 : ℝ), ∃ᶠ n : ℕ in atTop, ∃ A : Finset ℕ,
+    IsLcmFree n A ∧ 1 ∉ A ∧ ((uncovered n A).card : ℝ) ≤ n / (log n) ^ c := by
   sorry
 
 /--
@@ -117,8 +120,8 @@ In [Er73] Erdős further speculates that in fact
 $$\sum_{a\in A}\frac{1}{a}\leq 1+o(1),$$
 where the $o(1)$ term $\to 0$ as $n\to \infty$.
 -/
-@[category research open, AMS 11]
-theorem erdos_542.variants.one_add_little_o : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_542.variants.one_add_little_o :
     ∃ o : ℕ → ℝ, Tendsto o atTop (nhds 0) ∧
       ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → ∑ a ∈ A, (1 : ℝ) / a ≤ 1 + o n := by
   sorry
@@ -127,8 +130,8 @@ theorem erdos_542.variants.one_add_little_o : answer(sorry) ↔
 In [Er98] Erdős mentions that he, Schinzel, and Szekeres conjectured that $2,3,5$ and
 $3,4,5,7,11$ are the only two sequences for which the sum is $>1$.
 -/
-@[category research open, AMS 11]
-theorem erdos_542.variants.only_two : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_542.variants.only_two :
     ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → 1 < ∑ a ∈ A, (1 : ℝ) / a →
       A = {2, 3, 5} ∨ A = {3, 4, 5, 7, 11} := by
   sorry

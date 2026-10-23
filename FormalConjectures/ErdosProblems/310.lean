@@ -45,9 +45,9 @@ $(\log N)^{-1/7+o(1)}\leq \alpha \leq 1/2$ then there is some $S\subseteq A$ suc
 $\frac{a}{b}=\sum_{n\in S}\frac{1}{n}$ with $a\leq b \leq \exp(O(1/\alpha))$. They also observe
 that the dependence $b\leq \exp(O(1/\alpha))$ is sharp.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos310.lean#L240"]
-theorem erdos_310 : answer(True) ↔ ∀ α : ℝ, 0 < α → ∃ C : ℕ, ∀ N : ℕ, 1 ≤ N →
+theorem erdos_310 : ∀ α : ℝ, 0 < α → ∃ C : ℕ, ∀ N : ℕ, 1 ≤ N →
     ∀ A ⊆ Finset.Icc 1 N, α * N ≤ A.card →
       ∃ S ⊆ A, ∃ a b : ℕ, 0 < a ∧ a ≤ b ∧ b ≤ C ∧ ∑ n ∈ S, (1 / n : ℚ) = a / b := by
   sorry

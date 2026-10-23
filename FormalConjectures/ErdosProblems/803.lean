@@ -51,10 +51,10 @@ a $D$-balanced subgraph then $H$ has $\ll m\sqrt{\log m}+\log D$ many edges.
 
 See also [1077](https://www.erdosproblems.com/1077).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos803.lean#L448"]
-theorem erdos_803 : answer(False) ↔
-    ∃ (D c : ℝ), 0 < c ∧ ∀ m ≥ 1, ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
+theorem erdos_803 :
+    ¬ ∃ (D c : ℝ), 0 < c ∧ ∀ m ≥ 1, ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
       (n : ℝ) * log n ≤ G.edgeSet.ncard →
         ∃ H : G.Subgraph, H.verts.ncard = m ∧ IsBalanced H.coe D ∧
           c * m * log m ≤ H.edgeSet.ncard := by

@@ -45,20 +45,20 @@ This was solved in the affirmative by Gafni and Tao [GaTa25].
 
 This was formalized in Lean by Codex and GPT-5.6 Sol.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos682.lean#L5018"]
-theorem erdos_682 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos682.lean#L5018"]
+theorem erdos_682 :
     {n | ∃ m ∈ Set.Ioo (p n) (p (n + 1)), p (n + 1) - p n ≤ m.minFac}.HasDensity 1 := by
   sorry
 
-open scoped Classical in
 /--
-Gafni and Tao [GaTa25] proved that the number of exceptional $n\in [1,X]$ is
+Gafni and Tao [GaTa25, Theorem 1.1] proved that the number of exceptional gaps
+$(p_n,p_{n+1})$ with $p_n\in [X,2X]$ is
 $$\ll \frac{X}{(\log X)^2}.$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_682.variants.exceptional_count :
-    (fun X : ℕ ↦ ({n ∈ Finset.Icc 1 X |
-        ∀ m ∈ Set.Ioo (p n) (p (n + 1)), m.minFac < p (n + 1) - p n}.card : ℝ)) =O[atTop]
+    (fun X : ℕ ↦ ({n | p n ∈ Set.Icc X (2 * X) ∧
+        ∀ m ∈ Set.Ioo (p n) (p (n + 1)), m.minFac < p (n + 1) - p n}.ncard : ℝ)) =O[atTop]
       fun X : ℕ ↦ (X : ℝ) / Real.log X ^ 2 := by
   sorry
 

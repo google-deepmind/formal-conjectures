@@ -54,16 +54,18 @@ independently by Green [Gr04] and Sapozhenko [Sa03].
 
 The statement $f(n)=2^{(1+o(1))n/2}$ is formalised as $\log_2 f(n)/n\to 1/2$.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos748.lean#L1228"]
-theorem erdos_748 : answer(True) ↔
+theorem erdos_748 :
     Tendsto (fun n : ℕ ↦ logb 2 (f n) / n) atTop (nhds (1 / 2)) := by
   sorry
 
 /-- It is trivial to see that $f(n) \geq 2^{\frac{n}{2}}$, considering all subsets of
-$[n/2,n]$. -/
+$(n/2,n]$. The source writes $[n/2,n]$, but for even $n$ that interval is not sum-free,
+since $n/2 + n/2 = n$. -/
 @[category textbook, AMS 5 11]
-theorem erdos_748.variants.lower_bound (n : ℕ) : 2 ^ (n / 2) ≤ f n := by
+theorem erdos_748.variants.lower_bound (n : ℕ) :
+    (2 : ℝ) ^ ((n : ℝ) / 2) ≤ (f n : ℝ) := by
   sorry
 
 /-- Green [Gr04] and Sapozhenko [Sa03] proved that $f(n) \ll 2^{n/2}$. -/

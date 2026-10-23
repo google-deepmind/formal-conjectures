@@ -42,7 +42,7 @@ def IsPrimeMinusOne (d : ℤ) : Prop :=
   ∃ p : ℕ, p.Prime ∧ d = (p : ℤ) - 1
 
 /-- The interval $[N] = \{1, \ldots, N\}$, viewed as a finite set of integers. -/
-def interval (N : ℕ) : Finset ℤ :=
+noncomputable def interval (N : ℕ) : Finset ℤ :=
   Icc (1 : ℤ) (N : ℤ)
 
 /--
@@ -89,18 +89,18 @@ theorem green_65.test.consecutive {A : Finset ℤ} {a : ℤ}
 Is there $c > 0$ such that every sufficiently large subset $A \subseteq [N]$ of size at least
 $N^{1-c}$ has a difference that is a nonzero square?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_65 :
-    answer(sorry) ↔ LargeDifferencePattern IsNonzeroSquare := by
+    LargeDifferencePattern IsNonzeroSquare := by
   sorry
 
 /--
 Green asks the analogous question with a nonzero square replaced by $p - 1$ for a prime $p$.
 Green [Gr22, Theorem 1.1] proved a power-saving bound $|A| \ll N^{1-c}$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_65.variants.prime_minus_one :
-    answer(True) ↔ LargeDifferencePattern IsPrimeMinusOne := by
+    LargeDifferencePattern IsPrimeMinusOne := by
   sorry
 
 /--
@@ -117,13 +117,12 @@ theorem green_65.variants.ruzsa_obstruction :
 Green also asks the following presumably easier question: if $A \subset [N]$ has size $N^{1-c}$,
 does the $100$-fold difference set $100A - 100A$ contain a nonzero square?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_65.variants.hundredfold :
-    answer(sorry) ↔
-      ∃ c : ℝ, 0 < c ∧ c < 1 ∧ ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℤ,
-        A ⊆ interval N →
-          (N : ℝ) ^ (1 - c) ≤ (A.card : ℝ) →
-            ∃ d ∈ ((100 : ℕ) • A) - ((100 : ℕ) • A), IsNonzeroSquare d := by
+    ∃ c : ℝ, 0 < c ∧ c < 1 ∧ ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℤ,
+      A ⊆ interval N →
+        (N : ℝ) ^ (1 - c) ≤ (A.card : ℝ) →
+          ∃ d ∈ ((100 : ℕ) • A) - ((100 : ℕ) • A), IsNonzeroSquare d := by
   sorry
 
 end Green65
