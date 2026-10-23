@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Erdős–Ulam problem
@@ -30,6 +32,8 @@ import FormalConjecturesUtil
 * [AH59] Anning, N. H. and Erdős, P. (1945). "Integral distances." *Bull. Amer. Math. Soc.* 51,
   pp. 598--600.
 -/
+
+@[expose] public section
 
 open EuclideanSpace
 
