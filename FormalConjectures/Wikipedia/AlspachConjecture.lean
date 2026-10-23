@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Alspach's conjecture on cycle decompositions of complete graphs (1981; proved 2014)
@@ -31,6 +33,8 @@ import FormalConjecturesUtil
 * [BH09] Bryant, D. and Horsley, D. (2009). "Decompositions of complete graphs into long
   cycles." *Bull. London Math. Soc.* 41, pp. 927--934.
 -/
+
+@[expose] public section
 
 open SimpleGraph Finset
 
