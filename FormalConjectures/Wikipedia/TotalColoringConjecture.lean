@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The total colouring conjecture (Behzad 1965, Vizing 1968)
@@ -32,6 +34,8 @@ import FormalConjecturesUtil
 * [Yap96] Yap, H. P. (1996). *Total colourings of graphs.* Lecture Notes in Mathematics 1623,
   Springer.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
