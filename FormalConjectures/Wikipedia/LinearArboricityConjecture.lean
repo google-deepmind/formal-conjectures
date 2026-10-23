@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The linear arboricity conjecture
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
 * [Al88] Alon, N. (1988). "The linear arboricity of graphs." *Israel J. Math.* 62,
   pp. 311--325.
 -/
+
+@[expose] public section
 
 namespace LinearArboricityConjecture
 
