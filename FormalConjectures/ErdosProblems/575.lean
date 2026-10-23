@@ -34,45 +34,43 @@ open Filter SimpleGraph
 
 namespace Erdos575
 
-/-- A finite graph, bundled with its vertex count, so that a family may mix orders. -/
-structure FiniteGraph where
-  order : ℕ
-  graph : SimpleGraph (Fin order)
-
 /-- A host graph is `family`-free when it contains no member of `family` as a subgraph. -/
-def FamilyFree (family : Finset FiniteGraph) {n : ℕ} (host : SimpleGraph (Fin n)) : Prop :=
-  ∀ forbidden ∈ family, forbidden.graph.Free host
+def FamilyFree (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) {n : ℕ}
+    (host : SimpleGraph (Fin n)) : Prop :=
+  ∀ forbidden ∈ family, forbidden.2.Free host
 
 open scoped Classical in
 /-- $\mathrm{ex}(n;\mathcal{F})$, the greatest number of edges of a graph on `n` vertices
 containing no member of `family`. -/
-noncomputable def familyExtremal (family : Finset FiniteGraph) (n : ℕ) : ℕ :=
+noncomputable def familyExtremal (family : Finset (Σ n : ℕ, SimpleGraph (Fin n)))
+    (n : ℕ) : ℕ :=
   (Finset.univ.filter (FamilyFree family)).sup
     fun host : SimpleGraph (Fin n) => host.edgeFinset.card
 
 /-- No member of the family is acyclic. -/
-def IsCyclicFamily (family : Finset FiniteGraph) : Prop :=
-  ∀ forbidden ∈ family, ¬ forbidden.graph.IsAcyclic
+def IsCyclicFamily (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) : Prop :=
+  ∀ forbidden ∈ family, ¬ forbidden.2.IsAcyclic
 
 /-- The family contains at least one bipartite member. -/
-def ContainsBipartiteMember (family : Finset FiniteGraph) : Prop :=
-  ∃ forbidden ∈ family, forbidden.graph.IsBipartite
+def ContainsBipartiteMember (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) : Prop :=
+  ∃ forbidden ∈ family, forbidden.2.IsBipartite
 
-/-- Eventual constant-factor control of the family extremal number by a single graph. -/
-def ControlsFamily (family : Finset FiniteGraph) (forbidden : FiniteGraph) : Prop :=
+/-- Eventual constant-factor control of the family extremal number by a single member. -/
+def ControlsFamily (family : Finset (Σ n : ℕ, SimpleGraph (Fin n)))
+    (forbidden : Σ n : ℕ, SimpleGraph (Fin n)) : Prop :=
   ∃ C : ℝ, 0 < C ∧
     ∀ᶠ n : ℕ in atTop,
-      (extremalNumber n forbidden.graph : ℝ) ≤ C * (familyExtremal family n : ℝ)
+      (extremalNumber n forbidden.2 : ℝ) ≤ C * (familyExtremal family n : ℝ)
 
 /-- The family is *bipartite-compact*: some bipartite member already controls the family extremal
 number. -/
-def IsBipartiteCompactFamily (family : Finset FiniteGraph) : Prop :=
-  ∃ forbidden ∈ family, forbidden.graph.IsBipartite ∧ ControlsFamily family forbidden
+def IsBipartiteCompactFamily (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) : Prop :=
+  ∃ forbidden ∈ family, forbidden.2.IsBipartite ∧ ControlsFamily family forbidden
 
 open scoped Classical in
 /-- Every `family`-free graph on `n` vertices has at most $\binom{n}{2}$ edges. -/
 @[category test, AMS 5]
-theorem familyExtremal_le_choose_two (family : Finset FiniteGraph) (n : ℕ) :
+theorem familyExtremal_le_choose_two (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) (n : ℕ) :
     familyExtremal family n ≤ n.choose 2 := by
   unfold familyExtremal
   refine Finset.sup_le fun host _ => ?_
@@ -93,9 +91,10 @@ excluded, the answer is no: OpenAI [OpenAI26] give a finite nonempty family of c
 graphs, none of them acyclic, for which no single member controls the family extremal number
 (see `erdos_575.variants.counterexample` and Problem 180).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L189"]
-theorem erdos_575 : answer(False) ↔
-    ∀ family : Finset FiniteGraph,
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L189"]
+theorem erdos_575 :
+    ¬ ∀ family : Finset (Σ n : ℕ, SimpleGraph (Fin n)),
       family.Nonempty → IsCyclicFamily family →
         ContainsBipartiteMember family → IsBipartiteCompactFamily family := by
   sorry
@@ -105,9 +104,10 @@ The literal catalog statement without `IsCyclicFamily family` is also false, alr
 forest family $\mathcal{F}=\{K_{1,2}, 2K_2\}$, where $\mathrm{ex}(n;\mathcal{F})=1$ for $n\ge 4$
 while $\mathrm{ex}(n;K_{1,2})=\lfloor n/2\rfloor$ and $\mathrm{ex}(n;2K_2)=n-1$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L197"]
-theorem erdos_575.variants.unrestricted : answer(False) ↔
-    ∀ family : Finset FiniteGraph,
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L197"]
+theorem erdos_575.variants.unrestricted :
+    ¬ ∀ family : Finset (Σ n : ℕ, SimpleGraph (Fin n)),
       family.Nonempty → ContainsBipartiteMember family → IsBipartiteCompactFamily family := by
   sorry
 
@@ -115,15 +115,16 @@ theorem erdos_575.variants.unrestricted : answer(False) ↔
 The non-forest counterexample: a nonempty cyclic family of connected bipartite graphs that is not
 bipartite-compact.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L111"]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L111"]
 theorem erdos_575.variants.counterexample :
-    ∃ family : Finset FiniteGraph,
+    ∃ family : Finset (Σ n : ℕ, SimpleGraph (Fin n)),
       family.Nonempty ∧
       IsCyclicFamily family ∧
       ContainsBipartiteMember family ∧
       (∀ forbidden ∈ family,
-        forbidden.graph.Connected ∧ forbidden.graph.IsBipartite ∧
-          ¬ forbidden.graph.IsAcyclic) ∧
+        forbidden.2.Connected ∧ forbidden.2.IsBipartite ∧
+          ¬ forbidden.2.IsAcyclic) ∧
       ¬ IsBipartiteCompactFamily family := by
   sorry
 
