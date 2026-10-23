@@ -48,9 +48,8 @@ $n$ is prime (with a specific exception for $n^2 \equiv 1 \pmod{r}$)?
 While the "if" direction is a known theorem, the "only if" direction
 remains a conjecture.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem agrawal_conjecture :
-  answer(sorry) ↔
     ∀ (n r : ℕ), n > 1 → r > 0 → n.gcd r = 1 →
       let R := Polynomial (ZMod n)
       let X : R := Polynomial.X

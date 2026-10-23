@@ -32,9 +32,9 @@ namespace Green60
 Is there an absolute constant $c > 0$ such that, whenever $A ⊆ \mathbb{N}$ is a set of squares
 with $|A| ≥ 2$, the sumset $A + A$ satisfies $|A + A| ≥ |A|^{1 + c}$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_60 :
-    answer(sorry) ↔ ∃ c > (0 : ℝ),
+    ∃ c > (0 : ℝ),
       ∀ (A : Finset ℕ),
         (∀ a ∈ A, IsSquare a) →
         2 ≤ A.card →

@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 430a
@@ -27,6 +29,8 @@ orders `(1,4,12,19,12,4,1)`. Its independent domination number is three, its
 center-neighborhood independence number is two, and its Caro--Wei sum is less
 than two. The claimed inequality therefore becomes `3 ≤ 2`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture430a
 
@@ -55,10 +59,10 @@ greater than three satisfies
 `i(G) ≤ α(G[N(C)]) + 2 floor(CW(G)-1)`.
 The answer is no, witnessed by a nonuniform `P₇` clique blow-up.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/Kuberwastaken/c5-k4/blob/85fff48cdd7cc1f743802320fdc94db14d1f841e/lean/GraphConjecture430a.lean#L1-L390"]
-theorem conjecture430a : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V] [Nonempty V]
+theorem conjecture430a :
+    ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] [Nonempty V]
       (G : SimpleGraph V) [DecidableRel G.Adj],
       G.Connected → 3 < Fintype.card V →
         (G.indepDominationNumber : ℤ) ≤

@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 309
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
 
 The conjecture is false for the clique blow-ups $C_5[K_k]$ for every $k \geq 3$.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture309
 
@@ -77,9 +81,9 @@ $$
 $$
 Gebendorfer disproved the statement with the family $C_5[K_k]$, $k \geq 3$.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/Kuberwastaken/c5-k4/blob/c9daf0f594d6d5b264c6cd54dc9eec488cb64741/lean/GraphConjecture309.lean"]
-theorem conjecture309 : answer(False) ↔ conjecture309Statement := by
+theorem conjecture309 : ¬ conjecture309Statement := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture309

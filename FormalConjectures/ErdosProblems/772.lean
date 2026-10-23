@@ -54,9 +54,9 @@ Is it true that $H_k(n)/n^{1/2}\to \infty$?
 
 The answer is yes, and in fact $H_k(n) \gg_k n^{2/3}$, proved by Alon and Erdős [AlEr85].
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos772.lean#L1040"]
-theorem erdos_772.parts.i : answer(True) ↔
+theorem erdos_772.parts.i :
     ∀ k ≥ 1, Tendsto (fun n : ℕ ↦ (H k n : ℝ) / √n) atTop atTop := by
   sorry
 
@@ -65,9 +65,9 @@ Is it true that $H_k(n) > n^{1/2+c}$ for some constant $c>0$?
 
 The answer is yes, and in fact $H_k(n) \gg_k n^{2/3}$, proved by Alon and Erdős [AlEr85].
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos772.lean#L1040"]
-theorem erdos_772.parts.ii : answer(True) ↔
+theorem erdos_772.parts.ii :
     ∀ k ≥ 1, ∃ c > 0, ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ (1 / 2 + c : ℝ) < H k n := by
   sorry
 
@@ -77,10 +77,16 @@ theorem erdos_772.variants.alon_erdos (k : ℕ) (hk : 1 ≤ k) :
     ∃ c > 0, ∀ᶠ n : ℕ in atTop, c * (n : ℝ) ^ (2 / 3 : ℝ) ≤ H k n := by
   sorry
 
-/-- Erdős [Er84d] proved that $H_k(n) \ll n^{2/3}$, where the implied constant is absolute. -/
+/-- Erdős [Er84d] proved that $H_k(n) \ll n^{2/3}$, where the implied constant is absolute.
+
+Since $1_A\ast 1_A$ counts ordered pairs, the bound needs $k\geq 4$: the construction of
+Erdős has at most two unordered representations of each sum, hence at most four ordered ones,
+while $k\leq 2$ forces $A$ itself to be Sidon and so $H_k(n)=n$. For $k=3$ the only collisions
+are $a+b=2c$, so the Sidon subsets of $A$ are its $3$-term-progression-free subsets, which have
+size $n^{1-o(1)}$, and the bound fails there too. -/
 @[category research solved, AMS 5 11]
 theorem erdos_772.variants.upper_bound :
-    ∃ C : ℝ, ∀ k ≥ 1, ∀ᶠ n : ℕ in atTop,
+    ∃ C : ℝ, ∀ k ≥ 4, ∀ᶠ n : ℕ in atTop,
       (H k n : ℝ) ≤ C * (n : ℝ) ^ (2 / 3 : ℝ) := by
   sorry
 

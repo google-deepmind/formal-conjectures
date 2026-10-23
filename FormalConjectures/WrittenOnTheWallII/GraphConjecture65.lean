@@ -171,26 +171,24 @@ and $\operatorname{dist\_min}(S)$ is the minimum distance between two distinct v
 The answer is no. `Counterexample.graph` has a conjectured lower bound of $16$, but every
 induced forest in it has at most $15$ vertices.
 -/
-@[category research solved, AMS 5]
-theorem conjecture65 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+@[category research solved, question, AMS 5]
+theorem conjecture65 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_hG : G.Connected),
       let A : Set α := {v | G.degree v = G.minDegree}
       let M : Set α := {v | G.degree v = G.maxDegree}
       (distMin G A : ℝ) + ⌈(distMin G M : ℝ) / 3⌉ ≤
         (G.largestInducedForestSize : ℝ) := by
-  constructor
-  · exact False.elim
-  · intro h
-    have hc := h (Fin 17) Counterexample.graph Counterexample.connected
-    dsimp only at hc
-    rw [Counterexample.min_degree_vertices, Counterexample.max_degree_vertices,
-      Counterexample.distMin_min_degree_vertices,
-      Counterexample.distMin_max_degree_vertices] at hc
-    have hf := Counterexample.largest_induced_forest_le_fifteen
-    norm_num at hc
-    exact (by omega : ¬(16 : ℕ) ≤ Counterexample.graph.largestInducedForestSize)
-      (by exact_mod_cast hc)
+  intro h
+  have hc := h (Fin 17) Counterexample.graph Counterexample.connected
+  dsimp only at hc
+  rw [Counterexample.min_degree_vertices, Counterexample.max_degree_vertices,
+    Counterexample.distMin_min_degree_vertices,
+    Counterexample.distMin_max_degree_vertices] at hc
+  have hf := Counterexample.largest_induced_forest_le_fifteen
+  norm_num at hc
+  exact (by omega : ¬(16 : ℕ) ≤ Counterexample.graph.largestInducedForestSize)
+    (by exact_mod_cast hc)
 
 -- Sanity checks
 

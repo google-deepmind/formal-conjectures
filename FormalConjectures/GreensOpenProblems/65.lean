@@ -72,18 +72,18 @@ theorem not_forall_of_isNonzeroSquare :
 Is there $c > 0$ such that every sufficiently large subset $A \subseteq [N]$ of size at least
 $N^{1-c}$ has a difference that is a nonzero square?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_65 :
-    answer(sorry) ↔ LargeDifferencePattern IsNonzeroSquare := by
+    LargeDifferencePattern IsNonzeroSquare := by
   sorry
 
 /--
 Green asks the analogous question with a nonzero square replaced by $p - 1$ for a prime $p$.
 Green [Gr22, Theorem 1.1] solved this positively.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_65.variants.prime_minus_one :
-    answer(True) ↔ LargeDifferencePattern IsPrimeMinusOne := by
+    LargeDifferencePattern IsPrimeMinusOne := by
   sorry
 
 end Green65
