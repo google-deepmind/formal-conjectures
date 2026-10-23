@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 266
 
 *Reference:* [erdosproblems.com/266](https://www.erdosproblems.com/266)
 -/
+
+@[expose] public section
 
 namespace Erdos266
 
@@ -35,7 +38,8 @@ This was disproven by Kovač and Tao in [KoTa24].
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series.
          [arXiv:2406.17593](https://arxiv.org/abs/2406.17593) (2024).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos266.lean#L306"]
 theorem erdos_266 :
     ¬ ∀ (a : ℕ → ℕ), ((∀ n : ℕ, a n ≥ 1) ∧ Summable ((1 : ℝ) / a ·) →
       ∃ t ≥ (1 : ℕ), Irrational <| ∑' n, (1 : ℝ) / ((a n) + t)) := by
@@ -48,8 +52,11 @@ number for all $t \in \mathbb{Q}$ such that $t \ne -a_n$ for any $n$.
 
 [KoTa24] Kovač, V. and Tao T., On several irrationality problems for Ahmes series.
          [arXiv:2406.17593](https://arxiv.org/abs/2406.17593) (2024).
+
+Lean formalization by Ben Keene, with AI assistance.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/benkeene/erdos266/blob/ef01b23804a60669f24b25733f1a2b688084609d/Solution.lean#L27"]
 theorem erdos_266.variants.all_rationals:
     ∃ a : ℕ → ℕ, StrictMono a ∧ a 0 ≥ 1 ∧
       (∀ t : ℚ, (¬ ∃ n : ℕ, t = -(a n)) →
