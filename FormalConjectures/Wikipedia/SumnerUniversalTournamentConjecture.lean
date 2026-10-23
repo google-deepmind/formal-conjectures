@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Sumner's universal tournament conjecture (1971)
@@ -29,6 +31,8 @@ import FormalConjecturesUtil
   tournament conjecture for large tournaments." *Proc. London Math. Soc.* 102, pp. 731--766.
   [arXiv:1010.4430](https://arxiv.org/abs/1010.4430)
 -/
+
+@[expose] public section
 
 open SimpleGraph Digraph
 
