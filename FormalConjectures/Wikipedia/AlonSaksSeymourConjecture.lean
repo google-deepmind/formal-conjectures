@@ -70,7 +70,7 @@ This is **false**: Huang and Sudakov [HS12] constructed graphs with
 $\chi(G) \ge c \operatorname{bp}(G)^{6/5}$.
 -/
 @[category research solved, AMS 5]
-theorem alon_saks_seymour_conjecture : answer(False) ↔
+theorem alon_saks_seymour_conjecture : ¬
     ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V),
       G.chromaticNumber ≤ bicliquePartitionNumber G + 1 := by
   sorry
