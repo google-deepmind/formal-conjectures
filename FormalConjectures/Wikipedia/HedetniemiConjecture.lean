@@ -69,7 +69,7 @@ $\chi(G \times H) < \min\{\chi(G), \chi(H)\}$. The inequality $\le$ always holds
 (`chromaticNumber_tensorProd_le_min`); it is the reverse inequality that fails.
 -/
 @[category research solved, AMS 5]
-theorem hedetniemi_conjecture : answer(False) ↔
+theorem hedetniemi_conjecture : ¬
     ∀ {α β : Type} [Fintype α] [Fintype β] (G : SimpleGraph α) (H : SimpleGraph β),
       (tensorProd G H).chromaticNumber = min G.chromaticNumber H.chromaticNumber := by
   sorry
