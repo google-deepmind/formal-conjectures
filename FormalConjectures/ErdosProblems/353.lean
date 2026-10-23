@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 353
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Ko25] J. Koizumi, *Isosceles trapezoids of unit area with vertices in sets of infinite planar
   measure*. arXiv:2501.01914 (2025).
 -/
+
+@[expose] public section
 
 open Affine EuclideanGeometry MeasureTheory
 
@@ -50,8 +53,8 @@ This statement formalizes the leading question, for isosceles trapezoids; the re
 configurations are given as variants below. The area of a polygon is taken to be the Lebesgue
 measure of the convex hull of its vertices.
 -/
-@[category research solved, AMS 28 51, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/353/Erdos353.lean"]
-theorem erdos_353 : answer(True) ↔
+@[category research solved, question, AMS 28 51, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/353/Erdos353.lean"]
+theorem erdos_353 :
     ∀ A : Set ℝ², MeasurableSet A → volume A = ⊤ →
       ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, ∃ d ∈ A,
         IsIsoscelesTrapezoid a b c d ∧

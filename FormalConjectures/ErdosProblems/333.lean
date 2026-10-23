@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 333
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [ErNe77] Erdős, P. and Newman, D. J., *Bases for sets of integers*. J. Number Theory (1977),
   420-425.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 
@@ -45,9 +48,9 @@ this seems to have been overlooked by Erdős and Graham.
 
 See also [806].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos333.lean"]
-theorem erdos_333 : answer(False) ↔
-    ∀ A : Set ℕ, A.HasDensity 0 →
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos333.lean"]
+theorem erdos_333 :
+    ¬ ∀ A : Set ℕ, A.HasDensity 0 →
       ∃ B : Set ℕ, A ⊆ B + B ∧
         (fun N => ((B ∩ Set.Icc 1 N).ncard : ℝ)) =o[atTop]
           fun N => Real.sqrt N := by

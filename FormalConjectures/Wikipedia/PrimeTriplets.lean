@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Prime Triplet Conjecture
@@ -22,14 +23,16 @@ import FormalConjecturesUtil
 *Reference:* [Prime Triplet Wikipedia Page](https://en.wikipedia.org/wiki/Prime_triplet#Conjecture_on_prime_triplets)
 -/
 
+@[expose] public section
+
 namespace PrimeTriplets
 
 /--
 Are there infinitely many tuples of three consecutive primes $(p, q, r)$ such that $r - p = 6$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem prime_triplets :
-    answer(sorry) ↔ {p : ℕ | Prime p ∧ (Prime (p + 2) ∨ Prime (p + 4)) ∧ Prime (p + 6)}.Infinite := by
+    {p : ℕ | Prime p ∧ (Prime (p + 2) ∨ Prime (p + 4)) ∧ Prime (p + 6)}.Infinite := by
   sorry
 
 end PrimeTriplets

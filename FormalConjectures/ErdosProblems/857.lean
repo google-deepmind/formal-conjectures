@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 857
@@ -25,6 +26,8 @@ For fixed `n, k`, let `m(n, k)` be minimal such that every family of subsets of 
 of size at least `m(n, k)` contains a `k`-sunflower.
 The problem asks to estimate `m(n, k)`, ideally asymptotically.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -37,13 +40,14 @@ noncomputable def m (n k : ℕ) : ℕ :=
   sInf {t : ℕ | ∀ (F : Set (Set (Fin n))), t ≤ F.ncard →
     ∃ S ⊆ F, S.ncard = k ∧ IsSunflower S}
 
+def erdos_857.answer : ℕ → ℕ → ℝ := sorry
+
 /--
 Estimate `m(n,k)`, or better give an asymptotic formula.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_857 :
-    let f : ℕ → ℕ → ℝ := answer(sorry)
-    ∀ k : ℕ, 3 ≤ k → Tendsto (fun n : ℕ => (m n k : ℝ) / f k n) atTop (nhds 1) := by
+    ∀ k : ℕ, 3 ≤ k → Tendsto (fun n : ℕ => (m n k : ℝ) / erdos_857.answer k n) atTop (nhds 1) := by
   sorry
 
 end Erdos857
