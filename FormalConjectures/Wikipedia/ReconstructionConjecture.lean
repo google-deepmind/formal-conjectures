@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The reconstruction conjecture
@@ -33,6 +35,8 @@ import FormalConjecturesUtil
 * [Bo91] Bondy, J. A. (1991). "A graph reconstructor's manual." In *Surveys in Combinatorics*,
   LMS Lecture Note Series 166, Cambridge University Press, pp. 221--252.
 -/
+
+@[expose] public section
 
 namespace ReconstructionConjecture
 
