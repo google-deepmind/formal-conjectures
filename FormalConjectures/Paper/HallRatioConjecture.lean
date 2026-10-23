@@ -22,7 +22,6 @@ public import FormalConjecturesUtil
 # The Hall ratio conjecture (Harris 2019) — disproved
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/Fractional_coloring)
 * [Ha19] Harris, D. G. (2019). "Some results on chromatic number as a function of triangle
   count." *SIAM J. Discrete Math.* 33, pp. 546--563.
 * [DOW20] Dvořák, Z., Ossona de Mendez, P. and Wu, H. (2020). "1-subdivisions, the fractional
@@ -58,7 +57,7 @@ Martin, Norin, Pfender and Volec [BLMNPV22] constructed graphs with $\chi_f / \r
 arbitrarily large.
 -/
 @[category research solved, AMS 5]
-theorem hall_ratio_conjecture : answer(False) ↔
+theorem hall_ratio_conjecture : ¬
     ∃ C : ℝ, ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V),
       G.fractionalChromaticNumber ≤ C * hallRatio G := by
   sorry
@@ -87,16 +86,5 @@ theorem hall_ratio_conjecture.variants.unbounded (C : ℝ) :
     ∃ (V : Type) (_ : Fintype V) (_ : DecidableEq V) (G : SimpleGraph V),
       C * hallRatio G < G.fractionalChromaticNumber := by
   sorry
-
-/--
-**The fractional chromatic number is at most the number of vertices.**
-
-This is the trivial bound `SimpleGraph.fractionalChromaticNumber_le_card`, recorded here as a
-sanity check on the definition.
--/
-@[category test, AMS 5]
-theorem fractionalChromaticNumber_le_card (G : SimpleGraph V) :
-    G.fractionalChromaticNumber ≤ Fintype.card V :=
-  G.fractionalChromaticNumber_le_card
 
 end HallRatioConjecture

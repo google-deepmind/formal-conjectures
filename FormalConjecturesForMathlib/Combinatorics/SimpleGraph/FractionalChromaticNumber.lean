@@ -21,8 +21,6 @@ public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.Fintype.Powerset
 
-@[expose] public section
-
 /-!
 # The fractional chromatic number
 
@@ -35,6 +33,8 @@ notion.
 We prove that the singleton weighting is a fractional colouring, so that `χ_f(G) ≤ |V|`, and
 that `χ_f(G) ≥ 0`.
 -/
+
+@[expose] public section
 
 namespace SimpleGraph
 
