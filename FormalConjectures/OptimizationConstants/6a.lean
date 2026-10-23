@@ -44,7 +44,7 @@ open Finset
 namespace Constant6a
 
 /-- **Tao's Optimization Constant 6a / The union-closed sets conjecture**: the largest $c$ such
-that every union-closed family $A \ne \{\emptyset\}$ of finite subsets of $\mathbb{N}$ has an
+that every union-closed family $A \ne \{\emptyset\}$ of finite subsets of $\mathbb{N}$ (or any infinite set/type) has an
 element that belongs to at least a $c$ fraction of its sets. -/
 @[optimization_constant "6a"]
 noncomputable def C6a : ℝ :=
