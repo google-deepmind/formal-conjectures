@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Meyniel's conjecture on the cop number
@@ -30,6 +32,8 @@ import FormalConjecturesUtil
 * [BB12] Baird, W. and Bonato, A. (2012). "Meyniel's conjecture on the cop number: a survey."
   *J. Comb.* 3, pp. 225--238.
 -/
+
+@[expose] public section
 
 open Filter
 
