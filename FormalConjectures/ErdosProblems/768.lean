@@ -38,6 +38,24 @@ $d>1$ and $d \equiv 1 \pmod p$. -/
 def HasErdos768Property (n : ℕ) : Prop :=
   ∀ p, p.Prime → p ∣ n → ∃ d, d ∣ n ∧ 1 < d ∧ d % p = 1
 
+/-- The divisors $3$, $10$ and $6$ witness the property for the prime factors of $30$. -/
+@[category test, AMS 11]
+theorem hasErdos768Property_thirty : HasErdos768Property 30 := by
+  intro p hp hpd
+  have hp_le : p ≤ 30 := Nat.le_of_dvd (by decide) hpd
+  refine ⟨if p = 2 then 3 else if p = 3 then 10 else 6, ?_⟩
+  interval_cases p <;> norm_num at *
+
+/-- A prime has no divisor other than $1$ that is congruent to $1$ modulo itself. -/
+@[category test, AMS 11]
+theorem not_hasErdos768Property_prime {p : ℕ} (hp : p.Prime) :
+    ¬ HasErdos768Property p := by
+  intro h
+  obtain ⟨d, hd, hgt, hmod⟩ := h p hp (dvd_refl p)
+  rcases (Nat.dvd_prime hp).mp hd with rfl | rfl
+  · omega
+  · simp at hmod
+
 /-- The counting function $\lvert A \cap [1,N]\rvert$. -/
 noncomputable def erdos768Count (N : ℕ) : ℕ := by
   classical
