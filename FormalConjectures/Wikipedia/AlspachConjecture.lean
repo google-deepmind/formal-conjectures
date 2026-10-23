@@ -62,7 +62,7 @@ lengths $m_1, \dots, m_t$. (These conditions are clearly necessary: $K_n$ has al
 only for odd $n$, and its edges must be split exactly among the cycles.)
 -/
 @[category research solved, AMS 5]
-theorem alspach_conjecture : answer(True) ↔
+theorem alspach_conjecture :
     ∀ (n : ℕ), Odd n → ∀ m : Multiset ℕ, (∀ x ∈ m, 3 ≤ x ∧ x ≤ n) → m.sum = n.choose 2 →
       ∃ C : Multiset (Cycle (completeGraph (Fin n))),
         IsCycleDecomposition (completeGraph (Fin n)) C ∧ lengths C = m := by
@@ -91,13 +91,13 @@ theorem alspach_conjecture.variants.even (n : ℕ) (hn : Even n)
 **Long cycles (Bryant–Horsley 2009).**
 
 The conjecture holds (for odd $n$) whenever all the prescribed lengths $m_i$ are at least
-$\lceil n/2 \rceil$.
+$\lceil(n+4)/2\rceil$.
 
 *Reference:* [BH09].
 -/
 @[category research solved, AMS 5]
 theorem alspach_conjecture.variants.long_cycles (n : ℕ) (hn : Odd n) (m : Multiset ℕ)
-    (hm : ∀ x ∈ m, (n + 1) / 2 ≤ x ∧ x ≤ n) (hsum : m.sum = n.choose 2) :
+    (hm : ∀ x ∈ m, (n + 5) / 2 ≤ x ∧ x ≤ n) (hsum : m.sum = n.choose 2) :
     ∃ C : Multiset (Cycle (completeGraph (Fin n))),
       IsCycleDecomposition (completeGraph (Fin n)) C ∧ lengths C = m := by
   sorry
@@ -184,7 +184,7 @@ exactly two pairs with odd $n$ — $(9, C_4 + C_5)$ and $(11, C_3 + C_3 + C_5)$ 
 conjectured to exist in every other case. Known for all sufficiently large $n$ [GJKKO21].
 -/
 @[category research open, AMS 5]
-theorem alspach_conjecture.variants.oberwolfach : answer(sorry) ↔
+theorem alspach_conjecture.variants.oberwolfach :
     ∀ (n : ℕ), Odd n → 3 ≤ n →
       ∀ (F : SimpleGraph (Fin n)) [DecidableRel F.Adj], (∀ v, F.degree v = 2) →
       IsEmpty (F ≃g oberwolfachException9) → IsEmpty (F ≃g oberwolfachException11) →
