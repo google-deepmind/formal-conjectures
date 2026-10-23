@@ -62,8 +62,8 @@ $(n,2n)$. Is $\max_i (a_{i+1} - a_i) \leq (\log n)^{O(1)}$?
 The exponent is independent of $k$, while the threshold for $n$ may depend on $k$
 [Er79e, p. 78].
 -/
-@[category research open, AMS 11]
-theorem erdos_693 : answer(sorry) ↔ ∃ C : ℕ, ∀ k ≥ 2, ∀ᶠ n in atTop,
+@[category research open, question, AMS 11]
+theorem erdos_693 : ∃ C : ℕ, ∀ k ≥ 2, ∀ᶠ n in atTop,
     MaxGapAtMost (divisorWindowSet k n) ((Real.log (n : ℝ)) ^ C) := by
   sorry
 
