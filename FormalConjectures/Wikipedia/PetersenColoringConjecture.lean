@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Petersen colouring conjecture (Jaeger 1988)
@@ -29,6 +31,8 @@ import FormalConjecturesUtil
   snarks." *Ars Math. Contemp.* 7, pp. 161--173.
 * [Zh97] Zhang, C.-Q. (1997). *Integer flows and cycle covers of graphs.* Marcel Dekker.
 -/
+
+@[expose] public section
 
 open SimpleGraph Finset
 
