@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 943
 
 *Reference:* [erdosproblems.com/943](https://www.erdosproblems.com/943)
 -/
+
+@[expose] public section
 
 open AdditiveCombinatorics Nat Filter
 
@@ -29,8 +32,8 @@ namespace Erdos943
 /--
 Let $A$ be the set of powerful numbers. Is is true that $1_A\ast 1_A(n)=n^{o(1)}$ for every $n$?
 -/
-@[category research open, AMS 11]
-theorem erdos_943 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_943 :
     ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n in atTop, (sumRep Powerful n) ≤ (n : ℝ)^(o n) := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 
 /-!
@@ -30,6 +31,8 @@ import FormalConjectures.Util.ProblemImports
  - [Mc99] McKee, James, The average number of divisors of an irreducible quadratic polynomial. Math. Proc. Cambridge Philos. Soc. (1999), 17--22.
  - [T] T. Tao, Erdos' divisor bound, https://terrytao.wordpress.com/2011/07/23/erdos-divisor-bound/
 -/
+
+@[expose] public section
 
 open Filter Real Polynomial
 open scoped ArithmeticFunction.sigma Topology
@@ -51,8 +54,8 @@ $\sum_{n \le x} \tau(f(n)) \approx c \cdot x \log x$?
 
 Note that it is unclear whether the polynomial should have integer coefficients or merely be
 integer-valued. We assume the former. -/
-@[category research open, AMS 11]
-theorem erdos_975 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_975 :
     ∀ f : ℤ[X], f.natDegree ≠ 0 → Irreducible f → (∀ᶠ n in atTop, 1 ≤ f.eval n) →
     ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
   sorry
@@ -65,11 +68,16 @@ theorem erdos_975.variants.upper_bound (f : ℤ[X]) (hf : Irreducible f)
     (hf_pos : ∀ᶠ n in atTop, 1 ≤ f.eval n) : Erdos975Sum f =O[atTop] (fun x ↦ x * log x) := by
   sorry
 
+/-- Lower bound for the growth rate of `Erdos975Sum`, shown in [Va39]. -/
 @[category research solved, AMS 11]
 theorem erdos_975.variants.lower_bound (f : ℤ[X]) (hf : Irreducible f) (hfdeg : f.natDegree ≠ 0)
     (hf_pos : ∀ᶠ n in atTop, 1 ≤ f.eval n) :
     (fun x ↦ x * log x) =O[atTop] Erdos975Sum f := by
   sorry
+
+-- The constant is only known in terms of Hurwitz class numbers, which are not yet formalized
+-- (see the `TODO` below), so the answer stays a placeholder.
+def erdos_975.variants.quadratic.answer : ℝ := sorry
 
 /--
 When $f$ is an irreducible quadratic polynomial, the question is answered first by Hooley [Ho63].
@@ -78,10 +86,11 @@ is given by McKey in [Mc95], [Mc97], [Mc99].
 
 TODO: formalize Hurwitz class numbers and the expression of the constant in terms of them.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question value, AMS 11]
 theorem erdos_975.variants.quadratic (f : ℤ[X]) (hf : Irreducible f)
     (hf_pos : ∀ᶠ n : ℕ in atTop, 1 ≤ f.eval ↑n) (hf_degree : f.degree = 2) (c : ℝ) :
-    c = answer(sorry) → 0 < c ∧ Tendsto (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
+    c = erdos_975.variants.quadratic.answer → 0 < c ∧ Tendsto
+      (fun x ↦ Erdos975Sum f x / (x * log x)) atTop (𝓝 c) := by
   sorry
 
 /--
@@ -93,6 +102,7 @@ theorem erdos_975.variants.n2_plus_1_strong :
     (fun x ↦ Erdos975Sum (X ^ 2 + 1) x - (3 / π) * x * log x) =O[atTop] id := by
   sorry
 
+/-- Asymptotics for `Erdos975Sum` with $f(X) = X^2 + 1$. -/
 @[category research solved, AMS 11]
 theorem erdos_975.variants.n2_plus_1 :
     ∃ c > (0 : ℝ), Tendsto (fun x ↦ Erdos975Sum (X ^ 2 + 1) x / (x * log x)) atTop (𝓝 c) := by

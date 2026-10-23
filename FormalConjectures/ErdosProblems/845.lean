@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 845
 
 *Reference:* [erdosproblems.com/845](https://www.erdosproblems.com/845)
 -/
+
+@[expose] public section
 
 namespace Erdos845
 
@@ -31,14 +34,15 @@ $b_t \leq Cb_1$ has density $0$?
 
 van Doorn and Everts \cite{vDEv25} have disproved this with $C=6$ - in fact, they prove that all
 integers can be written as such a sum in which $b_t<6b_1$.
+
+This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos845.lean"]
 theorem erdos_845 :
-    answer(False) ↔
-      ∀ᵉ (C : ℝ) (hC : 0 < C),
-        let f : ℕ × ℕ → ℕ := fun (k, l) ↦ 2 ^ k * 3 ^ l
-        { ∑ x ∈ B, f x | (B : Finset (ℕ × ℕ)) (h : B.Nonempty)
-          (hB : B.sup f ≤ C * B.inf' h f) }.HasDensity 0 := by
+    ¬ ∀ᵉ (C : ℝ) (hC : 0 < C),
+      let f : ℕ × ℕ → ℕ := fun (k, l) ↦ 2 ^ k * 3 ^ l
+      { ∑ x ∈ B, f x | (B : Finset (ℕ × ℕ)) (h : B.Nonempty)
+        (hB : B.sup f ≤ C * B.inf' h f) }.HasDensity 0 := by
   sorry
 
 end Erdos845

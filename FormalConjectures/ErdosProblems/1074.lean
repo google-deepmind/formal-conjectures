@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1074
@@ -22,31 +23,32 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1074](https://www.erdosproblems.com/1074)
 -/
 
+@[expose] public section
+
+namespace Erdos1074
+
 open scoped Nat
+open Nat
 
 /-- The EHS numbers (after Erdős, Hardy, and Subbarao) are those $m\geq 1$ such that there
 exists a prime $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$. -/
-abbrev Nat.EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, p.Prime ∧ ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
+abbrev EHSNumbers : Set ℕ := {m | 1 ≤ m ∧ ∃ p, p.Prime ∧ ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
 /-- The Pillai primes are those primes $p$ such that there exists an $m \ge 1$ with
 $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$-/
-abbrev Nat.PillaiPrimes : Set ℕ := {p | p.Prime ∧ ∃ m ≥ 1, ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
+abbrev PillaiPrimes : Set ℕ := {p | p.Prime ∧ ∃ m ≥ 1, ¬p ≡ 1 [MOD m] ∧ p ∣ m ! + 1}
 
 @[category test, AMS 11]
-theorem test : ¬ 2 ∈ Nat.PillaiPrimes := by
+theorem two_not_mem_pillaiPrimes : ¬ 2 ∈ PillaiPrimes := by
   norm_num
   intro m hm h
   exact (Nat.dvd_factorial (by decide) (hm.lt_of_ne (by bound))).modEq_zero_nat.add_right 1
 
 @[category test, AMS 11]
-theorem test' : 23 ∈ Nat.PillaiPrimes := by
+theorem twentyThree_mem_pillaiPrimes : 23 ∈ PillaiPrimes := by
   norm_num
   use 14
   decide
-
-namespace Erdos1074
-
-open Nat
 
 /-- Let $S$ be the set of all $m\geq 1$ such that there exists a prime $p\not\equiv 1\pmod{m}$ such
 that $m! + 1 \equiv 0\pmod{p}$. Does
@@ -54,17 +56,19 @@ $$
   \lim\frac{|S\cap[1, x]|}{x}
 $$
 exist? -/
-@[category research open, AMS 11]
-theorem erdos_1074.parts.i : answer(sorry) ↔ ∃ c, EHSNumbers.HasDensity c := by
+@[category research open, question, AMS 11]
+theorem erdos_1074.parts.i : ∃ c, EHSNumbers.HasDensity c := by
   sorry
+
+def erdos_1074.parts.ii.answer : ℝ := sorry
 
 /-- Let $S$ be the set of all $m\geq 1$ such that there exists a prime $p\not\equiv 1\pmod{m}$ such
 that $m! + 1 \equiv 0\pmod{p}$. What is
 $$
   \lim\frac{|S\cap[1, x]|}{x}?
 $$ -/
-@[category research open, AMS 11]
-theorem erdos_1074.parts.ii : EHSNumbers.HasDensity answer(sorry) := by
+@[category research open, question value, AMS 11]
+theorem erdos_1074.parts.ii : EHSNumbers.HasDensity erdos_1074.parts.ii.answer := by
   sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
@@ -73,18 +77,20 @@ $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}
 $$
 exist? -/
-@[category research open, AMS 11]
-theorem erdos_1074.parts.iii : answer(sorry) ↔ ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
+@[category research open, question, AMS 11]
+theorem erdos_1074.parts.iii : ∃ c, PillaiPrimes.HasDensity c {p | p.Prime} := by
   sorry
+
+def erdos_1074.parts.iv.answer : ℝ := sorry
 
 /-- Similarly, if $P$ is the set of all primes $p$ such that there exists an $m$ with
 $p\not\equiv 1\pmod{m}$ such that $m! + 1 \equiv 0\pmod{p}$, then what is
 $$
   \lim\frac{|P\cap[1, x]|}{\pi(x)}?
 $$ -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_1074.parts.iv :
-    PillaiPrimes.HasDensity answer(sorry) {p | p.Prime} := by
+    PillaiPrimes.HasDensity erdos_1074.parts.iv.answer {p | p.Prime} := by
   sorry
 
 /-- Pillai [Pi30] raised the question of whether there exist any primes in $P$. This was answered
@@ -94,13 +100,18 @@ theorem erdos_1074.variants.mem_pillaiPrimes : 23 ∈ PillaiPrimes := by
   norm_num
   exact ⟨14, by decide⟩
 
-/-- Erdős, Hardy, and Subbarao proved that $S$ is infinite. -/
-@[category research solved, AMS 11]
+/--
+Erdős, Hardy, and Subbarao proved that $S$ is infinite.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at
+"https://github.com/mzhorvath1/formal-conjectures/blob/3dec597bd1a73778760b761712a1fc5fb24bc5d7/FormalConjectures/ErdosProblems/1074.lean#L99"]
 theorem erdos_1074.variants.EHSNumbers_infinite : EHSNumbers.Infinite := by
   sorry
 
 /-- Erdős, Hardy, and Subbarao proved that $P$ is infinite. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos1074_erdos_1074_variants_PillaiPrimes_infinite.lean#L178"]
 theorem erdos_1074.variants.PillaiPrimes_infinite : PillaiPrimes.Infinite := by
   sorry
 
@@ -117,9 +128,12 @@ theorem erdos_1074.variants.PillaiPrimes_init :
   sorry
 
 /-- Regarding the first question, Hardy and Subbarao computed all EHS numbers up to $2^{10}$, and
-write "...if this trend conditions we expect [the limit] to be around 0.5, if it exists." -/
+write "...if this trend conditions we expect [the limit] to be around 0.5, if it exists. The
+frequency with which the EHS numbers occur - most often in long sequences of consecutive integers -
+makes us believe that their asymptotic density exists and is unity. Erdős, though initially
+hesitant, later agreed with this view." That is, the conjecture is that $S$ has density $1$. -/
 @[category research open, AMS 11]
-theorem erdos_1074.variants.EHSNumbers_one_half : EHSNumbers.HasDensity (1 / 2) := by
+theorem erdos_1074.variants.EHSNumbers_one : EHSNumbers.HasDensity 1 := by
   sorry
 
 end Erdos1074

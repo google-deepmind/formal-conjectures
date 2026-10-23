@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Beal conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Beal_conjecture)
 -/
+
+@[expose] public section
 
 namespace BealConjecture
 
@@ -39,7 +42,7 @@ theorem beal_conjecture : bealConjecture := by
 /--
 The Beal Conjecture implies Fermat's last theorem
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem flt_of_beal_conjecture (H : bealConjecture) :
     FermatLastTheorem := by
   intro n hn x y z hx hy hz

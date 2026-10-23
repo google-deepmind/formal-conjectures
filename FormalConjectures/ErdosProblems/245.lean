@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 245
@@ -22,9 +23,11 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/245](https://www.erdosproblems.com/245)
 -/
 
+@[expose] public section
+
 namespace Erdos245
 
-open Filter Erdos245
+open Filter Set Erdos245
 
 open scoped Pointwise Topology
 
@@ -39,12 +42,13 @@ The answer is yes, proved by Freiman [Fr73].
 
 [Fr73] Fre\u{\i}man, G. A., _Foundations of a structural theory of set addition_. (1973), vii+108.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_245 :
-    answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
-      atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
+    ∀ (A : Set ℕ), A.Infinite →
+      atTop.Tendsto (fun N ↦ (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0) →
       3 ≤ atTop.limsup
-        fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard := by
+        fun N : ℝ ↦ ((A + A) ∩ Icc 1 ⌊N⌋₊ |>.ncard : EReal)
+          / (A ∩ Icc 1 ⌊N⌋₊).ncard := by
   sorry
 
 /--
@@ -56,9 +60,10 @@ $$
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
-    (hf : atTop.Tendsto (fun N ↦ (A.interIcc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0)) :
+    (hf : atTop.Tendsto (fun N ↦ (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0)) :
     2 ≤ atTop.limsup
-      fun N : ℝ ↦ ((A + A).interIcc 1 ⌊N⌋₊ |>.ncard : EReal) / (A.interIcc 1 ⌊N⌋₊).ncard := by
+      fun N : ℝ ↦ ((A + A) ∩ Icc 1 ⌊N⌋₊ |>.ncard : EReal)
+        / (A ∩ Icc 1 ⌊N⌋₊).ncard := by
   sorry
 
 end Erdos245

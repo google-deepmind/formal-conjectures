@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1072
@@ -22,7 +23,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/1072](https://www.erdosproblems.com/1072)
 -/
 
-open Nat Filter Finset
+@[expose] public section
+
+open Nat Filter Finset Set
 open scoped Topology
 
 namespace Erdos1072
@@ -31,14 +34,14 @@ namespace Erdos1072
 noncomputable def f (p : ℕ) : ℕ := sInf {n | (n)! + 1 ≡ 0 [MOD p]}
 
 /-- Is it true that there are infinitely many $p$ for which $f(p) = p − 1$? -/
-@[category research open, AMS 11]
-theorem erdos_1072.parts.i : answer(sorry) ↔ Set.Infinite {p | p.Prime ∧ f p = p - 1} := by
+@[category research open, question, AMS 11]
+theorem erdos_1072.parts.i : Set.Infinite {p | p.Prime ∧ f p = p - 1} := by
   sorry
 
 /-- Is it true that $f(p)/p \to 0$ for $p \to \infty$ in a density 1 subset of the primes? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1072.parts.ii :
-    answer(sorry) ↔ ∃ (P : Set ℕ), P ⊆ {p | p.Prime} ∧ P.HasDensity 1 {p | p.Prime} ∧
+    ∃ (P : Set ℕ), P ⊆ {p | p.Prime} ∧ P.HasDensity 1 {p | p.Prime} ∧
       Tendsto (fun p => (f p / p : ℝ)) (atTop ⊓ principal P) (𝓝 0) := by
   sorry
 /--
@@ -50,7 +53,7 @@ Amer. Math. Monthly (2002), 554--559.
 -/
 @[category research open, AMS 11]
 theorem erdos_1072.variants.littleo :
-    (fun x ↦ (({p | p.Prime ∧ f p = p - 1}.interIcc 0 x).ncard : ℝ)) =o[atTop]
+    (fun x ↦ (({p | p.Prime ∧ f p = p - 1} ∩ Icc 0 x).ncard : ℝ)) =o[atTop]
       (fun x ↦ x / Real.log x) := by
   sorry
 

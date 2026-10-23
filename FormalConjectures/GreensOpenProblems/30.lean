@@ -13,10 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
-import FormalConjecturesForMathlib.Combinatorics.AP.Basic
+module
 
-open scoped Pointwise
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 30
@@ -29,6 +28,10 @@ which 'obviously' has $D(A') \leq K + \varepsilon$, with $D(A) := |A - A|/|A|$.
 - [EGM13] Eberhard, Sean, Ben Green, and Freddie Manners. "Sets of integers with no large sum-free
   subset." Annals of Mathematics (2014): 621-652.
 -/
+
+@[expose] public section
+
+open scoped Pointwise
 
 namespace Green30
 
@@ -45,13 +48,13 @@ If $|A - A| \leq (4 - \varepsilon)|A|$, then there is a progression $P$ of lengt
 $\gg_\varepsilon |A|$ on which $A$ has density $> 1/2$. Then $A' := A \cap P$ "obviously" has
 $D(A') \leq 4$ [Gr24].
 -/
-@[category research solved, AMS 05 11]
+@[category research solved, AMS 5 11]
 theorem green_30.example :
     ∀ (ε : ℝ), ε > 0 →
       ∃ (k : ℝ), k > 0 ∧
         ∀ A : Finset ℤ, A.Nonempty →
           D A ≤ 4 - ε →
-          let A' : Finset ℤ := answer(sorry)
+          ∃ A' : Finset ℤ,
           ∃ P : Finset ℤ, (P : Set ℤ).IsAPOfLength P.card ∧
             A' = A ∩ P ∧
             k * A.card ≤ P.card ∧
@@ -65,7 +68,7 @@ $|A − A| \leq (4 − \varepsilon)|A|$. Then there is an arithmetic progression
 of length $\gg_\varepsilon |A|$ on which the density of $A$ is at least $1/2 + c\varepsilon$.
 [EGM13, Theorem 6.4]
 -/
-@[category research solved, AMS 05 11]
+@[category research solved, AMS 5 11]
 theorem green_30.variants.EGM13 :
     ∃ c : ℝ, c > 0 ∧
       ∀ (ε : ℝ), ε > 0 →

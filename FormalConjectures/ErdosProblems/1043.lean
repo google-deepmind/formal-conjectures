@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1043
@@ -28,6 +30,8 @@ import FormalConjectures.Util.ProblemImports
   97-115.
 -/
 
+@[expose] public section
+
 namespace Erdos1043
 
 open MeasureTheory Polynomial
@@ -40,19 +44,22 @@ def levelSet (f : Polynomial ℂ) : Set ℂ :=
 **Erdős Problem 1043**:
 Let $f\in \mathbb{C}[x]$ be a monic polynomial.
 Must there exist a straight line $\ell$ such that the projection of
-\[\{ z: \lvert f(z)\rvert\leq 1\}\]
+$$\{ z: \lvert f(z)\rvert\leq 1\}$$
 onto $\ell$ has measure at most $2$?
 
 Pommerenke [Po61] proved that the answer is no.
 
+The projection onto the line $\ell = \mathbb{R} u$ is measured with the Lebesgue measure of that
+line, so `volume` of the projected set is its length.
+
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1043.lean", AMS 28 30]
+@[category research solved, question, AMS 28 30,
+formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1043.lean"]
 theorem erdos_1043 :
-    answer(False) ↔ ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
+    ¬ ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
-      volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) ≤ 2 := by
+      volume ((ℝ ∙ u).orthogonalProjectionOnto '' levelSet f) ≤ 2 := by
   sorry
 
 /--
@@ -63,7 +70,7 @@ measure at most 3.3.
 theorem erdos_1043.variants.weak :
     ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧
-      volume ((ℝ ∙ u).orthogonalProjection '' levelSet f) ≤ 3.3 := by
+      volume ((ℝ ∙ u).orthogonalProjectionOnto '' levelSet f) ≤ 3.3 := by
   sorry
 
 end Erdos1043

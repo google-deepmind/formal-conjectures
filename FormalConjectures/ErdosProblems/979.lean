@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 979
 
 *Reference:* [erdosproblems.com/979](https://www.erdosproblems.com/979)
 -/
+
+@[expose] public section
 
 namespace Erdos979
 
@@ -31,8 +34,8 @@ def solutionSet (n k : ℕ) : Set (Multiset ℕ) :=
 Let $k ≥ 2$, and let $f_k(n)$ count the number of solutions to $n = p_1^k + \dots + p_k^k$,
 where the $p_i$ are prime numbers. Is it true that $\limsup f_k(n) = \infty$?
 -/
-@[category research open, AMS 11]
-theorem erdos_979 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_979 :
     ∀ k ≥ 2, Filter.limsup (fun n => (solutionSet n k).encard) Filter.atTop = ⊤ := by
   sorry
 
@@ -42,15 +45,17 @@ Erdős [Er37b] proved that if $f_2(n)$ counts the number of solutions to $n = p_
 [Er37b] Erdős, Paul, On the Sum and Difference of Squares of Primes. J. London Math. Soc. (1937), 133--136.
 -/
 @[category research solved, AMS 11]
-theorem erdos_979_k2 :
+theorem erdos_979.variants.k2 :
     Filter.limsup (fun n => (solutionSet n 2).encard) Filter.atTop = ⊤ := by
   sorry
 
 /--
 Erdős (unpublished)
 -/
-@[category research solved, AMS 11]
-theorem erdos_979_k3 :
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-979-k3/blob/930fcc877fa4a2b4fc7c59614cbbab04a6d834ca/lean/K3Lean/Erdos979K3Final.lean#L46-L47"]
+theorem erdos_979.variants.k3 :
     Filter.limsup (fun n => (solutionSet n 3).encard) Filter.atTop = ⊤ := by
   sorry
 

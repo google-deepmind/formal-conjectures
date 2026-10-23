@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 257
 
 *Reference:* [erdosproblems.com/257](https://www.erdosproblems.com/257)
 -/
+
+@[expose] public section
 
 namespace Erdos257
 
@@ -31,8 +34,8 @@ $$
 $$
 irrational?
 -/
-@[category research open, AMS 11]
-theorem erdos_257 : answer(sorry) ↔ ∀ (A : Set ℕ), A.Infinite →
+@[category research open, question, AMS 11]
+theorem erdos_257 : ∀ (A : Set ℕ), A.Infinite →
     Irrational (∑' n : A, (1 : ℝ) / (2 ^ n.1 - 1)) := by
   sorry
 
@@ -43,10 +46,45 @@ $$
 $$
 where $d(n)$ is the number of divisors of $n$.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_257.variants.tsum_top_eq :
     ∑' n, 1 / (2 ^ n - 1 : ℝ) = ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
-  sorry
+  have hr : ‖(1 / 2 : ℝ)‖ < 1 := by norm_num
+  -- The key Lambert-series identity from Mathlib (`k = 0`):
+  -- `∑' n:ℕ+, (1/2)^n / (1 - (1/2)^n) = ∑' n:ℕ+, σ 0 n * (1/2)^n`, with summands rewritten.
+  have key := tsum_pow_div_one_sub_eq_tsum_sigma (𝕜 := ℝ) hr 0
+  have hpos : ∀ n : ℕ, 0 < n → (2 : ℝ) ≤ 2 ^ n := fun n hn ↦ by
+    simpa using pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 2) hn
+  simp only [pow_zero, one_mul, ArithmeticFunction.sigma_zero_apply,
+    show ∀ n : ℕ+, ((1 : ℝ) / 2) ^ (n : ℕ) / (1 - (1 / 2) ^ (n : ℕ))
+        = 1 / (2 ^ (n : ℕ) - 1) from fun n ↦ by
+      have h := hpos n n.2
+      have hp : (0 : ℝ) < 2 ^ (n : ℕ) := by positivity
+      have h1 : (1 : ℝ) / 2 ^ (n : ℕ) < 1 := (div_lt_one hp).2 (by linarith)
+      rw [div_pow, one_pow, div_eq_div_iff (by linarith) (by linarith)]; field_simp,
+    show ∀ n : ℕ+, ((n : ℕ).divisors.card : ℝ) * (1 / 2) ^ (n : ℕ)
+        = (n : ℕ).divisors.card / 2 ^ (n : ℕ) from fun n ↦ by
+      rw [div_pow, one_pow]; ring] at key
+  -- Domination by geometric series gives `ℕ`-summability of both sides.
+  have hsummL : Summable fun n : ℕ ↦ 1 / (2 ^ n - 1 : ℝ) :=
+    .of_nonneg_of_le
+      (fun n ↦ by have := one_le_pow₀ (one_le_two (α := ℝ)) (n := n); apply div_nonneg <;> linarith)
+      (fun n ↦ by
+        rcases Nat.eq_zero_or_pos n with h | h
+        · simp [h]
+        · have h2 := hpos n h
+          rw [show (2 : ℝ) * (1 / 2) ^ n = 2 / 2 ^ n by rw [div_pow, one_pow]; ring,
+            div_le_div_iff₀ (by linarith) (by positivity)]; nlinarith)
+      ((summable_geometric_of_norm_lt_one hr).mul_left 2)
+  have hsummR : Summable fun n : ℕ ↦ (n.divisors.card : ℝ) / (2 ^ n : ℝ) :=
+    .of_nonneg_of_le (fun n ↦ by positivity)
+      (fun n ↦ by
+        rw [pow_one, show ((1 : ℝ) / 2) ^ n = 1 / 2 ^ n by rw [div_pow, one_pow], mul_one_div]
+        gcongr; exact_mod_cast Nat.card_divisors_le_self n)
+      (summable_pow_mul_geometric_of_norm_lt_one 1 hr)
+  -- Bridge `ℕ+` to `ℕ`: the `n = 0` term is `0` on both sides.
+  rw [← (tsum_zero_pnat_eq_tsum_nat hsummL), ← (tsum_zero_pnat_eq_tsum_nat hsummR)]
+  simpa using key
 
 /--
 Show that
@@ -57,9 +95,33 @@ is irrational.
 
 [Er48] Erdős, P., _On arithmetical properties of Lambert series_. J. Indian Math. Soc. (N.S.) (1948), 63-66.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos-lean/blob/c4eab2571b4692ee9c08d3ec138176f7fbfa09a9/verification/FCMergedIntegerAdapters/research/adapters/FormalConjecturesAdapter.lean#L121-L134"]
 theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
+  sorry
+
+/--
+Let $A \subseteq \mathbb{N}$ be infinite with $\sum_{a \in A} 1/a < \infty$.
+For every integer base $b \ge 2$, the series
+$$
+\sum_{a \in A} \frac{1}{b^a - 1}
+$$
+is irrational. No pairwise coprimality assumption is needed. Exponent zero
+contributes zero under Lean's real-division convention.
+
+Erdős stated the coprimality-free result in *On the irrationality of certain
+series*, Math. Student 36 (1968), p. 222. A proof and formalisation appear in
+W. Cook,
+*Reciprocal Mersenne Subseries*:
+https://github.com/wcook04/plectis-erdos/blob/598cd7bac8b73dcfef3687f46922c1ef6da766ae/docs/papers/full-text/erdos257-mersenne-reasoning-surface.md
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/wcook04/plectis-erdos-lean/blob/ec92e5ce12c6117a24e4b532ea565ba332a1df7b/verification/FC257ReciprocalSupport/verification/Solutions/FC257Subtype.lean#L10-L17"]
+theorem erdos_257.variants.summable_reciprocal_support
+    (b : ℕ) (A : Set ℕ) (hb : 2 ≤ b) (hA : A.Infinite)
+    (hsum : Summable fun a : A => 1 / (a : ℝ)) :
+    Irrational (∑' n : A, 1 / ((b : ℝ) ^ (n : ℕ) - 1)) := by
   sorry
 
 end Erdos257

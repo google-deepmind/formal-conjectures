@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 198
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Ba75] Baumgartner, James E., Partitioning vector spaces. J. Combinatorial Theory Ser. A (1975),
   231-233.
 -/
+
+@[expose] public section
 
 open Function Set Nat
 
@@ -68,16 +71,19 @@ $(a+d+1)!+(a+d)\in A$, and $d$ divides $(a+d+1)!+d$.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos198.lean", AMS 5 11]
-theorem erdos_198 : (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ Aᶜ)) ↔
-    answer(False) := by
+@[category research solved, question, AMS 5 11,
+formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos198.lean"]
+theorem erdos_198 : ¬ (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ Aᶜ)) := by
   sorry
 
 /--
-In fact one such sequence is $n! + n$. This was found by AlphaProof. It also found $(n + 1)! + n$.
+In fact one such sequence is $n! + n$.
+
+This was found and proved by AlphaProof.
+
+It also found $(n + 1)! + n$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/21f6780f84b406de468389571eb01717b8072f09/FormalConjectures/ErdosProblems/198.lean#L84"]
 theorem erdos_198.variants.concrete :  ∃ (A : Set ℕ), A = {n ! + n | n} ∧
     IsSidon A ∧ (∀ Y, IsAPOfLength Y ⊤ → (A ∩ Y).Nonempty) := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Goldbach's conjecture
@@ -24,14 +25,16 @@ import FormalConjectures.Util.ProblemImports
 - [Goldbach's Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture)
 -/
 
+@[expose] public section
+
 namespace GoldbachConjecture
 
 /--
 Can every even integer greater than 2 be written as the sum of two primes?
 -/
-@[category research open, AMS 11]
-theorem goldbach (n : ℕ) (hn : 2 < n) (hn_even : Even n) :
-    ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+@[category research open, question, AMS 11]
+theorem goldbach :
+    ∀ n : ℕ, 2 < n → Even n → ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
   sorry
 
 end GoldbachConjecture

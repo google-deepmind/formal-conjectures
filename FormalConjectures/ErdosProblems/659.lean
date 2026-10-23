@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 659
@@ -25,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
 - [ErFi96] Erdős, Paul and Fishburn, Peter, Maximum planar sets that determine {$k$} distances. Discrete Math. (1996), 115--125.
 - [Gr26](https://arxiv.org/abs/2601.09102): Benjamin Grayzel, Solution to a Problem of Erdős Concerning Distances and Points
 -/
+
+@[expose] public section
 
 open EuclideanGeometry Finset Real
 
@@ -45,11 +48,14 @@ There are only six possible configurations of $4$ points which determine only $2
 (first noted by Erdős and Fishburn [ErFi96]), and five of them contain either a square or an
 equilateral triangle. The remaining configuration contains four points from a regular pentagon,
 and Grayzel [Gr26] (using Gemini) has noted in the comments that this configuration can also be
-ruled out, thus giving a complete solution to this problem. Boris Alexeev using Aristotle provides
-a formalisation of the proof.
+ruled out, thus giving a complete solution to this problem.
+
+Boris Alexeev provides a formalisation of the reduction, which is conditional on Bernays' theorem
+(assumed as an axiom in the proof to obtain the $O(n/\sqrt{\log n})$ bound).
+See the [formal proof](https://github.com/plby/lean-proofs/blob/226d5fad7143dcebea2bbb5ec87f18a3a1dcea69/src/v4.24.0/ErdosProblems/Erdos659.lean).
 -/
-@[category research formally solved using lean4 at "https://github.com/plby/lean-proofs/blob/226d5fad7143dcebea2bbb5ec87f18a3a1dcea69/src/v4.24.0/ErdosProblems/Erdos659.lean", AMS 52]
-theorem erdos_659 : answer(True) ↔ ∃ A : ℕ → Finset ℝ²,
+@[category research solved, question, AMS 52]
+theorem erdos_659 : ∃ A : ℕ → Finset ℝ²,
    (∀ n, #(A n) = n ∧ ∀ S ⊆ A n, #S = 4 → 3 ≤ distinctDistances S) ∧
     (fun n ↦ distinctDistances (A n)) ≪ fun n ↦ n / sqrt (log n) := by
   sorry

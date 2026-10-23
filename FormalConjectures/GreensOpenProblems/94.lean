@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 94
@@ -22,19 +23,41 @@ import FormalConjectures.Util.ProblemImports
 *Reference:*
 - [Ben Green's Open Problem 94](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.94)
 - [erdosproblems.com/120](https://www.erdosproblems.com/120)
+- [OAI26a] OpenAI, *The dyadic case of the Erdős similarity conjecture*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-dyadic-case-of-the-Erdos-similarity-conjecture-September-25-2026/paper.pdf
 -/
+
+@[expose] public section
 
 open Set MeasureTheory
 
 namespace Green94
 
 /--
-Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
+Let `A ⊂ R` be a set of positive outer measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
+
+The answer is "no".
 -/
-@[category research open, AMS 28]
-theorem green_94 :
-   answer(sorry) ↔ ∀ A : Set ℝ,
+@[category research solved, question, AMS 28, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/153d79d6c82c76fe1bee860742af800840c974d9/FormalConjectures/GreensOpenProblems/94.lean#L174"]
+theorem green_94_outer_measure :
+   ¬ ∀ A : Set ℝ,
    volume A > 0 →
+   ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
+  sorry
+
+/--
+Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
+
+The answer is "no": there are compact sets of measure arbitrarily close to $1$ in $[0, 1]$
+that contain no affine copy of $\{2^{-n} : n \geq 1\}$. This was proved by an internal OpenAI
+model in September 2026 [OAI26a]; see the linked Lean proof.
+-/
+@[category research solved, question, AMS 28, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/DyadicAvoidance/Main.lean#L103"]
+theorem green_94 :
+   ¬ ∀ A : Set ℝ,
+   MeasurableSet A ∧ volume A > 0 →
    ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry
 

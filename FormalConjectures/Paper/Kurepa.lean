@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 /-!
 # Kurepa's conjecture
 
 *Reference:* [On the left factorial function !N](https://oeis.org/A3422), by *Đuro Kurepa* Math. Balkanica 1, p. 147-153, 1971
 
 -/
+
+@[expose] public section
 
 namespace Kurepa
 
@@ -55,7 +58,10 @@ theorem kurepa_conjecture.variants.prime (p : ℕ) (h_p : 2 < p) :
     p.Prime → (!p : ℕ) % p ≠ 0 := by
   sorry
 
-@[category undergraduate, AMS 11]
+/--
+Kurepa's conjecture for all integers greater than 2 is equivalent to the conjecture restricted to primes greater than 2.
+-/
+@[category textbook, AMS 11]
 theorem kurepa_conjecture.prime_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
     ↔ (∀ p, 2 < p → p.Prime → (!p : ℕ) % p ≠ 0) := by
   refine ⟨fun h p hp hp_prime ↦ h p hp, fun h n hn h_mod ↦ ?_⟩
@@ -90,7 +96,10 @@ An equivalent formulation in terms of the gcd of $n!$ and $!n$.
 theorem kurepa_conjecture.variants.gcd (n : ℕ) : 2 < n → (n !).gcd (! n) = 2 := by
   sorry
 
-@[category undergraduate, AMS 11]
+/--
+Kurepa's conjecture for all integers greater than 2 is equivalent to the statement that $\gcd(n!, !n) = 2$ for all integers greater than 2.
+-/
+@[category textbook, AMS 11]
 theorem kurepa_conjecture.gcd_reduction : (∀ n, 2 < n → (!n : ℕ) % n ≠ 0)
     ↔ (∀ n, 2 < n → (n)!.gcd (!n) = 2) := by
   refine ⟨fun h n hn ↦ match n with | S + 1 => gcd_eq_iff.2 ?_,

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 233
@@ -25,19 +26,11 @@ import FormalConjectures.Util.ProblemImports
   - [Wikipedia](https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_conjecture)
 -/
 
+@[expose] public section
+
 open Filter Real
 
 namespace Erdos233
-
-/--
-The prime number theorem immediately implies a lower bound of $\gg N(\log N)^2$ for the sum of
-squares of gaps between consecutive primes.
--/
-@[category research solved, AMS 11]
-theorem sum_of_squares_of_prime_gaps_lower_bound :
-    (fun (N : ℕ) => N * (log N)^2) =O[atTop]
-    (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) := by
-  sorry
 
 /--
 A conjecture by Heath-Brown:
@@ -52,8 +45,20 @@ theorem erdos_233 :
 Cramér proved an upper bound of $O(N(\log N)^4)$ conditional on the Riemann hypothesis.
 -/
 @[category research solved, AMS 11]
-theorem erdos_233.variant (h : RiemannHypothesis) :
+theorem erdos_233.variants.upper_bound (h : RiemannHypothesis) :
     (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) =O[atTop] fun N => N * (log N)^4 := by
+  sorry
+
+/--
+The prime number theorem immediately implies a lower bound of $\gg N(\log N)^2$ for the sum of
+squares of gaps between consecutive primes.
+
+Formal proof linked here provided by AlphaProof.
+-/
+@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/mzhorvath1/formal-conjectures/blob/032848c62fdf4c422bb0ee6663dc8d009d456c2c/FormalConjectures/ErdosProblems/233.lean#L57"]
+theorem erdos_233.variants.lower_bound :
+    (fun (N : ℕ) => N * (log N)^2) =O[atTop]
+    (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) := by
   sorry
 
 end Erdos233

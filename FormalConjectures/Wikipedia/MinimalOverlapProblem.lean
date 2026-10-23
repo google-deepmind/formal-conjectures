@@ -13,5 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«36»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«36»
+
+/-!
+# Minimum Overlap Problem
+
+The minimum overlap problem asks for the limit of the minimum, over all
+splittings of $\{1, \ldots, 2n\}$ into two sets $A$ and $B$ of equal size, of
+the maximum number of representations of any integer $k$ as $a - b$ with
+$a \in A$, $b \in B$, divided by $n$.
+
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Minimum_overlap_problem)
+
+This file points to the canonical formalization in `FormalConjectures.ErdosProblems.«36»`.
+-/
+
+@[expose] public section

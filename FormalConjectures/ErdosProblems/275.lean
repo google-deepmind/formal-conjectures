@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 275
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [CrVE70] R.B. Crittenden and C.L. Vanden Eynden, *Any n arithmetic progressions covering the first
   2^n integers cover all integers*, Proc. Amer. Math. Soc. 24 (1970), 475-481.
 -/
+
+@[expose] public section
 
 open Set
 
@@ -38,8 +41,7 @@ Selfridge and Crittenden and Vanden Eynden [CrVE70].
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos275.lean", AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos275.lean"]
 theorem erdos_275 (r : ℕ) (a : Fin r → ℤ) (n : Fin r → ℕ)
     (H : ∃ k : ℤ, ∀ x ∈ Ico k (k + 2 ^ r), ∃ i, x ≡ a i [ZMOD n i]) (x : ℤ) :
     ∃ i, x ≡ a i [ZMOD n i] := by

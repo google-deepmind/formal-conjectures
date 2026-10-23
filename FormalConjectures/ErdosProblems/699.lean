@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 699
@@ -22,10 +23,12 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/699](https://www.erdosproblems.com/699)
 -/
 
+@[expose] public section
+
 namespace Erdos699
 
 /-- Sylvester and Schur: for $1 \le i \le n/2$ there is a prime $p > i$ dividing `n.choose i`. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/AllenGrahamHart/FormalConjectures-Bench/blob/482dacc4d9335240f26218cdc62032da3100392b/formalizations/erdos699/Erdos699Formalization.lean#L7679"]
 theorem sylvester_schur (n i : ℕ) (hi : 1 ≤ i) (hi_half : i ≤ n / 2) :
     ∃ p : ℕ, p.Prime ∧ i < p ∧ p ∣ Nat.choose n i := by
   sorry
@@ -34,8 +37,8 @@ theorem sylvester_schur (n i : ℕ) (hi : 1 ≤ i) (hi_half : i ≤ n / 2) :
 **Erdős Problem 699.** Is it true that for every $1 \le i < j \le n / 2$ there exists a prime
 $p \ge i$ with $p \mid \gcd\big(\binom{n}{i}, \binom{n}{j}\big)$?
 -/
-@[category research open, AMS 11]
-theorem erdos_699 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_699 :
     ∀ n i j : ℕ,
       1 ≤ i →
       i < j →
@@ -45,8 +48,8 @@ theorem erdos_699 : answer(sorry) ↔
 
 /-- Erdős and Szekeres conjectured that, apart from a finite exceptional set of triples `(n, i, j)`,
 one can always take `p > i` in the prime divisor statement. -/
-@[category research open, AMS 11]
-theorem erdos_szekeres_strengthening : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_szekeres_strengthening :
     ∃ E : Finset (ℕ × ℕ × ℕ), ∀ n i j : ℕ,
       1 ≤ i →
       i < j →

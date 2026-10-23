@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 26
@@ -25,6 +26,8 @@ import FormalConjectures.Util.ProblemImports
   _Some of Erdős' unconventional problems in number theory, thirty-four years later_,
   arXiv:1908.00488 [math.NT] (2019)
 -/
+
+@[expose] public section
 
 namespace Erdos26
 
@@ -91,16 +94,16 @@ for some $a\in A$?
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research formally solved using lean4 at
-"https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos26.lean", AMS 11]
-theorem erdos_26 : answer(False) ↔ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos26.lean"]
+theorem erdos_26 : ¬ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
     ∃ k, IsBehrend (A · + k) := by
   sorry
 
 /--
 If we allow for $\sum_{a\in A} \frac{1}{a} < \infty$ then Rusza has found a counter-example.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos26.lean#L752"]
 theorem erdos_26.variants.rusza : ∃ A : ℕ → ℕ,
     StrictMono A ∧ ¬IsThick A ∧ ∀ k, ¬IsBehrend (A · + k) := by
   sorry
@@ -109,9 +112,12 @@ theorem erdos_26.variants.rusza : ∃ A : ℕ → ℕ,
 Tenenbaum asked the weaker variant where for every $\epsilon>0$ there is
 some $k=k(\epsilon)$ such that at least $1-\epsilon$ density of all integers have a
 divisor of the form $a+k$ for some $a\in A$.
+
+The DeepMind prover agent has found a formal disproof of this statement.
 -/
-@[category research open, AMS 11]
-theorem erdos_26.variants.tenenbaum : answer(sorry) ↔ ∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A →
+@[category research solved, question, AMS 11,
+formal_proof using formal_conjectures at "https://github.com/mo271/formal-conjectures/blob/09c54540aa51cb40dff73660c94a82e2631386f8/FormalConjectures/ErdosProblems/26.lean#L625"]
+theorem erdos_26.variants.tenenbaum : ¬ ∀ᵉ (A : ℕ → ℕ), StrictMono A → IsThick A →
     (∀ ε > (0 : ℝ), ∃ k, IsWeaklyBehrend (A · + k) ε) := by
   sorry
 

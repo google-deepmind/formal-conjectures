@@ -13,27 +13,32 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-
-open Filter Finset Real
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 887
 
-*Reference:* [erdosproblems.com/887](https://www.erdosproblems.com/887)
+*References:*
+* [erdosproblems.com/887](https://www.erdosproblems.com/887)
+* [ErRo97] Erdős, Paul and Rosenfeld, Moshe, The factor-difference set of integers. Acta Arith. (1997), 353--359.
 -/
 
+@[expose] public section
 
+open Filter Finset Real
 namespace Erdos887
 
+def erdos_887.parts.i.answer : ℕ := sorry
+
 /--
 Is there an absolute constant $K$ such that, for every $C > 0$, if $n$ is sufficiently large then
 $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{1}{4}})$.
 -/
-@[category research open, AMS 11]
-theorem erdos_887 : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
-    #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ answer(sorry) := by
+@[category research open, question value, AMS 11]
+theorem erdos_887.parts.i : ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
+    #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ erdos_887.parts.i.answer := by
   sorry
 
 /--
@@ -41,28 +46,36 @@ Is there an absolute constant $K$ such that, for every $C > 0$, if $n$ is suffic
 $n$ has at most $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{1}{4}})$.
 -/
 @[category research open, AMS 11]
-theorem erdos_887.variant_i : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
-    #{ d ∈ Ioo ⌊√n⌋ ⌈√n + C * n^((1 : ℝ) / 4)⌉ | d ∣ n } ≤ K := by
+theorem erdos_887.parts.ii : ∃ K, ∀ C > (0 : ℝ), ∀ᶠ n in atTop,
+    #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n } ≤ K := by
   sorry
 
 /--
-A question of Erdős and Rosenfeld, who proved that there are infinitely many $n$ with $4$ divisors
-in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
+A question of Erdős and Rosenfeld, who proved that there are infinitely many $n$ with (at least)
+$4$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + cn^{\frac{1}{4}})$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_887.variant_ii :
-    Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = 4)} := by
+theorem erdos_887.variants.rosenfeld_infinite : ∃ C > (0 : ℝ),
+    Infinite {n : ℕ | 4 ≤ #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n }} := by
   sorry
 
 /--
-Erdős and Rosenfeld, ask whether $4$ is the best possible $K$ for the infinitude of $n$
-with $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + n^{\frac{1}{4}})$.
--/
-@[category research open, AMS 11]
-theorem erdos_887.variant_iii :
-    IsGreatest
-      {K | Infinite {n : ℤ | (#{ d ∈ Ioo ⌊√n⌋ ⌈√n + n^((1 : ℝ) / 4)⌉ | d ∣ n } = K)}} 4 := by
-  sorry
+Erdős and Rosenfeld ask whether $4$ is the best possible $K$ for the infinitude of $n$
+with (at least) $K$ divisors in $(n^{\frac{1}{2}}, n^{\frac{1}{2}} + C n^{\frac{1}{4}})$, for some
+constant $C > 0$. The constant cannot be taken to be $1$. Distinct divisors $d > \sqrt{n}$ give
+distinct integers $d + n/d$, and a divisor in the interval has
+$2\sqrt{n} < d + n/d < 2\sqrt{n} + C^2$, so for $C = 1$ there is at most one such divisor.
 
+The answer is no. In a [forum post](https://www.erdosproblems.com/forum/thread/887#post-7374)
+(July 2026), m-czech showed that for $C = 31$ infinitely many $n$ have $5$ divisors in the
+interval. The construction is $n = (x^2 - 1)(x^2 - 4)(x^2 - 16)(x^2 - 49)$ with
+$z^2 = 56 x^2 + 65$.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/5cb725981b3ad137103ef908eb6ecff9e7ed9bdf/ErdosLean/Erdos887.lean#L538"]
+theorem erdos_887.variants.rosenfeld_4 :
+    ¬ IsGreatest {K | ∃ C > (0 : ℝ),
+      Infinite {n : ℕ | K ≤ #{ d ∈ Ioo ⌊√n⌋₊ ⌈√n + C * n^((1 : ℝ) / 4)⌉₊ | d ∣ n }}} 4 := by
+  sorry
 
 end Erdos887

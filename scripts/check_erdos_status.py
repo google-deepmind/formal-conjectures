@@ -5,6 +5,9 @@ Downloads the latest problems.yaml from teorth/erdosproblems and compares
 each problem's status against the @[category research open/solved] annotation
 on the main theorem in the corresponding .lean file.
 
+The upstream side is read from the `informal_status` and `formal_status` fields, not from the
+`status` string that joins them.
+
 Usage:
   python check_erdos_status.py               # Print mismatches as JSON
   python check_erdos_status.py --create-issues  # Also create GitHub issues
@@ -17,8 +20,6 @@ import subprocess
 import sys
 import urllib.request
 
-import yaml
-
 YAML_URL = (
     "https://raw.githubusercontent.com/teorth/erdosproblems/main/data/problems.yaml"
 )
@@ -28,64 +29,118 @@ ERDOS_DIR = os.path.join(
     "ErdosProblems",
 )
 
-# Matches the category annotation line immediately before a main theorem.
-# Captures the status word ("open" or "solved") and the problem number.
-# The main theorem is `erdos_{N}` possibly followed by a suffix like `_statement`,
-# but NOT containing a dot (which indicates a variant).
+# Matches the category annotation line immediately before any erdos theorem.
+# Captures the category and the problem number.
+# Note: 'formally solved' is no longer a valid category value.
 CATEGORY_THEN_THEOREM = re.compile(
-    r"@\[category research (open|solved|formally solved[^]]*),.*\]\s*\n"
-    r"theorem erdos_(\d+)\w*[\s:]",
+    r"@\[category research (open|solved).*\]\s*\n"
+    r"theorem erdos_(\d+)([\w.]*)\s",
     re.MULTILINE,
 )
 
-OPEN_STATES = {"open", "falsifiable", "verifiable"}
-SOLVED_STATES = {
-    "solved",
-    "proved",
-    "disproved",
+# Matches the formal_proof attribute (may appear on the same line as category or separate).
+# Captures the proof kind.
+FORMAL_PROOF_ATTR = re.compile(
+    r"formal_proof using (formal_conjectures|lean4|other_system) at",
+    re.MULTILINE,
+)
+
+# `informal_status.state` is the mathematical status, and these two sets are the whole of its
+# vocabulary. `formal_status.state` separately says whether a machine-checked proof exists.
+# Upstream also publishes the two joined into `status.state` ("proved (Lean)"), but that is a
+# product of two vocabularies and gains a value whenever either side does, so the code reads
+# the two fields instead of their combinations.
+#
+# The split below follows the definitions in the upstream CONTRIBUTING.md. Three of these
+# states name a problem that is still open: "decidable" is "both falsifiable and verifiable,
+# but not yet solved", and "not provable" and "not disprovable" are each "open in general",
+# with a model of set theory that settles the problem one way. "independent" is a resolution,
+# so it counts as solved.
+OPEN_STATES = {
+    "open",
+    "falsifiable",
+    "verifiable",
+    "decidable",
     "not provable",
     "not disprovable",
-    "independent",
-    "decidable",
 }
-FORMALLY_SOLVED_STATES = {
-    "solved (Lean)",
-    "proved (Lean)",
-    "disproved (Lean)",
-}
+SOLVED_STATES = {"solved", "proved", "disproved", "independent"}
+
+# Upstream states this value explicitly and never leaves it blank, and every other value
+# names a proof assistant. CONTRIBUTING.md reserves the right to add assistants, and 6
+# problems already carry an undocumented "formalized", so the code tests this one value
+# rather than a list that would skip a problem whenever upstream adds a name.
+UNFORMALIZED_STATE = "unformalized"
 
 
 def fetch_yaml():
+    # Imported here rather than at the top so the module can be imported without pyyaml,
+    # which the tests do and the script-test CI job does not install.
+    import yaml
+
     with urllib.request.urlopen(YAML_URL) as resp:
         return yaml.safe_load(resp.read())
 
 
-def yaml_status_to_category(state):
-    """Map a YAML status.state value to 'open', 'solved', 'formally solved', or None.
+def problem_status(problem):
+    """The (informal, formal) status states of a YAML problem.
 
-    Returns None for unrecognized states.
+    Each default claims the least. An absent, null or empty formal state records no
+    formalisation, so a settled problem degrades to 'solved' and the code does not invent
+    a proof. An absent informal state is not a status at all, so it falls into the
+    warn-and-skip path below and does not assert that the problem is open.
     """
-    if state in OPEN_STATES:
+    informal = (problem.get("informal_status") or {}).get("state")
+    formal = (problem.get("formal_status") or {}).get("state") or UNFORMALIZED_STATE
+    return informal, formal
+
+
+def yaml_status_to_category(informal_state, formal_state):
+    """Map a problem's YAML status states to 'open', 'solved', 'formally solved', or None.
+
+    A problem is 'formally solved' when it is settled and upstream records a formalisation.
+    An open problem stays open even when a Lean statement of it exists, which is how
+    `scan_lean_files` reads this repository: it upgrades a problem to 'formally solved' only
+    when the category is already 'solved'.
+
+    Returns None for an informal state this script does not know, which means "we cannot read
+    this problem", not "this problem agrees with us".
+    """
+    if informal_state in OPEN_STATES:
         return "open"
-    if state in FORMALLY_SOLVED_STATES:
-        return "formally solved"
-    if state in SOLVED_STATES:
+    if informal_state in SOLVED_STATES:
+        if formal_state != UNFORMALIZED_STATE:
+            return "formally solved"
         return "solved"
-    print(f"WARNING: unrecognized YAML status state: {state!r}", file=sys.stderr)
+    print(
+        f"WARNING: unrecognized YAML informal status state: {informal_state!r}",
+        file=sys.stderr,
+    )
     return None  # unrecognized — skip comparison
 
 
 def lean_category(cat):
-    """Normalize a captured category string to 'open', 'solved', or 'formally solved'."""
+    """Normalize a captured category string to 'open' or 'solved'."""
     if cat == "open":
         return "open"
-    if cat.startswith("formally solved"):
-        return "formally solved"
     return "solved"
 
 
+def is_variant(suffix):
+    """Check if a theorem name suffix indicates a variant (not a main part)."""
+    return ".variants." in suffix
+
+
 def scan_lean_files():
-    """Return dict mapping problem number (str) -> 'open', 'solved', or 'formally solved'."""
+    """Return dict mapping problem number (str) -> 'open', 'solved', or 'formally solved'.
+
+    For multi-part problems (no single `erdos_{N}` theorem), collects all
+    non-variant theorems. The problem is 'open' if any part is open,
+    'formally solved' if all parts are formally solved, and 'solved' otherwise.
+
+    A problem is 'formally solved' if its category is 'solved' and it has a
+    @[formal_proof ...] attribute.
+    """
     result = {}
     for fname in os.listdir(ERDOS_DIR):
         if not fname.endswith(".lean"):
@@ -96,12 +151,55 @@ def scan_lean_files():
         filepath = os.path.join(ERDOS_DIR, fname)
         with open(filepath) as f:
             content = f.read()
-        # Find the main theorem's category (first match for this problem number)
+
+        # Check if file has any formal_proof attribute
+        has_formal_proof = bool(FORMAL_PROOF_ATTR.search(content))
+
+        # Collect all non-variant theorem categories for this problem number
+        main_categories = []
+        has_exact_main = False
+        exact_main_cat = None
         for m in CATEGORY_THEN_THEOREM.finditer(content):
-            if m.group(2) == file_number:
-                result[file_number] = lean_category(m.group(1))
-                break
+            if m.group(2) != file_number:
+                continue
+            suffix = m.group(3)  # e.g. "", "_cycles", ".parts.i", ".variants.foo"
+            cat = lean_category(m.group(1))
+            # Upgrade to 'formally solved' if formal_proof attribute is present
+            if cat == "solved" and has_formal_proof:
+                cat = "formally solved"
+            if suffix == "" or suffix == ":":
+                # Exact match: `erdos_{N}` with no suffix
+                has_exact_main = True
+                exact_main_cat = cat
+            elif not is_variant(suffix):
+                main_categories.append(cat)
+
+        if has_exact_main:
+            # Single main theorem exists — use its category directly
+            result[file_number] = exact_main_cat
+        elif main_categories:
+            # Multi-part problem: open if any part is open
+            if "open" in main_categories:
+                result[file_number] = "open"
+            elif all(c == "formally solved" for c in main_categories):
+                result[file_number] = "formally solved"
+            else:
+                result[file_number] = "solved"
+
     return result
+
+
+def classifiable():
+    """Problems the YAML gives a status this script understands.
+
+    A problem missing from this set is not agreeing with us, it is one we cannot read, which
+    is a different thing and must not be treated as resolved.
+    """
+    return {
+        str(p["number"])
+        for p in fetch_yaml()
+        if yaml_status_to_category(*problem_status(p)) is not None
+    }
 
 
 def find_mismatches():
@@ -109,8 +207,7 @@ def find_mismatches():
     yaml_statuses = {}
     for p in problems:
         num = str(p["number"])
-        state = p.get("status", {}).get("state", "open")
-        cat = yaml_status_to_category(state)
+        cat = yaml_status_to_category(*problem_status(p))
         if cat is not None:
             yaml_statuses[num] = cat
 
@@ -156,6 +253,14 @@ def create_issues(mismatches):
             capture_output=True,
             text=True,
         )
+        if result.returncode != 0:
+            print(
+                f"Failed to check existing issues for Erdős Problem {num} "
+                f"(gh exit code {result.returncode}), skipping to avoid "
+                f"duplicates",
+                file=sys.stderr,
+            )
+            continue
         existing = json.loads(result.stdout) if result.stdout.strip() else []
         if existing:
             print(f"Issue already exists for Erdős Problem {num}, skipping")
@@ -163,6 +268,7 @@ def create_issues(mismatches):
 
         body = (
             f"The status of [Erdős problem {num}]"
+            f"(https://www.erdosproblems.com/{num}) "
             f"appears to have changed.\n\n"
             f"- **[This repo](http://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/{num}.lean)**: `{m['lean_status']}` "
             f"(in `FormalConjectures/ErdosProblems/{num}.lean`)\n"
@@ -179,13 +285,77 @@ def create_issues(mismatches):
         subprocess.run(cmd)
 
 
+ISSUE_TITLE_RE = re.compile(r"Erdős Problem (\d+): status mismatch")
+
+
+def issues_to_close(issues, still_open, known):
+    """Which open sync issues no longer describe a real mismatch.
+
+    Kept separate from the `gh` calls so it can be tested.
+    """
+    out = []
+    for issue in issues:
+        match = ISSUE_TITLE_RE.match(issue["title"])
+        if not match:
+            continue
+        num = match.group(1)
+        # Still mismatched, or a YAML state we cannot read. Either way, leave it alone:
+        # "we cannot tell" is not the same as "resolved".
+        if num in still_open or num not in known:
+            continue
+        out.append(issue["number"])
+    return out
+
+
+def close_resolved_issues(mismatches):
+    """Close open sync issues whose mismatch has gone away.
+
+    The script opens an issue when this repository and erdosproblems.com disagree, but
+    nothing ever closed them, so the label accumulates issues describing a state that no
+    longer holds. `mismatches` is everything still disagreeing, so any other open issue under
+    the label has been overtaken by a merge.
+    """
+    # `find_mismatches` keys problems by string, so compare as strings.
+    still_open = {str(m["number"]) for m in mismatches}
+    known = classifiable()
+    result = subprocess.run(
+        [
+            "gh", "issue", "list",
+            "--label", "erdos-status-sync",
+            "--state", "open",
+            "--limit", "500",
+            "--json", "number,title",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(
+            f"Failed to list sync issues (gh exit code {result.returncode}), "
+            f"not closing anything",
+            file=sys.stderr,
+        )
+        return
+    issues = json.loads(result.stdout) if result.stdout.strip() else []
+    for number in issues_to_close(issues, still_open, known):
+        subprocess.run([
+            "gh", "issue", "close", str(number),
+            "--comment",
+            "The repository and erdosproblems.com now agree on this problem, so there is "
+            "no mismatch left to act on. Closed automatically; reopen if that is wrong.",
+        ])
+
+
 def main():
     mismatches = find_mismatches()
     json.dump(mismatches, sys.stdout, indent=2)
     print()  # trailing newline
 
-    if "--create-issues" in sys.argv and mismatches:
-        create_issues(mismatches)
+    if "--create-issues" in sys.argv:
+        if mismatches:
+            create_issues(mismatches)
+        # Runs even when nothing mismatches, which is exactly when there is most to close.
+        close_resolved_issues(mismatches)
 
     return 1 if mismatches else 0
 

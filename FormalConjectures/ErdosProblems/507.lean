@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 507
@@ -31,17 +32,21 @@ import FormalConjectures.Util.ProblemImports
   Journal of the London Mathematical Society 2.3 (1981): 385-396.
 -/
 
+@[expose] public section
+
 open Asymptotics Filter Topology
 open scoped EuclideanGeometry
 
 namespace Erdos507
 
 /--
-The minimum area of a triangle determined by three distinct points in a set `S`.
+The minimum (unsigned) area of a triangle determined by three distinct points in a set `S`.
+Collinear triples count with area `0`. `EuclideanGeometry.triangle_area` is a signed area, so the
+absolute value is taken before the infimum.
 -/
 noncomputable def minTriangleArea (S : Finset ℝ²) : ℝ :=
-  sInf {EuclideanGeometry.triangle_area (t.points 0) (t.points 1) (t.points 2) |
-    (t : Affine.Triangle ℝ ℝ²) (_ : ∀ i, t.points i ∈ S)}
+  sInf {abs (EuclideanGeometry.triangle_area (p 0) (p 1) (p 2)) |
+    (p : Fin 3 → ℝ²) (_ : Function.Injective p) (_ : ∀ i, p i ∈ S)}
 
 /--
 $\alpha(n)$ is the supremum of `minTriangleArea S` over all sets `S` of $n$ points in the unit disk.
@@ -60,31 +65,35 @@ The "Barrier" function: n^(-7/6) used for the best upper bound [CPZ24].
 -/
 noncomputable def upperBarrier (n : ℕ) : ℝ := 1 / (n : ℝ) ^ ((7 : ℝ) / 6)
 
+def erdos_507.equivalent.answer : ℕ → ℝ := sorry
+
 /--
 Let $\alpha(n)$ be such that every set of $n$ points in the unit disk contains three points which
 determine a triangle of area at most $\alpha(n)$. Estimate $\alpha(n)$.
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem erdos_507.equivalent:
-    α ~[atTop] (answer(sorry) : ℕ → ℝ) := by
+    α ~[atTop] erdos_507.equivalent.answer := by
   sorry
+
+def erdos_507.lower.answer : ℕ → ℝ := sorry
 
 /--
 Estimate a lower bound for$\alpha(n)$.
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem erdos_507.lower:
-    let ans := (answer(sorry) : ℕ → ℝ)
-    (lowerBest =o[atTop] ans) ∧ (ans ≪ α) := by
+    (lowerBest =o[atTop] erdos_507.lower.answer) ∧ (erdos_507.lower.answer ≪ α) := by
   sorry
+
+def erdos_507.upper.answer : ℕ → ℝ := sorry
 
 /--
 Estimate an upper bound for$\alpha(n)$.
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem erdos_507.upper:
-    let ans := (answer(sorry) : ℕ → ℝ)
-    (α ≪ ans) ∧ (ans =o[atTop] upperBarrier) := by
+    (α ≪ erdos_507.upper.answer) ∧ (erdos_507.upper.answer =o[atTop] upperBarrier) := by
   sorry
 
 /--

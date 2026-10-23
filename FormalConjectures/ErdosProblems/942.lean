@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 942
 
 *Reference:* [erdosproblems.com/942](https://www.erdosproblems.com/942)
 -/
+
+@[expose] public section
 
 open Nat Filter Topology
 
@@ -35,8 +38,8 @@ def erdos_942.h (n : ℕ) : ℕ := ((Finset.Ico (n ^ 2) ((n + 1) ^ 2)).filter Po
 Is there some constant $c > 0$ such that $h(n) < (\log n)^{c + o(1)}$ and, for infinitely many $n$,
 $h(n) > (\log n)^{c - o(1)}$.
 -/
-@[category research open, AMS 11]
-theorem erdos_942 : answer(sorry) ↔ ∃ c > 0, ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
+@[category research open, question, AMS 11]
+theorem erdos_942 : ∃ c > 0, ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
     (∀ᶠ n in atTop, erdos_942.h n < (Real.log n) ^ (c + o n)) ∧
     {n | erdos_942.h n > (Real.log n) ^ (c - o n)}.Infinite := by
   sorry
@@ -44,7 +47,7 @@ theorem erdos_942 : answer(sorry) ↔ ∃ c > 0, ∃ (o : ℕ → ℝ), o =o[atT
 /--
 It is not hard to prove that $\limsup h(n) = \infty$.
 -/
-@[category graduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_942.variants.limsup :
     atTop.limsup (((fun (n : ℕ) ↦ (n : ℕ∞)) ∘ erdos_942.h)) = ⊤ := by
   sorry
@@ -53,7 +56,7 @@ theorem erdos_942.variants.limsup :
 It is not hard to prove that the density $\delta_l$ of integers for which $h(n) = l$ exists
 and satisfies $$\sum_l \delta_l = 1$$.
 -/
-@[category graduate, AMS 11]
+@[category textbook, AMS 11]
 theorem erdos_942.variants.density :
     ∃ δ : ℕ → ℝ, ∀ l, {n | erdos_942.h n = l}.HasDensity (δ l) ∧
     ∑' l, δ l = 1 := by

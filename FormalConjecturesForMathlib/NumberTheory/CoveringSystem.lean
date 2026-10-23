@@ -34,7 +34,8 @@ structure CoveringSystem (R : Type*) [CommSemiring R] where
   residue : ι → R
   moduli : ι → Ideal R
   unionCovers : ⋃ i, ({residue i} : Set R) + (moduli i : Set R) = @Set.univ R
-  non_trivial : ∀ i, moduli i ≠ ⊥
+  ne_bot : ∀ i, moduli i ≠ ⊥
+  ne_top : ∀ i, moduli i ≠ ⊤
 
 /--
 We say a covering system is strict if all the congruence relations that define it are take modulo

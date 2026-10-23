@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1060
 
 *Reference:* [erdosproblems.com/1060](https://www.erdosproblems.com/1060)
 -/
+
+@[expose] public section
 
 open Asymptotics Finset Filter Real
 open scoped ArithmeticFunction.sigma
@@ -37,6 +41,7 @@ theorem erdos_1060.parts.i :
     ∃ h : ℕ → ℝ,
       h =o[atTop] (fun n ↦ 1 / log (log n)) ∧ ∀ᶠ n in atTop, #{k ≤ n | k * σ 1 k = n} ≤ (n : ℝ) ^ h n := by sorry
 
+/-- Part (ii) of Erdős Problem 1060: bound on the number of $k \le n$ with $k \sigma_1(k) = n$. -/
 @[category research open, AMS 11]
 theorem erdos_1060.parts.ii :
     ∃ (C : ℝ), (fun n ↦ (#{k ≤ n | k * σ 1 k = n} : ℝ)) =O[atTop]

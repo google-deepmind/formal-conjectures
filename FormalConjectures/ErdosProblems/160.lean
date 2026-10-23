@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 160
 
 *Reference:* [erdosproblems.com/160](https://www.erdosproblems.com/160)
 -/
+
+@[expose] public section
 
 namespace Erdos160
 
@@ -48,26 +51,29 @@ theorem erdos_160.known_upper :
 
 open Real
 
+def erdos_160.better_upper.answer : ℕ → ℝ := sorry
+
 /--
 Estimate $h(n)$ by finding a better upper bound.
 -/
-@[category research open, AMS 5 51]
+@[category research open, question value, AMS 5 51]
 theorem erdos_160.better_upper :
-    let upper_bound : ℕ → ℝ := answer(sorry)
-    (fun n => (erdos_160.h n : ℝ)) =O[atTop] upper_bound ∧
-    upper_bound =o[atTop] fun n => (n : ℝ) ^ ((2 : ℝ) / 3) := by
+    (fun n => (erdos_160.h n : ℝ)) =O[atTop] erdos_160.better_upper.answer ∧
+    erdos_160.better_upper.answer =o[atTop] fun n => (n : ℝ) ^ ((2 : ℝ) / 3) := by
   sorry
+
+def erdos_160.better_lower.answer : ℕ → ℝ := sorry
 
 /--
 Estimate $h(n)$ by finding a better lower bound.
 -/
-@[category research open, AMS 5 51]
+@[category research open, question value, AMS 5 51]
 theorem erdos_160.better_lower:
-    let lower_bound : ℕ → ℝ := answer(sorry)
-    (lower_bound =O[atTop] fun n => (erdos_160.h n : ℝ)) ∧
+    (erdos_160.better_lower.answer =O[atTop] fun n => (erdos_160.h n : ℝ)) ∧
     ∀ c > 0,
     (fun (n : ℕ) => exp (c * log n ^ ((1 : ℝ) / 12))) =O[atTop] (fun n => (erdos_160.h n : ℝ)) →
-    ∀ c > 0, (fun (n : ℕ) => exp (c * log n ^ ((1 : ℝ) / 12))) =o[atTop] lower_bound := by
+    ∀ c > 0, (fun (n : ℕ) => exp (c * log n ^ ((1 : ℝ) / 12))) =o[atTop]
+      erdos_160.better_lower.answer := by
   sorry
 
 /--

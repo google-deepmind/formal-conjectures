@@ -13,14 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 817
 
-*Reference:* [erdosproblems.com/817](https://www.erdosproblems.com/817)
+*References:*
+- [erdosproblems.com/817](https://www.erdosproblems.com/817)
+- [Co26] Costa, S., *A negative answer to the Erdős–Sárközy question*.
+  [arXiv:2609.06303](https://arxiv.org/abs/2609.06303) (2026).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -45,11 +51,15 @@ contains no non-trivial $k$-term arithmetic progression. Estimate $g_k(n)$. In
 particular, is it true that
 $$
   g_3(n) \gg 3^n
-$$ -/
+$$
+
+The answer is no: Costa [Co26, Corollary 1.2] proved that $\liminf_{n \to \infty} g_3(n)/3^n = 0$.
+-/
 -- Formalisation note : only formalising the "In particular" part
-@[category research open, AMS 5 11]
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
+  "https://zenodo.org/records/22638810"]
 theorem erdos_817 :
-    answer(sorry) ↔ (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
+    ¬ (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
   sorry
 
 /-- A problem of Erdős and Sárközy who proved

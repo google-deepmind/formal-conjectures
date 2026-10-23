@@ -1,0 +1,207 @@
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.Prod
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
+
+/-!
+Dominating sets and domination numbers
+
+This file introduces dominating sets and related invariants.
+
+Main definitions
+
+* `SimpleGraph.IsDominating`   : A set of vertices that dominates all vertices.
+* `SimpleGraph.IsNDominatingSet` : A dominating set with `n` vertices.
+* `SimpleGraph.dominationNumber` : The domination number of a graph.
+* `SimpleGraph.IsTotalDominating` : A total dominating set.
+* `SimpleGraph.IsTotalNDominatingSet` : A total dominating set with `n` vertices.
+* `SimpleGraph.totalDominationNumber` : The total domination number.
+
+Future work should extend this file with connected, independent, and power
+variants as well as domination-related lemmas.
+-/
+
+namespace SimpleGraph
+
+variable {α : Type*} {G : SimpleGraph α} [Fintype α] [DecidableEq α]
+
+/-! ### Dominating sets -/
+
+/-- A set `D` is a dominating set for `G` if every vertex of `G` is either in
+`D` or adjacent to a vertex of `D`. -/
+def IsDominating (G : SimpleGraph α) (D : Set α) : Prop :=
+  ∀ v, v ∈ D ∨ ∃ w ∈ D, G.Adj v w
+
+/-- An `n`-dominating set is a dominating set with `n` vertices. -/
+@[mk_iff]
+structure IsNDominatingSet (n : ℕ) (D : Finset α) : Prop where
+  isDominating : G.IsDominating D
+  card_eq : D.card = n
+
+/-! ### Domination number -/
+
+/-- The domination number of a graph `G` is the minimum size of a dominating
+set. It is `0` if there are no vertices. -/
+noncomputable def dominationNumber (G : SimpleGraph α) : ℕ :=
+  sInf {n | ∃ D : Finset α, G.IsNDominatingSet n D}
+
+/-- Computable domination number via powerset enumeration. -/
+def computable_dom_num (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  (Finset.univ.powerset.filter (fun D : Finset α =>
+    ∀ v : α, v ∈ D ∨ ∃ w ∈ D, G.Adj v w)).inf'
+    ⟨Finset.univ, Finset.mem_filter.mpr
+      ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
+       fun v => Or.inl (Finset.mem_univ v)⟩⟩
+    Finset.card
+
+/-! ### Total domination -/
+
+/-- A set `D` is a total dominating set if every vertex is adjacent to a vertex
+in `D`. -/
+def IsTotalDominating (G : SimpleGraph α) (D : Set α) : Prop :=
+  ∀ v, ∃ w ∈ D, G.Adj v w
+
+/-- An `n`-total dominating set is a total dominating set with `n` vertices. -/
+@[mk_iff]
+structure IsTotalNDominatingSet (n : ℕ) (D : Finset α) : Prop where
+  isTotalDominating : G.IsTotalDominating D
+  card_eq : D.card = n
+
+/-- The total domination number of `G`. -/
+noncomputable def totalDominationNumber (G : SimpleGraph α) : ℕ :=
+  sInf {n | ∃ D : Finset α, G.IsTotalNDominatingSet n D}
+
+/-! ### Connected domination -/
+
+/-- A set is a connected dominating set if it is dominating and induces a
+connected subgraph. -/
+def IsConnectedDominating (G : SimpleGraph α) (D : Set α) : Prop :=
+  G.IsDominating D ∧ (G.induce D).Connected
+
+/-- The connected domination number of `G`. -/
+noncomputable def connectedDominationNumber (G : SimpleGraph α) : ℕ :=
+  sInf {n | ∃ D : Finset α, G.IsConnectedDominating (D : Set α) ∧ D.card = n}
+
+/-! ### Independent domination -/
+
+def IsIndepDominating (G : SimpleGraph α) (D : Set α) : Prop :=
+  G.IsIndepSet D ∧ G.IsDominating D
+
+@[mk_iff]
+structure IsNIndepDominatingSet (n : ℕ) (D : Finset α) : Prop where
+  isIndep : G.IsIndepSet D
+  isDominating : G.IsDominating D
+  card_eq : D.card = n
+
+noncomputable def indepDominationNumber (G : SimpleGraph α) : ℕ :=
+  sInf {n | ∃ D : Finset α, G.IsNIndepDominatingSet n D}
+
+/-! ### Vertex and edge covers -/
+
+/-- A set of edges is an edge cover if every vertex is incident to some edge in it. -/
+def IsEdgeCover (G : SimpleGraph α) (M : Set (Sym2 α)) : Prop :=
+  M ⊆ G.edgeSet ∧ ∀ v, ∃ e ∈ M, v ∈ e
+
+/-- The minimum edge cover number of `G`. -/
+noncomputable def edgeCoverNumber (G : SimpleGraph α) : ℕ :=
+  sInf {n | ∃ M : Finset (Sym2 α), G.IsEdgeCover (M : Set (Sym2 α)) ∧ M.card = n}
+
+/-! ### Edge domination -/
+
+def edgesAdjacent (e e' : Sym2 α) : Prop := ∃ v, v ∈ e ∧ v ∈ e'
+
+def IsEdgeDominating (G : SimpleGraph α) (M : Set (Sym2 α)) : Prop :=
+  ∀ ⦃e⦄, e ∈ G.edgeSet → e ∈ M ∨ ∃ e' ∈ M, edgesAdjacent e e'
+
+@[mk_iff]
+structure IsNEdgeDominatingSet (n : ℕ) (M : Finset (Sym2 α)) : Prop where
+  isDominating : G.IsEdgeDominating (M : Set (Sym2 α))
+  card_eq : M.card = n
+
+noncomputable def edgeDominationNumber (G : SimpleGraph α) : ℕ :=
+  sInf {n | ∃ M : Finset (Sym2 α), G.IsNEdgeDominatingSet n M}
+
+/-! ### Domination equivalence -/
+
+theorem dom_num_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
+    dominationNumber G = computable_dom_num G := by
+  unfold SimpleGraph.dominationNumber SimpleGraph.computable_dom_num
+  apply le_antisymm
+  · apply csInf_le ⟨0, fun _ _ => Nat.zero_le _⟩
+    simp only [Set.mem_ofPred_eq]
+    obtain ⟨D, hD_mem, hD_card⟩ := Finset.exists_mem_eq_inf' _ Finset.card
+    exact ⟨D, hD_card ▸ ⟨(Finset.mem_filter.mp hD_mem).2, rfl⟩⟩
+  · apply le_csInf
+    · exact ⟨Fintype.card α, Finset.univ,
+        ⟨fun v => Or.inl (Finset.mem_univ v), Finset.card_univ⟩⟩
+    · intro b hb
+      obtain ⟨D, hD⟩ := hb
+      rw [← hD.card_eq]
+      exact Finset.inf'_le _
+        (Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr (Finset.subset_univ _),
+          hD.isDominating⟩)
+
+/-! ### Domination number of Cartesian products -/
+
+omit [DecidableEq α] in
+/-- The set `Finset.univ` is a dominating set of any graph, so the set of sizes of dominating
+sets is nonempty and `dominationNumber` is attained by some dominating set. -/
+lemma exists_isNDominatingSet_dominationNumber
+    (G : SimpleGraph α) :
+    ∃ D : Finset α, G.IsNDominatingSet G.dominationNumber D := by
+  have hne : {n | ∃ D : Finset α, G.IsNDominatingSet n D}.Nonempty :=
+    ⟨_, Finset.univ, ⟨fun v => Or.inl (Finset.mem_univ v), rfl⟩⟩
+  exact Nat.sInf_mem hne
+
+omit [Fintype α] [DecidableEq α] in
+/-- If `D` is a dominating set of `G` with `n` elements then `γ(G) ≤ n`. -/
+lemma dominationNumber_le_of_isDominating
+    (G : SimpleGraph α) (D : Finset α) (hD : G.IsDominating D) :
+    G.dominationNumber ≤ D.card :=
+  Nat.sInf_le ⟨D, hD, rfl⟩
+
+/--
+**Projection bound: `γ(G) ≤ γ(G □ H)` whenever `H` has a vertex.**
+
+Projecting a dominating set of `G □ H` onto the first coordinate yields a dominating set of
+`G` of no larger size: a vertex `(v, b)` is dominated by some `(w, c)` with either `v = w`
+(so `v` lies in the projection) or `G.Adj v w` (so `v` is dominated by `w` in the projection).
+-/
+theorem dominationNumber_le_dominationNumber_boxProd
+    {β : Type*} [Fintype β] [DecidableEq β] [Nonempty β]
+    (G : SimpleGraph α) (H : SimpleGraph β) :
+    G.dominationNumber ≤ (G □ H).dominationNumber := by
+  obtain ⟨D, hD, hcard⟩ := exists_isNDominatingSet_dominationNumber (G □ H)
+  refine le_trans (dominationNumber_le_of_isDominating G (D.image Prod.fst) ?_) ?_
+  · intro v
+    obtain ⟨b⟩ := ‹Nonempty β›
+    rcases hD (v, b) with h | ⟨⟨w, c⟩, hw, hadj⟩
+    · exact Or.inl (Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp h)))
+    · rw [boxProd_adj] at hadj
+      rcases hadj with ⟨hvw, -⟩ | ⟨-, hvw⟩
+      · exact Or.inr ⟨w, Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp hw)),
+          hvw⟩
+      · obtain rfl : v = w := hvw
+        exact Or.inl (Finset.mem_coe.mpr (Finset.mem_image_of_mem Prod.fst (Finset.mem_coe.mp hw)))
+  · exact hcard ▸ Finset.card_image_le
+
+end SimpleGraph

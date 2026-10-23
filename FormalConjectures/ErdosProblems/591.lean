@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 591
@@ -23,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/591](https://www.erdosproblems.com/591)
 - [Sc10] Schipperus, Rene, Countable partition ordinals. Ann. Pure Appl. Logic (2010), 1195-1215.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal
 
@@ -36,8 +39,8 @@ edges of $K_α$ there is either a red $K_α$ or a blue $K_3$?
 
 This is true and was proved independently by Schipperus [Sc10] and Darby.
 -/
-@[category research solved, AMS 3]
-theorem erdos_591 : answer(True) ↔ OrdinalCardinalRamsey (ω ^ ω ^ 2) (ω ^ ω ^ 2) 3 := by
+@[category research solved, question, AMS 3]
+theorem erdos_591 : OrdinalCardinalRamsey (ω ^ ω ^ 2) (ω ^ ω ^ 2) 3 := by
   sorry
 
 end Erdos591

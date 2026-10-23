@@ -13,16 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Moser's Worm
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Moser%27s_worm_problem)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Moser%27s_worm_problem)
+- [Tao's optimization constant 13a](https://teorth.github.io/optimizationproblems/constants/13a.html)
 -/
 
+@[expose] public section
+
 open EuclideanGeometry MeasureTheory
+
+namespace MoserWorm
 
 /--
 The set of worms is the set of curves of length (at most) 1.
@@ -44,18 +51,34 @@ A disc of radius 1 / 2 is a worm cover.
 
 This follows by translating the center of the disc to the midpoint of the worm.
 -/
-@[category high_school, AMS 52]
+@[category textbook, AMS 52]
 theorem disc_mem_worm_covers : Metric.closedBall 0 0.5 ∈ WormCovers := by
-  sorry
+  refine ⟨measurableSet_closedBall, ?_⟩
+  rintro w ⟨f, hf, rfl⟩
+  refine ⟨LinearIsometryEquiv.refl ℝ _, f ⟨1/2, by constructor <;> norm_num⟩,
+    LinearEquiv.det_refl .., ?_⟩
+  rintro _ ⟨t, rfl⟩
+  refine ⟨f t - f ⟨1/2, by constructor <;> norm_num⟩, ?_, by simp⟩
+  simp only [Metric.mem_closedBall, dist_zero_right]
+  have h := hf.dist_le_mul t ⟨1/2, by constructor <;> norm_num⟩
+  simp only [NNReal.coe_one, one_mul] at h
+  rw [dist_eq_norm] at h
+  refine h.trans ?_
+  obtain ⟨t, ht1, ht2⟩ := t
+  simp only [Subtype.dist_eq, Real.dist_eq]
+  rw [abs_le]
+  constructor <;> linarith
+
+def mosers_worm_problem.answer : ENNReal := sorry
 
 /--
 **Moser's Worm Problem**
 What is the minimal area (or greatest lower bound on the area)
 of a shape that can cover every unit-length curve?
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem mosers_worm_problem :
-    IsGLB {v | ∃ X ∈ WormCovers, volume X = v} answer(sorry) := by
+    IsGLB {v | ∃ X ∈ WormCovers, volume X = v} mosers_worm_problem.answer := by
   sorry
 
 /--
@@ -70,14 +93,22 @@ theorem mosers_worm_problem_upper_bound :
     ∃ X ∈ WormCovers, volume X = 0.260437 := by
   sorry
 
+/-- **Moser's convex worm cover constant**: the infimal area of a convex set that covers every
+worm by a translation and a rotation. -/
+@[optimization_constant "13a"]
+noncomputable def convexWormCoverConstant : ENNReal :=
+  sInf {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v}
+
+def convex_mosers_worm_problem.answer : ENNReal := sorry
+
 /--
 **Convex Moser's Worm Problem**
 What is the minimal area (or greatest lower bound on the area)
 of a *convex* shape that can cover every unit-length curve?
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem convex_mosers_worm_problem :
-    IsGLB {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} answer(sorry) := by
+    convexWormCoverConstant = convex_mosers_worm_problem.answer := by
   sorry
 
 /--
@@ -86,7 +117,7 @@ This follows from the Blaschke selection theorem.
 -/
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_bound_attained :
-    ∃ bound, IsLeast {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} bound := by
+    ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = convexWormCoverConstant := by
   sorry
 
 /--
@@ -98,8 +129,7 @@ Acta Mathematica Sinica, 49 (4): 835–846, MR 2264090.
 -/
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_upper_bound :
-    ∃ X : Set ℝ², MeasurableSet X ∧ Convex ℝ X ∧ volume X = 0.270911861 ∧
-      ∀ w ∈ Worms, ∃ (e : ℝ² ≃ₗᵢ[ℝ] ℝ²) (v : ℝ²), e.toLinearEquiv.det = 1 ∧ w ⊆ (fun x => e x + v) '' X := by
+    ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = 0.270911861 := by
   sorry
 
 /--
@@ -113,5 +143,7 @@ International Journal of Computational Geometry & Applications,
 -/
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_lower_bound :
-    0.232239 ∈ lowerBounds {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} := by
+    0.232239 ≤ convexWormCoverConstant := by
   sorry
+
+end MoserWorm

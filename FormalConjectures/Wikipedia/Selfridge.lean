@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
+
 
 /-!
 # Selfridge's conjectures
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/John_Selfridge#Selfridge's_conjecture_about_primality_testing)
 -/
+
+@[expose] public section
 
 namespace Selfridge
 
@@ -76,11 +80,12 @@ and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
 
 This test does not work.
 -/
-@[category undergraduate, AMS 11]
+@[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.exist_pseudo_counterexample :
-    ∃ n : ℕ, IsPseudoSelfridge n ∧ ¬ n.Prime := by
+    ∃ n > 1, IsPseudoSelfridge n ∧ ¬ n.Prime := by
   use 6601
-  sorry
+  refine ⟨?_, ⟨?_, ?_, ?_, ?_⟩, ?_⟩ <;> norm_num [Nat.ModEq]
+  decide +kernel
 
 /--
 Selfridge's test variant:
@@ -89,10 +94,11 @@ and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
 
 The number $6601$ is a conterexample to this test satisfying $6601 ≡ 1 \mod 5$
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample :
     IsPseudoSelfridge 6601 ∧ ¬ (6601).Prime ∧ 6601 ≡ 1 [MOD 5] := by
-  sorry
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> norm_num [Nat.ModEq]
+  decide +kernel
 
 /--
 Selfridge's test variant:
@@ -101,16 +107,17 @@ and $F_{p-1} \equiv 0 \pmod{p}$, then $p$ is a prime number.
 
 The number $30889$ is a conterexample to this test satisfying $30889 ≡ - 1 \mod 5$
 -/
-@[category high_school, AMS 11]
+@[category textbook, AMS 11]
 theorem selfridge_conjecture.variants.pseudo_counterexample' :
     IsPseudoSelfridge 30889 ∧ ¬ (30889).Prime ∧ 30889 ≡ 4 [MOD 5] := by
-  sorry
+  refine ⟨⟨?_, ?_, ?_, ?_⟩, ?_, ?_⟩ <;> norm_num [Nat.ModEq]
+  decide +kernel
 
 end PrimalityTesting
 
 section FermatNumbers
 
-/-!
+/-
 # Selfridge's conjectures about Fermat numbers
 -/
 
@@ -139,7 +146,13 @@ A sufficient condition for this conjecture to hold is that there exists a Fermat
 @[category research solved, AMS 11]
 theorem selfridge_seq_conjecture.variants.sufficient_condition (n : ℕ) (hn : Prime n.fermatNumber)
     (hn' : n ≥ 5) : type_of% selfridge_seq_conjecture := by
-  sorry
+  intro hmono
+  have h1 : fermatFactors n = 1 := by simp [fermatFactors, hn.nat_prime]
+  have h5 : fermatFactors 5 = 2 := by
+    have hf : Nat.fermatNumber 5 = 641 * 6700417 := by norm_num [Nat.fermatNumber]
+    rw [fermatFactors, hf, Nat.primeFactors_mul (by norm_num) (by norm_num)]
+    norm_num [show Nat.Prime 641 by norm_num, show Nat.Prime 6700417 by norm_num]
+  have := hmono hn'; omega
 
 end FermatNumbers
 

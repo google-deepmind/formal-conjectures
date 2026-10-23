@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 757
@@ -25,30 +26,36 @@ import FormalConjectures.Util.ProblemImports
     four elements. J. Combin. Theory Ser. B (1995), 108-118.
 -/
 
+@[expose] public section
+
 open scoped Pointwise
 open Filter
 
 namespace Erdos757
 
-/-- We say that `c` is admissible if for any finit set `A` such that for any subset `B` of size `4`,
-`(B - B).card = 11`, there exists a Sidon subset `S` of size at least `c * A.ncard`. -/
+/-- We say that `c` is admissible if, for any finite set `A` such that every four-element
+subset `B` determines at least five positive differences, there exists a Sidon subset `S`
+of size at least `c * A.ncard`. The difference condition is equivalent to
+`11 ≤ (B - B).ncard`. -/
 def IsAdmissible (c : ℝ) : Prop := ∀ {A : Set ℝ}, A.Finite → (∀ B ⊆ A,
-  B.ncard = 4 → (B - B).ncard = 11) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)
+  B.ncard = 4 → 11 ≤ (B - B).ncard) → ∃ S ⊆ A, IsSidon S ∧ c * A.ncard ≤ (S.ncard : ℝ)
+
+def erdos_757.answer : ℝ := sorry
 
 /-- What is the supremum of the set of admissible numbers? -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_757 {A : Set ℝ} :
-    answer(sorry) = sSup {c | IsAdmissible c} := by
+    erdos_757.answer = sSup {c | IsAdmissible c} := by
   sorry
 
 /-- The supremum is strictly larger than `1 / 2`, which is proved in [GyLe95]. -/
 @[category research solved, AMS 5]
-theorem erdos_757.lowerBound {A : Set ℝ} : 1 / (2 : ℝ) < sSup {c | IsAdmissible c} := by
+theorem erdos_757.variants.lowerBound {A : Set ℝ} : 1 / (2 : ℝ) < sSup {c | IsAdmissible c} := by
   sorry
 
 /-- In [GyLe95], the authors also prove that the supremum is smaller than `3 / 5`. -/
 @[category research solved, AMS 5]
-theorem erdos_757.upperBound {A : Set ℝ} : sSup {c | IsAdmissible c} < 3 / (5 : ℝ) := by
+theorem erdos_757.variants.upperBound {A : Set ℝ} : sSup {c | IsAdmissible c} < 3 / (5 : ℝ) := by
   sorry
 
 end Erdos757

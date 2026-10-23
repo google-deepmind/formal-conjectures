@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-open Polynomial
+public import FormalConjecturesUtil
 
 /-!
 # Hypothesis H
@@ -23,6 +23,9 @@ open Polynomial
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Schinzel%27s_hypothesis_H)
 -/
 
+@[expose] public section
+
+open Polynomial
 namespace Schinzel
 
 /--

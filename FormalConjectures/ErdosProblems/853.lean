@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 853
 
 *Reference:* [erdosproblems.com/853](https://www.erdosproblems.com/853)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -40,7 +43,7 @@ integer $t$ such that $d_n = t$ has no solutions for $n \le x$.
 Is it true that $r(x) \to \infty$?
 -/
 @[category research open, AMS 11]
-theorem erdos_853 : atTop.Tendsto r atTop := by
+theorem erdos_853.parts.i : atTop.Tendsto r atTop := by
   sorry
 
 /--
@@ -49,7 +52,7 @@ integer $t$ such that $d_n = t$ has no solutions for $n \le x$.
 
 Is it true that $r(x) / \log x \to \infty$? -/
 @[category research open, AMS 11]
-theorem erdos_853_strong :
+theorem erdos_853.parts.ii :
     atTop.Tendsto (fun n ↦ r n / Real.log n) atTop := by
   sorry
 
