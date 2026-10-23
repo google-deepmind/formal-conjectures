@@ -14,13 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 530
 
 *Reference:* [Erdős Problem 530](https://www.erdosproblems.com/530)
 -/
+
+@[expose] public section
 
 namespace Erdos530
 
@@ -64,15 +68,14 @@ theorem erdos_530.parts.i :
   sorry
 
 /-- Is $\ell(N) \sim \sqrt N$? -/
-@[category research open, AMS 5 11]
-theorem erdos_530.parts.ii : answer(sorry) ↔
-    (fun N : ℕ => (ℓ N : ℝ)) ~[atTop] (fun N : ℕ => (N : ℝ).sqrt) := by
+@[category research open, question, AMS 5 11]
+theorem erdos_530.parts.ii : (fun N : ℕ => (ℓ N : ℝ)) ~[atTop] (fun N : ℕ => (N : ℝ).sqrt) := by
   sorry
 
 /-- Alon and Erdős asked whether every $N$-element finite set of reals can be written as the
 union of at most $(1 + o(1))\sqrt N$ Sidon sets. -/
-@[category research open, AMS 5 11]
-theorem erdos_530.variants.alon_erdos : answer(sorry) ↔ ∃ K : ℕ → ℕ,
+@[category research open, question, AMS 5 11]
+theorem erdos_530.variants.alon_erdos : ∃ K : ℕ → ℕ,
     (∀ N, UniformSidonCoverBound N (K N)) ∧
     ∀ ε > 0, ∀ᶠ N in atTop, (K N : ℝ) ≤ (1 + ε) * (N : ℝ).sqrt := by
   sorry
