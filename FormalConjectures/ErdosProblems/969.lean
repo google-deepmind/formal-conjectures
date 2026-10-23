@@ -21,7 +21,11 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 969
 
-*Reference:* [Erdős Problem 969](https://www.erdosproblems.com/969)
+*References:*
+- [Erdős Problem 969](https://www.erdosproblems.com/969)
+- Moser, L. and MacLeod, R. A., *The error term for the squarefree integers*.
+  Canadian Mathematical Bulletin **9** (1966), 303–306.
+  https://doi.org/10.4153/CMB-1966-039-4
 -/
 
 @[expose] public section
@@ -34,6 +38,11 @@ open Filter Asymptotics
 def squarefreeCounting (x : ℕ) : ℕ :=
   ((Finset.Icc 1 x).filter Squarefree).card
 
+/-- Exactly seven integers in $[1,10]$ are squarefree, including $1$. -/
+@[category test, AMS 11]
+theorem squarefreeCounting_ten : squarefreeCounting 10 = 7 := by
+  decide +kernel
+
 /-- The error term in `Q(x) = (6 / π^2) x + E(x)`. -/
 noncomputable def squarefreeCountingError (x : ℕ) : ℝ :=
   (squarefreeCounting x : ℝ) - 6 / Real.pi ^ 2 * x
@@ -42,13 +51,13 @@ def erdos_969.answer : ℕ → ℝ := sorry
 
 /-- Let $Q(x)$ count the squarefree integers in $[1,x]$, and define $E(x)$ by
 $$Q(x)=\frac{6}{\pi^2}x+E(x).$$
-Determine the order of magnitude of $E(x)$. The two estimates below explicitly say that the
-answer is both an asymptotic upper and lower bound for $|E(x)|$. -/
+Determine the order of magnitude of $E(x)$: an upper bound $E(x)=O(g(x))$ with a matching
+oscillation bound $E(x)\ne o(g(x))$. -/
 @[category research open, question value, AMS 11]
 theorem erdos_969 :
     let g := erdos_969.answer
     (fun x => |squarefreeCountingError x|) =O[atTop] g ∧
-      g =O[atTop] (fun x => |squarefreeCountingError x|) := by
+      ¬(fun x => |squarefreeCountingError x|) =o[atTop] g := by
   sorry
 
 /-- The prime number theorem implies $E(x)=o(\sqrt{x})$. -/
