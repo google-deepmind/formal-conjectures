@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of squares of nonacci numbers
@@ -24,6 +25,8 @@ Sum of squares of nonacci numbers (Fibonacci 9-step numbers).
 *References:*
 - [A107247](https://oeis.org/A107247)
 -/
+
+@[expose] public section
 
 namespace OeisA107247
 
@@ -84,12 +87,14 @@ theorem known_prime_and_semiprimes :
   (a 27).IsSemiprime := by
   sorry
 
+def conjecture.answer : ℕ := sorry
+
 /--
 Primes in this sequence include: $a(8) = 2$, which is next?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem conjecture :
-    answer(sorry) = a (sInf {n : ℕ | 8 < n ∧ (a n).Prime}) := by
+    conjecture.answer = a (sInf {n : ℕ | 8 < n ∧ (a n).Prime}) := by
   sorry
 
 end OeisA107247

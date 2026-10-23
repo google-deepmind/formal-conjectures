@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Characterization of Carmichael numbers via squarefree denominators $a(n)$
@@ -29,6 +30,8 @@ A composite number $n$ has squarefree $a(n)$ if and only if $n$ is a Carmichael 
 - [A027641](https://oeis.org/A027641)
 - [A027642](https://oeis.org/A027642)
 -/
+
+@[expose] public section
 
 namespace OeisA309132
 

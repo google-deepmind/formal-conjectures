@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 153
@@ -25,6 +27,8 @@ import FormalConjecturesUtil
  - [ESS94] Erdős, P. and Sárközy, A. and Sós, T., On Sum Sets of Sidon Sets, I. Journal of Number
     Theory (1994), 329-347.
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 open Filter Finset Nat
@@ -41,8 +45,8 @@ noncomputable def f (n : ℕ) : ℝ := ⨅ A : {A : Finset ℕ | A.card = n ∧ 
 /-- Let $A$ be a finite Sidon set and $A+A=\{s_1<\cdots<s_t\}$. Is it true that
 $$\frac{1}{t}\sum_{1\leq i<t}(s_{i+1}-s_i)^2 \to \infty$$
 as $\lvert A\rvert\to \infty$? -/
-@[category research open, AMS 5]
-theorem erdos_153 : answer(sorry) ↔ Tendsto f atTop atTop := by
+@[category research open, question, AMS 5]
+theorem erdos_153 : Tendsto f atTop atTop := by
   sorry
 
 end Erdos153

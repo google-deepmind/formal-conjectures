@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 401
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
   theory*. Monographies de L'Enseignement Mathematique (1980).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -43,8 +46,8 @@ statement.
 The answer is yes: Barreto and Leeham have used ChatGPT to provide a proof of the stated problem
 (in fact essentially the same construction as their solution to [729]).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos401.lean"]
-theorem erdos_401 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos401.lean"]
+theorem erdos_401 :
     ∃ f : ℕ → ℝ, Tendsto f atTop atTop ∧
       ∀ (r : ℕ) (hr : 1 ≤ r),
         {n : ℕ | ∃ a₁ a₂ : ℕ, 0 < a₁ ∧ 0 < a₂ ∧
