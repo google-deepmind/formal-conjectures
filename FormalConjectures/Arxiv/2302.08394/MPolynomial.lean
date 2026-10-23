@@ -76,7 +76,9 @@ noncomputable def mPolynomial (T : SimpleGraph V) (root : V) : MvPolynomial (Fin
 /-- Equality of the M-polynomials does not imply root-preserving isomorphism
 of finite rooted trees. The linked written witness has order 28; no universal
 minimum-order claim is included here. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/61546130766156dcbff217fc91cc33f79a4a1441/Proofs/BurghartFull.lean#L13"]
 theorem conjecture20 : ¬ ∀ (n m : ℕ) (T : SimpleGraph (Fin n))
     (U : SimpleGraph (Fin m)) (r : Fin n) (s : Fin m), T.IsTree → U.IsTree →
       mPolynomial T r = mPolynomial U s → ∃ e : T ≃g U, e r = s := by
