@@ -30,8 +30,6 @@ public import FormalConjecturesUtil
 * [GJKKO21] Glock, S., Joos, F., Kim, J., Kühn, D. and Osthus, D. (2021). "Resolution of the
   Oberwolfach problem." *J. Eur. Math. Soc.* 23, pp. 2511--2547.
   [arXiv:1806.04644](https://arxiv.org/abs/1806.04644)
-* [BH09] Bryant, D. and Horsley, D. (2009). "Decompositions of complete graphs into long
-  cycles." *Bull. London Math. Soc.* 41, pp. 927--934.
 -/
 
 @[expose] public section
@@ -88,12 +86,10 @@ theorem alspach_conjecture.variants.even (n : ℕ) (hn : Even n)
   sorry
 
 /--
-**Long cycles (Bryant–Horsley 2009).**
+A long-cycle corollary of the Alspach theorem (Bryant–Horsley–Pettersson 2014).
 
-The conjecture holds (for odd $n$) whenever all the prescribed lengths $m_i$ are at least
-$\lceil(n+4)/2\rceil$.
-
-*Reference:* [BH09].
+For odd $n$, the conjecture holds whenever all the prescribed lengths $m_i$ are at least
+$\lceil(n+4)/2\rceil$. This follows from [BHP14, Theorem 1].
 -/
 @[category research solved, AMS 5]
 theorem alspach_conjecture.variants.long_cycles (n : ℕ) (hn : Odd n) (m : Multiset ℕ)
