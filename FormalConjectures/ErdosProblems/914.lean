@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 914
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [KiKo08] Kierstead, H. A. and Kostochka, A. V., *A short proof of the Hajnal-Szemerédi theorem on
   equitable colouring*. Combin. Probab. Comput. (2008), 265-270.
 -/
+
+@[expose] public section
 
 namespace Erdos914
 

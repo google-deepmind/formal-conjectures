@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Fibonacci-Collatz sequence
@@ -25,6 +26,8 @@ if $\mathrm{fib}$ is odd then $a(n) = 3 \cdot \mathrm{fib} + 1$ else $a(n) = \ma
 *References:*
 - [A105801](https://oeis.org/A105801)
 -/
+
+@[expose] public section
 
 namespace OeisA105801
 

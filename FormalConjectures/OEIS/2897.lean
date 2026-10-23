@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Coefficient of $(xyz)^n$ in $((x+y)(y+z)(z+x))^n$ equaling $\binom{2n}{n}^3$
@@ -25,6 +26,8 @@ The sequence $a(n)$ is defined by $a(n) = \binom{2n}{n}^3$.
 - [A002897](https://oeis.org/A002897)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA2897
 

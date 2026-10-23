@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 519
@@ -35,6 +36,8 @@ import FormalConjecturesUtil
   Sci. Hungar. (1961), 185-188.
 -/
 
+@[expose] public section
+
 open scoped BigOperators
 
 namespace Erdos519
@@ -52,8 +55,8 @@ $$
 
 Atkinson proved that $c=1/6$ suffices.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos519.lean"]
-theorem erdos_519 : answer(True) ↔
+@[category research solved, question, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos519.lean"]
+theorem erdos_519 :
     ∃ c : ℝ, 0 < c ∧
       ∀ (n : ℕ) (hn : 0 < n) (z : Fin n → ℂ),
         z ⟨0, hn⟩ = 1 →
