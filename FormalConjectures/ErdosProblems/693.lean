@@ -55,6 +55,20 @@ def MaxGapAtMost (A : Finset ℕ) (B : ℝ) : Prop :=
 theorem divisorWindowSet_two_two : divisorWindowSet 2 2 = {3} := by
   rfl
 
+/-- The open divisor window $(3,6)$ produces exactly $4,5,8$ in $[3,9]$. -/
+@[category test, AMS 11]
+theorem divisorWindowSet_two_three : divisorWindowSet 2 3 = {4, 5, 8} := by
+  decide +kernel
+
+/-- The nontrivial gap from $5$ to $8$ has length $3$. -/
+@[category test, AMS 11]
+theorem maxGapAtMost_two_three :
+    MaxGapAtMost (divisorWindowSet 2 3) 3 ∧
+      ¬ MaxGapAtMost (divisorWindowSet 2 3) 2 := by
+  rw [divisorWindowSet_two_three]
+  norm_num [MaxGapAtMost, ConsecutiveIn]
+  rintro x y (rfl | rfl | rfl) (rfl | rfl | rfl) <;> norm_num
+
 /-- Let $k \geq 2$ and let $n$ be sufficiently large depending on $k$. Let
 $A = \{a_1 < a_2 < \cdots\}$ be the set of integers in $[n,n^k]$ which have a divisor in
 $(n,2n)$. Is $\max_i (a_{i+1} - a_i) \leq (\log n)^{O(1)}$?
