@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 488
 
 *Reference:* [erdosproblems.com/488](https://www.erdosproblems.com/488)
 -/
+
+@[expose] public section
 
 
 namespace Erdos488
@@ -31,8 +34,8 @@ $$B=\{ n \geq 1 : a\mid n\textrm{ for some }a\in A\}.$$
 Is it true that, for every $m>n\geq \max(A)$,
 $$\frac{\lvert B\cap [1,m]\rvert }{m}< 2\frac{\lvert B\cap [1,n]\rvert}{n}?$$
 -/
-@[category research open, AMS 5 11]
-theorem erdos_488 : answer(sorry) ↔ ∀ (A : Finset ℕ), A.Nonempty →
+@[category research open, question, AMS 5 11]
+theorem erdos_488 : ∀ (A : Finset ℕ), A.Nonempty →
     -- These are needed for the reasons outlined here: https://github.com/google-deepmind/formal-conjectures/pull/256
     0 ∉ A → 1 ∉ A →
     letI B := {n ≥ 1 | ∃ a ∈ A, a ∣ n}

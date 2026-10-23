@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Half-Fibonacci sequence
@@ -25,6 +26,8 @@ and $f(x) = x$ if $x$ is odd.
 
 *References:*
 - [A120424](https://oeis.org/A120424)-/
+
+@[expose] public section
 
 namespace OeisA120424
 

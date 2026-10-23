@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Erdős–Moser equation
@@ -31,6 +32,8 @@ $(k,m)=(1,3)$.
 * B. C. Kellner,
   [On stronger conjectures that imply the Erdős–Moser conjecture](https://arxiv.org/abs/1003.1646)
 -/
+
+@[expose] public section
 
 namespace ErdosMoser
 
