@@ -457,4 +457,177 @@ theorem entirelyComplete_floorSeq_iff_lt_two (t α : ℝ) (hα_lo : 1 < α) (hα
   sorry
 
 
+/-- **Distinct-value prefix sum.** `C a N` is the sum of the *distinct* values among
+`a 0, ..., a (N - 1)`, i.e. the "running reachable total" for subset sums over the SET
+`Set.range a` (duplicate values counted once, unlike a plain prefix sum). Auxiliary to
+`floorSeq_brown_all` / `eventuallyComplete_of_brown_of_base_window` below. -/
+noncomputable def C (a : ℕ → ℤ) (N : ℕ) : ℤ := ∑ x ∈ (Finset.range N).image a, x
+
+/-- **Unboundedness of the floor sequence.** For $t > 0$ and $\alpha > 1$, the sequence
+$n \mapsto \lfloor t\alpha^n\rfloor$ is unbounded above: for every $M$ there is an $n$ with
+$M \le \lfloor t\alpha^n\rfloor$. Textbook-level consequence of $\alpha^n \to \infty$, not itself
+a partial result on Erdős Problem 349; a building block for `isGoodPair_of_pos_of_lt_two` below. -/
+@[category textbook, AMS 11]
+theorem floorSeq_unbounded (t α : ℝ) (ht : 0 < t) (hα1 : 1 < α) :
+    ∀ M : ℤ, ∃ n : ℕ, M ≤ ⌊t * α ^ n⌋ := by
+  intro M
+  obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt (((M : ℝ) + 1) / t) hα1
+  refine ⟨n, Int.le_floor.mpr ?_⟩
+  have : (M : ℝ) + 1 < t * α ^ n := by
+    rw [div_lt_iff₀ ht] at hn; linarith
+  linarith
+
+/-- **Distinct-value prefix sum, toolbox: the empty prefix.** $C\ a\ 0 = 0$. Textbook-level;
+shared with `entirely_complete_of_doubling` above (same `C`), reused here for the small-$t$
+eventual-completeness engine. -/
+@[category textbook, AMS 11]
+theorem C_zero (a : ℕ → ℤ) : C a 0 = 0 := by simp [C]
+
+/-- **Distinct-value prefix sum, toolbox: the one-term prefix.** $C\ a\ 1 = a_0$.
+Textbook-level. -/
+@[category textbook, AMS 11]
+theorem C_one (a : ℕ → ℤ) : C a 1 = a 0 := by simp [C]
+
+/-- **Distinct-value prefix sum, toolbox: duplicates.** If $a_n$ already occurred among
+$a_0, \ldots, a_{n-1}$, then $C\ a\ (n+1) = C\ a\ n$. Textbook-level. -/
+@[category textbook, AMS 11]
+theorem C_succ_of_mem (a : ℕ → ℤ) {n : ℕ} (h : a n ∈ (Finset.range n).image a) :
+    C a (n + 1) = C a n := by
+  have himg : (Finset.range (n + 1)).image a = (Finset.range n).image a := by
+    rw [Finset.range_add_one, Finset.image_insert, Finset.insert_eq_self.mpr h]
+  simp only [C, himg]
+
+/-- **Distinct-value prefix sum, toolbox: genuinely new values.** If $a_n$ did not occur among
+$a_0, \ldots, a_{n-1}$, then $C\ a\ (n+1) = a_n + C\ a\ n$. Textbook-level. -/
+@[category textbook, AMS 11]
+theorem C_succ_of_notMem (a : ℕ → ℤ) {n : ℕ} (h : a n ∉ (Finset.range n).image a) :
+    C a (n + 1) = a n + C a n := by
+  have himg : (Finset.range (n + 1)).image a = insert (a n) ((Finset.range n).image a) := by
+    rw [Finset.range_add_one, Finset.image_insert]
+  simp only [C, himg, Finset.sum_insert h]
+
+/-- **Distinct-value prefix sum, toolbox: strict novelty.** A value strictly larger than all of
+its predecessors has not occurred before. Textbook-level. -/
+@[category textbook, AMS 11]
+theorem notMem_image_of_forall_lt (a : ℕ → ℤ) {n : ℕ} (h : ∀ j, j < n → a j < a n) :
+    a n ∉ (Finset.range n).image a := by
+  intro hmem
+  rw [Finset.mem_image] at hmem
+  obtain ⟨j, hj, hja⟩ := hmem
+  have := h j (Finset.mem_range.mp hj)
+  omega
+
+/-- **Distinct-value prefix sum, toolbox: domination.** Each nonnegative term is dominated by
+the prefix sum containing it: $a_n \le C\ a\ (n+1)$. Textbook-level. -/
+@[category textbook, AMS 11]
+theorem le_C_succ (a : ℕ → ℤ) (hnn : ∀ n, 0 ≤ a n) (n : ℕ) : a n ≤ C a (n + 1) := by
+  have hmem : a n ∈ (Finset.range (n + 1)).image a := by
+    rw [Finset.mem_image]; exact ⟨n, Finset.mem_range.mpr (Nat.lt_succ_self n), rfl⟩
+  have : a n ≤ ∑ x ∈ (Finset.range (n + 1)).image a, x := by
+    apply Finset.single_le_sum (f := id) _ hmem
+    intro x hx; rw [Finset.mem_image] at hx; obtain ⟨i, _, rfl⟩ := hx; exact hnn i
+  simpa [C] using this
+
+/-- **Abstract eventual-completeness engine from a base window.** Let $a : \mathbb{N} \to
+\mathbb{Z}$ be nonnegative, monotone and unbounded, and suppose there are a rank $N_0$ and a
+threshold $L$ such that: (i) *base window* — every $k$ with $L \le k \le C\ a\ N_0$ is already a
+subset sum of $\{a_0, \ldots, a_{N_0 - 1}\}$; (ii) *shifted Brown margin* — $a_n + L \le 1 + C\ a\
+n$ for every $n \ge N_0$. Then $\operatorname{range} a$ is additively complete in the eventual
+sense (in fact every $k \ge L$ is a finite subset sum).
+
+Textbook-level: a purely combinatorial merge-induction on monotone integer sequences, phrased
+abstractly (no $t, \alpha$); the research content of Erdős Problem 349 is in its instantiation
+`isGoodPair_of_pos_of_lt_two` below. Analogous in spirit to `entirely_complete_of_doubling` above,
+but concluding *eventual* (not *entire*) completeness from a *base-window* hypothesis instead of a
+doubling bound — the two are independent engines for different regimes.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category textbook, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/0ed837c90387a146fc88a23172074d01533f94ee/FormalConjectures/ErdosProblems/349.lean#L1134"]
+theorem eventuallyComplete_of_brown_of_base_window (a : ℕ → ℤ)
+    (hnn : ∀ n, 0 ≤ a n)
+    (hmono : Monotone a)
+    (hub : ∀ M : ℤ, ∃ n, M ≤ a n)
+    (N₀ : ℕ) (L : ℤ)
+    (hbase : ∀ k : ℤ, L ≤ k → k ≤ C a N₀ →
+      k ∈ subsetSums (((Finset.range N₀).image a : Finset ℤ) : Set ℤ))
+    (hbrown : ∀ n : ℕ, N₀ ≤ n → a n + L ≤ 1 + C a n) :
+    IsAddComplete (Set.range a) := by
+  sorry
+
+/-- **Universal Brown condition for $0 < t < 2$ on the strip $1 < \alpha < 3/2$.** The floor
+sequence $a_n = \lfloor t\alpha^n\rfloor$ satisfies $a_n \le 1 + C(n)$ for **every** $n$ (not
+merely eventually), where $C(n)$ sums the distinct values among $a_0, \ldots, a_{n-1}$. This is
+the `hbrown` hypothesis of `eventuallyComplete_of_brown_of_base_window` instantiated with the
+witnesses $N_0 = 0$, $L = 0$: since $C\ a\ 0 = 0$, no "eventually" is available and the bound must
+hold from $n = 0$ on.
+
+Proof sketch (two phases, split at the first index $n_0$ where the sequence jumps by at least
+$2$): while all increments are $\le 1$ (Phase 1), $t < 2$ gives $a_0 \le 1$ so the values form an
+initial segment and $2C(n+1) \ge a_n(a_n + 1)$ grows quadratically, giving the Brown condition
+directly. If a jump $a_{n_0 + 1} \ge a_{n_0} + 2$ occurs (Phase 2), it forces
+$t\alpha^{n_0}(\alpha - 1) > 1$, hence $t\alpha^{n_0} > 2$ (as $\alpha - 1 < 1/2$ from
+$\alpha < 3/2$), hence $a_{n_0} \ge 2$; the Phase 1 quadratic stock then starts the linear
+invariant $a_n + 1 \le 2C(n)$, which is self-propagating (all terms distinct past $n_0$, so
+$C(n+1) = a_n + C(n)$) and carries the Brown condition forward:
+$2a_{n+1} \le 3a_n + 2 < 2(1 + C(n+1))$.
+
+A **partial result** on the open Erdős Problem 349 and on the named open conjecture
+`complete_for_alpha_in_Ioo_one_to_goldenRatio` (restricted to $\alpha < 3/2$): this is the new
+mathematical content behind `isGoodPair_of_pos_of_lt_two` below.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/0ed837c90387a146fc88a23172074d01533f94ee/FormalConjectures/ErdosProblems/349.lean#L1244"]
+theorem floorSeq_brown_all (t α : ℝ) (ht : 0 < t) (ht2 : t < 2) (hα1 : 1 < α) (hα2 : α < 3 / 2) :
+    ∀ n : ℕ, ⌊t * α ^ n⌋ ≤ 1 + C (fun m : ℕ => ⌊t * α ^ m⌋) n := by
+  sorry
+
+/-- **Erdős Problem 349, eventual completeness for $0 < t < 2$ on the strip $1 < \alpha < 3/2$.**
+
+The pair $(t, \alpha)$ is good, i.e. $\lfloor t\alpha^n\rfloor$ is additively complete in the
+**eventual** sense. Instantiates `eventuallyComplete_of_brown_of_base_window` with the explicit
+base window $N_0 = 0$, $L = 0$: `hbase` is trivial ($C\ a\ 0 = 0$, so the only admissible $k$ is
+$0 = \sum_{i \in \emptyset} i$) and `hbrown` is `floorSeq_brown_all`.
+
+This extends the conclusion `IsGoodPair t α` to $0 < t < 1$, which `isGoodPair_of_one_le_lt_two`
+does not cover (it requires $1 \le t$). For such $t$ we have $a_0 = \lfloor t\rfloor = 0$, so the
+sequence begins with a prefix of zeros; the Brown condition `floorSeq_brown_all` is nevertheless
+established from $n = 0$ on. Together with `isGoodPair_of_one_le_lt_two` this gives `IsGoodPair t α`
+for every $0 < t < 2$ and $1 < \alpha < 3/2$.
+
+A **partial result** on the open Erdős Problem 349 and on the named open conjecture
+`complete_for_alpha_in_Ioo_one_to_goldenRatio` (restricted to $\alpha < 3/2$, eventual sense,
+$t < 2$); nothing is claimed for $t \ge 2$ on this route, and no "only if" direction is claimed.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline (it depends on two linked theorems). -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/0ed837c90387a146fc88a23172074d01533f94ee/FormalConjectures/ErdosProblems/349.lean#L1436"]
+theorem isGoodPair_of_pos_of_lt_two (t α : ℝ) (ht : 0 < t) (ht2 : t < 2)
+    (hα1 : 1 < α) (hα2 : α < 3 / 2) : IsGoodPair t α := by
+  sorry
+
+/-- **Erdős Problem 349, eventual completeness for $0 < t < 1$ on the strip $1 < \alpha < 3/2$.**
+
+Corollary of `isGoodPair_of_pos_of_lt_two`, specialized to $t < 1$: the sub-case left entirely out
+of scope by the *entire*-completeness results above (`isGoodPair_of_one_le_lt_two`,
+`entirelyComplete_floorSeq_iff_lt_two`), which all require $1 \le t$. A **partial result** on the
+open Erdős Problem 349 and on `complete_for_alpha_in_Ioo_one_to_goldenRatio` (restricted to
+$\alpha < 3/2$, eventual sense, $t < 1$).
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it depends
+on a linked theorem. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/0ed837c90387a146fc88a23172074d01533f94ee/FormalConjectures/ErdosProblems/349.lean#L1460"]
+theorem isGoodPair_of_pos_of_lt_one (t α : ℝ) (ht : 0 < t) (ht1 : t < 1)
+    (hα1 : 1 < α) (hα2 : α < 3 / 2) : IsGoodPair t α := by
+  sorry
+
 end Erdos349
