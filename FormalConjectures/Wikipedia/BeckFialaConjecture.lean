@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Beck–Fiala theorem and conjecture
@@ -47,6 +48,8 @@ produces vectors of Euclidean norm at most $1$.
   Random Structures & Algorithms **12** (1998), 351–360](https://doi.org/10.1002/(SICI)1098-2418(199807)12:4%3C351::AID-RSA3%3E3.0.CO;2-S)
 -/
 
+@[expose] public section
+
 namespace BeckFiala
 
 /--
@@ -63,7 +66,9 @@ only, whose discrepancy is $0 > 2 \cdot 0 - 1$.
 [J. Beck and T. Fiala, *"Integer-making" theorems*,
 Discrete Applied Mathematics **3** (1981), 1–8.]
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/Lemmy00/beck-fiala-lean/blob/19334973121b07e428c51e15b914e9ca4921fbb9/BeckFialaProof/BeckFiala.lean#L35"]
 theorem beck_fiala_theorem (n m t : ℕ) (ht : 1 ≤ t) (S : Fin m → Finset (Fin n))
     (hdeg : ∀ j, (Finset.univ.filter fun i => j ∈ S i).card ≤ t) :
     ∃ χ : Fin n → ℝ, (∀ j, χ j = 1 ∨ χ j = -1) ∧
