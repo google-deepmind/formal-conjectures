@@ -25,9 +25,9 @@ public import FormalConjecturesUtil
 * [Wikipedia](https://en.wikipedia.org/wiki/Petersen_graph#Petersen_coloring_conjecture)
 * [Ja88] Jaeger, F. (1988). "Nowhere-zero flow problems." In *Selected Topics in Graph
   Theory 3*, Academic Press, pp. 71--95.
-* [Mk16] Mkrtchyan, V. V. (2013). "A remark on the Petersen coloring conjecture of Jaeger."
+* [Mk13] Mkrtchyan, V. V. (2013). "A remark on the Petersen coloring conjecture of Jaeger."
   *Australas. J. Combin.* 56, pp. 145--151.
-* [HS15] Hägglund, J. and Steffen, E. (2014). "Petersen-colorings and some families of
+* [HS14] Hägglund, J. and Steffen, E. (2014). "Petersen-colorings and some families of
   snarks." *Ars Math. Contemp.* 7, pp. 161--173.
 * [Zh97] Zhang, C.-Q. (1997). *Integer flows and cycle covers of graphs.* Marcel Dekker.
 -/

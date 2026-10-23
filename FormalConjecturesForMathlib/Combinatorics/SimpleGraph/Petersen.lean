@@ -18,14 +18,14 @@ module
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.Fintype.Powerset
 
-@[expose] public section
-
 /-!
 # The Petersen graph
 
 The **Petersen graph** as the Kneser graph $K(5, 2)$: vertices are the $2$-element subsets of a
 $5$-element set, adjacent when disjoint. We record that it has $10$ vertices and is cubic.
 -/
+
+@[expose] public section
 
 namespace SimpleGraph
 
