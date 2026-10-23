@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Hall ratio conjecture (Harris 2019) — disproved
@@ -31,6 +33,8 @@ import FormalConjecturesUtil
   36, pp. 1678--1686. [arXiv:1811.11116](https://arxiv.org/abs/1811.11116)
 * [SU97] Scheinerman, E. R. and Ullman, D. H. (1997). *Fractional Graph Theory.* Wiley.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
