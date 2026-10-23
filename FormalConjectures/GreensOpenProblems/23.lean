@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 23
@@ -24,6 +25,8 @@ References:
 - [FrKlMo25] Frantzikinakis, N., O. Klurman, and J. Moreira. "Partition regularity of Pythagorean pairs." Forum of Mathematics, Pi 13. Cambridge University Press (2025).
 -/
 
+@[expose] public section
+
 namespace Green23
 
 /--
@@ -32,9 +35,8 @@ Suppose that $\mathbb{N}$ is finitely coloured. Are there $x,y$ of the same colo
 
 Solved in [FrKlMo25].
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem green_23 :
-  answer(True) ↔
     -- For every finite colouring of the natural numbers
     ∀ (k : ℕ) (c : ℕ → Fin k),
     -- there exist two numbers of the same colour whose squares sum to a square

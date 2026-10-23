@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 987
@@ -36,7 +37,10 @@ import FormalConjectures.Util.ProblemImports
 - [Li69] Lindström, B., An inequality for $B_2$-sequences. J. Combinatorial Theory (1969), 211-212.
 -/
 
+@[expose] public section
+
 open Filter Finset Asymptotics
+open scoped ExponentialSum
 
 namespace Erdos987
 
@@ -45,11 +49,6 @@ Here we use 0-indexing for generality and convenience, while in the original pro
 formulation 1-indexing was used. This change does not affect the meaning of the problem.
 In the description of the problem below we remain faithful to the original one.
 -/
-
-/-- Shorthand for the additive character $e(x) = e^{2 \pi i x}$.
-(Matches `Real.fourierChar` / `𝐞` from `Mathlib/Analysis/Complex/Circle.lean`, but
-kept as a local definition for readability across the many sites that use it.) -/
-noncomputable def e (x : ℝ) : ℂ := Complex.exp ((2 * Real.pi * x : ℝ) * Complex.I)
 
 /--
 For an infinite sequence $x_1, x_2, \ldots \in (0, 1)$, define
@@ -69,10 +68,10 @@ Erdős [Er64b] remarks it is "easy to see" that $\limsup_k \sup_n |\sum_{j \le n
 Erdős [Er65b] later found a "very easy" proof that $A_k \gg \log k$ for infinitely many $k$.
 Clunie [Cl67] proved that $A_k \gg k^{1/2}$ for infinitely many $k$, which implies the answer is
 yes (Tao independently found a proof). This is Problem 7.21 in [Ha74]. -/
-@[category research solved, AMS 11 40 42, formal_proof using lean4 at
+@[category research solved, question, AMS 11 40 42, formal_proof using lean4 at
 "https://github.com/Marti2203/formal-conjectures/blob/19c63d48acce3099c242b059518c49bf8dc0eab8/FormalConjectures/ErdosProblems/987.lean"]
 theorem erdos_987.parts.i :
-    answer(True) ↔ ∀ (x : ℕ → ℝ) (_ : ∀ j : ℕ, x j ∈ Set.Ioo (0 : ℝ) 1),
+    ∀ (x : ℕ → ℝ) (_ : ∀ j : ℕ, x j ∈ Set.Ioo (0 : ℝ) 1),
       atTop.limsup (fun k : ℕ => A x k) = ⊤ := by
   sorry
 
@@ -164,10 +163,10 @@ theorem erdos_987.variants.sqrt_log_upper_bound :
 $(x_n) \in (0, 1)$ and a bound $b(k) = o(k)$ with $A x k \le b k$ eventually. A corollary of
 `sqrt_log_upper_bound` (which gives a $\sqrt{k \log k}$ bound) plus the asymptotic
 $\sqrt{k \log k} = o(k)$. -/
-@[category research solved, AMS 11 40 42, formal_proof using lean4 at
+@[category research solved, question, AMS 11 40 42, formal_proof using lean4 at
 "https://github.com/Marti2203/formal-conjectures/blob/19c63d48acce3099c242b059518c49bf8dc0eab8/FormalConjectures/ErdosProblems/987.lean"]
 theorem erdos_987.parts.ii :
-    answer(True) ↔ ∃ (x : ℕ → ℝ) (_ : ∀ j : ℕ, x j ∈ Set.Ioo (0 : ℝ) 1) (b : ℕ → ℝ),
+    ∃ (x : ℕ → ℝ) (_ : ∀ j : ℕ, x j ∈ Set.Ioo (0 : ℝ) 1) (b : ℕ → ℝ),
       b =o[atTop] (fun k : ℕ => (k : ℝ)) ∧ ∀ᶠ k : ℕ in atTop, A x k ≤ ((b k : ℝ) : EReal) := by
   sorry
 

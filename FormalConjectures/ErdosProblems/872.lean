@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 872
@@ -32,6 +33,8 @@ value grows linearly, and the questions below concern the Prolonger-first quanti
 - [erdosproblems.com/872](https://www.erdosproblems.com/872)
 - [erdosproblems.com/forum/thread/872](https://www.erdosproblems.com/forum/thread/872)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -60,9 +63,9 @@ structure GamePos (n : ℕ) where
   claimed : Finset ℕ
   pool : Finset ℕ
 
-open scoped Classical in
 /-- The legal moves from a position: unclaimed elements whose insertion preserves primitiveness. -/
 def legalMoves {n : ℕ} (p : GamePos n) : Finset ℕ :=
+  open scoped Classical in
   p.pool.filter fun x => IsPrimitive n (insert x p.claimed)
 
 /-- Membership in `legalMoves`: a legal move is a pool element whose insertion preserves
@@ -154,22 +157,25 @@ The problem asks for asymptotic lower bounds on `L(n)`. Two specific targets are
 
 /-- Erdős Problem 872, part (i) (weak form): there exists a constant $\epsilon > 0$ such that the
 game length is at least $\epsilon \cdot n$ for all sufficiently large $n$. -/
-@[category research open, AMS 5 11 91]
-theorem erdos_872.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 5 11 91]
+theorem erdos_872.parts.i :
     ∃ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ ε * n := by
   sorry
 
 /-- Erdős Problem 872, part (ii) (strong form): for every $\epsilon > 0$, the game length is at
 least $(1-\epsilon) \cdot n / 2$ for all sufficiently large $n$.
 
-Status note: the forum thread (April-May 2026) records Shortener strategies giving
+The forum thread (April-May 2026) records Shortener strategies giving
 $L(n) \leq (23/48 + o(1)) \cdot n$ (described in the thread as accepted as correct, with a Lean
 formalization in progress) and a claimed $L(n) \leq 0.19 \cdot n$, either of which would answer this
-question negatively under the Prolonger-first convention. Neither is published, so the statement
-is recorded here as the original Erdős question. -/
-@[category research open, AMS 5 11 91]
-theorem erdos_872.parts.ii : answer(sorry) ↔
-    ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
+question negatively under the Prolonger-first convention.
+
+The $23/48$ upper bound for `C`-respecting plays (following old-bielefelder's strategy in the
+forum thread) was formalized in Lean 4 by Pommeret using Aristotle and Claude Opus 4.7, and
+completed to a proof for the full minimax game value `L n` by Ilia Pauzner using Gemini 4 Argon. -/
+@[category research solved, question, AMS 5 11 91, formal_proof using formal_conjectures at "https://github.com/ilpauzner/formal-conjectures/blob/d9299da16287d2347e375d9eec253eec455bae75/FormalConjectures/ErdosProblems/872.lean#L1180"]
+theorem erdos_872.parts.ii :
+    ¬ ∀ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ (1 - ε) * n / 2 := by
   sorry
 
 /-- A trivial upper bound: a play can claim at most the $n - 1$ elements of $\{2, \dots, n\}$, so
@@ -187,9 +193,17 @@ theorem erdos_872.trivial_upper_bound (n : ℕ) (hn : 2 ≤ n) :
 The set of primes in $\{2, \dots, n\}$ is a maximal primitive subset of size $\pi(n)$, and the forum
 thread asks whether this is the smallest possible for all $n \geq 2$. Equivalently: must every
 completed play of the saturation game, by both players and regardless of strategy, claim at least
-$\pi(n)$ elements? (Terminal positions of the game are exactly the maximal primitive subsets.) -/
-@[category research open, AMS 5 11 91]
-theorem erdos_872.variants.prime_question : answer(sorry) ↔
+$\pi(n)$ elements? (Terminal positions of the game are exactly the maximal primitive subsets.)
+
+The answer is yes. For each prime $q \le n$, let $q^k$ be the largest power of $q$ that is at most
+$n$. Maximality gives an element of $A$ comparable with $q^k$ under divisibility, and no element is
+comparable with two such prime powers, so $|A| \ge \pi(n)$. This argument was posted on the forum
+by old-bielefelder (May 2026); the statement also appears as Theorem 2.3(i) of
+[El23] S. Elsakhawy, *Independence and domination in divisor graph and mod-difference graphs*,
+J. Egyptian Math. Soc. 31 (2023). -/
+@[category research solved, question, AMS 5 11 91, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/5cb725981b3ad137103ef908eb6ecff9e7ed9bdf/ErdosLean/Erdos872.lean#L114"]
+theorem erdos_872.variants.prime_question :
     ∀ n ≥ 2, ∀ A : Finset ℕ, Maximal (IsPrimitive n) A →
       ((Finset.Icc 2 n).filter Nat.Prime).card ≤ A.card := by
   sorry

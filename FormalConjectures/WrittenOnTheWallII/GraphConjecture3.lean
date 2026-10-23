@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 3
@@ -22,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 
 universe u
@@ -40,8 +43,7 @@ tree satisfies `Ls(G) ≥ G.indepDominationNumber * MaxTemp(G)`, where `G.indepD
 domination number and `MaxTemp(G)` is `max_v deg(v)/(n(G) - deg(v))`.
 -/
 @[category research solved, AMS 5]
-theorem conjecture3 {G : SimpleGraph α} [DecidableEq α] [DecidableRel G.Adj] [Nontrivial α]
-    (h_conn : G.Connected) :
+theorem conjecture3 {G : SimpleGraph α} [DecidableRel G.Adj] [Nontrivial α] (h_conn : G.Connected) :
     G.indepDominationNumber * MaxTemp G ≤ Ls G := by
   sorry
 

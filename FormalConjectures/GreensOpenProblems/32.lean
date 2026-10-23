@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 32
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Sh20] Shakan, George. "A Large Gap in a Dilate of a Set." SIAM Journal on Discrete Mathematics
   34.4 (2020): 2553-2555.
 -/
+
+@[expose] public section
 
 open Asymptotics Filter
 open scoped Pointwise
@@ -79,9 +82,9 @@ def HasLargeGapDilate (ω : ℕ → ℝ) : Prop :=
 Let $p$ be a prime and let $A \subset \mathbb{Z}/p\mathbb{Z}$ be a set of size $\lfloor \sqrt{p} \rfloor$.
 Is there a dilate of $A$ containing a gap of length $100\sqrt{p}$?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_32 :
-    answer(sorry) ↔ HasLargeGapDilate (fun p ↦ Real.sqrt p) := by
+    HasLargeGapDilate (fun p ↦ Real.sqrt p) := by
   sorry
 
 /-- [Sh20, Theorem 1] implies a gap of at least $\lfloor 2p/|A| - 2 \rfloor$. -/
@@ -116,17 +119,20 @@ theorem green_32.variants.szemeredi_regime :
 /--
 In the regime $\omega(p) \le c \log p$, this is basically Dirichlet's lower bound for the size of
 Bohr sets [Gr24].
+
+The lower bound $101 \le \omega(p)$ makes the set size $\lfloor \omega(p) \rfloor$ exceed $100$.
+With only $100 < \omega(p)$, a function with $100 < \omega(p) < 101$ asks for sets of size $100$
+with a gap of length $p - 1$ in some dilate, which is impossible.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Green32_green_32_variants_dirichlet_regime.lean#L260"]
 theorem green_32.variants.dirichlet_regime :
-    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 100 < ω p ∧ ω p ≤ c * Real.log p) →
+    ∃ c > 0, ∀ ω : ℕ → ℝ, (∀ᶠ p in atTop, 101 ≤ ω p ∧ ω p ≤ c * Real.log p) →
       HasLargeGapDilate ω := by
   sorry
 
 /-- Even what happens in the regime $\omega(p) \sim 10 \log p$ is unclear [Gr24]. -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_32.variants.log_regime :
-    answer(sorry) ↔
     (∀ ω : ℕ → ℝ, ω ~[atTop] (fun p ↦ 10 * Real.log p) →
       HasLargeGapDilate ω) := by
   sorry

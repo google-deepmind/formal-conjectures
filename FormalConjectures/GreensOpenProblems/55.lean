@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 55
@@ -28,6 +30,8 @@ import FormalConjectures.Util.ProblemImports
 - [GTZ12] Green, Ben, Terence Tao, and Tamar Ziegler. "An inverse theorem for the Gowers $U^{s+1}[N]$-norm."
   Annals of Mathematics (2012): 1231-1372.
 -/
+
+@[expose] public section
 
 namespace Green55
 
@@ -46,17 +50,21 @@ noncomputable def boxNorm4 {G : Type*} [Fintype G] (g : G × G → ℂ) : ℝ :=
     g (x₁, y₁) * star (g (x₁, y₂)) * star (g (x₂, y₁)) * g (x₂, y₂)).re
 
 /--
+The diagonal-direction inverse question [Gr24, Problem 55; Au14, §1.3].
+
 Let $p$ be an odd prime and suppose that $f : \mathbb{F}_p^n \times \mathbb{F}_p^n \to \mathbb{C}$
 is a function bounded pointwise by 1. Suppose that
 $\mathbb{E}_h \lVert \Delta_{(h,h)} f \rVert_{\square}^4 \geq \delta$.
 
-Does $f$ correlate with a function of the form $a(x)b(y)c(x+y)(-1)^{q(x,y)}$?
+Does $f$ correlate with a function of the form
+$a(x)b(y)c(x-y)e_p(B(x,y))$, where $B$ is bilinear and
+$e_p(t) = \exp(2\pi i t/p)$?
 
 NOTE: here "correlate" means that the inner product is at least $C(\delta) > 0$, see [GTZ12, Conjecture 1.2].
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_55 :
-    answer(sorry) ↔ ∀ (p : ℕ) [Fact p.Prime] (hp : p ≠ 2), ∃ C : ℝ → ℝ, (∀ δ > 0, 0 < C δ) ∧
+    ∀ (p : ℕ) [Fact p.Prime] (hp : p ≠ 2), ∃ C : ℝ → ℝ, (∀ δ > 0, 0 < C δ) ∧
       ∀ (δ : ℝ) (hδ : 0 < δ) (n : ℕ)
 
       -- Edge case: avoid the trivial truth  $|f(0,0)| \leq 1$ if n = 0 (single point domain)
@@ -71,14 +79,14 @@ theorem green_55 :
       (hδ_le : δ ≤ 1)
 
       (h_bound : (1 / (p^n : ℝ)) * ∑ h : 𝔽ₚⁿ, boxNorm4 (multiplicativeDerivative (h, h) f) ≥ δ),
-      ∃ (a b c : 𝔽ₚⁿ → ℂ) (q : 𝔽ₚⁿ × 𝔽ₚⁿ → ℤ),
+      ∃ (a b c : 𝔽ₚⁿ → ℂ) (B : 𝔽ₚⁿ →ₗ[ZMod p] 𝔽ₚⁿ →ₗ[ZMod p] ZMod p),
 
         -- Common assumption for inverse Gowers norm theorems, prevents trivial solutions by
         -- arbitrarily scaling one of the functions (and thus the correlation).
         (∀ x, ‖a x‖ ≤ 1) ∧ (∀ x, ‖b x‖ ≤ 1) ∧ (∀ x, ‖c x‖ ≤ 1) ∧
 
         ‖(1 / (p^(2*n) : ℝ)) * ∑ x : 𝔽ₚⁿ, ∑ y : 𝔽ₚⁿ,
-          f (x, y) * star (a x * b y * c (x + y) * (-1 : ℂ) ^ q (x, y))‖ ≥ C δ := by
+          f (x, y) * star (a x * b y * c (x - y) * ZMod.stdAddChar (B x y))‖ ≥ C δ := by
   sorry
 
 end Green55

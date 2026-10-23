@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1084
 
-*Reference:* [erdosproblems.com/1084](https://www.erdosproblems.com/1084)
+*References:*
+- [erdosproblems.com/1084](https://www.erdosproblems.com/1084)
+- [Ha74b] Harborth, Heiko, Lösung zu Problem 664A. Elem. Math. (1974), 14--15.
 
 Let `f_2(n)` be the maximum number of pairs of points at distance exactly `1`
 among any set of `n` points in `ℝ²`, under the condition that all pairwise
@@ -29,6 +32,8 @@ Estimate the growth of `f_2(n)`.
 
 Status: open.
 -/
+
+@[expose] public section
 
 open Finset Filter Metric Real
 open scoped EuclideanGeometry
@@ -59,11 +64,12 @@ theorem erdos_1084.variants.upper_d2 : ∃ c > (0 : ℝ), ∀ n > 0, f 2 n < 3 *
   sorry
 
 /-- Erdős conjectured that the triangular lattice is best possible in 2D, in particular that
-$f_2(3n^2 + 3n + 1) < 9n^2 + 3n$.
+$f_2(3n^2 + 3n + 1) = 9n^2 + 3n$. Harborth [Ha74b] proved this, and more generally
+$f_2(n) = \lfloor 3n - \sqrt{12n - 3} \rfloor$ for all $n \geq 2$.
 
 Note: in [Er75f] is read $9n^2 + 6n$, but this seems to be a typo.
 -/
-@[category research open, AMS 52]
+@[category research solved, AMS 52]
 theorem erdos_1084.variants.triangular_optimal_d2 : f 2 (3 * n ^ 2 + 3 * n + 1) = 9 * n ^ 2 + 3 * n := by
   sorry
 

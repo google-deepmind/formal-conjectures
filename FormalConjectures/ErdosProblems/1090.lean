@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1090
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Er75f] Erdős, Paul, *On some problems of elementary and combinatorial geometry*. Ann. Mat. Pura Appl. (4) (1975), 99-108.
 -/
 
+@[expose] public section
+
 namespace Erdos1090
 
 /--
@@ -31,8 +34,8 @@ Let $k\geq 3$. Does there exist a finite set $A\subset \mathbb{R}^2$ such that, 
 
 Erdős [Er75f] says Graham and Selfridge proved the answer is yes when $k=3$. Hunter has observed that, for sufficiently large $n$, a generic projection of $[k]^n$ into $\mathbb{R}^2$ has this property, by the Hales-Jewett theorem.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1090.lean"]
-theorem erdos_1090 : answer(True) ↔ ∀ (k : ℕ), ∀ (hk : 3 ≤ k),
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1090.lean"]
+theorem erdos_1090 : ∀ (k : ℕ), ∀ (hk : 3 ≤ k),
     ∃ (A : Finset (Fin 2 → ℝ)), ∀ (C : A → Fin 2),
       ∃ (S : Finset (Fin 2 → ℝ)), ∃ (hSA : S ⊆ A),
         Collinear ℝ (S : Set (Fin 2 → ℝ)) ∧ S.card ≥ k ∧

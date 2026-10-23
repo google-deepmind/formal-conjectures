@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 226
@@ -31,6 +32,8 @@ import FormalConjectures.Util.ProblemImports
   (1974), 155--180.
 -/
 
+@[expose] public section
+
 namespace Erdos226
 
 /-- A real function preserves rationality. -/
@@ -43,9 +46,9 @@ Is there an entire non-linear function $f$ such that, for all $x\in\mathbb{R}$, 
 Barth and Schneider [BaSc70] proved the stronger result for countable dense subsets of
 $\mathbb{R}$.
 -/
-@[category research solved, AMS 30,
+@[category research solved, question, AMS 30,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos226.lean"]
-theorem erdos_226 : answer(True) ↔
+theorem erdos_226 :
     ∃ F : ℂ → ℂ, Differentiable ℂ F ∧ (∀ x : ℝ, (F x).im = 0) ∧
       (∀ g : AffineMap ℝ ℝ ℝ, (fun x : ℝ => (F x).re) ≠ g) ∧
       PreservesRationality (fun x : ℝ => (F x).re) := by

@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 56
 
 *Reference:* [erdosproblems.com/56](https://www.erdosproblems.com/56)
 -/
+
+@[expose] public section
+
 open scoped Finset
 namespace Erdos56
 
@@ -35,7 +39,7 @@ def WeaklyDivisible (k : ℕ) (A : Finset ℕ) : Prop :=
 lemma weaklyDivisible_empty (k : ℕ): WeaklyDivisible k {} := by
   simp [WeaklyDivisible]
 
-/-- A singleton is `k`-weakly divisble if `k ≠ 0`. -/
+/-- A singleton is `k`-weakly divisible if `k ≠ 0`. -/
 @[category API, AMS 11]
 lemma weaklyDivisible_singleton {k : ℕ} (hk : k ≠ 0) (l : ℕ) : WeaklyDivisible k {l} := by
   simp [WeaklyDivisible, hk]
@@ -144,8 +148,8 @@ relatively prime. An example is the set of all multiples of the first $k$ primes
 Is this the largest such set?  To avoid trivial counterexamples, we must insist that $N$ be at
 least the $k$th prime.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos56.lean"]
-theorem erdos_56 : answer(False) ↔ ∀ᵉ (k > 0) (N ≥ (k-1).nth Nat.Prime),
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos56.lean"]
+theorem erdos_56 : ¬ ∀ᵉ (k > 0) (N ≥ (k-1).nth Nat.Prime),
     (MaxWeaklyDivisible N k = (FirstPrimesMultiples N k).card) := by
   sorry
 

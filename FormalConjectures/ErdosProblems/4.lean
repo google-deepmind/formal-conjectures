@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 4
 
 *Reference:* [erdosproblems.com/4](https://www.erdosproblems.com/4)
 -/
+
+@[expose] public section
 
 open Real
 
@@ -36,8 +39,8 @@ $$
   p_{n + 1} - p_n > C \frac{\log\log n\log\log\log\log n}{(\log\log\log n) ^ 2}\log n
 $$
 -/
-@[category research solved, AMS 11]
-theorem erdos_4 : answer(True) ↔ (∀ C > 0, Erdos4For C) := by
+@[category research solved, question, AMS 11]
+theorem erdos_4 : (∀ C > 0, Erdos4For C) := by
   sorry
 
 /-- Rankin's theorem: there exists a positive constant $C$ such that `Erdos4For C` holds. -/

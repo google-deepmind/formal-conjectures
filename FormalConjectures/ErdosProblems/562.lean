@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 562
 
 *Reference:* [erdosproblems.com/562](https://www.erdosproblems.com/562)
 -/
+
+@[expose] public section
 
 open Combinatorics Filter Real
 open scoped Asymptotics
@@ -35,8 +39,8 @@ Prove that, for $r \ge 3$,
 $$ \log_{r-1} R_r(n) \asymp_r n, $$
 where $\log_{r-1}$ denotes the $(r-1)$-fold iterated logarithm.
 -/
-@[category research open, AMS 5]
-theorem erdos_562 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_562 :
     ∀ r ≥ 3, (fun n ↦ log^[r - 1] (hypergraphRamsey r n)) =Θ[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 

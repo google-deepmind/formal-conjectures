@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 194
@@ -23,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/194](https://www.erdosproblems.com/194)
 - [ABJ11] Ardal, H. and Brown, T. and Jungić, V., Chaotic orderings of the rationals and reals. Amer. Math. Monthly (2011), 921-925.
 -/
+
+@[expose] public section
 
 namespace Erdos194
 
@@ -33,10 +36,10 @@ progression?
 
 The answer is no, even for $k=3$, as shown by Ardal, Brown, and Jungić [ABJ11].
 --/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://gist.githubusercontent.com/ster-oc/ffe9e4fa1b813111f40c0e417bbe8be0/raw/6f748a76e55d47e24ca319a9c00fd20ab79422bb/Erdos194.lean"]
 theorem erdos_194 :
-  answer(False) ↔ ∀ k ≥ 3, ∀ r : ℝ → ℝ → Prop, IsStrictTotalOrder ℝ r →
+  ¬ ∀ k ≥ 3, ∀ r : ℝ → ℝ → Prop, IsStrictTotalOrder ℝ r →
     ∃ s : List ℝ, s.IsAPOfLength k ∧ (s.Pairwise r ∨ s.Pairwise (flip r)) := by
   sorry
 

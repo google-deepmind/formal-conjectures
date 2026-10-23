@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 58
@@ -35,6 +36,8 @@ This graph $G$ has $n = 79$ vertices and satisfies:
 - $\lceil b(G) / l_{\mathrm{avg}}(G) \rceil \ge 7 > 6 \ge f(G)$
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture58
 
 open SimpleGraph Finset
@@ -54,10 +57,10 @@ $\lceil b/l_{\mathrm{avg}} \rceil \ge 7 > 6 \ge f(G)$.
 The counterexample has been found by Moritz Firsching and Goran Žužić using an
 experimental pipeline.
 -/
-@[category research solved, AMS 5, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/4bd72a06842a10e1b8d7bb0fd6b1ef5e6bd20210/FormalConjectures/WrittenOnTheWallII/GraphConjecture58.lean#L772"]
-theorem conjecture58 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+theorem conjecture58 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_hG : G.Connected),
       Nat.ceil (G.b / G.l_avg) ≤ G.largestInducedForestSize := by
   sorry

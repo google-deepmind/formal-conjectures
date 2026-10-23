@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
+
 
 /-!
 # Lychrel numbers in base 10
@@ -33,6 +35,8 @@ The smallest widely studied open case is `196`.
 * [OEIS A023108](https://oeis.org/A023108)
 * [OEIS A023109](https://oeis.org/A023109)
 -/
+
+@[expose] public section
 
 namespace LychrelNumbers
 
@@ -66,16 +70,16 @@ def IsLychrel10 (n : ℕ) : Prop :=
 
 Equivalently, every positive integer eventually becomes a palindrome under the Lychrel iteration.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem no_lychrel_numbers_base10 :
-    answer(sorry) ↔ ∀ n : ℕ, 0 < n → ¬ IsLychrel10 n := by
+    ∀ n : ℕ, 0 < n → ¬ IsLychrel10 n := by
   sorry
 
 /--
 The first widely studied open case: whether `196` is a base-10 Lychrel number.
 -/
-@[category research open, AMS 11]
-theorem isLychrel10_196 : answer(sorry) ↔ IsLychrel10 196 := by
+@[category research open, question, AMS 11]
+theorem isLychrel10_196 : IsLychrel10 196 := by
   sorry
 
 /-- An equivalent formulation of `no_lychrel_numbers_base10`. -/
@@ -98,23 +102,23 @@ theorem eventually_palindrome_base10 :
 /-- Sanity check: digit reversal of `120` is `21`. -/
 @[category test, AMS 11]
 theorem rev10_120 : rev10 120 = 21 := by
-  native_decide
+  decide
 
 /-- Sanity check: `121` is a base-10 palindrome. -/
 @[category test, AMS 11]
 theorem palindrome_121 : IsPalindrome10 121 := by
   dsimp [IsPalindrome10]
-  native_decide
+  decide
 
 /-- Sanity check: `56 → 121` in one Lychrel step. -/
 @[category test, AMS 11]
 theorem lychrelIter_56_one : lychrelStep^[1] 56 = 121 := by
-  native_decide
+  decide
 
 /-- Sanity check: the Lychrel iteration at `56` reaches a palindrome. -/
 @[category test, AMS 11]
 theorem eventually_palindrome_56 : ∃ k : ℕ, IsPalindrome10 (lychrelStep^[k] 56) := by
   refine ⟨1, ?_⟩
   dsimp [IsPalindrome10]
-  native_decide
+  decide
 end LychrelNumbers

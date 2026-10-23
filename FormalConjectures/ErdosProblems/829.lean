@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 829
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Er83] Erdős, P. and Dudley, U., _Some remarks and problems in number theory related to the
   work of Euler_. Math. Mag. (1983), 292-298.
 -/
+
+@[expose] public section
 
 open AdditiveCombinatorics Asymptotics Filter
 
@@ -50,11 +53,10 @@ it true that $(1_A \ast 1_A)(n) \ll (\log n)^{O(1)}$?  That is, does there exist
 number $C$ such that the number of representations of $n$ as a sum of two cubes is
 $O((\log n)^C)$ as $n \to \infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_829 :
-    answer(sorry) ↔
-      ∃ C : ℕ, (fun n : ℕ => (sumRep cubes n : ℝ)) =O[atTop]
-        (fun n : ℕ => (Real.log n) ^ C) := by
+    ∃ C : ℕ, (fun n : ℕ => (sumRep cubes n : ℝ)) =O[atTop]
+      (fun n : ℕ => (Real.log n) ^ C) := by
   sorry
 
 /-- There is exactly one ordered pair of cubes summing to $0$, namely $(0, 0)$. -/

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Beck–Fiala theorem and conjecture
@@ -37,7 +38,7 @@ The Komlós conjecture (see `KomlosConjecture.lean`) would imply the Beck–Fial
 conjecture, since scaling the incidence vectors of a degree-$t$ system by $1/\sqrt{t}$
 produces vectors of Euclidean norm at most $1$.
 
-*References:* 
+*References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Beck%E2%80%93Fiala_theorem)
 - [J. Beck and T. Fiala, *"Integer-making" theorems*,
   Discrete Applied Mathematics **3** (1981), 1–8](https://doi.org/10.1016/0166-218X(81)90022-6)
@@ -46,6 +47,8 @@ produces vectors of Euclidean norm at most $1$.
 - [W. Banaszczyk, *Balancing vectors and Gaussian measures of n-dimensional convex bodies*,
   Random Structures & Algorithms **12** (1998), 351–360](https://doi.org/10.1002/(SICI)1098-2418(199807)12:4%3C351::AID-RSA3%3E3.0.CO;2-S)
 -/
+
+@[expose] public section
 
 namespace BeckFiala
 
@@ -63,7 +66,9 @@ only, whose discrepancy is $0 > 2 \cdot 0 - 1$.
 [J. Beck and T. Fiala, *"Integer-making" theorems*,
 Discrete Applied Mathematics **3** (1981), 1–8.]
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/Lemmy00/beck-fiala-lean/blob/19334973121b07e428c51e15b914e9ca4921fbb9/BeckFialaProof/BeckFiala.lean#L35"]
 theorem beck_fiala_theorem (n m t : ℕ) (ht : 1 ≤ t) (S : Fin m → Finset (Fin n))
     (hdeg : ∀ j, (Finset.univ.filter fun i => j ∈ S i).card ≤ t) :
     ∃ χ : Fin n → ℝ, (∀ j, χ j = 1 ∨ χ j = -1) ∧

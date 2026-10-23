@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 184
@@ -29,9 +30,15 @@ import FormalConjectures.Util.ProblemImports
   intersections. Canadian J. Math. (1966), 106-112.
 - [Er71] Erdős, P., Some unsolved problems in graph theory and combinatorial analysis. Combinatorial
   Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
+- [OAI26a] OpenAI, *A linear cycle-and-edge decomposition of every graph*. OpenAI Math Release
+  preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-linear-cycle-and-edge-decomposition-of-every-graph-September-24-2026/main.pdf
+- [Py85] Pyber, L., An Erdős-Gallai conjecture. Combinatorica (1985), 67-79.
 -/
 
-open Filter SimpleGraph Classical
+@[expose] public section
+
+open Filter SimpleGraph
 
 namespace Erdos184
 
@@ -39,17 +46,18 @@ namespace Erdos184
 A graph $H$ is a cycle or an edge if it is connected and 2-regular, or if it has exactly one edge.
 -/
 def IsCycleOrEdge {U : Type*} [Fintype U] (H : SimpleGraph U) : Prop :=
+  open scoped Classical in
   (H.Connected ∧ H.IsRegularOfDegree 2) ∨ H.edgeFinset.card = 1
 
-/-- D is a decomposition of G into subgraphs. -/
-def IsDecomposition {V : Type*} (G : SimpleGraph V) (D : Finset G.Subgraph) : Prop :=
-  Set.PairwiseDisjoint (D : Set G.Subgraph) (fun H ↦ H.edgeSet) ∧
-  (⋃ H ∈ D, H.edgeSet) = G.edgeSet
-
+open scoped Classical in
 /--
 Any graph on $n$ vertices can be decomposed into $O(n)$ many edge-disjoint cycles and edges.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+proof.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/CycleDecomposition/Main.lean#L207"]
 theorem erdos_184 :
     ∃ f : ℕ → ℝ,
       (f =O[atTop] fun n : ℕ ↦ (n : ℝ)) ∧
@@ -60,6 +68,7 @@ theorem erdos_184 :
         (D.card : ℝ) ≤ f (Fintype.card V) := by
   sorry
 
+open scoped Classical in
 /--
 Erdős and Gallai [EGP66] proved that $O(n \log n)$ many cycles and edges suffices.
 -/
@@ -74,11 +83,12 @@ theorem erdos_184.variants.n_log_n :
         (D.card : ℝ) ≤ f (Fintype.card V) := by
   sorry
 
+open scoped Classical in
 /--
 The graph $K_{3,n-3}$ shows that at least $(1+c)n$ many cycles and edges are required, for some
 constant $c>0$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/394ec1c1ff92bdf2fa10f30d62ae9d0455d3ce20/Proofs/T_Erdos184_erdos_184_variants_lower_bound.lean#L285"]
 theorem erdos_184.variants.lower_bound :
     ∃ c > 0, ∀ᶠ n in atTop,
       let G : SimpleGraph (Fin n) := fromRel (fun (i j : Fin n) => (i : ℕ) < 3 ∧ 3 ≤ (j : ℕ));
@@ -88,23 +98,24 @@ theorem erdos_184.variants.lower_bound :
         (1 + c) * (n : ℝ) ≤ (D.card : ℝ) := by
   sorry
 
+open scoped Classical in
 /--
 In [Er71] Erdős suggests that only $n-1$ many cycles and edges are required if we do not
-require them to be edge-disjoint.
+require them to be edge-disjoint. Pyber [Py85] proved this.
 -/
-@[category research open, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_184.variants.covering :
-    answer(sorry) ↔
-      ∀ {V : Type} [Fintype V] [DecidableEq V] [Nonempty V] (G : SimpleGraph V),
-      ∃ (D : Finset G.Subgraph),
-        (∀ H ∈ D, IsCycleOrEdge H.coe) ∧
-        (⋃ H ∈ D, H.edgeSet) = G.edgeSet ∧
-        (D.card : ℝ) ≤ (Fintype.card V : ℝ) - 1 := by
+    ∀ {V : Type} [Fintype V] [DecidableEq V] [Nonempty V] (G : SimpleGraph V),
+    ∃ (D : Finset G.Subgraph),
+      (∀ H ∈ D, IsCycleOrEdge H.coe) ∧
+      (⋃ H ∈ D, H.edgeSet) = G.edgeSet ∧
+      (D.card : ℝ) ≤ (Fintype.card V : ℝ) - 1 := by
   sorry
 
+open scoped Classical in
 /--
-The best bound available is due to Bucić and Montgomery [BM22], who prove that $O(n\log^* n)$ many
-cycles and edges suffice, where $\log^*$ is the iterated logarithm function.
+Before [OAI26a], the best bound was due to Bucić and Montgomery [BM22], who prove that
+$O(n\log^* n)$ many cycles and edges suffice, where $\log^*$ is the iterated logarithm function.
 -/
 @[category research solved, AMS 5]
 theorem erdos_184.variants.bucic_montgomery :
@@ -117,6 +128,7 @@ theorem erdos_184.variants.bucic_montgomery :
         (D.card : ℝ) ≤ f (Fintype.card V) := by
   sorry
 
+open scoped Classical in
 /--
 Conlon, Fox, and Sudakov [CFS14] proved that $O_\epsilon(n)$ cycles and edges suffice if $G$ has
 minimum degree at least $\epsilon n$, for any $\epsilon>0$.

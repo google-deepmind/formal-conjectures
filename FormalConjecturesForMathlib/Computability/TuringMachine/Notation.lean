@@ -17,6 +17,7 @@ module
 
 public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 public meta import Mathlib.Data.List.Defs
+import Mathlib.Tactic.FinCases
 
 public meta section
 
@@ -45,7 +46,7 @@ a transition to the halting state without writing or moving.
 
 Example of a tape: `1RA0LB_0LA---`
 
-There are more examples in `ForMathlib/Test/Computability`.
+There are more examples at the end of this file.
 -/
 
 open Turing BusyBeaver
@@ -149,22 +150,28 @@ section Main
 
 /-- `mkStateType n` adds to the environment an inductive type with `n` states
 names `State{n}` with constructors the symbols `A, B, ...`, together with the instance
-`Inhabited (State{n})`. -/
+`Inhabited (State{n})`.
+
+Both declarations have to be `public`. `liftCommandElabM` runs them in a fresh scope that does
+not carry the surrounding module's visibility, so without it they are declared private and end
+up named `_private.<module>.0.State{n}`. The lookup below then fails with `Unknown constant
+State{n}`, and the type would in any case be private while appearing in the type of the term
+this elaborator returns. -/
 def mkStateType (n : ℕ) (stateName : Name) : TermElabM Unit := do
   /-
   We may want to have some smarter check done here, e.g. throw an error if the type of the
   constant isn't defeq to the one we want? (note that the instance command we elaborate below already
-  implicitely performs a very weak check). -/
+  implicitly performs a very weak check). -/
   unless ← hasConst stateName do
     let indName : Ident := Lean.mkIdent <| stateName
     -- First construct the inductive type
     let typeConstructors ← (Array.range n).mapM fun i ↦
       `(Command.ctor| | $(Lean.mkIdent <|
         .mkSimple s!"{Alphabet[i]!}"):ident : $(indName))
-    let stx ← `(command| inductive $(indName) $typeConstructors:ctor*)
+    let stx ← `(command| public inductive $(indName) $typeConstructors:ctor*)
     liftCommandElabM <| elabCommand stx
   -- Create the `inhabited` instance as follows in order to have access to it e.g. in proofs
-  let inhabitedStx ← `(command | instance : Inhabited $(Lean.mkIdent stateName) :=
+  let inhabitedStx ← `(command | public instance : Inhabited $(Lean.mkIdent stateName) :=
     ⟨$(Lean.mkIdent <| (.str stateName "A"))⟩)
   liftCommandElabM <| elabCommand inhabitedStx
 
@@ -209,3 +216,92 @@ elab "turing_machine%" str:Lean.Parser.strLit : term =>
   parseTuring str.getString
 
 end Main
+
+end
+
+/-! ## Examples
+
+The examples below check the parser and the halting API on small machines.
+-/
+
+section Examples
+
+open Turing BusyBeaver Machine
+
+example : turing_machine% "------" = fun _ _ => none := by
+  aesop
+
+example : turing_machine% "1RA0LB_0LA---" = fun a b =>
+    match a, b with
+    | .A, 0 => some (some .A, Stmt.write 1 .right)
+    | .A, 1 => some (some .B, Stmt.write 0 .left)
+    | .B, 0 => some (some .A, Stmt.write 0 .left)
+    | .B, 1 => none := by
+  aesop
+
+example : turing_machine% "1RZ0LZ_------" = fun a b =>
+    match a, b with
+    | .A, 0 => some (none, Stmt.write 1 .right)
+    | .A, 1 => some (none, Stmt.write 0 .left)
+    | .B, 0 => none
+    | .B, 1 => none :=
+  rfl
+
+example : turing_machine% "1RZ0LZ2LZ_---------" = fun a b =>
+    match a, b with
+      | .A, 0 => some (none, Stmt.write 1 .right)
+      | .A, 1 => some (none, Stmt.write 0 .left)
+      | .A, 2 => some (none, Stmt.write 2 .left)
+      | .B, 0 => none
+      | .B, 1 => none
+      | .B, 2 => none :=
+  rfl
+
+/-- error: Invalid write instruction: A is not a numeral. -/
+#guard_msgs in
+#check turing_machine% "---ALZ_------"
+
+/-- error: Invalid direction A. -/
+#guard_msgs in
+#check turing_machine% "---0AZ_------"
+
+/--
+info: fun a b ↦
+  match a, b with
+  | State2.A, 0 => none
+  | State2.A, 1 => some (none, { symbol := 0, dir := Dir.left })
+  | State2.B, 0 => none
+  | State2.B, 1 => none : State2 → Fin 2 → Option (Option State2 × Stmt (Fin 2))
+-/
+#guard_msgs in
+#check turing_machine% "---0LZ_------"
+
+/-- error: All portions of the string separated by `_` should have the same length. -/
+#guard_msgs in
+#check turing_machine% "---0LZ_-----"
+
+/-- error: Each chunk of the string should consist of several groups of length 3. -/
+#guard_msgs in
+#check turing_machine% "---0L_-----"
+
+-- A machine with no transitions halts after zero steps.
+example : IsHalting (turing_machine% "------") :=
+  (isHalting_iff_exists_haltsAt _).mpr ⟨0, by aesop⟩
+
+-- A machine that moves to a state without transitions halts after one step.
+example : IsHalting (turing_machine% "0RB0RB_------") :=
+  (isHalting_iff_exists_haltsAt _).mpr ⟨1, by aesop⟩
+
+example : haltingNumber (turing_machine% "0RB0RB_------") = 1 := by
+  apply haltingNumber_def
+  · use { q := some State2.B, tape := ⟨0, Quotient.mk'' [0], default⟩ }
+    rfl
+  · rfl
+
+-- A machine whose transitions never enter the halting state does not halt.
+example : ¬ IsHalting (turing_machine% "0RB0LB_0RA0LB") := by
+  apply not_isHalting_of_forall_isSome
+  intro l s
+  cases l <;> fin_cases s <;> exact ⟨_, _, rfl⟩
+
+end Examples

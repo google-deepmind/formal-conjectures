@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures about Mersenne primes
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Wikipedia: Catalan's Mersenne conjecture](https://en.wikipedia.org/wiki/Catalan%27s_Mersenne_conjecture)
 - [MathWorld: Catalan-Mersenne Number](https://mathworld.wolfram.com/Catalan-MersenneNumber.html)
 -/
+
+@[expose] public section
 
 namespace Mersenne
 
@@ -78,14 +81,15 @@ theorem new_mersenne_conjecture (p : ℕ) (hp : Odd p) :
     NewMersenneConjectureStatement p := by
   sorry
 
-/-- It suffices to check this conjecture for primes -/
+/-- It suffices to check this conjecture for odd primes. The statement fails at `p = 2`:
+`mersenne 2 = 3` is prime and `2 = 2 ^ 0 + 1`, but `2` gives no Wagstaff prime. -/
 @[category textbook, AMS 11]
 theorem new_mersenne_conjecture_of_prime :
-    (∀ p, p.Prime → NewMersenneConjectureStatement p) →
+    (∀ p, p.Prime → Odd p → NewMersenneConjectureStatement p) →
     ∀ p, Odd p → NewMersenneConjectureStatement p := by
   intro H p hp_odd
   by_cases hp_prime : p.Prime
-  · exact H p hp_prime
+  · exact H p hp_prime hp_odd
   suffices ¬Nat.GivesWagstaffPrime p by
     have hF1 : ¬(mersenne p).Prime := fun h => hp_prime h.of_mersenne
     refine ⟨?_, ?_, ?_⟩ <;> grind
@@ -127,9 +131,9 @@ theorem new_mersenne_conjecture.variants.prime (p : ℕ) (hp : p.Prime) (h : Odd
 /--
 Are there infinitely many Mersenne primes?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_mersenne_primes :
-  answer(sorry) ↔ Set.Infinite { p : ℕ | (mersenne p).Prime } := by
+  Set.Infinite { p : ℕ | (mersenne p).Prime } := by
     sorry
 
 /--
@@ -137,9 +141,9 @@ The first five Catalan-Mersenne numbers $c_0, \ldots, c_4$ are known to be prime
 Catalan conjectured that they are prime "up to a certain limit".
 Are all Catalan-Mersenne numbers $c_n$ with $n \geq 5$ prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem catalans_mersenne_conjecture :
-    answer(sorry) ↔ ∀ n ≥ 5, Nat.Prime (catalanMersenne n) := by
+    ∀ n ≥ 5, Nat.Prime (catalanMersenne n) := by
   sorry
 
 end Mersenne

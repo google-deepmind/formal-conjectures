@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 17
 *Reference:* [erdosproblems.com/17](https://www.erdosproblems.com/17)
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real
 
@@ -35,8 +38,8 @@ def IsClusterPrime (p : ℕ) : Prop :=
         q₁ ≤ p ∧ q₂ ≤ p ∧ n = (q₁ - q₂ : ℤ)
 
 /-- **Erdős Problem 17.** Are there infinitely many cluster primes? -/
-@[category research open, AMS 11]
-theorem erdos_17 : answer(sorry) ↔ {p : ℕ | IsClusterPrime p}.Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_17 : {p : ℕ | IsClusterPrime p}.Infinite := by
   sorry
 
 /-- The counting function of cluster primes $\le n$. -/
@@ -106,12 +109,22 @@ theorem isClusterPrime_97_isLeast_non_cluster : IsLeast {p : ℕ | p.Prime ∧ �
     -- difference of two primes `≤ 97`.
     refine ⟨by norm_num, ?_⟩
     rw [cluster_iff 97 (by norm_num)]
-    set_option maxRecDepth 8000 in decide
+    simp only [Nat.reduceSub, Finset.mem_range, Nat.reduceAdd, not_forall, not_exists, not_and,
+      not_le]
+    refine ⟨88, by norm_num, by norm_num, ?_⟩
+    intro x xl hx xl
+    suffices 9 < x by
+      lia
+    contrapose! xl
+    interval_cases x <;> norm_num
+    · contrapose hx
+      exact Nat.not_prime_one
+    · contrapose hx
+      norm_num
   · -- `97` is a lower bound: every prime `< 97` is a cluster prime, so cannot lie
     -- in the set of non-cluster primes.
     rintro b ⟨hbp, hbnc⟩
-    by_contra hlt
-    push_neg at hlt
+    by_contra! hlt
     interval_cases b <;>
       first
         | exact absurd hbp (by decide)

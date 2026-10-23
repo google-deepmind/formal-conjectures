@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 653
 
 *Reference:* [erdosproblems.com/653](https://www.erdosproblems.com/653)
 -/
+
+@[expose] public section
 
 open Finset EuclideanGeometry Filter
 
@@ -31,8 +34,8 @@ where the points are ordered such that
 $$R(x_1)\leq \cdots \leq R(x_n).$$
 Let $g(n)$ be the maximum number of distinct values the $R(x_i)$ can take. Is it true that
 $g(n) \geq (1-o(1))n$? -/
-@[category research open, AMS 5 52]
-theorem erdos_653 : answer(sorry) ↔ ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
+@[category research open, question, AMS 5 52]
+theorem erdos_653 : ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
     ∀ᶠ n in atTop, (1 - o n) * n ≤ maximalDistinctDistancesFrom n := by
   sorry
 

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 61 -- Erdős–Hajnal Conjecture
 
 *Reference:* [erdosproblems.com/61](https://www.erdosproblems.com/61)
 -/
+
+@[expose] public section
 
 open Filter
 open SimpleGraph
@@ -42,15 +45,15 @@ def IsErdosHajnalLowerBound {α : Type*} [Fintype α] [DecidableEq α]
 The Erdős–Hajnal Conjecture states that there is a constant $c(H) > 0$ for each
 $H$ such that we can take $f(n) = n^{c(H)}$ in the above formulation.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_61 :
-    answer(sorry) ↔ ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
+    ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
       ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c) := by
   sorry
 
 /--
 Erdős and Hajnal [ErHa89] proved that we can take $f(n) = \exp(c_H \sqrt{\log n})$
-for some constant $c_H > 0$ dependending on $H$.
+for some constant $c_H > 0$ depending on $H$.
 
 [ErHa89] Erdős, P. and Hajnal, A., Ramsey-type theorems. Discrete Appl. Math. (1989), 37-52.
 -/
@@ -62,7 +65,7 @@ theorem erdos_61.variants.erha89 :
 
 /--
 Bucić, Nguyen, Scott, and Seymour [BNSS23] improved this to
-$f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H > 0$ dependending on $H$.
+$f(n) = \exp(c_H \sqrt{\log n \log \log n})$ for some constant $c_H > 0$ depending on $H$.
 
 [BNSS23] Bucić, M. and Nguyen, T. and Scott, A. and Seymour, P., A loglog step towards Erdos-Hajnal
 -/

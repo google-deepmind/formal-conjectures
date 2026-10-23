@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
+
 
 /-!
 # Sierpiński number
@@ -42,6 +44,8 @@ The *prime Sierpiński problem* asks: is 271129 the smallest *prime* Sierpiński
 The *extended Sierpiński problem* asks: is 271129 the second-smallest Sierpiński number?
 -/
 
+@[expose] public section
+
 namespace SierpinskiNumber
 
 /--
@@ -55,10 +59,10 @@ theorem selfridge_78557 : Nat.IsSierpinskiNumber 78557 := by
     nlinarith [h]
   · have hcov : ∃ p ∈ ([3,5,7,13,19,37,73] : List ℕ), p ∣ (78557 * 2 ^ n + 1) := by
       have base : ∀ r, r < 36 → ∃ p ∈ ([3,5,7,13,19,37,73] : List ℕ),
-          p ∣ (78557 * 2 ^ r + 1) := by native_decide
+          p ∣ (78557 * 2 ^ r + 1) := by decide
       obtain ⟨p, hpmem, hpdvd⟩ := base (n % 36) (Nat.mod_lt _ (by norm_num))
       refine ⟨p, hpmem, ?_⟩
-      have hp36 : (2 : ℕ) ^ 36 ≡ 1 [MOD p] := by fin_cases hpmem <;> native_decide
+      have hp36 : (2 : ℕ) ^ 36 ≡ 1 [MOD p] := by fin_cases hpmem <;> decide
       have e2 : (2 : ℕ) ^ n ≡ 2 ^ (n % 36) [MOD p] := by
         conv_lhs => rw [← Nat.div_add_mod n 36, pow_add, pow_mul]
         calc ((2 : ℕ) ^ 36) ^ (n / 36) * 2 ^ (n % 36)
@@ -79,9 +83,9 @@ Selfridge conjectured that 78557 is the smallest Sierpiński number. He proved i
 78557 is indeed a Sierpiński number by showing that all numbers of the form $78557 \cdot 2^n + 1$
 have a factor in the covering set $\{3, 5, 7, 13, 19, 37, 73\}$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem selfridge_conjecture :
-    answer(sorry) ↔ IsLeast {k | k.IsSierpinskiNumber} 78557 := by
+    IsLeast {k | k.IsSierpinskiNumber} 78557 := by
   sorry
 
 /--
@@ -90,9 +94,9 @@ theorem selfridge_conjecture :
 In 1976, Nathan Mendelsohn determined that the second provable Sierpiński number is the prime
 $k = 271129$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem prime_sierpinski_problem :
-    answer(sorry) ↔ IsLeast {k | k.IsSierpinskiNumber ∧ k.Prime} 271129 := by
+    IsLeast {k | k.IsSierpinskiNumber ∧ k.Prime} 271129 := by
   sorry
 
 /--
@@ -102,11 +106,10 @@ Even if 78557 is confirmed as the smallest Sierpiński number, there could exist
 Sierpiński number $k$ with $78557 < k < 271129$. We formalize "second-smallest" as: the
 least Sierpiński number $k$ such that there exists exactly one Sierpiński number below it.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem extended_sierpinski_problem :
-    answer(sorry) ↔
-      IsLeast {k | k.IsSierpinskiNumber ∧
-        ∃ k', k'.IsSierpinskiNumber ∧ k' < k} 271129 := by
+    IsLeast {k | k.IsSierpinskiNumber ∧
+      ∃ k', k'.IsSierpinskiNumber ∧ k' < k} 271129 := by
   sorry
 
 end SierpinskiNumber

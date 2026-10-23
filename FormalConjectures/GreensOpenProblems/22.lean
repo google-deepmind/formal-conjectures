@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 22
@@ -34,6 +35,8 @@ import FormalConjectures.Util.ProblemImports
 - [Al23] Alweiss, Ryan. "Monochromatic Sums and Products over $\mathbb {Q} $." arXiv preprint
   arXiv:2307.08901 (2023).
 -/
+
+@[expose] public section
 
 open Finset Filter
 
@@ -61,17 +64,18 @@ open scoped Asymptotics
 /-- The upper bound function from [GrSa25]. -/
 noncomputable def GreenSawhneyBound (r : ℕ) : ℝ := Real.exp (Real.exp (r ^ 50))
 
+def green_22.answer : ℕ → ℝ := sorry
+
 /--
 If $\{1, \ldots, N\}$ is $r$-coloured then, for $N \geqslant N_0(r)$, there are integers
 $x, y \geqslant 3$ such that $x + y, xy$ have the same colour.
 
 Find reasonable bounds for $N_0(r)$. The goal is to improve upon the Green-Sawhney bound.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_22 :
-    let ans := (answer(sorry) : ℕ → ℝ)
-    ∀ᶠ r in atTop, N₀ r ≤ ans r ∧
-    ans =o[atTop] GreenSawhneyBound := by
+    ∀ᶠ r in atTop, N₀ r ≤ green_22.answer r ∧
+    green_22.answer =o[atTop] GreenSawhneyBound := by
   sorry
 
 /--

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 50
@@ -28,6 +29,8 @@ multiplication on sets.
 
 *Reference:* [Ben Green's Open Problem 50](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.6 Problem 50)
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 
@@ -47,8 +50,8 @@ scalar multiplication notation `10 • A` where `•` denotes the iterated addit
 Note: We model $\mathbb{F}_2^n$ as `Fin n → ZMod 2`, which is an $n$-dimensional vector space
 over $\mathbb{F}_2$.
 -/
-@[category research open, AMS 5 11]
-theorem green_50 : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem green_50 :
     ∃ C > (0 : ℝ), ∀ n : ℕ, ∀ A : Finset (𝔽₂ n),
     A.Nonempty →
     let α : ℝ := A.dens

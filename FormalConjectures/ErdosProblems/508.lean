@@ -13,10 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Analysis.InnerProductSpace.PiL2
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 508
@@ -28,7 +27,13 @@ or the [Golomb graph]
 *At least 4 colors are required:* [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)
 *At least 4 colors are required:* [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph)
 *At least 5 colors are required:* [de Grey 2018](https://arxiv.org/abs/1804.02385)
+*At least 6 colors are required, and 7 colors suffice:* [OAI26]
+
+- [OAI26] OpenAI, *The Euclidean plane is not five-colorable*. OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/paper.pdf
 -/
+
+@[expose] public section
 
 open SimpleGraph
 open scoped EuclideanGeometry
@@ -37,13 +42,18 @@ namespace Erdos508
 
 scoped notation "χ(ℝ²)" => SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)
 
+def HadwigerNelsonProblem.answer : ℕ∞ := sorry
+
 /--
 The Hadwiger–Nelson problem asks: How many colors are required to color the plane
 such that no two points at distance 1 from each other have the same color?
+
+It is known that $6 \leq \chi(\mathbb{R}^2) \leq 7$; see `HadwigerNelsonAtLeastSix` and
+`HadwigerNelsonAtMostSeven`.
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem HadwigerNelsonProblem :
-    χ(ℝ²) = answer(sorry) := by
+    χ(ℝ²) = HadwigerNelsonProblem.answer := by
   sorry
 
 /--
@@ -59,11 +69,22 @@ theorem HadwigerNelsonAtLeastFive :
   sorry
 
 /--
+The chromatic number of the plane is at least 6: there is no proper 5-colouring of the plane.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26]; see the linked Lean proof.
+-/
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/PlaneColoring/Five.lean#L124"]
+theorem HadwigerNelsonAtLeastSix :
+    6 ≤ χ(ℝ²) := by
+  sorry
+
+/--
 The "chromatic number of the plane" is at least 4. This can be
 proven by considering the [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)
 or the [Golomb graph](https://en.wikipedia.org/wiki/Golomb_graph) graph.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/394ec1c1ff92bdf2fa10f30d62ae9d0455d3ce20/Proofs/T_Erdos508_HadwigerNelsonAtLeast4.lean#L88"]
 theorem HadwigerNelsonAtLeast4 : 4 ≤ χ(ℝ²) := by
   sorry
 
@@ -76,8 +97,11 @@ pattern. A proof can probably be found in:
 Soifer, Alexander (2008), The Mathematical Coloring Book: Mathematics of Coloring and the Colorful Life of its Creators, New York: Springer, ISBN 978-0-387-74640-1
 
 An alternative approach that uses square tiling was highlighted by László Székely.
+
+The linked Lean proof of this bound is part of the OpenAI release [OAI26].
 -/
-@[category textbook, AMS 52]
+@[category textbook, AMS 52, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/PlaneColoring/Seven.lean#L36"]
 theorem HadwigerNelsonAtMostSeven :
     χ(ℝ²) ≤ 7 := by
   sorry

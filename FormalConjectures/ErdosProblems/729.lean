@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 729
@@ -25,17 +26,19 @@ import FormalConjectures.Util.ProblemImports
 - [Er68c] Erdős, P., *Aufgabe 557*. Elemente Math. (1968), 111-113.
 -/
 
+@[expose] public section
+
 namespace Erdos729
 
 /--
 Let $C>0$ be a constant. Are there infinitely many integers $a,b,n$ with $a+b> n+C\log n$ such
-that the denominator of\[\frac{n!}{a!b!}\]contains only primes $\ll_C 1$?
+that the denominator of $$\frac{n!}{a!b!}$$contains only primes $\ll_C 1$?
 
 Erdős [Er68c] proved that if $a!b!\mid n!$ then $a+b\leq n+O(\log n)$. This has been proved in the affirmative by Barreto and Leeham, using ChatGPT and Aristotle, with a modification of the argument used for [728].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos729.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos729.lean"]
 theorem erdos_729 :
-    answer(True) ↔ ∀ (C : ℝ) (hC : C > 0),
+    ∀ (C : ℝ) (hC : C > 0),
       ∃ K ≥ 3, Set.Infinite { T : ℕ × ℕ × ℕ |
         let (a, b, n) := T
         a > 0 ∧ b > 0 ∧ n > 0 ∧

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 36
@@ -25,7 +26,9 @@ import FormalConjectures.Util.ProblemImports
   Matrix Multiplication" (Problem 4.7)
 -/
 
-open Classical Filter
+@[expose] public section
+
+open Filter
 open scoped Pointwise
 
 namespace Green36
@@ -33,12 +36,14 @@ namespace Green36
 /-- The simultaneous double product property [CKS05, 4.1]. -/
 def SimultaneousDoubleProduct {ι H : Type*} [AddCommGroup H]
     (A B : ι → Finset H) : Prop :=
+  open scoped Classical in
   (∀ i, (A i + B i).card = (A i).card * (B i).card) ∧
   (∀ i j k, i ≠ k → Disjoint (A i + B j) (A j + B k))
 
 /-- A variant of the simultaneous double product property, as stated in [Gr24, Problem 36]. -/
 def Green36Property {ι H : Type*} [AddCommGroup H]
     (A B : ι → Finset H) : Prop :=
+  open scoped Classical in
   (∀ i, (A i + B i).card = (A i).card * (B i).card) ∧
   (∀ i j k, j ≠ k → Disjoint (A i + B i) (A j + B k))
 
@@ -51,25 +56,23 @@ $|A_i + B_i| = |A_i||B_i|$, such that the sets $A_i + B_i$ are disjoint from the
 NOTE: according to [CKS05, 4.1], the conditions should be $A_i + B_j$ disjoint from $A_j + B_k$ for
 $i \neq k$. See `green_36.variants.cks05`.
 -/
-@[category research open, AMS 5 20]
+@[category research open, question, AMS 5 20]
 theorem green_36 :
-    answer(sorry) ↔
-      ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
-        ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
-          (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
-          (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
-          Green36Property A B := by
+    ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
+      ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
+        (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
+        (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
+        Green36Property A B := by
   sorry
 
 /-- Variant using the exact simultaneous double product property from [CKS05, 4.1]. -/
-@[category research open, AMS 5 20]
+@[category research open, question, AMS 5 20]
 theorem green_36.variants.cks05 :
-    answer(sorry) ↔
-      ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
-        ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
-          (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
-          (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
-          SimultaneousDoubleProduct A B := by
+    ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
+      ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
+        (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
+        (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
+        SimultaneousDoubleProduct A B := by
   sorry
 
 -- TODO(jeangud) Add variants mentioned in [Gr24, Problem 36] comments.

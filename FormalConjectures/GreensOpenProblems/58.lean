@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 58
 
 *Reference:* [Ben Green's Open Problem 58](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.8 Problem 58)
 -/
+
+@[expose] public section
+
 open scoped Pointwise
 namespace Green58
 
@@ -28,13 +32,12 @@ namespace Green58
 Suppose $A, B ⊆ \{1, \dots, N\}$ both have size at least $N^{0.49}$. Must the sumset $A + B$
 contain a composite number?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_58 :
-    answer(sorry) ↔
-      ∀ᶠ (N : ℕ) in Filter.atTop, ∀ᵉ (A ⊆ Finset.Icc 1 N) (B ⊆ Finset.Icc 1 N),
-        (N : ℝ) ^ (0.49 : ℝ) ≤ (A.card : ℝ) →
-        (N : ℝ) ^ (0.49 : ℝ) ≤ (B.card : ℝ) →
-        ∃ m ∈ (A + B), m.Composite := by
+    ∀ᶠ (N : ℕ) in Filter.atTop, ∀ᵉ (A ⊆ Finset.Icc 1 N) (B ⊆ Finset.Icc 1 N),
+      (N : ℝ) ^ (0.49 : ℝ) ≤ (A.card : ℝ) →
+      (N : ℝ) ^ (0.49 : ℝ) ≤ (B.card : ℝ) →
+      ∃ m ∈ (A + B), m.Composite := by
   sorry
 
 end Green58
