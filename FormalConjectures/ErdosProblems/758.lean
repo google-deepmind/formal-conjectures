@@ -24,13 +24,6 @@ public import FormalConjecturesUtil
 
 [ErGi93] Erdős, P. and Gimbel, J., *Some problems and results in cochromatic
 theory*, Annals of Discrete Mathematics 55 (1993), 261–264.
-
-A cochromatic colouring partitions the vertices into classes, each inducing
-either a complete graph or an empty graph. The page asks for small values of
-the maximum cochromatic number, and specifically whether $z(12)=4$.
-This statement expresses that specific equality by its uniform upper bound
-and an explicit existence lower bound. The page credits Bhavik Mehta's computation.
-The broader table of small values is not asserted here.
 -/
 
 @[expose] public section
@@ -43,8 +36,13 @@ def CochromaticColorable {n : ℕ} (G : SimpleGraph (Fin n)) (k : ℕ) : Prop :=
     (∀ u v, c u = i → c v = i → u ≠ v → G.Adj u v) ∨
     (∀ u v, c u = i → c v = i → u ≠ v → ¬ G.Adj u v)
 
-/-- Every twelve-vertex graph has cochromatic number at most four, and some
-twelve-vertex graph has cochromatic number greater than three: $z(12)=4$. -/
+/--
+In particular is it true that $z(12)=4$?
+
+Here $z(n)$ is the maximum cochromatic number of an $n$-vertex graph. A colour
+class may induce either a complete graph or an empty graph. The source credits
+Bhavik Mehta's computation for the affirmative resolution.
+-/
 @[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos758.lean"]
 theorem erdos_758 :
