@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integer values of $\tan(\arctan 1 + \arctan 2 + \cdots + \arctan n)$
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
   results of [Ono26], MIT licensed. Its `P`, `A`, `B` and `x` are the definitions used
   here.
 -/
+
+@[expose] public section
 
 open Finset
 
@@ -60,9 +63,9 @@ instance (n : ℕ) : Decidable (IsIntegerValue n) := by unfold IsIntegerValue; i
 $$x_n = \tan(\arctan 1 + \arctan 2 + \cdots + \arctan n)$$
 is not an integer.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem tan_arctan_sum_not_integer :
-    answer(sorry) ↔ ∀ n : ℕ, 5 ≤ n → ¬ IsIntegerValue n := by
+    ∀ n : ℕ, 5 ≤ n → ¬ IsIntegerValue n := by
   sorry
 
 /-- $x_n$ satisfies $x_1 = 1$ and $x_n = \dfrac{x_{n-1} + n}{1 - n x_{n-1}}$, which is the

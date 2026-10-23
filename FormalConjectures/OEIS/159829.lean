@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest $m$ such that $n^3 + m^3 + 1$ is prime
@@ -23,6 +24,8 @@ $a(n)$ is the smallest natural number $m \ge 1$ such that $n^3 + m^3 + 1$ is pri
 
 *References:*
 - [A159829](https://oeis.org/A159829)-/
+
+@[expose] public section
 
 namespace OeisA159829
 
@@ -89,11 +92,11 @@ for $n, m \ge 1$.
 Answer: No.
 - _Kenta Kitamura_, 2026
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a159829-conjecture1-counterexample/blob/6632e626baa7f28ad14045aa7408a84178ec128d/lean/A159829Conjecture1FC.lean#L52-L61"]
 theorem conjecture1 :
-    answer(False) ↔ ∀ (k : ℕ), 3 ≤ k →
+    ¬ ∀ (k : ℕ), 3 ≤ k →
       Set.Infinite {p : ℕ | ∃ n m : ℕ, 1 ≤ n ∧ 1 ≤ m ∧ p.Prime ∧
         p = n ^ k + m ^ k} := by
   sorry

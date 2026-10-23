@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 494
@@ -27,7 +28,11 @@ import FormalConjecturesUtil
       221-254.
   - [GFS62] Gordon, B. and Fraenkel, A. S. and Straus, E. G., On the determination of sets
       by the sets of sums of a certain order. Pacific J. Math. (1962), 187--196.
+  - [FoIz94] Fomin, D. V. and Izhboldin, O. T., Sets of multiple sums. Proc. St. Petersburg
+      Math. Soc. 3 (1994), 244-259.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -48,7 +53,8 @@ Selfridge and Straus [SeSt58] showed that the conjecture is true when $k = 2$ an
 $|A| \ne 2^l$ for $l \ge 0$.
 They also gave counterexamples when $k = 2$ and $|A| = 2^l$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/a2d6dcb99d4f11469cbb40c18959357031786c4c/erdos-494/Solution.lean#L26"]
 theorem erdos_494.variants.k_eq_2_card_not_pow_two :
     ∀ card : ℕ, (∀ l : ℕ, card ≠ 2 ^ l) → Erdos494Unique 2 card := by
   sorry
@@ -66,14 +72,19 @@ theorem erdos_494.variants.k_eq_2_card_pow_two :
 
 /--
 Selfridge and Straus [SeSt58] also showed that the conjecture is true when
-1) $k = 3$ and $|A| > 6$ or
+1) $k = 3$ and $|A| > 6$, except possibly for $|A| = 27$ and $|A| = 486$, or
 2) $k = 4$ and $|A| > 12$.
 More generally, they proved that $A$ is determined by $A_k$ (and $|A|$) if $|A|$ is divisible by
 a prime greater than $k$.
+
+The cases $|A| = 27$ and $|A| = 486$ were left open in [SeSt58]. Fomin and Izhboldin [FoIz94]
+later found two distinct sets of each of these sizes with the same multiset of $3$-sums, so
+these exceptions are genuine.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/a2d6dcb99d4f11469cbb40c18959357031786c4c/erdos-494/Solution.lean#L30"]
 theorem erdos_494.variants.k_eq_3_card_gt_6 :
-    ∀ card > 6, Erdos494Unique 3 card := by
+    ∀ card > 6, card ≠ 27 → card ≠ 486 → Erdos494Unique 3 card := by
   sorry
 
 /--

@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 768
@@ -24,6 +26,8 @@ import FormalConjecturesUtil
 - [Er74b] Erdős, P., *Remarks on some problems in number theory*.
   Math. Balkanica (1974), 197–202.
 -/
+
+@[expose] public section
 
 namespace Erdos768
 
@@ -52,8 +56,8 @@ some $d \mid n$ with $d>1$ and $d \equiv 1 \pmod p$. Is there a constant $c>0$ s
 for all large $N$,
 $$\frac{\lvert A\cap[1,N]\rvert}{N}=
 \exp\big(-(c+o(1))\sqrt{\log N}\log\log N\big)?$$ -/
-@[category research open, AMS 11]
-theorem erdos_768 : answer(sorry) ↔ ∃ c > 0, ∃ error : ℕ → ℝ,
+@[category research open, question, AMS 11]
+theorem erdos_768 : ∃ c > 0, ∃ error : ℕ → ℝ,
     error =o[atTop] (fun _ ↦ (1 : ℝ)) ∧ ∀ᶠ N in atTop,
       erdos768Density N = Real.exp (-(c + error N) * erdos768Scale N) := by
   sorry

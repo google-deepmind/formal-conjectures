@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 582
@@ -47,6 +48,8 @@ import FormalConjecturesUtil
   for Ramsey arrowing of triangles*. J. Combin. Math. Combin. Comput. (2014), 61-71.
 -/
 
+@[expose] public section
+
 namespace Erdos582
 
 /--
@@ -69,8 +72,8 @@ often called Folkman numbers.) The current best bounds on the minimal number of 
 such a graph are $21 \leq N \leq 786$, where the lower bound is due to Bikov and Nenov [BiNe20]
 and the upper bound is due to Lange, Radziszowski, and Xu [LRX14].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos582.lean"]
-theorem erdos_582 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos582.lean"]
+theorem erdos_582 :
     ∃ (V : Type*) (_ : Fintype V) (G : SimpleGraph V),
       G.CliqueFree 4 ∧ EdgeRamseyTriangle G := by
   sorry
