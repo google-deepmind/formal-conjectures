@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Tuza's conjecture
@@ -26,6 +28,8 @@ import FormalConjecturesUtil
 * [Ha99] Haxell, P. E. (1999). "Packing and covering triangles in graphs." *Discrete Math.*
   195, pp. 251--254.
 -/
+
+@[expose] public section
 
 namespace TuzaConjecture
 
