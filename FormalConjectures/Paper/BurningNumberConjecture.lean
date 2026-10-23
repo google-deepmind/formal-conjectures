@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The burning number conjecture
@@ -27,6 +29,8 @@ import FormalConjecturesUtil
   asymptotically." *J. Combin. Theory Ser. B* 171, pp. 208--235.
   [arXiv:2207.04035](https://arxiv.org/abs/2207.04035)
 -/
+
+@[expose] public section
 
 namespace BurningNumberConjecture
 
