@@ -78,11 +78,9 @@ theorem c6a_lower_bound_intermediate : 0.38234 ≤ C6a := by
 theorem c6a_lower_bound : 0.38271 ≤ C6a := by
   sorry
 
-def mem_Ioc_c6a.answer : ℝ := sorry
-
-/-- How can the best known lower bound $0.38271$ of [L2023] be improved? -/
-@[category research open, question value, AMS 5]
-theorem mem_Ioc_c6a : mem_Ioc_c6a.answer ∈ Set.Ioc 0.38271 C6a := by
+/-- Can the best known lower bound $0.38271$ of [L2023] be improved? -/
+@[category research open, question, AMS 5]
+theorem c6a_lower_bound_improved : 0.38272 < C6a := by
   sorry
 
 end Constant6a
