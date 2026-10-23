@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 251
@@ -22,13 +23,15 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/251](https://www.erdosproblems.com/251)
 -/
 
+@[expose] public section
+
 namespace Erdos251
 
 /--
 Is $\sum_{n=1}^\infty \frac{p_n}{2^n}$ irrational? Here $p_n$ is the $n$-th prime ($p_1=2, p_2=3, \dots$).
 -/
-@[category research open, AMS 11]
-theorem erdos_251 : answer(sorry) ↔ Irrational (∑' n : ℕ, (Nat.nth Nat.Prime n) / (2 ^ n)) := by
+@[category research open, question, AMS 11]
+theorem erdos_251 : Irrational (∑' n : ℕ, (Nat.nth Nat.Prime n) / (2 ^ n)) := by
   sorry
 
 end Erdos251
