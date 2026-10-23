@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 # Hajós' conjecture (1961) — disproved
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/Haj%C3%B3s_conjecture_(graph_theory))
+* [Wikipedia](https://en.wikipedia.org/wiki/Hadwiger_conjecture_(graph_theory)#Generalizations)
 * [Ha61] Hajós, G. (1961). "Über eine Konstruktion nicht n-färbbarer Graphen."
   *Wiss. Z. Martin-Luther-Univ. Halle-Wittenberg Math.-Natur. Reihe* 10, pp. 116--117.
 * [Di52] Dirac, G. A. (1952). "A property of 4-chromatic graphs and some remarks on critical
@@ -68,7 +68,7 @@ counterexamples for every $k \ge 7$, and Erdős and Fajtlowicz [EF81] showed tha
 graphs are counterexamples.
 -/
 @[category research solved, AMS 5]
-theorem hajos_conjecture : answer(False) ↔
+theorem hajos_conjecture : ¬
     ∀ {V : Type} [Fintype V] (G : SimpleGraph V) (k : ℕ),
       (k : ℕ∞) ≤ G.chromaticNumber → ContainsSubdivision (completeGraph (Fin k)) G := by
   sorry
@@ -93,8 +93,8 @@ theorem hajos_conjecture.variants.le_four
 Whether every $5$-chromatic graph contains a subdivision of $K_5$, and every $6$-chromatic graph
 a subdivision of $K_6$, is unknown (see [Th05]).
 -/
-@[category research open, AMS 5]
-theorem hajos_conjecture.variants.five_six : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem hajos_conjecture.variants.five_six :
     ∀ {V : Type} [Fintype V] (G : SimpleGraph V) (k : ℕ), k = 5 ∨ k = 6 →
       (k : ℕ∞) ≤ G.chromaticNumber → ContainsSubdivision (completeGraph (Fin k)) G := by
   sorry
