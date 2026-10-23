@@ -35,42 +35,42 @@ open Filter SimpleGraph
 namespace Erdos575
 
 /-- A host graph is `family`-free when it contains no member of `family` as a subgraph. -/
-def FamilyFree (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) {n : ℕ}
+def FamilyFree (family : Finset ((n : ℕ) × SimpleGraph (Fin n))) {n : ℕ}
     (host : SimpleGraph (Fin n)) : Prop :=
   ∀ forbidden ∈ family, forbidden.2.Free host
 
 open scoped Classical in
 /-- $\mathrm{ex}(n;\mathcal{F})$, the greatest number of edges of a graph on `n` vertices
 containing no member of `family`. -/
-noncomputable def familyExtremal (family : Finset (Σ n : ℕ, SimpleGraph (Fin n)))
+noncomputable def familyExtremal (family : Finset ((n : ℕ) × SimpleGraph (Fin n)))
     (n : ℕ) : ℕ :=
   (Finset.univ.filter (FamilyFree family)).sup
     fun host : SimpleGraph (Fin n) => host.edgeFinset.card
 
 /-- No member of the family is acyclic. -/
-def IsCyclicFamily (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) : Prop :=
+def IsCyclicFamily (family : Finset ((n : ℕ) × SimpleGraph (Fin n))) : Prop :=
   ∀ forbidden ∈ family, ¬ forbidden.2.IsAcyclic
 
 /-- The family contains at least one bipartite member. -/
-def ContainsBipartiteMember (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) : Prop :=
+def ContainsBipartiteMember (family : Finset ((n : ℕ) × SimpleGraph (Fin n))) : Prop :=
   ∃ forbidden ∈ family, forbidden.2.IsBipartite
 
 /-- Eventual constant-factor control of the family extremal number by a single member. -/
-def ControlsFamily (family : Finset (Σ n : ℕ, SimpleGraph (Fin n)))
-    (forbidden : Σ n : ℕ, SimpleGraph (Fin n)) : Prop :=
+def ControlsFamily (family : Finset ((n : ℕ) × SimpleGraph (Fin n)))
+    (forbidden : (n : ℕ) × SimpleGraph (Fin n)) : Prop :=
   ∃ C : ℝ, 0 < C ∧
     ∀ᶠ n : ℕ in atTop,
       (extremalNumber n forbidden.2 : ℝ) ≤ C * (familyExtremal family n : ℝ)
 
 /-- The family is *bipartite-compact*: some bipartite member already controls the family extremal
 number. -/
-def IsBipartiteCompactFamily (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) : Prop :=
+def IsBipartiteCompactFamily (family : Finset ((n : ℕ) × SimpleGraph (Fin n))) : Prop :=
   ∃ forbidden ∈ family, forbidden.2.IsBipartite ∧ ControlsFamily family forbidden
 
 open scoped Classical in
 /-- Every `family`-free graph on `n` vertices has at most $\binom{n}{2}$ edges. -/
 @[category test, AMS 5]
-theorem familyExtremal_le_choose_two (family : Finset (Σ n : ℕ, SimpleGraph (Fin n))) (n : ℕ) :
+theorem familyExtremal_le_choose_two (family : Finset ((n : ℕ) × SimpleGraph (Fin n))) (n : ℕ) :
     familyExtremal family n ≤ n.choose 2 := by
   unfold familyExtremal
   refine Finset.sup_le fun host _ => ?_
@@ -94,7 +94,7 @@ graphs, none of them acyclic, for which no single member controls the family ext
 @[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L189"]
 theorem erdos_575 :
-    ¬ ∀ family : Finset (Σ n : ℕ, SimpleGraph (Fin n)),
+    ¬ ∀ family : Finset ((n : ℕ) × SimpleGraph (Fin n)),
       family.Nonempty → IsCyclicFamily family →
         ContainsBipartiteMember family → IsBipartiteCompactFamily family := by
   sorry
@@ -107,7 +107,7 @@ while $\mathrm{ex}(n;K_{1,2})=\lfloor n/2\rfloor$ and $\mathrm{ex}(n;2K_2)=n-1$.
 @[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L197"]
 theorem erdos_575.variants.unrestricted :
-    ¬ ∀ family : Finset (Σ n : ℕ, SimpleGraph (Fin n)),
+    ¬ ∀ family : Finset ((n : ℕ) × SimpleGraph (Fin n)),
       family.Nonempty → ContainsBipartiteMember family → IsBipartiteCompactFamily family := by
   sorry
 
@@ -118,7 +118,7 @@ bipartite-compact.
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/linrock/math-proofs/blob/b135fd8f6e5ee25129c4855e06c93739dd80651d/erdos-575/Proofs/Erdos575.lean#L111"]
 theorem erdos_575.variants.counterexample :
-    ∃ family : Finset (Σ n : ℕ, SimpleGraph (Fin n)),
+    ∃ family : Finset ((n : ℕ) × SimpleGraph (Fin n)),
       family.Nonempty ∧
       IsCyclicFamily family ∧
       ContainsBipartiteMember family ∧
