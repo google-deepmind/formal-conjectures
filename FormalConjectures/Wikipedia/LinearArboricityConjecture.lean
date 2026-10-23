@@ -42,10 +42,10 @@ which every vertex has at most two neighbours. -/
 def IsLinearForest (F : SimpleGraph V) : Prop :=
   F.IsAcyclic ∧ ∀ v, (F.neighborSet v).ncard ≤ 2
 
-/-- `G` decomposes into `k` linear forests: there are `k` linear forests such that every edge
-of `G` lies in exactly one of them. -/
+/-- `G` decomposes into `k` linear forests: there are `k` linear-forest subgraphs of `G`
+such that every edge of `G` lies in exactly one of them. -/
 def HasLinearForestDecomposition (G : SimpleGraph V) (k : ℕ) : Prop :=
-  ∃ D : Fin k → SimpleGraph V, (∀ i, IsLinearForest (D i)) ∧
+  ∃ D : Fin k → SimpleGraph V, (∀ i, IsLinearForest (D i) ∧ D i ≤ G) ∧
     ∀ u v, G.Adj u v ↔ ∃! i, (D i).Adj u v
 
 /-- The **linear arboricity** `la(G)`: the least number of linear forests into which the edges
@@ -82,24 +82,26 @@ theorem linear_arboricity_conjecture {V : Type} [Fintype V] (G : SimpleGraph V)
 /--
 **The linear arboricity conjecture for regular graphs.**
 
-Every `Δ`-regular graph has linear arboricity exactly `⌈(Δ + 1) / 2⌉`. Since a `Δ`-regular
+Every nonempty `Δ`-regular graph with `0 < Δ` has linear arboricity exactly
+`⌈(Δ + 1) / 2⌉`. Since a nonempty `Δ`-regular
 graph is easily seen to have linear arboricity strictly greater than `Δ / 2`, this form of
 the conjecture is equivalent to the general upper bound; see [AEH81].
 -/
 @[category research open, AMS 5]
-theorem linear_arboricity_conjecture.variants.regular {V : Type} [Fintype V]
-    (G : SimpleGraph V) [DecidableRel G.Adj] (Δ : ℕ) (hreg : ∀ v, G.degree v = Δ) :
+theorem linear_arboricity_conjecture.variants.regular {V : Type} [Fintype V] [Nonempty V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (Δ : ℕ) (hΔ : 0 < Δ)
+    (hreg : ∀ v, G.degree v = Δ) :
     linearArboricity G = (Δ + 2) / 2 := by
   sorry
 
 /--
 **Cubic graphs have linear arboricity two** (Akiyama–Exoo–Harary [AEH81]).
 
-The edges of every `3`-regular graph can be partitioned into two linear forests, and one
+The edges of every nonempty `3`-regular graph can be partitioned into two linear forests, and one
 linear forest is not enough.
 -/
 @[category research solved, AMS 5]
-theorem linear_arboricity_conjecture.variants.cubic {V : Type} [Fintype V]
+theorem linear_arboricity_conjecture.variants.cubic {V : Type} [Fintype V] [Nonempty V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hreg : ∀ v, G.degree v = 3) :
     linearArboricity G = 2 := by
   sorry
