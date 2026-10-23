@@ -45,7 +45,7 @@ def CochromaticColorable {n : ℕ} (G : SimpleGraph (Fin n)) (k : ℕ) : Prop :=
 
 /-- Every twelve-vertex graph has cochromatic number at most four, and some
 twelve-vertex graph has cochromatic number greater than three: $z(12)=4$. -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos758.lean"]
 theorem erdos_758 :
     (∀ G : SimpleGraph (Fin 12), CochromaticColorable G 4) ∧
