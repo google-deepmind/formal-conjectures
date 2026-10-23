@@ -26,7 +26,6 @@ public import FormalConjecturesUtil
 *References:*
 - [Ha71] Hajnal, A. *A negative partition relation.* Proc. Nat. Acad. Sci. U.S.A. 68 (1971),
   pp. 142–144.
-- [Va99] Vaughan, J.E. *Open problems in topology II*, problem 7.85 (1999).
 -/
 
 @[expose] public section
@@ -38,34 +37,18 @@ namespace Erdos1169
 
 universe u
 
-/-- Local copy of the binary ordinal Ramsey predicate $\alpha \to (\beta, \gamma)^2$:
-every 2-coloring of pairs from $\alpha$ admits a red clique of order type $\beta$ or a
-blue clique of order type $\gamma$.
-
-Will be replaced by `OrdinalRamsey` from `FormalConjecturesForMathlib/SetTheory/Ordinal/
-PartitionRelation.lean` once that lands (see PR #4195). -/
-def OrdinalRamsey (α β γ : Ordinal.{u}) : Prop :=
-  ∀ red blue : SimpleGraph α.ToType, IsCompl red blue →
-    (∃ s, red.IsClique s ∧ typeLT s = β) ∨
-    (∃ s, blue.IsClique s ∧ typeLT s = γ)
-
 /- ### The main open problem -/
 
 /--
-**Erdős Problem 1169** (problem of Erdős and Hajnal). For every finite $k$, does the
-negative ordinal Ramsey relation $\omega_1^2 \not\to (\omega_1^2, k)^2$ hold?
+Is it true that $\omega_1^2 \not\to (\omega_1^2, 3)^2$?
 
-That is: is there a 2-coloring of pairs from $\omega_1^2$ such that no subset of order
-type $\omega_1^2$ is red-monochromatic, and no $k$-element subset is blue-monochromatic?
-
-**Status.** NOT DISPROVABLE — open in general, but Hajnal [Ha71] proved it under the
-Continuum Hypothesis. See also [erdosproblems.com/592](https://www.erdosproblems.com/592)
-for the analogous question over countable ordinals.
+A problem of Erdős and Hajnal. Hajnal [Ha71] proved this assuming the continuum hypothesis.
+The source's displayed relation has blue target $3$; its introductory $k$ does not occur
+in that relation. See also [erdosproblems.com/592](https://www.erdosproblems.com/592).
 -/
-@[category research open, AMS 3]
+@[category research open, question, AMS 3]
 theorem erdos_1169 :
-    answer(sorry) ↔
-    ∀ k : ℕ, ¬ OrdinalRamsey ((ω_ 1) ^ (2 : ℕ)) ((ω_ 1) ^ (2 : ℕ)) (k : Ordinal) := by
+    ¬ OrdinalRamsey ((ω_ 1) ^ (2 : ℕ)) ((ω_ 1) ^ (2 : ℕ)) (3 : Ordinal) := by
   sorry
 
 /- ### Variants and known results -/
@@ -73,21 +56,23 @@ theorem erdos_1169 :
 namespace erdos_1169.variants
 
 /--
-**Single-$k$ form**. The Erdős–Hajnal question specialised to $k = 3$ (the literal form
-on erdosproblems.com): does $\omega_1^2 \not\to (\omega_1^2, 3)^2$ hold?
+The finite-blue-target form asks whether $\omega_1^2 \not\to (\omega_1^2, k)^2$
+for every $k \ge 3$. The restriction excludes $k \le 2$, where the positive relation holds.
+A colouring witnessing the negative relation with blue target $3$ also witnesses this form.
 -/
-@[category research open, AMS 3]
-theorem at_three : answer(sorry) ↔
-    ¬ OrdinalRamsey ((ω_ 1) ^ (2 : ℕ)) ((ω_ 1) ^ (2 : ℕ)) (3 : Ordinal) := by
+@[category research open, question, AMS 3]
+theorem finite_blue_target :
+    ∀ k : ℕ, 3 ≤ k →
+      ¬ OrdinalRamsey ((ω_ 1) ^ (2 : ℕ)) ((ω_ 1) ^ (2 : ℕ)) (k : Ordinal) := by
   sorry
 
 /--
 **Hajnal (1971), assuming CH.** Under the Continuum Hypothesis,
-$\omega_1^2 \not\to (\omega_1^2, k)^2$ holds for every finite $k$.
+$\omega_1^2 \not\to (\omega_1^2, k)^2$ holds for every finite $k \ge 3$.
 -/
 @[category research solved, AMS 3]
 theorem hajnal_under_ch (hCH : 𝔠 = ℵ_ 1) :
-    ∀ k : ℕ, ¬ OrdinalRamsey ((ω_ 1) ^ (2 : ℕ)) ((ω_ 1) ^ (2 : ℕ)) (k : Ordinal) := by
+    ∀ k : ℕ, 3 ≤ k → ¬ OrdinalRamsey ((ω_ 1) ^ (2 : ℕ)) ((ω_ 1) ^ (2 : ℕ)) (k : Ordinal) := by
   sorry
 
 end erdos_1169.variants
