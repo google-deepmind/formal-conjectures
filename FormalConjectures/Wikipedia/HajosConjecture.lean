@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Hajós' conjecture (1961) — disproved
@@ -32,6 +34,8 @@ import FormalConjecturesUtil
 * [Th05] Thomassen, C. (2005). "Some remarks on Hajós' conjecture." *J. Combin. Theory Ser. B*
   93, pp. 95--105.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
