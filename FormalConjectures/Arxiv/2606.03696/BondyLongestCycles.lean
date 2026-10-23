@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bondy's conjecture on longest cycles in highly connected graphs
@@ -31,6 +32,8 @@ longest cycle holds no long path.
 The case `k = 1` is Dirac's theorem and the case `k = 2` is the theorem of Nash-Williams. The
 case `k = 3` is proved. The cases `k ≥ 4` are open.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
@@ -53,9 +56,9 @@ because subtraction on `ℕ` is truncated. The two forms agree for `k ≥ 1`.
 
 A longest cycle is a cycle whose length is the circumference of `G`.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem bondy_conjecture :
-    answer(sorry) ↔ ∀ (k : ℕ), 1 ≤ k → ∀ (V : Type) [Fintype V] [DecidableEq V]
+    ∀ (k : ℕ), 1 ≤ k → ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj], IsKConnected G k →
       ((Fintype.card V : ℝ) + k * (k - 1)) / (k + 1) ≤ G.minDegree →
       ∀ (a : V) (C : G.Walk a a), C.IsCycle → C.length = G.circumference →
@@ -98,6 +101,22 @@ theorem bondy_conjecture.variants.three {G : SimpleGraph V} [DecidableRel G.Adj]
   sorry
 
 /--
+**Theorem 1.1 (Ma-Ning-Zhao, 2026), explicit threshold.** Bondy's conjecture holds when
+$n \geq 5k^2 + 7k$. This value of $n_k$ is given after Theorem 1.1 and in its reduction
+from Theorem 2.2.
+-/
+@[category research solved, AMS 5]
+theorem bondy_conjecture.variants.large_explicit :
+    ∀ k : ℕ, 1 ≤ k → ∀ (V : Type) [Fintype V] [DecidableEq V]
+      (G : SimpleGraph V) [DecidableRel G.Adj],
+      5 * k ^ 2 + 7 * k ≤ Fintype.card V → IsKConnected G k →
+      ((Fintype.card V : ℝ) + k * (k - 1)) / (k + 1) ≤ G.minDegree →
+      ∀ (a : V) (C : G.Walk a a), C.IsCycle → C.length = G.circumference →
+      ∀ (u v : offWalk C) (P : (G.induce (offWalk C)).Walk u v), P.IsPath →
+        P.support.length + 1 ≤ k := by
+  sorry
+
+/--
 **Theorem 1.1 (Ma-Ning-Zhao, 2026).** The conjecture holds for every graph with enough
 vertices. The full conjecture, for graphs of every size, stays open.
 -/
@@ -109,6 +128,7 @@ theorem bondy_conjecture.variants.large :
       ∀ (a : V) (C : G.Walk a a), C.IsCycle → C.length = G.circumference →
       ∀ (u v : offWalk C) (P : (G.induce (offWalk C)).Walk u v), P.IsPath →
         P.support.length + 1 ≤ k := by
-  sorry
+  intro k hk
+  exact ⟨5 * k ^ 2 + 7 * k, bondy_conjecture.variants.large_explicit k hk⟩
 
 end Arxiv.«2606.03696»

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Primitive roots of the form k² + 1
@@ -27,6 +28,8 @@ Zhi-Wei Sun has offered a prize of RMB 2,000 for the first proof.
 - [A239957](https://oeis.org/A239957)
 - Z.-W. Sun, "New observations on primitive roots modulo primes," arXiv:1405.0290 [math.NT], 2014.
 -/
+
+@[expose] public section
 
 namespace OeisA239957
 
