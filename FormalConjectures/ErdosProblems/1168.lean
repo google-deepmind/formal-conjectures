@@ -21,7 +21,10 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 1168
 
-*Reference:* [erdosproblems.com/1168](https://www.erdosproblems.com/1168)
+*References:*
+* [erdosproblems.com/1168](https://www.erdosproblems.com/1168)
+* [EHR65] Erdős, P., Hajnal, A. and Rado, R., *Partition relations for cardinal numbers*.
+  Acta Math. Acad. Sci. Hungar. (1965), pp. 93–196.
 -/
 
 @[expose] public section
@@ -29,8 +32,6 @@ public import FormalConjecturesUtil
 open Cardinal Ordinal SimpleGraph
 
 namespace Erdos1168
-
-universe u
 
 /--
 **Erdős Problem 1168.** Prove that
@@ -80,15 +81,6 @@ theorem GCH_implies_power_aleph_omega (hGCH : GCH) :
 @[category test, AMS 5]
 theorem aleph_omega_succ_is_successor : ℵ_ (ω + 1) = Order.succ (ℵ_ ω) := by
   exact (succ_aleph ω).symm
-
-/--
-**Monotonicity**: if `CardinalCountableColorRamsey κ` holds and `μ ≤ κ`, then
-`CardinalCountableColorRamsey μ` holds. (Requires ordinal embedding machinery.)
--/
-@[category research open, AMS 5]
-theorem mono_kappa {μ κ : Cardinal.{u}} (hle : μ ≤ κ)
-    (hκ : CardinalCountableColorRamsey κ) : CardinalCountableColorRamsey μ := by
-  sorry
 
 end erdos_1168.variants
 
