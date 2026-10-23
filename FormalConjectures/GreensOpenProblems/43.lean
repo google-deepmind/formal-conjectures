@@ -65,8 +65,8 @@ Let $N$ be a large integer. For each prime $p$ with $N^{0.51} \leq p < 2N^{0.51}
 residue $a(p) \in \mathbb{Z}/p\mathbb{Z}$. Is it true that
 $$\#\{n \in [N] : n \equiv a(p) \pmod{p} \text{ for some } p\} \gg N^{1-o(1)}?$$
 -/
-@[category research open, AMS 11]
-theorem green_43 : answer(sorry) ↔ SievedLowerBoundExp (0.51 : ℝ) := by
+@[category research open, question, AMS 11]
+theorem green_43 : SievedLowerBoundExp (0.51 : ℝ) := by
   sorry
 
 /-- The sieved set is a subset of `[1, N]`, so it always has at most `N` elements. -/
@@ -136,9 +136,9 @@ length more than `p^{0.49}`?
 The question is asymptotic, so it is stated for all sufficiently large primes `p` (see the
 large-prime discussion in [AP92, §2]); for small primes it fails trivially, e.g. `p = 3`, `A = {0}`.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_43.variants.alon_peres :
-    answer(sorry) ↔ ∀ᶠ p : ℕ in atTop, p.Prime → ∀ A : Finset (ZMod p), A.card = p / 2 →
+    ∀ᶠ p : ℕ in atTop, p.Prime → ∀ A : Finset (ZMod p), A.card = p / 2 →
     ∃ n : ZMod p, ∀ L : ℕ, (p : ℝ) ^ (0.49 : ℝ) < (L : ℝ) → ¬ HasGap (Dilate n A) L := by
   sorry
 
@@ -147,9 +147,8 @@ theorem green_43.variants.alon_peres :
 ranging over `N^{0.51} ≤ p < N^{0.52}`. Obtaining the lower bound `N^{1-o(1)}` here is no harder
 than Problem 43, but is not known.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_43.variants.range_N051_N052 :
-    answer(sorry) ↔
     SievedLowerBound (fun N => (N : ℝ) ^ (0.51 : ℝ)) (fun N => (N : ℝ) ^ (0.52 : ℝ)) := by
   sorry
 
@@ -157,9 +156,9 @@ theorem green_43.variants.range_N051_N052 :
 [Gr24, Comments to Problem 43] For the range `N^{0.51} ≤ p < N^{0.52}` there may even be a
 linear lower bound `c N`.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_43.variants.range_N051_N052_linear :
-    answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧ ∀ᶠ N : ℕ in atTop, ∀ a : ℕ → ℤ,
+    ∃ c : ℝ, 0 < c ∧ ∀ᶠ N : ℕ in atTop, ∀ a : ℕ → ℤ,
       c * N ≤ sievedCard N a ((N : ℝ) ^ (0.51 : ℝ)) ((N : ℝ) ^ (0.52 : ℝ)) := by
   sorry
 
@@ -170,9 +169,9 @@ does the lower bound `N^{1-o(1)}` hold for sieving primes in `[N^α, 2 N^α)` fo
 `0 < α < 1`? Problem 43 is the case `α = 0.51`; the regime `α < 1/2` is the solved special case
 `green_43.variants.general_exponent_lt_half`, while progress for `α ≈ 1` would imply Kakeya.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_43.variants.general_exponent :
-    answer(sorry) ↔ ∀ α : ℝ, 0 < α → α < 1 → SievedLowerBoundExp α := by
+    ∀ α : ℝ, 0 < α → α < 1 → SievedLowerBoundExp α := by
   sorry
 
 /--
