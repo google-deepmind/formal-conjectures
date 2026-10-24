@@ -112,6 +112,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Prod
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Shannon
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Saturation
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SizeRamsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
