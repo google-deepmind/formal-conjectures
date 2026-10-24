@@ -102,10 +102,16 @@ theorem erdos_1180.variants.lower_bound : ∃ K : ℝ, 0 < K ∧ ∀ ε : ℝ, 0
     K * ε⁻¹ ≤ C ε := by
   sorry
 
-/-- Is $C_\epsilon\leq \epsilon^{-1-o(1)}$? -/
+/--
+Is $C_\epsilon\leq \epsilon^{-1-o(1)}$? Here $C_\epsilon$ is the number of summands needed for
+every sufficiently large prime, as in `erdos_1180.variants.shparlinski` and
+`erdos_1180.variants.glibichuk`. For all primes no such bound holds, since when $p^\epsilon < 2$
+the only admissible denominator is $1$.
+-/
 @[category research open, question, AMS 11]
 theorem erdos_1180.variants.optimal : ∀ δ : ℝ, 0 < δ →
-    ∀ᶠ ε : ℝ in nhdsWithin 0 (Set.Ioi 0), (C ε : ℝ) ≤ ε⁻¹ ^ (1 + δ) := by
+    ∀ᶠ ε : ℝ in nhdsWithin 0 (Set.Ioi 0), ∃ P : ℕ, ∀ p : ℕ, P ≤ p → p.Prime → ∀ a : ZMod p,
+      ∃ s : Multiset ℕ, (s.card : ℝ) ≤ ε⁻¹ ^ (1 + δ) ∧ Represents ε p a s := by
   sorry
 
 end Erdos1180

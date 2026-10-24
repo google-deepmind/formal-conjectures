@@ -30,20 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos753
 
-/--
-A graph $G$ is $k$-choosable if for any assignment of a list of $k$ colours to each vertex of $G$
-(perhaps different lists for different vertices) a colouring of each vertex by a colour on its list
-can be chosen such that adjacent vertices receive distinct colours.
--/
-def IsKChoosable {V : Type*} (G : SimpleGraph V) (k : ℕ) : Prop :=
-  ∀ L : V → Finset ℕ, (∀ v, (L v).card = k) → ∃ C : G.Coloring ℕ, ∀ v, C v ∈ L v
-
-/--
-The list chromatic number $\chi_L(G)$, defined to be the minimal $k$ such that $G$ is
-$k$-choosable.
--/
-noncomputable def listChromaticNumber {V : Type*} (G : SimpleGraph V) : ℕ :=
-  sInf {k : ℕ | IsKChoosable G k}
+open SimpleGraph
 
 /--
 The list chromatic number $\chi_L(G)$ is defined to be the minimal $k$ such that for any

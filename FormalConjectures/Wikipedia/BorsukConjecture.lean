@@ -34,8 +34,9 @@ September 2026 an internal OpenAI model gave a compact counterexample in dimensi
 [OAI26]: the set of rank-one orthogonal projectors on $\mathbb{R}^4$, viewed in the
 nine-dimensional affine space of trace-one symmetric $4 \times 4$ matrices with the Frobenius
 metric, has diameter $\sqrt{2}$ and cannot be covered by $10$ sets of smaller diameter. The
-paper extends this to every dimension $n \geq 9$ (Corollary 7.1); only the case $n = 9$ is
-formalized. The cases $4 \leq n \leq 8$ are open. In dimension $4$, every bounded set can be
+paper extends this to every dimension $n \geq 9$ (Corollary 7.1); see
+`borsuk_conjecture.not_of_nine_le`. The linked Lean proof establishes the case $n = 9$.
+The cases $4 \leq n \leq 8$ are open. In dimension $4$, every bounded set can be
 partitioned into $9$ parts of smaller diameter [La82], and a 2026 preprint reduces this to $8$
 parts [TV26].
 
@@ -97,6 +98,27 @@ least two points.
 def HasBorsukCover (k : ℕ) (s : Set E) : Prop :=
   ∃ c : Fin k → Set E, s ⊆ ⋃ i, c i ∧ ∀ i, ediam (c i) < ediam s
 
+/-- An isometry preserves the existence of a cover by a fixed number of sets of
+strictly smaller diameter. -/
+@[category API, AMS 52]
+theorem HasBorsukCover.isometry_image_iff
+    {E F : Type*} [PseudoEMetricSpace E] [PseudoEMetricSpace F]
+    {f : E → F} (hf : Isometry f) {k : ℕ} {s : Set E} :
+    HasBorsukCover k (f '' s) ↔ HasBorsukCover k s := by
+  constructor
+  · rintro ⟨c, hcover, hsmall⟩
+    refine ⟨fun i => f ⁻¹' c i, ?_, ?_⟩
+    · intro x hx
+      obtain ⟨i, hi⟩ := Set.mem_iUnion.mp (hcover ⟨x, hx, rfl⟩)
+      exact Set.mem_iUnion.mpr ⟨i, hi⟩
+    · intro i
+      grw [(hf.ediam_image _).symm, ediam_mono (Set.image_preimage_subset _ _), hsmall, hf.ediam_image s]
+  · rintro ⟨c, hcover, hsmall⟩
+    refine ⟨fun i => f '' c i, ?_, by grind [hf.ediam_image]⟩
+    · rintro y ⟨x, hx, rfl⟩
+      obtain ⟨i, hi⟩ := Set.mem_iUnion.mp (hcover hx)
+      exact Set.mem_iUnion.mpr ⟨i, x, hi, rfl⟩
+
 /--
 **Borsuk's conjecture** in dimension `n`: every bounded subset of $\mathbb{R}^n$ with at
 least two points can be partitioned into $n + 1$ sets of strictly smaller diameter.
@@ -109,7 +131,7 @@ def BorsukConjecture (n : ℕ) : Prop :=
 that every bounded subset of $\mathbb{R}^n$ with at least two points can be partitioned into
 $n + 1$ sets of strictly smaller diameter for every such $n$.
 
-The conjecture is true for $n \leq 3$ and false for $n \geq 63$. It was disproved in dimension
+The conjecture is true for $n \leq 3$ and false for $n \geq 9$. It was disproved in dimension
 $9$ by an internal OpenAI model in September 2026 [OAI26]; see `borsuk_conjecture.not_nine` and
 the linked Lean proof. The cases $4 \leq n \leq 8$ remain open.
 -/
@@ -224,6 +246,13 @@ currently known to be false.
 @[category research solved, AMS 52, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/Borsuk/Main.lean#L117"]
 theorem borsuk_conjecture.not_nine : ¬ BorsukConjecture 9 := by
+  sorry
+
+/-- **Borsuk's conjecture** fails in every dimension $n \geq 9$. Corollary 7.1 of [OAI26]
+extends the dimension-nine counterexample by adjoining $n - 9$ points at diameter distance
+from one another and from the original set. -/
+@[category research solved, AMS 52]
+theorem borsuk_conjecture.not_of_nine_le (n : ℕ) (hn : 9 ≤ n) : ¬ BorsukConjecture n := by
   sorry
 
 end Borsuk

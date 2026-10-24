@@ -83,6 +83,35 @@ def PoissonConjectureFor (n : ℕ) : Prop :=
   ∀ φ : MvPolynomial (Fin n ⊕ Fin n) K →ₐ[K] MvPolynomial (Fin n ⊕ Fin n) K,
     IsPoissonEndomorphism φ → Function.Bijective φ
 
+omit [CharZero K] in
+/-- With one canonical pair, the Poisson endomorphism condition is one bracket equation. -/
+@[category API, AMS 17]
+theorem isPoissonEndomorphism_one_iff
+    (φ : MvPolynomial (Fin 1 ⊕ Fin 1) K →ₐ[K] MvPolynomial (Fin 1 ⊕ Fin 1) K) :
+    IsPoissonEndomorphism φ ↔
+      poissonBracket (φ (X (Sum.inl 0))) (φ (X (Sum.inr 0))) = 1 := by
+  constructor
+  · intro h
+    simpa using h (Sum.inl 0) (Sum.inr 0)
+  · intro h v w
+    rcases v with v | v <;> rcases w with w | w <;>
+      have hv : v = 0 := Subsingleton.elim _ _ <;>
+      have hw : w = 0 := Subsingleton.elim _ _ <;> subst v <;> subst w
+    · simp
+    · simpa using h
+    · rw [poissonBracket_swap]
+      simp [h]
+    · simp
+
+omit [CharZero K] in
+/-- The dimension-one conjecture asks for bijectivity from a single bracket equation. -/
+@[category API, AMS 14 17]
+theorem poissonConjectureFor_one_iff : PoissonConjectureFor K 1 ↔
+    ∀ φ : MvPolynomial (Fin 1 ⊕ Fin 1) K →ₐ[K] MvPolynomial (Fin 1 ⊕ Fin 1) K,
+      poissonBracket (φ (X (Sum.inl 0))) (φ (X (Sum.inr 0))) = 1 →
+        Function.Bijective φ := by
+  simp only [PoissonConjectureFor, isPoissonEndomorphism_one_iff]
+
 /--
 The **Poisson Conjecture** ([AvdE07], the characteristic zero case): for every `n`, every
 endomorphism of the `n`-th canonical Poisson algebra over a field `K` of characteristic

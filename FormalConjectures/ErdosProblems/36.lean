@@ -264,7 +264,8 @@ A lower bound of $\frac 1 4$.
 See [Some remarks on number theory (in Hebrew)](https://users.renyi.hu/~p_erdos/1955-13.pdf)
 by *Paul Erdős*, Riveon Lematematika 9, p.45-48,1955
 -/
-@[category textbook, AMS 5 11]
+@[category textbook, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/22db103d7b6109baca46f2623a7287b965a56936/erdos-36/Solution.lean#L52"]
 theorem minimum_overlap.variants.lower.erdos_1955 :
     (1 : ℝ) / 4 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
@@ -275,7 +276,8 @@ Scherk (written communication), see
 [On the minimal overlap problem of Erdös](https://eudml.org/doc/206397)
 by *Leo Moser*, Аста Аrithmetica V, p. 117-119, 1959
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/22db103d7b6109baca46f2623a7287b965a56936/erdos-36/Solution.lean#L56"]
 theorem minimum_overlap.variants.lower.scherk_1955 :
     1 - (√2)⁻¹ < atTop.liminf MinOverlapQuotient := by
   sorry
@@ -286,7 +288,8 @@ See [On the intersection of a linear set with the translation of its complement]
 by *Stanisław Świerczkowski1*, Colloquium Mathematicum 5(2), p. 185-197, 1958
 
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/22db103d7b6109baca46f2623a7287b965a56936/erdos-36/Solution.lean#L60"]
 theorem minimum_overlap.variants.lower.swierczkowski_1958 :
     (4 - 6 ^ ((1 : ℝ) / 2)) / 5 < atTop.liminf MinOverlapQuotient := by
   sorry
@@ -313,7 +316,8 @@ theorem minimum_overlap.variants.lower.white_2022 :
 The example (with $N$ even), $A = \{\frac N 2 + 1, \dots, \frac{3N}{2}\}$
 shows an upper bound of $\frac 1 2$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/22db103d7b6109baca46f2623a7287b965a56936/erdos-36/Solution.lean#L68"]
 theorem minimum_overlap.variants.upper.erdos_1955 :
     atTop.limsup MinOverlapQuotient ≤ (1 : ℝ) / 2 := by
   sorry

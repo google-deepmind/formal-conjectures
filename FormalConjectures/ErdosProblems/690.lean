@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/690](https://www.erdosproblems.com/690)
 - [Er79e] Erdős, Paul, _Some unconventional problems in number theory_. Astérisque (1979), 73-82.
 - [Ca25] S. Cambie, _Resolution of Erdős' problems about unimodularity_. arXiv:2501.10333 (2025).
+- [WC26] S. Wang and D. Crapis, _A Complete Answer to Erdős Problem 690_. arXiv:2605.08542 (2026).
 -/
 
 @[expose] public section
@@ -87,10 +88,12 @@ theorem erdos_690.variants.cambie_not_unimodal (k : ℕ) (hk : 4 ≤ k) (hk' : k
     ¬ IsUnimodalOnPrimes d := by
   sorry
 
-/-- Is $d_k(p)$ unimodular for any $k\geq 21$? -/
-@[category research open, question, AMS 11]
+/-- Is $d_k(p)$ unimodular for any $k\geq 21$?
+
+The answer is no: $d_k(p)$ is not unimodal for any $k \geq 4$ [WC26] (arXiv preprint). -/
+@[category research solved, question, AMS 11]
 theorem erdos_690.variants.large_k :
-    ∃ k ≥ 21, ∀ d : ℕ → ℝ,
+    ¬ ∃ k ≥ 21, ∀ d : ℕ → ℝ,
       (∀ p, p.Prime → (kthPrimeFactorSet k p).HasDensity (d p)) → IsUnimodalOnPrimes d := by
   sorry
 
