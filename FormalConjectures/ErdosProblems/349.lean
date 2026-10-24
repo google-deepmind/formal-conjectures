@@ -176,4 +176,23 @@ A partial result on Erdős Problem 349 in the same divisibility family as
 theorem three_halves_two_not_isGoodPair : ¬ IsGoodPair (3 / 2) 2 := by
   sorry
 
+/-- **Band $3/2 \le \alpha < \varphi$, $2 \le t\alpha < 3$: $(t,\alpha)$ is a good pair.**
+For $3/2 \le \alpha$ with $\alpha^2 < \alpha + 1$ (i.e. $\alpha < \varphi = \frac{1+\sqrt5}{2}$)
+and $2 \le t\alpha < 3$, the sequence $\lfloor t\alpha^n\rfloor$ is additively complete; in fact
+every positive integer is a sum of distinct terms. The first terms are $1, 2$ and $\le 4$, and from
+then on $\lfloor t\alpha^{n+1}\rfloor \le 2\lfloor t\alpha^n\rfloor$, so a doubling argument
+applies.
+
+A partial result on the open Erdős Problem 349: it covers only this band of parameters and does not
+decide `complete_for_alpha_in_Ioo_one_to_goldenRatio` or `erdos_349`.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/91ed80a8973de82f60ef7b278108e74aa6b3a168/FormalConjectures/ErdosProblems/349.lean#L1468"]
+theorem isGoodPair_of_band_two (t α : ℝ) (hα32 : 3 / 2 ≤ α) (hφ : α ^ 2 < α + 1)
+    (h2 : 2 ≤ t * α) (h3 : t * α < 3) : IsGoodPair t α := by
+  sorry
+
 end Erdos349
