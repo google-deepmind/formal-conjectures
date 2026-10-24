@@ -740,7 +740,10 @@ theorem ame_4_2_not_exists : ¬ ExistsAME 4 2 := by
   sorry
 
 /-- Source-backed benchmark statement: no $\mathrm{AME}(7,2)$ state exists; see Huber--Gühne--Siewert (2017) and the OQP page. -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-7-2/blob/249375965695a9b84ccacbb3d327eddd29d5e3a7/AME72/PauliRoute.lean#L166-L169",
+formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-7-2/blob/249375965695a9b84ccacbb3d327eddd29d5e3a7/AME72/FormalTarget.lean#L52-L53"]
 theorem ame_7_2_not_exists : ¬ ExistsAME 7 2 := by
   sorry
 
