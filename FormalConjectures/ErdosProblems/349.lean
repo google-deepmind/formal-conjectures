@@ -176,4 +176,159 @@ A partial result on Erdős Problem 349 in the same divisibility family as
 theorem three_halves_two_not_isGoodPair : ¬ IsGoodPair (3 / 2) 2 := by
   sorry
 
+/-- A set $A \subseteq \mathbb{Z}$ is *entirely additively complete* if **every** positive integer
+is a finite subset sum of $A$ (van Doorn's "entirely complete": $P(A) = \mathbb{N}_{\ge 1}$).
+Strictly stronger than `IsAddComplete`, which only requires all *sufficiently large* integers.
+
+This is a problem-local definition; it could be promoted to
+`FormalConjecturesForMathlib/NumberTheory/AdditivelyComplete.lean` (next to `IsAddComplete`) if
+the maintainers prefer it to live there. -/
+def IsEntirelyAddComplete (A : Set ℤ) : Prop :=
+  ∀ k : ℤ, 1 ≤ k → k ∈ subsetSums A
+
+/-- **Glue.** Entire completeness implies (eventual) completeness: if every $k \ge 1$ is a subset
+sum, then in particular all sufficiently large $k$ are. Textbook-level: an immediate consequence
+of the definitions, not itself a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
+theorem isEntirelyAddComplete_imp_isAddComplete {A : Set ℤ}
+    (h : IsEntirelyAddComplete A) : IsAddComplete A :=
+  Filter.eventually_atTop.mpr ⟨1, fun k hk => h k hk⟩
+
+/-- **Abstract single-gap criterion.** For a monotone, nonnegative integer sequence $a$, a single
+gap $\sum_{k < r+1} a_k < m < a_{r+1}$ with $m \ge 1$ already shows that $m$ is not a subset sum,
+hence the range of $a$ is not entirely additively complete.
+
+This is the pure-$\mathbb{Z}$ core of `alpha_gt_two_not_isGoodPair`'s
+`by_cases ∃ b ∈ B, a (r+1) ≤ b` case-split, with $m$ *given* rather than constructed via
+`Tendsto` (strictly easier, and enough for the band $5/3 \le \alpha < 2$ below). A textbook-level
+combinatorial fact about monotone integer sequences, phrased abstractly (no $t, \alpha$); the
+research content of Erdős Problem 349 is in its application below. -/
+@[category textbook, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/89b448c3644d1f6ca0f4eec0e381bde8daa317e1/FormalConjectures/ErdosProblems/349.lean#L574"]
+theorem entire_gap_not_complete (a : ℕ → ℤ) (hmono : Monotone a) (hnn : ∀ n, 0 ≤ a n)
+    (r : ℕ) (m : ℤ) (hm : 1 ≤ m)
+    (hlo : (∑ k ∈ Finset.range (r + 1), a k) < m) (hhi : m < a (r + 1)) :
+    ¬ IsEntirelyAddComplete (Set.range a) := by
+  sorry
+
+/-- The $0$-th term of $\lfloor t\alpha^n\rfloor$ is $\lfloor t\rfloor$ (since $\alpha^0 = 1$).
+Textbook-level: a one-line simplification, not a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
+theorem floorSeq_zero (t α : ℝ) : ⌊t * α ^ (0 : ℕ)⌋ = ⌊t⌋ := by
+  simp [pow_zero, mul_one]
+
+/-- The $1$-st term of $\lfloor t\alpha^n\rfloor$ is $\lfloor t\alpha\rfloor$. Textbook-level:
+a one-line simplification, not a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
+theorem floorSeq_one (t α : ℝ) : ⌊t * α ^ (1 : ℕ)⌋ = ⌊t * α⌋ := by
+  simp [pow_one]
+
+/-- $n \mapsto \lfloor t\alpha^n\rfloor$ is monotone when $0 \le t$ and $1 \le \alpha$.
+Textbook-level: elementary monotonicity of `Int.floor` composed with a monotone power. -/
+@[category textbook, AMS 11]
+theorem floorSeq_monotone (t α : ℝ) (ht : 0 ≤ t) (hα : 1 ≤ α) :
+    Monotone (fun n => ⌊t * α ^ n⌋) := by
+  intro n m hnm
+  simp only
+  apply Int.floor_le_floor
+  apply mul_le_mul_of_nonneg_left _ ht
+  exact pow_le_pow_right₀ hα hnm
+
+/-- $n \mapsto \lfloor t\alpha^n\rfloor$ is nonnegative when $0 \le t$ and $0 \le \alpha$.
+Textbook-level: an immediate `positivity` consequence, not a partial result on Erdős Problem 349. -/
+@[category textbook, AMS 11]
+theorem floorSeq_nonneg (t α : ℝ) (ht : 0 ≤ t) (hα : 0 ≤ α) (n : ℕ) :
+    0 ≤ (fun n => ⌊t * α ^ n⌋) n := by
+  simp only
+  rw [Int.floor_nonneg]
+  positivity
+
+/-- **Application inside the band $5/3 \le \alpha < 2$.** For $t \ge 3$ and $5/3 \le \alpha < 2$,
+the sequence $\lfloor t\alpha^n\rfloor$ is NOT entirely additively complete: the very first gap
+$\lfloor t\rfloor < \lfloor t\rfloor+1 < \lfloor t\alpha\rfloor$ already misses the positive
+integer $\lfloor t\rfloor+1$.
+
+This is the $r = 0$, $m = \lfloor t\rfloor + 1$ instance of `entire_gap_not_complete`. The gap
+inequality comes from $t\alpha \ge t\cdot(5/3) = t + 2t/3 \ge t + 2 \ge \lfloor t\rfloor + 2$.
+The constant $5/3$ (not $\varphi$) is the sharp clean threshold uniform in $t \ge 3$: at
+$\alpha = \varphi$, $t = 3$ gives $\lfloor 3\varphi\rfloor = 4 = \lfloor t\rfloor+1$, so the first
+gap closes. This theorem states entire incompleteness. For $t \ge 3$ and $5/3 \le \alpha < 2$,
+eventual incompleteness also follows from van Doorn's Corollary 1 (arXiv:2602.23394; his
+coefficient is $t/\alpha$) but is not formalised here. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/89b448c3644d1f6ca0f4eec0e381bde8daa317e1/FormalConjectures/ErdosProblems/349.lean#L665"]
+theorem floorSeq_not_entirelyComplete_of_le_two
+    (t α : ℝ) (ht : 3 ≤ t) (hα : 5 / 3 ≤ α) (hα2 : α < 2) :
+    ¬ IsEntirelyAddComplete (Set.range (fun n => ⌊t * α ^ n⌋)) := by
+  sorry
+
+/-- **Abstract doubling criterion** (van Doorn's Lemma 3, applied with base phase length $r = 0$).
+
+Let $a : \mathbb{N} \to \mathbb{Z}$ be a monotone integer sequence with $a_0 = 1$, satisfying the
+doubling bound $a_{n+1} \le 2 a_n$ for every $n$, and unbounded ($\forall M,\ \exists n,\ M \le
+a_n$). Then every positive integer is a finite subset sum of distinct values of $a$, i.e. the
+range of $a$ is entirely additively complete.
+
+A textbook-level combinatorial fact about monotone integer sequences (no $t, \alpha$); its
+application to $a_n = \lfloor \alpha^n \rfloor$ below (`isGoodPair_one_alpha_of_lt_three_halves`)
+is the research content of Erdős Problem 349.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category textbook, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/6e869b32eccf185e6c57f3f5cae571a8ce1bb4fb/FormalConjectures/ErdosProblems/349.lean#L708"]
+theorem entirely_complete_of_doubling (a : ℕ → ℤ)
+    (ha0 : a 0 = 1)
+    (hmono : Monotone a)
+    (hdouble : ∀ n, a (n + 1) ≤ 2 * a n)
+    (hub : ∀ M : ℤ, ∃ n, M ≤ a n) :
+    IsEntirelyAddComplete (Set.range a) := by
+  sorry
+
+/-- **Doubling bound for the floor of a power sequence.** For $1 < \alpha < 3/2$ and any
+$n \ge 0$, $\lfloor \alpha^{n+1} \rfloor \le 2 \lfloor \alpha^n \rfloor$.
+
+Proof: $\alpha^{n+1} = \alpha \cdot \alpha^n < \tfrac{3}{2}\alpha^n \le \tfrac{3}{2}(\lfloor
+\alpha^n\rfloor + 1) \le 2\lfloor \alpha^n\rfloor + 1$, using $\lfloor \alpha^n\rfloor \ge 1$
+(since $\alpha > 1$). A textbook-level floor/inequality fact. -/
+@[category textbook, AMS 11]
+theorem floor_pow_succ_le_two_mul_floor_pow (α : ℝ) (hα_lo : 1 < α) (hα_hi : α < 3 / 2)
+    (n : ℕ) :
+    ⌊α ^ (n + 1)⌋ ≤ 2 * ⌊α ^ n⌋ := by
+  have hpos : (0 : ℝ) < α ^ n := by positivity
+  have hone : (1 : ℝ) ≤ α ^ n := one_le_pow₀ hα_lo.le
+  have hm1 : (1 : ℤ) ≤ ⌊α ^ n⌋ := by rw [Int.le_floor]; push_cast; linarith
+  have hflo : (↑(⌊α ^ n⌋) : ℝ) ≤ α ^ n := Int.floor_le _
+  have hfle : α ^ n - 1 < (↑(⌊α ^ n⌋) : ℝ) := by linarith [Int.sub_one_lt_floor (α ^ n)]
+  rw [Int.floor_le_iff]
+  push_cast
+  have hsucc : α ^ (n + 1) = α * α ^ n := by ring
+  rw [hsucc]
+  have hm1r : (1 : ℝ) ≤ (↑(⌊α ^ n⌋) : ℝ) := by exact_mod_cast hm1
+  nlinarith [mul_pos (by linarith : (0 : ℝ) < α) hpos, hflo, hfle, hm1r]
+
+/-- **Erdős Problem 349, Proposition 6 (van Doorn), "if" direction, case $t = 1$.**
+
+For $1 < \alpha < 3/2$, the pair $(1, \alpha)$ is good: the sequence $\lfloor \alpha^n\rfloor$ is
+additively complete (in fact *entirely* additively complete — every $k \ge 1$ is a finite subset
+sum of distinct terms $\lfloor \alpha^n\rfloor$).
+
+A **partial result** on the open Erdős Problem 349: it complements
+`floorSeq_not_entirelyComplete_of_le_two` (which rules out $5/3 \le \alpha < 2$ for $t \ge 3$) and
+the integer-pair characterization `integer_isGoodPair_iff`. Proof: instantiate
+`entirely_complete_of_doubling` with $a_n = \lfloor \alpha^n\rfloor$, using
+`floor_pow_succ_le_two_mul_floor_pow` for the doubling bound.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/cepadugato/formal-conjectures/blob/6e869b32eccf185e6c57f3f5cae571a8ce1bb4fb/FormalConjectures/ErdosProblems/349.lean#L864"]
+theorem isGoodPair_one_alpha_of_lt_three_halves (α : ℝ) (hα_lo : 1 < α) (hα_hi : α < 3 / 2) :
+    IsGoodPair 1 α := by
+  sorry
+
 end Erdos349
