@@ -1,0 +1,25 @@
+# The pinned external tools, one machine-readable source of truth. "At or
+# after" prose is not a lock — and neither is a key nothing reads: every key
+# in this file has a consumer in the adapter or in CI, and a key that loses
+# its last consumer is deleted rather than kept for confidence.
+
+# Where a generated workspace is built and checked. These are LeanEval's pins,
+# not this repository's: a workspace is vendored into lean-eval and built
+# there, so it has to be buildable where it is going. The resolved component
+# pins below are authoritative; there is deliberately no lean-eval commit
+# here, because nothing could check the two statements against each other.
+[target]
+comparator_repository = "https://github.com/leanprover/comparator"
+lean_toolchain = "leanprover/lean4:v4.33.0"
+mathlib_revision = "6f1ef4e5dd604a435bddba4747b13970cd65d2a1"
+mathlib_git = "https://github.com/leanprover-community/mathlib4.git"
+comparator = "c0c5a52d2aff92b457c3e5ed4a68c1ebc5795809"
+lean4export = "15f6055e299ad5b89345e533cc2192f4cc00f659"
+
+# The extracted generator this repository's requests are written against.
+# `schemas/request-v1.schema.json` and `response-v1.schema.json` at this
+# revision are the normative wire format; a bump here is a contract change
+# and has to survive the seam round-trip test.
+[generator]
+repository = "https://github.com/leanprover/lean-eval-generator"
+rev = "77373a539b31f8f304c852f288d7d8469cceebff"
