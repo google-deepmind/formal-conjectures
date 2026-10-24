@@ -1,0 +1,31 @@
+Source: https://www.erdosproblems.com/latex/97
+Retrieved: 2026-09-08
+Original response SHA256: 12984b37421242663943a9af7fce5176cae0ce96b4b77cd8ad1cb221b4a744e0
+Extraction: complete problem box, no FC reviews.
+
+Does every convex polygon have a vertex with no other $4$ vertices equidistant from it?
+Erd\H{o}s originally conjectured this (in \cite{Er46b}) with no $3$ vertices equidistant, but Danzer found a {IMAGE=97-Danzer,convex polygon} on 9 points such that every vertex has three vertices equidistant from it (but this distance depends on the vertex). Danzer's construction is explained in \cite{Er87b}. Fishburn and Reeds \cite{FiRe92} have found a convex polygon on 20 points such that every vertex has three vertices equidistant from it (and this distance is the same for all vertices).
+If this fails for $4$, perhaps there is some constant for which it holds? In \cite{Er75f} Erd\H{o}s claimed that Danzer proved that this false for every constant - in fact, for any $k$ there is a convex polygon such that every vertex has $k$ vertices equidistant from it. Since this claim was not repeated in later papers, presumably Erd\H{o}s was mistaken here.
+Erd\H{o}s suggested this as an approach to solve
+[96]
+. Indeed, if this problem holds for $k+1$ vertices then, by induction, this implies an upper bound of $kn$ for
+[96]
+.
+The answer is no if we omit the requirement that the polygon is convex (I thank Boris Alexeev and Dustin Mixon for pointing this out), since for any $d$ there are graphs with minimum degree $d$ which can be embedded in the plane such that each edge has length one (for example one can take the $d$-dimensional hypercube graph on $2^d$ vertices). One can then connect the vertices in a cyclic order so that there are no self-intersections and no three consecutive vertices on a line, thus forming a (non-convex) polygon.
+References
+[Er46b] Erd\H{o}s, P.,
+On sets of distances of {$n$} points
+. Amer. Math. Monthly (1946), 248--250.
+  
+  [Er75f] Erd\H{o}s, Paul,
+On some problems of elementary and combinatorial geometry
+. Ann. Mat. Pura Appl. (4) (1975), 99-108.
+  
+  [Er87b] Erd\H{o}s, P.,
+Some combinatorial and metric problems in geometry
+. Intuitive geometry (Si\'{o}fok, 1985) (1987), 167-177.
+  
+  [FiRe92] Fishburn, P. C. and Reeds, J. A.,
+Unit distances between vertices of a convex polygon
+. Comput. Geom. (1992), 81-91.
+Back to the problem
