@@ -32,6 +32,9 @@ public import FormalConjecturesUtil
   837-840.
 - [MaCh16] Ma, Mi-Mi and Chen, Yong-Gao, On {$d$}-complete sequences of integers. J. Number Theory
   (2016), 1--12.
+- [PM26] Principia Math, *Antichain subset sums in rank-three multiplicative semigroups* (2026),
+  and *Erdős 123$^{+}$: distinct $2^k3^\ell5^m$ summands within a factor $1+\varepsilon$* (2026).
+  https://github.com/antoshashakov/Principia-Math-Solutions/tree/30d7e5327cdf5cda55137d70abec8f4d3b7ff2b3/erdos123
 -/
 
 @[expose] public section
@@ -114,8 +117,14 @@ theorem erdos_123.variants.powers_2_3 : IsDComplete (↑(powers 2) * ↑(powers 
 In [Er92b] Erdős makes the stronger conjecture (for $a=2$, $b=3$, and $c=5$) that, for any
 $\epsilon>0$, all large integers $n$ can be written as the sum of distinct integers
 $b_1<\cdots <b_t$ of the form $2^k3^l5^m$ where $b_t<(1+\epsilon)b_1$.
+
+This was proved by Principia Math [PM26] as a corollary of their band theorem: for pairwise coprime
+$a, b, c > 1$ and every real $1 < \rho < \min(a, b, c)$, every large integer is a sum of
+distinct elements of $\{a^k b^l c^m\} \cap [x, \rho x)$ for some $x$, none dividing another.
+Taking $(a, b, c) = (2, 3, 5)$ and $\rho = \min(1 + \epsilon, 3/2)$ gives the statement below.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/MendozaLab/erdos-experiments/blob/2ae29f91b18e370f1a299ffb952153260ca55c95/proofs/erdos123-snug/SnugBridge.lean"]
 theorem erdos_123.variants.powers_2_3_5_snug :
     ∀ ε > 0, ∀ᶠ n in atTop,
       ∃ A : Finset ℕ, (A : Set ℕ) ⊆ ↑(powers 2) * ↑(powers 3) * ↑(powers 5) ∧ IsSnug ε A ∧
