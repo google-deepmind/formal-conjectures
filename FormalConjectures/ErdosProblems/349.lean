@@ -176,4 +176,30 @@ A partial result on Erdős Problem 349 in the same divisibility family as
 theorem three_halves_two_not_isGoodPair : ¬ IsGoodPair (3 / 2) 2 := by
   sorry
 
+/-- **A wider near-one strip for $t \ge 2$.** Let $t \ge 2$ and let $j \ge 1$ be an integer with
+$j^2 \ge \lfloor t\rfloor - 1$. Then for every $1 < \alpha \le 1 + 1/(\lfloor t\rfloor + 2j)$ the
+sequence $\lfloor t\alpha^n\rfloor$ is additively complete.
+
+The method is the one of Proposition 9 of van Doorn (arXiv:2602.23394): the sums of exactly $j$
+distinct elements of a block of consecutive integers fill an interval, two consecutive such
+layers abut, and the resulting run of subset sums feeds a Brown-type induction. The constant is
+slightly better: on the grid $t \in \{2, 2.25, \ldots, 300\}$ (steps of $1/4$), about $40$
+boundary points (all with $t \ge 65$) are covered here but by neither Proposition 8 nor
+Proposition 9 of that paper (numerical estimate, not proved).
+
+This is a partial result: it widens a strip around $\alpha = 1$ and does not decide
+`complete_for_alpha_in_Ioo_one_to_goldenRatio` or `erdos_349`, which remain open. The completeness
+is eventual only: for $t \ge 2$ every term is at least $2$, so $1$ is never a subset sum.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/8f0950bce1370159520332ec4f51af7d2f27aa83/FormalConjectures/ErdosProblems/349.lean#L803"]
+theorem isGoodPair_of_two_le_layer_sq (t α : ℝ) (j : ℕ)
+    (ht : 2 ≤ t) (hj : 1 ≤ j) (hsq : ⌊t⌋ - 1 ≤ (j : ℤ) * (j : ℤ))
+    (hα1 : 1 < α) (hα : α ≤ 1 + 1 / ((⌊t⌋ + 2 * (j : ℤ) : ℤ) : ℝ)) :
+    IsGoodPair t α := by
+  sorry
+
 end Erdos349
