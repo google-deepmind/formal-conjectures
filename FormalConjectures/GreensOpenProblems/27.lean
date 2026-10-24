@@ -64,10 +64,14 @@ theorem green_27.equivalent :
   green_27.equivalent.answer ~[primesAtTop] m := by
   sorry
 
-def green_27.lower.answer : ℕ → ℝ := fun p ↦ Real.log p * Real.log (Real.log p)
+noncomputable def green_27.lower.answer : ℕ → ℝ := fun p ↦ Real.log p * Real.log (Real.log p)
 
-/-- Propose a better lower bound along primes. -/
-@[category research open, question value, AMS 5 11]
+/-- Propose a better lower bound along primes.
+
+Cao and Yuan [CY26, Theorem 1.1] prove $m(p) \gg \log p \log \log p$. This beats `lowerBest`,
+since $\sqrt{\log \log \log p} / \log \log \log \log p = o(\log \log p)$. The exact order of
+$m(p)$ remains open. -/
+@[category research solved, question value, AMS 5 11]
 theorem green_27.lower :
     (lowerBest =o[primesAtTop] green_27.lower.answer) ∧ (green_27.lower.answer =O[primesAtTop] m)
       := by
