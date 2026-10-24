@@ -176,4 +176,24 @@ A partial result on Erdős Problem 349 in the same divisibility family as
 theorem three_halves_two_not_isGoodPair : ¬ IsGoodPair (3 / 2) 2 := by
   sorry
 
+/-- **The pair $(t, 17/11)$ is good for $363/289 \le t < 22/17$.** For $\alpha = 17/11$ and
+$t \in [3/\alpha^2, 2/\alpha)$, the sequence $\lfloor t\alpha^n\rfloor$ is additively complete.
+The proof is an application of van Doorn's method (arXiv:2602.23394, \S4: a tiling of the
+parameter range and a finite certificate checking an initial window of subset sums, followed by a
+doubling/Brown-type induction) to a case that is not treated in that paper.
+
+This is a partial result: it covers only this interval of $t$ at the single value
+$\alpha = 17/11$ and does not decide `complete_for_alpha_in_Ioo_one_to_goldenRatio` or
+`erdos_349`, which remain open. The completeness is eventual only (all sufficiently large integers):
+the sequence begins $1, 1, 3, \ldots$ and never represents $2$.
+
+The proof is recorded via the `formal_proof` mechanism rather than written inline, as it exceeds
+the repository's proof-length guideline. -/
+@[category research solved, AMS 11,
+  formal_proof using formal_conjectures at
+  "https://github.com/cepadugato/formal-conjectures/blob/3d252fc5a9e96f96016612fef4ec3e73e1b328aa/FormalConjectures/ErdosProblems/349.lean#L509"]
+theorem isGoodPair_of_z3_17_11 (t : ℝ) (h1 : 363 / 289 ≤ t) (h2 : t < 22 / 17) :
+    IsGoodPair t (17 / 11) := by
+  sorry
+
 end Erdos349
