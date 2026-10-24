@@ -59,7 +59,10 @@ Achieving density $1/3$ is trivial, taking $A$ to be all multiples of $3$.
 @[category research solved, AMS 11]
 theorem erdos_1136.variants.multiples_of_three :
     AvoidsPowersOfTwo {n : ℕ | 3 ∣ n} ∧ Set.HasDensity {n : ℕ | 3 ∣ n} (1 / 3) := by
-  sorry
+  refine ⟨fun a ha b hb k hk => ?_, by simpa using Nat.hasDensity_multiples (k := 3) (by norm_num)⟩
+  have h3 : 3 ∣ 2 ^ k := hk ▸ dvd_add ha hb
+  have h32 : 3 ∣ 2 := Nat.Prime.dvd_of_dvd_pow Nat.prime_three h3
+  omega
 
 /--
 Müller [Mu11] settled this question in the affirmative: in fact one can take $A$ to be
