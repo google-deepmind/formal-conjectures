@@ -347,6 +347,11 @@ theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nels
 - Once the question is answered, fill in the definition, for example
   `def foo.answer : ℕ := 5`, and leave the statement unchanged. The proof then
   proves the statement for that value.
+- A linter checks that no statement depends on `sorry` except through an
+  `answer` definition. A definition built from a theorem proved by `sorry`,
+  for example with `Nat.find`, must not appear in a statement.
+- Do not use the `answer(sorry)` elaborator for new problems. It is being
+  replaced by this convention.
 
 ### Problems that require answers
 

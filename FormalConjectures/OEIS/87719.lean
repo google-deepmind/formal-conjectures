@@ -53,6 +53,9 @@ theorem a_exists (n : ℕ) : ∃ m, countExceeding n m > countNotExceeding n m :
 noncomputable def a (n : ℕ) : ℕ :=
   Nat.find (a_exists n)
 
+-- The definition `a` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /-- a(1) = 15. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 15 := by
@@ -61,6 +64,9 @@ theorem a_1 : a 1 = 15 := by
   intro m hm
   interval_cases m <;> decide +native
 
+-- The definition `a` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /-- a(2) = 27. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 27 := by
@@ -69,6 +75,9 @@ theorem a_2 : a 2 = 27 := by
   intro m hm
   interval_cases m <;> decide +native
 
+-- The definition `a` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /-- a(3) = 57. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 57 := by
@@ -77,6 +86,9 @@ theorem a_3 : a 3 = 57 := by
   intro m hm
   interval_cases m <;> decide +native
 
+-- The definition `a` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /-- We have the following formula: $a(n) = 3^n + 3 * 2^n + 6$ for $n \geq 1$. -/
 @[category textbook, AMS 11,
   formal_proof using formal_conjectures at

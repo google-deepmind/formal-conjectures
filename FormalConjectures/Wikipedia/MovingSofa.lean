@@ -202,6 +202,9 @@ end GerversSofa
 def gerversSofa : Set ℝ² :=
   sofaOfRotateTranslatePath GerversSofa.p
 
+-- The definition `gerversSofa` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /-- Gerver's concrete sofa admits a valid hallway motion. -/
 @[category research solved, AMS 49,
   formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0",
@@ -236,6 +239,9 @@ def sofaConstant_eq.answer : ℝ≥0∞ := volume gerversSofa
 theorem sofaConstant_eq : sofaConstant = sofaConstant_eq.answer := by
   sorry
 
+-- The definition `gerversSofa` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
 @[category research solved, AMS 49,
   formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
@@ -245,6 +251,9 @@ theorem sofaConstant_eq : sofaConstant = sofaConstant_eq.answer := by
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
+-- The definition `gerversSofa` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /--
 Gerver's sofa is the unique sofa that attains the sofa constant, up to a rigid motion.
 
