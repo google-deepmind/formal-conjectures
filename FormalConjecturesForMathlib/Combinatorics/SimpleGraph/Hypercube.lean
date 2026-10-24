@@ -39,6 +39,9 @@ def hypercube (n : ℕ) : SimpleGraph (Fin n → Bool) where
   symm.symm _ _ := by simp [eq_comm]
   loopless.irrefl _ := by simp
 
+instance (n : ℕ) : DecidableRel (hypercube n).Adj :=
+  fun u v ↦ inferInstanceAs (Decidable (#{i | u i ≠ v i} = 1))
+
 @[simp]
 theorem hypercube_adj {n : ℕ} {u v : Fin n → Bool} :
     (hypercube n).Adj u v ↔ #{i | u i ≠ v i} = 1 := Iff.rfl
