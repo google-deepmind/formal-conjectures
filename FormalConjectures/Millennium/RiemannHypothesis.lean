@@ -28,6 +28,9 @@ posed by the Clay Mathematics Institute.
 The Generalized Riemann Hypothesis extends this to Dirichlet $L$-functions of primitive
 Dirichlet characters.
 
+The quasi-Riemann hypothesis is the weaker claim that there is a zero-free half-plane
+$\operatorname{Re}(s) > \theta$ for some $\theta < 1$.
+
 Note: the **Extended Riemann Hypothesis** (ERH) for Dedekind zeta functions is intentionally
 **not** stated here. Mathlib's `NumberField.dedekindZeta` is the naive Dirichlet series
 (`LSeries`), not a meromorphic continuation; outside the region of absolute convergence
@@ -42,6 +45,8 @@ continuation of the Dedekind zeta function.
 - [Wikipedia: Dedekind zeta function](https://en.wikipedia.org/wiki/Dedekind_zeta_function)
 - J. Neukirch, *Algebraic Number Theory*, Springer (Grundlehren 322), 1999, Chapter VII, §5.
 - D. A. Marcus, *Number Fields*, Springer (GTM 81), 1977, Chapter VII.
+- OpenAI, *The Quasi-Riemann Hypothesis: A Zero-Free Half-Plane $\Re(s)>7/8$* (2026),
+  [preprint](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/paper.pdf)
 -/
 
 @[expose] public section
@@ -94,6 +99,43 @@ theorem implies_riemannHypothesis :
     RiemannHypothesis, riemannZeta_one_ne_zero])
 
 end GRH
+
+namespace QuasiRiemannHypothesis
+
+/-- The **quasi-Riemann hypothesis**: there is $\theta < 1$ such that the Riemann zeta function
+has no zeros in the half-plane $\operatorname{Re}(s) > \theta$. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/Nonvanishing.lean#L29"]
+theorem quasi_riemann_hypothesis : ∃ θ < 1, ∀ s : ℂ, θ < s.re → riemannZeta s ≠ 0 := by
+  sorry
+
+/-- The **quasi-Riemann hypothesis for Dirichlet $L$-functions**: there is $\theta < 1$ such that
+no Dirichlet $L$-function $L(\chi, s)$ has a zero in the half-plane $\operatorname{Re}(s) > \theta$.
+
+The bound `θ` is uniform in the modulus `q` and the character `χ`. The point $s = 1$ is
+excluded for the principal character, where $L(\chi, s)$ has a pole. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/Nonvanishing.lean#L19"]
+theorem quasi_generalized_riemann_hypothesis :
+    ∃ θ < 1, ∀ q [NeZero q] (χ : DirichletCharacter ℂ q) (s : ℂ),
+      θ < s.re → ¬(χ = 1 ∧ s = 1) → χ.LFunction s ≠ 0 := by
+  sorry
+
+/-- The Riemann hypothesis implies the quasi-Riemann hypothesis with $\theta = 1/2$. -/
+@[category test, AMS 11]
+theorem of_riemannHypothesis (h : RiemannHypothesis) : type_of% quasi_riemann_hypothesis :=
+  ⟨1 / 2, by norm_num, fun s hs hz => hs.ne' <| h s hz
+    (by rintro ⟨n, rfl⟩; norm_num at hs; linarith) fun h1 => riemannZeta_one_ne_zero (h1 ▸ hz)⟩
+
+/-- The Dirichlet version implies the version for $\zeta$, taking $q = 1$. -/
+@[category test, AMS 11]
+theorem of_quasi_generalized_riemann_hypothesis
+    (h : type_of% quasi_generalized_riemann_hypothesis) : type_of% quasi_riemann_hypothesis :=
+  let ⟨θ, hθ, H⟩ := h
+  ⟨θ, hθ, fun s hs => (eq_or_ne s 1).elim (· ▸ riemannZeta_one_ne_zero)
+    fun hs1 => by simpa using H 1 1 s hs (by simp [hs1])⟩
+
+end QuasiRiemannHypothesis
 
 /- NOTE: Extended Riemann Hypothesis
 ## Extended Riemann Hypothesis
