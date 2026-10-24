@@ -76,15 +76,7 @@ theorem integralMeansSpectrum_id (τ : ℝ) : integralMeansSpectrum id τ = 0 :=
     simpa using ((continuous_sub_left (1 : ℝ)).tendsto 1).mono_left nhdsWithin_le_nhds
   have habs : Tendsto (fun r : ℝ => |Real.log (1 - r)|) (𝓝[Iio 1] (1 : ℝ)) atTop :=
     tendsto_abs_atBot_atTop.comp (Real.tendsto_log_nhdsGT_zero.comp hsub)
-  have key : ∀ r : ℝ, (∫ θ in Ioc (-Real.pi) Real.pi,
-      ‖deriv (id : ℂ → ℂ) (r • Complex.exp (Complex.I * θ))‖ ^ τ) = 2 * Real.pi := fun r => by
-    simp only [deriv_id, norm_one, Real.one_rpow, MeasureTheory.setIntegral_const,
-      smul_eq_mul, mul_one,
-      Real.volume_real_Ioc_of_le (by linarith [Real.pi_pos] : -Real.pi ≤ Real.pi)]
-    ring
-  unfold integralMeansSpectrum
-  simp only [key]
-  exact (tendsto_const_nhds.div_atTop habs).limsup_eq
+  simp [integralMeansSpectrum, (tendsto_const_nhds.div_atTop habs).limsup_eq]
 
 /-- Brennan's conjecture, part 1: $B(-2) = 1$.
 
