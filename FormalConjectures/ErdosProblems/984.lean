@@ -33,7 +33,7 @@ namespace Erdos984
 /-- The $k$-term arithmetic progression $\{a,a+d,\ldots,a+(k-1)d\}$ is monochromatic under the
 colouring `c`. -/
 def IsMonochromaticAP (c : ℕ → Fin 2) (a d k : ℕ) : Prop :=
-  ∃ i, ∀ j < k, c (a + j * d) = i
+  ∃ S : Set ℕ, S.IsAPOfLengthWith k a d ∧ ∃ i, ∀ n ∈ S, c n = i
 
 /--
 Can $\mathbb{N}$ be $2$-coloured such that if
@@ -46,10 +46,9 @@ replaced by a very slowly growing function $h(a)$. Erdős reports that he can co
 colouring with the bound $k\ll a^{1-c}$ for some absolute constant $c>0$. Zach Hunter has proved
 the answer is yes.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos984.lean#L39"]
-theorem erdos_984 : answer(True) ↔
-    ∃ c : ℕ → Fin 2, ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, 0 < C ∧
+theorem erdos_984 : ∃ c : ℕ → Fin 2, ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, 0 < C ∧
       ∀ a d k : ℕ, 0 < a → 0 < d → IsMonochromaticAP c a d k →
         (k : ℝ) ≤ C * (a : ℝ) ^ ε := by
   sorry

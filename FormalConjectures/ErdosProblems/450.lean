@@ -49,6 +49,8 @@ def IsSufficientScale (Y : ℝ → ℕ → ℕ) : Prop :=
 noncomputable def windowThreshold (ε : ℝ) (n : ℕ) : ℕ∞ :=
   ⨅ y : {y : ℕ // ∀ z ≥ y, UniformlySparse ε n z}, (y.1 : ℕ∞)
 
+def erdos_450.answer : ℕ∞ := sorry
+
 /--
 How large must $y=y(\epsilon,n)$ be such that the number of integers in
 $(x,x+y)$ with a divisor in $(n,2n)$ is at most $\epsilon y$?
@@ -58,8 +60,8 @@ $y(\epsilon,n)$ is the least such threshold (or $\infty$ if there is none).
 A **linear** scale $y \le C(\epsilon) n$ is known to suffice for fixed $\epsilon$
 and all large $n$ (see `erdos_450.linear_scale_suffices`).
 -/
-@[category research open, AMS 11]
-theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) : windowThreshold ε n = answer(sorry) := by
+@[category research open, question value, AMS 11]
+theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) : windowThreshold ε n = erdos_450.answer := by
   sorry
 
 /--
