@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,9 +37,10 @@ open Filter Real Topology
 
 namespace Erdos783
 
-/-- The integers in `{1, …, N}` not divisible by any element of `A`. -/
-def unsieved (N : ℕ) (A : Finset ℕ) : Finset ℕ :=
-  (Finset.Icc 1 N).filter fun m ↦ ∀ a ∈ A, ¬ a ∣ m
+open scoped Classical in
+/-- The positive integers up to `N` in the common sifted set. -/
+noncomputable def unsieved (N : ℕ) (A : Finset ℕ) : Finset ℕ :=
+  (Finset.Icc 1 N).filter fun m ↦ m ∈ sievedSet (A : Set ℕ)
 
 /-- A set `A ⊆ {2, …, N}` is *admissible* for the budget `C` if its elements are pairwise coprime
 and `∑_{a ∈ A} 1/a ≤ C`. -/
@@ -50,13 +51,6 @@ def IsAdmissible (C : ℝ) (N : ℕ) (A : Finset ℕ) : Prop :=
 set `A ⊆ {2, …, N}` with reciprocal sum at most `C`. -/
 noncomputable def minUnsieved (C : ℝ) (N : ℕ) : ℕ :=
   sInf {k | ∃ A, IsAdmissible C N A ∧ k = (unsieved N A).card}
-
-/-- `ρ` is the Dickman–de Bruijn function: it is continuous on `[0, ∞)`, equal to `1` on `[0, 1]`,
-and satisfies the delay differential equation `u ρ'(u) = -ρ(u - 1)` for `u > 1`. These conditions
-determine `ρ` uniquely on `[0, ∞)`. -/
-def IsDickman (ρ : ℝ → ℝ) : Prop :=
-  ContinuousOn ρ (Set.Ici 0) ∧ (∀ u ∈ Set.Icc (0 : ℝ) 1, ρ u = 1) ∧
-    ∀ u > 1, HasDerivAt ρ (-ρ (u - 1) / u) u
 
 open scoped Classical in
 /-- The block of the largest primes `q₁ > q₂ > ⋯ > q_k` up to `N` with `∑ 1/q_i ≤ C`, `k`
@@ -121,9 +115,9 @@ Chojecki has proved that this is the extremal set when $C\leq\log 2$. Hunter has
 are cases where it is not the literal extremal set, since small improving perturbations are
 possible.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_783.variants.prime_block :
-    answer(sorry) ↔ ∀ C : ℝ, 0 < C → ∀ᶠ N : ℕ in atTop,
+    ∀ C : ℝ, 0 < C → ∀ᶠ N : ℕ in atTop,
       (unsieved N (primeBlock C N)).card = minUnsieved C N := by
   sorry
 
