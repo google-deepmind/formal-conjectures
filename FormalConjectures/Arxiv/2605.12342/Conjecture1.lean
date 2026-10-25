@@ -105,7 +105,21 @@ single element.
 @[category research solved, AMS 20]
 theorem conjecture_1.variants.rank_2_2 :
     ∃ g : gammaSubgroup 2 2, Subgroup.closure {g} = ⊤ := by
-  sorry
+  have hperm : ∀ a : Equiv.Perm (Fin 2), a = 1 ∨ a = Equiv.swap 0 1 := by decide
+  have hs : sign (Equiv.swap (0 : Fin 2) 1) = -1 := sign_swap (by decide)
+  have hg : ((Equiv.swap (0 : Fin 2) 1, Equiv.swap (0 : Fin 2) 1) :
+      Equiv.Perm (Fin 2) × Equiv.Perm (Fin 2)) ∈ gammaSubgroup 2 2 := by
+    simp [gammaSubgroup, signDiffHom, MonoidHom.mem_ker]
+  refine ⟨⟨_, hg⟩, ?_⟩
+  rw [Subgroup.eq_top_iff']
+  rintro ⟨⟨a, b⟩, hx⟩
+  have hmem : (⟨_, hg⟩ : gammaSubgroup 2 2) ∈ Subgroup.closure {(⟨_, hg⟩ : gammaSubgroup 2 2)} :=
+    Subgroup.subset_closure rfl
+  rcases hperm a with rfl | rfl <;> rcases hperm b with rfl | rfl
+  · exact (Subgroup.closure _).one_mem
+  · simp [gammaSubgroup, signDiffHom, MonoidHom.mem_ker, hs] at hx
+  · simp [gammaSubgroup, signDiffHom, MonoidHom.mem_ker, hs] at hx
+  · exact hmem
 
 /--
 It is known that $\Gamma_{3 \oplus 3}$ has rank $3$: it is not $2$-generated.
