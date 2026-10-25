@@ -30,9 +30,6 @@ namespace Erdos489
 open Filter
 open scoped Topology
 
-/-- The set of positive integers not divisible by any element of `A`. -/
-def sievedSet (A : Set ℕ) : Set ℕ := {n : ℕ | 0 < n ∧ ∀ a ∈ A, ¬(a ∣ n)}
-
 /-- The squared-gap sum `∑_{b_i < x} (b_{i+1} - b_i)²`, where `b_i` enumerates the positive
 integers not divisible by any element of `A`. -/
 noncomputable def GapSumSq (A : Set ℕ) (x : ℕ) : ℝ :=
@@ -54,8 +51,8 @@ and the existence of this limit was proved by Erdős.
 
 See also [208].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-489/F061/Erdos489.lean"]
-theorem erdos_489 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-489/F061/Erdos489.lean"]
+theorem erdos_489 :
     ∀ (A : Set ℕ),
       (fun x : ℕ => (((Finset.Icc 1 x).filter (· ∈ A)).card : ℝ)) =o[atTop]
         (fun x : ℕ => (x : ℝ).sqrt) →

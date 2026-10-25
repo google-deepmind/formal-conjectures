@@ -37,21 +37,6 @@ open Polynomial Set
 namespace Erdos1215
 
 /--
-A polynomial `P` is *admissible* if `P(0) = 1`, `P` is nonconstant, and all its roots lie on the
-unit circle.
--/
-def IsAdmissible (P : ℂ[X]) : Prop :=
-  P.eval 0 = 1 ∧ 0 < P.natDegree ∧ ∀ z : ℂ, P.IsRoot z → ‖z‖ = 1
-
-/--
-`γ : [0, 1] → ℂ` is a path in `{z : |P(z)| < 1}` connecting `0` to the unit circle. Since
-`|P(0)| = 1`, the strict inequality is only required away from the starting point.
--/
-def IsEscapePath (P : ℂ[X]) (γ : ℝ → ℂ) : Prop :=
-  ContinuousOn γ (Icc 0 1) ∧ γ 0 = 0 ∧ ‖γ 1‖ = 1 ∧
-    ∀ t ∈ Icc (0 : ℝ) 1, t ≠ 0 → ‖P.eval (γ t)‖ < 1
-
-/--
 Does there exist a constant $C$ such that for every polynomial $P$ with $P(0)=1$, all of whose
 roots are on the unit circle, there exists a path in
 $$\{ z: \lvert P(z)\rvert < 1\}$$
@@ -69,11 +54,12 @@ large (depending on $n$) $d$ there exists such a polynomial $P$ of degree $d$ su
 $\lvert P(z)\rvert >2$ for all $z\in A$. One can then choose $A$ to be a suitable labyrinth
 blocking $0$ from the unit circle, which any candidate path must traverse.
 
-The length of a path is its total variation on $[0,1]$.
+The length of a path is its total variation on $[0,1]$. The polynomial is nonconstant:
+otherwise $P=1$ would admit no escape path and make the negative answer trivial.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at
+@[category research solved, question, AMS 30, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1215.lean#L132"]
-theorem erdos_1215 : answer(False) ↔ ∃ C : ℝ, ∀ P : ℂ[X], IsAdmissible P →
+theorem erdos_1215 : ¬ ∃ C : ℝ, ∀ P : ℂ[X], P.IsNormalizedUnitCircle →
     ∃ γ : ℝ → ℂ, IsEscapePath P γ ∧ eVariationOn γ (Icc 0 1) ≤ ENNReal.ofReal C := by
   sorry
 
@@ -81,7 +67,7 @@ theorem erdos_1215 : answer(False) ↔ ∃ C : ℝ, ∀ P : ℂ[X], IsAdmissible
 length $>L$. -/
 @[category research solved, AMS 30, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1215.lean#L87"]
-theorem erdos_1215.variants.mac_lane : ∀ L : ℝ, 0 ≤ L → ∃ P : ℂ[X], IsAdmissible P ∧
+theorem erdos_1215.variants.mac_lane : ∀ L : ℝ, 0 ≤ L → ∃ P : ℂ[X], P.IsNormalizedUnitCircle ∧
     ∀ γ : ℝ → ℂ, IsEscapePath P γ → ENNReal.ofReal L < eVariationOn γ (Icc 0 1) := by
   sorry
 
@@ -89,7 +75,7 @@ theorem erdos_1215.variants.mac_lane : ∀ L : ℝ, 0 ≤ L → ∃ P : ℂ[X], 
 which connects $0$ to the unit circle. -/
 @[category research solved, AMS 30]
 theorem erdos_1215.variants.cohen :
-    ∀ P : ℂ[X], IsAdmissible P → ∃ γ : ℝ → ℂ, IsEscapePath P γ := by
+    ∀ P : ℂ[X], P.IsNormalizedUnitCircle → ∃ γ : ℝ → ℂ, IsEscapePath P γ := by
   sorry
 
 end Erdos1215
