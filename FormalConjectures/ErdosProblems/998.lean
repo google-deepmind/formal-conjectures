@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -58,11 +58,12 @@ converse. This is true, and was proved by Kesten [Ke66].
 As literally stated the conclusion is too strong: Kesten's theorem says that $[u, v)$ has bounded
 remainder if and only if $v - u \in \mathbb{Z}\alpha + \mathbb{Z}$, which does not constrain $u$
 itself (for instance $u = 1/4$, $v = 1/4 + \sqrt{2}/10$, $\alpha = \sqrt{2}/10$); see
-`erdos_998.variants.kesten` for the correct statement.
+`erdos_998` for the correct statement. The source box conflates the endpoints with the interval
+length.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos998.lean#L260"]
-theorem erdos_998 : answer(False) ↔ ∀ α u v : ℝ, Irrational α → 0 ≤ u → u < v → v ≤ 1 →
+theorem erdos_998.variants.literal : ¬ ∀ α u v : ℝ, Irrational α → 0 ≤ u → u < v → v ≤ 1 →
     HasBoundedRemainder α u v →
       (∃ k : ℤ, u = Int.fract (α * k)) ∧ ∃ l : ℤ, v = Int.fract (α * l) := by
   sorry
@@ -72,8 +73,8 @@ Kesten's theorem [Ke66] (with the converse of Hecke [He22] and Ostrowski [Os27],
 irrational $\alpha$ and $0 \leq u < v \leq 1$, the interval $[u, v)$ has bounded remainder if and
 only if $v - u = \{k\alpha\}$ for some integer $k$, or $v - u = 1$.
 -/
-@[category research solved, AMS 11]
-theorem erdos_998.variants.kesten (α u v : ℝ) (hα : Irrational α) (hu : 0 ≤ u) (huv : u < v)
+@[category research solved, question, AMS 11]
+theorem erdos_998 (α u v : ℝ) (hα : Irrational α) (hu : 0 ≤ u) (huv : u < v)
     (hv : v ≤ 1) :
     HasBoundedRemainder α u v ↔ (∃ k : ℤ, v - u = Int.fract (α * k)) ∨ v - u = 1 := by
   sorry

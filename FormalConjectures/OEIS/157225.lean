@@ -82,8 +82,8 @@ See T. Adamczewski, OEIS Open: How many conjectures can language models turn int
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/epoch-research/LeanOpenProblems-results/blob/main/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_157225_conjecture_0/Submission/Spec.lean"]
-theorem conjecture (n : ℕ) (hn : 0 < n) :
-    a n = 0 ↔ n < 11 ∨ n = 13 ∨ n = 16 ∨ n = 992 := by
+theorem conjecture :
+    ¬ ∀ n : ℕ, 0 < n → (a n = 0 ↔ n < 11 ∨ n = 13 ∨ n = 16 ∨ n = 992) := by
   sorry
 
 end OeisA157225
