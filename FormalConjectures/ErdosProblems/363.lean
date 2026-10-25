@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 363
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Ul05] Ulas, Maciej, *On products of disjoint blocks of consecutive integers*.
   Enseign. Math. (2) (2005), 331--334.
 -/
+
+@[expose] public section
 
 namespace Erdos363
 
@@ -59,9 +62,9 @@ this restriction finiteness fails, by a result of Skałba (see [Ul05]).
 This is false: Ulas [Ul05] constructed infinitely many such collections with $n = 4$ and
 $k_1 = \cdots = k_4 = 4$.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos363.lean"]
-theorem erdos_363 : answer(False) ↔ ∀ ks : List ℕ,
+theorem erdos_363 : ¬ ∀ ks : List ℕ,
     {S : List (Finset ℕ) | IsValidCollection S ∧ S.map Finset.card = ks}.Finite := by
   sorry
 

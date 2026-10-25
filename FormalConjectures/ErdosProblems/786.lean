@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 786
 
 *Reference:* [erdosproblems.com/786](https://www.erdosproblems.com/786)
 -/
+
+@[expose] public section
 
 open Filter Real
 
@@ -47,8 +50,8 @@ Let $\epsilon > 0$. Is there some set $A\subset\mathbb{N}$ of density $> 1 - \ep
 such that $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when
 $r = s$?
 -/
-@[category research open, AMS 11]
-theorem erdos_786.parts.i : answer(sorry) ↔ ∀ ε > 0, ε ≤ 1 →
+@[category research open, question, AMS 11]
+theorem erdos_786.parts.i : ∀ ε > 0, ε ≤ 1 →
     ∃ (A : Set ℕ) (δ : ℝ), 0 ∉ A ∧ 1 - ε < δ ∧ A.HasDensity δ ∧ A.IsMulCardSet := by
   sorry
 
@@ -57,8 +60,8 @@ Is there some set $A\subset\{1, ..., N\}$ of size $\geq (1 - o(1))N$ such that
 $a_1\cdots a_r = b_1\cdots b_s$ with $a_i, b_j\in A$ can only hold when
 $r = s$?
 -/
-@[category research open, AMS 11]
-theorem erdos_786.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_786.parts.ii :
     ∃ (A : ℕ → Set ℕ) (f : ℕ → ℝ) (_ : f =o[atTop] (1 : ℕ → ℝ)),
     ∀ N, A N ⊆ Set.Icc 1 (N + 1) ∧ (1 - f N) * N ≤ (A N).ncard ∧ (A N).IsMulCardSet := by
   sorry

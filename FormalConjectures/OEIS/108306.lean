@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # A108306: Expansion of $(3x+1)/(1-3x-3x^2)$
@@ -25,6 +26,8 @@ and $a(n) = 3a(n-1) + 3a(n-2)$ for $n \ge 2$.
 *References:*
 - [A108306](https://oeis.org/A108306)
 -/
+
+@[expose] public section
 
 namespace OeisA108306
 

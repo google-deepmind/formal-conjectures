@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 756
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   Combinatorica (1990), 261-269.
 - [HoPa34] Hopf, H. and Pannwitz, E., *Aufgabe 167*. Jber. Deutsch. Math. Verein. (1934), 114.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped EuclideanGeometry Asymptotics
@@ -52,8 +55,8 @@ each of which occurs for more than $n$ many pairs from $A$?
 The answer is yes: Bhowmick [Bh24] constructs a set of $n$ points in $\mathbb{R}^2$ such that
 $\lfloor\frac{n}{4}\rfloor$ distances occur at least $n+1$ times.
 -/
-@[category research solved, AMS 52]
-theorem erdos_756 : answer(True) ↔
+@[category research solved, question, AMS 52]
+theorem erdos_756 :
     (fun n : ℕ => (n : ℝ)) =O[atTop] (fun n : ℕ => (maxRichDistances n : ℝ)) := by
   sorry
 

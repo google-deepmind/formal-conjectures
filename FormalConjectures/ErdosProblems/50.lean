@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 50
@@ -26,6 +27,8 @@ Resenhas (1995), 165-186.
 * [Sch38] Schoenberg, I. J. "On asymptotic distributions of arithmetical functions."
 Transactions of the American Mathematical Society 39.2 (1936): 315-330.
 -/
+
+@[expose] public section
 
 open Filter Set MeasureTheory Topology
 open scoped Nat Topology
@@ -72,8 +75,8 @@ Let $f$ be the asymptotic distribution function of $\varphi(n)/n$, so that for e
 $f(c)$ is the natural density of $\{n : \varphi(n) < cn\}$. Is it true that there is no $x$ such
 that the derivative $f'(x)$ exists and is positive?
 -/
-@[category research open, AMS 11]
-theorem erdos_50 : answer(sorry) ↔ ∀ᵉ (f : ℝ → ℝ) (hf : IsDistributionOfPhiRatio f),
+@[category research open, question, AMS 11]
+theorem erdos_50 : ∀ᵉ (f : ℝ → ℝ) (hf : IsDistributionOfPhiRatio f),
     ¬∃ x ∈ Icc (0 : ℝ) 1, ∃ y > 0, HasDerivWithinAt f y (Icc 0 1) x := by
   sorry
 

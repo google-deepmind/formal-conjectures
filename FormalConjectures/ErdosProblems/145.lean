@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 145
 
 *Reference:* [erdosproblems.com/145](https://www.erdosproblems.com/145)
 -/
+
+@[expose] public section
 
 namespace Erdos145
 
@@ -42,9 +45,9 @@ $$
 $$
 exists?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_145 :
-    answer(sorry) ↔ ∀ α ≥ (0 : ℝ), ∃ β : ℝ,
+    ∀ α ≥ (0 : ℝ), ∃ β : ℝ,
       atTop.Tendsto (fun x : ℝ ↦ 1 / x * ∑ n ∈ A x, (s (n + 1) - s n : ℝ) ^ α) (𝓝 β) := by
   sorry
 

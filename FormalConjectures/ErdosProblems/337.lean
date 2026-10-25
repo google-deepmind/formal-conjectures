@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 337
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
 - [Tu84] Turjányi, S., *A note on basis sequences*. Topics in classical number theory, Vol. I, II
   (Budapest, 1981) (1984), 1571-1576.
 -/
+
+@[expose] public section
 
 namespace Erdos337
 
@@ -57,9 +60,9 @@ The linked file states the basis hypothesis as `∃ N₀, Set.Ici N₀ ⊆ itera
 indexes both counting functions by a real $x$ through $\lfloor x\rfloor$, where the counting
 functions here are indexed by $N : \mathbb{N}$.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos337.lean"]
-theorem erdos_337 : answer(False) ↔
-    ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos337.lean"]
+theorem erdos_337 :
+    ¬ ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
       Tendsto (fun N : ℕ ↦ (((A + A) ∩ Icc 1 N).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
         atTop atTop := by

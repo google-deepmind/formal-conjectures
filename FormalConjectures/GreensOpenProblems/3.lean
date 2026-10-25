@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 3
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   [arXiv:2607.06073](https://arxiv.org/abs/2607.06073), Theorem 1.1.
 -/
 
+@[expose] public section
+
 open Set MeasureTheory
 
 namespace Green3
@@ -34,9 +37,9 @@ solution to $xy = z$ with $x, y, z \in A$?
 
 The answer is yes. [FGY26] prove that an open product-free subset of $(0,1)$ has measure strictly
 less than $\frac{1}{3}$. -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem green_3 :
-    answer(True) ↔ ∀ A : Set ℝ,
+    ∀ A : Set ℝ,
       IsOpen A → A ⊆ Icc 0 1 → volume A > 1/3 →
         ∃ x y z, x ∈ A ∧ y ∈ A ∧ z ∈ A ∧ x * y = z := by
   sorry

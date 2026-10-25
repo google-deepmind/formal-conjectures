@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Goodman's conjecture on coefficients of $p$-valent functions
@@ -34,6 +35,8 @@ $p$-valent typically-real functions.
 - Goodman, A. W., *On some determinants related to $p$-valent functions*,
   Trans. Amer. Math. Soc. 63 (1948), 175–192.
 -/
+
+@[expose] public section
 
 open Complex Set
 

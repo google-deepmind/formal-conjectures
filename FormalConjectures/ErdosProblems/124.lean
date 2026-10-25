@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 124
@@ -22,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/124](https://www.erdosproblems.com/124)
 - [BEGL96] Burr, S. A. and Erdős, P. and Graham, R. L. and Li, W. Wen-Ching, Complete sequences of sets of integer powers. Acta Arith. (1996), 133-138.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Pointwise
@@ -40,8 +44,8 @@ where $c_i \in \{0, 1\}$ and $a_i$ has only the digits $0, 1$ when written in ba
 
 Conjectured by Erdős [Er97], solved by Boris Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11]
-lemma erdos124.zero : answer(True) ↔
+@[category research solved, question, AMS 11]
+lemma erdos124.zero :
     ∀ D : Finset ℕ, (∀ d ∈ D, 3 ≤ d) → 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ →
       ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d 0 := sorry
 
@@ -54,8 +58,8 @@ written in base $d_i$?
 
 Conjectured by Burr, Erdős, Graham, and Li [BEGL96]
 -/
-@[category research open, AMS 11]
-lemma erdos124.ne_zero : answer(sorry) ↔
+@[category research open, question, AMS 11]
+lemma erdos124.ne_zero :
     ∀ k ≠ 0, ∀ D : Finset ℕ, (∀ d ∈ D, 3 ≤ d) → 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ → D.gcd id = 1 →
       ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d k := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Inscribed square problem
@@ -29,6 +30,8 @@ There are several open and solved variants of this conjecture.
    by *Benjamin Matschke*
  - [arxiv/2005.09193](https://arxiv.org/abs/2005.09193)
 -/
+
+@[expose] public section
 
 open Topology ContDiff Manifold
 open scoped EuclideanGeometry
@@ -50,9 +53,9 @@ structure IsRectangle (a b c d : ℝ²) (ratio : ℝ) : Prop where
 **Inscribed square problem**
 Does every Jordan curve admit an inscribed square?
 -/
-@[category research open, AMS 51]
+@[category research open, question, AMS 51]
 theorem inscribed_square_problem :
-    answer(sorry) ↔ ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ),
+    ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ),
       ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 := by
   sorry
 
@@ -60,9 +63,9 @@ theorem inscribed_square_problem :
 **Inscribed rectangle problem**
 Does every Jordan curve admit inscribed rectangles of any given aspect ratio?
 -/
-@[category research open, AMS 51]
+@[category research open, question, AMS 51]
 theorem inscribed_rectangle_problem :
-    answer(sorry) ↔ ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ) (r : ℝ) (hr : r > 0),
+    ∀ (γ : Circle → ℝ²) (hγ : IsEmbedding γ) (r : ℝ) (hr : r > 0),
       ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) r := by
   sorry
 

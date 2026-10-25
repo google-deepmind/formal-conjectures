@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of next $n$ primes
@@ -26,6 +27,8 @@ with $a(0) = 0$.
 *References:*
 - [A007468](https://oeis.org/A007468)
 -/
+
+@[expose] public section
 
 namespace OeisA7468
 

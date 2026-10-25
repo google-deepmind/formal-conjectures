@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 967
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   341-356.
 - [Yi25] Yip, F., *On a problem of Erdős and Ingham*. arXiv:2512.16528 (2025).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -46,10 +49,10 @@ $1+\sum_{k}\frac{1}{a_k^{1+it}}=0$.
 
 This was formalized in Lean by Wu using Aristotle.
 -/
-@[category research solved, AMS 11 30, formal_proof using lean4 at
+@[category research solved, question, AMS 11 30, formal_proof using lean4 at
 "https://gist.githubusercontent.com/llllvvuu/d25f037d1f1000bdabd6ca928c74c9bb/raw/c2d3e4ed5d88520993b508f84be029cf8808f565/967.lean"]
-theorem erdos_967 : answer(False) ↔
-    ∀ a : ℕ → ℕ, StrictMono a → 1 < a 0 → Summable (fun k : ℕ => 1 / (a k : ℝ)) →
+theorem erdos_967 :
+    ¬ ∀ a : ℕ → ℕ, StrictMono a → 1 < a 0 → Summable (fun k : ℕ => 1 / (a k : ℝ)) →
       ∀ t : ℝ, 1 + (∑' k, summand t (a k)) ≠ 0 := by
   sorry
 
@@ -67,8 +70,8 @@ theorem erdos_967.variants.yip (t : ℝ) (ht : t ≠ 0) :
 /--
 It remains open whether this is true for every finite sequence of integers.
 -/
-@[category research open, AMS 11 30]
-theorem erdos_967.variants.finite : answer(sorry) ↔
+@[category research open, question, AMS 11 30]
+theorem erdos_967.variants.finite :
     ∀ A : Finset ℕ, (∀ n ∈ A, 1 < n) → ∀ t : ℝ, 1 + (∑ n ∈ A, summand t n) ≠ 0 := by
   sorry
 
@@ -76,8 +79,8 @@ theorem erdos_967.variants.finite : answer(sorry) ↔
 A question of Erdős and Ingham [ErIn64]. The simplest case they could not decide this question
 for was the finite sequence $\{2,3,5\}$.
 -/
-@[category research open, AMS 11 30]
-theorem erdos_967.variants.two_three_five : answer(sorry) ↔
+@[category research open, question, AMS 11 30]
+theorem erdos_967.variants.two_three_five :
     ∀ t : ℝ, 1 + (∑ n ∈ ({2, 3, 5} : Finset ℕ), summand t n) ≠ 0 := by
   sorry
 

@@ -35,10 +35,6 @@ open Function
 
 namespace Erdos339
 
-/-- The set of sums of exactly `r` pairwise distinct elements of `A`. -/
-def restrictedSums (r : ℕ) (A : Set ℕ) : Set ℕ :=
-  {n | ∃ f : Fin r → ℕ, Injective f ∧ (∀ i, f i ∈ A) ∧ ∑ i, f i = n}
-
 /--
 Let $A \subseteq \mathbb{N}$ be a basis of order $r$. Must the set of integers representable as
 the sum of exactly $r$ distinct elements from $A$ have positive lower density?
@@ -46,11 +42,10 @@ the sum of exactly $r$ distinct elements from $A$ have positive lower density?
 A question of Erdős and Graham [ErGr80, p.52]. The answer is yes, proved by Hegyvári, Hennecart
 and Plagne [HHP03].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos339.lean#L456"]
-theorem erdos_339 : answer(True) ↔
-    ∀ (A : Set ℕ) (r : ℕ), A.IsAsymptoticAddBasisOfOrder r →
-      0 < (restrictedSums r A).lowerDensity := by
+theorem erdos_339 : ∀ (A : Set ℕ) (r : ℕ), A.IsAsymptoticAddBasisOfOrder r →
+      0 < (Set.restrictedSums r A).lowerDensity := by
   sorry
 
 end Erdos339

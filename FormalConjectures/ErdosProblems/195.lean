@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 195
@@ -27,7 +28,11 @@ import FormalConjecturesUtil
   integers. Discrete Math. (2019), 1489-1491.
 -/
 
+@[expose] public section
+
 namespace Erdos195
+
+def erdos_195.answer : ℕ := sorry
 
 /--
 What is the largest $k$ such that in any permutation of $\mathbb{Z}$ there must exist a
@@ -38,9 +43,9 @@ integers, i.e. a bijection $\mathbb{N} \to \mathbb{Z}$, and a monotone $k$-term 
 progression is a subsequence $a_{i_1}, \ldots, a_{i_k}$ with $i_1 < \cdots < i_k$ forming an
 increasing or decreasing arithmetic progression.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_195 :
-    answer(sorry) = sSup {k : ℕ | ∀ f : ℕ ≃ ℤ, HasMonotoneAP f k} := by
+    erdos_195.answer = sSup {k : ℕ | ∀ f : ℕ ≃ ℤ, HasMonotoneAP f k} := by
   sorry
 
 /--

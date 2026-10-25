@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Boxdot Conjecture
@@ -29,6 +30,8 @@ has been studied in several works. In particular, see:
   by *Christopher Steinsvold*, Australasian Journal of Logic
 
 -/
+
+@[expose] public section
 
 namespace Arxiv.«1308.0994»
 

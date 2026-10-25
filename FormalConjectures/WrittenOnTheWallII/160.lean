@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 160
@@ -42,6 +43,8 @@ conjecture instead uses this binary $C_4$-free indicator.
 **Provenance.** Statement corrected by Dominic Dabish.
 
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture160
 
@@ -91,13 +94,13 @@ theorem conjecture160 (G : SimpleGraph α) [DecidableRel G.Adj] (h : G.Connected
 @[category test, AMS 5]
 example : numTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) (0 : Fin 3) = 1 := by
   unfold numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- In $K_3$, `maxTrianglesAtVertex = 1`. -/
 @[category test, AMS 5]
 example : maxTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) = 1 := by
   unfold maxTrianglesAtVertex numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- In the path $P_3$, vertex $1$ is adjacent to $0$ and $2$, but $0$ and $2$ are not adjacent.
 So $T(1) = 0$. -/
@@ -105,6 +108,6 @@ So $T(1) = 0$. -/
 example : numTrianglesAtVertex
     (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) (1 : Fin 3) = 0 := by
   unfold numTrianglesAtVertex
-  decide +native
+  decide
 
 end WrittenOnTheWallII.GraphConjecture160

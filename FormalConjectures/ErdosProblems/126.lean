@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 126
 
 *Reference:* [erdosproblems.com/126](https://www.erdosproblems.com/126)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -39,9 +42,9 @@ Is it true that $\frac{f(n)}{\log n} \to\infty$?
 
 The answer is yes, and a machine-checked proof is available.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/tadamcz/erdos126/blob/2516785fe6bbc43e979cf6029c976d9f998a7fba/Erdos126/Resolutions/Erdos126_132usd_25h.lean#L3053"]
-theorem erdos_126 : answer(True) ↔ ∀ (f : ℕ → ℕ), IsMaximalAddFactorsCard f →
+theorem erdos_126 : ∀ (f : ℕ → ℕ), IsMaximalAddFactorsCard f →
     Tendsto (fun n => f n / Real.log n) atTop atTop := by
   sorry
 

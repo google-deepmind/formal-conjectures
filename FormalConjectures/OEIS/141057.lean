@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of Abelian cubes of length $3n$ over an alphabet of size 3
@@ -26,6 +27,8 @@ $$a(n) = \sum_{k=0}^n \binom{n}{k}^3 \sum_{j=0}^k \binom{k}{j}^3.$$
 
 *References:*
 - [A141057](https://oeis.org/A141057)-/
+
+@[expose] public section
 
 namespace OeisA141057
 
@@ -88,8 +91,12 @@ Conjecture (Peter Bala, 2022):
 The supercongruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^{3k}}$ hold
 for the integer-indexed extension $a(n)$ for all $n \in \mathbb{Z} \setminus \{0\}$, primes $p \ge 5$,
 and $k \ge 1$.
+
+Proved in Lean by Jensen Kohlmeyer and Liam Kruer, extending the positive-index
+proof by Epoch Research.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/JENW1N/complete-math-solutions/blob/8b9db1d8c0ded5398d5e4e4bbdf8f2ec14ce5c23/proofs/BalaA141057Conjecture.lean#L1416"]
 theorem conjecture2 (p k : ℕ) (n : ℤ) (hp : p.Prime) (h_p_ge_5 : 5 ≤ p) (h_k_pos : 1 ≤ k)
     (hn : n ≠ 0) :
     aInt (n * (p ^ k : ℤ)) ≡ aInt (n * (p ^ (k - 1) : ℤ)) [ZMOD (p ^ (3 * k) : ℤ)] := by

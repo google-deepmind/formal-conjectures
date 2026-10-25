@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 494
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   - [FoIz94] Fomin, D. V. and Izhboldin, O. T., Sets of multiple sums. Proc. St. Petersburg
       Math. Soc. 3 (1994), 244-259.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -50,7 +53,8 @@ Selfridge and Straus [SeSt58] showed that the conjecture is true when $k = 2$ an
 $|A| \ne 2^l$ for $l \ge 0$.
 They also gave counterexamples when $k = 2$ and $|A| = 2^l$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/a2d6dcb99d4f11469cbb40c18959357031786c4c/erdos-494/Solution.lean#L26"]
 theorem erdos_494.variants.k_eq_2_card_not_pow_two :
     ∀ card : ℕ, (∀ l : ℕ, card ≠ 2 ^ l) → Erdos494Unique 2 card := by
   sorry
@@ -77,7 +81,8 @@ The cases $|A| = 27$ and $|A| = 486$ were left open in [SeSt58]. Fomin and Izhbo
 later found two distinct sets of each of these sizes with the same multiset of $3$-sums, so
 these exceptions are genuine.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/a2d6dcb99d4f11469cbb40c18959357031786c4c/erdos-494/Solution.lean#L30"]
 theorem erdos_494.variants.k_eq_3_card_gt_6 :
     ∀ card > 6, card ≠ 27 → card ≠ 486 → Erdos494Unique 3 card := by
   sorry

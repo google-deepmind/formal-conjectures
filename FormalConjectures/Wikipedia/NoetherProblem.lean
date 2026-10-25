@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Rational_variety
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Rational_variety)
 -/
+
+@[expose] public section
 
 namespace NoetherProblem
 
@@ -66,8 +69,8 @@ Is the fixed field `L^G` a rational extension of `K`, i.e. does `L/K` have the N
 
 Solution: False.
 -/
-@[category research solved, AMS 12 14]
-theorem noether_problem : answer(False) ↔ ∀ (K L ι : Type)
+@[category research solved, question, AMS 12 14]
+theorem noether_problem : ¬ ∀ (K L ι : Type)
     [Field K] [Field L] [Fintype ι] [Algebra K L] [IsRationalExtension K L ι],
     HasNoetherProperty K L ι := by
   sorry

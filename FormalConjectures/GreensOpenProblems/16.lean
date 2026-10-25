@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 16
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 * [Schoen and Sisask](T. Schoen and O. Sisask, Roth’s theorem for four variables and additive structures in sums of sparse sets Forum of Mathematics, Sigma (2016), Vol. 4, e5, 28 pages.)
 * [Yufei Zhao](Via Personal Communication with Ben Green)
 -/
+
+@[expose] public section
 
 open Finset Real Filter Topology
 
@@ -40,11 +43,13 @@ def SolutionFree (A : Finset ℕ) : Prop :=
 noncomputable def f (N : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ SolutionFree A ∧ A.card = k}
 
+def green_16.answer : ℕ → ℕ := sorry
+
 /-- What is the largest subset of $[N]$ with no solution to $x + 3y = 2z + 2w$ in distinct integers $x, y, z, w$? -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_16 (N : ℕ) :
     ∃ A : Finset ℕ, A ⊆ Icc 1 N ∧ SolutionFree A ∧
-      A.card = (answer(sorry) : ℕ → ℕ) N ∧
+      A.card = green_16.answer N ∧
       MaximalFor (fun B => B ⊆ Icc 1 N ∧ SolutionFree B) Finset.card A := by
   sorry
 
@@ -77,9 +82,9 @@ noncomputable def g (N : ℕ) : ℕ :=
 
 /-- From [Yufei Zhao]: Is there a subset of $\{1, \ldots, N\}$ of size
 $N^{1/3 - o(1)}$ with no nontrivial solutions to $x + 2y + 3z = x' + 2y' + 3z'$? -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem zhao_question :
-    answer(sorry) ↔ ∃ h : ℕ → ℝ, Tendsto h atTop (𝓝 0) ∧
+    ∃ h : ℕ → ℝ, Tendsto h atTop (𝓝 0) ∧
       ∀ᶠ N in atTop, (g N : ℝ) ≥ (N : ℝ) ^ (1 / 3 - h N) := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Dean's conjecture on cycles of length divisible by `k`
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   [arXiv:2601.13552](https://arxiv.org/abs/2601.13552) (2026).
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Arxiv.«2605.02731»
@@ -44,9 +47,9 @@ A cycle has length at least `3`, so the divisor is never `0` and the statement i
 satisfied for a trivial reason. `SimpleGraph.minDegree` is `0` on a graph with no vertices and
 on a graph with no edges, so the hypothesis excludes both.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem dean_conjecture :
-    answer(sorry) ↔ ∀ (k : ℕ), 3 ≤ k → ∀ (V : Type) [Fintype V] [DecidableEq V]
+    ∀ (k : ℕ), 3 ≤ k → ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G : SimpleGraph V) [DecidableRel G.Adj], k ≤ G.minDegree →
         ∃ m ∈ G.cycleLengths, k ∣ m := by
   sorry
@@ -54,9 +57,9 @@ theorem dean_conjecture :
 /--
 The case $k = 5$. This is the only case of the conjecture that is still open.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem dean_conjecture.variants.five :
-    answer(sorry) ↔ ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+    ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], 5 ≤ G.minDegree → ∃ m ∈ G.cycleLengths, 5 ∣ m := by
   sorry
 

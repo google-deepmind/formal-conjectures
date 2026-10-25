@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Gerstenhaber problem for three commuting matrices
@@ -35,6 +36,8 @@ commuting matrices. The bound fails for four or more pairwise commuting matrices
   commuting triples of matrices*.
 -/
 
+@[expose] public section
+
 namespace Gerstenhaber
 
 variable {K : Type*} [Field K] {n : ℕ}
@@ -54,12 +57,11 @@ theorem finrank_adjoin_pair_le (A B : Matrix (Fin n) (Fin n) K) (hAB : Commute A
 $n \times n$ matrices over a field $K$, is the dimension of the unital
 $K$-algebra $K[A, B, C]$ they generate always at most $n$?
 -/
-@[category research open, AMS 15 16]
+@[category research open, question, AMS 15 16]
 theorem finrank_adjoin_triple_le :
-    answer(sorry) ↔
-      ∀ (K : Type*) [Field K] (n : ℕ) (A B C : Matrix (Fin n) (Fin n) K),
-        ({A, B, C} : Set (Matrix (Fin n) (Fin n) K)).Pairwise Commute →
-          Module.finrank K (Algebra.adjoin K {A, B, C}) ≤ n := by
+    ∀ (K : Type*) [Field K] (n : ℕ) (A B C : Matrix (Fin n) (Fin n) K),
+      ({A, B, C} : Set (Matrix (Fin n) (Fin n) K)).Pairwise Commute →
+        Module.finrank K (Algebra.adjoin K {A, B, C}) ≤ n := by
   sorry
 
 /--
