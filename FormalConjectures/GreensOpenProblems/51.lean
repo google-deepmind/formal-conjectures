@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 51
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   Acta Arithmetica 60.2 (1991): 191-202.
 -/
 
+@[expose] public section
+
 open Filter Real
 open scoped Pointwise
 
@@ -40,6 +43,8 @@ namespace Green51
 noncomputable def guaranteedMaxCosetDim (n : ℕ) (α : ℝ) : ℕ :=
   sInf { maxCosetDim (ZMod 2) (𝔽₂ n) ↑(A + A) | (A : Finset (𝔽₂ n)) (_h : A.dens ≥ α) }
 
+def green_51.answer : ℕ → ℝ → ℕ := sorry
+
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ is a set of density $\alpha$. What is the largest size of coset
 guaranteed to be contained in $2A$?
@@ -47,8 +52,8 @@ guaranteed to be contained in $2A$?
 We phrase this by asking for the exact function $F(\alpha, n)$ giving the maximum dimension
 of a guaranteed coset.
 -/
-@[category research open, AMS 5 11]
-theorem green_51 : answer(sorry) = guaranteedMaxCosetDim := by
+@[category research open, question value, AMS 5 11]
+theorem green_51 : green_51.answer = guaranteedMaxCosetDim := by
   sorry
 
 /-- It is known that $A + A$ must contain a coset of dimension $\gg_\alpha n$ [Gr13]. -/
@@ -68,9 +73,9 @@ theorem green_51.upper :
 Suppose that $A \subset \mathbb{F}_2^n$ has density $\alpha > 1/2 - C/\sqrt{n}$.
 Does $A + A$ contain a subspace of co-dimension $O_C(1)$? [Sa11, Question 5.1]
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_51.one_half :
-    answer(sorry) ↔ ∀ (k : ℝ), 0 < k →
+    ∀ (k : ℝ), 0 < k →
       ∃ (c : ℕ), ∀ᶠ (n : ℕ) in atTop,
         ∀ (α : ℝ), α > (1/2 : ℝ) - k / sqrt (n : ℝ) → α ≤ 1 →
           n ≤ guaranteedMaxCosetDim n α + c := by

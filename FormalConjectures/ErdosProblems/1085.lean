@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1085
@@ -24,6 +25,8 @@ of points which are distance 1 apart. Estimate f_d(n).
 
 *Reference:* [erdosproblems.com/1085](https://www.erdosproblems.com/1085)
 -/
+
+@[expose] public section
 
 open Filter Real
 open scoped EuclideanGeometry Topology
@@ -55,8 +58,8 @@ theorem erdos_1085.variants.lower_d3 :
   sorry
 
 /-- Is the $n^{4/3}\log\log n$ lower bound in 3D also an upper bound?. -/
-@[category research open, AMS 52]
-theorem erdos_1085.variants.upper_d3 : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_1085.variants.upper_d3 :
     (fun n ↦ (f 3 n : ℝ)) =O[atTop] (fun n : ℕ ↦ (n : ℝ) ^ (4/3 : ℝ) * log (log n)) := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 54
@@ -30,6 +31,8 @@ Advances and Applications, 77, 1995 Birkhäuser Verlag Basel/Switzerland.
 Here $nK = K + \cdots + K$ ($n$ times) is the $n$-fold sumset of $K$, written `n • K` for `n : ℕ`
 with `open scoped Pointwise`.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory
 open scoped Pointwise ENNReal
@@ -50,9 +53,9 @@ convex set $C$ with $\gamma_\infty(C) \geq 0.01$?
 The answer is yes: Hua, Song and Tudose proved that if $\gamma_n(A) > 5/6$ then $3(A + A + A)$
 contains a symmetric convex body $C$ with $\gamma_n(C) \geq 1/4$, uniformly in $n$.
 -/
-@[category research solved, AMS 46 52 60]
+@[category research solved, question, AMS 46 52 60]
 theorem green_54 :
-    answer(True) ↔ ∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
+    ∀ K : Set (ℕ → ℝ), IsCompact K → Balanced ℝ K → (0.99 : ℝ≥0∞) ≤
     gaussianMeasureInf K → ∃ C : Set (ℕ → ℝ), IsCompact C ∧ Convex ℝ C ∧ C ⊆ (10 : ℕ) • K ∧
     (0.01 : ℝ≥0∞) ≤ gaussianMeasureInf C := by
   sorry

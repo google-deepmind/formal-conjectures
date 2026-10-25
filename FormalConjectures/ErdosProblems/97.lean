@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 97
 
 *Reference:* [erdosproblems.com/97](https://www.erdosproblems.com/97)
 -/
+
+@[expose] public section
 
 open EuclideanGeometry
 open Real
@@ -72,9 +75,9 @@ def HasNUnitDistanceProperty (n : ℕ) (A : Finset ℝ²) : Prop :=
 /--
 Does every convex polygon have a vertex with no other 4 vertices equidistant from it?
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_97 :
-    answer(sorry) ↔ ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A := by
+    ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A := by
   sorry
 
 /--
@@ -105,8 +108,8 @@ theorem erdos_97.variants.three_equidistant :
 Erdős also conjectured that there is a $k$ for which every convex polygon has a vertex
 with no other $k$ vertices equidistant from it.
 -/
-@[category research open, AMS 52]
-theorem erdos_97.variants.k_equidistant : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_97.variants.k_equidistant :
     ∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty k A := by
   sorry
 

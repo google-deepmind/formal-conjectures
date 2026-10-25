@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 549
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   (Proc. Capital Conf., George Washington Univ., Washington, D.C., 1973) (1974), 52-75.
 - [NSZ16] S. Norin and Y. R. Sun and Y. Zhao, Asymptotics of Ramsey numbers of double stars.
 -/
+
+@[expose] public section
 
 namespace Erdos549
 
@@ -39,9 +42,9 @@ and conjectured that $R(T)=(4.2+o(1))k$.
 
 This problem is #15 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, AMS 5]
-theorem erdos_549 : answer(False) ↔
-    ∀ (k : ℕ) (hk : 2 ≤ k) (T : SimpleGraph (Fin k ⊕ Fin (2 * k))),
+@[category research solved, question, AMS 5]
+theorem erdos_549 :
+    ¬ ∀ (k : ℕ) (hk : 2 ≤ k) (T : SimpleGraph (Fin k ⊕ Fin (2 * k))),
       T.IsTree →
       (∀ x₁ x₂, ¬ T.Adj (Sum.inl x₁) (Sum.inl x₂)) →
       (∀ y₁ y₂, ¬ T.Adj (Sum.inr y₁) (Sum.inr y₂)) →

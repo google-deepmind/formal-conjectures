@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 423
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
   https://github.com/mjtb49/HofstaderUlam/blob/main/HofstaderUlamSequence.pdf
 - [OEIS A005243](https://oeis.org/A005243)
 -/
+
+@[expose] public section
 
 open Finset BigOperators Filter Asymptotics
 
@@ -103,8 +106,8 @@ Let $a(1) = 1$, $a(2) = 2$, and for $k \ge 3$ let $a(k)$ be the least integer gr
 than $a(k-1)$ that is a sum of at least two consecutive terms of the sequence.
 What is the asymptotic behaviour of this sequence? It seems likely that $a_n = n + o(n)$.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_423 : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem erdos_423 :
     ∀ a : ℕ → ℕ, IsHofstadterSeq a →
     (fun n : ℕ => (a n : ℝ) - n) =o[atTop] (fun n : ℕ => (n : ℝ)) := by
   sorry

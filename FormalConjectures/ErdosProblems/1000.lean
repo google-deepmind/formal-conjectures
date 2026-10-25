@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1000
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   52-65.
 - [Ha] Haight, J. A., *Metric Diophantine approximation and related topics*. PhD thesis.
 -/
+
+@[expose] public section
 
 open Filter Topology
 
@@ -67,8 +70,8 @@ $$
 This was solved by Haight [Ha] who proved that such a sequence does exist (contrary to Erdős'
 expectations).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1000.lean"]
-theorem erdos_1000 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1000.lean"]
+theorem erdos_1000 :
     ∃ n : ℕ → ℕ, StrictMono n ∧ 0 < n 0 ∧
       Tendsto (phiAvg n) atTop (𝓝 0) := by
   sorry

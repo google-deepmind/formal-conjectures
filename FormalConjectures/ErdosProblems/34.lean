@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 34
@@ -30,15 +31,11 @@ import FormalConjecturesUtil
 - [Ko15] Konieczny, J., *On consecutive sums in permutations*. arXiv:1504.07156 (2015).
 -/
 
+@[expose] public section
+
 namespace Erdos34
 
 open scoped BigOperators
-
-/-- The set of consecutive sums of a permutation `p` of `{1,…,n}`, where position `k` holds the
-value `p k + 1`: the sums `∑_{u ≤ k ≤ v} (p k + 1)`. -/
-def consecutiveSums (n : ℕ) (p : Equiv.Perm (Fin n)) : Finset ℕ :=
-  (Finset.univ.filter (fun x : Fin n × Fin n => x.1 ≤ x.2)).image
-    (fun x => ∑ k ∈ Finset.Icc x.1 x.2, ((p k : ℕ) + 1))
 
 /--
 For any permutation $\pi\in S_n$ of $\{1,\ldots,n\}$ let $S(\pi)$ count the number of distinct consecutive sums, that is, sums of the shape $\sum_{u\leq i\leq v}\pi(i)$. Is it true that
@@ -49,11 +46,11 @@ for all $\pi\in S_n$?
 
 Hegyvári [He86] gave a counterexample.
 -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos34.lean"]
-theorem erdos_34 : answer(False) ↔
-    ∀ c : ℝ, 0 < c → ∃ N : ℕ, ∀ n ≥ N, ∀ p : Equiv.Perm (Fin n),
-      ((consecutiveSums n p).card : ℝ) < c * (n : ℝ) ^ 2 := by
+theorem erdos_34 :
+    ¬ ∀ c : ℝ, 0 < c → ∃ N : ℕ, ∀ n ≥ N, ∀ p : Equiv.Perm (Fin n),
+      ((consecutiveSums (fun k : Fin n ↦ ((p k : ℕ) + 1))).card : ℝ) < c * (n : ℝ) ^ 2 := by
   sorry
 
 end Erdos34

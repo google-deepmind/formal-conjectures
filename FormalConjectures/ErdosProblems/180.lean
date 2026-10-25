@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 180
@@ -26,25 +27,11 @@ import FormalConjecturesUtil
 - [OpenAI26] OpenAI, *Ten advances in mathematics and theoretical computer science*. (2026).
 -/
 
+@[expose] public section
+
 open Filter SimpleGraph
 
 namespace Erdos180
-
-/-- A finite graph, bundled with its vertex count, so that a family may mix orders. -/
-structure FiniteGraph where
-  order : ℕ
-  graph : SimpleGraph (Fin order)
-
-/-- A host graph is `family`-free when it contains no member of `family` as a subgraph. -/
-def FamilyFree (family : Finset FiniteGraph) {n : ℕ} (host : SimpleGraph (Fin n)) : Prop :=
-  ∀ forbidden ∈ family, forbidden.graph.Free host
-
-open scoped Classical in
-/-- $\mathrm{ex}(n;\mathcal{F})$, the greatest number of edges of a graph on `n` vertices
-containing no member of `family`. -/
-noncomputable def familyExtremal (family : Finset FiniteGraph) (n : ℕ) : ℕ :=
-  (Finset.univ.filter (FamilyFree family)).sup
-    fun host : SimpleGraph (Fin n) => host.edgeFinset.card
 
 /-- No member of the family is acyclic. -/
 def IsCyclicFamily (family : Finset FiniteGraph) : Prop :=
@@ -54,7 +41,7 @@ def IsCyclicFamily (family : Finset FiniteGraph) : Prop :=
 def IsCompactFamily (family : Finset FiniteGraph) : Prop :=
   ∃ forbidden ∈ family, ∃ C : ℝ, 0 < C ∧
     ∀ᶠ n : ℕ in atTop,
-      (extremalNumber n forbidden.graph : ℝ) ≤ C * (familyExtremal family n : ℝ)
+      (extremalNumber n forbidden.graph : ℝ) ≤ C * (familyExtremalNumber family n : ℝ)
 
 /--
 If $\mathcal{F}$ is a finite set of finite graphs then $\mathrm{ex}(n;\mathcal{F})$ is the maximum
@@ -68,9 +55,9 @@ This is the Erdős–Simonovits compactness conjecture. The answer is no: OpenAI
 family of connected bipartite graphs, none of them acyclic, for which no single member controls
 the family extremal number. See `erdos_180.variants.counterexample`.
 -/
-@[category research solved, AMS 5]
-theorem erdos_180 : answer(False) ↔
-    ∀ family : Finset FiniteGraph,
+@[category research solved, question, AMS 5]
+theorem erdos_180 :
+    ¬ ∀ family : Finset FiniteGraph,
       family.Nonempty → IsCyclicFamily family → IsCompactFamily family := by
   sorry
 

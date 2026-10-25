@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 35
@@ -46,6 +47,8 @@ The constants of [CS17], [MV10], [AE25] and [GGTW25] are stated for functions su
 $[-1/4, 1/4]$; rescaling to $[0, 1]$ halves them.
 -/
 
+@[expose] public section
+
 namespace Green35
 
 open MeasureTheory
@@ -59,21 +62,24 @@ def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
   sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
+def green_35.lower.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
+
 /-- Lower bound for $c(p)$ for $1 < p \le \infty$, improving the known value $\sqrt{4/7}$ at
 $p = 2$ or the known value $0.64$ at $p = \infty$. -/
-@[category research open, AMS 26 28 42]
+@[category research open, question value, AMS 26 28 42]
 theorem green_35.lower :
-    let lb : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
-    (∀ p, 1 < p → lb p ≤ c p) ∧
-      (ENNReal.ofReal (Real.sqrt (4 / 7)) < lb 2 ∨ 0.64 < lb ∞) := by
+    (∀ p, 1 < p → green_35.lower.answer p ≤ c p) ∧
+      (ENNReal.ofReal (Real.sqrt (4 / 7)) < green_35.lower.answer 2 ∨
+        0.64 < green_35.lower.answer ∞) := by
   sorry
+
+def green_35.upper.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
 
 /-- Upper bound for $c(p)$ for $1 < p \le \infty$, improving the best-known value $0.7516$ at
 $p = \infty$. -/
-@[category research open, AMS 26 28 42]
+@[category research open, question value, AMS 26 28 42]
 theorem green_35.upper :
-    let ub : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
-    (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7516 := by
+    (∀ p, 1 < p → c p ≤ green_35.upper.answer p) ∧ green_35.upper.answer ∞ < 0.7516 := by
   sorry
 
 /-  Known bounds and comparisons. -/

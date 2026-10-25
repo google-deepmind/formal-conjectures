@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Lesser of twin primes
@@ -24,6 +25,8 @@ Primes $p$ such that $p+2$ is also prime.
 *References:*
 - [A001359](https://oeis.org/A001359)
 -/
+
+@[expose] public section
 
 namespace OeisA1359
 

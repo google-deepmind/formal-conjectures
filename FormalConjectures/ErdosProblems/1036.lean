@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1036
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   Discrete Math. (1989), 145-154.
 - [Sh98] Shelah, Saharon, *Erdős and Rényi conjecture*. J. Combin. Theory Ser. A (1998), 179-185.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -58,10 +61,10 @@ which are not pairwise isomorphic?
 
 This is true, and was proved by Shelah [Sh98].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1036.lean"]
-theorem erdos_1036 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1036.lean"]
+theorem erdos_1036 :
     ∀ c : ℝ, 0 < c → ∃ δ : ℝ, 0 < δ ∧ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
-      (G.cliqueNum : ℝ) ≤ c * Real.log (n : ℝ) → (G.indepNum : ℝ) ≤ c * Real.log (n : ℝ) →
+      G.IsCRamsey c →
         HasManyNonIsomorphicInducedSubgraphs G ((2 : ℝ) ^ (δ * (n : ℝ))) := by
   sorry
 
@@ -73,7 +76,7 @@ many non-isomorphic induced subgraphs.
 @[category research solved, AMS 5]
 theorem erdos_1036.variants.alon_hajnal :
     ∀ c : ℝ, 0 < c → ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
-      (G.cliqueNum : ℝ) ≤ c * Real.log (n : ℝ) → (G.indepNum : ℝ) ≤ c * Real.log (n : ℝ) →
+      G.IsCRamsey c →
         HasManyNonIsomorphicInducedSubgraphs G
           (Real.exp ((n : ℝ) * Real.log (n : ℝ) ^ (-(C * Real.log (Real.log (n : ℝ)))))) := by
   sorry

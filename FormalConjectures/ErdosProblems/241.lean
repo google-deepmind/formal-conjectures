@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 241
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Wh24] White, Ethan Patrick, An optimal $L^2$ autoconvolution inequality. Canad. Math. Bull.
   67 (2024), 108-121. [doi:10.4153/S0008439523000565](https://doi.org/10.4153/S0008439523000565)
 -/
+
+@[expose] public section
 
 open Filter Finset
 open scoped Asymptotics
@@ -57,9 +60,9 @@ Originally asked to Erdős by Bose.
 
 This is discussed in problem C11 of Guy's collection [Gu04].
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_241 :
-    answer(sorry) ↔ (fun N ↦ (f N 3 : ℝ)) ~[atTop] (fun N ↦ (N : ℝ) ^ ((1 : ℝ) / 3)) := by
+    (fun N ↦ (f N 3 : ℝ)) ~[atTop] (fun N ↦ (N : ℝ) ^ ((1 : ℝ) / 3)) := by
   sorry
 
 /--

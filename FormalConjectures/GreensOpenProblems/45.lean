@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«689»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«689»
 
 /-!
 # Ben Green's Open Problem 45
@@ -31,6 +32,8 @@ The version of this problem with $10$ replaced by $2$ is `Erdos689.erdos_689` in
 `FormalConjectures.ErdosProblems.«689»`.
 -/
 
+@[expose] public section
+
 namespace Green45
 
 /--
@@ -40,9 +43,9 @@ integer $\leq N$ lies in at least $10$ of them?
 Erdős remarks that he does not know how to answer it with $10$ replaced by $2$;
 this is `Erdos689.erdos_689`.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_45 :
-    answer(sorry) ↔ ∀ᶠ N in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 N,
+    ∀ᶠ N in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 N,
       10 ≤ (Finset.Icc 1 N |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
   sorry
 

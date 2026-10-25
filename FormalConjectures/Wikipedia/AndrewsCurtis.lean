@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Andrews-Curtis conjecture
@@ -28,6 +29,8 @@ References:
 * [A. D. Myasnikov, A. G. Myasnikov and V. Shpilrain,
   *On the Andrews-Curtis equivalence*](https://arxiv.org/abs/math/0302080)
 -/
+
+@[expose] public section
 
 namespace AndrewsCurtis
 

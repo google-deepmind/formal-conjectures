@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Fernandes' conjecture on the 2-generation of even direct product permutation groups
@@ -43,6 +44,8 @@ $\mathrm{rank}(\Gamma_{4 \oplus 3}) = 3$, and $\mathrm{rank}(\Gamma_{4 \oplus 4}
 $(m, n) \notin \{(2,2), (3,3), (4,3), (4,4)\}$, the group $\Gamma_{m \oplus n}$ has
 rank $2$ (i.e., is $2$-generated).
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2605.12342»
 
@@ -102,7 +105,21 @@ single element.
 @[category research solved, AMS 20]
 theorem conjecture_1.variants.rank_2_2 :
     ∃ g : gammaSubgroup 2 2, Subgroup.closure {g} = ⊤ := by
-  sorry
+  have hperm : ∀ a : Equiv.Perm (Fin 2), a = 1 ∨ a = Equiv.swap 0 1 := by decide
+  have hs : sign (Equiv.swap (0 : Fin 2) 1) = -1 := sign_swap (by decide)
+  have hg : ((Equiv.swap (0 : Fin 2) 1, Equiv.swap (0 : Fin 2) 1) :
+      Equiv.Perm (Fin 2) × Equiv.Perm (Fin 2)) ∈ gammaSubgroup 2 2 := by
+    simp [gammaSubgroup, signDiffHom, MonoidHom.mem_ker]
+  refine ⟨⟨_, hg⟩, ?_⟩
+  rw [Subgroup.eq_top_iff']
+  rintro ⟨⟨a, b⟩, hx⟩
+  have hmem : (⟨_, hg⟩ : gammaSubgroup 2 2) ∈ Subgroup.closure {(⟨_, hg⟩ : gammaSubgroup 2 2)} :=
+    Subgroup.subset_closure rfl
+  rcases hperm a with rfl | rfl <;> rcases hperm b with rfl | rfl
+  · exact (Subgroup.closure _).one_mem
+  · simp [gammaSubgroup, signDiffHom, MonoidHom.mem_ker, hs] at hx
+  · simp [gammaSubgroup, signDiffHom, MonoidHom.mem_ker, hs] at hx
+  · exact hmem
 
 /--
 It is known that $\Gamma_{3 \oplus 3}$ has rank $3$: it is not $2$-generated.

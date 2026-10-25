@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 959
 
 *Reference:* [erdosproblems.com/959](https://www.erdosproblems.com/959)
 -/
+
+@[expose] public section
 
 namespace Erdos959
 
@@ -68,6 +71,8 @@ def extremalGap (n : ℕ) : ℕ := by
   classical
   exact Nat.findGreatest (AttainableGap n) (Nat.choose n 2)
 
+def erdos_959.answer : ℕ → ℝ := sorry
+
 /--
 Let $A\subseteq \mathbb{R}^2$ be a set of size $n$ and let $\{d_1,\ldots,d_k\}$ be
 the set of distinct distances determined by $A$. Let $f(d)$ be the number of times
@@ -76,9 +81,9 @@ $f(d_1)\geq f(d_2)\geq \cdots \geq f(d_k)$. Estimate
 $$\max (f(d_1)-f(d_2)),$$
 where the maximum is taken over all $A$ of size $n$ (this is `extremalGap n`).
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem erdos_959 :
-    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] erdos_959.answer := by
   sorry
 
 /--

@@ -33,17 +33,15 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open Filter Asymptotics
+open Filter Asymptotics SimpleGraph
 
 namespace Erdos574
 
-/-- The extremal number `ex(n; {C_{2k-1}, C_{2k}})`: the maximum number of edges of a graph on `n`
-vertices containing neither a cycle of length `2k - 1` nor a cycle of length `2k`. -/
-noncomputable def consecutiveCycleExtremalNumber (k n : ℕ) : ℕ := by
-  classical
-  exact Finset.sup {G : SimpleGraph (Fin n) |
-    (SimpleGraph.cycleGraph (2 * k - 1)).Free G ∧ (SimpleGraph.cycleGraph (2 * k)).Free G}
-    fun G ↦ G.edgeFinset.card
+open scoped Classical in
+/-- The extremal number forbidding the two consecutive cycle lengths. -/
+noncomputable abbrev consecutiveCycleExtremalNumber (k n : ℕ) : ℕ :=
+  familyExtremalNumber
+    {⟨2 * k - 1, cycleGraph (2 * k - 1)⟩, ⟨2 * k, cycleGraph (2 * k)⟩} n
 
 /--
 Is it true that, for $k \geq 2$,
@@ -54,10 +52,9 @@ $k = 5$ by Lazebnik, Ustimenko and Woldar [LUW94b], who constructed bipartite gr
 $C_{2k}$ with $\left(\frac{k-1}{k^{1 + 1/k}} + o(1)\right) n^{1 + \frac1k}$ edges. An alternative
 disproof for $k = 3$ is given by Füredi, Naor and Verstraëte [FNV06].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos574.lean#L343"]
-theorem erdos_574 : answer(False) ↔
-    ∀ k : ℕ, 2 ≤ k →
+theorem erdos_574 : ¬ ∀ k : ℕ, 2 ≤ k →
       (fun n : ℕ ↦ (consecutiveCycleExtremalNumber k n : ℝ)) ~[atTop]
         fun n : ℕ ↦ ((n : ℝ) / 2) ^ (1 + 1 / (k : ℝ)) := by
   sorry

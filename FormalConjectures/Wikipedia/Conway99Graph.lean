@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conway's 99-graph problem
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_99-graph_problem)
 -/
+
+@[expose] public section
 
 namespace Conway99Graph
 
@@ -60,8 +63,8 @@ Equivalently, every edge should be part of a unique triangle and every non-adjac
 one of the two diagonals of a unique 4-cycle.
 The first condition is equivalent to being locally linear.
 -/
-@[category research open, AMS 5]
-theorem conway99Graph : answer(sorry) ↔ ∃ G : SimpleGraph (Fin 99),
+@[category research open, question, AMS 5]
+theorem conway99Graph : ∃ G : SimpleGraph (Fin 99),
     G.LocallyLinear ∧ NonEdgesAreDiagonals G := by
   sorry
 

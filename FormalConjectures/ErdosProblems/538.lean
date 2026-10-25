@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 538
 
 *Reference:* [erdosproblems.com/538](https://www.erdosproblems.com/538)
 -/
+
+@[expose] public section
 
 open Asymptotics Filter
 
@@ -42,6 +45,8 @@ def reciprocalMass (A : Finset ℕ) : ℚ := ∑ a ∈ A, (1 : ℚ) / a
 noncomputable def maxMass (r N : ℕ) : ℝ :=
   sSup ((fun A => (reciprocalMass A : ℝ)) '' {A : Finset ℕ | Admissible r N A})
 
+def erdos_538.answer : ℕ → ℕ → ℝ := sorry
+
 /--
 Let $r\geq 2$ and suppose that $A\subseteq\{1,\ldots,N\}$ is such that, for any
 $m$, there are at most $r$ solutions to $m=pa$ where $p$ is prime and $a\in A$.
@@ -52,10 +57,9 @@ order `Θ_r(log N / loglog N)` is known (see `erdos_538.matching_order`). The be
 upper bound is the asymptotic size of the largest reciprocal sum `maxMass r N` over
 admissible `A`.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_538 :
-    let f : ℕ → ℕ → ℝ := answer(sorry)
-    ∀ r : ℕ, 2 ≤ r → maxMass r ~[atTop] f r := by
+    ∀ r : ℕ, 2 ≤ r → maxMass r ~[atTop] erdos_538.answer r := by
   sorry
 
 /--

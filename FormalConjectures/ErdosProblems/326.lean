@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 326
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ca57] Cassels, J. W. S., *Über Basen der natürlichen Zahlenreihe*.
   Abh. Math. Sem. Univ. Hamburg (1957), 247-257.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -45,8 +48,8 @@ Erdős and Graham conjectured a negative answer to this question [ErGr80].
 "Minimal basis of order $2$" is formalised as `Minimal` for the predicate
 `Set.IsAsymptoticAddBasisOfOrder · 2` on sets of naturals ordered by inclusion.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_326 : answer(sorry) ↔ ∃ (a : ℕ → ℕ), StrictMono a ∧
+@[category research open, question, AMS 5 11]
+theorem erdos_326 : ∃ (a : ℕ → ℕ), StrictMono a ∧
     Minimal (fun A : Set ℕ ↦ A.IsAsymptoticAddBasisOfOrder 2) (Set.range a) ∧
       ∃ (c : ℝ), c ≠ 0 ∧ Tendsto (fun n ↦ (a n : ℝ) / n ^ 2) atTop (𝓝 c) := by
   sorry

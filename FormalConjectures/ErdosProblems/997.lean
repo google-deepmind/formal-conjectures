@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 997
@@ -35,6 +36,8 @@ import FormalConjecturesUtil
 - [Mo26] P. Monticone, [Lean formalisation of Erdős problem 997](https://live.lean-lang.org/#project=mathlib-v4.28.0&url=https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean) (2026)
 -/
 
+@[expose] public section
+
 open Set
 
 namespace Erdos997
@@ -49,9 +52,7 @@ The notion of a well-distributed sequence was introduced by Hlawka and Petersen 
 def IsWellDistributed (x : ℕ → ℝ) : Prop :=
   ∀ ε > 0, ∀ᶠ k in Filter.atTop, ∀ n : ℕ,
   ∀ a b, 0 ≤ a → a ≤ b → b ≤ 1 →
-    letI I := Ico a b
-    let count := (Finset.Ioc n (n + k)).filter (fun m ↦ x m ∈ I)
-    abs ((count.card : ℝ) - (b - a) * k) < ε * k
+    abs (Discrepancy.interval x (Finset.Ioc n (n + k)) a b) < ε * k
 
 /--
 Is it true that, for every $\alpha$, the sequence $\{ \alpha p_n\}$ is not well-distributed,
@@ -59,11 +60,10 @@ if $p_n$ is the sequence of primes?
 
 The answer is yes, by [APSSV26, Section 4]; a Lean formalisation is available in [Mo26].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://gist.githubusercontent.com/pitmonticone/016f2ed66b4cd1c4c4b9998095170e60/raw/b7dfc05c525ae385b5835f89f1ada721443e4305/Erdos997.lean"]
 theorem erdos_997 :
-    answer(True) ↔
-      ∀ α : ℝ, ¬ IsWellDistributed (fun n ↦ Int.fract (α * (n.nth Nat.Prime))) := by
+    ∀ α : ℝ, ¬ IsWellDistributed (fun n ↦ Int.fract (α * (n.nth Nat.Prime))) := by
   sorry
 
 /--

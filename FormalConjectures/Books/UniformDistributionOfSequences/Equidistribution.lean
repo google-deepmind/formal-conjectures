@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 /-!
 # Equidistributed Sequences
 
@@ -32,6 +33,8 @@ by *L. Kuipers* and *H. Niederreiter*, 1974
   - [Pol79] Pollington, Andrew Douglas. "On the density of sequence $\{n_ {k}\xi\} $."
     Illinois Journal of Mathematics 23.4 (1979): 511-515.
 -/
+
+@[expose] public section
 
 namespace Equidistribution
 
@@ -102,12 +105,15 @@ theorem isAccumulationPoint_three_halves_pow_infinite :
     {x | IsAccumulationPoint x (fun n => Int.fract <| (3 / 2 : ℝ)^n)}.Infinite := by
   sorry
 
+def isAccumulationPoint_three_halves_pow.answer : ℝ := sorry
+
 /--
 Find an accumulation point of the sequence `(3/2)^n` modulo `1`.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem isAccumulationPoint_three_halves_pow :
-    IsAccumulationPoint answer(sorry) (fun n => Int.fract <| (3 / 2 : ℝ)^n) := by
+    IsAccumulationPoint isAccumulationPoint_three_halves_pow.answer
+      (fun n => Int.fract <| (3 / 2 : ℝ)^n) := by
   sorry
 
 /-- The values of `(3/2)^n` modulo `1` are pairwise distinct: if `(3/2)^n - (3/2)^m` were an

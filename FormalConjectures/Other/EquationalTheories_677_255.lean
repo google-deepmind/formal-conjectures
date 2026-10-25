@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Equational Theories
 
 *Reference:* [Equational Theories project site](https://teorth.github.io/equational_theories/implications/?677&finite)
 -/
+
+@[expose] public section
 
 namespace EquationalTheories_677_255
 
@@ -60,9 +63,9 @@ the existence of a finite countermodel satisfying Equation 677 but not Equation 
 
 Discussion thread:
 https://leanprover.zulipchat.com/#narrow/channel/458659-Equational/topic/FINITE.3A.20677.20-.3E.20255 -/
-@[category research open, AMS 8]
+@[category research open, question, AMS 8]
 theorem Finite.Equation677_implies_Equation255 :
-    answer(sorry) ↔ ∀ (G : Type) (_ : Magma G), Finite G → Equation677 G → Equation255 G := by
+    ∀ (G : Type) (_ : Magma G), Finite G → Equation677 G → Equation255 G := by
   sorry
 
 end EquationalTheories_677_255

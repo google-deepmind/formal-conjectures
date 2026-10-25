@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Periodicity of $k$-th prime factors in coupled nonlinear recurrence $a(n)$
@@ -28,6 +29,8 @@ where $b(n) = a(n-1)b(n-2) - a(n-2)b(n-1)$, with $a(0) = b(0) = b(1) = 1$ and $a
   recurrence formula where for $n>1$ if you take the $n$-th prime factor of each term, you get an
   eventually periodic sequence", Mar. 31, 2025.
 -/
+
+@[expose] public section
 
 namespace OeisA382590
 
@@ -103,8 +106,10 @@ are $3$, $5$ and $7$.
 
 This was proved by Terence Tao in a [MathOverflow answer](https://mathoverflow.net/a/490348),
 using that $a(n)$ divides $a(n+3)$ for all $n$.
+Lean formalization by Wentao Li, with AI assistance.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/0a23974e54b90afd1453ef02c27cf8f617bad940/LeanOeisProofs/NewFormalization/A382590.lean#L201"]
 theorem kthPrimeFactor_periodic : ∀ k : ℕ, k ≥ 2 → ∃ N₀ p : ℕ, p > 0 ∧
     ∀ n : ℕ, n ≥ N₀ → kthPrimeFactor k (a (n + p)) = kthPrimeFactor k (a n) := by
     sorry

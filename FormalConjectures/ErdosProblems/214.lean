@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 214
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Ju79] Juhász, Rozália, *Ramsey type theorems in the plane*. J. Combin. Theory Ser. A (1979),
   152-160.
 -/
+
+@[expose] public section
 
 open scoped Congruent EuclideanGeometry
 
@@ -57,8 +60,8 @@ complement of $S$ contain four points which form a unit square?
 The answer is yes, proved by Juhász [Ju79], who proved more generally that the complement of $S$
 must contain a congruent copy of any set of four points.
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos214.lean"]
-theorem erdos_214 : answer(True) ↔
+@[category research solved, question, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos214.lean"]
+theorem erdos_214 :
     ∀ S : Set ℝ², UnitDistanceAvoiding S →
       ∃ p : Fin 4 → ℝ², (∀ i, p i ∈ Sᶜ) ∧ (p ≅ unitSquare) := by
   sorry

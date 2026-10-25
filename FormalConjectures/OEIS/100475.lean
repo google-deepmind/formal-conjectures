@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Prime-th recurrence with reversal at each step
@@ -25,6 +26,8 @@ with $a(0)=1$, where $p_k$ is the $k$-th prime number.
 *References:*
 - [A100475](https://oeis.org/A100475)
 -/
+
+@[expose] public section
 
 namespace OeisA100475
 
@@ -106,17 +109,12 @@ If zero is admitted as a starting value, then a start other than $1$ does go int
 sequence starting at zero is constant. This records the degenerate answer created by totalizing
 the one-based prime recurrence at index zero.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem conjecture_with_zero :
-    answer(True) ↔ ∃ x : ℕ, x ≠ 1 ∧ IsUltimatelyPeriodic (aStartAt x) := by
-  change True ↔ _
-  constructor
-  · intro _
-    refine ⟨0, by omega, 0, 1, by omega, ?_⟩
-    intro n _
-    rw [aStartAt_zero, aStartAt_zero]
-  · intro _
-    trivial
+    ∃ x : ℕ, x ≠ 1 ∧ IsUltimatelyPeriodic (aStartAt x) := by
+  refine ⟨0, by omega, 0, 1, by omega, ?_⟩
+  intro n _
+  rw [aStartAt_zero, aStartAt_zero]
 
 /--
 Starting at a positive value other than $a(0) = 1$, does this sequence ever go into a loop?
@@ -124,9 +122,9 @@ Starting at a positive value other than $a(0) = 1$, does this sequence ever go i
 The positivity hypothesis is required because the source recurrence uses the one-based prime index
 `p₁ = 2`; the `x = 0` branch above is only an artifact of making `aStartAt` total on `ℕ`.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∃ x : ℕ, 0 < x ∧ x ≠ 1 ∧ IsUltimatelyPeriodic (aStartAt x) := by
+    ∃ x : ℕ, 0 < x ∧ x ≠ 1 ∧ IsUltimatelyPeriodic (aStartAt x) := by
   sorry
 
 end OeisA100475

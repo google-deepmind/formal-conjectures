@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Independent Domination of Regular Graphs, Conjecture 1.6
@@ -37,6 +38,8 @@ $\left(1 - \frac{\Delta}{\lfloor (\Delta+2)^2/4 \rfloor}\right)\lvert V(G)\rvert
 Expanding the floor for even and odd $\Delta$ gives exactly the two
 statements below.
 -/
+
+@[expose] public section
 namespace Arxiv.«2107.00295»
 variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
 

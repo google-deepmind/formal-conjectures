@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Nearest integer to $n/\sqrt{2}$
@@ -23,6 +24,8 @@ Nearest integer to $n/\sqrt{2}$, defined by $\lfloor n/\sqrt{2} + 1/2 \rfloor$.
 
 *References:*
 - [A049473](https://oeis.org/A049473)-/
+
+@[expose] public section
 
 namespace OeisA49473
 

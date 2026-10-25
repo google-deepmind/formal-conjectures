@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture 1.74 (Minimal topological groups)
@@ -38,6 +39,8 @@ Tarski monsters exist by a theorem of Klyachko, Olshanskii and Osin.
   [arXiv:1210.7895](https://arxiv.org/abs/1210.7895), Theorem 1.4.
 -/
 
+@[expose] public section
+
 namespace Kourovka.«1.74»
 
 /--
@@ -48,15 +51,17 @@ def IsMinimalTopologicalGroup (G : Type*) [Group G] [TopologicalSpace G] : Prop 
   IsTopologicalGroup G ∧ T2Space G ∧ ¬ DiscreteTopology G ∧
     ∀ H : Subgroup G, H ≠ ⊤ → IsClosed (H : Set G) → DiscreteTopology H
 
+def kourovka_1_74.answer : (G : Type) → [Group G] → [TopologicalSpace G] → Prop := sorry
+
 /--
 Describe all minimal topological groups, that is, all non-discrete Hausdorff
 topological groups whose proper closed subgroups are all discrete.
 -/
-@[category research open, AMS 20 22]
+@[category research open, question value, AMS 20 22]
 theorem kourovka_1_74 :
     ∀ (G : Type) [Group G] [TopologicalSpace G],
       IsMinimalTopologicalGroup G ↔
-        (answer(sorry) : ∀ (G : Type) [Group G] [TopologicalSpace G], Prop) G := by
+        kourovka_1_74.answer G := by
   sorry
 
 /--
@@ -74,8 +79,8 @@ gives a topologizable Tarski monster of every sufficiently large odd exponent $n
 taking $n$ to be a prime $p$ makes every non-trivial proper subgroup cyclic of
 order $p$. Any such group is a minimal topological group.
 -/
-@[category research solved, AMS 20 22]
-theorem kourovka_1_74.variants.tarski_monster : answer(True) ↔
+@[category research solved, question, AMS 20 22]
+theorem kourovka_1_74.variants.tarski_monster :
     ∃ (G : Type) (_ : Group G) (_ : TopologicalSpace G),
       IsTarskiMonster G ∧ IsTopologicalGroup G ∧ T2Space G ∧
       ¬ DiscreteTopology G := by

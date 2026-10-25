@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 399
@@ -33,6 +34,8 @@ with $xy > 1$ and $k > 2$?
   diophantine equation. Comm. Pure Appl. Math. (1973), 313-325.
 -/
 
+@[expose] public section
+
 open Nat
 
 namespace Erdos399
@@ -48,11 +51,9 @@ This is discussed in problem D2 of Guy's collection [Gu04].
 
 This was formalized in Lean by Lu using Codex.
 -/
-@[category research solved, AMS 11]
-theorem erdos_399 : answer(False) ↔
-    ¬ ∃ (n x y k : ℕ), 1 < x * y ∧ 2 < k ∧ (n ! = x ^ k + y ^ k ∨ n ! + y ^ k = x ^ k) := by
-  show False ↔ _
-  simp only [false_iff, Classical.not_not]
+@[category research solved, question, AMS 11]
+theorem erdos_399 :
+    ∃ (n x y k : ℕ), 1 < x * y ∧ 2 < k ∧ (n ! = x ^ k + y ^ k ∨ n ! + y ^ k = x ^ k) := by
   exact ⟨10, 48, 36, 4, by decide⟩
 
 /-- Erdős and Obláth [ErOb37] proved this is true when $(x,y)=1$ and $k\neq 4$. -/

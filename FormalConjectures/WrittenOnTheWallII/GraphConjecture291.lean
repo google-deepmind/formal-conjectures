@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 291
@@ -52,6 +53,8 @@ The conjecture is **false**: on July 23, 2026, Zyad Tamimi sent a 12-vertex
 counterexample with $\gamma_t(G) = 4$, $\mathrm{frequency}(t_{\min}(v)) = 1$ and $k = 2$,
 and the source now lists Conjecture 291 as refuted.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture291
 
@@ -116,9 +119,9 @@ The hypothesis $n > 2$ is stated in the source's full list of conjectures (as fo
 neighbouring Conjectures 290, 292 and 293) but omitted on its list of open conjectures;
 the counterexample has $12$ vertices, so it refutes both readings.
 -/
-@[category research solved, AMS 5]
-theorem conjecture291 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+@[category research solved, question, AMS 5]
+theorem conjecture291 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_h : G.Connected) (_hn : 2 < Fintype.card α),
       G.totalDominationNumber ≤ havelHakimiZeroStep G + freqMinTriangles G := by
   sorry
@@ -129,7 +132,7 @@ theorem conjecture291 : answer(False) ↔
 @[category test, AMS 5]
 example : numTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) (0 : Fin 3) = 1 := by
   unfold numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- In the path $P_3$, vertex $1$ has no triangles incident to it
 ($0$ and $2$ are neighbors of $1$ but not adjacent to each other). -/
@@ -137,13 +140,13 @@ example : numTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) (0 : Fin 3) = 1 := by
 example : numTrianglesAtVertex
     (SimpleGraph.fromEdgeSet {s(0,1), s(1,2)} : SimpleGraph (Fin 3)) (1 : Fin 3) = 0 := by
   unfold numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- In $K_3$, the minimum triangle count is $1$ (every vertex has $1$ triangle). -/
 @[category test, AMS 5]
 example : minTrianglesAtVertex (⊤ : SimpleGraph (Fin 3)) = 1 := by
   unfold minTrianglesAtVertex numTrianglesAtVertex
-  decide +native
+  decide
 
 /-- `havelHakimiZeroStep` is nonneg. -/
 @[category test, AMS 5]

@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«1043»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«1043»
 
 /-!
 # Erdős Problem 1048
@@ -27,6 +28,8 @@ import FormalConjectures.ErdosProblems.«1043»
 - [Po61] Pommerenke, Ch., *On metric properties of complex polynomials*. Michigan Math. J.
   (1961), 97-115.
 -/
+
+@[expose] public section
 
 namespace Erdos1048
 
@@ -48,9 +51,9 @@ Pommerenke [Po61] proved the answer is no for $r>1$, showing that if $f(z)=z^n-r
 $\{ z: \lvert f(z)\rvert \leq 1\}$ has $n$ connected components, all with diameter
 $\to 0$ as $n\to \infty$.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1048.lean"]
-theorem erdos_1048 : answer(False) ↔
-    ∀ (r : ℝ) (f : ℂ[X]), 0 < r → r < 2 → f.Monic → f.degree ≥ 1 → (∀ z ∈ f.roots, ‖z‖ ≤ r) →
+@[category research solved, question, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1048.lean"]
+theorem erdos_1048 :
+    ¬ ∀ (r : ℝ) (f : ℂ[X]), 0 < r → r < 2 → f.Monic → f.degree ≥ 1 → (∀ z ∈ f.roots, ‖z‖ ≤ r) →
       ∃ z ∈ openLevelSet f, ENNReal.ofReal (2 - r) <
         Metric.ediam (connectedComponentIn (openLevelSet f) z) := by
   sorry
@@ -63,7 +66,7 @@ $\to 0$ as $n\to \infty$.
 @[category research solved, AMS 30]
 theorem erdos_1048.variants.pommerenke_ncard_components (r : ℝ) (hr : 1 < r) (n : ℕ) (hn : 1 ≤ n)
     (f : ℂ[X]) (hf : f = (X : ℂ[X]) ^ n - C ((r : ℂ) ^ n)) :
-    {C : Set ℂ | ∃ z ∈ levelSet f, C = connectedComponentIn (levelSet f) z}.ncard = n := by
+    (Set.connectedComponents (levelSet f)).ncard = n := by
   sorry
 
 /--

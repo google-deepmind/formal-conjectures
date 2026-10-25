@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 193
@@ -28,6 +29,8 @@ References:
 - [CaKa26] Cambie, Stijn and Kalviainen, Erik, "An infinite small-step Z³-walk with no
   collinear triple." [arXiv:2609.01766](https://arxiv.org/abs/2609.01766).
 -/
+
+@[expose] public section
 
 open Set
 
@@ -49,10 +52,10 @@ points?
 Cambie and Kalviainen [CaKa26] answered this question in the negative by constructing an infinite
 walk in $\mathbb{Z}^3$ with a finite set of steps and no three collinear points.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/ekalvi/erdos-193/blob/fca4e1bd2b423c000a6bef18cf2f3bc0f4bd363e/formal/Hilbert193/Hilbert193/Continuity.lean#L64-L72"]
 theorem erdos_193 :
-    answer(False) ↔ ∀ S : Set (Fin 3 → ℤ), S.Finite →
+    ¬ ∀ S : Set (Fin 3 → ℤ), S.Finite →
       /- The statement's $A = \lbrace a_1, a_2, \ldots \rbrace$ is an infinite set.
 
       If the sequence only takes finitely many values, one value has to repeat infinitely many
