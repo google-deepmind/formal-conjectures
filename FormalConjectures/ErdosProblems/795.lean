@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,14 +43,9 @@ open Filter Real
 
 namespace Erdos795
 
-/-- `A` has distinct subset products: the products $\prod_{n\in S}n$ are distinct for all
-$S\subseteq A$. -/
-def HasDistinctSubsetProducts (A : Finset ℕ) : Prop :=
-  Set.InjOn (fun S : Finset ℕ ↦ ∏ n ∈ S, n) (A.powerset : Set (Finset ℕ))
-
 /-- `g n` is the maximal size of $A\subseteq \{1,\ldots,n\}$ with distinct subset products. -/
 noncomputable def g (n : ℕ) : ℕ :=
-  sSup {k | ∃ A ⊆ Finset.Icc 1 n, HasDistinctSubsetProducts A ∧ A.card = k}
+  sSup {k | ∃ A ⊆ Finset.Icc 1 n, Finset.HasDistinctSubsetProducts A ∧ A.card = k}
 
 /--
 Let $g(n)$ be the maximal size of $A\subseteq \{1,\ldots,n\}$ such that the products
@@ -60,10 +55,9 @@ $$g(n) \leq \pi(n)+\pi(n^{1/2})+o\left(\frac{n^{1/2}}{\log n}\right)?$$
 The answer is yes, proved by Raghavan [Ra25], who proved that
 $g(n) \leq \pi(n)+\pi(n^{1/2})+O(n^{5/12+o(1)})$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos795.lean#L6651"]
-theorem erdos_795 : answer(True) ↔
-    ∃ e : ℕ → ℝ, (e =o[atTop] fun n : ℕ ↦ √n / log n) ∧
+theorem erdos_795 : ∃ e : ℕ → ℝ, (e =o[atTop] fun n : ℕ ↦ √n / log n) ∧
       ∀ n, (g n : ℝ) ≤ Nat.primeCounting n + Nat.primeCounting (Nat.sqrt n) + e n := by
   sorry
 
