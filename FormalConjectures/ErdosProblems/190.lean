@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -40,18 +40,16 @@ open Filter
 
 namespace Erdos190
 
-/-- A colouring `c` of `{0, …, N - 1}` contains either a monochromatic `k`-term arithmetic
-progression or a rainbow one (all terms of different colours). -/
-def HasMonochromaticOrRainbowAP (k N : ℕ) (c : ℕ → ℕ) : Prop :=
-  ∃ a d : ℕ, 0 < d ∧ a + (k - 1) * d < N ∧
-    ((∀ i < k, c (a + i * d) = c a) ∨
-      (∀ i < k, ∀ j < k, c (a + i * d) = c (a + j * d) → i = j))
+/-- Every colouring of the first `N` integers contains a monochromatic or rainbow AP of length `k`. -/
+def IsCanonical (k N : ℕ) : Prop :=
+  ∀ c : ℕ → ℕ, ∃ S : Set ℕ, S ⊆ Set.Ico 0 N ∧ S.IsAPOfLength k ∧
+    ((∃ i, ∀ n ∈ S, c n = i) ∨ S.InjOn c)
 
 /-- `H k` is the smallest `N` such that in any finite colouring of `{1, …, N}` (into any number
 of colours) there is always either a monochromatic `k`-term arithmetic progression or a rainbow
 arithmetic progression. -/
 noncomputable def H (k : ℕ) : ℕ :=
-  sInf {N : ℕ | 0 < N ∧ ∀ c : ℕ → ℕ, HasMonochromaticOrRainbowAP k N c}
+  sInf {N : ℕ | 0 < N ∧ IsCanonical k N}
 
 /--
 Let $H(k)$ be the smallest $N$ such that in any finite colouring of $\{1,\ldots,N\}$ (into any
@@ -72,10 +70,9 @@ $$H(k) \geq k^{(1-o(1))k\log k}.$$
 Colourings are functions `ℕ → ℕ` (only the values on `{0, …, N - 1}` matter), which is
 equivalent to colourings into an arbitrary finite set of colours.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos190.lean#L897"]
-theorem erdos_190 : answer(True) ↔
-    Tendsto (fun k : ℕ => (H k : ℝ) ^ (1 / (k : ℝ)) / k) atTop atTop := by
+theorem erdos_190 : Tendsto (fun k : ℕ => (H k : ℝ) ^ (1 / (k : ℝ)) / k) atTop atTop := by
   sorry
 
 /-- Fox and Hunter [FoHu26] proved that $H(k) \geq k^{(1-o(1))k\log k}$. -/
