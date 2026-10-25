@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,14 +35,9 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-namespace Erdos1216
+open Digraph
 
-/--
-A tournament `G` contains a transitive tournament on `k` vertices: `k` distinct vertices
-`v 0, …, v (k-1)` with `v i → v j` whenever `i < j`.
--/
-def HasTransitiveSubtournament {V : Type*} (G : Digraph V) (k : ℕ) : Prop :=
-  ∃ v : Fin k → V, Function.Injective v ∧ ∀ i j : Fin k, i < j → G.Adj (v i) (v j)
+namespace Erdos1216
 
 /--
 `f n` is the largest `k` such that every tournament on `n` vertices contains a transitive
@@ -71,9 +66,9 @@ $n\geq 55$ by Sanchez-Flores [Sa94] to $f(n) \geq \lfloor \log_2 n-\log_2(55)\rf
 further for $n\geq 32$ to $f(n) \geq \lfloor \log_2 n-\log_2(54)\rfloor+7$ by Sanchez-Flores
 [Sa98b]. (Note that $7-\log_2(54)\approx 1.24$.)
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1216.lean#L1178"]
-theorem erdos_1216 : answer(False) ↔ ∀ n : ℕ, 1 ≤ n → f n = Nat.log 2 n + 1 := by
+theorem erdos_1216 : ¬ ∀ n : ℕ, 1 ≤ n → f n = Nat.log 2 n + 1 := by
   sorry
 
 /-- The first counterexample: $f(14) = 5$, whereas $\lfloor \log_2 14\rfloor + 1 = 4$. -/
