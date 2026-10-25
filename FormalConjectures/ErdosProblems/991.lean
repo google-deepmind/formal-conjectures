@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public import FormalConjectures.ErdosProblems.«988»
 
 /-!
 # Erdős Problem 991
@@ -33,7 +32,7 @@ public import FormalConjectures.ErdosProblems.«988»
 
 @[expose] public section
 
-open Filter Asymptotics Erdos988
+open Filter Asymptotics SphericalCap
 
 namespace Erdos991
 
@@ -62,10 +61,9 @@ $\ll n^{2/3}$ (as a special case of a more general result).
 
 See also [988](https://www.erdosproblems.com/988).
 -/
-@[category research solved, AMS 11 31 52, formal_proof using lean4 at
+@[category research solved, question, AMS 11 31 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos991.lean#L187"]
-theorem erdos_991 : answer(True) ↔
-    ∀ A : ℕ → Finset Sphere, (∀ n, (A n).card = n) →
+theorem erdos_991 : ∀ A : ℕ → Finset Sphere, (∀ n, (A n).card = n) →
       (∀ n, IsDistanceProductMaximizer (A n)) →
         (fun n : ℕ ↦ discrepancy (A n)) =o[atTop] fun n : ℕ ↦ (n : ℝ) := by
   sorry
