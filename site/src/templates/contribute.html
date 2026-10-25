@@ -21,6 +21,7 @@
       <li><a href="/stats/">Stats</a></li>
       <li><a href="/modules/">Modules</a></li>
       <li><a href="/about/">About</a></li>
+      <li><a href="/team/">Team</a></li>
       <li><a href="/contribute/">Contribute</a></li>
       <li><a href="https://github.com/google-deepmind/formal-conjectures" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
@@ -91,13 +92,16 @@ Copyright YYYY The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 …
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Problem Title
 *Reference:* [source](https://…)
 -/
+
+@[expose] public section
 
 namespace MyProblem
 
@@ -138,7 +142,7 @@ end MyProblem</code></pre>
         <li>One problem per file (variants and special cases may share a file).</li>
         <li>Include a reference comment linking to the source of the conjecture.</li>
         <li>Use <code>theorem</code> or <code>lemma</code> for problem statements.</li>
-        <li>For questions ("Does P hold?"), use the <code>answer(sorry)</code> elaborator.</li>
+        <li>Tag a yes-or-no question with <code>@[question]</code>, and a question that asks for a value with <code>@[question value]</code> and a definition <code>&lt;theorem&gt;.answer</code> for the unknown.</li>
         <li>Bespoke definitions are fine; add basic API tests for them.</li>
         <li>Follow the same AI usage conventions as <a href="https://leanprover-community.github.io/contribute/index.html" target="_blank" rel="noopener">Mathlib</a>.</li>
       </ul>

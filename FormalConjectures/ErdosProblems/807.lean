@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,31 +38,6 @@ namespace Erdos807
 
 variable {V : Type*}
 
-/-- A complete bipartite subgraph of `G`, given by its two disjoint parts. -/
-structure Biclique (G : SimpleGraph V) where
-  /-- One part of the biclique. -/
-  left : Finset V
-  /-- The other part of the biclique. -/
-  right : Finset V
-  disjoint : Disjoint left right
-  complete : ∀ u ∈ left, ∀ v ∈ right, G.Adj u v
-
-/-- The edges of a biclique. -/
-def Biclique.edgeSet {G : SimpleGraph V} (B : Biclique G) : Set (Sym2 V) :=
-  {e | ∃ u ∈ B.left, ∃ v ∈ B.right, e = s(u, v)}
-
-/-- The bipartition number $\tau(G)$ of a graph $G$: the smallest number of pairwise edge
-disjoint complete bipartite subgraphs whose union is $G$. -/
-noncomputable def bipartitionNumber (G : SimpleGraph V) : ℕ :=
-  sInf {k | ∃ B : Fin k → Biclique G,
-    (Pairwise fun i j ↦ Disjoint (B i).edgeSet (B j).edgeSet) ∧ ⋃ i, (B i).edgeSet = G.edgeSet}
-
-open scoped Classical in
-/-- A sequence of properties of graphs holds *almost surely* for the random graph
-$G(n, 1/2)$ if the proportion of labelled graphs on `n` vertices satisfying it tends to `1`. -/
-def AlmostSurely (P : ∀ n : ℕ, SimpleGraph (Fin n) → Prop) : Prop :=
-  Tendsto (fun n ↦ ((Finset.univ.filter (P n)).card : ℝ) / 2 ^ n.choose 2) atTop (nhds 1)
-
 /--
 The bipartition number $\tau(G)$ of a graph $G$ is the smallest number of pairwise edge
 disjoint complete bipartite graphs whose union is $G$. The independence number $\alpha(G)$ is
@@ -74,10 +49,9 @@ almost surely?
 
 Alon [Al15] showed this is false: in fact almost surely $\tau(G) \leq n-\alpha(G)-1$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos807.lean#L154"]
-theorem erdos_807 : answer(False) ↔
-    AlmostSurely fun n G ↦ bipartitionNumber G = n - G.indepNum := by
+theorem erdos_807 : ¬ AlmostSurely fun n G ↦ bipartitionNumber G = n - G.indepNum := by
   sorry
 
 /-- Alon, Bohman, and Huang [ABH17] proved that there is some absolute constant $c>0$ such
