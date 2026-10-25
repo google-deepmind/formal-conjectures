@@ -132,9 +132,9 @@ theorem cube_hamiltonian_arc_decomposition_impossible_m2 :
 /-- For even `m > 2`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition.
 Knuth records this as settled in the final section of [Knu26], by [Ho26] with the proof in
 [GPT26] for even `m ≥ 8`, and by [AM26] for the even case generally. -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem cube_hamiltonian_arc_decomposition_even :
-    answer(True) ↔ ∀ᵉ (m : ℕ) (_ : NeZero m) (_ : Even m) (_ : 2 < m),
+    ∀ᵉ (m : ℕ) (_ : NeZero m) (_ : Even m) (_ : 2 < m),
       HasHamiltonianArcDecomposition m := by
   sorry
 

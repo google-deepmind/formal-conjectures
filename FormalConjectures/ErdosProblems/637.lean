@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,11 +41,6 @@ open scoped Classical in
 noncomputable def distinctDegrees {n : ℕ} (G : SimpleGraph (Fin n)) (W : Finset (Fin n)) : ℕ :=
   (W.image fun v ↦ (W.filter (G.Adj v)).card).card
 
-/-- `G` contains no clique or independent set on `C log n` vertices. -/
-def IsRamseyGraph {n : ℕ} (C : ℝ) (G : SimpleGraph (Fin n)) : Prop :=
-  ∀ S : Finset (Fin n), (G.IsClique (S : Set (Fin n)) ∨ G.IsIndepSet (S : Set (Fin n))) →
-    (S.card : ℝ) < C * log n
-
 /--
 If $G$ is a graph on $n$ vertices which contains no complete graph or independent set on
 $\gg \log n$ vertices then $G$ contains an induced subgraph on $\gg n$ vertices which contains
@@ -53,10 +48,9 @@ $\gg n^{1/2}$ distinct degrees.
 
 A problem of Erdős, Faudree, and Sós. This was proved by Bukh and Sudakov [BuSu07].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos637.lean#L1062"]
-theorem erdos_637 : answer(True) ↔
-    ∀ C : ℝ, 0 < C → ∃ α β : ℝ, 0 < α ∧ 0 < β ∧ ∀ᶠ n : ℕ in atTop,
+theorem erdos_637 : ∀ C : ℝ, 0 < C → ∃ α β : ℝ, 0 < α ∧ 0 < β ∧ ∀ᶠ n : ℕ in atTop,
       ∀ G : SimpleGraph (Fin n), IsRamseyGraph C G →
         ∃ W : Finset (Fin n), α * n ≤ W.card ∧ β * √n ≤ distinctDegrees G W := by
   sorry
