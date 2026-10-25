@@ -44,9 +44,9 @@ and no points from $B$?
 This has been disproved by Xichuan in the comments, who has found three explicit
 counterexamples.
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos105.lean"]
-theorem erdos_105 : answer(False) ↔
-    ∀ A B : Finset ℝ², Disjoint A B → A.card = B.card + 3 →
+@[category research solved, question, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos105.lean"]
+theorem erdos_105 :
+    ¬ ∀ A B : Finset ℝ², Disjoint A B → A.card = B.card + 3 →
       ¬ Collinear ℝ (A : Set ℝ²) →
       ∃ p ∈ A, ∃ q ∈ A, p ≠ q ∧ ∀ b ∈ B, b ∉ line[ℝ, p, q] := by
   sorry
@@ -73,10 +73,16 @@ theorem erdos_105.variants.beck_szemeredi_trotter : ∃ c > (0 : ℝ),
 
 /--
 It remains possible that this holds with $n-4$ (or in general with $n-O(1)$ or $(1-o(1))n$).
+
+This fails with $n-4$ as well: Core_65536 gives an explicit counterexample in the
+[forum](https://www.erdosproblems.com/forum/thread/105#post-8033) (24 July 2026), with $|A| = 10$
+and $|B| = 6$ and integer coordinates, in which every line through two points of $A$ contains a
+point of $B$. The incidences have been verified in Lean.
 -/
-@[category research open, AMS 5 52]
-theorem erdos_105.variants.sub_four : answer(sorry) ↔
-    ∀ A B : Finset ℝ², Disjoint A B → A.card = B.card + 4 →
+@[category research solved, question, AMS 5 52, formal_proof using lean4 at
+  "https://github.com/kusasyu36/erdos105-sub-four/blob/a2d073034d2d15af216d8bd71771f1eda13b3de3/Erdos105SubFour.lean#L93"]
+theorem erdos_105.variants.sub_four :
+    ¬ ∀ A B : Finset ℝ², Disjoint A B → A.card = B.card + 4 →
       ¬ Collinear ℝ (A : Set ℝ²) →
       ∃ p ∈ A, ∃ q ∈ A, p ≠ q ∧ ∀ b ∈ B, b ∉ line[ℝ, p, q] := by
   sorry

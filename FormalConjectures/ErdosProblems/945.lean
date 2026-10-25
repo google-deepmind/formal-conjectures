@@ -40,15 +40,15 @@ noncomputable def F (x : ℝ) : ℕ :=
   sSup {k | ∃ (n : ℕ), n + k ≤ x ∧ (Set.Ioc n (n + k)).InjOn τ}
 
 -- Implementation note: we define a Prop here and below to be able to easily formulate
--- the equivalence between the two variants. Because the theorems require `answer(sorry)` we
+-- the equivalence between the two variants. Because the theorems have an unknown `answer` we
 -- can't handle this with `type_of%`.
 def Erdos945Prop : Prop := ∃ O : ℝ → ℝ, O =O[atTop] (1 : ℝ → ℝ) ∧ ∀ᶠ x in atTop, F x ≤ log x ^ O x
 
 /--
 Is it true that $F(x) \leq (\log x)^{O(1)}$?
 -/
-@[category research open, AMS 11]
-theorem erdos_945 : answer(sorry) ↔ Erdos945Prop := by
+@[category research open, question, AMS 11]
+theorem erdos_945 : Erdos945Prop := by
   sorry
 
 def Erdos945Constant : Prop :=
@@ -62,8 +62,8 @@ def Erdos945Constant : Prop :=
 Is there a constant $C > 0$ such that, for all large $x$, every interval $[x, x+(\log x)C]$
 contains two integers with the same number of divisors?
 -/
-@[category research open, AMS 11]
-theorem erdos_945.variants.constant : answer(sorry) ↔ Erdos945Constant := by
+@[category research open, question, AMS 11]
+theorem erdos_945.variants.constant : Erdos945Constant := by
   sorry
 
 -- TODO(firsching): show equivalence

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,17 +33,6 @@ open Filter Asymptotics EuclideanGeometry
 
 namespace Erdos960
 
-open scoped Classical in
-/-- The number of *ordinary lines* determined by `A` (lines containing exactly two points of
-`A`), counted through the pairs of points of `A` spanning them. -/
-noncomputable def ordinaryLines (A : Finset ℝ²) : ℕ :=
-  ((A.powersetCard 2).filter fun B : Finset ℝ² ↦
-    ∀ x ∈ A, x ∈ affineSpan ℝ (B : Set ℝ²) → x ∈ B).card
-
-/-- No `k` points of `A` lie on a line. -/
-def NoKCollinear (A : Finset ℝ²) (k : ℕ) : Prop :=
-  ∀ B ⊆ A, B.card = k → ¬ Collinear ℝ (B : Set ℝ²)
-
 /-- `A` contains a set `A'` of `r` points such that all $\binom{r}{2}$ lines determined by `A'`
 are ordinary (with respect to `A`). -/
 def HasOrdinaryClique (A : Finset ℝ²) (r : ℕ) : Prop :=
@@ -54,7 +43,7 @@ def HasOrdinaryClique (A : Finset ℝ²) (r : ℕ) : Prop :=
 line and at least `t` ordinary lines contains `r` points all of whose joining lines are
 ordinary. -/
 noncomputable def f (r k n : ℕ) : ℕ :=
-  sInf {t | ∀ A : Finset ℝ², A.card = n → NoKCollinear A k → t ≤ ordinaryLines A →
+  sInf {t | ∀ A : Finset ℝ², A.card = n → NonCollinearFor k (A : Set ℝ²) → t ≤ (EuclideanGeometry.ordinaryLines A).card →
     HasOrdinaryClique A r}
 
 /--
@@ -68,10 +57,9 @@ Is it true that $f_{r,k}(n)=o(n^2)$?
 The answer is no: an internal OpenAI model (see [APSSV26b]) has shown that in fact for any
 $r\geq 3$ and $k\geq 4$, $f_{r,k}(n) \geq \frac{n^2}{12}-O(n)$.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at
+@[category research solved, question, AMS 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos960.lean#L1533"]
-theorem erdos_960.parts.i : answer(False) ↔
-    ∀ r ≥ 2, ∀ k ≥ 2,
+theorem erdos_960.parts.i : ¬ ∀ r ≥ 2, ∀ k ≥ 2,
       (fun n : ℕ ↦ (f r k n : ℝ)) =o[atTop] fun n : ℕ ↦ (n : ℝ) ^ 2 := by
   sorry
 
@@ -81,10 +69,9 @@ Is it true that $f_{r,k}(n) \ll n$?
 The answer is no, since $f_{r,k}(n) \geq \frac{n^2}{12}-O(n)$ for $r\geq 3$, $k\geq 4$
 [APSSV26b].
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at
+@[category research solved, question, AMS 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos960.lean#L1533"]
-theorem erdos_960.parts.ii : answer(False) ↔
-    ∀ r ≥ 2, ∀ k ≥ 2,
+theorem erdos_960.parts.ii : ¬ ∀ r ≥ 2, ∀ k ≥ 2,
       (fun n : ℕ ↦ (f r k n : ℝ)) =O[atTop] fun n : ℕ ↦ (n : ℝ) := by
   sorry
 
