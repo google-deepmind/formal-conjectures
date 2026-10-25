@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -46,18 +46,6 @@ open SimpleGraph
 
 namespace Erdos565
 
-/-- `H` is an *induced Ramsey host* for `G` if every $2$-colouring of the edges of `H` contains an
-induced monochromatic copy of `G`, i.e. a graph embedding `G ↪g H` (which preserves and reflects
-adjacency) all of whose edges receive the same colour. -/
-def IsInducedRamseyHost {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
-  ∀ c : H.EdgeLabeling (Fin 2), ∃ (i : Fin 2) (f : G ↪g H), ∀ e : G.edgeSet, c (f.mapEdgeSet e) = i
-
-/-- The induced Ramsey number `R*(G)`: the minimal `m` such that there is a graph `H` on `m`
-vertices such that any $2$-colouring of the edges of `H` contains an induced monochromatic copy
-of `G`. -/
-noncomputable def inducedRamseyNumber {V : Type*} (G : SimpleGraph V) : ℕ :=
-  sInf {m | ∃ H : SimpleGraph (Fin m), IsInducedRamseyHost G H}
-
 /--
 Let $R^*(G)$ be the induced Ramsey number: the minimal $m$ such that there is a graph $H$ on $m$
 vertices such that any $2$-colouring of the edges of $H$ contains an induced monochromatic copy of
@@ -72,9 +60,8 @@ Filipe, and Marciano [ACDFM25].
 
 This was formalized in Lean by Codex and GPT-5.6 Sol.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos565.lean#L52"]
-theorem erdos_565 : answer(True) ↔
-    ∃ C : ℕ, ∀ (n : ℕ) (G : SimpleGraph (Fin n)), inducedRamseyNumber G ≤ 2 ^ (C * n) := by
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos565.lean#L52"]
+theorem erdos_565 : ∃ C : ℕ, ∀ (n : ℕ) (G : SimpleGraph (Fin n)), inducedRamseyNumber G ≤ 2 ^ (C * n) := by
   sorry
 
 /--
