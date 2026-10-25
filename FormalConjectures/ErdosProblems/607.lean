@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,10 +34,6 @@ open Filter Real EuclideanGeometry
 
 namespace Erdos607
 
-/-- The lines determined by a finite set of points `P` in the plane. -/
-def determinedLines (P : Finset ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
-  {affineSpan ℝ {p, q} | (p ∈ P) (q ∈ P) (_ : p ≠ q)}
-
 open scoped Classical in
 /-- $A(P)=\{\lvert \ell_1\cap P\rvert,\ldots,\lvert \ell_m\cap P\rvert\}$, where
 $\ell_1,\ldots,\ell_m$ are the lines determined by `P`. -/
@@ -59,10 +55,9 @@ $$F(n) \leq \exp(O(\sqrt{n}))?$$
 The answer is yes, proved by Szemerédi and Trotter [SzTr83]. Erdős writes it is 'easy to see'
 that this bound would be best possible.
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at
+@[category research solved, question, AMS 5 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos607.lean#L826"]
-theorem erdos_607 : answer(True) ↔
-    ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, (F n : ℝ) ≤ exp (C * √n) := by
+theorem erdos_607 : ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, (F n : ℝ) ≤ exp (C * √n) := by
   sorry
 
 /-- Erdős writes it is 'easy to see' that the bound $F(n) \leq \exp(O(\sqrt{n}))$ would be best

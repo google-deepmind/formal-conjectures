@@ -68,10 +68,10 @@ Erdős [Er64b] remarks it is "easy to see" that $\limsup_k \sup_n |\sum_{j \le n
 Erdős [Er65b] later found a "very easy" proof that $A_k \gg \log k$ for infinitely many $k$.
 Clunie [Cl67] proved that $A_k \gg k^{1/2}$ for infinitely many $k$, which implies the answer is
 yes (Tao independently found a proof). This is Problem 7.21 in [Ha74]. -/
-@[category research solved, AMS 11 40 42, formal_proof using lean4 at
+@[category research solved, question, AMS 11 40 42, formal_proof using lean4 at
 "https://github.com/Marti2203/formal-conjectures/blob/19c63d48acce3099c242b059518c49bf8dc0eab8/FormalConjectures/ErdosProblems/987.lean"]
 theorem erdos_987.parts.i :
-    answer(True) ↔ ∀ (x : ℕ → ℝ) (_ : ∀ j : ℕ, x j ∈ Set.Ioo (0 : ℝ) 1),
+    ∀ (x : ℕ → ℝ) (_ : ∀ j : ℕ, x j ∈ Set.Ioo (0 : ℝ) 1),
       atTop.limsup (fun k : ℕ => A x k) = ⊤ := by
   sorry
 
@@ -163,10 +163,10 @@ theorem erdos_987.variants.sqrt_log_upper_bound :
 $(x_n) \in (0, 1)$ and a bound $b(k) = o(k)$ with $A x k \le b k$ eventually. A corollary of
 `sqrt_log_upper_bound` (which gives a $\sqrt{k \log k}$ bound) plus the asymptotic
 $\sqrt{k \log k} = o(k)$. -/
-@[category research solved, AMS 11 40 42, formal_proof using lean4 at
+@[category research solved, question, AMS 11 40 42, formal_proof using lean4 at
 "https://github.com/Marti2203/formal-conjectures/blob/19c63d48acce3099c242b059518c49bf8dc0eab8/FormalConjectures/ErdosProblems/987.lean"]
 theorem erdos_987.parts.ii :
-    answer(True) ↔ ∃ (x : ℕ → ℝ) (_ : ∀ j : ℕ, x j ∈ Set.Ioo (0 : ℝ) 1) (b : ℕ → ℝ),
+    ∃ (x : ℕ → ℝ) (_ : ∀ j : ℕ, x j ∈ Set.Ioo (0 : ℝ) 1) (b : ℕ → ℝ),
       b =o[atTop] (fun k : ℕ => (k : ℝ)) ∧ ∀ᶠ k : ℕ in atTop, A x k ≤ ((b k : ℝ) : EReal) := by
   sorry
 

@@ -44,8 +44,8 @@ where $c_i \in \{0, 1\}$ and $a_i$ has only the digits $0, 1$ when written in ba
 
 Conjectured by Erdős [Er97], solved by Boris Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11]
-lemma erdos124.zero : answer(True) ↔
+@[category research solved, question, AMS 11]
+lemma erdos124.zero :
     ∀ D : Finset ℕ, (∀ d ∈ D, 3 ≤ d) → 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ →
       ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d 0 := sorry
 
@@ -58,8 +58,8 @@ written in base $d_i$?
 
 Conjectured by Burr, Erdős, Graham, and Li [BEGL96]
 -/
-@[category research open, AMS 11]
-lemma erdos124.ne_zero : answer(sorry) ↔
+@[category research open, question, AMS 11]
+lemma erdos124.ne_zero :
     ∀ k ≠ 0, ∀ D : Finset ℕ, (∀ d ∈ D, 3 ≤ d) → 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ → D.gcd id = 1 →
       ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d k := by
   sorry
