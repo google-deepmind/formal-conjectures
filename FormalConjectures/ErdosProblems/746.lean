@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,13 +43,6 @@ open Filter Real Topology SimpleGraph
 
 namespace Erdos746
 
-open scoped Classical in
-/-- The probability that the random graph `G(n, m)`, chosen uniformly among the labelled graphs
-on `n` vertices with exactly `m` edges, satisfies `P`. -/
-noncomputable def probability (n m : ℕ) (P : SimpleGraph (Fin n) → Prop) : ℝ :=
-  ((Finset.univ.filter fun G : SimpleGraph (Fin n) ↦ G.edgeFinset.card = m ∧ P G).card : ℝ) /
-    (Finset.univ.filter fun G : SimpleGraph (Fin n) ↦ G.edgeFinset.card = m).card
-
 /--
 Is it true that, almost surely, a random graph on $n$ vertices with $\geq (\tfrac{1}{2}+\epsilon)n\log n$
 edges is Hamiltonian?
@@ -66,10 +59,10 @@ tends to $e^{-e^{-2c}}$ as $n\to \infty$.
 
 This was formalized in Lean by Codex and GPT-5.6 Sol.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos746.lean#L34"]
-theorem erdos_746 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ∀ m : ℕ → ℕ,
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos746.lean#L34"]
+theorem erdos_746 : ∀ ε : ℝ, 0 < ε → ∀ m : ℕ → ℕ,
     (∀ᶠ n : ℕ in atTop, (1 / 2 + ε) * n * log n ≤ m n) → (∀ᶠ n : ℕ in atTop, m n ≤ n.choose 2) →
-      Tendsto (fun n ↦ probability n (m n) IsHamiltonian) atTop (𝓝 1) := by
+      Tendsto (fun n ↦ fixedEdgeGraphProbability n (m n) IsHamiltonian) atTop (𝓝 1) := by
   sorry
 
 /--
@@ -80,7 +73,7 @@ edges the probability that the graph is Hamiltonian tends to $e^{-e^{-2c}}$ as $
 theorem erdos_746.variants.komlos_szemeredi (c : ℝ) (m : ℕ → ℕ)
     (hm : (fun n : ℕ ↦ (m n : ℝ) - (1 / 2 * n * log n + 1 / 2 * n * log (log n) + c * n)) =o[atTop]
       fun n : ℕ ↦ (n : ℝ)) :
-    Tendsto (fun n ↦ probability n (m n) IsHamiltonian) atTop (𝓝 (exp (-exp (-2 * c)))) := by
+    Tendsto (fun n ↦ fixedEdgeGraphProbability n (m n) IsHamiltonian) atTop (𝓝 (exp (-exp (-2 * c)))) := by
   sorry
 
 end Erdos746
