@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,12 +42,6 @@ def arc (z : UnitAddCircle) (ℓ : ℝ) : Set UnitAddCircle := Metric.ball z (�
 
 variable {Ω : Type*} [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
 
-/-- The random points `X n` of the unit circle are independent and uniformly distributed. -/
-structure IsIIDUniform (X : ℕ → Ω → UnitAddCircle) : Prop where
-  measurable n : Measurable (X n)
-  iIndepFun : iIndepFun X ℙ
-  map_eq n : Measure.map (X n) ℙ = AddCircle.haarAddCircle
-
 /-- Shepp's condition on the sequence of lengths `a₀ ≥ a₁ ≥ ⋯`:
 $$\sum_{n\geq 1} \frac{e^{a_0+\cdots+a_{n-1}}}{n^2}=\infty.$$
 -/
@@ -64,12 +58,16 @@ condition is that
 $$\sum_n \frac{e^{a_1+\cdots+a_n}}{n^2}=\infty.$$
 Since coverage is invariant under permuting the arcs, this decides the general case by passing
 to the non-increasing rearrangement of the $a_n$.
+
+For coverage by the union of all arcs, each length is required to be less than the circumference
+$1$. Otherwise an initial arc can force coverage independently of the tail criterion.
 -/
 @[category research solved, AMS 60]
 theorem erdos_526 (a : ℕ → ℝ) (ha : Antitone a) (h0 : ∀ n, 0 ≤ a n)
+    (hlt : ∀ n, a n < 1)
     (hlim : Tendsto a atTop (nhds 0)) (hdiv : ¬ Summable a) :
     (∀ (Ω : Type) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
-      (X : ℕ → Ω → UnitAddCircle), IsIIDUniform X →
+      (X : ℕ → Ω → UnitAddCircle), IsIIDWithLaw X ℙ AddCircle.haarAddCircle →
         ∀ᵐ ω, ∀ x : UnitAddCircle, ∃ n, x ∈ arc (X n ω) (a n)) ↔
       SheppCondition a := by
   sorry
@@ -84,7 +82,7 @@ probability $1$.
 theorem erdos_526.variants.infinitely_often (a : ℕ → ℝ) (ha : Antitone a)
     (h0 : ∀ n, 0 ≤ a n) (hlim : Tendsto a atTop (nhds 0)) (hdiv : ¬ Summable a) :
     (∀ (Ω : Type) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
-      (X : ℕ → Ω → UnitAddCircle), IsIIDUniform X →
+      (X : ℕ → Ω → UnitAddCircle), IsIIDWithLaw X ℙ AddCircle.haarAddCircle →
         ∀ᵐ ω, ∀ N, ∀ x : UnitAddCircle, ∃ n ≥ N, x ∈ arc (X n ω) (a n)) ↔
       SheppCondition a := by
   sorry
@@ -96,7 +94,7 @@ probability $1$.
 @[category research solved, AMS 60]
 theorem erdos_526.variants.almost_all (a : ℕ → ℝ) (h0 : ∀ n, 0 ≤ a n)
     (hlim : Tendsto a atTop (nhds 0)) (hdiv : ¬ Summable a)
-    (X : ℕ → Ω → UnitAddCircle) (hX : IsIIDUniform X) :
+    (X : ℕ → Ω → UnitAddCircle) (hX : IsIIDWithLaw X ℙ AddCircle.haarAddCircle) :
     ∀ᵐ ω, ∀ᵐ x : UnitAddCircle, ∃ n, x ∈ arc (X n ω) (a n) := by
   sorry
 
@@ -106,14 +104,14 @@ Kahane [Ka59] showed that $a_n=\frac{1+c}{n}$ with $c>0$ has this property, whic
 -/
 @[category research solved, AMS 60]
 theorem erdos_526.variants.one_div (c : ℝ) (hc : 0 ≤ c)
-    (X : ℕ → Ω → UnitAddCircle) (hX : IsIIDUniform X) :
+    (X : ℕ → Ω → UnitAddCircle) (hX : IsIIDWithLaw X ℙ AddCircle.haarAddCircle) :
     ∀ᵐ ω, ∀ x : UnitAddCircle, ∃ n, x ∈ arc (X n ω) ((1 + c) / (n + 1)) := by
   sorry
 
 /-- Erdős also showed that $a_n=\frac{1-c}{n}$ with $c>0$ does not have this property. -/
 @[category research solved, AMS 60]
 theorem erdos_526.variants.one_sub_div (c : ℝ) (hc : 0 < c)
-    (X : ℕ → Ω → UnitAddCircle) (hX : IsIIDUniform X) :
+    (X : ℕ → Ω → UnitAddCircle) (hX : IsIIDWithLaw X ℙ AddCircle.haarAddCircle) :
     ¬ ∀ᵐ ω, ∀ x : UnitAddCircle, ∃ n, x ∈ arc (X n ω) ((1 - c) / (n + 1)) := by
   sorry
 
