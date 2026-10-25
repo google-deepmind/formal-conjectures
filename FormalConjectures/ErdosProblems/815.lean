@@ -38,15 +38,6 @@ open scoped SimpleGraph
 
 namespace Erdos815
 
-open scoped Classical in
-/--
-A graph on `n` vertices is *degree $3$ critical* if it has `2n - 2` edges and every proper
-induced subgraph has minimum degree `≤ 2`.
--/
-def IsDegreeThreeCritical {n : ℕ} (G : SimpleGraph (Fin n)) : Prop :=
-  G.edgeFinset.card = 2 * n - 2 ∧
-    ∀ s : Set (Fin n), s ≠ Set.univ → (G.induce s).minDegree ≤ 2
-
 /--
 Let $k\geq 3$ and $n$ be sufficiently large. Is it true that if $G$ is a graph with $n$ vertices
 and $2n-2$ edges such that every proper induced subgraph has minimum degree $\leq 2$ then $G$
@@ -62,9 +53,9 @@ Such graphs are called degree $3$ critical. This conjecture was disproved by Nar
 and Szabó [NPS17], who proved that there are arbitrarily large such graphs with no cycle of length
 $23$. It remains open whether this question has an affirmative answer if we restrict to even $k$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos815.lean#L2075"]
-theorem erdos_815 : answer(False) ↔ ∀ k : ℕ, 3 ≤ k → ∀ᶠ n : ℕ in atTop,
+theorem erdos_815 : ¬ ∀ k : ℕ, 3 ≤ k → ∀ᶠ n : ℕ in atTop,
     ∀ G : SimpleGraph (Fin n), IsDegreeThreeCritical G → cycleGraph k ⊑ G := by
   sorry
 
@@ -79,8 +70,8 @@ theorem erdos_815.variants.twenty_three : ∃ᶠ n : ℕ in atTop,
   sorry
 
 /-- It remains open whether this question has an affirmative answer if we restrict to even $k$. -/
-@[category research open, AMS 5]
-theorem erdos_815.variants.even : answer(sorry) ↔ ∀ k : ℕ, 3 ≤ k → Even k →
+@[category research open, question, AMS 5]
+theorem erdos_815.variants.even : ∀ k : ℕ, 3 ≤ k → Even k →
     ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n), IsDegreeThreeCritical G → cycleGraph k ⊑ G := by
   sorry
 

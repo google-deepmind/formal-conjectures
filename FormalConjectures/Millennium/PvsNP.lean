@@ -25,6 +25,7 @@ in complexity theory, including
 
 - the P vs NP problem
 - the NP vs coNP problem
+- the P vs BPP problem
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/P_versus_NP_problem)
@@ -52,6 +53,14 @@ The conjecture that the complexity classes NP and coNP are not equal.
 theorem NP_ne_coNP : NP ≠ coNP := by sorry
 
 /--
+**P = BPP**:
+
+The conjecture that the complexity classes P and BPP are equal.
+-/
+@[category research open, AMS 68]
+theorem P_eq_BPP : P = BPP := by sorry
+
+/--
 The theorem that the set of complements of languages in P is itself P.
 
 This can be proven by observing that the boolean negation function is computable in polynomial time,
@@ -69,7 +78,8 @@ This can be proven by observing that for any language in P,
 we can construct a verifier that ignores the witness and simply runs the poly-time decider for the
 language.
 -/
-@[category textbook, AMS 68]
+@[category textbook, AMS 68, formal_proof using lean4 at
+  "https://github.com/AItoBit/p-subset-np/blob/beaeee15c37af6efac518426e117861c00ff3acc/PSubsetNP.lean#L358"]
 theorem P_subset_NP :
     P ⊆ NP := by
   sorry
@@ -84,5 +94,17 @@ theorem P_subset_coNP :
   simp only [Set.ofPred_subset_ofPred]
   intros L hL
   exact P_subset_NP hL
+
+/--
+The theorem that P is a subset of BPP.
+
+This can be proven by observing that for any language in P,
+we can construct a randomized decider that ignores the random bits
+and simply runs the poly-time decider for the language.
+-/
+@[category textbook, AMS 68]
+theorem P_subset_BPP :
+    P ⊆ BPP := by
+  sorry
 
 end ComplexityTheory
