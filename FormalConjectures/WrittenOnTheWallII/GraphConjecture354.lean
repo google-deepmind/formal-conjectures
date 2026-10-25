@@ -58,7 +58,9 @@ noncomputable def openPackingNumber {V : Type*} [Fintype V] [DecidableEq V]
  An open packing has pairwise disjoint open neighborhoods; adjacent packed
  vertices are permitted. Components include isolates, and $N[A]$ is closed.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/afe9d3138ae1da4df353114471573ea4d46fccba/Proofs/WOWII376354/WOWII354Full.lean#L42"]
 theorem closed_neighborhood_bound {V : Type*} [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj] (hT : T.IsTree)
     (horder : 1 < Fintype.card V) (A : Finset V)
@@ -70,7 +72,9 @@ theorem closed_neighborhood_bound {V : Type*} [Fintype V] [DecidableEq V]
 /-- The degree-two specialization gives
 $2c(T[N[D_2(T)]])\le\gamma_t(T)$ for every nontrivial finite simple tree.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/afe9d3138ae1da4df353114471573ea4d46fccba/Proofs/WOWII376354/WOWII354Full.lean#L55"]
 theorem degree_two_bound {V : Type*} [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj] (hT : T.IsTree)
     (horder : 1 < Fintype.card V) :
@@ -81,7 +85,9 @@ theorem degree_two_bound {V : Type*} [Fintype V] [DecidableEq V]
 $|C(T)|c(T[N[D_2(T)]])\le\gamma_t(T)$ for every finite simple tree of order
  greater than two, where $C(T)$ is its eccentricity/radius center.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/afe9d3138ae1da4df353114471573ea4d46fccba/Proofs/WOWII376354/WOWII354Full.lean#L64"]
 theorem conjecture354_closed {V : Type*} [Fintype V] [DecidableEq V]
     (T : SimpleGraph V) [DecidableRel T.Adj] (hT : T.IsTree)
     (horder : 2 < Fintype.card V) :
