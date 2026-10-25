@@ -58,12 +58,64 @@ The linked file proves the bound for every finite vertex type with at least $10$
 gives the `atTop` reading below, and collects the uncovered edges as the edge set of a graph
 rather than as a set of pairs.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos639.lean"]
-theorem erdos_639 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos639.lean"]
+theorem erdos_639 :
     ∀ᶠ (n : ℕ) in atTop, ∀ C : Sym2 (Fin n) → Fin 2,
       {e : Sym2 (Fin n) | ¬e.IsDiag ∧
         ∀ x y : Fin n, e = s(x, y) →
           ¬∃ z, z ≠ x ∧ z ≠ y ∧ C s(x, z) = C e ∧ C s(y, z) = C e}.ncard ≤ n ^ 2 / 4 := by
   sorry
+
+/-- The edges of a two-coloured complete graph that lie in no monochromatic triangle. -/
+def uncoveredEdges {n : ℕ} (C : Sym2 (Fin n) → Fin 2) : Set (Sym2 (Fin n)) :=
+  {e | ¬e.IsDiag ∧ ∀ x y : Fin n, e = s(x, y) →
+    ¬∃ z, z ≠ x ∧ z ≠ y ∧ C s(x, z) = C e ∧ C s(y, z) = C e}
+
+/--
+The exact maximum number of uncovered edges is $\binom{n}{2}$ for $n\leq 5$, $10$ for
+$n=6$, and $\lfloor n^2/4\rfloor$ for $n\geq 7$ [KeSu04, Theorem 1.1].
+`IsGreatest` states both the upper bound and its attainment by a colouring.
+-/
+@[category research solved, AMS 5]
+theorem erdos_639.variants.exact :
+    ∀ n : ℕ, IsGreatest
+      (Set.range fun C : Sym2 (Fin n) → Fin 2 => (uncoveredEdges C).ncard)
+      (if n ≤ 5 then n.choose 2 else if n = 6 then 10 else n ^ 2 / 4) := by
+  sorry
+
+/-- Every two-colouring of $K_n$ with $n\geq 10$ has at most
+$\lfloor n^2/4\rfloor$ uncovered edges [KeSu04, Proposition 2.1]. -/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/AItoBit/formal-conjectures/blob/0ad11a9f7f83c7ada19d42f1a95964465fb1195f/proofs/erdos639/Bridge639.lean"]
+theorem erdos_639.variants.ten_le :
+    ∀ n : ℕ, 10 ≤ n → ∀ C : Sym2 (Fin n) → Fin 2,
+      (uncoveredEdges C).ncard ≤ n ^ 2 / 4 := by
+  sorry
+
+/-- A colouring of $K_6$ with exactly ten uncovered edges. -/
+private def sixColoring (e : Sym2 (Fin 6)) : Fin 2 :=
+  if e ∈ ({s(0, 1), s(1, 2), s(2, 3), s(3, 4), s(4, 0),
+      s(5, 1), s(5, 4), s(0, 5)} : Finset (Sym2 (Fin 6))) then 0 else 1
+
+private def sixUncovered : Finset (Sym2 (Fin 6)) :=
+  {s(0, 2), s(0, 3), s(1, 2), s(1, 3), s(1, 4),
+    s(2, 3), s(2, 4), s(2, 5), s(3, 4), s(3, 5)}
+
+/-- There is a two-colouring of $K_6$ with ten uncovered edges, exceeding $6^2/4$. -/
+@[category research solved, AMS 5]
+theorem erdos_639.variants.six_vertices :
+    ∃ C : Sym2 (Fin 6) → Fin 2, (uncoveredEdges C).ncard = 10 ∧
+      6 ^ 2 / 4 < (uncoveredEdges C).ncard := by
+  have h : (uncoveredEdges sixColoring).ncard = 10 := by
+    have hs : uncoveredEdges sixColoring = (sixUncovered : Set (Sym2 (Fin 6))) := by
+      unfold uncoveredEdges
+      apply Set.ext
+      simp only [Set.mem_ofPred_eq]
+      decide
+    rw [hs, Set.ncard_coe_finset]
+    decide
+  refine ⟨sixColoring, h, ?_⟩
+  rw [h]
+  decide
 
 end Erdos639
