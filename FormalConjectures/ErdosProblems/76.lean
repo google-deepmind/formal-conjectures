@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,11 +38,6 @@ open Filter SimpleGraph
 
 namespace Erdos76
 
-/-- A family of triangles (`3`-sets of vertices) is *edge-disjoint* if any two distinct members
-share at most one vertex. -/
-def EdgeDisjoint {V : Type*} [DecidableEq V] (P : Finset (Finset V)) : Prop :=
-  ∀ s ∈ P, ∀ t ∈ P, s ≠ t → (s ∩ t).card ≤ 1
-
 /--
 Is it true that in any $2$-colouring of the edges of $K_n$ there must exist at least
 $$(1+o(1))\frac{n^2}{12}$$
@@ -57,11 +52,11 @@ The answer is yes, proved by Gruslys and Letzter [GrLe20].
 A $2$-colouring of the edges of $K_n$ is encoded by the graph $G$ of red edges, whose complement
 is the graph of blue edges.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos76.lean#L58"]
-theorem erdos_76 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
+theorem erdos_76 : ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
     ∀ G : SimpleGraph (Fin n), ∃ P : Finset (Finset (Fin n)),
-      (∀ t ∈ P, G.IsNClique 3 t ∨ Gᶜ.IsNClique 3 t) ∧ EdgeDisjoint P ∧
+      (∀ t ∈ P, G.IsNClique 3 t ∨ Gᶜ.IsNClique 3 t) ∧ P.IsLinearHypergraph ∧
         (1 - ε) * n ^ 2 / 12 ≤ P.card := by
   sorry
 
@@ -70,10 +65,10 @@ In [Er97d] Erdős also asks for a lower bound for the count of edge-disjoint mon
 triangles in a single colour (the colour chosen to maximise this quantity), and speculates that
 the answer is $\geq cn^2$ for some constant $c>1/24$.
 -/
-@[category research open, AMS 5]
-theorem erdos_76.variants.single_colour : answer(sorry) ↔ ∃ c : ℝ, 1 / 24 < c ∧
+@[category research open, question, AMS 5]
+theorem erdos_76.variants.single_colour : ∃ c : ℝ, 1 / 24 < c ∧
     ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n), ∃ P : Finset (Finset (Fin n)),
-      ((∀ t ∈ P, G.IsNClique 3 t) ∨ (∀ t ∈ P, Gᶜ.IsNClique 3 t)) ∧ EdgeDisjoint P ∧
+      ((∀ t ∈ P, G.IsNClique 3 t) ∨ (∀ t ∈ P, Gᶜ.IsNClique 3 t)) ∧ P.IsLinearHypergraph ∧
         c * n ^ 2 ≤ P.card := by
   sorry
 

@@ -64,7 +64,8 @@ infinitely many odd integers not of this form, but gives no reference.
 
 [Er77c] Erdős, P., _Problems and results on combinatorial number theory. III._.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/de08009e59829727653bfa20b8d8f7ed1b1baf79/erdos-9/Solution.lean#L25"]
 theorem erdos_9.variants.infinite : Erdos9A.Infinite := by
   sorry
 
@@ -72,8 +73,8 @@ theorem erdos_9.variants.infinite : Erdos9A.Infinite := by
 Is the upper density of the set of odd numbers that cannot be expressed as a prime plus
 two powers of 2 positive?
 -/
-@[category research open, AMS 5 11]
-theorem erdos_9 : answer(sorry) ↔ 0 < Erdos9A.upperDensity := by
+@[category research open, question, AMS 5 11]
+theorem erdos_9 : 0 < Erdos9A.upperDensity := by
   sorry
 
 end Erdos9

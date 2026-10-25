@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.Combinatorics.Enumerative.Partition.Basic
 
 
 /-!
@@ -32,39 +33,21 @@ namespace OeisA41
 
 open Nat
 
-/-- The `n`-th partition number. -/
-def a (n : ℕ) : ℕ := Fintype.card (Nat.Partition n)
+@[category test, AMS 11]
+theorem partitionNumber_3 : partitionNumber 3 = 3 := by decide +native
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by decide
+theorem partitionNumber_4 : partitionNumber 4 = 5 := by decide +native
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by decide
-
---TODO: these were previously proven with `native_decide`,
--- but really, one should rove the recurrence relation and use that
-@[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by
-  sorry --this was previously proven using `native_decide`
-
-@[category test, AMS 11]
-theorem a_3 : a 3 = 3 := by
-  sorry --this was previously proven using `native_decide`
-
-@[category test, AMS 11]
-theorem a_4 : a 4 = 5 := by
-  sorry --this was previously proven using `native_decide`
-
-@[category test, AMS 11]
-theorem a_5 : a 5 = 7 := by
-  sorry --this was previously proven using `native_decide`
+theorem partitionNumber_5 : partitionNumber 5 = 7 := by decide +native
 
 /--
 There are no partition numbers $a(k)$ of the form $x^m$, with $x,m$ integers $>1$.
 See comment by Zhi-Wei Sun (Dec 02 2013).
 -/
-@[category research open, AMS 11]
-theorem noPowerPartitionNumber : answer(sorry) ↔ ∀ k, ¬IsPerfectPower (a k) := by
+@[category research open, question, AMS 11]
+theorem noPowerPartitionNumber : ∀ k, ¬IsPerfectPower (partitionNumber k) := by
   sorry
 
 end OeisA41
