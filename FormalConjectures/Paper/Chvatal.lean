@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 
 * [A Conjecture in Extremal Combinatorics](https://users.encs.concordia.ca/~chvatal/conjecture.html)
 * [Chvátal's Conjecture and Correlation Inequalities](https://arxiv.org/abs/1608.08954)
+* [A proof of Chvátal's conjecture via a sharp correlation inequality](https://arxiv.org/abs/2609.19123)
 -/
 
 @[expose] public section
@@ -45,7 +46,7 @@ If F is a decreasing family of sets of some finite type α, then there is some e
 x of α such that the family consisting of all members of F containing x is an intersecting
 subfamily of F with maximal cardinality.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/boonsuan/chvatal/blob/c19ed3aaac9e42d446f963a862d39d8a09eddbf9/Solution.lean#L22-L33"]
 theorem exists_maximal_star :
     ∀ F : Finset (Finset α), Decreasing F →
         ∃ x : α, ∀ G, G ⊆ F → Intersecting G → G.card ≤ { A ∈ F | x ∈ A }.card := by

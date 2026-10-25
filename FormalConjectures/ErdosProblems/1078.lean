@@ -38,13 +38,6 @@ open Filter SimpleGraph
 
 namespace Erdos1078
 
-/--
-A graph on `Fin r × Fin n` is `r`-partite with parts `{i} × Fin n` (each of size `n`) if
-there are no edges inside a part.
--/
-def IsPartite {r n : ℕ} (G : SimpleGraph (Fin r × Fin n)) : Prop :=
-  ∀ ⦃x y⦄, G.Adj x y → x.1 ≠ y.1
-
 open scoped Classical in
 /--
 Let $G$ be an $r$-partite graph with $n$ vertices in each part. If $G$ has minimum degree
@@ -55,11 +48,12 @@ the best possible here. This is true, and was proved by Haxell [Ha01]. The sharp
 $$(r-1)n-\left\lceil \frac{sn}{2s-1}\right\rceil$$
 where $s=\lfloor r/2\rfloor$ was proved by Haxell and Szabó [HaSz06].
 
-Here the $o(1)$ term tends to zero as $r\to\infty$.
+Here the $o(1)$ term tends to zero as $r\to\infty$. We require $n>0$ to exclude the
+empty graph, for which the degree hypothesis is vacuous.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1078.lean#L905"]
-theorem erdos_1078 : answer(True) ↔ ∃ ε : ℕ → ℝ, Tendsto ε atTop (nhds 0) ∧
+theorem erdos_1078 : ∃ ε : ℕ → ℝ, Tendsto ε atTop (nhds 0) ∧
     ∀ r n : ℕ, 2 ≤ r → 0 < n → ∀ G : SimpleGraph (Fin r × Fin n), IsPartite G →
       (∀ x, (r - 3 / 2 - ε r) * n ≤ G.degree x) → ¬ G.CliqueFree r := by
   sorry
