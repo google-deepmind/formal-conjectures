@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,14 +34,9 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-namespace Erdos924
+open SimpleGraph
 
-/-- A graph `G` is *edge-Ramsey for `K_l` with `k` colours* (in arrow notation,
-$G \to (K_l)^e_k$) if every $k$-colouring of the edges of `G` contains a monochromatic copy of
-$K_l$. -/
-def IsEdgeRamseyForClique {V : Type*} (G : SimpleGraph V) (k l : ℕ) : Prop :=
-  ∀ c : G.edgeSet → Fin k, ∃ i : Fin k, ∃ S : Finset V, S.card = l ∧
-    ∀ u ∈ S, ∀ v ∈ S, u ≠ v → ∃ h : G.Adj u v, c ⟨s(u, v), h⟩ = i
+namespace Erdos924
 
 /--
 Let $k\geq 2$ and $l\geq 3$. Is there a graph $G$ which contains no $K_{l+1}$ such that every
@@ -52,9 +47,9 @@ was proved by Nešetřil and Rödl [NeRo76].
 
 See [582](https://www.erdosproblems.com/582) for a special case.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos924.lean#L1306"]
-theorem erdos_924 : answer(True) ↔ ∀ k ≥ 2, ∀ l ≥ 3,
+theorem erdos_924 : ∀ k ≥ 2, ∀ l ≥ 3,
     ∃ (V : Type) (_ : Fintype V) (G : SimpleGraph V),
       G.CliqueFree (l + 1) ∧ IsEdgeRamseyForClique G k l := by
   sorry

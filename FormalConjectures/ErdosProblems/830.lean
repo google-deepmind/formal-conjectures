@@ -20,7 +20,13 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 830
 
-*Reference:* [erdosproblems.com/830](https://www.erdosproblems.com/830)
+*References:*
+- [erdosproblems.com/830](https://www.erdosproblems.com/830)
+- [Er55b] Erdős, P., *On amicable numbers*. Publ. Math. Debrecen (1955), 108-111.
+- [Gu04] Guy, Richard K., *Unsolved problems in number theory*. (2004), xviii+437.
+- [Po15] Pomerance, Carl, *On amicable numbers*. (2015), 321-327.
+- [Po81] Pomerance, Carl, *On the distribution of amicable numbers. II*. J. Reine Angew. Math.
+  (1981), 183-188.
 -/
 
 @[expose] public section
@@ -41,8 +47,8 @@ noncomputable abbrev A (x : ℝ) : ℝ :=
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$. Are there
 infinitely many amicable pairs?
 -/
-@[category research open, AMS 11]
-theorem erdos_830.parts.i : answer(sorry) ↔ {(a, b) | IsAmicable a b}.Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_830.parts.i : {(a, b) | IsAmicable a b}.Infinite := by
   sorry
 
 /-- **Erdos Problem 830, Part 2**
@@ -50,8 +56,8 @@ We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b
 If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then is it true that
 $$A(x) > x^{1-o(1)}?$$
 -/
-@[category research open, AMS 11]
-theorem erdos_830.parts.ii : answer(sorry) ↔ ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → ℝ) ∧ ∀ᶠ x in atTop,
+@[category research open, question, AMS 11]
+theorem erdos_830.parts.ii : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → ℝ) ∧ ∀ᶠ x in atTop,
     x ^ (1 - o x) < A x := by
   sorry
 
@@ -75,12 +81,13 @@ theorem erdos_830.variants.pomerance : ∀ᶠ x in atTop, A x ≤ x * rexp (- Re
 /--
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$.
 If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then one can show that
-$A(x) \leq x \exp(-(\tfrac{1}{2}+o(1))(\log x\log\log x)^{1/2})$.
+$A(x) \leq x \exp(-(\tfrac{1}{2}+o(1))(\log x\log\log\log x)^{1/2})$.
+(erdosproblems.com has $\log\log x$; [Po15, Theorem 1.1] has $\log\log\log x$.)
 -/
 @[category research solved, AMS 11]
 theorem erdos_830.variants.pomerance_stronger :
     ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → ℝ) ∧
-    ∀ᶠ x in atTop, A x ≤ x * rexp (- (1/ 2 + o x) * √(x.log * x.log.log)) := by
+    ∀ᶠ x in atTop, A x ≤ x * rexp (- (1/ 2 + o x) * √(x.log * x.log.log.log)) := by
   sorry
 
 end Erdos830
