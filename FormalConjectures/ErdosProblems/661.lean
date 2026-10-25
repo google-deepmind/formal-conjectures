@@ -134,7 +134,8 @@ $i,j$: take the $x_i$ on the circle of radius $1/\sqrt{2}$ about the origin in t
 first two coordinates, and the $y_j$ on the circle of radius $1/\sqrt{2}$ about the origin in the
 plane of the last two coordinates.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/994b4c04dc4cf77c4b27364e27f179622104c681/erdos-661/Solution.lean#L26"]
 theorem erdos_661.variants.lenz (n : ℕ) :
     ∃ A B : Finset (EuclideanSpace ℝ (Fin 4)), #A = n ∧ #B = n ∧ Disjoint A B ∧
       ∀ x ∈ A, ∀ y ∈ B, dist x y = 1 := by
