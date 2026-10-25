@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,10 +35,6 @@ open Filter Set
 
 namespace Erdos880
 
-/-- The set of integers which are the sum of `k` or fewer distinct elements of `A`. -/
-def restrictedSums (A : Set ℕ) (k : ℕ) : Set ℕ :=
-  {n | ∃ s : Finset ℕ, (s : Set ℕ) ⊆ A ∧ s.card ≤ k ∧ ∑ a ∈ s, a = n}
-
 /--
 `B = {b₁ < b₂ < ⋯}` has bounded gaps: `b_{n+1} - b_n = O(1)`, where `b_n` is the `n`-th
 element of `B` (as `Nat.nth`).
@@ -59,11 +55,10 @@ $b_{n+1}-b_n\leq 2$ for large $n$) but no for $k\geq 3$.
 The proof that $b_{n+1}-b_n\leq 2$ for $k=2$ is trivial, since clearly all odd numbers in $A+A$
 must be the sum of two distinct elements from $A$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos880.lean#L777"]
-theorem erdos_880 : answer(False) ↔
-    ∀ (k : ℕ) (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder k →
-      HasBoundedGaps (restrictedSums A k) := by
+theorem erdos_880 : ¬ ∀ (k : ℕ) (A : Set ℕ), A.IsAsymptoticAddBasisOfOrder k →
+      HasBoundedGaps (Set.restrictedSumsUpTo A k) := by
   sorry
 
 /--
@@ -73,7 +68,7 @@ of order $k$ for which the sums of at most $k$ distinct elements do not have bou
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos880.lean#L777"]
 theorem erdos_880.variants.three_or_more : ∀ k : ℕ, 3 ≤ k → ∃ A : Set ℕ,
-    A.IsAsymptoticAddBasisOfOrder k ∧ ¬ HasBoundedGaps (restrictedSums A k) := by
+    A.IsAsymptoticAddBasisOfOrder k ∧ ¬ HasBoundedGaps (Set.restrictedSumsUpTo A k) := by
   sorry
 
 /--
@@ -82,8 +77,8 @@ $A+A$ are sums of two distinct elements of $A$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_880.variants.two : ∀ A : Set ℕ, A.IsAsymptoticAddBasisOfOrder 2 →
-    ∀ᶠ n : ℕ in atTop, Nat.nth (· ∈ restrictedSums A 2) (n + 1) -
-      Nat.nth (· ∈ restrictedSums A 2) n ≤ 2 := by
+    ∀ᶠ n : ℕ in atTop, Nat.nth (· ∈ Set.restrictedSumsUpTo A 2) (n + 1) -
+      Nat.nth (· ∈ Set.restrictedSumsUpTo A 2) n ≤ 2 := by
   sorry
 
 end Erdos880
