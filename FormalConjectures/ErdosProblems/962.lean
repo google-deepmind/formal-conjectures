@@ -84,7 +84,8 @@ Tao's upper bound [Tao]:
 
 $k(n) \le (1 + o(1)) * n^{1/2}$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/994b4c04dc4cf77c4b27364e27f179622104c681/erdos-962/Solution.lean#L26"]
 theorem erdos_962.variants.tao_upper_bound :
     ∃ ε : ℕ → ℝ,
       (∀ δ > 0, ∀ᶠ n in atTop, |ε n| < δ) ∧
