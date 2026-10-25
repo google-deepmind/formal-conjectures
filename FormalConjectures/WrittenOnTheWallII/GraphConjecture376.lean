@@ -51,7 +51,9 @@ maximum-degree set and $Med(T)$ consists of the vertices minimizing the sum
 of distances to all vertices. Selected vertices also require a selected
 neighbor in total domination.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/afe9d3138ae1da4df353114471573ea4d46fccba/Proofs/WOWII376354/WOWII376Full.lean#L81"]
 theorem conjecture376 (T : SimpleGraph V) [DecidableRel T.Adj]
     (hT : T.IsTree) (horder : 2 < Fintype.card V) :
     (maximumDegreeIsolates T).card + (medians T).card ≤ T.totalDominationNumber := by
