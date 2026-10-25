@@ -62,10 +62,17 @@ theorem a_5 : a 5 = 3 := by
   decide
 
 /--
-Is $a(n) > 0$ for all $n > 2$?
+"Is $a(n)>0$?"
+
+The answer is negative: $a(331523) = -1$. The restriction $n > 2$ excludes the initial
+zero $a(2) = 0$.
+
+The counterexample and formal proof were developed by Codex (GPT-6), prompted by
+Samuel Schlesinger.
 -/
-@[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 2 < n) : 0 < a n := by
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/SamuelSchlesinger/a071532-counterexample/blob/818c9f6b3f1eed9ebd1b3b9481848dc21f3e3243/Counterexample.lean#L28-L35"]
+theorem conjecture1 : ¬ ∀ n : ℕ, 2 < n → 0 < a n := by
   sorry
 
 /--
@@ -84,14 +91,16 @@ theorem conjecture3 :
     ∃ C : ℝ, 0 < C ∧ (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
   sorry
 
+def conjecture3_value.answer : ℝ := sorry
+
 /--
 Conjecture: the constant $C$ in $a(n) \sim C \log(n)^2$ is approximately $1.4$.
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem conjecture3_value :
-    let C : ℝ := answer(sorry)
-    |C - 1.4| < 0.1 ∧
-      (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
+    |conjecture3_value.answer - 1.4| < 0.1 ∧
+      (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ conjecture3_value.answer * Real.log (n : ℝ) ^ 2)
+        := by
   sorry
 
 end OeisA71532
