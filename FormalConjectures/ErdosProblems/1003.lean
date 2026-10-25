@@ -34,8 +34,8 @@ open Filter
 Are there infinitely many solutions to $\phi(n) = \phi(n+1)$, where $\phi$ is the Euler totient
 function?
 -/
-@[category research open, AMS 11]
-theorem erdos_1003 : answer(sorry) ↔ Set.Infinite {n | φ n = φ (n + 1)} := by
+@[category research open, question, AMS 11]
+theorem erdos_1003 : Set.Infinite {n | φ n = φ (n + 1)} := by
   sorry
 
 /--
@@ -44,9 +44,9 @@ $$\phi(n) = \phi(n+1) = \cdots = \phi (n+k)$$ has infinitely many solutions.
 
 [Er85e] Erdős, P., _Some problems and results in number theory_. Number theory and combinatorics. Japan 1984 (Tokyo, Okayama and Kyoto, 1984) (1985), 65-87.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1003.variants.Icc :
-    answer(sorry) ↔ ∀ k ≥ 1, {n | ∀ i ∈ Set.Icc 1 k, φ n = φ (n + i)}.Infinite := by
+    ∀ k ≥ 1, {n | ∀ i ∈ Set.Icc 1 k, φ n = φ (n + i)}.Infinite := by
   sorry
 
 /--

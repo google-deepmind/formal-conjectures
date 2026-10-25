@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -40,9 +40,6 @@ open Polynomial Metric
 
 namespace Erdos511
 
-/-- The connected components of a set `s ⊆ ℂ`, as subsets of `ℂ`. -/
-def components (s : Set ℂ) : Set (Set ℂ) := {C | ∃ x ∈ s, C = connectedComponentIn s x}
-
 /--
 Let $f(z)\in \mathbb{C}[z]$ be a monic polynomial of degree $n$. Is it true that, for every $c>1$,
 the set
@@ -54,11 +51,10 @@ The answer is no: Pommerenke [Po61] proved that, for any $0<d<4$ and $k\geq 1$ t
 polynomials $f\in \mathbb{C}[x]$ such that $\{z: \lvert f(z)\rvert\leq 1\}$ has at least $k$
 connected components of diameter $\geq d$. This was independently proved by Huang [Hu25].
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at
+@[category research solved, question, AMS 30, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos511.lean#L924"]
-theorem erdos_511 : answer(False) ↔
-    ∀ c : ℝ, 1 < c → ∃ B : ℕ, ∀ f : ℂ[X], f.Monic →
-      {C ∈ components {z : ℂ | ‖f.eval z‖ < 1} | c < diam C}.encard ≤ B := by
+theorem erdos_511 : ¬ ∀ c : ℝ, 1 < c → ∃ B : ℕ, ∀ f : ℂ[X], f.Monic →
+      {C ∈ Set.connectedComponents {z : ℂ | ‖f.eval z‖ < 1} | c < diam C}.encard ≤ B := by
   sorry
 
 /--
@@ -69,16 +65,19 @@ components of diameter $\geq d$. This was independently proved by Huang [Hu25].
 @[category research solved, AMS 30]
 theorem erdos_511.variants.pommerenke (d : ℝ) (hd₀ : 0 < d) (hd₄ : d < 4) (k : ℕ) :
     ∃ f : ℂ[X], f.Monic ∧
-      k ≤ {C ∈ components {z : ℂ | ‖f.eval z‖ ≤ 1} | d ≤ diam C}.encard := by
+      k ≤ {C ∈ Set.connectedComponents {z : ℂ | ‖f.eval z‖ ≤ 1} | d ≤ diam C}.encard := by
   sorry
 
 /--
 Pólya [Po28] showed that $4$ is the best possible here, in that no connected component of
-$\{z: \lvert f(z)\rvert\leq 1\}$ can have diameter $>4$.
+$\{z: \lvert f(z)\rvert\leq 1\}$ can have diameter $>4$ for a nonconstant monic polynomial.
+The positive-degree hypothesis excludes the constant polynomial $1$, whose closed lemniscate
+is the whole plane.
 -/
 @[category research solved, AMS 30]
 theorem erdos_511.variants.polya (f : ℂ[X]) (hf : f.Monic)
-    (C : Set ℂ) (hC : C ∈ components {z : ℂ | ‖f.eval z‖ ≤ 1}) : diam C ≤ 4 := by
+    (hdeg : 0 < f.natDegree)
+    (C : Set ℂ) (hC : C ∈ Set.connectedComponents {z : ℂ | ‖f.eval z‖ ≤ 1}) : diam C ≤ 4 := by
   sorry
 
 end Erdos511

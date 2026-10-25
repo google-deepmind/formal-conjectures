@@ -84,8 +84,14 @@ def xN (n : ℕ) : Set Word :=
 
 Formalized as $|X_n| = a(n-1)$ for $n \ge 1$, because the sequence values $a(0)=1, a(1)=2, a(2)=7$
 match the examples given for word lengths $n=1, 2, 3$ respectively.
+
+Solved: a Lean 4 proof, derived from the Atlas proofs in
+[facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
+`formal_proof`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/OeisA108081.lean#L3720"]
 theorem count_words_in_x_is_a_shifted (n : ℕ) :
     n ≥ 1 → Set.ncard (xN n) = a (n - 1) := by
   sorry
