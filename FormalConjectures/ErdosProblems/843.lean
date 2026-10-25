@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public import FormalConjectures.ErdosProblems.«54»
 
 /-!
 # Erdős Problem 843
@@ -35,8 +34,6 @@ public import FormalConjectures.ErdosProblems.«54»
 
 @[expose] public section
 
-open Erdos54
-
 namespace Erdos843
 
 /--
@@ -51,9 +48,9 @@ A stronger version was proved by Conlon, Fox, and Pham [CFP21].
 
 See also [54](https://www.erdosproblems.com/54) and [55](https://www.erdosproblems.com/55).
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos843.lean#L2338"]
-theorem erdos_843 : answer(True) ↔ IsRamseyComplete 2 {n : ℕ | ∃ m, 0 < m ∧ n = m ^ 2} := by
+theorem erdos_843 : IsRamseyComplete 2 {n : ℕ | ∃ m, 0 < m ∧ n = m ^ 2} := by
   sorry
 
 /--
