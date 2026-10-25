@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,12 +41,9 @@ open Filter Asymptotics MeasureTheory
 
 namespace Erdos992
 
-/-- The discrepancy of the first $N$ fractional parts $\{\alpha x_n\}$: the supremum over
-subintervals $I = [a, b) \subseteq [0,1]$ of $\lvert \#\{ n < N : \{ \alpha x_n\}\in I\} -
-\lvert I\rvert N\rvert$. -/
-noncomputable def discrepancy (x : ℕ → ℤ) (α : ℝ) (N : ℕ) : ℝ :=
-  sSup {t | ∃ a b : ℝ, 0 ≤ a ∧ a ≤ b ∧ b ≤ 1 ∧
-    t = |({n ∈ Finset.range N | Int.fract (α * x n) ∈ Set.Ico a b}.card : ℝ) - (b - a) * N|}
+/-- Discrepancy of the first `N` fractional parts of the dilated integer sequence. -/
+noncomputable abbrev discrepancy (x : ℕ → ℤ) (α : ℝ) (N : ℕ) : ℝ :=
+  Discrepancy.intervalSup (fun n ↦ Int.fract (α * x n)) (Finset.range N)
 
 /--
 Let $x_1<x_2<\cdots$ be an infinite sequence of integers. Is it true that, for almost all
@@ -66,9 +63,9 @@ $$\limsup_{N\to \infty}\frac{D(N)}{(N\log N)^{1/2}}>0.$$
 The bound $D(N) \ll N^{1/2}(\log N)^{o(1)}$ is formalized as $D(N) \ll_\epsilon N^{1/2}(\log N)^\epsilon$
 for every $\epsilon > 0$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos992.lean#L1128"]
-theorem erdos_992 : answer(False) ↔ ∀ x : ℕ → ℤ, StrictMono x →
+theorem erdos_992 : ¬ ∀ x : ℕ → ℤ, StrictMono x →
     ∀ᵐ α ∂(volume.restrict (Set.Icc (0 : ℝ) 1)), ∀ ε : ℝ, 0 < ε →
       (fun N : ℕ => discrepancy x α N) =O[atTop] fun N : ℕ => √N * Real.log N ^ ε := by
   sorry
@@ -78,9 +75,9 @@ Or even $D(N)\ll N^{1/2}(\log\log N)^{O(1)}$?
 
 This is also false, by the construction of Berkes and Philipp [BePh94].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos992.lean#L1128"]
-theorem erdos_992.variants.loglog : answer(False) ↔ ∀ x : ℕ → ℤ, StrictMono x →
+theorem erdos_992.variants.loglog : ¬ ∀ x : ℕ → ℤ, StrictMono x →
     ∀ᵐ α ∂(volume.restrict (Set.Icc (0 : ℝ) 1)), ∃ C : ℝ,
       (fun N : ℕ => discrepancy x α N) =O[atTop]
         fun N : ℕ => √N * Real.log (Real.log N) ^ C := by
