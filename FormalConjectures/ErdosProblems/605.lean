@@ -33,11 +33,9 @@ public import FormalConjecturesUtil
 @[expose] public section
 
 open Filter Metric Asymptotics
+open scoped EuclideanGeometry
 
 namespace Erdos605
-
-/-- The Euclidean space $\mathbb{R}^3$. -/
-local notation "ℝ³" => EuclideanSpace ℝ (Fin 3)
 
 /--
 Is there some function $f(n)\to \infty$ as $n\to\infty$ such that there exist $n$ distinct points
@@ -50,9 +48,9 @@ Swanepoel and Valtr [SwVa04] to $f(n) \gg \sqrt{\log n}$.
 
 See also [90](https://www.erdosproblems.com/90).
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at
+@[category research solved, question, AMS 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos605.lean#L457"]
-theorem erdos_605 : answer(True) ↔ ∃ f : ℕ → ℝ, Tendsto f atTop atTop ∧ ∀ n : ℕ,
+theorem erdos_605 : ∃ f : ℕ → ℝ, Tendsto f atTop atTop ∧ ∀ n : ℕ,
     ∃ (P : Finset ℝ³) (c : ℝ³) (r d : ℝ), P.card = n ∧ (P : Set ℝ³) ⊆ sphere c r ∧
       0 < d ∧ f n * n ≤ distanceMultiplicity P d := by
   sorry
