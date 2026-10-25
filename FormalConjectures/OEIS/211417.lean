@@ -26,6 +26,8 @@ $$a(n) = \frac{(30n)! n!}{(15n)! (10n)! (6n)!}$$
 *References:*
 - [A211417](https://oeis.org/A211417)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
+- [Me11] R. Meštrović, *Wolstenholme's theorem: Its Generalizations and Extensions in the last
+  hundred and fifty years (1862-2012)*, [arXiv:1111.3057](https://arxiv.org/abs/1111.3057) (2011).
 -/
 
 @[expose] public section
@@ -156,8 +158,18 @@ integer k." - _Peter Bala_, Jan 24 2020
 
 More generally, "the congruences a(n*p^k) == a(n*p^(k-1)) ( mod p^(3*k) ) may hold for any
 prime p >= 5 and any positive integers n and k."
+
+The same OEIS comment (Peter Bala, Jan 24 2020) already sketches an informal proof of the
+supercongruence: write
+$a(n) = \binom{30n}{15n}\binom{15n}{5n} / \binom{6n}{n}$ and apply [Me11, eq. (39), p. 12].
+
+Solved: a Lean 4 proof, derived from the Atlas proofs in
+[facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
+`formal_proof`.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/OeisA211417.lean#L848"]
 theorem supercongruence (p k : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) (hk : 0 < k) :
     (p : ℤ) ^ (3 * k) ∣ ((a (p ^ k) : ℤ) - (a (p ^ (k - 1)) : ℤ)) := by
   sorry

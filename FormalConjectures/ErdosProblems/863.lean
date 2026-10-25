@@ -55,7 +55,7 @@ noncomputable def diffMax (r N : ℕ) : ℕ :=
 Let $r \geq 2$ and let $A \subseteq \{1, \ldots, N\}$ be a set of maximal size such that there are
 at most $r$ solutions to $n = a + b$ with $a \leq b$ for any $n$ (that is, $A$ is a $B_2[r]$ set).
 Similarly, let $B \subseteq \{1, \ldots, N\}$ be a set of maximal size such that there are at most
-$r$ solutions to $n = a - b$ for any $n$. If $|A| \sim c_r N^{1/2}$ and $|B| \sim c_r' N^{1/2}$ as
+$r$ solutions to $n = a - b$ for any $n \geq 1$. If $|A| \sim c_r N^{1/2}$ and $|B| \sim c_r' N^{1/2}$ as
 $N \to \infty$, then is it true that $c_r \neq c_r'$ for $r \geq 2$?
 
 A question of Erdős, Berend and Freud [Er92c, p.39]. The answer is yes: an adaptation of the
@@ -64,10 +64,9 @@ Trujillo [CRT02] constructed $B_2[r]$ sets with
 $|A| \geq \frac{r + \lfloor r/2 \rfloor}{\sqrt{r + 2 \lfloor r/2 \rfloor}} N^{1/2}$, so that
 $c_r' \le \sqrt r < c_r$. See also `erdos_863.parts.ii`.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos863.lean#L1214"]
-theorem erdos_863.parts.i : answer(True) ↔
-    ∀ (r : ℕ), 2 ≤ r → ∀ (c c' : ℝ),
+theorem erdos_863.parts.i : ∀ (r : ℕ), 2 ≤ r → ∀ (c c' : ℝ),
       ((fun N : ℕ => (sumMax r N : ℝ)) ~[atTop] fun N : ℕ => c * √N) →
       ((fun N : ℕ => (diffMax r N : ℝ)) ~[atTop] fun N : ℕ => c' * √N) → c ≠ c' := by
   sorry
@@ -77,10 +76,9 @@ In the setting of `erdos_863.parts.i`, is it true that $c_r' < c_r$?
 
 The answer is yes, by the bounds $c_r' \le \sqrt r < c_r$ described there.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos863.lean#L1207"]
-theorem erdos_863.parts.ii : answer(True) ↔
-    ∀ (r : ℕ), 2 ≤ r → ∀ (c c' : ℝ),
+theorem erdos_863.parts.ii : ∀ (r : ℕ), 2 ≤ r → ∀ (c c' : ℝ),
       ((fun N : ℕ => (sumMax r N : ℝ)) ~[atTop] fun N : ℕ => c * √N) →
       ((fun N : ℕ => (diffMax r N : ℝ)) ~[atTop] fun N : ℕ => c' * √N) → c' < c := by
   sorry
