@@ -840,6 +840,9 @@ async function main() {
   // ---- About page ----
   copyStaticTemplate('about.html', 'site/about/index.html');
 
+  // ---- Team page ----
+  copyStaticTemplate('team.html', 'site/team/index.html');
+
   // ---- Stats page ----
   let growthPlot = '';
   if (fs.existsSync(whitePlotPath) && fs.existsSync(darkPlotPath)) {

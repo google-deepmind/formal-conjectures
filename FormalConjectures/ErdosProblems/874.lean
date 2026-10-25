@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,14 +39,9 @@ open Filter Finset
 
 namespace Erdos874
 
-/-- $S_r(A) = \{ a_1+\cdots +a_r : a_1<\cdots<a_r\in A\}$, the sums of `r` distinct elements
-of `A`. -/
-def sumsOf (r : ℕ) (A : Finset ℕ) : Finset ℕ :=
-  (A.powersetCard r).image fun B ↦ ∑ a ∈ B, a
-
 /-- `A` is *admissible* (Straus) if the sets $S_r(A)$ are disjoint for distinct $r\geq 1$. -/
 def IsAdmissible (A : Finset ℕ) : Prop :=
-  ∀ r s : ℕ, 0 < r → 0 < s → r ≠ s → Disjoint (sumsOf r A) (sumsOf s A)
+  ∀ r s : ℕ, 0 < r → 0 < s → r ≠ s → Disjoint (Finset.restrictedSums r A) (Finset.restrictedSums s A)
 
 /-- `k N` is the size of the largest admissible $A\subseteq \{1,\ldots,N\}$. -/
 noncomputable def k (N : ℕ) : ℕ :=
@@ -63,10 +58,9 @@ The answer is yes: the conjecture was proved (for all large $N$) by Deshouillers
 $\liminf k(N)/N^{1/2}\geq 2$; Erdős, Nicolas, and Sárközy [ENS91] improved the upper bound to
 $(143/27)^{1/2}$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos874.lean#L109"]
-theorem erdos_874 : answer(True) ↔
-    Tendsto (fun N : ℕ ↦ (k N : ℝ) / √N) atTop (nhds 2) := by
+theorem erdos_874 : Tendsto (fun N : ℕ ↦ (k N : ℝ) / √N) atTop (nhds 2) := by
   sorry
 
 /-- Straus [St66] proved that $A=(N-k,N]\cap \mathbb{N}$ is admissible for $k=2m-1$ if

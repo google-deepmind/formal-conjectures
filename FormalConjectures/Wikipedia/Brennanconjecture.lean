@@ -24,6 +24,9 @@ public import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Brennan_conjecture)
 - [arXiv:2409.15074](https://arxiv.org/abs/2409.15074)
 - [arXiv:2512.09330](https://arxiv.org/abs/2512.09330)
+- [OAI26a] OpenAI, *Brennan's conjecture and sharp inverse-square integral means*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Brennans-conjecture-and-sharp-inverse-square-integral-means-September-24-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -69,8 +72,12 @@ theorem universalSpectrumBounded_le (τ : ℝ) :
 theorem integralMeansSpectrum_id (τ : ℝ) : integralMeansSpectrum id τ = 0 := by
   sorry
 
-/-- Brennan's conjecture, part 1: $B(-2) = 1$. -/
-@[category research open, AMS 30]
+/-- Brennan's conjecture, part 1: $B(-2) = 1$.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+proof. -/
+@[category research solved, AMS 30, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/IntegralMeans/Main.lean#L10"]
 theorem brennan_universalSpectrum :
     universalSpectrum (-2) = 1 := by
   sorry
