@@ -20,10 +20,6 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 790
 
-The sum-free condition here excludes an element equal to a sum of two or more
-distinct other elements. It allows all integers, including zero.
-The question to estimate $l(n)$ is interpreted as asking for its order of growth.
-
 *References:*
 - [erdosproblems.com/790](https://www.erdosproblems.com/790)
 - [Er65] Erdős, P., _Extremal problems in number theory_. Proc. Sympos. Pure Math.
@@ -43,6 +39,8 @@ open scoped Asymptotics
 namespace Erdos790
 
 
+/-- No element equals a sum of two or more distinct other elements.
+All integers, including zero, are allowed. -/
 def DistinctSubsetSumFree (B : Finset ℤ) : Prop :=
   ∀ a ∈ B, ∀ S : Finset ℤ,
     S ⊆ B.erase a → 2 ≤ S.card → (∑ x ∈ S, x) ≠ a
@@ -55,27 +53,32 @@ noncomputable def l (n : ℕ) : ℕ := by
   classical
   exact Nat.findGreatest (Guarantees n) n
 
-def erdos_790.answer : ℕ → ℝ := by sorry
+def erdos_790.parts.i.answer : ℕ → ℝ := by sorry
 
 /-- Let $l(n)$ be maximal such that if $A\subset\mathbb{Z}$ with $\lvert A\rvert=n$
-then there exists a sum-free $B\subseteq A$ with $\lvert B\rvert\geq l(n)$, where
-there are no solutions to $a_1=a_2+\cdots+a_r$ with $a_i\in B$ all distinct.
+then there exists a sum-free $B\subseteq A$ with $\lvert B\rvert \geq l(n)$ - that is,
+$B$ is such that there are no solutions to $a_1=a_2+\cdots+a_r$
+with $a_i\in B$ all distinct.
 Estimate $l(n)$.
+
+This is interpreted as asking for the order of growth of $l(n)$.
 -/
 @[category research open, question value, AMS 5 11]
-theorem erdos_790 :
-    (fun n ↦ (l n : ℝ)) =Θ[atTop] erdos_790.answer := by sorry
+theorem erdos_790.parts.i :
+    (fun n ↦ (l n : ℝ)) =Θ[atTop] erdos_790.parts.i.answer := by sorry
 
-/-- Is it true that $l(n)n^{-1/2}\to\infty$? The lower bound in [CKS75,
+/-- In particular, is it true that $l(n)n^{-1/2}\to\infty$? The lower bound in [CKS75,
 Theorem (1.1)] gives a positive answer.
 -/
 @[category research solved, question, AMS 5 11]
-theorem erdos_790.variants.divergence :
+theorem erdos_790.parts.ii :
     Tendsto (fun n : ℕ ↦ (l n : ℝ) / Real.sqrt (n : ℝ)) atTop atTop := by sorry
 
-/-- Is it true that $l(n)<n^{1-c}$ for some $c>0$, for all sufficiently large $n$? -/
+/-- Is it true that $l(n)<n^{1-c}$ for some $c>0$?
+The inequality is interpreted as holding for all sufficiently large $n$.
+-/
 @[category research open, question, AMS 5 11]
-theorem erdos_790.variants.polynomial_upper :
+theorem erdos_790.parts.iii :
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
       (l n : ℝ) < (n : ℝ) ^ (1 - c) := by sorry
 
