@@ -32,9 +32,9 @@ namespace GoldbachConjecture
 /--
 Can every even integer greater than 2 be written as the sum of two primes?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem goldbach :
-    answer(sorry) ↔ ∀ n : ℕ, 2 < n → Even n → ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
+    ∀ n : ℕ, 2 < n → Even n → ∃ p q, Prime p ∧ Prime q ∧ n = p + q := by
   sorry
 
 end GoldbachConjecture

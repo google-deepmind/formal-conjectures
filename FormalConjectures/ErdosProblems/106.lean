@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,28 +42,15 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
+open EuclideanGeometry
+
 namespace Erdos106
-
-/-- A square in the plane, given by its centre, a unit vector along one of its sides and its side
-length. The other side direction is the counterclockwise quarter-turn of `direction`. -/
-structure Square where
-  center : ℝ × ℝ
-  direction : ℝ × ℝ
-  side : ℝ
-  side_pos : 0 < side
-  direction_unit : direction.1 ^ 2 + direction.2 ^ 2 = 1
-
-/-- The (closed) set of points of a square. -/
-def Square.carrier (S : Square) : Set (ℝ × ℝ) :=
-  {p | ∃ x y : ℝ, |x| ≤ S.side / 2 ∧ |y| ≤ S.side / 2 ∧
-    p = (S.center.1 + x * S.direction.1 - y * S.direction.2,
-      S.center.2 + x * S.direction.2 + y * S.direction.1)}
 
 /-- A family of squares is a packing of the unit square if each square lies inside the unit square
 and no two of them have a common interior point. -/
 def IsPacking {n : ℕ} (P : Fin n → Square) : Prop :=
   (∀ i, (P i).carrier ⊆ Set.Icc 0 1 ×ˢ Set.Icc 0 1) ∧
-    Pairwise fun i j => Disjoint (interior (P i).carrier) (interior (P j).carrier)
+    Set.IsInteriorPacking fun i => (P i).carrier
 
 /-- `f n` is the maximum possible sum of the side lengths of `n` squares drawn inside the unit
 square with no common interior point. -/
@@ -100,9 +87,9 @@ $c>0$ such that $f(k^2+1)\geq k+\frac{c}{k}$ for all $k\geq 4$.
 
 The case $k = 0$ is excluded, since trivially $f(1) = 1$.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at
-  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos106.lean#L618"]
-theorem erdos_106 : answer(False) ↔ ∀ k : ℕ, 0 < k → f (k ^ 2 + 1) = k := by
+@[category research solved, question, AMS 52, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos106.lean#L610"]
+theorem erdos_106 : ¬ ∀ k : ℕ, 0 < k → f (k ^ 2 + 1) = k := by
   sorry
 
 /-- The counterexample of Claude Opus 5 (prompted by Silverstein): $f(17) > 4$. -/
@@ -112,8 +99,8 @@ theorem erdos_106.variants.seventeen : 4 < f 17 := by
   sorry
 
 /-- It is known that $f(5)=2$ (Newman). It is not known whether $f(10)=3$. -/
-@[category research open, AMS 52]
-theorem erdos_106.variants.ten : answer(sorry) ↔ f 10 = 3 := by
+@[category research open, question, AMS 52]
+theorem erdos_106.variants.ten : f 10 = 3 := by
   sorry
 
 /--
