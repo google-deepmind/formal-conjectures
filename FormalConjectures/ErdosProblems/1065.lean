@@ -35,17 +35,17 @@ This is mentioned as B46
 in [Unsolved Problems in Number Theory](https://doi.org/10.1007/978-0-387-26677-0)
 by *Richard K. Guy*
  -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1065.parts.i :
-    answer(sorry) ↔ Set.Infinite {p | ∃ q k, p.Prime ∧ q.Prime ∧ p = 2^k * q + 1} := by
+    Set.Infinite {p | ∃ q k, p.Prime ∧ q.Prime ∧ p = 2^k * q + 1} := by
   sorry
 
 /--
 Are there infinitely many primes $p$ such that $p = 2^k 3^l q + 1$
 for some prime $q$ and $k ≥ 0$, $l ≥ 0$?
 -/
-@[category research open, AMS 11]
-theorem erdos_1065.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_1065.parts.ii :
     Set.Infinite {p | ∃ q k l, p.Prime ∧ q.Prime ∧ p = 2^k * 3^l * q + 1} := by
   sorry
 
