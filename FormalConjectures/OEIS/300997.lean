@@ -75,19 +75,66 @@ noncomputable def a (n : ℕ) : ℕ :=
 
 
 @[category test, AMS 11]
-lemma a_1 : a 1 = 0 := by sorry
+lemma a_1 : a 1 = 0 := by simp [a, Nat.sInf_eq_zero, Set.mem_ofPred_eq, List.replicate]
 
 @[category test, AMS 11]
-lemma a_2 : a 2 = 1 := by sorry
+lemma a_2 : a 2 = 1 := by
+  unfold a
+  norm_num
+  refine le_antisymm (Nat.sInf_le ?_) ?_
+  · simp only [Set.mem_ofPred_eq]
+    decide
+  · refine Nat.one_le_iff_ne_zero.mpr fun h => ?_
+    rcases Nat.sInf_eq_zero.mp h with h0 | h0
+    · simp only [Set.mem_ofPred_eq] at h0
+      exact absurd h0 (by decide)
+    · exact absurd h0 (Set.nonempty_iff_ne_empty.mp ⟨1, by simp only [Set.mem_ofPred_eq]; decide⟩)
 
 @[category test, AMS 11]
-lemma a_3 : a 3 = 3 := by sorry
+lemma a_3 : a 3 = 3 := by
+  norm_num [a]
+  refine IsLeast.csInf_eq ⟨?_, ?_⟩
+  · simp only [Set.mem_ofPred_eq]
+    decide
+  · intro k hk
+    simp only [Set.mem_ofPred_eq] at hk
+    by_contra hlt
+    push Not at hlt
+    interval_cases k <;> exact absurd hk (by decide)
 
 @[category test, AMS 11]
-lemma a_4 : a 4 = 4 := by sorry
+lemma a_4 : a 4 = 4 := by
+  norm_num [a]
+  apply le_antisymm
+  · apply Nat.sInf_le
+    simp only [Set.mem_ofPred_eq]
+    decide
+  · apply le_csInf
+    · refine ⟨4, ?_⟩
+      simp only [Set.mem_ofPred_eq]
+      decide
+    · intro b hb
+      simp only [Set.mem_ofPred_eq] at hb
+      by_contra hb4
+      push Not at hb4
+      interval_cases b <;> exact absurd hb (by decide)
 
 @[category test, AMS 11]
-lemma a_5 : a 5 = 6 := by sorry
+lemma a_5 : a 5 = 6 := by
+  have key : ∀ s : Set ℕ, 6 ∈ s → (∀ k < 6, k ∉ s) → sInf s = 6 := by
+    intro s h6 hlt
+    refine le_antisymm (Nat.sInf_le h6) ?_
+    by_contra h
+    push Not at h
+    exact hlt _ h (Nat.sInf_mem ⟨6, h6⟩)
+  unfold a
+  norm_num
+  apply key
+  · simp only [Set.mem_ofPred_eq]
+    decide
+  · intro k hk
+    simp only [Set.mem_ofPred_eq]
+    interval_cases k <;> decide
 
 
 /--

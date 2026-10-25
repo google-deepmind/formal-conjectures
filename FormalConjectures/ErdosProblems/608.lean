@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,10 +36,6 @@ open Filter SimpleGraph
 
 namespace Erdos608
 
-/-- The edges of `G` which are contained in a cycle of length `k`. -/
-def edgesInCycle {V : Type*} (G : SimpleGraph V) (k : ℕ) : Set (Sym2 V) :=
-  {e ∈ G.edgeSet | ∃ (v : V) (c : G.Walk v v), c.IsCycle ∧ c.length = k ∧ e ∈ c.edges}
-
 /--
 Let $G$ be a graph with $n$ vertices and $>n^2/4$ many edges. Are there at least $\frac{2}{9}n^2$
 edges of $G$ which are contained in a $C_5$?
@@ -66,9 +62,9 @@ ensures at least $\frac{2}{9}n^2-O(n)$ edges in a $C_{2k+1}$).
 The question is asked for all sufficiently large $n$ (for $n = 3$ it fails trivially, since
 $K_3$ has $> 9/4$ edges and no $C_5$).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos608.lean#L33"]
-theorem erdos_608 : answer(False) ↔ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
+theorem erdos_608 : ¬ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
     n ^ 2 < 4 * G.edgeSet.ncard → 2 * n ^ 2 ≤ 9 * (edgesInCycle G 5).ncard := by
   sorry
 
