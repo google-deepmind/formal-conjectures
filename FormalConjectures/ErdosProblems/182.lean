@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,11 +43,6 @@ open Filter Asymptotics SimpleGraph
 
 namespace Erdos182
 
-/-- `G` contains a nonempty (not necessarily induced or spanning) `k`-regular subgraph. -/
-def ContainsRegularSubgraph {V : Type*} (G : SimpleGraph V) (k : ℕ) : Prop :=
-  ∃ H : G.Subgraph, H.verts.Nonempty ∧ H.verts.Finite ∧
-    ∀ v : H.verts, (H.coe.neighborSet v).ncard = k
-
 /--
 `f n k` is the maximum number of edges of a graph on `n` vertices with no nonempty `k`-regular
 subgraph.
@@ -69,9 +64,9 @@ $C(k)\ll k^2$, which is the best possible up to an absolute constant.
 
 A construction due to Pyber, Rödl, and Szemerédi [PRS95] shows that this is best possible.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos182.lean#L93"]
-theorem erdos_182 : answer(True) ↔ ∀ k : ℕ, 3 ≤ k → ∀ ε : ℝ, 0 < ε →
+theorem erdos_182 : ∀ k : ℕ, 3 ≤ k → ∀ ε : ℝ, 0 < ε →
     ∀ᶠ n : ℕ in atTop, (f n k : ℝ) ≤ (n : ℝ) ^ (1 + ε) := by
   sorry
 
