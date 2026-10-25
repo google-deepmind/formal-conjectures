@@ -115,7 +115,8 @@ theorem erdos_423 :
 /--
 Bolan and Tang [Ta26] independently proved that $a_n-n$ is nondecreasing.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/994b4c04dc4cf77c4b27364e27f179622104c681/erdos-423/Proofs/Blueprint423.lean#L693"]
 theorem erdos_423.variants.nondecreasing :
     ∀ a : ℕ → ℕ, IsHofstadterSeq a →
     ∀ n m : ℕ, 1 ≤ n → n ≤ m → a n - n ≤ a m - m := by
@@ -124,7 +125,8 @@ theorem erdos_423.variants.nondecreasing :
 /--
 Bolan and Tang [Ta26] independently proved that $a_n-n\to\infty$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/994b4c04dc4cf77c4b27364e27f179622104c681/erdos-423/Proofs/CompletedSquareDiscriminantAndSmallThresholdObstruction423.lean#L763"]
 theorem erdos_423.variants.unbounded :
     ∀ a : ℕ → ℕ, IsHofstadterSeq a →
     ∀ M : ℕ, ∀ᶠ n in atTop, M + n ≤ a n := by
@@ -134,7 +136,8 @@ theorem erdos_423.variants.unbounded :
 Bolan and Tang [Ta26] independently proved that infinitely many positive integers do not occur in
 the Hofstadter sequence.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/994b4c04dc4cf77c4b27364e27f179622104c681/erdos-423/Proofs/CompletedSquareDiscriminantAndSmallThresholdObstruction423.lean#L771"]
 theorem erdos_423.variants.infinite_complement :
     ∀ a : ℕ → ℕ, IsHofstadterSeq a → Set.Infinite (Set.range a)ᶜ := by
   sorry
