@@ -70,7 +70,9 @@ def quasiComplete (n m : ℕ) : SimpleGraph (Fin n) where
 
 /-- Every finite simple graph of order $n\ge1$ and size $m$ has at least as
 many stable partitions as the quasi-complete graph $Q(n,m)$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/62f9346442c8757cad34bc4c9b295f29260684d2/Proofs/GraphicalBell/Full.lean#L18"]
 theorem conjecture {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hn : 1 ≤ Fintype.card V) :
     bell (quasiComplete (Fintype.card V) G.edgeFinset.card) ≤ bell G := by
@@ -78,7 +80,9 @@ theorem conjecture {V : Type*} [Fintype V] [DecidableEq V]
 
 /-- The written resolution strengthens the Bell bound coordinatewise for every
 number of nonempty independent blocks. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/62f9346442c8757cad34bc4c9b295f29260684d2/Proofs/GraphicalBell/Full.lean#L10"]
 theorem coefficientwise {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hn : 1 ≤ Fintype.card V) (k : ℕ) :
     stirling (quasiComplete (Fintype.card V) G.edgeFinset.card) k ≤ stirling G k := by
