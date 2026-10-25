@@ -45,6 +45,10 @@ noncomputable def f (n : ℕ) : ℕ :=
 /-- `P n` is the largest prime factor of `n` (and `0` if `n ≤ 1`). -/
 noncomputable def P (n : ℕ) : ℕ := n.primeFactors.sup id
 
+/-- $Q(n)$ is the largest prime-power divisor of $n$: the maximum of $p^{v_p(n)}$ over
+prime divisors $p$ of $n$. It is `0` when `n ≤ 1`. -/
+noncomputable def Q (n : ℕ) : ℕ := n.primeFactors.sup (fun p => p ^ n.factorization p)
+
 /-- The set whose infimum defines `f`. -/
 def fSet (n : ℕ) : Set ℕ := {m | ∃ k, 1 < k ∧ k ≤ n / 2 ∧ m = Nat.gcd n (n.choose k)}
 
@@ -62,6 +66,8 @@ lemma f_mem (n k : ℕ) (h1 : 1 < k) (h2 : k ≤ n / 2) :
 lemma f_le (n k : ℕ) (h1 : 1 < k) (h2 : k ≤ n / 2) :
     f n ≤ Nat.gcd n (n.choose k) := Nat.sInf_le (f_mem n k h1 h2)
 
+def erdos_700.parts.i.answer : Set ℕ := sorry
+
 /-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$ and let $P(n)$ be the largest prime
 dividing $n$.
 
@@ -69,11 +75,40 @@ dividing $n$.
 
 Erdős–Szekeres [ErSz78] note that $f(n) = n/P(n)$ when $n$ is a product of two primes
 (`erdos_700.variants.prime_mul`), with $n = 30$ a further example. The characterisation itself is
-open; we state it as the (unknown) set of all composite `n` with `f n = n / P n`. -/
-@[category research open, AMS 11]
+open; we state it as the (unknown) set of all composite `n` with `f n = n / P n`.
+
+This follows the largest-prime reading on erdosproblems.com. In [ErSz78, p. 98], the first prose
+line below (7) reads: "where $P(n)$ is the greatest prime power which divides $n$."
+The paper's reading is stated with $Q(n)$ in `erdos_700.variants.prime_power_divisor`. -/
+@[category research open, question value, AMS 11]
 theorem erdos_700.parts.i :
-    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / P n} = answer(sorry) := by
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / P n} = erdos_700.parts.i.answer := by
   sorry
+
+def erdos_700.variants.prime_power_divisor.answer : Set ℕ := sorry
+
+/-- Characterise those composite $n$ such that $f(n) = n/Q(n)$, where $Q(n)$ is the largest
+prime-power divisor of $n$. This is the reading of part (a) in Erdős–Szekeres
+[ErSz78, pp. 98–99](https://combinatorica.hu/~p_erdos/1978-46.pdf). -/
+@[category research open, question value, AMS 11]
+theorem erdos_700.variants.prime_power_divisor :
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ f n = n / Q n} = erdos_700.variants.prime_power_divisor.answer
+      := by
+  sorry
+
+/-- At $n = 12$, $f(n) = 3 = n/Q(n)$, whereas $n/P(n) = 4$. -/
+@[category test, AMS 11]
+theorem prime_power_divisor_separation : f 12 = 3 ∧ 12 / P 12 = 4 ∧ 12 / Q 12 = 3 := by
+  refine ⟨le_antisymm ?_ ?_, ?_, ?_⟩
+  · exact f_le 12 4 (by decide) (by decide)
+  · have hne : (fSet 12).Nonempty := ⟨_, f_mem 12 4 (by decide) (by decide)⟩
+    obtain ⟨k, hk1, hk2, hkeq⟩ := Nat.sInf_mem hne
+    rw [f_eq, hkeq]
+    interval_cases k <;> decide
+  · unfold P
+    decide +kernel
+  · unfold Q
+    decide +kernel
 
 /-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$.
 
@@ -82,9 +117,9 @@ theorem erdos_700.parts.i :
 Erdős–Szekeres [ErSz78] could not prove this. (Since $f(n) \ge p(n)$, the least prime factor of
 $n$, there are infinitely many $n$ — those of the form $p^2$ — with $f(n) \ge n^{1/2}$; the
 question asks for the strict inequality.) Here $f(n) > n^{1/2}$ is written as `(f n) ^ 2 > n`. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_700.parts.ii :
-    answer(sorry) ↔ {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ (f n) ^ 2 > n}.Infinite := by
+    {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ (f n) ^ 2 > n}.Infinite := by
   sorry
 
 /-- Let $f(n) = \min_{1 < k \le n/2} \gcd(n, \binom{n}{k})$.
@@ -94,9 +129,9 @@ theorem erdos_700.parts.ii :
 Erdős–Szekeres [ErSz78] prove the weaker bound $f(n) \le (1 + o(1)) n/\log n$ (the case $A = 1$).
 Here $f(n) \ll_A n/(\log n)^A$ is spelled out as: for every `A > 0` there is a constant `C`
 (depending on `A`) with `f(n) ≤ C · n/(log n)^A` for every composite `n`. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_700.parts.iii :
-    answer(sorry) ↔ (∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, ¬ n.Prime → 1 < n →
+    (∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, ¬ n.Prime → 1 < n →
       (f n : ℝ) ≤ C * (n : ℝ) / (Real.log n) ^ A) := by
   sorry
 
