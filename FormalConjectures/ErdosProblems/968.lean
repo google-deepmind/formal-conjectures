@@ -74,7 +74,8 @@ Erdős and Prachar proved `∑_{pₙ < x} |u (n+1) - u n| ≍ (log x)^2` (see [E
 
 We encode `∑_{pₙ < x}` as a sum over `n < Nat.primeCounting' x` (the number of primes `< x`).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/f2c06c925dd01819fcb0bf4674d302850108cb8a/erdos-968/Solution.lean#L32"]
 theorem erdos_968.variants.sum_abs_diff_isTheta_log_sq :
     (fun x : ℕ =>
         ∑ n < Nat.primeCounting' x, |u (n + 1) - u n|) =Θ[atTop]
@@ -85,7 +86,8 @@ theorem erdos_968.variants.sum_abs_diff_isTheta_log_sq :
 Erdős and Prachar proved that the set `{n | u n > u (n+1)}` has positive lower density
 (see [ErPr61]).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/f2c06c925dd01819fcb0bf4674d302850108cb8a/erdos-968/Solution.lean#L38"]
 theorem erdos_968.variants.decreasing_steps_pos_lower_density :
     0 < {n : ℕ | u n > u (n + 1)}.lowerDensity := by
   sorry
