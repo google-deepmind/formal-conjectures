@@ -118,8 +118,9 @@ theorem erdos_1194.variants.exists_perfect_difference_set :
 The greedy construction achieves $a_n\ll n^3$.
 
 [Le04, Section 3] shows that the $n$th element of the set built greedily is $O(n^3)$. Each step
-represents the least positive integer not yet a difference, so $n$ is represented within the
-first $n+1$ steps, which gives $a_n\ll n^3$.
+represents the least positive integer not yet a difference and adds at most two elements, so $n$
+is represented within the first $n+1$ steps, $a_n$ is among the first $2n+2$ elements, and hence
+$a_n\ll n^3$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_1194.variants.greedy_upper_bound :
@@ -133,7 +134,7 @@ $$\limsup_{n\to \infty}\frac{a_n}{n}=\infty.$$
 Indeed, since $A$ must be a Sidon set, if $a_n \leq f(n)n$ for all $n$, then all differences in
 $[1,x/f(x)]$ can be realised by differences from $A\cap [1,x]$, and hence
 $\lvert A\cap [1,x]\rvert^2 \gg x/f(x)$. Erdős (see for example [HaRo66]) proved that for
-infinitely many $x$ $\lvert A\cap [1,x]\rvert \ll (x/\log x)^{1/2}$, which is a contradiction for
+infinitely many $x$, $\lvert A\cap [1,x]\rvert \ll (x/\log x)^{1/2}$, which is a contradiction for
 a suitable choice of $f$.
 
 Formally: for every perfect difference set $A$ and every $C$, $a_n \geq Cn$ for infinitely many
