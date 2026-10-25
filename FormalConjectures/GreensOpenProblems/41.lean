@@ -85,7 +85,7 @@ which of them one might hope to save.
 Kenta Kitamura [Ki26] gave a Lean proof that the answer is yes, with $C = 102$; the README of
 [Ki26] explains the argument.
 -/
-@[category research solved, AMS 51 52, questions,
+@[category research solved, question, AMS 51 52,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/green-41-double-exponential/blob/e2b49ac630b116f49661f5f701a38fac238cda76/lean/Green41DoubleExponentialFC.lean#L4845-L4849"]
 theorem green_41.variants.double_exponential_bound :
@@ -98,10 +98,10 @@ Is a quasi-polynomial number of rotations, $\exp((\log \varepsilon^{-1})^C)$, en
 Kenta Kitamura [Ki26b] gave a Lean proof that the answer is yes, with $C = 5$; the README of
 [Ki26b] explains the argument.
 -/
-@[category research solved, AMS 51 52,
+@[category research solved, question, AMS 51 52,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/green-41-quasi-polynomial/blob/5f8398aef8be85d0f5f82f3d3edd88bf7cb0b262/lean/Green41QuasiPolynomial/FinalQuasi.lean#L339-L342"]
-theorem green_41.variants.quasi_polynomial_bound : answer(True) ↔
+theorem green_41.variants.quasi_polynomial_bound :
     ∃ C : ℝ, ∃ ε₀ > 0, ∀ ε ∈ Ioc 0 ε₀,
       (minCopies ε : ℝ) ≤ Real.exp (Real.log ε⁻¹ ^ C) := by
   sorry
