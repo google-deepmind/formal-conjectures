@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public import FormalConjectures.ErdosProblems.«182»
 
 /-!
 # Erdős Problem 715
@@ -34,7 +33,7 @@ public import FormalConjectures.ErdosProblems.«182»
 
 @[expose] public section
 
-open Erdos182
+open SimpleGraph
 
 namespace Erdos715
 
@@ -42,11 +41,12 @@ namespace Erdos715
 Does every regular graph of degree $4$ contain a regular subgraph of degree $3$?
 
 A problem of Berge (or Berge and Sauer). The answer is yes, proved by Tashkinov [Ta82].
+
+The graph is nonempty, since the conclusion requires a nonempty cubic subgraph.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos715.lean#L35278"]
-theorem erdos_715.parts.i : answer(True) ↔
-    ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V) [DecidableRel G.Adj],
+theorem erdos_715.parts.i : ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V) [DecidableRel G.Adj],
       G.IsRegularOfDegree 4 → ContainsRegularSubgraph G 3 := by
   sorry
 
@@ -57,10 +57,9 @@ degree $3$?
 The answer is yes: $r=4$ works by Tashkinov [Ta82], and Alon, Friedland, and Kalai [AFK84]
 proved that every $r$-regular graph with $r\geq 5$ contains a $3$-regular subgraph.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos715.lean#L35295"]
-theorem erdos_715.parts.ii : answer(True) ↔
-    ∃ r : ℕ, ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V) [DecidableRel G.Adj],
+theorem erdos_715.parts.ii : ∃ r : ℕ, ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V) [DecidableRel G.Adj],
       G.IsRegularOfDegree r → ContainsRegularSubgraph G 3 := by
   sorry
 

@@ -30,15 +30,17 @@ open Filter
 
 namespace Erdos409
 
+def erdos_409.parts.i.answer : ℕ := sorry
+
 /--
 How many iterations of $n\mapsto\phi(n) + 1$ are needed before a prime is reached?
 -/
 -- Formalisation note: the sequence of iterates always terminates if `n > 0`
 -- since it is strictly decreasing unless the input is prime, at which point
 -- it becomes static. See also https://oeis.org/A39651
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.i (n : ℕ) (hn : 0 < n) :
-    IsLeast { i | (φ · + 1)^[i] n |>.Prime } answer(sorry) := by
+    IsLeast { i | (φ · + 1)^[i] n |>.Prime } erdos_409.parts.i.answer := by
   sorry
 
 /-- If $n > 0$, then the iteration $n\mapsto\phi(n) + 1$ necessarily
@@ -69,54 +71,64 @@ theorem erdos_409.variants.termination (n : ℕ) (hn : 0 < n) :
 -- Formalisation note: it's possible that solution to `erdos_409.parts.i` needs to be
 -- expressed asymptotically. To handle this we include `IsTheta`, `IsBigO`
 -- and `IsLittleO` variants below. Since a solution is not known this necessitates
--- the use of an `answer(sorry)` placeholder. Trivial or sub-optimal solutions
+-- the use of an `answer` definition left as `sorry`. Trivial or sub-optimal solutions
 -- will therefore exist to the asymptotic formalisations. A true solution to
 -- the asymptotic variants should have a degree of optimality or non-triviality to it.
+def erdos_409.parts.i.isTheta.answer : ℕ → ℝ := sorry
+
 /--
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\phi(n) + 1$ before a prime
 is reached. What is $\Theta(c(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isTheta (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =Θ[atTop] erdos_409.parts.i.isTheta.answer := by
   sorry
+
+def erdos_409.parts.i.isBigO.answer : ℕ → ℝ := sorry
 
 /--
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\phi(n) + 1$ before a prime
 is reached. Find the simplest function $g(n)$ such that $c(n) = O(g(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isBigO (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =O[atTop] erdos_409.parts.i.isBigO.answer := by
   sorry
+
+def erdos_409.parts.i.isLittleO.answer : ℕ → ℝ := sorry
 
 /--
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\phi(n) + 1$ before a prime
 is reached. Find the simplest function $g(n)$ such that $c(n) = o(g(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.i.isLittleO (c : ℕ → ℕ)
     (h : ∀ n > 0, IsLeast { i | (φ · + 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =o[atTop] erdos_409.parts.i.isLittleO.answer := by
   sorry
 
 /--
 Can infinitely many $n$ reach the same prime under the iteration $n\mapsto\phi(n) + 1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_409.parts.ii :
-    answer(sorry) ↔ ∃ (p : ℕ) (hp : p.Prime), { n | ∃ i, (φ · + 1)^[i] n = p }.Infinite := by
+    ∃ (p : ℕ) (hp : p.Prime), { n | ∃ i, (φ · + 1)^[i] n = p }.Infinite := by
   sorry
+
+def erdos_409.parts.iii.answer : ℝ := sorry
 
 /--
 What is the density of $n$ which reach any fixed prime under the iteration $n\mapsto\phi(n) + 1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.parts.iii (p : ℕ) (h : p.Prime) :
-    { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity answer(sorry) := by
+    { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity erdos_409.parts.iii.answer := by
   sorry
+
+def erdos_409.variants.sigma.answer : ℕ := sorry
 
 /--
 If the iteration $n\mapsto\sigma(n) - 1$ starting at $n > 1$ reaches a prime, how many
@@ -124,10 +136,10 @@ iterations are needed before a prime is reached?
 -/
 -- Formalisation note: termination of this sequence is not known in general since
 -- it is strictly increasing except at primes, so it is assumed as a hypothesis.
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1)
     (hterm : ∃ i, (σ 1 · - 1)^[i] n |>.Prime) :
-    IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } answer(sorry) := by
+    IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } erdos_409.variants.sigma.answer := by
   sorry
 
 /-- If $n > 1$ then the iteration $n\mapsto\sigma(n) - 1$ necessarily reaches a prime.
@@ -140,42 +152,48 @@ theorem erdos_409.variants.sigma_termination (n : ℕ) (hn : n > 1) :
 
 -- Formalisation note: See the above formalisation note for the rationale
 -- for including asymptotic variants
+def erdos_409.variants.sigma_isTheta.answer : ℕ → ℝ := sorry
+
 /--
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\sigma(n) - 1$ before a prime
 is reached. What is $\Theta(c(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isTheta (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =Θ[atTop] erdos_409.variants.sigma_isTheta.answer := by
   sorry
+
+def erdos_409.variants.sigma_isBigO.answer : ℕ → ℝ := sorry
 
 /--
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\sigma(n) - 1$ before a prime
 is reached. Find the simplest function $g(n)$ such that $c(n) = O(g(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isBigO (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =O[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =O[atTop] erdos_409.variants.sigma_isBigO.answer := by
   sorry
+
+def erdos_409.variants.sigma_isLittleO.answer : ℕ → ℝ := sorry
 
 /--
 Let $c(n)$ be the minimum number of iterations of $n\mapsto\sigma(n) - 1$ before a prime
 is reached. Find the simplest function $g(n)$ such that $c(n) = o(g(n))$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma_isLittleO (c : ℕ → ℕ)
     (h : ∀ n > 1, IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (c n)) :
-    (fun n => (c n : ℝ)) =o[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n => (c n : ℝ)) =o[atTop] erdos_409.variants.sigma_isLittleO.answer := by
   sorry
 
 /--
 Is it true that iterates of $n\mapsto\sigma(n) - 1$ always reach a prime?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_409.variants.sigma_prime_termination :
-    answer(sorry) ↔ ∀ n > 1, ∃ i, (σ 1 · - 1)^[i] n |>.Prime := by
+    ∀ n > 1, ∃ i, (σ 1 · - 1)^[i] n |>.Prime := by
   sorry
 
 end Erdos409
