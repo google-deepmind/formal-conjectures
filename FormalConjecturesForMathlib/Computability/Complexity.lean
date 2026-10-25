@@ -22,11 +22,15 @@ public import Mathlib.Computability.TuringMachine.Computable
 # Complexity Classes
 
 This file contains formal definitions of notions from complexity theory,
-including the complexity classes P, NP, and coNP.
+including the complexity classes P, NP, coNP, and BPP.
 
 *References:*
 - Sanjeev Arora and Boaz Barak. Computational Complexity: A Modern Approach.
   Cambridge University Press, 2009.
+- Melissa Antonelli, Ugo Dal Lago, and Paolo Pistone. On Randomized Computational Models
+  and Complexity Classes: a Historical Overview. 2024.
+  [arXiv:2409.11999](https://arxiv.org/abs/2409.11999)
+- [Wikipedia: Complexity class](https://en.wikipedia.org/wiki/Complexity_class)
 -/
 
 @[expose] public section
@@ -78,10 +82,11 @@ def P : DecisionComplexityClass :=
   { L | IsPolyTime L }
 
 /--
-The class NP is the set of decision problems
-such that there exists a polynomial `p` over ℕ and a poly-time Turing machine
-where for all `x`, `L x = true` iff there exists a `w` of length at most `p (|x|)`
-such that the Turing machine accepts the pair `(x,w)`.
+The class NP is the set of decision problems $L$
+such that there exists a polynomial $p$ over ℕ
+and a poly-time Turing machine computing a relation $R$
+where for all $x$, $L(x)$ iff there exists a $w$ of length at most $p (|x|)$
+such that $R(x,w)$ accepts.
 
 See Definition 2.1 in Arora-Barak (2009).
 -/
@@ -96,5 +101,21 @@ whose complements are in NP.
 -/
 def coNP : DecisionComplexityClass :=
   { L | Lᶜ ∈ NP }
+
+/--
+The class BPP is the set of decision problems $L$
+such that there exists a polynomial $p$ over ℕ
+and a poly-time Turing machine computing a relation $R$
+where for all $x$, a uniformly random string $r$ of length $p (|x|)$ satisfies
+$R (x, r) = L (x)$ with probability at least $2/3$.
+
+See Definition 7.4 in Arora-Barak (2009), or Antonelli et al. (2024).
+-/
+def BPP : DecisionComplexityClass :=
+  { L | ∃ (p : Polynomial ℕ), ∃ R : (List Bool × List Bool) → Bool,
+      IsPolyTime R ∧
+      ∀ x, (2 : ℚ) / 3 ≤
+        ((Finset.univ.filter fun r : Fin (p.eval x.length) → Bool =>
+          R (x, List.ofFn r) = L x).card : ℚ) / 2 ^ p.eval x.length }
 
 end ComplexityTheory
