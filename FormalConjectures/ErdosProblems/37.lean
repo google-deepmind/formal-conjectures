@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,18 +41,6 @@ open scoped Pointwise
 
 namespace Erdos37
 
-open scoped Classical in
-/-- A set $A\subset \mathbb{N}$ is an essential component if $d_s(A+B)>d_s(B)$ for every
-$B\subset \mathbb{N}$ with $0<d_s(B)<1$, where $d_s$ is the Schnirelmann density. -/
-def IsEssentialComponent (A : Set ℕ) : Prop :=
-  ∀ B : Set ℕ, 0 < schnirelmannDensity B → schnirelmannDensity B < 1 →
-    schnirelmannDensity B < schnirelmannDensity (A + B)
-
-/-- A set $A = \{a_1 < a_2 < \cdots\} \subset \mathbb{N}$ is lacunary if it is infinite and
-$a_{k+1} \geq q a_k$ for all $k$, for some fixed $q > 1$. -/
-def IsLacunarySet (A : Set ℕ) : Prop :=
-  A.Infinite ∧ ∃ q : ℝ, 1 < q ∧ ∀ x ∈ A, ∀ y ∈ A, x < y → q * x ≤ y
-
 /--
 We say that $A\subset \mathbb{N}$ is an essential component if $d_s(A+B)>d_s(B)$ for every
 $B\subset \mathbb{N}$ with $0<d_s(B)<1$ where $d_s$ is the Schnirelmann density.
@@ -67,10 +55,12 @@ there exists an essential component $A$ for which $\lvert A\cap \{1,\ldots,N\}\r
 
 See also [1146](https://www.erdosproblems.com/1146) for whether $\{2^m3^n\}$ is an essential
 component.
+
+As in Problem 1146, the sumset convention adjoins zero to both sets; this avoids making
+non-essentiality automatic whenever the original set omits zero.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos37.lean#L6737"]
-theorem erdos_37 : answer(False) ↔ ∃ A : Set ℕ, IsLacunarySet A ∧ IsEssentialComponent A := by
+@[category research solved, question, AMS 11]
+theorem erdos_37 : ¬ ∃ a : ℕ → ℕ, StrictMono a ∧ IsLacunary a ∧ (Set.range a).IsEssentialComponent := by
   sorry
 
 /--
@@ -78,7 +68,7 @@ Ruzsa [Ru87] proved that if $A$ is an essential component then there exists some
 such that $\lvert A\cap \{1,\ldots,N\}\rvert \geq (\log N)^{1+c}$ for all large $N$.
 -/
 @[category research solved, AMS 11]
-theorem erdos_37.variants.ruzsa_lower (A : Set ℕ) (hA : IsEssentialComponent A) :
+theorem erdos_37.variants.ruzsa_lower (A : Set ℕ) (hA : A.IsEssentialComponent) :
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ N : ℕ in atTop,
       Real.log N ^ (1 + c) ≤ ((A ∩ Set.Icc 1 N).ncard : ℝ) := by
   sorry
@@ -89,7 +79,7 @@ $\lvert A\cap \{1,\ldots,N\}\rvert \leq (\log N)^{1+c}$ for all large $N$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_37.variants.ruzsa_sharp (c : ℝ) (hc : 0 < c) :
-    ∃ A : Set ℕ, IsEssentialComponent A ∧ ∀ᶠ N : ℕ in atTop,
+    ∃ A : Set ℕ, A.IsEssentialComponent ∧ ∀ᶠ N : ℕ in atTop,
       ((A ∩ Set.Icc 1 N).ncard : ℝ) ≤ Real.log N ^ (1 + c) := by
   sorry
 
