@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 
 /-!
 # Conjectures about Latin Squares
@@ -55,24 +56,24 @@ def HasCompleteMOLS (n : ℕ) : Prop :=
 Conjecture 3.2 in [Wa2011]:
 Each Latin square of odd order has at least one transversal.
 -/
-@[category research open, AMS 5]
-theorem oddOrderLatinSquareTransversal : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem oddOrderLatinSquareTransversal :
     ∀ (n : ℕ), Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
   sorry
 
 /--
 The conjecture is known to be true for $n \leq 9$.
 -/
-@[category research solved, AMS 5]
-theorem oddOrderLeq9LatinSquareTransversal : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem oddOrderLeq9LatinSquareTransversal :
     ∀ n ≤ 9, Odd n → ∀ (L : LatinSquare n), ∃ σ, IsTransversal L σ := by
   sorry
 
 /--
 The smallest odd number for which this conjecture is not known is 11.
 -/
-@[category research open, AMS 5]
-theorem latinSquareOrder11Transversal : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem latinSquareOrder11Transversal :
     ∀ (L : LatinSquare 11), ∃ σ, IsTransversal L σ := by
   sorry
 
@@ -86,8 +87,8 @@ square of order $n$ such that $\lambda(L) = m$.
 Conjecture 5.1 in [Wa2011]:
 Every latin square has a near-transversal
 -/
-@[category research open, AMS 5]
-theorem latinSquareNearTransversal : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem latinSquareNearTransversal :
     ∀ (n : ℕ) (L : LatinSquare n), ∃ ρ σ, IsNearTransversal L ρ σ := by
   sorry
 
@@ -110,8 +111,7 @@ theorem z_zero : z 0 = 1 := by
 [OEIS A006717](https://oeis.org/A006717), starting with
 $z(1) = 1, z(3) = 3, z(5) = 15, z(7) = 133$. -/
 @[category test, AMS 5]
-theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by
-  sorry --this was previously proven using `native_decide`
+theorem z_odd_values : [z 1, z 3, z 5, z 7] = [1, 3, 15, 133] := by native_decide
 
 /-- The Cayley table of $\mathbb{Z}_n$ for positive even $n$ has no transversals. -/
 @[category textbook, AMS 5]
@@ -165,8 +165,8 @@ c_1^n n! \leq z_n \leq c_2^n n!
 $$
 for all odd $n \geq 3$.
 -/
-@[category research open, AMS 5]
-theorem numTransversalsZn : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem numTransversalsZn :
       ∃ᵉ (c₁ > (0 : ℝ)) (c₂ < (1 : ℝ)) (_ : c₁ < c₂),
       ∀ n ≥ 3, Odd n →
         (z n : ℝ) ∈ Set.Icc (c₁ ^ n * n.factorial) (c₂ ^ n * n.factorial) := by
@@ -180,8 +180,8 @@ $$
 It is not even known if this limit exists. Note that $z_n = 0$ for even $n$ (see `z_even`), so the
 limit must be restricted to odd $n$; here we parametrise odd $n$ as $2k + 1$.
 -/
-@[category research open, AMS 5]
-theorem growthRateZn : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem growthRateZn :
     Filter.Tendsto (fun k => (1 : ℝ) / (2 * k + 1) *
       Real.log (z (2 * k + 1) / (2 * k + 1).factorial)) Filter.atTop
       (nhds (-1)) := by
@@ -205,6 +205,8 @@ theorem maxTransversalsBound :
       (T n : ℝ) ∈ Set.Icc ((15 : ℝ) ^ ((n : ℝ) / 5)) (c ^ n * Real.sqrt n * n.factorial) := by
   sorry
 
+def molsExistenceProblem.answer : Set ℕ := sorry
+
 /--
 MOLS existence problem: determine exactly which orders `n` admit a complete set of `n - 1`
 mutually orthogonal latin squares.
@@ -212,16 +214,16 @@ mutually orthogonal latin squares.
 Equivalently, this asks for which orders affine planes of order `n` exist. Complete sets are known
 for prime-power orders; the smallest currently unresolved order is `12`.
 -/
-@[category research open, AMS 5]
-theorem molsExistenceProblem : answer(sorry) = {n : ℕ | HasCompleteMOLS n} := by
+@[category research open, question value, AMS 5]
+theorem molsExistenceProblem : molsExistenceProblem.answer = {n : ℕ | HasCompleteMOLS n} := by
   sorry
 
 /--
 The smallest unresolved case of the MOLS existence problem: whether there are `11` mutually
 orthogonal latin squares of order `12`.
 -/
-@[category research open, AMS 5]
-theorem molsOrder12 : answer(sorry) ↔ HasCompleteMOLS 12 := by
+@[category research open, question, AMS 5]
+theorem molsOrder12 : HasCompleteMOLS 12 := by
   sorry
 
 /-
