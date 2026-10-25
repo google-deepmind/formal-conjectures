@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,14 +35,6 @@ public import FormalConjecturesUtil
 open Filter Asymptotics
 
 namespace Erdos54
-
-/--
-A set of integers `A` is *Ramsey `r`-complete* if, whenever `A` is `r`-coloured, all sufficiently
-large integers can be written as a monochromatic sum of distinct elements of `A`.
--/
-def IsRamseyComplete (r : ℕ) (A : Set ℕ) : Prop :=
-  ∀ c : A → Fin r, ∀ᶠ n : ℕ in atTop,
-    ∃ s : Finset A, (∃ i : Fin r, ∀ a ∈ s, c a = i) ∧ ∑ a ∈ s, (a : ℕ) = n
 
 /--
 A set of integers $A$ is Ramsey $2$-complete if, whenever $A$ is $2$-coloured, all sufficiently
