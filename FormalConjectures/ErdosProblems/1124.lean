@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,11 +30,9 @@ public import FormalConjecturesUtil
 @[expose] public section
 
 open Metric Real
+open scoped EuclideanGeometry
 
 namespace Erdos1124
-
-/-- The Euclidean plane. -/
-local notation "ℝ²" => EuclideanSpace ℝ (Fin 2)
 
 /-- The closed axis-parallel square centred at the origin with side length `s`. -/
 def square (s : ℝ) : Set ℝ² := {x | ∀ i, |x i| ≤ s / 2}
@@ -50,9 +48,9 @@ This is true - Laczkovich [La90b] proved that in fact this is possible using tra
 Equidecomposability is expressed with Mathlib's `Equidecomp`: a bijection between the two sets
 which, on each of finitely many pieces, is given by a single isometry of the plane.
 -/
-@[category research solved, AMS 28 52, formal_proof using lean4 at
+@[category research solved, question, AMS 28 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1124.lean#L236"]
-theorem erdos_1124 : answer(True) ↔ ∀ r : ℝ, 0 < r →
+theorem erdos_1124 : ∀ r : ℝ, 0 < r →
     ∃ e : Equidecomp ℝ² (ℝ² ≃ᵢ ℝ²), e.source = closedBall 0 r ∧
       e.target = square (√π * r) := by
   sorry

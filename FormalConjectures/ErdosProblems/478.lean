@@ -41,8 +41,8 @@ namespace Erdos478
 /--
 Let $p$ be a prime and $$A_p = \{ k! \pmod{p} : 1\leq k<p\}.$$ Is it true that $$\lvert A_p\rvert \sim (1-\tfrac{1}{e})p?$$
 -/
-@[category research open, AMS 11]
-theorem erdos_478 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_478 :
     Filter.Tendsto
       (fun p : ℕ =>
         (((Finset.Ico 1 p).image (fun k => Nat.factorial k % p)).card : ℝ) / p)
