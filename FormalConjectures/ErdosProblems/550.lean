@@ -23,6 +23,8 @@ public import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/550](https://www.erdosproblems.com/550)
 - [Ch77] Chvátal, V., Tree-complete graph Ramsey numbers. J. Graph Theory (1977), 93.
+- [Li26] Li, E., *A Resolution of Erdős Problem 550 on Tree versus Complete Multipartite Ramsey
+  Numbers*, [arXiv:2606.23659](https://arxiv.org/abs/2606.23659) (2026).
 -/
 
 @[expose] public section
@@ -37,8 +39,14 @@ and $G$ is the complete multipartite graph with vertex class sizes $m_1,\ldots,m
 $$R(T,G)\leq (\chi(G)-1)(R(T,K_{m_1,m_2})-1)+m_1.$$
 
 This problem is #16 in Ramsey Theory in the graphs problem collection.
+
+Li [Li26] proved this, combining an off-Turán tree-embedding theorem with a compactness theorem
+for bounded-rank hypergraph obstructions. The linked formal proof states the bound for trees on an
+arbitrary finite vertex type and with `K_{m_1,m_2}` written as a complete multipartite graph with
+two parts; the statement below is the special case `V = Fin n`.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos550/Main.lean#L80"]
 theorem erdos_550 :
     ∀ (k : ℕ) (hk : 2 ≤ k) (m : Fin k → ℕ) (hm : Monotone m)
       (hm_pos : ∀ i, 0 < m i),
