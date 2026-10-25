@@ -66,9 +66,9 @@ Let $h(n)$ be such that any $n$ points in $\mathbb{R}^2$, with no three on a lin
 and no four on a circle, determine at least $h(n)$ distinct distances. Does
 $h(n)/n\to \infty$?
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_98 :
-    answer(sorry) ↔ Tendsto (fun n : ℕ ↦ ((h n : ℝ) / (n : ℝ))) atTop atTop := by
+    Tendsto (fun n : ℕ ↦ ((h n : ℝ) / (n : ℝ))) atTop atTop := by
   sorry
 
 /--

@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,14 +39,10 @@ namespace Erdos543
 
 variable {G : Type*} [AddCommGroup G] [Fintype G]
 
-/-- `A` is *complete* if all elements of `G` can be written as $\sum_{x\in S}x$ for some
-$S\subseteq A$. -/
-def IsComplete (A : Finset G) : Prop := ∀ g : G, ∃ S ⊆ A, ∑ x ∈ S, x = g
-
 open scoped Classical in
 /-- The probability that a uniformly random `k`-element subset of `G` is complete. -/
 noncomputable def completeProbability (G : Type*) [AddCommGroup G] [Fintype G] (k : ℕ) : ℝ :=
-  (((univ : Finset G).powersetCard k).filter IsComplete).card /
+  (((univ : Finset G).powersetCard k).filter fun A ↦ subsetSums (A : Set G) = Set.univ).card /
     ((univ : Finset G).powersetCard k).card
 
 /-- `f N` is the minimal `k` such that, for every abelian group `G` of size `N`, a uniformly
@@ -67,10 +63,9 @@ $\mathbb{F}_p$ of size $\leq f(p)$ fails to generate $\mathbb{F}_p$ in this way.
 
 See also [1179](https://www.erdosproblems.com/1179).
 -/
-@[category research solved, AMS 5 11 20, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11 20, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos543.lean#L81"]
-theorem erdos_543 : answer(False) ↔
-    ∃ o : ℕ → ℝ, (o =o[atTop] fun N : ℕ ↦ log (log N)) ∧
+theorem erdos_543 : ¬ ∃ o : ℕ → ℝ, (o =o[atTop] fun N : ℕ ↦ log (log N)) ∧
       ∀ᶠ N : ℕ in atTop, (f N : ℝ) ≤ logb 2 N + o N := by
   sorry
 

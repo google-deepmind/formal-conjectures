@@ -74,34 +74,71 @@ f(n) = f(n - f(n - 1)) + f(n - f(n - 2)).
 $$
 Does $f(n)$ miss infinitely many integers?
 -/
-@[category research open, AMS 11]
-theorem erdos_422 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_422 :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → Set.Infinite {n | ∀ x, f x ≠ n} := by
   sorry
 
 /--
 Is $f$ surjective?
 -/
-@[category research open, AMS 11]
-theorem erdos_422.variants.surjective : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_422.variants.surjective :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → f.Surjective := by
   sorry
+
+def erdos_422.variants.growth_rate.answer : ℕ+ → ℝ := sorry
 
 /--
 How does $f$ grow?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_422.variants.growth_rate :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f →
-    (fun n ↦ (f n : ℝ)) =O[atTop] (answer(sorry) : ℕ+ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =O[atTop] erdos_422.variants.growth_rate.answer := by
   sorry
 
 /--
-Does $f$ become stationary at some point?
+Hofstadter's $Q$-sequence is not eventually constant: if $f(n) = c$ for all large $n$, then the
+recurrence gives $c = f(n - c) + f(n - c) = 2c$.
 -/
-@[category research open, AMS 11]
-theorem erdos_422.variants.eventually_const : answer(sorry) ↔
-    ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → EventuallyConst f atTop := by
+@[category API, AMS 11]
+theorem IsHofstadterQ.not_eventuallyConst {f : ℕ+ → ℕ+} (hf : IsHofstadterQ f) :
+    ¬ EventuallyConst f atTop := by
+  obtain ⟨-, -, hf⟩ := hf
+  intro h
+  obtain ⟨c, hc⟩ := eventuallyConst_iff_exists_eventuallyEq.mp h
+  obtain ⟨N, hN⟩ := eventually_atTop.mp hc
+  have hc0 := c.pos
+  -- Subtracting `k ≤ c + 1` from `n = N + c + 2` leaves an index that is still at least `N`.
+  have key (k : ℕ+) (hk : (k : ℕ) ≤ c + 1) : f (N + c + 2 - k) = c := hN _ <| by
+    have hlt : k < N + c + 2 := by
+      rw [← PNat.coe_lt_coe]; push_cast; omega
+    rw [← PNat.coe_le_coe, PNat.sub_coe, if_pos hlt]
+    push_cast; omega
+  have hn : f (N + c + 2) = c := hN _ <| by
+    rw [← PNat.coe_le_coe]; push_cast; omega
+  obtain ⟨-, -, hrec⟩ := hf (N + c + 2) (PNat.lt_add_left 2 (N + c))
+  -- The recurrence at `n` now reads `c = c + c`.
+  rw [hn, key 1 (Nat.le_add_left 1 c), key 2 (by push_cast; omega), key c (by omega)] at hrec
+  exact (PNat.lt_add_right c c).ne hrec
+
+/--
+Does $f$ become stationary at some point?
+
+No: see `IsHofstadterQ.not_eventuallyConst`. The statement is existential, so the answer does
+not depend on whether $f(n)$ is well-defined for all $n$.
+-/
+@[category textbook, AMS 11]
+theorem erdos_422.variants.eventually_const :
+    ¬ ∃ f : ℕ+ → ℕ+, IsHofstadterQ f ∧ EventuallyConst f atTop :=
+  fun ⟨_, hf, h⟩ ↦ hf.not_eventuallyConst h
+
+/--
+Is $f(n)$ well-defined for all $n$?
+-/
+@[category research open, question, AMS 11]
+theorem erdos_422.variants.well_defined : ∃ f : ℕ+ → ℕ+, IsHofstadterQ f := by
   sorry
 
 end Erdos422
