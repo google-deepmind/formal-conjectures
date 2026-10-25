@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 379
 
 *Reference:* [erdosproblems.com/379](https://www.erdosproblems.com/379)
 -/
+
+@[expose] public section
 
 namespace Erdos379
 
@@ -37,8 +40,7 @@ $\limsup S(n) = \infty$.
 This was formalized in Lean by Tao.
 -/
 @[category research solved, AMS 11,
-formal_proof using lean4 at "https://github.com/teorth/analysis/blob/4f623b0f4cacdb967f1f8132db0becaee0f1fb3d/Analysis/Misc/erdos_379.lean#L90",
-formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/80a965e9a85d3f3dabd0a398a49adab6742ea6e0/FormalConjectures/ErdosProblems/379.lean#L123"]
+formal_proof using lean4 at "https://github.com/teorth/analysis/blob/4f623b0f4cacdb967f1f8132db0becaee0f1fb3d/Analysis/Misc/erdos_379.lean#L90"]
 theorem erdos_379 : atTop.limsup (fun n => (S n : ℕ∞)) = ⊤ := by
   sorry
 

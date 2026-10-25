@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 541
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [GHW10] Gao, Weidong and Hamidoune, Yahya Ould and Wang, Guoqing, Distinct length modular zero-sum
   subsequences: a proof of Graham's conjecture. J. Number Theory (2010), 1425--1431.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -41,8 +44,8 @@ Must there be at most two distinct residues amongst the $a_i$?
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos541.lean"]
-theorem erdos_541 : answer(True) ↔ (∀ p, Fact p.Prime → ∀ (a : Fin p → ZMod p),
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos541.lean"]
+theorem erdos_541 : (∀ p, Fact p.Prime → ∀ (a : Fin p → ZMod p),
     (∃ r, ∀ (S : Finset (Fin p)), S ≠ ∅ → ∑ i ∈ S, a i = 0 → S.card = r) →
       (Set.range a).ncard ≤ 2) := by
   sorry

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1128
 
 *Reference:* [erdosproblems.com/1128](https://www.erdosproblems.com/1128)
 -/
+
+@[expose] public section
 
 open Cardinal Set Ordinal Order
 
@@ -39,28 +42,30 @@ These establish key countability and boundedness properties of ω₁.
 -/
 
 /-- The set of countable ordinals, expressed using Mathlib's `ω_ 1`. -/
-private abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
+abbrev Omega1 := {o : Ordinal.{0} // o < ω_ 1}
 
 /-- The set of ordinals strictly below any $\gamma < \omega_1$ is countable. -/
 @[category API, AMS 5]
 private lemma countable_Iio_of_lt_omega1 {γ : Ordinal} (hγ : γ < ω_ 1) :
     (Set.Iio γ).Countable := by
-  rwa [countable_iff_lt_aleph_one, mk_Iio_ordinal, lift_lt_aleph_one,
-    ← lt_omega_iff_card_lt]
+  rwa [← le_aleph0_iff_set_countable, Cardinal.mk_Iio_ordinal, lift_le_aleph0,
+    ← lt_aleph_one_iff, ← lt_omega_iff_card_lt]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Initial segments of ω₁ (as sets of `Omega1` elements) are countable.
 This is the subtype-order version of `countable_Iio_of_lt_omega1`. -/
 @[category API, AMS 5]
 private lemma countable_Iio_omega1 (γ : Omega1) : (Set.Iio γ : Set Omega1).Countable := by
   -- The injection a ↦ ⟨a.1.val, a.2⟩ sends ↑(Iio γ : Set Omega1) into ↑(Iio γ.val : Set Ord)
   -- and the codomain is countable by countable_Iio_of_lt_omega1.
-  haveI hcount := (countable_Iio_of_lt_omega1 γ.2).to_subtype
+  have hcount := (countable_Iio_of_lt_omega1 γ.2).to_subtype
   -- Goal: (Set.Iio γ : Set Omega1).Countable = Set.Countable (Set.Iio γ)
   -- = Countable ↥(Set.Iio γ : Set Omega1) (by definition of Set.Countable)
   show Countable ↑(Set.Iio γ : Set Omega1)
   -- Use Function.Injective.countable with the injection a ↦ ⟨a.1.val, a.2⟩.
   apply Function.Injective.countable (β := ↑(Set.Iio γ.val : Set Ordinal.{0}))
     (f := fun (a : ↑(Set.Iio γ : Set Omega1)) => (⟨a.1.val, a.2⟩ : ↑(Set.Iio γ.val)))
+  -- `h` arrives as an unreduced application of the injection.
   intro ⟨⟨av, hav_ω₁⟩, hav_γ⟩ ⟨⟨bv, hbv_ω₁⟩, hbv_γ⟩ h
   simp only [Subtype.mk.injEq] at h
   exact Subtype.ext (Subtype.ext h)
@@ -72,12 +77,10 @@ private lemma countable_subset_bdd (S : Set Omega1) (hS : S.Countable) :
     ∃ γ : Omega1, ∀ s ∈ S, s < γ := by
   by_cases hemp : S.Nonempty
   · obtain ⟨f, hf⟩ := hS.exists_eq_range hemp
-    have hf_lt' : ∀ n, (f n).1 < (ℵ_ 1).ord :=
-      fun n => lt_of_lt_of_eq (f n).2 (ord_aleph 1).symm
+    have hf_lt' n : (f n).1 < ω_ 1 := (f n).2
     have hbdd : BddAbove (Set.range (fun n => (f n).1)) :=
       ⟨ω_ 1, fun o ⟨m, hm⟩ => hm ▸ (f m).2.le⟩
-    have hlt : ⨆ n, (f n).1 < ω_ 1 :=
-      lt_of_lt_of_eq (iSup_sequence_lt_omega_one _ hf_lt') (ord_aleph 1)
+    have hlt : ⨆ n, (f n).1 < ω_ 1 := iSup_lt_omega_one hf_lt'
     -- `ω_ 1` is a limit ordinal (no ord_aleph rewrite needed).
     have hsucc_lt : (⨆ n, (f n).1) + 1 < ω_ 1 := by
       rw [← succ_eq_add_one]; exact (isSuccLimit_omega 1).succ_lt hlt
@@ -144,30 +147,24 @@ Note: The positive statement asserts that every 2-colouring of every $\aleph_1^3
 contains a monochromatic countably infinite box. Since the answer is False, this
 positive statement fails.
 -/
-@[category research solved, AMS 3 5]
-theorem erdos_1128 : answer(False) ↔
-    ∀ (A B C : Type) (_ : #A = aleph 1) (_ : #B = aleph 1) (_ : #C = aleph 1)
+@[category research solved, question, AMS 3 5]
+theorem erdos_1128 :
+    ¬ ∀ (A B C : Type) (_ : #A = aleph 1) (_ : #B = aleph 1) (_ : #C = aleph 1)
       (f : A → B → C → Fin 2),
       ∃ (A₁ : Set A) (B₁ : Set B) (C₁ : Set C),
         #A₁ = aleph 0 ∧ #B₁ = aleph 0 ∧ #C₁ = aleph 0 ∧
         IsMonochromaticBox f A₁ B₁ C₁ := by
-  -- `answer(False)` reduces to `False` in the default elaborator mode.
-  -- The goal is: False ↔ ∀ A B C, |A| = ℵ₁ → |B| = ℵ₁ → |C| = ℵ₁ →
-  --               ∀ f, ∃ monochromatic countable box.
-  -- (→): False implies anything.
-  -- (←): The Prikry–Mills theorem provides A B C of size ℵ₁ and a 2-colouring
-  --      with no monochromatic countable box, contradicting the hypothesis.
-  constructor
-  · intro h; exact h.elim
-  · intro h
-    -- Obtain the Prikry–Mills counterexample: a type X of cardinality ℵ₁ with a
-    -- 2-colouring f : X → X → X → Fin 2 having no monochromatic countable box.
-    obtain ⟨X, hX, f, hf⟩ := erdos_1128.prikryMills
-    -- Apply h to X (playing the roles of A, B, C), using |X| = ℵ₁.
-    obtain ⟨A₁, B₁, C₁, hA, hB, hC, hbox⟩ := h X X X hX hX hX f
-    -- The Prikry–Mills theorem says no countably infinite box is monochromatic.
-    -- Since #A₁ = aleph 0, #B₁ = aleph 0, #C₁ = aleph 0, this is a contradiction.
-    exact hf A₁ B₁ C₁ hA hB hC hbox
+  -- The Prikry–Mills theorem provides A B C of size ℵ₁ and a 2-colouring
+  -- with no monochromatic countable box, contradicting the hypothesis.
+  intro h
+  -- Obtain the Prikry–Mills counterexample: a type X of cardinality ℵ₁ with a
+  -- 2-colouring f : X → X → X → Fin 2 having no monochromatic countable box.
+  obtain ⟨X, hX, f, hf⟩ := erdos_1128.prikryMills
+  -- Apply h to X (playing the roles of A, B, C), using |X| = ℵ₁.
+  obtain ⟨A₁, B₁, C₁, hA, hB, hC, hbox⟩ := h X X X hX hX hX f
+  -- The Prikry–Mills theorem says no countably infinite box is monochromatic.
+  -- Since #A₁ = aleph 0, #B₁ = aleph 0, #C₁ = aleph 0, this is a contradiction.
+  exact hf A₁ B₁ C₁ hA hB hC hbox
 
 /--
 **Explicit form of Prikry–Mills**:
@@ -226,8 +223,9 @@ $\omega_1$; but any bounded subset of $\omega_1$ is countable (since initial seg
 countable), contradicting $A_1$ being uncountable. The colour-1 case is symmetric with
 the roles of $A_1$ and $B_1$ swapped.
 
-Note: The correct classical result for 2-colourings of pairs (not products) is the
-Erdős–Rado theorem $\omega_1 \to (\omega_1)^2_2$, which concerns unordered pairs.
+Note: For 2-colourings of unordered pairs the analogous statement also fails: Sierpiński
+showed $\omega_1 \not\to (\omega_1)^2_2$. The Erdős–Rado theorem gives
+$(2^{\aleph_0})^+ \to (\aleph_1)^2_{\aleph_0}$ instead.
 -/
 @[category research solved, AMS 3 5]
 theorem erdos_1128.variants.two_dimensional_false :
@@ -246,13 +244,11 @@ theorem erdos_1128.variants.two_dimensional_false :
   -- Contrapositive: uncountable subsets of ω₁ are not bounded (i.e., cofinal in ω₁).
   have A₁_unbdd : ∀ γ : Omega1, ∃ a ∈ A₁, γ ≤ a := by
     intro γ
-    by_contra hbdd
-    push_neg at hbdd
+    by_contra! hbdd
     exact hA_unc (Set.Countable.mono (fun a ha => hbdd a ha) (countable_Iio_omega1 γ))
   have B₁_unbdd : ∀ γ : Omega1, ∃ b ∈ B₁, γ ≤ b := by
     intro γ
-    by_contra hbdd
-    push_neg at hbdd
+    by_contra! hbdd
     exact hB_unc (Set.Countable.mono (fun b hb => hbdd b hb) (countable_Iio_omega1 γ))
   -- A₁ and B₁ are both nonempty (since uncountable sets are nonempty).
   have hA_ne : A₁.Nonempty := by

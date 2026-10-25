@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesUtil.Attributes.Basic
+public meta import FormalConjecturesUtil.Attributes.Basic
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 public import Mathlib.NumberTheory.FLT.Basic
 public import Mathlib.RingTheory.Algebraic.Defs
@@ -46,9 +46,130 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
 theorem a_formally_solved_problem : 2 + 2 = 4 := by
   rfl
 
+-- The `question` attribute
+
+#guard_msgs in
+/-- Is `2 + 2` equal to `4`? -/
+@[category research solved, question, AMS 11]
+theorem a_question : 2 + 2 = 4 := by
+  rfl
+
+-- The attribute is independent of the order of attributes.
+#guard_msgs in
+@[question, category research open]
+theorem a_question_first : 2 + 2 = 4 := by
+  sorry
+
+-- `question` is not a keyword.
+#guard_msgs in
+example (question : Nat) : question = question := rfl
+
+/--
+error: the `question` attribute only applies to theorems, but the type of 'not_a_theorem' is not a proposition
+-/
+#guard_msgs in
+@[question]
+def not_a_theorem : Prop := True
+
+-- The unknown of a value question is a definition `<theorem>.answer`.
+def a_value_question_with_def.answer : Nat := sorry
+
+#guard_msgs in
+/-- What is `2 + 2`? -/
+@[category research open, question value, AMS 11]
+theorem a_value_question_with_def : 2 + 2 = a_value_question_with_def.answer := by
+  sorry
+
+-- The form is checked against the statement, in both directions.
+def a_value_question_with_def_tagged_yes_no.answer : Nat := sorry
+
+/--
+error: the statement of 'a_value_question_with_def_tagged_yes_no' refers to the unknown of a value question; use `question value`
+-/
+#guard_msgs in
+@[category research open, question, AMS 11]
+theorem a_value_question_with_def_tagged_yes_no : 2 + 2 = a_value_question_with_def_tagged_yes_no.answer := by
+  sorry
+
+/--
+error: `question value` requires the statement of 'a_yes_no_question_tagged_value' to refer to the definition `a_yes_no_question_tagged_value.answer`; for a yes-or-no question use `question`
+-/
+#guard_msgs in
+@[category research open, question value, AMS 11]
+theorem a_yes_no_question_tagged_value : 2 + 2 = 4 := by
+  sorry
+
+open ProblemAttributes
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_question
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_question_first
+
+/-- info: some QuestionKind.value -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_value_question_with_def
+
+-- An untagged theorem has no kind.
+/-- info: none -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_formally_solved_problem
+
+-- A question belongs to a research problem, whichever attribute comes first.
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_test' is categorised as `test`
+-/
+#guard_msgs in
+@[category test, question]
+theorem question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_api' is categorised as `API`
+-/
+#guard_msgs in
+@[question, category API]
+theorem question_on_api : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_textbook' is categorised as `textbook`
+-/
+#guard_msgs in
+@[category textbook, question]
+theorem question_on_textbook : 1 + 1 = 2 := by
+  rfl
+
+-- The check also covers the `attribute` command.
+#guard_msgs in
+@[category test]
+theorem later_question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'later_question_on_test' is categorised as `test`
+-/
+#guard_msgs in
+attribute [question] later_question_on_test
+
+#guard_msgs in
+@[category research open]
+theorem later_question : 1 + 1 = 2 := by
+  sorry
+
+#guard_msgs in
+attribute [question] later_question
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `later_question
+
 -- formal_proof on non-research categories
 #guard_msgs in
-@[category graduate, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]
+@[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/example/proof"]
 theorem a_graduate_problem_with_formal_proof : 1 + 1 = 2 := by
   rfl
 
@@ -56,6 +177,119 @@ theorem a_graduate_problem_with_formal_proof : 1 + 1 = 2 := by
 @[category test, formal_proof using formal_conjectures at ""]
 theorem a_test_with_formal_proof : 3 + 3 = 6 := by
   rfl
+
+#guard_msgs in
+theorem conditional_formal_proof_hypothesis : 0 = 0 := by
+  sorry
+
+#guard_msgs in
+theorem another_conditional_formal_proof_hypothesis : 1 = 1 := by
+  sorry
+
+#guard_msgs in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/conditional-proof"
+    assuming conditional_formal_proof_hypothesis]
+theorem a_conditionally_formally_solved_problem : 4 + 4 = 8 := by
+  rfl
+
+#guard_msgs in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/two-hypotheses"
+    assuming conditional_formal_proof_hypothesis another_conditional_formal_proof_hypothesis]
+theorem a_conditionally_formally_solved_problem_with_two_hypotheses : 5 + 5 = 10 := by
+  rfl
+
+run_meta do
+  let conditions ← ProblemAttributes.getProofConditions ``a_conditionally_formally_solved_problem
+  unless conditions = [``conditional_formal_proof_hypothesis] do
+    throwError "unexpected proof conditions for a_conditionally_formally_solved_problem"
+
+run_meta do
+  let conditions ← ProblemAttributes.getProofConditions
+    ``a_conditionally_formally_solved_problem_with_two_hypotheses
+  unless conditions = [``conditional_formal_proof_hypothesis,
+      ``another_conditional_formal_proof_hypothesis] do
+    throwError
+      "unexpected proof conditions for a_conditionally_formally_solved_problem_with_two_hypotheses"
+
+/--
+error: a `conditional` formal proof must name the hypotheses it assumes: state each hypothesis as
+a declaration in this file (with a `sorry` proof) and reference it as
+`conditional formal_proof using <kind> at "<link>" assuming <decl>`.
+-/
+#guard_msgs in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/missing-hypothesis"]
+theorem conditional_formal_proof_without_assuming : 6 + 6 = 12 := by
+  rfl
+
+/--
+error: an `assuming` clause requires the `conditional` modifier:
+`conditional formal_proof using <kind> at "<link>" assuming <decl>`.
+-/
+#guard_msgs in
+@[category research solved,
+  formal_proof using lean4 at "https://github.com/example/not-conditional"
+    assuming conditional_formal_proof_hypothesis]
+theorem assuming_without_conditional_formal_proof : 7 + 7 = 14 := by
+  rfl
+
+-- A `formal_proof` link is validated: external kinds must link to the proof, and
+-- any link that is given must be a URL.
+
+/--
+warning: A `lean4` or `other_system` `formal_proof` should include a link to the proof.
+-/
+#guard_msgs in
+@[category test, formal_proof using lean4 at ""]
+theorem a_lean4_proof_with_empty_link : 4 + 4 = 8 := by
+  rfl
+
+/--
+warning: A `formal_proof` link should be a URL (http:// or https://), but got: "not-a-url".
+-/
+#guard_msgs in
+@[category test, formal_proof using lean4 at "not-a-url"]
+theorem a_formal_proof_with_malformed_link : 5 + 5 = 10 := by
+  rfl
+
+-- The `optimization_constant` attribute
+
+#guard_msgs in
+@[optimization_constant "1a"]
+noncomputable def anOptimizationConstant : ℝ := 1
+
+#guard_msgs in
+@[optimization_constant "21a"]
+def anotherOptimizationConstant : ℕ := 4
+
+/--
+warning: An `optimization_constant` id should be the name of the entry's page `https://teorth.github.io/optimizationproblems/constants/<id>.html`. This is one or more digits followed by one lowercase letter (e.g. "1a" or "21a"). The letter is required even when the database table shows only the number. Got: "21".
+-/
+#guard_msgs in
+@[optimization_constant "21"]
+def anOptimizationConstantWithoutLetter : ℕ := 4
+
+run_meta do
+  let tags ← ProblemAttributes.getOptimizationConstants ``anOptimizationConstant
+  unless tags.map (·.constantId) = #["1a"] do
+    throwError "unexpected optimization constant tags for anOptimizationConstant"
+
+/--
+warning: An `optimization_constant` id should be the name of the entry's page `https://teorth.github.io/optimizationproblems/constants/<id>.html`. This is one or more digits followed by one lowercase letter (e.g. "1a" or "21a"). The letter is required even when the database table shows only the number. Got: "a1".
+-/
+#guard_msgs in
+@[optimization_constant "a1"]
+noncomputable def anOptimizationConstantWithMalformedId : ℝ := 3
+
+/--
+warning: An `optimization_constant` annotation should be applied to the definition of the constant, but `an_optimization_constant_theorem` is not a definition. Theorems about the constant (e.g. bounds) should not carry this attribute.
+-/
+#guard_msgs in
+@[category research open, AMS 11, optimization_constant "1a"]
+theorem an_optimization_constant_theorem : 3 + 3 = 6 := by
+  sorry
 
 -- The `#AMS` command
 
@@ -122,6 +356,7 @@ info: 0 General and overarching topics
 92 Biology and other natural sciences
 93 Systems theory; control
 94 Information and communication, circuits
+97 Mathematics education
 -/
 #guard_msgs in
 #AMS

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Inverse Galois problem
@@ -22,10 +23,14 @@ import FormalConjecturesUtil
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Inverse_Galois_problem)
 -/
 
+@[expose] public section
+
 namespace InverseGalois
 
-structure GaloisRealization (K G : Type*) [Field K] [Group G] where
-  L : Type*
+structure GaloisRealization.{u, v} (K : Type u) (G : Type v) [Field K] [Group G] where
+  -- Every Galois extension of `K : Type u` injects into `AlgebraicClosure K : Type u`.
+  -- We therefore lose no generality assuming `L : Type u`.
+  L : Type u
   to_field : Field L
   to_algebra : Algebra K L
   to_isGalois : IsGalois K L
@@ -70,7 +75,7 @@ theorem inverse_galois_problem.variants.abelian
 /--
 Every finite symmetric group is realizable.
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/4e37e8779287010f34ffc6c817ea45fc26d8ba0a/Proofs/T_InverseGalois_inverse_galois_problem_variants_symmetric_group.lean#L392"]
 theorem inverse_galois_problem.variants.symmetric_group
     {S : Type*} [Fintype S] :
     IsRealizable ℚ (S ≃ S) := by
@@ -88,11 +93,11 @@ theorem inverse_galois_problem.variants.complex_rational_functions
 
 /--
 Every finite group is realisable over the field of rational functions
-with coefficients `K`, where `K` is any field of characteristic 0.
+with coefficients `K`, where `K` is any algebraically closed field of characteristic 0.
 -/
 @[category research solved, AMS 12]
 theorem inverse_galois_problem.variants.complex_function_field
-    {G K : Type*} [Field K] [CharZero K] [Fintype G] [Group G] :
+    {G K : Type*} [Field K] [IsAlgClosed K] [CharZero K] [Fintype G] [Group G] :
     IsRealizable (RatFunc K) G := by
   sorry
 

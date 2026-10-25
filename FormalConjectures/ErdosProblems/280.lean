@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 280
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial
   number theory*. Monographies de L'Enseignement Mathematique (1980).
 -/
+
+@[expose] public section
 
 namespace Erdos280
 
@@ -46,10 +49,10 @@ $$
 
 Cambie observed that this is false.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos280.lean"]
-theorem erdos_280 : answer(False) ↔
-    ∀ (n a : ℕ → ℕ), StrictMono n → (∀ i, 1 ≤ i → a i < n i) →
+theorem erdos_280 :
+    ¬ ∀ (n a : ℕ → ℕ), StrictMono n → (∀ i, 1 ≤ i → a i < n i) →
       (∃ ε : ℝ, 0 < ε ∧
         ∀ k, 1 ≤ k → (n k : ℝ) > (1 + ε) * (k : ℝ) * Real.log (k : ℝ)) →
       ¬ Tendsto

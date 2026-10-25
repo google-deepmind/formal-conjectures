@@ -58,6 +58,20 @@ This is independent of the category attribute and can be used with any category.
 - `@[formal_proof using other_system at "link"]` : formally proved in another system
   (Roqc, Isabelle, Lean 3, HOL, etc.)
 
+### Conditional formal proofs
+A formal proof that only establishes the statement under an unproven hypothesis
+(such as GRH) is marked with the `conditional` modifier. Each hypothesis is stated
+as a declaration in the same file (with a `sorry` proof) and named in the
+`assuming` clause:
+- `@[conditional formal_proof using lean4 at "link" assuming grh]` : formally proved
+  in Lean 4 elsewhere, assuming the statement of the declaration `grh`.
+
+This is the structured counterpart to the `conditional_*` naming convention already
+used in the repository (e.g. `conditional_artin_primitive_roots`): a proof can be
+`sorry`-free and still establish the statement only under an unproven hypothesis,
+so a reader and the site can see exactly what is assumed rather than infer it from
+a declaration name.
+
 ### Usage examples
 The tag should be used as follows:
 ```
@@ -78,8 +92,59 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
 theorem a_solved_problem_with_formal_proof : ... := by
   sorry
 
+/-- The unproven hypothesis assumed by the conditional proof below (statement only). -/
+@[category research open]
+theorem grh : ... := by
+  sorry
+
+@[category research solved,
+  conditional formal_proof using lean4 at "https://example.com/proof" assuming grh]
+theorem a_conditionally_proved_problem : ... := by
+  sorry
+
 @[category test]
 theorem a_test_to_sanity_check_some_definition : ¬ FermatLastTheoremWith 1 := by
+  sorry
+```
+
+## The Question Attribute
+
+### Overview
+Records that the source asks a question rather than makes a claim. A conjecture is a claim:
+its author expects it to be true. A question leaves the answer open. There are two kinds:
+
+- A yes-or-no question ("Is it true that...?", "Does...?", "Are there...?"). The Lean
+  statement is the proposition the question asks about. Once the question is answered, the
+  statement is the one that holds: unchanged if the answer is yes, negated with `¬` if the
+  answer is no. Not a question: a conjecture that is merely phrased as one. "Is every even
+  integer greater than 2 the sum of two primes?" is Goldbach's conjecture, a claim.
+- A question that asks for a value ("What is...?", "How large can...be?"). The unknown is a
+  definition `<theorem>.answer`, declared with `sorry` before the theorem, which refers to it
+  by that name. Not a question: a conjectured value. "What is $R(5,5)$?" is a question, stated
+  as `R(5, 5) = ramsey_5_5.answer`; "$R(5,5) = 43$" is a claim, stated as `R(5, 5) = 43`.
+
+A yes-or-no question is written `@[question]`, a value question `@[question value]`. The
+attribute checks the form against the statement: `value` requires the statement to refer to
+`<theorem>.answer`, and plain `question` forbids it.
+
+The attribute is independent of `category`, but it only makes sense on a `research open` or
+`research solved` problem: a textbook exercise, a `test`, or an `API` statement is not a
+question anyone left open.
+
+### Usage examples
+```
+/-- Is every aliquot sequence bounded? Catalan and Dickson conjectured that it is;
+Guy and Selfridge conjectured that it is not. -/
+@[category research open, question, AMS 11]
+theorem catalan_dickson :
+    ∀ n, ∃ B, ∀ k, (fun m => ∑ d ∈ m.properDivisors, d)^[k] n ≤ B := by
+  sorry
+
+def hadwiger_nelson.answer : ℕ := sorry
+
+/-- What is the chromatic number of the plane? -/
+@[category research open, question value, AMS 5]
+theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nelson.answer := by
   sorry
 ```
 
@@ -102,6 +167,25 @@ In order to access the list from within a Lean file, use the `#AMS` command.
 
 Note: the current implementation of the attribute includes all the main categories
 in the AMS classification for completeness. Some are not relevant to this repository.
+
+## The Optimization Constant Attribute
+
+Marks the definition of a constant as formalising an entry of the optimization
+problems database at https://teorth.github.io/optimizationproblems/. The attribute
+takes the entry's id as a string, e.g.:
+```
+@[optimization_constant "1a"]
+noncomputable def C1a : ℝ :=
+  ...
+```
+The id consists of the entry's number followed by a lowercase letter
+(`"1a"`, `"21a"`, ...), matching the database's page
+`https://teorth.github.io/optimizationproblems/constants/<id>.html`.
+We require a letter even when the database table shows only the number:
+note that the table shows `21`, but the page and the id are `21a`.
+
+The attribute belongs on the definition of the constant itself, not on theorems
+about it (bounds, exact values): those may get a separate annotation later.
 
 -/
 
@@ -162,6 +246,14 @@ inductive Category
   | API
   deriving Inhabited, BEq, Hashable, ToExpr
 
+instance : ToString Category where
+  toString
+    | .textbook => "textbook"
+    | .research .open => "research open"
+    | .research .solved => "research solved"
+    | .test => "test"
+    | .API => "API"
+
 syntax CategorySyntax := &"textbook"
     <|> (&"research" problemStatus) <|> &"test" <|> &"API"
 
@@ -196,6 +288,9 @@ structure FormalProofTag where
   proofKind : FormalProofKind
   /-- A link to the formal proof. -/
   proofLink : String
+  /-- Declarations (stated in the same file, with `sorry` proofs) for the unproven
+  hypotheses the proof assumes. Empty for an unconditional proof. -/
+  conditions : List Name := []
   deriving Inhabited, BEq, Hashable, ToExpr
 
 /-- Defines the `formalProofExt` extension for recording formal proof annotations. -/
@@ -207,9 +302,11 @@ initialize formalProofExt :
   }
 
 def addFormalProofEntry {m : Type → Type} [MonadEnv m]
-    (declName : Name) (kind : FormalProofKind) (link : String) : m Unit :=
+    (declName : Name) (kind : FormalProofKind) (link : String)
+    (conditions : List Name := []) : m Unit :=
   modifyEnv (formalProofExt.addEntry ·
-    { declName := declName, proofKind := kind, proofLink := link })
+    { declName := declName, proofKind := kind, proofLink := link,
+      conditions := conditions })
 
 structure SubjectTag where
   /-- The name of the declaration with the given tag. -/
@@ -232,6 +329,50 @@ def addSubjectEntry {m : Type → Type} [MonadEnv m] (name : Name)
     (subjects : List AMS) (informal : String) : m Unit :=
   modifyEnv (subjectExt.addEntry ·
     { declName := name, subjects := subjects, informal := informal })
+
+/-- The kind of question a source asks. -/
+inductive QuestionKind
+  /-- A yes-or-no question. The statement is the proposition asked about. -/
+  | yesNo
+  /-- A question asking for a value. The unknown is the definition `<theorem>.answer`. -/
+  | value
+  deriving Inhabited, BEq, Hashable, Repr, ToExpr
+
+instance : ToString QuestionKind where
+  toString
+    | .yesNo => "yes_no"
+    | .value => "value"
+
+/-- A tag recording that a declaration is posed as a question by its source. -/
+structure QuestionTag where
+  /-- The name of the declaration with the given tag. -/
+  declName : Name
+  /-- The kind of question. -/
+  kind : QuestionKind
+  deriving Inhabited, BEq, Hashable, ToExpr
+
+/-- Defines the `questionExt` extension recording which declarations are posed as
+questions by their source, keyed by declaration name. -/
+initialize questionExt :
+    SimplePersistentEnvExtension QuestionTag (Std.HashMap Name QuestionKind) ←
+  registerSimplePersistentEnvExtension {
+    addImportedFn := fun as =>
+      as.foldl (fun m tags => tags.foldl (fun m t => m.insert t.declName t.kind) m) {}
+    addEntryFn := fun m t => m.insert t.declName t.kind
+  }
+
+def addQuestionEntry {m : Type → Type} [MonadEnv m] (declName : Name) (kind : QuestionKind) :
+    m Unit :=
+  modifyEnv (questionExt.addEntry · { declName := declName, kind := kind })
+
+/-- Fails unless `cat` is a research category. A question is something a source asked and left
+open at some point, so it belongs to a research problem, not to a textbook exercise, a test, or
+an API statement. The `question` and `category` attributes both call this, so the check runs
+whichever of the two is applied second, and also for `attribute [question] foo`. -/
+def checkQuestionCategory (declName : Name) (cat : Category) : CoreM Unit :=
+  unless cat matches .research _ do
+    throwError "the `question` attribute belongs to a `research open` or `research solved` \
+      problem, but '{declName}' is categorised as `{cat}`"
 
 /-- Convert from a syntax node to a term of type `Category` and annotate the syntax
 with the corresponding name's docstring. -/
@@ -258,6 +399,32 @@ def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
 
 syntax (name := Category_attr) "category" CategorySyntax : attr
 
+section
+open Command Parser Term
+
+/-- Extract the `category` attributes from a declaration's modifiers. -/
+def toCategorySyntax
+    (stx : TSyntax ``Command.declModifiers) :
+    CommandElabM (Array <| TSyntax ``attrInstance) := do
+  match stx with
+  | `(declModifiers| $(_)? @[$[$atts],*] $(_)? $(_)? $(_)? $(_)?) =>
+    atts.filterM fun att ↦ do
+      match att with
+      | `(attrInstance | category $_) => return true
+      | _ => return false
+  | _ => return #[]
+
+/-- Extract the categories from a declaration's modifiers. -/
+def toCategories
+    (stx : TSyntax ``Command.declModifiers) :
+    CommandElabM (Array Category) := do
+  let cats ← toCategorySyntax stx
+  cats.mapM fun
+    | `(attrInstance | category $s) => liftCoreM <| Syntax.toCategory s
+    | _ => throwUnsupportedSyntax
+
+end
+
 /-- Specifies the type of a statement.
 
 This is used as follows: `@[category my_cat]` where `my_cat` is one of:
@@ -276,44 +443,98 @@ initialize Lean.registerBuiltinAttribute {
         let cat ← Syntax.toCategory s
         return (cat, "")
       | _ => throwUnsupportedSyntax
-    if status == .research .open then
-      let env ← getEnv
-      if (env.find? decl).bind (·.value?) |>.any (!·.hasSorry) then
-        logWarning "If a problem has a sorry-free proof, it should not be categorised as `open`."
+    -- The "sorry-free proof categorised as `open`" check used to live here. It never fired for a
+    -- theorem: attributes run before the proof term exists, since theorem bodies elaborate
+    -- asynchronously, so `value?` was always `none`. It is now `CategoryLinter`'s
+    -- `checkNotOpenIfSorryFree`, which runs once the command has finished.
+    if (questionExt.getState (← getEnv)).contains decl then
+      checkQuestionCategory decl status
     addCategoryEntry decl status oldDoc
   applicationTime := .afterTypeChecking
 }
 
-syntax (name := FormalProof_attr) "formal_proof" &"using" formalProofKind &"at" str : attr
+syntax (name := FormalProof_attr) (&"conditional ")? "formal_proof" &"using" formalProofKind
+  &"at" str (&"assuming" ident+)? : attr
 
 /-- Records the existence and location of a formal proof for a statement.
-
-This is independent of the `category` attribute and can be used with any category.
 
 Usage: `@[formal_proof using <kind> at "<link>"]` where `<kind>` is one of:
 - `formal_conjectures` : formally proved in this repository.
 - `lean4` : formally proved in Lean 4 elsewhere (e.g. Mathlib).
-- `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.) -/
+- `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.)
+
+This says a proof of *this statement* exists somewhere, so in practice it goes on
+problems we already consider settled, and attaching it to a `research open`
+problem warns. To record a conditional result about a problem that is still open,
+state the implication as its own `research solved` variant carrying the
+assumption as a hypothesis, and annotate that.
+
+`conditional` is for something else: the proof at the link establishes the
+statement only under hypotheses the author has not proved. That is a fact about
+their proof, not about the problem's status, and it is not visible from the proof
+term. `#print axioms` on a proof that takes its assumption as a parameter comes
+back clean, so it has to be written down:
+
+`@[conditional formal_proof using <kind> at "<link>" assuming <decl> ...]`
+
+Each named hypothesis is a declaration in the same file, stated with a `sorry`
+proof, so a reader can see what is being assumed. -/
+private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit := do
+  let (kind, link, conds) ← match stx with
+    | `(attr| formal_proof using $kind at $link) =>
+      pure (kind, link, #[])
+    | `(attr| conditional formal_proof using $kind at $link assuming $conds*) =>
+      pure (kind, link, conds)
+    | `(attr| conditional formal_proof using $_ at $_) =>
+      throwError
+        "a `conditional` formal proof must name the hypotheses it assumes: \
+         state each hypothesis as a declaration in this file (with a `sorry` proof) \
+         and reference it as `conditional formal_proof using <kind> at \"<link>\" \
+         assuming <decl>`."
+    | `(attr| formal_proof using $_ at $_ assuming $_*) =>
+      throwError
+        "an `assuming` clause requires the `conditional` modifier: \
+         `conditional formal_proof using <kind> at \"<link>\" assuming <decl>`."
+    | _ => throwUnsupportedSyntax
+  let some n := formalProofKind.toName kind | throwUnsupportedSyntax
+  let pfKind ← Lean.Meta.MetaM.run' <|
+    unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
+  Elab.addConstInfo kind n
+  let env ← getEnv
+  -- Resolve each assumed hypothesis to a declaration (so it is checked to exist
+  -- and hovering it jumps to the statement).
+  let conditions ← conds.toList.mapM fun (c : TSyntax `ident) => do
+    let condName ← resolveGlobalConstNoOverload c.raw
+    Elab.addConstInfo c.raw condName
+    return condName
+  -- Warn if this is attached to a `research open` problem. `formal_proof` asserts
+  -- that a proof of this statement exists, which contradicts calling it open; a
+  -- conditional result about an open problem belongs on a `research solved`
+  -- variant that carries the assumption as a hypothesis. See the docstring above.
+  let catTags := categoryExt.getState env
+  if catTags.toArray.any fun tag => tag.declName == decl &&
+      tag.category == .research .open then
+    logWarning
+      "A `formal_proof` annotation on a `research open` problem is suspicious. \
+       If a formal proof exists, the problem should not be categorised as `open`."
+  -- Validate the proof link. A `lean4` or `other_system` proof lives outside
+  -- this repository and must be locatable, so its link is required; a
+  -- `formal_conjectures` proof is in this repository, so its link may be empty.
+  -- Any link that is given should be a URL.
+  let linkStr := link.getString
+  if linkStr.isEmpty then
+    if pfKind == .lean4 || pfKind == .otherSystem then
+      logWarningAt link
+        "A `lean4` or `other_system` `formal_proof` should include a link to the proof."
+  else if !(linkStr.toLower.startsWith "http://" || linkStr.toLower.startsWith "https://") then
+    logWarningAt link
+      s!"A `formal_proof` link should be a URL (http:// or https://), but got: \"{linkStr}\"."
+  addFormalProofEntry decl pfKind link.getString conditions
+
 initialize Lean.registerBuiltinAttribute {
   name := `FormalProof_attr
   descr := "Annotation of the existence and location of a formal proof."
-  add := fun decl stx _attrKind => do
-    match stx with
-    | `(attr| formal_proof using $kind at $link) => do
-      let some n := formalProofKind.toName kind | throwUnsupportedSyntax
-      let pfKind ← Lean.Meta.MetaM.run' <|
-        unsafe Meta.evalExpr FormalProofKind q(FormalProofKind) (.const n [])
-      Elab.addConstInfo kind n
-      -- Warn if this is attached to a `research open` problem.
-      let env ← getEnv
-      let catTags := categoryExt.getState env
-      if catTags.toArray.any fun tag => tag.declName == decl &&
-          tag.category == .research .open then
-        logWarning
-          "A `formal_proof` annotation on a `research open` problem is suspicious. \
-           If a formal proof exists, the problem should not be categorised as `open`."
-      addFormalProofEntry decl pfKind link.getString
-    | _ => throwUnsupportedSyntax
+  add := fun decl stx _attrKind => addFormalProofAttribute decl stx
   applicationTime := .afterTypeChecking
 }
 
@@ -354,6 +575,116 @@ initialize Lean.registerBuiltinAttribute {
     addSubjectEntry decl subjects.toList oldDoc
 }
 
+/-- Whether the statement of `decl`, of type `type`, refers to the definition `decl.answer`,
+the unknown of a value question. -/
+def hasValueAnswer (decl : Name) (type : Expr) : Bool :=
+  type.getUsedConstants.contains (decl ++ `answer)
+
+syntax (name := Question_attr) &"question" (&"value")? : attr
+
+/-- Records that the source asks a question rather than makes a claim.
+
+Usage, together with a `research` category:
+- `@[question]` for a yes-or-no question. The statement is the proposition asked about; once
+  answered, it is the one that holds: unchanged for a yes, negated with `¬` for a no.
+- `@[question value]` for a question that asks for a value. The unknown is a definition
+  `<theorem>.answer`, which the statement refers to by that name.
+
+The attribute checks the form against the statement: `value` requires a reference to
+`<theorem>.answer`, and plain `question` forbids it. -/
+initialize Lean.registerBuiltinAttribute {
+  name := `Question_attr
+  descr := "Annotation that a statement is posed as a question."
+  add decl stx _attrKind := do
+    let kind ← match stx with
+      | `(attr| question) => pure QuestionKind.yesNo
+      | `(attr| question value) => pure QuestionKind.value
+      | _ => throwUnsupportedSyntax
+    -- Inside a `module`, a theorem is still registered as an axiom when attributes run, so
+    -- the check is on the type rather than on the kind of the constant.
+    let some info := (← getEnv).find? decl
+      | throwError "unknown declaration '{decl}'"
+    unless ← Meta.MetaM.run' (Meta.isProp info.type) do
+      throwError "the `question` attribute only applies to theorems, \
+        but the type of '{decl}' is not a proposition"
+    if let some tag := (categoryExt.getState (← getEnv)).toArray.find? (·.declName == decl) then
+      checkQuestionCategory decl tag.category
+    match kind, hasValueAnswer decl info.type with
+    | .value, false =>
+      throwError "`question value` requires the statement of '{decl}' to refer to the \
+        definition `{decl ++ `answer}`; for a yes-or-no question use `question`"
+    | .yesNo, true =>
+      throwError "the statement of '{decl}' refers to the unknown of a value question; \
+        use `question value`"
+    | _, _ => pure ()
+    addQuestionEntry decl kind
+  applicationTime := .afterTypeChecking
+}
+
+/-- A tag recording that a definition formalises an entry of the
+optimization problems database at <https://teorth.github.io/optimizationproblems/>. -/
+structure OptimizationConstantTag where
+  /-- The name of the declaration with the given tag. -/
+  declName : Name
+  /-- The id of the database entry, e.g. `"1a"` or `"21a"`. -/
+  constantId : String
+  deriving Inhabited, BEq, Hashable, ToExpr
+
+/-- Defines the `optimizationConstantExt` extension for recording
+optimization constant annotations. -/
+initialize optimizationConstantExt :
+    SimplePersistentEnvExtension OptimizationConstantTag (Std.HashSet OptimizationConstantTag) ←
+  registerSimplePersistentEnvExtension {
+    addImportedFn := fun as => as.foldl Std.HashSet.insertMany {}
+    addEntryFn := .insert
+  }
+
+def addOptimizationConstantEntry {m : Type → Type} [MonadEnv m]
+    (declName : Name) (constantId : String) : m Unit :=
+  modifyEnv (optimizationConstantExt.addEntry ·
+    { declName := declName, constantId := constantId })
+
+/-- Check that an optimization constant id has the form used by the database:
+one or more digits followed by one lowercase letter (e.g. `"1a"` or `"21a"`). -/
+def isValidOptimizationConstantId (id : String) : Bool :=
+  match id.toList.span Char.isDigit with
+  | ([], _) => false
+  | (_, [c]) => c.isLower
+  | _ => false
+
+syntax (name := OptimizationConstant_attr) "optimization_constant" str : attr
+
+/-- Marks the definition of a constant as formalising an entry of the optimization
+problems database at <https://teorth.github.io/optimizationproblems/>.
+
+Usage: `@[optimization_constant "<id>"]` on the definition of the constant, where
+`<id>` is the entry's id in the database, i.e. the entry's number followed by a
+lowercase letter (`"1a"`, `"21a"`, ...). The letter is required even when the database
+table shows only the number. The corresponding database page is
+`https://teorth.github.io/optimizationproblems/constants/<id>.html`. -/
+initialize Lean.registerBuiltinAttribute {
+  name := `OptimizationConstant_attr
+  descr := "Annotation linking the definition of a constant to an entry in the optimization problems database."
+  add := fun decl stx _attrKind => do
+    match stx with
+    | `(attr| optimization_constant $id) =>
+      let idStr := id.getString
+      unless isValidOptimizationConstantId idStr do
+        logWarningAt id
+          s!"An `optimization_constant` id should be the name of the entry's page \
+            `https://teorth.github.io/optimizationproblems/constants/<id>.html`. \
+            This is one or more digits followed by one lowercase letter (e.g. \"1a\" or \"21a\"). \
+            The letter is required even when the database table shows only the number. \
+            Got: \"{idStr}\"."
+      unless (← getConstInfo decl) matches .defnInfo _ do
+        logWarning m!"An `optimization_constant` annotation should be applied to the \
+          definition of the constant, but `{decl}` is not a definition. Theorems about \
+          the constant (e.g. bounds) should not carry this attribute."
+      addOptimizationConstantEntry decl idStr
+    | _ => throwUnsupportedSyntax
+  applicationTime := .afterTypeChecking
+}
+
 section Helper
 
 /-- Split an array into preimages of a function.
@@ -387,13 +718,35 @@ def getCategoryStats : m (Category → Nat) := do
 def getSubjectTags : m (Array SubjectTag) := do
   return subjectExt.getState (← MonadEnv.getEnv) |>.toArray
 
+/-- The declarations tagged `@[question]`, with the kind of question each asks. -/
+def getQuestionTags : m (Array QuestionTag) := do
+  return questionExt.getState (← MonadEnv.getEnv) |>.toArray.map fun (n, k) => ⟨n, k⟩
+
+/-- The kind of question a given declaration asks, if it is tagged `@[question]`. -/
+def getQuestionKind? (declName : Name) : m (Option QuestionKind) := do
+  return (questionExt.getState (← MonadEnv.getEnv))[declName]?
+
 def getFormalProofTags : m (Array FormalProofTag) := do
   return formalProofExt.getState (← MonadEnv.getEnv) |>.toArray
+
+def getOptimizationConstantTags : m (Array OptimizationConstantTag) := do
+  return optimizationConstantExt.getState (← MonadEnv.getEnv) |>.toArray
+
+/-- Get the optimization constant tags for a given declaration. -/
+def getOptimizationConstants (declName : Name) : m (Array OptimizationConstantTag) := do
+  let tags ← getOptimizationConstantTags
+  return tags.filter (·.declName == declName)
 
 /-- Get the formal proof tag for a given declaration, if any. -/
 def getFormalProofTag (declName : Name) : m (Option FormalProofTag) := do
   let tags ← getFormalProofTags
   return tags.find? (·.declName == declName)
+
+/-- Get the unproven hypotheses a given declaration's formal proof assumes.
+Empty when there is no formal proof or the proof is unconditional. -/
+def getProofConditions (declName : Name) : m (List Name) := do
+  let tag ← getFormalProofTag declName
+  return (tag.map (·.conditions)).getD []
 
 end Helper
 

@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.ErdosProblems.«830»
+public import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«830»
 
 /-!
 # Amicable numbers
@@ -36,6 +37,8 @@ Several open problems about amicable numbers are formalised here:
 - [MathWorld](https://mathworld.wolfram.com/AmicableNumbers.html)
 - [OEIS A063990](https://oeis.org/A063990)
 -/
+
+@[expose] public section
 
 namespace AmicableNumbers
 
@@ -59,9 +62,9 @@ whether a pair of relatively prime amicable numbers can exist.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Amicable_numbers)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem relatively_prime_amicable :
-    answer(sorry) ↔ ∃ a b : ℕ, IsAmicable a b ∧ a ≠ b ∧ a.Coprime b := by
+    ∃ a b : ℕ, IsAmicable a b ∧ a ≠ b ∧ a.Coprime b := by
   sorry
 
 /--
@@ -74,7 +77,7 @@ While many amicable pairs are known, it remains open whether there are infinitel
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Amicable_numbers),
 [erdosproblems.com/830](https://www.erdosproblems.com/830)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_amicable : type_of% Erdos830.erdos_830.parts.i := by
   sorry
 
@@ -87,9 +90,9 @@ that mixed-parity amicable pairs do not exist, but this remains open.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Amicable_numbers)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem opposite_parity_amicable :
-    answer(sorry) ↔ ∃ a b : ℕ, IsAmicable a b ∧ (Even a ↔ Odd b) := by
+    ∃ a b : ℕ, IsAmicable a b ∧ (Even a ↔ Odd b) := by
   sorry
 
 end AmicableNumbers

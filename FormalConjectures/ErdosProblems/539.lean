@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 539
@@ -23,7 +24,7 @@ In this problem, a function $h : \mathbb{N} \to\mathbb{N}$ is defined maximally 
 counting property.
 
 The problem asks to estimate $h(n)$. This has been interpreted here as asking for $\Theta(h(n))$.
-The principal version includes `answer(sorry)` for an unknown function. On the other hand, the best
+The principal version includes the unknown function `erdos_539.answer`. On the other hand, the best
 known upper bound is $n^{2/3}$ and the best known lower bound is $\sqrt{n}$ so we
 also provide these candidates as variants. Moreover, it suffices to show $O(h(n))$ and
 $O(\sqrt{n})$ respectively for each, so further variants are provided for those.
@@ -36,7 +37,10 @@ it is not clear whether this remains open, but we include it here either way.
 - [erdosproblems.com/539](https://www.erdosproblems.com/539)
 - [GR99] Granville, A., & Roesler, F. (1999). _The Set of Differences of a Given Set_. The American Mathematical Monthly, 106(4), 338–344.
 - [Er73] Erdős, P., _Problems and results on combinatorial number theory_. A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
+- [Sc+26] Schmitt, J., Gehrunger, T., Dekoninck, J., Bérczi, G., Kreitner, U., Price, L., & Holmes, D. (2026). _ProofCouncil: An LLM Agent for Solving Open Mathematical Problems_. [arXiv:2607.09474](https://arxiv.org/abs/2607.09474), Appendix A, Theorem A.1.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -54,19 +58,23 @@ for $n$. -/
 noncomputable def cofactorThreshold (n : ℕ) : ℕ :=
   sSup {m | IsCofactorLowerBound n m}
 
+def erdos_539.answer : ℕ → ℝ := sorry
+
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$. Estimate $h(n)$. -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem erdos_539 :
-    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] erdos_539.answer := by
   sorry
 
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$.
 Is $h(n) = \Theta(\sqrt{n})$? -/
-@[category research open, AMS 5 11]
+@[category research solved, question, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-539-sqrt-disproof/blob/f4b14f9ef32c111162d3fd587e1c65b27a1524d5/lean/Erdos539SqrtFC.lean#L41-L44"]
 theorem erdos_539.variants.sq :
-    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] fun n ↦ √n := by
+    ¬ ((fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] fun n ↦ √n) := by
   sorry
 
 /-- Erdős and Szemerédi proved that$$n^{1/2} \ll h(n)$$. -/
@@ -75,18 +83,24 @@ theorem erdos_539.variants.sq_isBigO :
     (fun n : ℕ ↦ √n) =O[atTop] fun n ↦ (cofactorThreshold n : ℝ) := by
   sorry
 
-/-- To prove `erdos_539.variants.sq` it suffices to show $$ h(n)\ll n^{1/2}$$. -/
-@[category research open, AMS 5 11]
+/-- Is $h(n) = O(\sqrt{n})$? -/
+@[category research solved, question, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-539-sqrt-disproof/blob/f4b14f9ef32c111162d3fd587e1c65b27a1524d5/lean/Erdos539SqrtFC.lean#L36-L39"]
 theorem erdos_539.variants.isBigO_sq :
-    (fun n ↦ (cofactorThreshold n : ℝ)) =O[atTop] fun n ↦ √n := by
+    ¬ ((fun n ↦ (cofactorThreshold n : ℝ)) =O[atTop] fun n ↦ √n) := by
   sorry
 
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$.
-Is $h(n) = \Theta(n^{2/3})$? -/
-@[category research open, AMS 5 11]
+Is $h(n) = \Theta(n^{2/3})$?
+The answer is negative; see [Sc+26, Theorem A.1] and the linked Lean proof. -/
+@[category research solved, question, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.sq_cube_root :
-    (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] fun n ↦ (n : ℝ) ^ ((2 : ℝ) / 3) := by
+    ¬ ((fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop]
+      fun n ↦ (n : ℝ) ^ ((2 : ℝ) / 3)) := by
   sorry
 
 /-- Granville and Roesler [GR99] showed that $$h(n)\ll n^{2/3}$$.-/
@@ -95,22 +109,31 @@ theorem erdos_539.variants.isBigO_sq_cube_root :
     (fun n ↦ (cofactorThreshold n : ℝ)) =O[atTop] fun n ↦ (n : ℝ) ^ ((2 : ℝ) / 3) := by
   sorry
 
-/-- To prove `erdos_539.variants.sq_cube_root` it suffices to show $$n^{2/3}\ll h(n)$$. -/
-@[category research open, AMS 5 11]
+/-- This lower bound is false; see [Sc+26, Theorem A.1] and the linked Lean proof. -/
+@[category research solved, question, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.sq_cube_root_isBigO :
-    (fun n : ℕ ↦ (n : ℝ) ^ ((2 : ℝ) / 3)) =O[atTop] fun n ↦ (cofactorThreshold n : ℝ) := by
+    ¬ ((fun n : ℕ ↦ (n : ℝ) ^ ((2 : ℝ) / 3)) =O[atTop]
+      fun n ↦ (cofactorThreshold n : ℝ)) := by
   sorry
+
+noncomputable def erdos_539.variants.limit.answer : Filter ℝ := nhds ((1 : ℝ) / 2)
 
 /-- From [Er73]: The determination of
 $$
   \lim_{n\to\infty}\frac{\log(h(n))}{\log(n)}
 $$
 will perhaps be not too difficult.
+The limit is $1/2$; see [Sc+26, Theorem A.1] and the linked Lean proof.
 -/
--- Formalisation note: it is not clear if this problem has since been solved
-@[category research open, AMS 5 11]
+@[category research solved, question value, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos-539-formal-conjectures/blob/79897cf9241390eb168572f4a481e29e0e64b5f7/lean/Erdos539/FC.lean#L282-L296"]
 theorem erdos_539.variants.limit :
-    atTop.Tendsto (fun n ↦ Real.log (cofactorThreshold n) / Real.log n) answer(sorry) := by
+    atTop.Tendsto
+      (fun n ↦ Real.log (cofactorThreshold n) / Real.log n)
+      erdos_539.variants.limit.answer := by
   sorry
 
 end Erdos539

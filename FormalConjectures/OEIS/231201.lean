@@ -13,15 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of two numbers with prime conditions
 
 Number of ways to write $n = x+y$, for $x,y > 0$ such that $2^x + y$ is prime.
 
-Zhi-Wei Sun has offered a $1000 prize for the first proof.
+Zhi-Wei Sun has offered a \$1000 prize for the first proof.
 
 *References:*
 - [A231201](https://oeis.org/A231201)
@@ -30,6 +31,8 @@ Zhi-Wei Sun has offered a $1000 prize for the first proof.
   "On a^n+ bn modulo m", arXiv:1312.1166 [math.NT], 2013-2014,
   "Problems on combinatorial properties of primes", arXiv:1402.6641 [math.NT], 2014-2015.
 -/
+
+@[expose] public section
 
 namespace OeisA231201
 

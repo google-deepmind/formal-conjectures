@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 91
@@ -26,13 +27,15 @@ import FormalConjecturesUtil
 - [erdosproblems.com/91](https://www.erdosproblems.com/91)
 -/
 
+@[expose] public section
+
 open Finset EuclideanGeometry Filter
 
 namespace Erdos91
 
 /-- A set $A$ is 'optimal' if it has $n$ points and achieves the minimum distance count. -/
 noncomputable def IsOptimal (A : Finset ℝ²) (n : ℕ) : Prop :=
-  A.card = n ∧ distinctDistances A = minimalDistinctDistances n
+  A.card = n ∧ distinctDistances A = minimalDistinctDistances ℝ² n
 
 /-- Two finite sets of points in $\mathbb{R}^2$ are similar if one can be mapped to the other by a
 DilationEquiv. -/
@@ -68,7 +71,7 @@ lemma erdos_91.test.equiTriangle_optimal : IsOptimal equiTriangle 3 := by
   have hcard : equiTriangle.card = 3 := by
     simp [equiTriangle, Finset.mem_insert, Finset.mem_singleton]
   have hdist : distinctDistances equiTriangle = 1 := by
-    unfold distinctDistances equiTriangle
+    unfold distinctDistances distanceSet equiTriangle
     have eucl_dist_one_of_sq : ∀ {x y : ℝ²}, dist x y ^ 2 = 1 → dist x y = 1 := by
       intro x y h; nlinarith [dist_nonneg (x := x) (y := y), sq_nonneg (dist x y)]
     have hd01 : dist (!₂[(0 : ℝ), 0]) (!₂[(1 : ℝ), 0]) = 1 := eucl_dist_one_of_sq <| by
@@ -96,7 +99,7 @@ lemma erdos_91.test.equiTriangle_optimal : IsOptimal equiTriangle 3 := by
     rcases ha with rfl | rfl | rfl <;> rcases hb with rfl | rfl | rfl <;> first
       | contradiction | exact hd01 | exact hd02 | exact hd12
       | (rw [dist_comm]; first | exact hd01 | exact hd02 | exact hd12)
-  have hmin : minimalDistinctDistances 3 = 1 := by
+  have hmin : minimalDistinctDistances ℝ² 3 = 1 := by
     unfold minimalDistinctDistances
     apply le_antisymm
     · exact Nat.sInf_le ⟨equiTriangle, hcard, by exact_mod_cast hdist⟩
@@ -143,16 +146,17 @@ Suppose $A\subset \mathbb{R}^2$ has $\lvert A\rvert=n$ and minimises the number 
 distances between points in $A$. Prove that for large $n$ there are at least two
 (and probably many) such $A$ which are non-similar.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_91 :
-    (∀ᶠ n : ℕ in atTop, ¬ UniqueMinimizer n) ↔ answer(sorry) := by
+    ∀ᶠ n : ℕ in atTop, ¬ UniqueMinimizer n := by
   sorry
 
 
 /--
 For $n = 3$ the equilateral triangle is the only such set.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-91/Solution.lean#L159"]
 theorem erdos_91.variants.three : UniqueMinimizer 3 := by
   sorry
 
@@ -161,7 +165,8 @@ theorem erdos_91.variants.three : UniqueMinimizer 3 := by
 For $n=4$ the square or two equilateral triangles sharing an edge give two
 non-similar examples.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-91/Solution.lean#L162"]
 theorem erdos_91.variants.four : ¬ UniqueMinimizer 4 := by
   sorry
 
@@ -179,7 +184,8 @@ theorem erdos_91.variants.five : UniqueMinimizer 5 := by
 /--
 In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 6$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-91/Solution.lean#L165"]
 theorem erdos_91.variants.six: ¬ UniqueMinimizer 6 := by
   sorry
 
@@ -187,7 +193,8 @@ theorem erdos_91.variants.six: ¬ UniqueMinimizer 6 := by
 /--
 In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 7$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-91/Solution.lean#L168"]
 theorem erdos_91.variants.seven: ¬ UniqueMinimizer 7 := by
   sorry
 
