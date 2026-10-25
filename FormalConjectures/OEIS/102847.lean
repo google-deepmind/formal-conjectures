@@ -50,6 +50,20 @@ theorem a_3 : a 3 = 123 := by rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = 15131 := by rfl
 
+@[category test, AMS 11]
+theorem a_5 : a 5 = 228947163 := by rfl
+
+@[category test, AMS 11]
+theorem a_6 : a 6 = 52416803445748571 := by rfl
+
+@[category test, AMS 11]
+theorem not_prime_a_5 : ¬ (a 5).Prime := by
+  have heq : a 5 = 3 * 76315721 := by rw [a_5]
+  rw [heq]
+  exact Nat.not_prime_mul (by decide) (by decide)
+
+def conjecture.answer : ℕ := sorry
+
 /--
 Prime for $a(1) = 3$, $a(2) = 11$, $a(4) = 15131$; semiprime for $a(3) = 123 = 3 * 41$,
 $a(5) = 228947163 = 3 * 76315721$.
@@ -57,8 +71,8 @@ $a(6)$, added by Jonathan Vos Post, has 4 prime factors.
 $a(7) = 41 * 811^2 * 106693969 * 317171188688357726699 * 8272236925540996054440172449761$.
 When is the next prime in the sequence?
 -/
-@[category research open, AMS 11]
-theorem conjecture : answer(sorry) = sInf {n : ℕ | 4 < n ∧ (a n).Prime} := by
+@[category research open, question value, AMS 11]
+theorem conjecture : conjecture.answer = sInf {n : ℕ | 4 < n ∧ (a n).Prime} := by
   sorry
 
 end OeisA102847
