@@ -38,13 +38,6 @@ open Filter
 
 namespace Erdos262
 
-/-- A strictly increasing sequence $a_1 < a_2 < \cdots$ of positive integers is an irrationality
-sequence if $\sum_n \frac{1}{t_n a_n}$ is irrational for every sequence of positive integers
-$t_n$. -/
-def IsIrrationalitySequence (a : ℕ → ℕ) : Prop :=
-  (∀ n, 0 < a n) ∧ StrictMono a ∧
-    ∀ t : ℕ → ℕ, (∀ n, 0 < t n) → Irrational (∑' n, 1 / ((t n : ℝ) * a n))
-
 /--
 Suppose $a_1<a_2<\cdots$ is a sequence of integers such that for all integer sequences $t_n$
 with $t_n\geq 1$ the sum

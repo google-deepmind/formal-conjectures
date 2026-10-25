@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 405
@@ -28,6 +30,8 @@ factorials. J. Austral. Math. Soc. Ser. A (1991), 1--7.
 - [YuLi96] Yu, Kunrui and Liu, Dehua, A complete resolution of a problem of {E}rdős and {G}raham.
 Rocky Mountain J. Math. (1996), 1235--1244.
 -/
+
+@[expose] public section
 
 open scoped Nat
 
