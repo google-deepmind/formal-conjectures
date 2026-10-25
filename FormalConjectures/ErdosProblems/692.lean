@@ -66,20 +66,22 @@ Cambie has calculated that unimodularity fails even for $n=2$ and $n=3$.
 
 This was formalized in Lean by Monticone using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
 "https://gist.githubusercontent.com/pitmonticone/96516af9100a37a1da81908dc0b0410c/raw/a1d6ca7f3835c58b257e5e715c8fdf3a224e1bd0/Erdos692.lean"]
-theorem erdos_692.parts.i : answer(False) ↔
-    ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) → ∀ n, UnimodularOn (δ n) (n + 1) := by
+theorem erdos_692.parts.i :
+    ¬ ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) → ∀ n, UnimodularOn (δ n) (n + 1) := by
   sorry
+
+def erdos_692.parts.ii.answer : ℕ := sorry
 
 /--
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
 For fixed $n$, where does $\delta_1(n,m)$ achieve its maximum?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_692.parts.ii (n : ℕ) :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
-      IsGreatest (δ n '' Set.Ioi (n + 1)) (δ n answer(sorry)) := by
+      IsGreatest (δ n '' Set.Ioi (n + 1)) (δ n erdos_692.parts.ii.answer) := by
   sorry
 
 /--

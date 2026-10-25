@@ -41,10 +41,13 @@ In fact, the answer to this question as written is easily seen to be no, since t
 solutions to $2^k\equiv -1\pmod{7}$, and hence this fails with $p=2$ and $q=7$. It is possible
 that Erdős meant to exclude such obstructions, by amending this to 'odd primes' or 'all
 sufficiently large primes' or such.
+
+The statement below assumes $p \neq q$: for $p = q$ no such $n$ exists, because $p$ would divide
+both $n$ and $n+1$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos649.lean"]
-theorem erdos_649 : answer(False) ↔
-    ∀ p q : ℕ, p.Prime → q.Prime →
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos649.lean#L488"]
+theorem erdos_649 :
+    ¬ ∀ p q : ℕ, p.Prime → q.Prime → p ≠ q →
       ∃ n : ℕ, n.maxPrimeFac = p ∧ (n + 1).maxPrimeFac = q := by
   sorry
 
@@ -94,8 +97,8 @@ theorem erdos_649.variants.tong (p : ℕ) (hp : p.Prime) :
 Tong asks whether, for any given odd prime $q$, there are infinitely many primes $p$ such that
 there is no integer $n$ with $P(n)=p$ and $P(n+1)=q$.
 -/
-@[category research open, AMS 11]
-theorem erdos_649.variants.tong_question : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_649.variants.tong_question :
     ∀ q : ℕ, q.Prime → Odd q →
       {p : ℕ |
         p.Prime ∧ ¬ ∃ n : ℕ, n.maxPrimeFac = p ∧ (n + 1).maxPrimeFac = q}.Infinite := by
