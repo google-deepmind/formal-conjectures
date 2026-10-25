@@ -40,15 +40,19 @@ def pellNumber : ℕ → ℕ
   | 1 => 1
   | n + 1 + 1 => 2 * pellNumber (n + 1) + pellNumber n
 
+/-- The initial Pell number is $P_0 = 0$. -/
 @[category test, AMS 11]
 theorem pellNumber_zero : pellNumber 0 = 0 := rfl
 
+/-- The second initial value is $P_1 = 1$. -/
 @[category test, AMS 11]
 theorem pellNumber_one : pellNumber 1 = 1 := rfl
 
+/-- The recurrence gives $P_2 = 2$. -/
 @[category test, AMS 11]
 theorem pellNumber_two : pellNumber 2 = 2 := rfl
 
+/-- The Pell number at index $5$ is $P_5 = 29$. -/
 @[category test, AMS 11]
 theorem pellNumber_five : pellNumber 5 = 29 := rfl
 
