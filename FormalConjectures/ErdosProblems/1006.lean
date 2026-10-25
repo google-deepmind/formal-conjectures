@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,19 +33,11 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open SimpleGraph
+open SimpleGraph Digraph
 
 namespace Erdos1006
 
 variable {V : Type*}
-
-/-- A digraph is acyclic if it has no directed cycle, i.e. no vertex reaches itself by a
-directed walk of positive length. -/
-def IsAcyclic (D : Digraph V) : Prop := ∀ v, ¬ Relation.TransGen D.Adj v v
-
-/-- The digraph obtained from `D` by reversing the direction of the arc `a → b`. -/
-def reverseArc (D : Digraph V) (a b : V) : Digraph V where
-  Adj x y := (D.Adj x y ∧ ¬ (x = a ∧ y = b)) ∨ (x = b ∧ y = a)
 
 /--
 Let $G$ be a graph with girth $>4$ (that is, it contains no cycles of length $3$ or $4$). Can the
@@ -59,9 +51,9 @@ This is false - Nešetřil and Rödl [NeRo78b] proved that, for every integer $g
 $G$ with girth $g$ such that every orientation of the edges in $G$ contains a directed cycle or a
 cycle obtained from a directed cycle by reversing one directed edge.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1006.lean#L57"]
-theorem erdos_1006 : answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), 4 < G.egirth →
+theorem erdos_1006 : ¬ ∀ (V : Type) (G : SimpleGraph V), 4 < G.egirth →
     ∃ D : Digraph V, D.IsOrientation G ∧ IsAcyclic D ∧
       ∀ a b, D.Adj a b → IsAcyclic (reverseArc D a b) := by
   sorry
