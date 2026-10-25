@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,15 +32,11 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
+open SimpleGraph
+
 namespace Erdos518
 
 variable {V : Type*}
-
-/-- The vertices of `G` can be covered by at most `k` paths of `G`. The paths are not required to
-be vertex-disjoint, and a single vertex counts as a path. -/
-def HasPathCover (G : SimpleGraph V) (k : ℕ) : Prop :=
-  ∃ (m : ℕ) (P : Fin m → (u : V) × (v : V) × G.Walk u v), m ≤ k ∧
-    (∀ i, (P i).2.2.IsPath) ∧ ∀ x : V, ∃ i, x ∈ (P i).2.2.support
 
 /--
 Is it true that, in any two-colouring of the edges of $K_n$, there exist $\sqrt{n}$ monochromatic
@@ -53,19 +49,20 @@ The answer is yes, proved by Pokrovskiy, Versteegen, and Williams [PVW24]. Erdő
 [ErGy95] proved that $2\sqrt{n}$ paths suffice, and observed that $\sqrt{n}$ would be best
 possible.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos518.lean#L34"]
-theorem erdos_518 : answer(True) ↔ ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
+theorem erdos_518 : ∀ (n : ℕ) (G : SimpleGraph (Fin n)),
     HasPathCover G (Nat.sqrt n) ∨ HasPathCover Gᶜ (Nat.sqrt n) := by
   sorry
 
 /--
 Gerencsér and Gyárfás [GeGy67] proved that, if the paths do not need to be of the same colour,
 then two paths suffice: the vertices of $K_n$ can be covered by a path of one colour and a path
-of the other colour.
+of the other colour. We require $n > 0$ because both paths have endpoints in `Fin n`.
 -/
 @[category research solved, AMS 5]
-theorem erdos_518.variants.gerencser_gyarfas (n : ℕ) (G : SimpleGraph (Fin n)) :
+theorem erdos_518.variants.gerencser_gyarfas (n : ℕ) (hn : 0 < n)
+    (G : SimpleGraph (Fin n)) :
     ∃ (u v : Fin n) (p : G.Walk u v) (u' v' : Fin n) (q : Gᶜ.Walk u' v'),
       p.IsPath ∧ q.IsPath ∧ ∀ x, x ∈ p.support ∨ x ∈ q.support := by
   sorry
