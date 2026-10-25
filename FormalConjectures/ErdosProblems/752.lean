@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,10 +38,6 @@ open Filter SimpleGraph
 
 namespace Erdos752
 
-/-- The set of cycle lengths of `G`: the lengths of the simple cycles in `G`. -/
-def cycleLengths {V : Type*} (G : SimpleGraph V) : Set ℕ :=
-  {l | ∃ (v : V) (p : G.Walk v v), p.IsCycle ∧ p.length = l}
-
 /--
 Let $G$ be a graph with minimum degree $k$ and girth $>2s$ (i.e. $G$ contains no cycles of length
 $\leq 2s$). Must there be $\gg k^s$ many distinct cycle lengths in $G$?
@@ -50,11 +46,12 @@ A question of Erdős, Faudree, and Schelp, who proved it when $s=2$. The answer 
 Sudakov and Verstraëte [SuVe08], who in fact proved that under the assumption of average degree
 $k$ and girth $>2s$ there are at least $\gg k^s$ many consecutive even integers which are cycle
 lengths in $G$.
+
+The vertex type is nonempty so minimum and average degree have their usual interpretations.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos752.lean#L207"]
-theorem erdos_752 : answer(True) ↔
-    ∀ s : ℕ, 1 ≤ s → ∃ c > 0, ∀ᶠ k : ℕ in atTop,
+theorem erdos_752 : ∀ s : ℕ, 1 ≤ s → ∃ c > 0, ∀ᶠ k : ℕ in atTop,
       ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V) [DecidableRel G.Adj],
         k ≤ G.minDegree → (2 * s : ℕ∞) < G.egirth →
           c * (k : ℝ) ^ s ≤ (cycleLengths G).ncard := by

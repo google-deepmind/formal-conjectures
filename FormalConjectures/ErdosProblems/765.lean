@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 765
@@ -38,6 +40,8 @@ import FormalConjecturesUtil
 - [MaYa23] Ma, Jie and Yang, Tianchi, *Upper bounds on the extremal number of the 4-cycle*. Bull.
   Lond. Math. Soc. (2023), 1655--1667.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 
@@ -66,9 +70,9 @@ $n$, having proved the upper bound $\mathrm{ex}(n; C_4) \le \frac{n^{3/2}}{2} + 
 in [Er75]. This is false: Ma and Yang [MaYa23] proved that, for some absolute constant $c > 0$ and
 a positive density set of $n$, $\mathrm{ex}(n; C_4) \le \frac{n^{3/2}}{2} + (\frac14 - c) n$.
 -/
-@[category research solved, AMS 5]
-theorem erdos_765.variants.second_term : answer(False) ↔
-    (fun n : ℕ ↦ (SimpleGraph.extremalNumber n (SimpleGraph.cycleGraph 4) : ℝ) -
+@[category research solved, question, AMS 5]
+theorem erdos_765.variants.second_term :
+    ¬ (fun n : ℕ ↦ (SimpleGraph.extremalNumber n (SimpleGraph.cycleGraph 4) : ℝ) -
       (n : ℝ) ^ (3 / 2 : ℝ) / 2 - (n : ℝ) / 4) =O[atTop] fun n : ℕ ↦ (n : ℝ) ^ (1 / 2 : ℝ) := by
   sorry
 
