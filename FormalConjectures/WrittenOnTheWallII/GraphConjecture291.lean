@@ -119,9 +119,9 @@ The hypothesis $n > 2$ is stated in the source's full list of conjectures (as fo
 neighbouring Conjectures 290, 292 and 293) but omitted on its list of open conjectures;
 the counterexample has $12$ vertices, so it refutes both readings.
 -/
-@[category research solved, AMS 5]
-theorem conjecture291 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+@[category research solved, question, AMS 5]
+theorem conjecture291 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_h : G.Connected) (_hn : 2 < Fintype.card α),
       G.totalDominationNumber ≤ havelHakimiZeroStep G + freqMinTriangles G := by
   sorry
