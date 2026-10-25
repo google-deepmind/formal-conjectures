@@ -33,7 +33,7 @@ $(d + 1)^{-1}$. We encode such a family as a map `Fin (d ^ 2) → StateVector d`
 SIC-POVMs are a basic structure in finite-dimensional quantum information.
 They are closely related to equiangular lines, tight frames, quantum state
 reconstruction, and finite-dimensional measurement theory.
-The open problem asks whether such families exist in every dimension.
+The problem asks whether such families exist in every dimension.
 
 ## What this file formalizes
 This file formalizes the existence problem for symmetric informationally complete
@@ -60,10 +60,13 @@ constructors used in the low-dimensional benchmark cases:
 - `hesseFamily`;
 - `bb84Family`.
 
-### Complete open conjecture
-The main open theorem is:
+### Complete conjecture
+The main theorem is:
 - `sicPOVMs`, expressing the conjecture that for every `d ≥ 1`, there exists a
   SIC-POVM in dimension `d`.
+
+This statement has been proved in [RW26] and [RW-rec], using a theorem of
+[AFK25]. A Lean proof is linked from the `formal_proof` attributes.
 
 ### Special cases
 The file also isolates several special cases:
@@ -72,7 +75,7 @@ The file also isolates several special cases:
 - a negative benchmark result:
   `bb84Family_not_isSICFamily`, showing that the BB84 family in dimension `2`
   does not form a SIC family;
-- selected open benchmark dimensions:
+- selected benchmark dimensions:
   `hasSICPOVM_56`, `hasSICPOVM_58`, `hasSICPOVM_59`, `hasSICPOVM_60`,
   `hasSICPOVM_64`, `hasSICPOVM_68`, `hasSICPOVM_69`, `hasSICPOVM_70`,
   `hasSICPOVM_71`, `hasSICPOVM_72`, `hasSICPOVM_75`.
@@ -96,6 +99,15 @@ placeholder proofs `by sorry`; they are intended to be proved in the next PR.
   https://oqp.iqoqi.oeaw.ac.at/sic-povms-and-zauners-conjecture
 - Formal Conjectures issue #1823:
   https://github.com/google-deepmind/formal-conjectures/issues/1823
+
+### Proof of `sicPOVMs`
+- [RW26] D. Radchenko, C. Wheeler,
+  *Real quadratic fields and finite quantum dilogarithms I*, arXiv:2609.21892.
+- [RW-rec] *Stark units for real quadratic fields and reciprocity laws*,
+  4 October 2026, https://www.danrad.net/papers/stark-reciprocity.pdf.
+- [AFK25] M. Appleby, S. T. Flammia, G. S. Kopp,
+  *A constructive approach to Zauner's conjecture via the Stark conjectures*,
+  arXiv:2501.03970.
 
 ### Foundational references
 - J. M. Renes, R. Blume-Kohout, A. J. Scott, and M. C. Caves,
@@ -313,56 +325,68 @@ theorem bb84Family_not_isSICFamily : ¬ IsSICFamily 2 bb84Family := by
   have h_overlap := h.2 (show 0 ≠ 1 by decide)
   simp [Fin.sum_univ_two, bb84Family, vec2, overlapSq, sicOverlapSq_two] at h_overlap
 
-/- ## Smallest open special cases (all d<=75) -/
+/- ## Benchmark dimensions (d <= 75) -/
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $56$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $56$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L19"]
 theorem hasSICPOVM_56 : HasSICPOVM 56 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $58$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $58$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L22"]
 theorem hasSICPOVM_58 : HasSICPOVM 58 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $59$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $59$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L25"]
 theorem hasSICPOVM_59 : HasSICPOVM 59 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $60$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $60$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L28"]
 theorem hasSICPOVM_60 : HasSICPOVM 60 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $64$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $64$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L31"]
 theorem hasSICPOVM_64 : HasSICPOVM 64 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $68$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $68$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L34"]
 theorem hasSICPOVM_68 : HasSICPOVM 68 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $69$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $69$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L37"]
 theorem hasSICPOVM_69 : HasSICPOVM 69 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $70$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $70$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L40"]
 theorem hasSICPOVM_70 : HasSICPOVM 70 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $71$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $71$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L43"]
 theorem hasSICPOVM_71 : HasSICPOVM 71 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $72$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $72$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L46"]
 theorem hasSICPOVM_72 : HasSICPOVM 72 := by sorry
 
-/-- Benchmark open subproblem: existence of a SIC-POVM in dimension $75$. -/
-@[category research open, question, AMS 15 47 81]
+/-- Benchmark subproblem: existence of a SIC-POVM in dimension $75$. -/
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L49"]
 theorem hasSICPOVM_75 : HasSICPOVM 75 := by sorry
 
 /- ## Full conjecture -/
 
 /-- Do SIC-POVMs exist in every finite dimension? -/
-@[category research open, question, AMS 15 47 81]
+@[category research solved, question, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/0f4ec7ea0970657d11dbbf8a1917e95de820aac1/SICLean/Solution.lean#L14"]
 theorem sicPOVMs :
     ∀ d : ℕ, 1 ≤ d → HasSICPOVM d := by
   sorry
