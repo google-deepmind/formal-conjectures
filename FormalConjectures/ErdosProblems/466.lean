@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,15 +39,6 @@ open Filter Metric
 namespace Erdos466
 
 /--
-`N X δ` is the maximum number of points in a closed disc of radius `X` in the plane such that
-the distance between any two of them is at least `δ` away from the nearest integer.
--/
-noncomputable def N (X δ : ℝ) : ℕ :=
-  sSup {n | ∃ (c : EuclideanSpace ℝ (Fin 2)) (P : Finset (EuclideanSpace ℝ (Fin 2))),
-    P.card = n ∧ ↑P ⊆ closedBall c X ∧
-      (P : Set (EuclideanSpace ℝ (Fin 2))).Pairwise fun x y => δ ≤ distToNearestInt (dist x y)}
-
-/--
 Let $N(X,\delta)$ denote the maximum number of points $P_1,\ldots,P_n$ which can be chosen in a
 circle of radius $X$ such that
 $$\| \lvert P_i-P_j\rvert \| \geq \delta$$
@@ -60,14 +51,14 @@ Graham proved this is true, and in fact $N(X,1/10)> \frac{\log X}{10}$. This was
 improved by Sárközy [Sa76], who proved that for all sufficiently small $\delta>0$,
 $N(X,\delta)>X^{1/2-\delta^{1/7}}$.
 -/
-@[category research solved, AMS 11 52, formal_proof using lean4 at
+@[category research solved, question, AMS 11 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos466.lean#L292"]
-theorem erdos_466 : answer(True) ↔ ∃ δ : ℝ, 0 < δ ∧ Tendsto (fun X ↦ N X δ) atTop atTop := by
+theorem erdos_466 : ∃ δ : ℝ, 0 < δ ∧ Tendsto (fun X ↦ integerSeparatedPackingNumber X δ) atTop atTop := by
   sorry
 
 /-- Graham proved that $N(X,1/10)> \frac{\log X}{10}$. -/
 @[category research solved, AMS 11 52]
-theorem erdos_466.variants.graham : ∀ X : ℝ, 1 ≤ X → Real.log X / 10 < N X (1 / 10) := by
+theorem erdos_466.variants.graham : ∀ X : ℝ, 1 ≤ X → Real.log X / 10 < integerSeparatedPackingNumber X (1 / 10) := by
   sorry
 
 /--
@@ -76,7 +67,7 @@ $N(X,\delta)>X^{1/2-\delta^{1/7}}$ for all sufficiently large $X$.
 -/
 @[category research solved, AMS 11 52]
 theorem erdos_466.variants.sarkozy : ∃ δ₀ : ℝ, 0 < δ₀ ∧ ∀ δ : ℝ, 0 < δ → δ < δ₀ →
-    ∀ᶠ X : ℝ in atTop, X ^ (1 / 2 - δ ^ (1 / 7 : ℝ)) < N X δ := by
+    ∀ᶠ X : ℝ in atTop, X ^ (1 / 2 - δ ^ (1 / 7 : ℝ)) < integerSeparatedPackingNumber X δ := by
   sorry
 
 end Erdos466

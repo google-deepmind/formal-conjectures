@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public import FormalConjectures.ErdosProblems.«466»
 
 /-!
 # Erdős Problem 465
@@ -35,7 +34,7 @@ public import FormalConjectures.ErdosProblems.«466»
 
 @[expose] public section
 
-open Filter Asymptotics Erdos466
+open Filter Asymptotics
 
 namespace Erdos465
 
@@ -54,31 +53,31 @@ $N(X,\delta) \ll_\delta X^{1/2}$.
 See also [466](https://www.erdosproblems.com/466) for lower bounds and
 [953](https://www.erdosproblems.com/953) for a similar problem.
 -/
-@[category research solved, AMS 11 52, formal_proof using lean4 at
+@[category research solved, question, AMS 11 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos465.lean#L962"]
-theorem erdos_465.parts.i : answer(True) ↔ ∀ δ : ℝ, 0 < δ → δ < 1 / 2 →
-    (fun X : ℝ ↦ (N X δ : ℝ)) =o[atTop] fun X ↦ X := by
+theorem erdos_465.parts.i : ∀ δ : ℝ, 0 < δ → δ < 1 / 2 →
+    (fun X : ℝ ↦ (integerSeparatedPackingNumber X δ : ℝ)) =o[atTop] fun X ↦ X := by
   sorry
 
 /-- In fact, is it true that (for any fixed $\delta>0$) $N(X,\delta)<X^{1/2+o(1)}$? Yes, by
 Konyagin's bound [Ko01]. -/
-@[category research solved, AMS 11 52, formal_proof using lean4 at
+@[category research solved, question, AMS 11 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos465.lean#L962"]
-theorem erdos_465.parts.ii : answer(True) ↔ ∀ δ : ℝ, 0 < δ → ∀ ε : ℝ, 0 < ε →
-    ∀ᶠ X : ℝ in atTop, (N X δ : ℝ) < X ^ (1 / 2 + ε) := by
+theorem erdos_465.parts.ii : ∀ δ : ℝ, 0 < δ → ∀ ε : ℝ, 0 < ε →
+    ∀ᶠ X : ℝ in atTop, (integerSeparatedPackingNumber X δ : ℝ) < X ^ (1 / 2 + ε) := by
   sorry
 
 /-- Konyagin [Ko01] proved the strong upper bound $N(X,\delta) \ll_\delta X^{1/2}$. -/
 @[category research solved, AMS 11 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos465.lean#L962"]
 theorem erdos_465.variants.konyagin : ∀ δ : ℝ, 0 < δ →
-    ∃ C : ℝ, 0 < C ∧ ∀ X : ℝ, 1 ≤ X → (N X δ : ℝ) ≤ C * √X := by
+    ∃ C : ℝ, 0 < C ∧ ∀ X : ℝ, 1 ≤ X → (integerSeparatedPackingNumber X δ : ℝ) ≤ C * √X := by
   sorry
 
 /-- Sárközy [Sa76] proved $N(X,\delta) \ll \delta^{-3}\frac{X}{\log\log X}$. -/
 @[category research solved, AMS 11 52]
 theorem erdos_465.variants.sarkozy : ∃ C : ℝ, 0 < C ∧ ∀ δ : ℝ, 0 < δ → δ < 1 / 2 →
-    ∀ᶠ X : ℝ in atTop, (N X δ : ℝ) ≤ C * δ⁻¹ ^ 3 * (X / Real.log (Real.log X)) := by
+    ∀ᶠ X : ℝ in atTop, (integerSeparatedPackingNumber X δ : ℝ) ≤ C * δ⁻¹ ^ 3 * (X / Real.log (Real.log X)) := by
   sorry
 
 end Erdos465
