@@ -1,5 +1,5 @@
 /-
-Copyright 2025 The Formal Conjectures Authors.
+Copyright 2026 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,14 +35,6 @@ open scoped SimpleGraph
 
 namespace Erdos1031
 
-open scoped Classical in
-/--
-`G` contains a non-trivial (neither empty nor complete) regular induced subgraph on at least
-`L` vertices.
--/
-def HasLargeNontrivialRegularInduced {V : Type*} [Fintype V] (G : SimpleGraph V) (L : ℝ) : Prop :=
-  ∃ (S : Finset V) (d : ℕ), L ≤ S.card ∧ 0 < d ∧ d + 1 < S.card ∧ (G.induce S).IsRegularOfDegree d
-
 /--
 If $G$ is a graph on $n$ vertices which contains no trivial (empty or complete) subgraph on
 $\geq 10\log n$ many vertices, then must $G$ contain an induced non-trivial regular subgraph on
@@ -61,9 +53,9 @@ graphs with $O_c(\log n)$ many vertices as induced subgraphs.
 See also [82](https://www.erdosproblems.com/82) for how large an induced regular subgraph a
 general graph must contain.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1031.lean#L1776"]
-theorem erdos_1031 : answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
+theorem erdos_1031 : ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
     (G.cliqueNum : ℝ) < 10 * Real.log n → (G.indepNum : ℝ) < 10 * Real.log n →
       HasLargeNontrivialRegularInduced G (c * Real.log n) := by
   sorry
