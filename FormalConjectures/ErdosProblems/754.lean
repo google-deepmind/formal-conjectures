@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 @[expose] public section
 
 open Filter
+open scoped EuclideanGeometry
 
 namespace Erdos754
 
@@ -40,7 +41,7 @@ open scoped Classical in
 every `x ∈ A` has at least `f n` points in `A` equidistant from `x` (i.e. at a common positive
 distance from `x`). -/
 noncomputable def f (n : ℕ) : ℕ :=
-  sSup {k | ∃ A : Finset (EuclideanSpace ℝ (Fin 4)), A.card = n ∧
+  sSup {k | ∃ A : Finset (ℝ^ 4), A.card = n ∧
     ∀ x ∈ A, ∃ r > 0, k ≤ (A.filter fun y ↦ y ≠ x ∧ dist x y = r).card}
 
 /--
@@ -52,9 +53,9 @@ Is it true that $f(n)\leq \frac{n}{2}+O(1)$?
 The answer is yes, proved by Swanepoel [Sw13]. Avis, Erdős, and Pach [AEP88] proved that
 $\frac{n}{2}+2 \leq f(n) \leq (1+o(1))\frac{n}{2}$.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at
+@[category research solved, question, AMS 52, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos754.lean#L1205"]
-theorem erdos_754 : answer(True) ↔ ∃ C : ℝ, ∀ n : ℕ, (f n : ℝ) ≤ n / 2 + C := by
+theorem erdos_754 : ∃ C : ℝ, ∀ n : ℕ, (f n : ℝ) ≤ n / 2 + C := by
   sorry
 
 /-- Avis, Erdős, and Pach [AEP88] proved that $\frac{n}{2}+2 \leq f(n)$ for all large $n$. -/
@@ -70,8 +71,8 @@ $$\sum_{x\in A}\sum_{y\in A}1_{\lvert x-y\rvert =d(x)}\leq \tfrac{1}{2}n^2+O(n).
 -/
 @[category research solved, AMS 52]
 theorem erdos_754.variants.swanepoel :
-    ∃ C : ℝ, ∀ (A : Finset (EuclideanSpace ℝ (Fin 4)))
-      (d : EuclideanSpace ℝ (Fin 4) → ℝ),
+    ∃ C : ℝ, ∀ (A : Finset (ℝ^ 4))
+      (d : ℝ^ 4 → ℝ),
       (∑ x ∈ A, ((A.filter fun y ↦ dist x y = d x).card : ℝ)) ≤
         (A.card : ℝ) ^ 2 / 2 + C * A.card := by
   sorry
