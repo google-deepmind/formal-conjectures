@@ -37,9 +37,9 @@ $r+1$ vertices). Is every
 $r$-hypergraph $G$ on $n$ vertices the union of at most $\mathrm{ex}_{r}(n;K_{r+1}^r)$ many copies
 of $K_r^r$ and $K_{r+1}^r$, no two of which share a $K_r^r$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_719 :
-    answer(sorry) ↔ ∀ r : ℕ, 2 ≤ r → ∀ (n : ℕ) (H : Finset (Finset (Fin n))),
+    ∀ r : ℕ, 2 ≤ r → ∀ (n : ℕ) (H : Finset (Finset (Fin n))),
     H.IsUniform r → ∃ D : Finset (Finset (Fin n)),
       H.IsCompleteHypergraphDecomposition r D ∧
         D.card ≤ Hypergraph.cliqueExtremalNumber n r (r + 1) := by

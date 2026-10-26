@@ -33,6 +33,8 @@ namespace Erdos712
 open Filter Asymptotics
 open scoped Topology
 
+def erdos_712.answer : ℕ → ℕ → ℝ := sorry
+
 /--
 Determine, for any $k>r>2$, the limiting value as $n\to\infty$ of
 $$\frac{\mathrm{ex}_r(n,K_k^r)}{\binom{n}{r}},$$
@@ -40,12 +42,37 @@ where $\mathrm{ex}_r(n,K_k^r)$ is the largest number of $r$-edges which can plac
 so that there exists no set of $k$ vertices which is covered by all $\binom{k}{r}$ possible
 $r$-edges.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_712 :
-    let L : ℕ → ℕ → ℝ := answer(sorry)
     ∀ k r : ℕ, 2 < r → r < k →
       Tendsto (fun n ↦ (Hypergraph.cliqueExtremalNumber n r k : ℝ) / n.choose r)
-        atTop (𝓝 (L k r)) := by
+        atTop (𝓝 (erdos_712.answer k r)) := by
+  sorry
+
+
+/-- The normalized extremal numbers have a limit in $[0,1]$. This existence result does
+not determine the value asked for in Erdős Problem 712. -/
+@[category textbook, AMS 5]
+theorem erdos_712.variants.limit_exists (r k : ℕ) :
+    ∃ π ∈ Set.Icc (0 : ℝ) 1,
+      Tendsto (fun n : ℕ ↦ (Hypergraph.cliqueExtremalNumber n r k : ℝ) / n.choose r)
+        atTop (𝓝 π) := by
+  sorry
+
+/-- Turán's theorem gives the graph case:
+$\mathrm{ex}_2(n,K_k)/\binom{n}{2}\to 1-1/(k-1)$. -/
+@[category research solved, AMS 5]
+theorem erdos_712.variants.graph_case (k : ℕ) (hk : 2 ≤ k) :
+    Tendsto (fun n : ℕ ↦ (Hypergraph.cliqueExtremalNumber n 2 k : ℝ) / n.choose 2)
+      atTop (𝓝 (1 - 1 / ((k : ℝ) - 1))) := by
+  sorry
+
+/-- With denominator $n^2$, Turán's graph limit is
+$\frac12(1-1/(k-1))$. The factor $\frac12$ comes from the normalization. -/
+@[category research solved, AMS 5]
+theorem erdos_712.variants.graph_case_div_sq (k : ℕ) (hk : 2 ≤ k) :
+    Tendsto (fun n : ℕ ↦ (Hypergraph.cliqueExtremalNumber n 2 k : ℝ) / (n : ℝ) ^ 2)
+      atTop (𝓝 ((1 / 2) * (1 - 1 / ((k : ℝ) - 1)))) := by
   sorry
 
 end Erdos712
