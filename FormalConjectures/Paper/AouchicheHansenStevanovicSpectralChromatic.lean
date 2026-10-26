@@ -49,7 +49,9 @@ noncomputable def kappa (n : ℕ) : ℕ := sInf {k : ℕ | 2 ≤ k ∧ n ≤ k *
 
 /-- The printed balanced $\lceil\sqrt n\rceil$-partite candidate does not
 maximize $\rho-\chi$ at every connected order $n\ge3$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/7e26b3648933c7aa73c17d7f0ef59efa7f3d0df9/Proofs/SpectralChromatic/Full.lean#L158"]
 theorem table1_upper : ¬ ∀ (n : ℕ) (G : SimpleGraph (Fin n))
     [DecidableRel G.Adj], 3 ≤ n → G.Connected →
     objective G ≤ objective (turanGraph n (⌈Real.sqrt n⌉₊)) := by
