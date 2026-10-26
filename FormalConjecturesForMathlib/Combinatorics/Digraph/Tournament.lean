@@ -76,4 +76,11 @@ noncomputable def homDensity (D : Digraph V) (D' : Digraph W)
     [DecidableRel D.Adj] [DecidableRel D'.Adj] : ℝ :=
   (homCount D D' : ℝ) / (Fintype.card W : ℝ) ^ (Fintype.card V)
 
+/--
+A tournament `G` contains a transitive tournament on `k` vertices: `k` distinct vertices
+`v 0, …, v (k-1)` with `v i → v j` whenever `i < j`.
+-/
+def HasTransitiveSubtournament {V : Type*} (G : Digraph V) (k : ℕ) : Prop :=
+  ∃ v : Fin k → V, Function.Injective v ∧ ∀ i j : Fin k, i < j → G.Adj (v i) (v j)
+
 end Digraph
