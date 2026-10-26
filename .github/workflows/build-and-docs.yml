@@ -40,12 +40,10 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  # Python 3.12.9 has a binary for Ubuntu 24.04, but not Ubuntu 26.04.
-  # Pin both Python jobs so ubuntu-latest migrations cannot break setup.
   # The category check is a policy gate, so it has tests of its own. They need
   # no Lean build, so they run alongside it rather than after it.
   scripts:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     name: Test scripts
     steps:
       - name: Checkout project
@@ -67,7 +65,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '3.12.9'
+          python-version: '3.12'
 
       - name: Run script tests
         run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
@@ -76,7 +74,7 @@ jobs:
         run: python3 -m unittest discover -s site -p 'test_*.py' -v
 
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     name: Build project
     steps:
 
@@ -309,7 +307,7 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '3.12.9'
+          python-version: '3.12'
 
       # Only the plotting and Verso-fragment scripts need these; the category
       # check below is standard library only.
