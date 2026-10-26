@@ -71,10 +71,10 @@ counterexample with maximum degree $3$; see
 Wentao Li formalized Fischer's counterexample in Lean, proving $Z(G) \ge 11$
 and $\alpha(G) \le 9$.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-arxiv-proofs/blob/43bfcf887db58b6e65b05dbcdb8177eff9edbeb5/LeanArxivProofs/TxGraffiti2.lean#L371"]
-theorem tx_graffiti_conjecture_2 : answer(False) ↔
-    ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+theorem tx_graffiti_conjecture_2 :
+    ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj] (_hConn : G.Connected)
       (_hDeg : G.maxDegree ≤ 3)
       (_hNotK4 : G = ⊤ → Fintype.card V ≠ 4),

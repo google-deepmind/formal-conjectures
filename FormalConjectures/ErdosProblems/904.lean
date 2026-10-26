@@ -50,9 +50,9 @@ say $x_1,\ldots,x_r$, such that $$d(x_1)+\cdots+d(x_r)\geq \frac{2rm}{n}.$$
 
 A conjecture of Bollobás and Erdős. This was conjectured in [Er75] only in the special case $r=3$. Edwards [Ed78] proved the conjecture for $2\leq r\leq 8$ (under the additional assumption that $n\geq r^2$). Faudree [Fa92] proved the conjecture for all $r\geq 2$ provided $n>\frac{r-1}{4}r^2$. The full conjecture was proved by Bollobás and Nikiforov [BoNi05].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos904.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos904.lean"]
 theorem erdos_904 :
-    answer(True) ↔ ∀ (V : Type*) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
+    ∀ (V : Type*) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj]
       (r : ℕ) (hr : r ∈ Set.Icc 1 (n V)) (hm : turanNumber (n V) r ≤ #G.edgeFinset),
       ∃ s, G.IsNClique r s ∧ 2 * r * #G.edgeFinset ≤ n V * ∑ v ∈ s, G.degree v := by
   sorry

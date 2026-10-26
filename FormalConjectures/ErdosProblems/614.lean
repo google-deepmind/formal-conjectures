@@ -31,18 +31,19 @@ public import FormalConjecturesUtil
 
 namespace Erdos614
 
+def erdos_614.answer : ℕ → ℕ → ℕ := sorry
+
 open scoped Classical in
 /--
 Let $f(n,k)$ be minimal such that there is a graph with $n$ vertices and $f(n,k)$ edges
 where every set of $k+2$ vertices induces a subgraph with maximum degree at least $k$.
 Determine $f(n,k)$.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_614 :
-    let f : ℕ → ℕ → ℕ := answer(sorry)
     ∀ n k, IsLeast {m : ℕ | ∃ G : SimpleGraph (Fin n), G.edgeFinset.card = m ∧
       ∀ s : Finset (Fin n), s.card = k + 2 →
-        ∃ v : s, k ≤ (G.induce (s : Set (Fin n))).degree v} (f n k) := by
+        ∃ v : s, k ≤ (G.induce (s : Set (Fin n))).degree v} (erdos_614.answer n k) := by
   sorry
 
 end Erdos614

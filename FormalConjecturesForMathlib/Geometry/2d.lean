@@ -211,12 +211,20 @@ Let $g(n)$ be the maximum number of distinct values the $R(x_i)$ can take.-/
 noncomputable def maximalDistinctDistancesFrom (n : ℕ) : ℕ :=
   sSup {#(X.image (distinctDistancesFrom X)) | (X : Finset ℝ²) (_ : #X = n)}
 
+/-- `NoFourConcyclic X` means that no four distinct points of `X` lie on a common circle.
+
+In the plane, `Cospherical` means lying on a common circle. Four distinct collinear points are
+never cospherical, so collinear points are allowed. Stated for `Set ℝ²`; a `Finset` argument
+coerces. -/
+def NoFourConcyclic (X : Set ℝ²) : Prop :=
+  ∀ T ⊆ X, T.ncard = 4 → ¬Cospherical T
+
 /-- A collection $x_1, \dots, x_n\in\mathbb{R}^2$ is in _general position_
 if no three are collinear and no four lie on a circle.
 
 Stated for `Set ℝ²` so that infinite collections are covered; a `Finset` argument coerces. -/
 def InGeneralPosition (X : Set ℝ²) : Prop :=
-  NonTrilinear X ∧ ∀ T ⊆ X, T.ncard = 4 → ¬Cospherical T
+  NonTrilinear X ∧ NoFourConcyclic X
 
 /-- `a b c` are the vertices of a right-angled triangle: the (unoriented) angle at one of the
 three vertices equals `π / 2`. -/
@@ -238,6 +246,16 @@ def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
 /-- A line in the plane: an affine subspace of `ℝ²` whose direction is one-dimensional. -/
 def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
   Module.finrank ℝ L.direction = 1
+
+/--
+The set of lines in $\mathbb{R}^2$ containing exactly $k$ points from a given set $S$.
+
+Only lines through two distinct points of $S$ are considered, so a line with fewer than two
+points of $S$ is never counted.
+-/
+noncomputable def linesWithPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
+  let determined_lines := { affineSpan ℝ {p, q} | (p ∈ S) (q ∈ S) (_ : p ≠ q) }
+  { L ∈ determined_lines | (↑L ∩ S).ncard = k }
 
 end EuclideanGeometry
 
