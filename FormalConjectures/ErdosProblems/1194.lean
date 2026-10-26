@@ -117,10 +117,11 @@ theorem erdos_1194.variants.exists_perfect_difference_set :
 /--
 The greedy construction achieves $a_n\ll n^3$.
 
-[Le04, Section 3] shows that the $n$th element of the set built greedily is $O(n^3)$. Each step
-represents the least positive integer not yet a difference and adds at most two elements, so $n$
-is represented within the first $n+1$ steps, $a_n$ is among the first $2n+2$ elements, and hence
-$a_n\ll n^3$.
+In the greedy construction of [Le04, Section 3], step $k$ adds $z_k$ and $z_k+d_k$, where $d_k$ is
+the least non-negative integer that is not yet a difference and $z_k$ is the least admissible
+positive integer. There are $O(k^3)$ excluded choices for $z_k$ and $d_k=O(k^2)$, so every element
+added by step $k$ is $O(k^3)$. As $d_1=0$ and the $d_k$ increase, $n$ is represented by step
+$n+1$, which gives $a_n\ll n^3$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_1194.variants.greedy_upper_bound :
