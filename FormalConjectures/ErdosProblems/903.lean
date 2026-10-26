@@ -41,12 +41,28 @@ true that if $t>n$ then $t\geq n+p$?
 
 This is true, and was proved by Erdős, Fowler, Sós, and Wilson [EFSW85].
 -/
-@[category research solved, question, AMS 5]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos903.lean#L1540"]
 theorem erdos_903 :
     ∀ p : ℕ, IsPrimePow p →
     ∀ H : Finset (Finset (Fin (p ^ 2 + p + 1))),
       H.IsPairwiseBalancedDesign → p ^ 2 + p + 1 < H.card →
         p ^ 2 + p + 1 + p ≤ H.card := by
+  sorry
+
+/-- In a finite nondegenerate incidence configuration with a line through every pair of
+points, the number of lines is at least the number of points (de Bruijn–Erdős). -/
+@[category research solved, AMS 5]
+theorem erdos_903.variants.de_bruijn_erdos (P L : Type*) [Membership P L]
+    [Configuration.HasLines P L] [Fintype P] [Fintype L] :
+    Fintype.card P ≤ Fintype.card L := Configuration.HasLines.card_le P L
+
+/-- The same gap holds for every integer $p\geq2$, without a prime-power assumption. -/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos903.lean#L1522"]
+theorem erdos_903.variants.general : ∀ p : ℕ, 2 ≤ p →
+    ∀ H : Finset (Finset (Fin (p ^ 2 + p + 1))), H.IsPairwiseBalancedDesign →
+      p ^ 2 + p + 1 < H.card → p ^ 2 + p + 1 + p ≤ H.card := by
   sorry
 
 end Erdos903
