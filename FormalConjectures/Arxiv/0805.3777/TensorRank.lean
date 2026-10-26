@@ -36,7 +36,9 @@ rank is known to be $\min(m_3, m_1m_2)$, so the interesting case is the *critica
 $3 \leq m_1 \leq m_2 \leq m_3 \leq (m_1-1)(m_2-1)$ [Fri12, Conjecture 5.1; BFZ24, (4.14)]. There
 the bound $r_0$ is attained in every case that has been settled, except for the formats
 $(3, 2p+1, 2p+1)$, where the generic rank is $r_0 + 1$. Friedland's conjecture, stated here as
-`isGenericRank_of_le_critical`, is that these are the only exceptions.
+`isGenericRank_of_le_critical`, is that these are the only exceptions. The boundary case
+$m_3 = (m_1-1)(m_2-1)$ is settled in [Fri12, Corollary 6.4(2)] and recorded as
+`isGenericRank_of_eq_critical`.
 
 The maximal rank is much less well understood. It is known for the formats
 $2 \times m \times n$ and for a range of small formats, but no formula is known even for
@@ -54,8 +56,8 @@ below therefore writes the format in the order its own source uses.
 * [BFZ24] W. Bruzda, S. Friedland, K. Życzkowski, *Rank of a tensor and quantum entanglement*,
   Linear Multilinear Algebra 72 (2024), 1796-1859,
   https://doi.org/10.1080/03081087.2023.2211717
-  ([arxiv/1912.06854](https://arxiv.org/abs/1912.06854)). A survey; the numbering used below is
-  that of the arXiv version. Conjecture 4.12 restates [Fri12, Conjecture 5.1], and Sections 4.5
+  ([arxiv/1912.06854v4](https://arxiv.org/pdf/1912.06854v4)). A survey; the numbering used below is
+  that of the arXiv v4 PDF. Conjecture 4.12 restates [Fri12, Conjecture 5.1], and Sections 4.5
   and 4.6 collect the current status.
 * [CGG02] M. V. Catalisano, A. V. Geramita, A. Gimigliano, *Ranks of tensors, secant varieties of
   Segre varieties and fat points*, Linear Algebra Appl. 355 (2002), 263-285,
@@ -71,7 +73,8 @@ below therefore writes the format in the order its own source uses.
 * [AS79] M. D. Atkinson, N. M. Stephens, *On the maximal multiplicative complexity of a family of
   bilinear forms*, Linear Algebra Appl. 27 (1979), 1-8,
   https://doi.org/10.1016/0024-3795(79)90026-0. Used for `isMaxRank_two`,
-  `cprank_le_of_three_slices`, `isMaxRank_of_le_min` and `isMaxRank_three_three_five_bounds`.
+  `cprank_le_of_three_slices`, `cprank_le_of_square_slices`, `isMaxRank_of_le_min` and
+  `isMaxRank_three_three_five_bounds`.
 * [JaJa79] J. JáJá, *Optimal evaluation of pairs of bilinear forms*, SIAM J. Comput. 8 (1979),
   443-462, https://doi.org/10.1137/0208037, and J. B. Kruskal, *Rank, decomposition, and
   uniqueness for 3-way and N-way arrays*, in Multiway Data Analysis, North-Holland (1989), 7-18.
@@ -81,6 +84,9 @@ below therefore writes the format in the order its own source uses.
   https://doi.org/10.1007/s10463-010-0294-5 ([arxiv/0806.4048](https://arxiv.org/abs/0806.4048)).
   Theorem 4.5 proves the first of the two bounds that [AS79] states without proof; Proposition
   4.9(1) is the special case used for `isMaxRank_three`.
+* [Ki26] K. Kitamura, *A Lean proof that the maximal rank of complex $3 \times 3 \times 5$
+  tensors is 6*, GitHub repository (2026), https://github.com/KitaKen1/mrank-3-3-5-lean. Used
+  for `isMaxRank_three_three_five`.
 * [BT15] G. Blekherman, Z. Teitler, *On maximum, typical and generic ranks*, Math. Ann. 362
   (2015), 1021-1031, https://doi.org/10.1007/s00208-014-1150-3
   ([arxiv/1402.2371](https://arxiv.org/abs/1402.2371)), Theorem 1. Used for
@@ -221,12 +227,51 @@ theorem isGenericRank_cube {n : ℕ} (hn : 1 ≤ n) (hn3 : n ≠ 3) :
     IsGenericRank [n, n, n] (n ^ 3 ⌈/⌉ (3 * n - 2)) := by
   sorry
 
+/-- At the boundary $m_3 = (m_1-1)(m_2-1)$, the dimension-count ceiling is $m_3+1$.
+This is the arithmetic identity in [Fri12, (5.11)]. -/
+@[category API, AMS 14 15]
+theorem critical_ceilDiv {m₁ m₂ : ℕ} (h₁ : 3 ≤ m₁) (h₂ : 3 ≤ m₂) :
+    m₁ * m₂ * ((m₁ - 1) * (m₂ - 1)) ⌈/⌉
+      (m₁ + m₂ + (m₁ - 1) * (m₂ - 1) - 2) = (m₁ - 1) * (m₂ - 1) + 1 := by
+  set b := (m₁ - 1) * (m₂ - 1)
+  set d := m₁ + m₂ + b - 2
+  have hb : 0 < b := Nat.mul_pos (by omega) (by omega)
+  have hbd : b < d := by omega
+  have hd : d + 1 = m₁ * m₂ := by
+    have hdadd : d + 2 = m₁ + m₂ + b := by omega
+    have hsub₁ : m₁ - 1 + 1 = m₁ := by omega
+    have hsub₂ : m₂ - 1 + 1 = m₂ := by omega
+    have hmul : b + m₁ + m₂ = m₁ * m₂ + 1 := by
+      dsimp [b]
+      rw [← hsub₁, ← hsub₂]
+      simp only [Nat.add_sub_cancel]
+      ring
+    omega
+  apply Nat.le_antisymm
+  · apply (ceilDiv_le_iff_le_mul (by omega : 0 < d)).2
+    nlinarith
+  · have hle := le_smul_ceilDiv (by omega : 0 < d) (b := m₁ * m₂ * b)
+    change m₁ * m₂ * b ≤ d * (m₁ * m₂ * b ⌈/⌉ d) at hle
+    by_contra h
+    have : m₁ * m₂ * b ⌈/⌉ d ≤ b := by omega
+    nlinarith
+
+/-- The generic rank at the critical boundary is $(m_1-1)(m_2-1)+1$
+[Fri12, Corollary 6.4(2)]. By `critical_ceilDiv`, this is the dimension-count value in
+`isGenericRank_of_le_critical`. -/
+@[category research solved, AMS 14 15]
+theorem isGenericRank_of_eq_critical {m₁ m₂ : ℕ} (h₁ : 3 ≤ m₁) (h₁₂ : m₁ ≤ m₂) :
+    IsGenericRank [m₁, m₂, (m₁ - 1) * (m₂ - 1)] ((m₁ - 1) * (m₂ - 1) + 1) := by
+  sorry
+
 /--
 **Friedland's conjecture.** In the critical range $m_3 \leq (m_1 - 1)(m_2 - 1)$, and away from the
 formats $(3, 2p+1, 2p+1)$, the generic rank of a tensor of format $(m_1, m_2, m_3)$ is the value
 $\lceil m_1m_2m_3 / (m_1 + m_2 + m_3 - 2) \rceil$ predicted by a dimension count
-[Fri12, Conjecture 5.1]. It is known for $m_1 \leq 4$ and for $(n, n, n)$, and has been verified
-numerically throughout the critical range for $m_3 \leq 20$ [BFZ24, Section 4.5].
+[Fri12, Conjecture 5.1]. The boundary $m_3 = (m_1-1)(m_2-1)$ is settled by
+`isGenericRank_of_eq_critical` [Fri12, (5.11)]. It is known for $m_1 \leq 4$ and for $(n, n, n)$,
+and has been verified numerically throughout the critical range for $m_3 \leq 20$
+[BFZ24, Section 4.5].
 -/
 @[category research open, AMS 14 15]
 theorem isGenericRank_of_le_critical {m₁ m₂ m₃ : ℕ} (h₁ : 3 ≤ m₁) (h₁₂ : m₁ ≤ m₂) (h₂₃ : m₂ ≤ m₃)
@@ -267,11 +312,15 @@ theorem isMaxRank_three_three_five_bounds {R : ℕ} (hR : IsMaxRank [3, 3, 5] R)
     6 ≤ R ∧ R ≤ 7 := by
   sorry
 
-/-- **Open problem.** Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It is the one
+def isMaxRank_three_three_five.answer : ℕ := 6
+
+/-- Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It was the one
 undetermined entry of the table of $\operatorname{mrank}(3, 3, p)$ for $p \leq 9$
-[BFZ24, (4.20)]. -/
-@[category research open, AMS 15]
-theorem isMaxRank_three_three_five : IsMaxRank [3, 3, 5] answer(sorry) := by
+[BFZ24, (4.20)]. The answer is `6`. A Lean proof is given in [Ki26]. -/
+@[category research solved, question value, AMS 15,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/mrank-3-3-5-lean/blob/fbec93aa021bd994380cd27eb60e444e7cc85e93/lean/TensorRank335FC.lean#L3365-L3367"]
+theorem isMaxRank_three_three_five : IsMaxRank [3, 3, 5] isMaxRank_three_three_five.answer := by
   sorry
 
 /-- The maximal rank is at most twice the generic rank [BT15, Theorem 1]. -/
@@ -280,14 +329,36 @@ theorem isMaxRank_le_two_mul_isGenericRank {ds : List ℕ} {r R : ℕ} (hr : IsG
     (hR : IsMaxRank ds R) : R ≤ 2 * r := by
   sorry
 
+/-- Every complex $m \times n \times n$ tensor has rank at most
+$\lfloor (m+1)n/2 \rfloor$ for $m,n \geq 3$ [BFZ24, (4.22)]. -/
+@[category research solved, AMS 15]
+theorem cprank_le_of_square_slices {m n : ℕ} (hm : 3 ≤ m) (hn : 3 ≤ n)
+    (T : Holor ℂ [m, n, n]) : T.cprank ≤ (m + 1) * n / 2 := by
+  sorry
+
+/-- For $n \geq 4$, the maximal rank $R$ of a complex cubic tensor satisfies
+$\lceil n^3/(3n-2) \rceil \leq R \leq n(n+1)/2$ [BFZ24, (4.22), (4.25)-(4.28)].
+The lower bound is the generic rank; the upper bound is the square-slice estimate. -/
+@[category research solved, AMS 14 15]
+theorem isMaxRank_cube_bounds {n R : ℕ} (hn : 4 ≤ n) (hR : IsMaxRank [n, n, n] R) :
+    n ^ 3 ⌈/⌉ (3 * n - 2) ≤ R ∧ R ≤ n * (n + 1) / 2 := by
+  constructor
+  · exact (isGenericRank_cube (by omega) (by omega)).le_of_isMaxRank hR
+  · obtain ⟨T, hT⟩ := hR.1
+    rw [← hT]
+    simpa [Nat.mul_comm] using cprank_le_of_square_slices (by omega) (by omega) T
+
+def isMaxRank_cube.answer : ℕ → ℕ := sorry
+
 /--
 **Open problem.** Determine the maximal rank of a complex $n \times n \times n$ tensor. No formula
 is known: for $n = 1, 2, 3$ the values are `1`, `3` and `5`, while for $4 \leq n \leq 7$ only
-bounds such as $\operatorname{mrank}(4, 4, 4) \leq 10$ are available [BFZ24, (4.25)-(4.28)].
+the bounds in `isMaxRank_cube_bounds`, such as $7 \leq \operatorname{mrank}(4,4,4) \leq 10$,
+are available [BFZ24, (4.25)-(4.28)].
 -/
-@[category research open, AMS 15]
+@[category research open, question value, AMS 15]
 theorem isMaxRank_cube {n : ℕ} (hn : 1 ≤ n) :
-    IsMaxRank [n, n, n] ((answer(sorry) : ℕ → ℕ) n) := by
+    IsMaxRank [n, n, n] (isMaxRank_cube.answer n) := by
   sorry
 
 end Arxiv.«0805.3777»
