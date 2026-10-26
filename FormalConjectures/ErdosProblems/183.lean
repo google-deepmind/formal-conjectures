@@ -34,16 +34,6 @@ open scoped Topology
 
 namespace Erdos183
 
-/-- `n` forces a monochromatic triangle on `k` colours when every `k`-colouring of the edges
-of `K_n` has a colour class containing a triangle. -/
-def ForcesMonochromaticTriangle (n k : ℕ) : Prop :=
-  ∀ C : SimpleGraph.TopEdgeLabeling (Fin n) (Fin k), ¬ C.CliqueFree 3
-
-/-- $R(3;k)$, the minimal `n` such that every `k`-colouring of the edges of `K_n` contains a
-monochromatic triangle. -/
-noncomputable def multicolourTriangleRamsey (k : ℕ) : ℕ :=
-  sInf {n : ℕ | ForcesMonochromaticTriangle n k}
-
 /--
 Let $R(3;k)$ be the minimal $n$ such that if the edges of $K_n$ are coloured with $k$ colours
 then there must exist a monochromatic triangle. Determine
@@ -56,7 +46,7 @@ along with the explicit superexponential lower bound in
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/openai/ten-proofs/blob/94bc0feb6a9ff12c7d31d6de640a725c9d43d2b6/MulticolorTriangleRamsey.lean"]
 theorem erdos_183 :
-    Tendsto (fun k : ℕ => (multicolourTriangleRamsey k : ℝ) ^ ((1 : ℝ) / (k : ℝ)))
+    Tendsto (fun k : ℕ => (SimpleGraph.cliqueRamseyNumber (fun _ : Fin k ↦ 3) : ℝ) ^ ((1 : ℝ) / (k : ℝ)))
       atTop atTop := by
   sorry
 
@@ -69,7 +59,7 @@ $$R(3;k)\geq \left(\frac{k^{1/3}}{6e^{38}\log k}\right)^k.$$
 theorem erdos_183.variants.explicit_lower_bound :
     ∀ k : ℕ, 2 ≤ k →
       (((1 : ℝ) / (6 * Real.exp 38)) * (k : ℝ) ^ ((1 : ℝ) / 3) / Real.log (k : ℝ)) ^ k ≤
-        (multicolourTriangleRamsey k : ℝ) := by
+        (SimpleGraph.cliqueRamseyNumber (fun _ : Fin k ↦ 3) : ℝ) := by
   sorry
 
 end Erdos183

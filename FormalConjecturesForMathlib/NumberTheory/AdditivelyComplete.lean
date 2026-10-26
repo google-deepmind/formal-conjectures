@@ -277,3 +277,11 @@ theorem not_isAddComplete_range_diff_of_sum_range_le {A : ℕ → ℕ} {n₀ : �
     omega
   have := hsum m (by omega)
   omega
+
+/--
+A set of integers `A` is *Ramsey `r`-complete* if, whenever `A` is `r`-coloured, all sufficiently
+large integers can be written as a monochromatic sum of distinct elements of `A`.
+-/
+def IsRamseyComplete (r : ℕ) (A : Set ℕ) : Prop :=
+  ∀ c : A → Fin r, ∀ᶠ n : ℕ in Filter.atTop,
+    ∃ s : Finset A, (∃ i : Fin r, ∀ a ∈ s, c a = i) ∧ ∑ a ∈ s, (a : ℕ) = n

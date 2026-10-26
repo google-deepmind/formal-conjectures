@@ -40,10 +40,20 @@ set on $f(n)$ vertices. Estimate $f(n)$.
 
 Phelps and Rödl [PhRo86] proved $f(n) \asymp (n\log n)^{1/2}$.
 -/
-@[category research solved, question value, AMS 5]
+@[category research solved, question value, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1024.lean#L338"]
 theorem erdos_1024 :
     (fun n ↦ (Hypergraph.linearIndependenceNumber n : ℝ)) =Θ[atTop]
     erdos_1024.answer := by
+  sorry
+
+/-- Erdős proved the preliminary bounds $n^{1/2}\ll f(n)\ll n^{2/3}$. -/
+@[category research solved, AMS 5]
+theorem erdos_1024.variants.erdos_bounds :
+    (fun n : ℕ ↦ Real.sqrt (n : ℝ)) =O[atTop]
+      (fun n ↦ (Hypergraph.linearIndependenceNumber n : ℝ)) ∧
+    (fun n : ℕ ↦ (Hypergraph.linearIndependenceNumber n : ℝ)) =O[atTop]
+      fun n ↦ (n : ℝ) ^ (2 / 3 : ℝ) := by
   sorry
 
 end Erdos1024
