@@ -58,4 +58,32 @@ theorem IsKChoosable.colorable {V : Type*} {G : SimpleGraph V} {k : ℕ} (h : G.
   exact ⟨Coloring.mk (fun v => ⟨C v, Finset.mem_range.1 (hC v)⟩)
     fun hab heq => C.valid hab (congrArg Fin.val heq)⟩
 
+/-- A graph is $(a,b)$-choosable if for any assignment of a list of $a$ colours to each of its
+vertices there is a subset of $b$ colours from each list such that the subsets of adjacent
+vertices are disjoint. -/
+def IsChoosable {V : Type*} (G : SimpleGraph V) (a b : ℕ) : Prop :=
+  ∀ L : V → Finset ℕ, (∀ v, (L v).card = a) →
+    ∃ φ : V → Finset ℕ, (∀ v, φ v ⊆ L v ∧ (φ v).card = b) ∧
+      ∀ u v, G.Adj u v → Disjoint (φ u) (φ v)
+
+/-- Ordinary list colorability is exactly `(a,1)`-choosability. -/
+theorem isChoosable_one_iff {V : Type*} (G : SimpleGraph V) (a : ℕ) :
+    G.IsChoosable a 1 ↔ G.IsKChoosable a := by
+  classical
+  constructor
+  · intro h L hL
+    obtain ⟨φ, hφ, hdis⟩ := h L hL
+    choose c hc using fun v ↦ Finset.card_eq_one.mp (hφ v).2
+    have hmem (v : V) : c v ∈ φ v := by rw [hc v]; simp
+    refine ⟨Coloring.mk c ?_, fun v ↦ (hφ v).1 (hmem v)⟩
+    intro u v huv heq
+    exact Finset.disjoint_left.mp (hdis u v huv) (hmem u) (heq ▸ hmem v)
+  · intro h L hL
+    obtain ⟨c, hc⟩ := h L hL
+    refine ⟨fun v ↦ {c v}, ?_, ?_⟩
+    · intro v
+      simp [hc v]
+    · intro u v huv
+      simpa using c.valid huv
+
 end SimpleGraph

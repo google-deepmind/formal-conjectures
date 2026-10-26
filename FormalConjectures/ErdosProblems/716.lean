@@ -42,7 +42,8 @@ $$\mathrm{ex}_3(n,\mathcal{F})=o(n^2)?$$
 The answer is yes, proved by Ruzsa and Szemerédi [RuSz78] (this is known as the Ruzsa-Szemerédi
 problem).
 -/
-@[category research solved, question, AMS 5]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos716.lean#L20"]
 theorem erdos_716 :
     (fun n ↦ (Hypergraph.configurationExtremalNumber n 3 6 3 : ℝ)) =o[atTop]
       (fun n ↦ (n : ℝ) ^ 2) := by
