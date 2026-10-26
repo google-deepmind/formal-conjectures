@@ -43,9 +43,7 @@ $3$-critical $3$-uniform hypergraph must have a vertex of degree $\leq 6$.
 @[category research solved, question, AMS 5]
 theorem erdos_834.parts.i :
     ¬ ∃ (n : ℕ) (H : Finset (Finset (Fin n))),
-    H.IsUniform 3 ∧ (H : Set (Finset (Fin n))).HasFiniteTransversal 3 ∧
-      ¬ (H : Set (Finset (Fin n))).HasFiniteTransversal 2 ∧
-      (∀ e ∈ H, (H.erase e : Set (Finset (Fin n))).HasFiniteTransversal 2) ∧
+    H.IsUniform 3 ∧ H.IsTransversalCritical 3 ∧
       ∀ v : Fin n, 7 ≤ H.hypergraphDegree v := by
   sorry
 
@@ -59,9 +57,7 @@ explicit $3$-critical $3$-uniform hypergraph on $9$ vertices with minimum degree
 @[category research solved, question, AMS 5]
 theorem erdos_834.parts.ii :
     ∃ (n : ℕ) (H : Finset (Finset (Fin n))),
-    H.IsUniform 3 ∧ H.HasHypergraphChromaticNumber 3 ∧
-      (∀ e ∈ H, (H.erase e).HypergraphColorable 2) ∧
-      (∀ v : Fin n, (H.filter (fun e ↦ v ∉ e)).HypergraphColorable 2) ∧
+    H.IsUniform 3 ∧ H.IsChromaticCritical 3 ∧
       ∀ v : Fin n, 7 ≤ H.hypergraphDegree v := by
   sorry
 
