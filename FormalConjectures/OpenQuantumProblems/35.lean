@@ -761,7 +761,8 @@ theorem ame_4_3_exists : ExistsAME 4 3 := by
   sorry
 
 /-- Source-backed benchmark statement: an $\mathrm{AME}(4,6)$ state exists; see Rather et al. (2022). -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-4-6/blob/d42273127096f5cbdc2c05f6d727f2dc75d5ea81/AME46/FormalTarget.lean#L23-L24"]
 theorem ame_4_6_exists : ExistsAME 4 6 := by
   sorry
 
