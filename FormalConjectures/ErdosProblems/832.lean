@@ -43,7 +43,8 @@ edges, with equality only for the complete graph on $(r-1)(k-1)+1$ vertices?
 
 This was disproved by Alon [Al85]. The validity of this conjecture for $r=3$ remains open.
 -/
-@[category research solved, question, AMS 5]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos832.lean#L896"]
 theorem erdos_832 :
     ¬ ∀ r : ℕ, 3 ≤ r → ∀ᶠ k : ℕ in atTop,
     ∀ (n : ℕ) (H : Finset (Finset (Fin n))),
@@ -51,6 +52,42 @@ theorem erdos_832 :
       ((r - 1) * (k - 1) + 1).choose r ≤ H.card ∧
       (H.card = ((r - 1) * (k - 1) + 1).choose r →
         ∃ S : Finset (Fin n), S.card = (r - 1) * (k - 1) + 1 ∧ H = S.powersetCard r) := by
+  sorry
+
+/-- The case of three-uniform hypergraphs remains open. -/
+@[category research open, question, AMS 5]
+theorem erdos_832.variants.three : ∀ᶠ k : ℕ in atTop,
+    ∀ (n : ℕ) (H : Finset (Finset (Fin n))),
+      H.IsUniform 3 → H.HasHypergraphChromaticNumber k →
+      (2 * (k - 1) + 1).choose 3 ≤ H.card ∧
+      (H.card = (2 * (k - 1) + 1).choose 3 →
+        ∃ S : Finset (Fin n), S.card = 2 * (k - 1) + 1 ∧ H = S.powersetCard 3) := by
+  sorry
+
+/-- Alon gives counterexamples with at most $(7/8)^r$ times the proposed number of edges. -/
+@[category research solved, AMS 5]
+theorem erdos_832.variants.alon : ∃ C : ℕ, 0 < C ∧ ∀ r k : ℕ, C ≤ r → C * r ≤ k →
+    ∃ (n : ℕ) (H : Finset (Finset (Fin n))), H.IsUniform r ∧
+      ¬ H.HypergraphColorable (k - 1) ∧
+      (H.card : ℝ) ≤ (7 / 8) ^ r * ((r - 1) * (k - 1) + 1).choose r := by
+  sorry
+
+/-- The minimum number of edges of an `r`-uniform hypergraph not colorable with `k` colors. -/
+noncomputable def m (r k : ℕ) : ℕ :=
+  sInf {e | ∃ (n : ℕ) (H : Finset (Finset (Fin n))), H.IsUniform r ∧
+    ¬ H.HypergraphColorable k ∧ H.card = e}
+
+/-- Akolzin and Shabanov prove $r k^r / \log r \ll m(r,k) \ll r^3 (\log r) k^r$. -/
+@[category research solved, AMS 5]
+theorem erdos_832.variants.akolzin_shabanov : ∃ c C : ℝ, 0 < c ∧
+    ∀ r k : ℕ, 2 ≤ r → 2 ≤ k → c * (r / Real.log r) * (k : ℝ) ^ r ≤ m r k ∧
+      (m r k : ℝ) ≤ C * (r ^ 3 * Real.log r) * (k : ℝ) ^ r := by
+  sorry
+
+/-- For fixed `r`, Cherkashin and Petrov prove convergence of $m(r,k)/k^r$. -/
+@[category research solved, AMS 5]
+theorem erdos_832.variants.cherkashin_petrov : ∀ r : ℕ, 2 ≤ r →
+    ∃ L : ℝ, Tendsto (fun k : ℕ ↦ (m r k : ℝ) / (k : ℝ) ^ r) atTop (nhds L) := by
   sorry
 
 end Erdos832
