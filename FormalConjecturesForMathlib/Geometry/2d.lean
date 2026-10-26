@@ -247,6 +247,10 @@ def IsIsoscelesTrapezoid (a b c d : ℝ²) : Prop :=
 def IsLine (L : AffineSubspace ℝ ℝ²) : Prop :=
   Module.finrank ℝ L.direction = 1
 
+/-- The lines determined by two distinct points of a set in the plane. -/
+def determinedLines (P : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
+  {affineSpan ℝ {p, q} | (p ∈ P) (q ∈ P) (_ : p ≠ q)}
+
 /--
 The set of lines in $\mathbb{R}^2$ containing exactly $k$ points from a given set $S$.
 
@@ -254,8 +258,7 @@ Only lines through two distinct points of $S$ are considered, so a line with few
 points of $S$ is never counted.
 -/
 noncomputable def linesWithPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
-  let determined_lines := { affineSpan ℝ {p, q} | (p ∈ S) (q ∈ S) (_ : p ≠ q) }
-  { L ∈ determined_lines | (↑L ∩ S).ncard = k }
+  { L ∈ EuclideanGeometry.determinedLines S | (↑L ∩ S).ncard = k }
 
 end EuclideanGeometry
 
@@ -272,3 +275,11 @@ def Set.IsIsoscelesFree {α : Type*} [Dist α] (A : Set α) : Prop :=
 theorem Set.IsIsoscelesFree.mono {α : Type*} [Dist α] {s t : Set α} (h : t ⊆ s)
     (hs : s.IsIsoscelesFree) : t.IsIsoscelesFree :=
   Set.Triplewise.mono h hs
+
+/-- A line through two distinct points has one-dimensional direction. -/
+theorem EuclideanGeometry.isLine_of_mem_determinedLines {P : Set ℝ²}
+    {L : AffineSubspace ℝ ℝ²} (hL : L ∈ EuclideanGeometry.determinedLines P) :
+    EuclideanGeometry.IsLine L := by
+  obtain ⟨p, hp, q, hq, hpq, rfl⟩ := hL
+  rw [EuclideanGeometry.IsLine, direction_affineSpan, vectorSpan_pair]
+  exact finrank_span_singleton (vsub_ne_zero.mpr hpq)

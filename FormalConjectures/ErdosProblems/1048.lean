@@ -66,7 +66,7 @@ $\to 0$ as $n\to \infty$.
 @[category research solved, AMS 30]
 theorem erdos_1048.variants.pommerenke_ncard_components (r : ℝ) (hr : 1 < r) (n : ℕ) (hn : 1 ≤ n)
     (f : ℂ[X]) (hf : f = (X : ℂ[X]) ^ n - C ((r : ℂ) ^ n)) :
-    {C : Set ℂ | ∃ z ∈ levelSet f, C = connectedComponentIn (levelSet f) z}.ncard = n := by
+    (Set.connectedComponents (levelSet f)).ncard = n := by
   sorry
 
 /--
