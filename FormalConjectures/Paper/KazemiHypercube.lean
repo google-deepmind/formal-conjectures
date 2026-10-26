@@ -47,7 +47,8 @@ noncomputable def totalDominatorChromaticNumber (G : SimpleGraph V) : ℕ :=
 /-- For every natural $n\ge2$, the total dominator chromatic number of the
 hypercube of dimension $2^n+1$ is $2^{2^n-n+1}+2$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/RhudeJJJJ/formal-conjectures/blob/a1a7e2bff19e75f1d2587886ddddc4ed931961cd/Proofs/Kazemi/Full.lean#L20"]
 theorem conjecture6_1 (n : ℕ) (hn : 2 ≤ n) :
     totalDominatorChromaticNumber (SimpleGraph.hypercube (2^n+1)) = 2^(2^n-n+1)+2 := by
   sorry
