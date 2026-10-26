@@ -42,7 +42,8 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
   sorry
 
 #guard_msgs in
-@[category research solved, formal_proof using lean4 at "https://github.com/example/formal-proof"]
+@[category research solved,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
 theorem a_formally_solved_problem : 2 + 2 = 4 := by
   rfl
 
@@ -188,14 +189,16 @@ theorem another_conditional_formal_proof_hypothesis : 1 = 1 := by
 
 #guard_msgs in
 @[category research solved,
-  conditional formal_proof using lean4 at "https://github.com/example/conditional-proof"
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming conditional_formal_proof_hypothesis]
 theorem a_conditionally_formally_solved_problem : 4 + 4 = 8 := by
   rfl
 
 #guard_msgs in
 @[category research solved,
-  conditional formal_proof using lean4 at "https://github.com/example/two-hypotheses"
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming conditional_formal_proof_hypothesis another_conditional_formal_proof_hypothesis]
 theorem a_conditionally_formally_solved_problem_with_two_hypotheses : 5 + 5 = 10 := by
   rfl
@@ -253,6 +256,112 @@ warning: A `formal_proof` link should be a URL (http:// or https://), but got: "
 @[category test, formal_proof using lean4 at "not-a-url"]
 theorem a_formal_proof_with_malformed_link : 5 + 5 = 10 := by
   rfl
+
+-- Open research problems retain their existing warning for non-Palomar links.
+
+/--
+warning: A `formal_proof` annotation on a `research open` problem is suspicious. If a formal proof exists, the problem should not be categorised as `open`.
+-/
+#guard_msgs in
+@[category research open, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem an_open_problem_with_formal_proof : True := by
+  sorry
+
+-- Solved research problems require Palomar entries, in either attribute order.
+
+#guard_msgs in
+@[category research solved,
+  formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002&version=1"]
+theorem a_solved_problem_with_palomar_proof : True := by
+  sorry
+
+#guard_msgs in
+@[formal_proof using other_system at
+    "https://palomar-registry.org/entry.html?version=1&id=PALOMAR-2026-10-05-000002",
+  category research solved]
+theorem a_solved_problem_with_palomar_proof_first : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[category research solved, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem a_solved_problem_with_non_palomar_proof : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[formal_proof using other_system at "https://github.com/example/proof", category research solved]
+theorem a_solved_problem_with_non_palomar_proof_first : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[category research solved, formal_proof using formal_conjectures at ""]
+theorem a_solved_problem_with_empty_proof_link : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/conditional-proof"
+    assuming conditional_formal_proof_hypothesis]
+theorem a_solved_problem_with_non_palomar_conditional_proof : True := by
+  sorry
+
+-- Applying either attribute later must enforce the same restriction.
+
+#guard_msgs in
+theorem an_uncategorised_problem_with_palomar_proof : True := by
+  sorry
+
+#guard_msgs in
+attribute [formal_proof using formal_conjectures at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
+  an_uncategorised_problem_with_palomar_proof
+
+#guard_msgs in
+attribute [category research solved] an_uncategorised_problem_with_palomar_proof
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+attribute [formal_proof using lean4 at "https://github.com/example/proof"] FLT
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+attribute [category research solved] a_graduate_problem_with_formal_proof
+
+-- Check URL boundaries without relying on the registry being reachable.
+run_meta do
+  let invalidLinks := [
+    "https://palomar-registry.org/",
+    "https://palomar-registry.org/entry.html",
+    "https://palomar-registry.org/entry.html?id=",
+    "https://palomar-registry.org/entry.html?version=1",
+    "https://palomar-registry.org/entry.html#?id=PALOMAR-2026-10-05-000002",
+    "https://palomar-registry.org.evil.example/entry.html?id=PALOMAR-2026-10-05-000002",
+    "https://palomar-registry.org@evil.example/entry.html?id=PALOMAR-2026-10-05-000002",
+    "https://example.com/palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002",
+    "ftp://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
+  for link in invalidLinks do
+    let rejected ← try
+      ProblemAttributes.checkFormalProofLink (.research .solved) link
+      pure false
+    catch _ => pure true
+    unless rejected do
+      throwError "unexpectedly accepted Palomar entry link: {link}"
 
 -- The `optimization_constant` attribute
 

@@ -51,6 +51,7 @@ The values of this attribute are
 ### Overview
 Provides information about the existence of a formal proof for a statement.
 This is independent of the category attribute and can be used with any category.
+On a `research solved` problem, the link must point to a Palomar entry.
 
 ### Values
 - `@[formal_proof using formal_conjectures at "link"]` : formally proved in this repository.
@@ -88,7 +89,8 @@ theorem imo_2024_p6
 theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
   sorry
 
-@[category research solved, formal_proof using lean4 at "https://example.com/proof"]
+@[category research solved, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
 theorem a_solved_problem_with_formal_proof : ... := by
   sorry
 
@@ -98,7 +100,8 @@ theorem grh : ... := by
   sorry
 
 @[category research solved,
-  conditional formal_proof using lean4 at "https://example.com/proof" assuming grh]
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002" assuming grh]
 theorem a_conditionally_proved_problem : ... := by
   sorry
 
@@ -197,7 +200,7 @@ namespace ProblemAttributes
 /-- The type of formal proof that exists for a problem. -/
 inductive FormalProofKind
   /-- The problem exactly as stated in formal-conjectures has a formal proof.
-  The link points to a commit that fills the `sorry` relative to the current
+  The proof fills the `sorry` in a commit relative to the current
   commit (i.e., the commit where this category is added, or the commit with the
   latest fix for this statement). -/
   | formalConjecturesProof
@@ -374,6 +377,30 @@ def checkQuestionCategory (declName : Name) (cat : Category) : CoreM Unit :=
     throwError "the `question` attribute belongs to a `research open` or `research solved` \
       problem, but '{declName}' is categorised as `{cat}`"
 
+/-- Checks the URL's host, entry page, and nonempty entry id without contacting Palomar. -/
+private def isPalomarEntryLink (link : String) : Bool :=
+  match link.splitOn "://" with
+  | [scheme, rest] =>
+    (scheme.toLower == "https" || scheme.toLower == "http") &&
+    match rest.splitOn "/" with
+    | [host, entry] =>
+      host.toLower == "palomar-registry.org" &&
+      match ((entry.splitOn "#").headD "").splitOn "?" with
+      | ["entry.html", query] => (query.splitOn "&").any fun param =>
+        match param.splitOn "=" with
+        | ["id", id] => !id.isEmpty
+        | _ => false
+      | _ => false
+    | _ => false
+  | _ => false
+
+/-- Requires Palomar entry links for solved research problems. Both attributes call this so
+the check runs whichever of `category` and `formal_proof` is applied second. -/
+def checkFormalProofLink (cat : Category) (link : String) : CoreM Unit := do
+  if cat == .research .solved && !isPalomarEntryLink link then
+    throwError "A `formal_proof` annotation on a `research solved` problem must link to a \
+      Palomar entry (https://palomar-registry.org/entry.html?id=...)."
+
 /-- Convert from a syntax node to a term of type `Category` and annotate the syntax
 with the corresponding name's docstring. -/
 def Syntax.toCategory (stx : TSyntax ``CategorySyntax) : CoreM Category := do
@@ -449,6 +476,9 @@ initialize Lean.registerBuiltinAttribute {
     -- `checkNotOpenIfSorryFree`, which runs once the command has finished.
     if (questionExt.getState (← getEnv)).contains decl then
       checkQuestionCategory decl status
+    for tag in formalProofExt.getState (← getEnv) do
+      if tag.declName == decl then
+        checkFormalProofLink status tag.proofLink
     addCategoryEntry decl status oldDoc
   applicationTime := .afterTypeChecking
 }
@@ -462,6 +492,10 @@ Usage: `@[formal_proof using <kind> at "<link>"]` where `<kind>` is one of:
 - `formal_conjectures` : formally proved in this repository.
 - `lean4` : formally proved in Lean 4 elsewhere (e.g. Mathlib).
 - `other_system` : formally proved in another formal system (Roqc, Isabelle, Lean 3, HOL, etc.)
+
+On a `research solved` problem, the link must point to a Palomar entry at
+`https://palomar-registry.org/entry.html?id=...`. This checks the URL's shape,
+not the existence or contents of the entry.
 
 This says a proof of *this statement* exists somewhere, so in practice it goes on
 problems we already consider settled, and attaching it to a `research open`
@@ -507,6 +541,9 @@ private def addFormalProofAttribute (decl : Name) (stx : Syntax) : AttrM Unit :=
     let condName ← resolveGlobalConstNoOverload c.raw
     Elab.addConstInfo c.raw condName
     return condName
+  for tag in categoryExt.getState env do
+    if tag.declName == decl then
+      withRef link <| checkFormalProofLink tag.category link.getString
   -- Warn if this is attached to a `research open` problem. `formal_proof` asserts
   -- that a proof of this statement exists, which contradicts calling it open; a
   -- conditional result about an open problem belongs on a `research solved`
