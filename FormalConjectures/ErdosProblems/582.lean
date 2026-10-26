@@ -53,16 +53,6 @@ public import FormalConjecturesUtil
 namespace Erdos582
 
 /--
-A graph `G` is *edge-Ramsey for triangles* (in arrow notation, $G \to (K_3, K_3)^e$) if any
-$2$-colouring of the edges of `G` produces a monochromatic $K_3$: three pairwise adjacent
-vertices whose three connecting edges all receive the same colour.
--/
-def EdgeRamseyTriangle {V : Type*} (G : SimpleGraph V) : Prop :=
-  ∀ c : G.edgeSet → Fin 2,
-    ∃ (u v w : V) (huv : G.Adj u v) (hvw : G.Adj v w) (huw : G.Adj u w),
-      c ⟨s(u, v), huv⟩ = c ⟨s(v, w), hvw⟩ ∧ c ⟨s(v, w), hvw⟩ = c ⟨s(u, w), huw⟩
-
-/--
 Does there exist a graph $G$ which contains no $K_4$, and yet any $2$-colouring of the edges
 produces a monochromatic $K_3$?
 
@@ -75,7 +65,7 @@ and the upper bound is due to Lange, Radziszowski, and Xu [LRX14].
 @[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos582.lean"]
 theorem erdos_582 :
     ∃ (V : Type*) (_ : Fintype V) (G : SimpleGraph V),
-      G.CliqueFree 4 ∧ EdgeRamseyTriangle G := by
+      G.CliqueFree 4 ∧ SimpleGraph.IsEdgeRamseyForClique G 2 3 := by
   sorry
 
 end Erdos582
