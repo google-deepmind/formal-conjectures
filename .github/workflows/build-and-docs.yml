@@ -65,7 +65,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '3.12'
+          python-version: '>=3.12.16 <3.13'
+          check-latest: true
 
       - name: Run script tests
         run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
@@ -128,6 +129,13 @@ jobs:
             fi
           fi
           echo "site=$site" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        if: steps.mode.outputs.website_only != 'true'
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '>=3.12.16 <3.13'
+          check-latest: true
 
       - name: Install elan
         if: steps.mode.outputs.website_only != 'true'
@@ -302,12 +310,6 @@ jobs:
         with:
           path: ~/.cache/mathlib
           key: oleans-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
-
-      - name: Set up Python
-        if: steps.mode.outputs.website_only != 'true'
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: '3.12'
 
       # Only the plotting and Verso-fragment scripts need these; the category
       # check below is standard library only.
