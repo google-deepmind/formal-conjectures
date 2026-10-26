@@ -52,6 +52,7 @@ theorem not_chromaticNumberAlephOne_bot : ¬ ChromaticNumberAlephOne (⊥ : Simp
     ⟨SimpleGraph.Coloring.mk (fun _ => 0) (by simp)⟩
   exact (not_isEmpty_iff.mpr this) h.2
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph with chromatic number $\aleph_1$. Must there exist an edge $e$ such that, for
 all large $n$, $G$ contains a cycle of length $n$ containing $e$?
@@ -67,6 +68,7 @@ theorem erdos_737 :
         CycleThroughEdgeOfLength G e n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The title and abstract of [Th83] state the result for graphs of uncountable chromatic number,
 that is, graphs with no proper colouring by `ℕ`. This is stronger than `erdos_737`.

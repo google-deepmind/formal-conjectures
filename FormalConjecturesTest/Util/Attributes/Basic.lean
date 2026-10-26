@@ -343,6 +343,54 @@ error: A `formal_proof` annotation on a `research solved` problem must link to a
 #guard_msgs in
 attribute [category research solved] a_graduate_problem_with_formal_proof
 
+-- The opt-out is local and does not disable the other link checks.
+
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[category research solved, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem a_solved_problem_with_palomar_check_disabled : True := by
+  sorry
+
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[formal_proof using other_system at "https://github.com/example/proof", category research solved]
+theorem a_solved_problem_with_palomar_check_disabled_first : True := by
+  sorry
+
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/conditional-proof"
+    assuming conditional_formal_proof_hypothesis]
+theorem a_conditional_proof_with_palomar_check_disabled : True := by
+  sorry
+
+/--
+warning: A `lean4` or `other_system` `formal_proof` should include a link to the proof.
+-/
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[category research solved, formal_proof using lean4 at ""]
+theorem a_solved_problem_with_empty_link_and_palomar_check_disabled : True := by
+  sorry
+
+/--
+warning: A `formal_proof` link should be a URL (http:// or https://), but got: "not-a-url".
+-/
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[category research solved, formal_proof using lean4 at "not-a-url"]
+theorem a_solved_problem_with_malformed_link_and_palomar_check_disabled : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[category research solved, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem a_solved_problem_after_local_palomar_opt_out : True := by
+  sorry
+
 -- Check URL boundaries without relying on the registry being reachable.
 run_meta do
   let invalidLinks := [

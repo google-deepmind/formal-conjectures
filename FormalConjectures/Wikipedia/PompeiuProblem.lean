@@ -96,6 +96,7 @@ structure IsAdmissibleDomain (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))) : Pro
   connectedComplClosure  : 2 ≤ N → IsConnected (closure Ω)ᶜ
   lipschitzBoundary      : HasLipschitzBoundary Ω
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Pompeiu's conjecture is false.** There is a bounded, simply connected Lipschitz domain in
 $\mathbb{R}^2$ which fails to have the Pompeiu property but is not a Euclidean ball. This conclusion
@@ -122,6 +123,7 @@ theorem ball_not_hasPompeiuProperty (Ω : Set (EuclideanSpace ℝ (Fin (N + 1)))
     ¬ HasPompeiuProperty Ω := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The hard direction of the Pompeiu problem is false: some admissible planar domain lacks the
 Pompeiu property without being a ball. Two independent proofs are given in [CLD26] and [CS26].

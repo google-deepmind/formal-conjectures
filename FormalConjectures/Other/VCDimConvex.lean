@@ -56,6 +56,7 @@ lemma exists_convex_rn_add_two_vc_n_forall_not_hasAddVCNDimAtMost (n : ℕ) :
 
 /-  ### Conjectures -/
 
+set_option linter.style.formal_proof_palomar false in
 /-- Not every convex set in $\mathbb R^3$ has
 $\mathrm{VC}_2$ dimension at most 1. -/
 @[category research solved, AMS 5 52,
@@ -70,6 +71,7 @@ lemma hasAddVCNDimAtMost_two_one_of_convex_r3 :
 lemma hasAddVCNDimAtMost_two_two_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C) :
     HasAddVCNDimAtMost C 2 2 := sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every $n \ge 1$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
 $\mathrm{VC}_n$ dimension at most $d$.
 

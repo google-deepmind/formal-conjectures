@@ -34,6 +34,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos780
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Suppose $n\geq kr+(t-1)(k-1)$ and the edges of the complete $r$-uniform hypergraph on $n$
 vertices are $t$-coloured. Prove that some colour class must contain $k$ pairwise disjoint edges.

@@ -165,6 +165,7 @@ theorem erdos_687.parts.i :
     (fun x : ℕ ↦ (Y x : ℝ)) =Θ[atTop] erdos_687.parts.i.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In particular, can one prove that $Y(x)=o(x^2)$?
 

@@ -59,6 +59,7 @@ theorem a_4 : a 4 = 6 := by decide
 @[category test, AMS 11]
 theorem a_5 : a 5 = 8 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: for every $k > 0$ there is an index $m$ such that all the $a(n)$ with $n > m$
 have the same residue $\bmod 3^k$.

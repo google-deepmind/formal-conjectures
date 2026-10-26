@@ -30,6 +30,7 @@ open Finset Filter SimpleGraph
 namespace Erdos1077
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 We call a graph $D$-balanced (or $D$-almost-regular) if the maximum degree is at most $D$ times the
 minimum degree.

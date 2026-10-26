@@ -40,6 +40,7 @@ A natural number $n$ which can be written as $n$ if $n = x^2 + y^2 - z^2$ with $
 def Erdos1148Prop (n : ℕ) : Prop :=
   ∃ x y z : ℕ, n = x ^ 2 + y ^ 2 - z ^ 2 ∧ x ^ 2 ≤ n ∧ y ^ 2 ≤ n ∧ z ^ 2 ≤ n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can every large integer $n$ be written as $n=x^2+y^2-z^2$ with $\max(x^2,y^2,z^2)\leq n$?
 

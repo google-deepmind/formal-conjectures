@@ -32,6 +32,7 @@ open Filter
 noncomputable def S (n : ℕ) : ℕ :=
   sSup {s | ∀ k ∈ Finset.Ico 1 n, ∃ p, p.Prime ∧ p^s ∣n.choose k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $S(n)$ denote the largest integer such that, for all $1 ≤ k < n$, the binomial coefficient
 $\binom{n}{k}$ is divisible by $p^S(n)$ for some prime $p$ (depending on $k$).Then

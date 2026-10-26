@@ -66,6 +66,7 @@ theorem erdos_793 :
       ((n : ℝ) ^ ((2 : ℝ) / 3) / (log n) ^ 2)) atTop (𝓝 c) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The constant in Problem 793 is $c = 27/2$, i.e.
 $$F(n) = \pi(n) + \left(\frac{27}{2} + o(1)\right) \frac{n^{2/3}}{(\log n)^2}.$$

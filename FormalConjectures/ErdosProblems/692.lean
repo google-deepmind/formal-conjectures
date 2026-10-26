@@ -57,6 +57,7 @@ at `m - 1` and at `b + 1`.
 def localMaxima (f : ℕ → ℝ) (a : ℕ) : Set ℕ :=
   {m | a < m ∧ f (m - 1) < f m ∧ ∃ b, m ≤ b ∧ (∀ j ∈ Set.Icc m b, f j = f m) ∧ f (b + 1) < f m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
 Is $\delta_1(n,m)$ unimodular for $m>n+1$ (i.e. increases until some $m$ then decreases

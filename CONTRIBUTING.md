@@ -262,6 +262,9 @@ Use `@[formal_proof using <kind> at "link"]` where `<kind>` is one of:
 For a `research solved` problem, the link must point to a Palomar entry at
 `https://palomar-registry.org/entry.html?id=...`. The attribute checks the URL's
 shape, not whether the entry exists. This also applies to conditional formal proofs.
+Existing proofs without a Palomar entry can disable this check for one declaration
+with `set_option linter.style.formal_proof_palomar false in` before its docstring.
+The other formal proof checks remain enabled.
 
 ```lean
 @[category research solved, AMS 11, formal_proof using lean4 at

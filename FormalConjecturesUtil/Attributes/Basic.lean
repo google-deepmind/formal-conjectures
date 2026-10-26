@@ -195,6 +195,11 @@ about it (bounds, exact values): those may get a separate annotation later.
 -- TODO(lezeau): can we/should we do this using
 -- `Lean.EnumAttributes` or `Lean.ParametricAttribute` ?
 
+register_option linter.style.formal_proof_palomar : Bool := {
+  defValue := true
+  descr := "require Palomar entry links for formal proofs of solved research problems"
+}
+
 namespace ProblemAttributes
 
 /-- The type of formal proof that exists for a problem. -/
@@ -397,6 +402,7 @@ private def isPalomarEntryLink (link : String) : Bool :=
 /-- Requires Palomar entry links for solved research problems. Both attributes call this so
 the check runs whichever of `category` and `formal_proof` is applied second. -/
 def checkFormalProofLink (cat : Category) (link : String) : CoreM Unit := do
+  unless linter.style.formal_proof_palomar.get (← getOptions) do return
   if cat == .research .solved && !isPalomarEntryLink link then
     throwError "A `formal_proof` annotation on a `research solved` problem must link to a \
       Palomar entry (https://palomar-registry.org/entry.html?id=...)."
@@ -496,6 +502,8 @@ Usage: `@[formal_proof using <kind> at "<link>"]` where `<kind>` is one of:
 On a `research solved` problem, the link must point to a Palomar entry at
 `https://palomar-registry.org/entry.html?id=...`. This checks the URL's shape,
 not the existence or contents of the entry.
+For an existing proof without a Palomar entry, disable only this check locally with
+`set_option linter.style.formal_proof_palomar false in` before the declaration.
 
 This says a proof of *this statement* exists somewhere, so in practice it goes on
 problems we already consider settled, and attaching it to a `research open`
