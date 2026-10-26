@@ -65,7 +65,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '>=3.12.16 <3.13'
+          python-version: '>=3.12.16'
           check-latest: true
 
       - name: Run script tests
@@ -134,7 +134,7 @@ jobs:
         if: steps.mode.outputs.website_only != 'true'
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '>=3.12.16 <3.13'
+          python-version: '>=3.12.16'
           check-latest: true
 
       - name: Install elan
