@@ -138,13 +138,13 @@ The proof in plby/lean-proofs uses the proof of `erdos_750.variants.stiebitz` li
 It produces a graph on a `V : Type`, which gives the statement below in any universe by
 lifting `V`.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at
     "https://github.com/Jayyhk/erdos-lean/blob/main/problems/750/Erdos750.lean",
   formal_proof using lean4 at
     "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos750.lean#L50"]
 theorem erdos_750 :
-    answer(True) ↔ ∀ (f : ℕ → ℝ≥0) (hf : atTop.Tendsto f atTop),
+    ∀ (f : ℕ → ℝ≥0) (hf : atTop.Tendsto f atTop),
       ∃ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
         ∀ (m : ℕ) (S : Set V), 0 < m → S.ncard = m →
           ∃ I ⊆ S, G.IsIndepSet I ∧ m / 2 - f m ≤ I.ncard := by
@@ -154,9 +154,9 @@ theorem erdos_750 :
 In [Er69b] Erdős conjectures this for $f(m)=\epsilon m$ for any fixed $\epsilon>0$. This follows
 from a result of Erdős, Hajnal, and Szemerédi [EHS82], as described by Sellke in the comments.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_750.variants.epsilon :
-    answer(True) ↔ ∀ (ε : ℝ≥0), ε > 0 →
+    ∀ (ε : ℝ≥0), ε > 0 →
       ∃ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
         ∀ (m : ℕ) (S : Set V), 0 < m → S.ncard = m →
           ∃ I ⊆ S, G.IsIndepSet I ∧ m / 2 - ε * m ≤ I.ncard := by
@@ -165,9 +165,9 @@ theorem erdos_750.variants.epsilon :
 /--
 In [ErHa67b] Erdős and Hajnal prove this for $f(m)\geq cm$ for all $c>1/4$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_750.variants.c_gt_quarter :
-    answer(True) ↔ ∀ (c : ℝ≥0), c > 1 / 4 →
+    ∀ (c : ℝ≥0), c > 1 / 4 →
       ∃ (V : Type*) (G : SimpleGraph V), G.chromaticNumber = ⊤ ∧
         ∀ (m : ℕ) (S : Set V), 0 < m → S.ncard = m →
           ∃ I ⊆ S, G.IsIndepSet I ∧ m / 2 - c * m ≤ I.ncard := by

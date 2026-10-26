@@ -124,10 +124,10 @@ the counterexample has $12$ vertices, so it refutes both readings.
 
 Lean formalization by Wentao Li, with AI assistance.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-graph-proofs/blob/b60c2e548910b32eb3b602f6a8e67af806e4b9f6/LeanGraphProofs/WOWII291.lean#L253"]
-theorem conjecture291 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+theorem conjecture291 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_h : G.Connected) (_hn : 2 < Fintype.card α),
       G.totalDominationNumber ≤ havelHakimiZeroStep G + freqMinTriangles G := by
   sorry
