@@ -33,13 +33,6 @@ open Filter
 namespace Erdos1037
 
 /--
-A set `s` of vertices of a graph `G` is *trivial* if the subgraph it induces is empty or
-complete, that is, if `s` is an independent set or a clique of `G`.
--/
-def IsTrivialSet {V : Type*} (G : SimpleGraph V) (s : Set V) : Prop :=
-  G.IsIndepSet s ∨ G.IsClique s
-
-/--
 Let $G$ be a graph on $n$ vertices in which every degree occurs at most twice, and the number of
 distinct degrees is $>(\frac{1}{2}+\epsilon)n$. Must $G$ contain a trivial (empty or complete)
 subgraph of size 'much larger' than $\log n$?
@@ -56,7 +49,7 @@ theorem erdos_1037 :
       (∀ d : ℕ, {v : Fin n | (G.neighborSet v).ncard = d}.ncard ≤ 2) →
       ((1 / 2 + ε) * (n : ℝ) <
         ((Set.range fun v : Fin n => (G.neighborSet v).ncard).ncard : ℝ)) →
-      ∃ s : Set (Fin n), IsTrivialSet G s ∧ (C * Real.log (n : ℝ) < (s.ncard : ℝ)) := by
+      ∃ s : Set (Fin n), G.IsHomogeneous s ∧ (C * Real.log (n : ℝ) < (s.ncard : ℝ)) := by
   sorry
 
 /--
@@ -70,7 +63,7 @@ theorem erdos_1037.variants.cambie_chan_hunter :
       (∀ d : ℕ, {v : Fin n | (G.neighborSet v).ncard = d}.ncard ≤ 2) ∧
       (3 / 4 * (n : ℝ) ≤
         ((Set.range fun v : Fin n => (G.neighborSet v).ncard).ncard : ℝ)) ∧
-      ∀ s : Set (Fin n), IsTrivialSet G s → ((s.ncard : ℝ) ≤ C * Real.log (n : ℝ)) := by
+      ∀ s : Set (Fin n), G.IsHomogeneous s → ((s.ncard : ℝ) ≤ C * Real.log (n : ℝ)) := by
   sorry
 
 end Erdos1037
