@@ -135,4 +135,16 @@ and `C.labelGraph i` is the graph formed by the edges of colour `i`. For `k = 2`
 noncomputable def multicolourGraphRamsey {α : Type*} [Fintype α] (k : ℕ) (G : SimpleGraph α) : ℕ :=
   sInf {n : ℕ | ∀ C : TopEdgeLabeling (Fin n) (Fin k), ∃ i, G.IsContained (C.labelGraph i)}
 
+/-- `H` is an *induced Ramsey host* for `G` if every $2$-colouring of the edges of `H` contains an
+induced monochromatic copy of `G`, i.e. a graph embedding `G ↪g H` (which preserves and reflects
+adjacency) all of whose edges receive the same colour. -/
+def IsInducedRamseyHost {V W : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
+  ∀ c : H.EdgeLabeling (Fin 2), ∃ (i : Fin 2) (f : G ↪g H), ∀ e : G.edgeSet, c (f.mapEdgeSet e) = i
+
+/-- The induced Ramsey number `R*(G)`: the minimal `m` such that there is a graph `H` on `m`
+vertices such that any $2$-colouring of the edges of `H` contains an induced monochromatic copy
+of `G`. -/
+noncomputable def inducedRamseyNumber {V : Type*} [Finite V] (G : SimpleGraph V) : ℕ :=
+  sInf {m | ∃ H : SimpleGraph (Fin m), IsInducedRamseyHost G H}
+
 end SimpleGraph
