@@ -37,24 +37,26 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 /--
 WOWII [Conjecture 19](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
-If `G` is connected then the size `b(G)` of a largest induced bipartite subgraph
+If $G$ is connected then the size $b(G)$ of a largest induced bipartite subgraph
 satisfies
-`b(G) ≥ FLOOR((∑ ecc(v))/(|V|) + sSup (range (l G)))`, where `ecc(v)` denotes
-eccentricity and `l(G)` is the independence number of neighbourhoods.
+$b(G) \ge \left\lfloor \frac{\sum_v \mathrm{ecc}(v)}{|V|} + \sup_v l(v) \right\rfloor$,
+where $\mathrm{ecc}(v)$ denotes eccentricity and $l(v)$ is the independence number of the
+neighbourhood of $v$.
 
-**Proof outline.** Pick `u` maximising `l(u)`, let `e = ecc(u)` and `D = diam(G)`, and let
-`I ⊆ N(u)` be an independent set with `|I| = l(u)`. Any family of sets `B d`, each
-independent and contained in the distance sphere `{v | dist(u, v) = d}`, induces a bipartite
-subgraph (colour by the parity of `dist(u, ·)`), so `b(G) ≥ ∑ |B d|`.
-* If `D ≤ e`, every eccentricity is at most `e`, so the average is at most `e`. Take
-  `B 0 = {u}`, `B 1 = I`, and one vertex of a geodesic from `u` to an eccentric vertex on
-  each sphere `2 ≤ d ≤ e`; this gives `b(G) ≥ e + l(u)`.
-* If `e < D`, the average eccentricity is strictly less than `D`. Take a diametral pair
-  `x, y`. On each sphere `d` in a suitable range, the vertices of geodesics `u → x` and
-  `u → y` at distance `d` from `u` are at distance at least `2` from each other (triangle
-  inequality with `dist(x, y) = D`), so they can share `B d`; counting gives
-  `b(G) ≥ D - 1 + l(u)`.
-In both cases the floor of the average plus `l(u)` is at most `b(G)`.
+**Proof outline.** Pick $u$ maximising $l(u)$, let $e = \mathrm{ecc}(u)$ and
+$D = \mathrm{diam}(G)$, and let $I \subseteq N(u)$ be an independent set with $|I| = l(u)$.
+Any family of sets $B_d$, each independent and contained in the distance sphere
+$\{v \mid \mathrm{dist}(u, v) = d\}$, induces a bipartite subgraph (colour by the parity of
+$\mathrm{dist}(u, \cdot)$), so $b(G) \ge \sum_d |B_d|$.
+* If $D \le e$, every eccentricity is at most $e$, so the average is at most $e$. Take
+  $B_0 = \{u\}$, $B_1 = I$, and one vertex of a geodesic from $u$ to an eccentric vertex on
+  each sphere $2 \le d \le e$; this gives $b(G) \ge e + l(u)$.
+* If $e < D$, the average eccentricity is strictly less than $D$. Take a diametral pair
+  $x, y$. On each sphere $d$ in a suitable range, the vertices of geodesics $u \to x$ and
+  $u \to y$ at distance $d$ from $u$ are at distance at least $2$ from each other (triangle
+  inequality with $\mathrm{dist}(x, y) = D$), so they can share $B_d$; counting gives
+  $b(G) \ge D - 1 + l(u)$.
+In both cases the floor of the average plus $l(u)$ is at most $b(G)$.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at
