@@ -107,7 +107,8 @@ noncomputable def cyclicAction (m : ℕ) [NeZero m] :
 /-- For n>=2 and m=2n+3, the automorphism group of D_n is
 $C_2\times(C_2^{m-1}\rtimes C_m)$, with the cyclic shift acting on the binary
 augmentation subgroup. RelIso supplies the actual relation-automorphism group. -/
-@[category research solved, AMS 5 20]
+@[category research solved, AMS 5 20, formal_proof using lean4 at
+  "https://github.com/RhudeJJJJ/formal-conjectures/blob/a0a4a998ac81abeb7af3105046be608594db721b/Proofs/Byzov/Full.lean#L15"]
 theorem conjecture8 (n : ℕ) (hn : 2 ≤ n) :
     Nonempty ((RelIso (adjacent n) (adjacent n)) ≃*
       (Multiplicative (ZMod 2) ×
