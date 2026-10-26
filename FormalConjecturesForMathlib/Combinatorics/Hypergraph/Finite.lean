@@ -89,6 +89,63 @@ theorem hypergraphColorable_two_iff (H : Finset (Finset V)) :
 def HasHypergraphChromaticNumber (H : Finset (Finset V)) (k : ℕ) : Prop :=
   H.HypergraphColorable k ∧ ∀ j < k, ¬ H.HypergraphColorable j
 
+/-- Transversal number `k`, with every edge deletion reducing it below `k`. -/
+def IsTransversalCritical (H : Finset (Finset V)) (k : ℕ) : Prop :=
+  (H : Set (Finset V)).HasFiniteTransversal k ∧
+    ¬ (H : Set (Finset V)).HasFiniteTransversal (k - 1) ∧
+    ∀ e ∈ H, (H.erase e : Set (Finset V)).HasFiniteTransversal (k - 1)
+
+/-- Delete a vertex and its incident edges, with the remaining vertices as the ground type. -/
+def hypergraphDeleteVertex (H : Finset (Finset V)) (v : V) :
+    Finset (Finset {w : V // w ≠ v}) :=
+  (H.filter (fun e ↦ v ∉ e)).image fun e ↦ e.subtype (· ≠ v)
+
+/-- For a positive number of colors, keeping the deleted vertex as an isolate is equivalent. -/
+theorem hypergraphDeleteVertex_colorable_iff (H : Finset (Finset V)) (v : V)
+    (k : ℕ) (hk : 0 < k) :
+    (H.hypergraphDeleteVertex v).HypergraphColorable k ↔
+      (H.filter (fun e ↦ v ∉ e)).HypergraphColorable k := by
+  constructor
+  · rintro ⟨c, hc⟩
+    let C : V → Fin k := fun w ↦ if h : w ≠ v then c ⟨w, h⟩ else ⟨0, hk⟩
+    refine ⟨C, ?_⟩
+    intro e he
+    obtain ⟨⟨x, hx⟩, hxe, ⟨y, hy⟩, hye, hxy⟩ :=
+      hc (e.subtype (· ≠ v)) (mem_image.mpr ⟨e, he, rfl⟩)
+    refine ⟨x, mem_subtype.mp hxe, y, mem_subtype.mp hye, ?_⟩
+    simpa [C, hx, hy] using hxy
+  · rintro ⟨c, hc⟩
+    refine ⟨fun w ↦ c w.1, ?_⟩
+    intro e he
+    obtain ⟨s, hs, rfl⟩ := mem_image.mp he
+    obtain ⟨x, hx, y, hy, hxy⟩ := hc s hs
+    have hxv : x ≠ v := fun h ↦ (mem_filter.mp hs).2 (h ▸ hx)
+    have hyv : y ≠ v := fun h ↦ (mem_filter.mp hs).2 (h ▸ hy)
+    exact ⟨⟨x, hxv⟩, mem_subtype.mpr hx, ⟨y, hyv⟩, mem_subtype.mpr hy, hxy⟩
+
+/-- Chromatic number `k`, with every edge or vertex deletion permitting `k - 1` colors. -/
+def IsChromaticCritical (H : Finset (Finset V)) (k : ℕ) : Prop :=
+  H.HasHypergraphChromaticNumber k ∧
+    (∀ e ∈ H, (H.erase e).HypergraphColorable (k - 1)) ∧
+    ∀ v : V, (H.hypergraphDeleteVertex v).HypergraphColorable (k - 1)
+
+/-- An isolated singleton is vertex-critical of chromatic number one. -/
+theorem isChromaticCritical_empty_singleton :
+    (∅ : Finset (Finset (Fin 1))).IsChromaticCritical 1 := by
+  constructor
+  · constructor
+    · exact ⟨fun _ ↦ 0, by simp [IsProperHypergraphColoring]⟩
+    · intro j hj h
+      have hj0 : j = 0 := Nat.lt_one_iff.mp hj
+      subst j
+      obtain ⟨c, _⟩ := h
+      exact Fin.elim0 (c 0)
+  · constructor
+    · simp
+    · intro v
+      refine ⟨fun w ↦ False.elim (w.property (Subsingleton.elim _ _)), ?_⟩
+      simp [hypergraphDeleteVertex, IsProperHypergraphColoring]
+
 /-- No edge is contained in this set of vertices. -/
 def IsHypergraphIndependent (H : Finset (Finset V)) (S : Finset V) : Prop :=
   ∀ e ∈ H, ¬ e ⊆ S

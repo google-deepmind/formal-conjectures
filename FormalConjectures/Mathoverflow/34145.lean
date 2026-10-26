@@ -139,7 +139,7 @@ structure Configuration : Type where
 
 /-- A "packing" means that the interiors of any two rectangles are disjoint. -/
 def Configuration.IsPacking (c : Configuration) : Prop :=
-  Pairwise fun m n ↦ interior (c.rect m).toSet ∩ interior (c.rect n).toSet = ∅
+  Set.IsInteriorPacking fun n ↦ (c.rect n).toSet
 
 /-- Can a unit square be covered by rectangles of width `1 / (n + 1)` and height `1 / (n + 2)`? -/
 @[category research open, question, AMS 51]
