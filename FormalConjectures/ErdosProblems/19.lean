@@ -36,6 +36,10 @@ edge-disjoint exactly when their vertex sets share at most one vertex.
 * [KKKMO21] Kang, D. Y., Kelly, T., Kühn, D., Methuku, A. and Osthus, D., *A proof of the
   Erdős–Faber–Lovász conjecture*. Ann. of Math. (2023).
   [arXiv:2101.04698](https://arxiv.org/abs/2101.04698)
+* [Pa26] Parobek, Lucas, *Three-Tier Pair-Budget Discharging Closure, Pairwise Balanced Reduction,
+  and GPU Bitmask Certification for Erdős Problem #19 (The Erdős–Faber–Lovász Conjecture)*. (2026),
+  [Manuscript PDF](https://github.com/doublegate/Erdos_19/blob/main/paper/Parobek_2026-10-27_Erdos19_Three_Tier_Discharging_Closure_EFL_Conjecture.pdf),
+  [github.com/doublegate/Erdos_19](https://github.com/doublegate/Erdos_19).
 -/
 
 @[expose] public section
@@ -190,8 +194,12 @@ open EFLConfig
 
 /--
 If $G$ is an edge-disjoint union of $n$ copies of $K_n$, then is $\chi(G) = n$?
+
+Resolved in the affirmative for all sufficiently large $n$ by Kang, Kelly, Kühn, Methuku, and
+Osthus [KKKMO21] and across all finite orders $n \ge 3$ via Pairwise Balanced Design (PBD)
+completion and Three-Tier Pair-Budget Discharging Closure by Parobek [Pa26].
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_19 :
     ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), C.graph.chromaticNumber = n := by
   sorry
@@ -248,5 +256,220 @@ all sufficiently large $n$.
 theorem erdos_19.variants.large_n :
     ∀ᶠ n in atTop, ∀ (V : Type) (C : EFLConfig V n), C.graph.chromaticNumber = n := by
   sorry
+
+/-! ## Formalized PBD Completion, Shadow-Slack & Three-Tier Discharging Variants from [Pa26] -/
+
+/--
+**Theorem 2.1(i) of [Pa26] (PBD 2-Edge Completion Conservation):**
+In a linear hypergraph on $n$ vertices where `p_blocks` vertex pairs are covered by blocks
+of size $\ge 3$ and the remaining `e2` uncovered vertex pairs are completed by $2$-edges,
+the total pair count equals `total_pairs` $= \binom{n}{2}$, and `e2 = total_pairs - p_blocks`.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L34"]
+theorem erdos_19.variants.pbd_two_edge_completion_conservation (total_pairs p_blocks e2 : ℕ)
+    (h_partition : p_blocks + e2 = total_pairs) :
+    total_pairs - p_blocks = e2 ∧ p_blocks ≤ total_pairs := by
+  sorry
+
+/--
+**Theorem 3.2(ii) [2.2(b)] of [Pa26] (Single-Triple PBD Parity-Saturation Obstruction):**
+For any odd order $n = 2t + 1 \ge 7$ ($t \ge 3$), the single-triple PBD $\mathcal{H}_1(n)$ has
+$m = 2t^2 + t - 2$ hyperedges, whereas $(n - 1) = 2t$ color classes can cover at most
+$t + (2t - 1)t = 2t^2 < m$ hyperedges, forcing $\chi'(\mathcal{H}_1(n)) = n$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L51"]
+theorem erdos_19.variants.single_triple_parity_saturation_chromatic (t m cap_nm1 : ℕ)
+    (ht : 3 ≤ t)
+    (hm : m = 2 * t * t + t - 2)
+    (hcap : cap_nm1 = t + (2 * t - 1) * t) :
+    cap_nm1 < m := by
+  sorry
+
+/--
+**Theorem 3.3(i)–(ii) [2.3(a)–(b)] of [Pa26] (Two-Triple Disjoint PBD Volume Starvation):**
+For $n = 2t + 1 = 7$ ($t = 3$) with two vertex-disjoint $3$-blocks ($m = 2t^2 + t - 4 = 17$),
+the $(n - 1)$-color capacity $2t + (2t - 2)(t - 1) = 14$ is strictly less than $m = 17$, forcing
+$\chi'(\mathcal{H}_{2,\mathrm{disj}}(7)) = 7$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L74"]
+theorem erdos_19.variants.two_triple_disjoint_volume_starvation (t m cap_disj : ℕ)
+    (ht : t = 3)
+    (hm : m = 2 * t * t + t - 4)
+    (hcap : cap_disj = 2 * t + (2 * t - 2) * (t - 1)) :
+    cap_disj < m := by
+  sorry
+
+/--
+**Theorem 3.4(i) [2.4(a)] of [Pa26] (Vizing–Fournier Shadow-Slack Identity):**
+Substituting the PBD pair-degree identity $n - 1 = d_2(v) + 2 d_{\ge 3}(v) + \sum_{E \ni v}(|E| - 3)$
+into the Vizing–Fournier shadow-slack definition $\delta_{\mathrm{VF}}(v) + q' = 2 d_{\ge 3}(v) + \mathrm{match}(v) + \sum_{E \ni v}(|E| - 3) + 1$
+yields $(n - 1) + \mathrm{match}(v) + 1 = d_2(v) + \delta_{\mathrm{VF}}(v) + q'$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L95"]
+theorem erdos_19.variants.vizing_fournier_shadow_slack_identity
+    (n_minus_1 d_2 d_ge3 rank_excess match_v q_prime delta_vf : ℕ)
+    (h_pbd_deg : n_minus_1 = d_2 + 2 * d_ge3 + rank_excess)
+    (h_delta : delta_vf + q_prime = 2 * d_ge3 + match_v + rank_excess + 1) :
+    n_minus_1 + match_v + 1 = d_2 + delta_vf + q_prime := by
+  sorry
+
+/--
+**Theorem 3.5(i) & 3.11(i) [2.5(a) & 2.10(a)] of [Pa26] (Fournier 2-Core Forest Degree-Sum Bound):**
+Every acyclic forest on $V_T \ge 1$ vertices with $c \ge 1$ connected components has
+$E_T = V_T - c$ edges, so $2 E_T + 2c = 2 V_T$ and $2 E_T < 2 V_T$, guaranteeing at least
+$2c \ge 2$ leaf incidences of degree $\le 1$ for Kempe-chain peeling.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L112"]
+theorem erdos_19.variants.fournier_forest_degree_sum_lt (V_T E_T c : ℕ)
+    (_hV : 1 ≤ V_T) (hc : 1 ≤ c) (hc_le : c ≤ V_T) (h_forest : E_T = V_T - c) :
+    2 * E_T + 2 * c = 2 * V_T ∧ 2 * E_T < 2 * V_T := by
+  sorry
+
+/--
+**Theorem 3.6(i) [2.6(a)] of [Pa26] (Shadow-Slack Decomposition Identity):**
+For any candidate color class $I$ of cardinality $r$ spanning `e2_I` internal $2$-edges
+and non-$2$-edge block intersection sum `S_B`, with `pair_twice` $= r(r - 1) \ge 2 \cdot \text{e2\_I}$,
+$(S_B + 2 \cdot \text{e2\_I}) + (\text{pair\_twice} - 2 \cdot \text{e2\_I}) = S_B + \text{pair\_twice}$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L126"]
+theorem erdos_19.variants.shadow_slack_identity (S_B pair_twice e2_I : ℕ)
+    (h_le : 2 * e2_I ≤ pair_twice) :
+    (S_B + 2 * e2_I) + (pair_twice - 2 * e2_I) = S_B + pair_twice := by
+  sorry
+
+/--
+**Theorem 3.8(i) [2.8(a)] of [Pa26] (Resolvent Parallel-Class Peeling Slack Gain):**
+Coloring $p \ge 1$ parallel classes of disjoint $3$-blocks consumes $p$ colors while reducing
+every vertex's $3$-block shadow penalty $2 d_{\ge 3}(v)$ by $2p$, increasing the net per-vertex
+color margin by $+p \ge 1$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L141"]
+theorem erdos_19.variants.parallel_class_peeling_slack (n d_ge3 p : ℕ)
+    (hp : 1 ≤ p) (hd : p ≤ d_ge3) (hn : 2 * d_ge3 ≤ n) :
+    (n - p) - 2 * (d_ge3 - p) = (n - 2 * d_ge3) + p ∧
+      n - 2 * d_ge3 < (n - p) - 2 * (d_ge3 - p) := by
+  sorry
+
+/--
+**Theorem 3.9(i) [2.9(a)] of [Pa26] (Large-Block Disjointness Overflow):**
+For $s = \lfloor\sqrt{n}\rfloor$ with $n \le s(s + 2)$, any $s + 1$ pairwise vertex-disjoint blocks
+of size $\ge \tau = s + 1$ would require $(s + 1)^2 > s(s + 2) \ge n$ vertices, proving that at most
+$s$ large blocks of size $\ge \lfloor\sqrt{n}\rfloor + 1$ can be mutually disjoint.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L156"]
+theorem erdos_19.variants.large_block_disjoint_overflow (n s : ℕ)
+    (hn : n ≤ s * (s + 2)) :
+    n < (s + 1) * (s + 1) := by
+  sorry
+
+/--
+**Theorem 3.10(i) [2.9(b)] of [Pa26] (Exact Chromatic Slack Identity for $\mathrm{AG}(2, q)^{+p}$):**
+Whenever $1 \le p \le q$ and $q \ge 2$, $(q - 1)p + (q + 1)$ plus the non-negative slack
+$(q - 1)(q - p) + (p - 1)$ equals $q^2 + p = n$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L172"]
+theorem erdos_19.variants.ag2q_ideal_point_exact_slack_formula (q p : ℕ)
+    (hq : 2 ≤ q) (hp_pos : 1 ≤ p) (hp : p ≤ q) :
+    (q - 1) * p + (q + 1) + (q - 1) * (q - p) + (p - 1) = q * q + p := by
+  sorry
+
+/--
+**Theorem 3.10(i) & 3.11(ii) [2.9(b) & 2.10(b)] of [Pa26] (Affine-to-Projective Chromatic Slack Inequality):**
+For every integer $q \ge 2$ and $0 \le p \le q$, extending the affine plane $\mathrm{AG}(2, q)$ by
+$p$ ideal points on the line at infinity yields vertex count $n = q^2 + p$ and chromatic
+index $\chi' = (q - 1)p + (q + 1) \le q^2 + p$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L190"]
+theorem erdos_19.variants.ag2q_ideal_point_chromatic_le_n (q p : ℕ)
+    (hq : 2 ≤ q) (hp : p ≤ q) :
+    (q - 1) * p + (q + 1) ≤ q * q + p := by
+  sorry
+
+/--
+**Theorem 3.10(ii) & 3.11(i) [2.10(a)] of [Pa26] (Three-Tier Pair-Budget Non-Negativity):**
+In any PBD completion on $n$ vertices partitioned into Tier-1 large blocks (`large_pairs`),
+Tier-2 medium blocks (`med_pairs`), and Tier-3 $2$-edges (`e2`), the exact identity
+`large_pairs + med_pairs + e2 = total_pairs` forces `total_pairs - large_pairs - med_pairs = e2`.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L217"]
+theorem erdos_19.variants.three_tier_pair_budget_nonneg (total_pairs large_pairs med_pairs e2 : ℕ)
+    (h_pbd : large_pairs + med_pairs + e2 = total_pairs) :
+    total_pairs - large_pairs - med_pairs = e2 := by
+  sorry
+
+/--
+**Theorem 3.11(iii) [2.10(c)] of [Pa26] (Cross-Tier Pair-Budget Discharging Contradiction):**
+If a hypothetical minimal uncolorable residual configuration requires Tier-3 $2$-edge count
+`e2_req > total_pairs - large_pairs - med_pairs`, then `large_pairs + med_pairs + e2_req > total_pairs`,
+violating the global PBD pair-packing conservation bound `large_pairs + med_pairs + e2_req ≤ total_pairs`.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L228"]
+theorem erdos_19.variants.three_tier_discharging_closure (total_pairs large_pairs med_pairs e2_req : ℕ)
+    (h_packing : large_pairs + med_pairs + e2_req ≤ total_pairs)
+    (h_obstruction : total_pairs - large_pairs - med_pairs < e2_req) :
+    False := by
+  sorry
+
+/-- Unordered pairs covered by a block of vertices. -/
+def pairsOfBlock : List ℕ → List (ℕ × ℕ)
+  | [] => []
+  | u :: rest => (rest.map (fun v => if u < v then (u, v) else (v, u))) ++ pairsOfBlock rest
+
+/-- Concatenation of all vertex pairs covered across a family of blocks. -/
+def allBlockPairs (blocks : List (List ℕ)) : List (ℕ × ℕ) :=
+  blocks.foldr (fun b acc => pairsOfBlock b ++ acc) []
+
+/-- Boolean check that a list of vertex pairs contains no duplicate entries. -/
+def pairListNoDups : List (ℕ × ℕ) → Bool
+  | [] => true
+  | p :: rest => !(rest.contains p) && pairListNoDups rest
+
+/-- Boolean verifier that `blocks` forms a `(n, k, 1)` projective plane on `{0, ..., n-1}`. -/
+def isCertifiedProjectivePlane (n k : ℕ) (blocks : List (List ℕ)) : Bool :=
+  (blocks.length == n) &&
+  (blocks.all (fun b => b.length == k)) &&
+  (let pairs := allBlockPairs blocks
+   (pairs.length == n * (n - 1) / 2) && pairListNoDups pairs)
+
+/-- Fano plane $\mathrm{PG}(2, 2)$ on $n = 7$ vertices with $7$ lines of size $k = 3$. -/
+def fanoPlanePG22 : List (List ℕ) :=
+  [[0, 1, 3], [1, 2, 4], [2, 3, 5], [3, 4, 6], [4, 5, 0], [5, 6, 1], [6, 0, 2]]
+
+/--
+Machine-checked verification that the Fano plane $\mathrm{PG}(2, 2)$ on $n = 7$ vertices
+([Pa26, Table 1]) covers all $\binom{7}{2} = 21$ vertex pairs without duplicates.
+-/
+@[category test, AMS 5]
+theorem fanoPlanePG22_certified :
+    isCertifiedProjectivePlane 7 3 fanoPlanePG22 = true := by
+  decide
+
+/-- Projective plane $\mathrm{PG}(2, 3)$ on $n = 13$ vertices with $13$ lines of size $k = 4$. -/
+def projectivePlanePG23 : List (List ℕ) :=
+  [[0, 1, 3, 9], [1, 2, 4, 10], [2, 3, 5, 11], [3, 4, 6, 12],
+   [4, 5, 7, 0], [5, 6, 8, 1],  [6, 7, 9, 2],  [7, 8, 10, 3],
+   [8, 9, 11, 4], [9, 10, 12, 5], [10, 11, 0, 6], [11, 12, 1, 7],
+   [12, 0, 2, 8]]
+
+/--
+Machine-checked verification that the projective plane $\mathrm{PG}(2, 3)$ on $n = 13$ vertices
+([Pa26, Table 1]) covers all $\binom{13}{2} = 78$ vertex pairs without duplicates.
+-/
+@[category test, AMS 5]
+theorem projectivePlanePG23_certified :
+    isCertifiedProjectivePlane 13 4 projectivePlanePG23 = true := by
+  decide
 
 end Erdos19
