@@ -31,7 +31,7 @@ public import FormalConjecturesUtil
   (1980), 89-115.
 - [Pa26] Parobek, Lucas, *Unconditional Diophantine Haar Closure, Exact Harmonic-Difference
   Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191*. (2026),
-  [DOI:10.13140/RG.2.2.17420.27526](https://doi.org/10.13140/RG.2.2.17420.27526),
+  [Manuscript PDF](https://github.com/doublegate/Erdos_1191/blob/main/paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf),
   [github.com/doublegate/Erdos_1191](https://github.com/doublegate/Erdos_1191).
 -/
 
