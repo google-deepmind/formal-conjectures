@@ -138,7 +138,7 @@ $\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a_j} = \frac{1}{a_j - a_i + 1}$
 underlying the non-asymptotic Harmonic-Integral Conservation Law.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/8addb1383e7516fde717e369a630875f95f5eccb/Erdos1191/Proofs.lean#L33"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L33"]
 theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
     (h_pos : 1 ≤ a_i) (h_lt : a_i < a_j) (h_diff : d = a_j - a_i) :
     (d + 1) + (a_i - 1) = a_j := by
@@ -151,7 +151,7 @@ $1 \le x \le 2^{k-2}$ and $2^{k-1} < y \le 2^k$ satisfy $2^{k-2} < y - x < 2^k$,
 distant cross-shell difference lies in the two dyadic difference shells $D_{k-1} \cup D_k$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/8addb1383e7516fde717e369a630875f95f5eccb/Erdos1191/Proofs.lean#L48"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L48"]
 theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ)
     (hx_pos : 1 ≤ x)
     (hx_hi : x ≤ pow_km2)
@@ -167,7 +167,7 @@ and remainder $r \le B$, the minimum ordered-pair sum over $B$ integer buckets s
 satisfies $(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/8addb1383e7516fde717e369a630875f95f5eccb/Erdos1191/Proofs.lean#L65"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L65"]
 theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
     (hr : r ≤ B) :
     (B - r) * (q * (q - 1)) + r * ((q + 1) * q) =
@@ -182,7 +182,7 @@ discrete integrality excess $r(B - r) = B^2 \theta(1 - \theta)$ that breaks the 
 continuum Cauchy–Schwarz barrier.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/8addb1383e7516fde717e369a630875f95f5eccb/Erdos1191/Proofs.lean#L84"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L84"]
 theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
     (hr : r ≤ B) :
     B * (B * (q * q) + 2 * (r * q)) + B * r =
@@ -196,7 +196,7 @@ heavier window ($x_1 - 1$) to the lighter window ($x_2 + 1$) preserves the total
 strictly reduces the ordered-pair count $x_1(x_1 - 1) + x_2(x_2 - 1)$ by $2(x_1 - x_2 - 1) \ge 2$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/8addb1383e7516fde717e369a630875f95f5eccb/Erdos1191/Proofs.lean#L107"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L107"]
 theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 + 2 ≤ x1) :
     (x1 - 1) * (x1 - 2) + (x2 + 1) * x2 + 2 * (x1 - x2 - 1) =
       x1 * (x1 - 1) + x2 * (x2 - 1) := by
@@ -209,7 +209,7 @@ the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r -
 satisfy $w \cdot B = 2^{k - 1} = |I_k|$ across all scales $s$ and octaves $r$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/8addb1383e7516fde717e369a630875f95f5eccb/Erdos1191/Proofs.lean#L147"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L147"]
 theorem erdos_1191.variants.scale_invariant_block_window_product (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     2 ^ (k - (s + r)) * 2 ^ ((s + r) - 1) = 2 ^ (k - 1) := by
@@ -222,7 +222,7 @@ logarithmic integrals of $\{u\}(1 - \{u\})/u$ into $2\ln H(M - 1)$ and the Glais
 sawtooth constant $C_{\mathrm{GK}} = 2\ln A_{\mathrm{GK}} = \frac{1}{6} - 2\zeta'(-1)$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/8addb1383e7516fde717e369a630875f95f5eccb/Erdos1191/Proofs.lean#L161"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L161"]
 theorem erdos_1191.variants.hyperfactorial_sawtooth_abel_step (m : ℕ) (hm : 1 ≤ m) :
     m * (m + 1) - (m - 1) * m = 2 * m := by
   sorry
@@ -234,7 +234,7 @@ $$\sum_{w=1}^W (W + 1 - w)\max(w - |x - y|, 0) = \binom{W - d + 1}{2}$$
 underlying the Order-2 Cesàro–Fejér window kernel in Theorems 2.7–2.11 of [Pa26].
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/8addb1383e7516fde717e369a630875f95f5eccb/Erdos1191/Proofs.lean#L239"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L239"]
 theorem erdos_1191.variants.cesaro_fejer_order2_step (k : ℕ) :
     (k + 1) * k + 2 * (k + 1) = (k + 2) * (k + 1) := by
   sorry
