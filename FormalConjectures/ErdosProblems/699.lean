@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
  * [Le26] Lee, P., _Erdős Problem 699 in Lean: every counterexample has
    $n \le j^2$_ (2026).
    [github.com/Paulee314/erdos699-lean](https://github.com/Paulee314/erdos699-lean)
+ * [PALOMAR-2026-10-27-000020](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-27-000020&version=1)
 -/
 
 @[expose] public section
