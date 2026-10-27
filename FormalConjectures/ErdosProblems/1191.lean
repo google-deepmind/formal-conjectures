@@ -203,6 +203,19 @@ theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 
   sorry
 
 /--
+**Theorem 2.9(a) of [Pa26] (Scale-Invariant Block-Window Exponent Identity):**
+For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
+the sliding-window width exponent $k - (s + r)$ and sub-block count exponent $(s + r) - 1$
+sum to $k - 1$ independently of $s$ and $r$.
+-/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L136"]
+theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
+    (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
+    (k - (s + r)) + ((s + r) - 1) = k - 1 := by
+  sorry
+
+/--
 **Theorem 2.9(a) of [Pa26] (Scale-Invariant Block-Window Product Identity):**
 For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
 the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r - 1}$
@@ -237,6 +250,17 @@ underlying the Order-2 Cesàro–Fejér window kernel in Theorems 2.7–2.11 of 
   formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L239"]
 theorem erdos_1191.variants.cesaro_fejer_order2_step (k : ℕ) :
     (k + 1) * k + 2 * (k + 1) = (k + 2) * (k + 1) := by
+  sorry
+
+/--
+**Corollary 2.12 of [Pa26] (Unconditional Exclusion of Positive Lower Envelope at $c = 1/2$):**
+An affirmative resolution $L = 0$ of `erdos_1191.parts.i` immediately implies $\neg (0 < L)$,
+ruling out the $c = 1/2$ boundary case of `erdos_1191.parts.ii`.
+-/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/5930fe3135c41c9b287246d6f8353e69be031fc6/Erdos1191/Proofs.lean#L252"]
+theorem erdos_1191.variants.zero_liminf_excludes_pos (L : ℕ) (h_zero : L = 0) :
+    ¬ (0 < L) := by
   sorry
 
 /--
