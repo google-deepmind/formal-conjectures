@@ -38,7 +38,8 @@ with equality if and only if $G$ contains $K_{2k+2}$.
 
 Conjectured by Bollobás and Erdős. Proved by Gyárfás [Gy92].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/1f6f15be04f783cf5fabcf7f8477b4d8c03c685c/erdos-58/Proofs/Layer1358.lean#L35"]
 theorem erdos_58 :
     ∀ {V : Type*} (G : SimpleGraph V) (k : ℕ),
       G.oddCycleLengths.Finite →
