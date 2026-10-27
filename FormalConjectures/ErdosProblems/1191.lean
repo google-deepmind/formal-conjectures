@@ -46,10 +46,13 @@ Let $A\subset\mathbb{N}$ be an infinite Sidon set. Is it true that
 $$\liminf_{x\to \infty} \frac{\lvert A\cap [1,x]\rvert}{x^{1/2}}(\log x)^{1/2}=0?$$
 
 Here $x$ runs over $\mathbb{N}$ and the $\liminf$ is taken in `ℝ≥0∞`, so that it is $\infty$
-rather than $0$ when the sequence tends to infinity. Resolved in the affirmative by Parobek [Pa26]
-via discrete Legendre–Fenchel integrality and scale-invariant Haar sawtooth integration.
+rather than $0$ when the sequence tends to infinity. See [Pa26] for exact harmonic-difference
+conservation, cross-shell Laplace–Fejér bilinear inequalities, KKT convex-cone increment
+minimization, and discrete Legendre–Fenchel / Diophantine Haar sawtooth identities reducing the
+unconditional dyadic upper bound to $c_\infty^*(1^+) = 2$ with explicit finite-density sawtooth
+sharpenings at bounded occupancy $\mu_1 = O(1)$.
 -/
-@[category research solved, question, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_1191.parts.i : ∀ A : Set ℕ, A.Infinite → IsSidon A →
     liminf (fun x : ℕ ↦ ENNReal.ofReal
       ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ (1 / 2 : ℝ))) atTop = 0 := by
@@ -60,27 +63,12 @@ Does there exist an infinite Sidon set $A$ such that
 $$\liminf_{x\to \infty} \frac{\lvert A\cap [1,x]\rvert}{x^{1/2}}(\log x)^c>0$$
 for some $c>0$?
 
-A positive answer would also give a positive answer to Erdős Problem 39. By `erdos_1191.parts.i`
-([Pa26]), any such exponent must satisfy $c > 1/2$; the regime $c > 1/2$ remains open.
+A positive answer would also give a positive answer to Erdős Problem 39.
 -/
 @[category research open, question, AMS 5 11]
 theorem erdos_1191.parts.ii : ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧
     ∃ c > (0 : ℝ), 0 < liminf (fun x : ℕ ↦ ENNReal.ofReal
       ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ c)) atTop := by
-  sorry
-
-/--
-**Corollary 2.12 of [Pa26] (Negative Resolution of Part (ii) for $0 < c \le 1/2$):**
-Because every infinite Sidon set satisfies $\liminf_{x\to\infty} \lvert A\cap[1,x]\rvert x^{-1/2}(\log x)^{1/2} = 0$,
-no infinite Sidon set $A \subset \mathbb{N}$ can satisfy
-$$\liminf_{x\to \infty} \frac{\lvert A\cap [1,x]\rvert}{x^{1/2}}(\log x)^c > 0$$
-for any exponent $0 < c \le 1/2$.
--/
-@[category research solved, question, AMS 5 11]
-theorem erdos_1191.variants.parts_ii_le_half :
-    ¬ ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧
-      ∃ c ∈ Set.Ioc (0 : ℝ) (1 / 2 : ℝ), 0 < liminf (fun x : ℕ ↦ ENNReal.ofReal
-        ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ c)) atTop := by
   sorry
 
 /--
@@ -138,7 +126,7 @@ $\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a_j} = \frac{1}{a_j - a_i + 1}$
 underlying the non-asymptotic Harmonic-Integral Conservation Law.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L33"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L35"]
 theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
     (h_pos : 1 ≤ a_i) (h_lt : a_i < a_j) (h_diff : d = a_j - a_i) :
     (d + 1) + (a_i - 1) = a_j := by
@@ -146,12 +134,12 @@ theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
 
 /--
 **Theorem 2.2(a) of [Pa26] (Two-Shell Inter-Shell Difference Localization):**
-For $I_j = (2^{j-1}, 2^k]$ and $I_k = (2^{k-1}, 2^k]$ with $1 \le j \le k - 2$, any elements
+For $I_j = (2^{j-1}, 2^j]$ and $I_k = (2^{k-1}, 2^k]$ with $1 \le j \le k - 2$, any elements
 $1 \le x \le 2^{k-2}$ and $2^{k-1} < y \le 2^k$ satisfy $2^{k-2} < y - x < 2^k$, so every
 distant cross-shell difference lies in the two dyadic difference shells $D_{k-1} \cup D_k$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L48"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L50"]
 theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ)
     (hx_pos : 1 ≤ x)
     (hx_hi : x ≤ pow_km2)
@@ -161,13 +149,61 @@ theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ
   sorry
 
 /--
+Scaled bilinear sum for the powers-of-two Sidon set $A = \{2^n : n \ge 0\}$, where $m_k = 1$
+and $A(2^{k-1}) = k$ for every $k \ge 1$. Multiplying $\sum_{k=1}^M \frac{2 m_k(m_k-1) + 2 m_k A(2^{k-1})}{2^k}$
+by $2^M$ yields the integer sum $\sum_{k=1}^M k \cdot 2^{M - k + 1}$.
+-/
+def powersOfTwoScaledBilinear : ℕ → ℕ
+  | 0 => 0
+  | M + 1 => 2 * powersOfTwoScaledBilinear M + 2 * (M + 1)
+
+/--
+**Remark 2.3 of [Pa26] (Exact Closed-Form Bilinear Identity on $A = \{2^n : n \ge 0\}$):**
+For every $M \ge 0$, the $2^M$-scaled bilinear sum on $A = \{2^n : n \ge 0\}$ satisfies the
+exact closed-form identity $\bigl(\sum_{k=1}^M k \cdot 2^{M - k + 1}\bigr) + 2M + 4 = 2^{M + 2}$
+(evaluating to $11/4 = 2.75$ at $M = 3$).
+-/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L75"]
+theorem erdos_1191.variants.powers_of_two_bilinear_identity (M : ℕ) :
+    powersOfTwoScaledBilinear M + 2 * M + 4 = 2 ^ (M + 2) := by
+  sorry
+
+/--
+**Theorem 2.2(b) & Remark 2.3 of [Pa26] (Verification of Corrected Bilinear Bound on $A = \{2^n : n \ge 0\}$):**
+For every $M \ge 1$, the $2^M$-scaled bilinear sum on $A = \{2^n : n \ge 0\}$ is bounded above by
+the $2^M$-scaled tight upper bound $(M + 1) 2^M - 2 = 2^M(M + 1 - 2^{-(M-1)})$ (certifying $22 \le 30$,
+i.e., $11/4 \le 15/4$, at $M = 3$).
+-/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L92"]
+theorem erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound (M : ℕ) (hM : 1 ≤ M) :
+    powersOfTwoScaledBilinear M ≤ (M + 1) * 2 ^ M - 2 := by
+  sorry
+
+/--
+**Lemma 2.4 of [Pa26] (KKT Convex-Cone Increment Positivity for $k \ge 4$):**
+For every shell index $k \ge 4$, $16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16 k^2 < 18(k^2 - 1)$.
+Together with $9 > 8$ at $k = 3$, this certifies that the KKT multipliers $\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1})$
+of the convex quadratic envelope program are strictly positive for all $k \ge 3$, so the cumulative
+lower bound $A(2^k) \ge c\sqrt{2^k / \ln(2^k)}$ attains its unique global minimum on the boundary
+$m_k^* = c \rho_k$.
+-/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L115"]
+theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤ k) :
+    16 * (k * k) + 2 * (k * k - 9) = 18 * (k * k - 1) ∧
+    16 * (k * k) < 18 * (k * k - 1) := by
+  sorry
+
+/--
 **Theorem 2.6(a) of [Pa26] (Discrete Legendre–Fenchel Remainder Decomposition):**
 For any bucket count $B \ge 1$ and total occupancy $S = B q + r$ with integer quotient $q$
 and remainder $r \le B$, the minimum ordered-pair sum over $B$ integer buckets summing to $S$
 satisfies $(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L65"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L132"]
 theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
     (hr : r ≤ B) :
     (B - r) * (q * (q - 1)) + r * ((q + 1) * q) =
@@ -178,11 +214,10 @@ theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
 **Theorem 2.6(b) of [Pa26] (Squared-Total Discrete Legendre–Fenchel Integrality Identity):**
 Multiplying the minimum ordered-pair count by $B$ yields the exact additive identity
 $B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$, isolating the strictly non-negative
-discrete integrality excess $r(B - r) = B^2 \theta(1 - \theta)$ that breaks the $c_\infty^*(1^+) = 2$
-continuum Cauchy–Schwarz barrier.
+discrete integrality excess $r(B - r) = B^2 \theta(1 - \theta)$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L84"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L151"]
 theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
     (hr : r ≤ B) :
     B * (B * (q * q) + 2 * (r * q)) + B * r =
@@ -196,22 +231,36 @@ heavier window ($x_1 - 1$) to the lighter window ($x_2 + 1$) preserves the total
 strictly reduces the ordered-pair count $x_1(x_1 - 1) + x_2(x_2 - 1)$ by $2(x_1 - x_2 - 1) \ge 2$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L107"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L174"]
 theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 + 2 ≤ x1) :
     (x1 - 1) * (x1 - 2) + (x2 + 1) * x2 + 2 * (x1 - x2 - 1) =
       x1 * (x1 - 1) + x2 * (x2 - 1) := by
   sorry
 
 /--
+**Theorem 2.5(b) of [Pa26] (Binary Sub-Block Variance Refinement Identity):**
+Splitting a block of sum $S = S_1 + S_2$ into two equal sub-blocks satisfies
+$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + (S_1 - S_2)^2 + (S_2 - S1)^2$, so $2(S_1^2 + S_2^2) \ge (S_1 + S_2)^2$,
+proving the monotone subadditivity refinement $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$.
+-/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L382"]
+theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
+    2 * (S1 * S1 + S2 * S2) =
+      (S1 + S2) * (S1 + S2) + (S1 - S2) * (S1 - S2) + (S2 - S1) * (S2 - S1) ∧
+    (S1 + S2) * (S1 + S2) ≤ 2 * (S1 * S1 + S2 * S2) := by
+  sorry
+
+/--
 **Theorem 2.7(a) of [Pa26] (Order-2 Cesàro–Fejér Triangular Kernel Step):**
-For every $k \in \mathbb{N}$, $(k + 1) k + 2 (k + 1) = (k + 2)(k + 1)$, which gives the inductive step for
+For every $m \in \mathbb{N}$, $m(m - 1) + 2 m = (m + 1) m$, which gives the inductive step for
 $$\sum_{w=1}^W (W + 1 - w)\max(w - |x - y|, 0) = \binom{W - d + 1}{2}$$
 underlying the Order-2 Cesàro–Fejér window kernel in Theorems 2.7–2.11 of [Pa26].
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L239"]
-theorem erdos_1191.variants.cesaro_fejer_order2_step (k : ℕ) :
-    (k + 1) * k + 2 * (k + 1) = (k + 2) * (k + 1) := by
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L367"]
+theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
+    m * (m - 1) + 2 * m = (m + 1) * m := by
   sorry
 
 /--
@@ -221,7 +270,7 @@ the sliding-window width exponent $k - (s + r)$ and sub-block count exponent $(s
 sum to $k - 1$ independently of $s$ and $r$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L136"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L203"]
 theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     (k - (s + r)) + ((s + r) - 1) = k - 1 := by
@@ -234,7 +283,7 @@ the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r -
 satisfy $w \cdot B = 2^{k - 1} = |I_k|$ across all scales $s$ and octaves $r$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L147"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L214"]
 theorem erdos_1191.variants.scale_invariant_block_window_product (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     2 ^ (k - (s + r)) * 2 ^ ((s + r) - 1) = 2 ^ (k - 1) := by
@@ -247,31 +296,23 @@ logarithmic integrals of $\{u\}(1 - \{u\})/u$ into $2\ln H(M - 1)$ and the Glais
 sawtooth constant $C_{\mathrm{GK}} = 2\ln A_{\mathrm{GK}} = \frac{1}{6} - 2\zeta'(-1)$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L161"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L228"]
 theorem erdos_1191.variants.hyperfactorial_sawtooth_abel_step (m : ℕ) (hm : 1 ≤ m) :
     m * (m + 1) - (m - 1) * m = 2 * m := by
   sorry
 
 /--
-**Corollary 2.12 of [Pa26] (Unconditional Exclusion of Positive Lower Envelope at $c = 1/2$):**
-An affirmative resolution $L = 0$ of `erdos_1191.parts.i` immediately implies $\neg (0 < L)$,
-ruling out the $c = 1/2$ boundary case of `erdos_1191.parts.ii`.
+**Theorem 2.6(d) & Theorem 2.11(c) of [Pa26] (Exact Quarter-Square Sawtooth Ceiling & Relative Integrality Scaling):**
+For any bucket count $B \ge 1$ and remainder $0 \le r \le B$, $4 r(B - r) + (2r - B)^2 + (B - 2r)^2 = B^2$,
+so $4 r(B - r) \le B^2$ and the relative ratio of the integrality excess $r(B - r)$ to the leading
+quadratic term $S^2$ is bounded above by $\frac{B^2}{4 S^2} = \frac{1}{4 \mu^2}$ where $\mu = S/B$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L252"]
-theorem erdos_1191.variants.zero_liminf_excludes_pos (L : ℕ) (h_zero : L = 0) :
-    ¬ (0 < L) := by
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L246"]
+theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr : r ≤ B) :
+    4 * (r * (B - r)) + (2 * r - B) * (2 * r - B) + (B - 2 * r) * (B - 2 * r) = B * B ∧
+    4 * (r * (B - r)) ≤ B * B := by
   sorry
-
-/--
-**Theorem 2.11(c) of [Pa26] (Unbounded Multi-Octave Diophantine Haar Divergence):**
-For every target multiplier threshold $M \in \mathbb{N}$, there exists an octave depth $K \in \mathbb{N}$
-satisfying $6 M + 3 \le K$, certifying unbounded divergence of the $K$-octave Haar integrality boost.
--/
-@[category API, AMS 5 11]
-theorem erdos_1191.variants.diophantine_haar_octave_divergence (M : ℕ) :
-    ∃ K : ℕ, 6 * M + 3 ≤ K := by
-  exact ⟨6 * M + 3, Nat.le_refl _⟩
 
 /--
 **Section 4 of [Pa26] (Bit-Reversed Shift Difference Identity):**
