@@ -99,7 +99,8 @@ theorem erdos_692.variants.erdos_upper_bound :
 Cambie has calculated that unimodularity fails even for $n=2$ and $n=3$. For example,
 $$\delta_1(3,6)= 0.35\quad \delta_1(3,7)\approx 0.33\quad \delta_1(3,8)\approx 0.3619.$$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/b8e7531a14cbe5c18ea1ae2e9e85b811bc3c7a46/erdos-692/Solution.lean#L26"]
 theorem erdos_692.variants.cambie_three :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
       δ 3 7 < δ 3 6 ∧ δ 3 7 < δ 3 8 := by
