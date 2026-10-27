@@ -96,6 +96,7 @@ theorem erdos_692.variants.erdos_upper_bound :
       ∃ c > (0 : ℝ), ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ m, δ n m ≤ C / Real.log n ^ c := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Cambie has calculated that unimodularity fails even for $n=2$ and $n=3$. For example,
 $$\delta_1(3,6)= 0.35\quad \delta_1(3,7)\approx 0.33\quad \delta_1(3,8)\approx 0.3619.$$

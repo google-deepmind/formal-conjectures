@@ -51,6 +51,7 @@ def GapSymmetric (N : ℕ) (b : ℕ → ℝ) : Prop :=
   ∀ i : ℕ, i + 1 < N →
     b (i + 1) - b i = b (N - 1 - i) - b (N - 2 - i)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(x)\in \mathbb{R}[x]$ be a polynomial of degree $n$ whose roots $\{a_0<\cdots<a_n\}$ are
 all real and form an arithmetic progression.
