@@ -67,7 +67,8 @@ def twoCliqueJoin (n : ℕ) : SimpleGraph (Fin n) where
 
 /-- The original lower bound fails on connected graphs of order at least four
 with at least two missing edges, exactly excluding K_n and K_n-e. -/
-@[category research solved, AMS 5 15]
+@[category research solved, AMS 5 15, formal_proof using lean4 at
+  "https://github.com/RhudeJJJJ/formal-conjectures/blob/7a18fe152ccd0b109cc788c337dd7c3c04f8c975/Proofs/JiaSong/Full.lean#L28"]
 theorem conjecture3_8 : ¬ ∀ (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
     4 ≤ n → G.Connected → 2 ≤ n.choose 2 - G.edgeFinset.card →
       conjecturedBound n ≤ objective G := by
