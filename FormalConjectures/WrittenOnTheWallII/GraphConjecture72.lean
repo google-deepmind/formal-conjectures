@@ -49,7 +49,7 @@ number is divided by three; the different reading dividing the whole sum is not 
 See Gebendorfer, An unbounded deficit in Written on the Wall II Conjecture72 (2026),
 https://github.com/google-deepmind/formal-conjectures/issues/7662. -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/ed4afb62505931cb28bde860af40760537af9fa3/Proofs/WOWII72/Full.lean#L55"]
+  formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/83fe1c1cd889d6b0635d8ca56e87072db2644bda/Proofs/WOWII72/Full.lean#L55"]
 theorem conjecture72 : ¬ conjecture72Statement := by
   sorry
 
