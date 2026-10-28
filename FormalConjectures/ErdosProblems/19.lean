@@ -37,6 +37,8 @@ edge-disjoint exactly when their vertex sets share at most one vertex.
   J. Combin. Theory Ser. A (1992).
 * [RoSa07] Romero, D. and Sánchez-Arroyo, A., *Adding evidence to the Erdős–Faber–Lovász
   conjecture*. Ars Combin. 85 (2007), 71-84.
+* [RoAl14] Romero, D. and Alonso-Pecina, F., *The Erdős–Faber–Lovász conjecture is true for
+  $n \le 12$*. Discrete Math. Algorithms Appl. 6 (2014), 1450039.
 * [KKKMO21] Kang, D. Y., Kelly, T., Kühn, D., Methuku, A. and Osthus, D., *A proof of the
   Erdős–Faber–Lovász conjecture*. Ann. of Math. (2023).
   [arXiv:2101.04698](https://arxiv.org/abs/2101.04698)
@@ -256,7 +258,8 @@ theorem erdos_19.variants.erdos_19_implies_lt_ten
   exact h V n C
 
 /--
-Romero and Sánchez-Arroyo [RoSa07] proved the Erdős–Faber–Lovász conjecture for $n \le 12$.
+Romero and Alonso-Pecina [RoAl14] proved the Erdős–Faber–Lovász conjecture for $n \le 12$
+(extending the $n \le 10$ result of Romero and Sánchez-Arroyo [RoSa07]).
 -/
 @[category research solved, AMS 5]
 theorem erdos_19.variants.le_twelve :
@@ -300,15 +303,15 @@ theorem erdos_19.variants.erdos_19_implies_large_n
     ∀ᶠ n in atTop, ∀ (V : Type) (C : EFLConfig V n), C.graph.chromaticNumber = n := by
   exact Filter.Eventually.of_forall (fun n V C => h V n C)
 
-/-! ## Formalized PBD Completion, Shadow-Slack & Three-Tier Discharging Variants from [Pa26] -/
+/-! ## Arithmetic Lemmas & Certified Projective Plane Witnesses Used in [Pa26] -/
 
 /--
-**Theorem 2.1(i) of [Pa26] (PBD 2-Edge Completion Conservation):**
-In a linear hypergraph on $n$ vertices where `p_blocks` vertex pairs are covered by blocks
-of size $\ge 3$ and the remaining `e2` uncovered vertex pairs are completed by $2$-edges,
-the total pair count equals `total_pairs` $= \binom{n}{2}$, and `e2 = total_pairs - p_blocks`.
+**Arithmetic Lemma for Theorem 2.1(i) of [Pa26] (Additive Partition Conservation):**
+For natural numbers `total_pairs`, `p_blocks`, and `e2` satisfying `p_blocks + e2 = total_pairs`,
+`total_pairs - p_blocks = e2` and `p_blocks ≤ total_pairs` (used for the PBD 2-edge pair partition
+`p_blocks + e2 = n * (n - 1) / 2` in Theorem 2.1(i) of [Pa26]).
 -/
-@[category research solved, AMS 5,
+@[category API, AMS 5,
   formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L36"]
 theorem erdos_19.variants.pbd_two_edge_completion_conservation (total_pairs p_blocks e2 : ℕ)
     (h_partition : p_blocks + e2 = total_pairs) :
@@ -316,13 +319,15 @@ theorem erdos_19.variants.pbd_two_edge_completion_conservation (total_pairs p_bl
   sorry
 
 /--
-**Theorem 3.2(ii) [2.2(b)] of [Pa26] (Single-Triple PBD Parity-Saturation Obstruction):**
-For any odd order $n = 2t + 1 \ge 7$ ($t \ge 3$), the single-triple PBD $\mathcal{H}_1(n)$ has
-$m = 2t^2 + t - 2$ hyperedges, whereas $(n - 1) = 2t$ color classes can cover at most
-$t + (2t - 1)t = 2t^2 < m$ hyperedges, forcing $\chi'(\mathcal{H}_1(n)) = n$.
+**Arithmetic Lemma for Theorem 3.2(ii) [2.2(b)] of [Pa26] (Single-Triple Capacity Inequality):**
+For any natural number `t ≥ 3`, if `m = 2 * t * t + t - 2` and `cap_nm1 = t + (2 * t - 1) * t`,
+then `cap_nm1 = 2 * t * t < m`. In Theorem 3.2(ii) of [Pa26], `m` is the edge count of the
+single-triple PBD `H_1(2t + 1)` and `cap_nm1` is the maximum hyperedge capacity of `2t = n - 1`
+color classes when one class contains the 3-block (`t` edges) and `2t - 1` classes contain at
+most `t` 2-edges each.
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L53"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L51"]
 theorem erdos_19.variants.single_triple_parity_saturation_chromatic (t m cap_nm1 : ℕ)
     (ht : 3 ≤ t)
     (hm : m = 2 * t * t + t - 2)
@@ -331,13 +336,13 @@ theorem erdos_19.variants.single_triple_parity_saturation_chromatic (t m cap_nm1
   sorry
 
 /--
-**Theorem 3.3(i)–(ii) [2.3(a)–(b)] of [Pa26] (Two-Triple Disjoint PBD Volume Starvation):**
-For $n = 2t + 1 = 7$ ($t = 3$) with two vertex-disjoint $3$-blocks ($m = 2t^2 + t - 4 = 17$),
-the $(n - 1)$-color capacity $2t + (2t - 2)(t - 1) = 14$ is strictly less than $m = 17$, forcing
-$\chi'(\mathcal{H}_{2,\mathrm{disj}}(7)) = 7$.
+**Arithmetic Lemma for Theorem 3.3(i)–(ii) [2.3(a)–(b)] of [Pa26] (Two-Triple Capacity Inequality at `t = 3`):**
+For `t = 3`, `m = 2 * t * t + t - 4 = 17`, and `cap_disj = 2 * t + (2 * t - 2) * (t - 1) = 14`,
+`cap_disj < m` holds on `ℕ`. In Theorem 3.3 of [Pa26], this compares the 6-color capacity bound
+against the 17 hyperedges of the disjoint two-triple PBD `H_{2,disj}(7)`.
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L76"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L71"]
 theorem erdos_19.variants.two_triple_disjoint_volume_starvation (t m cap_disj : ℕ)
     (ht : t = 3)
     (hm : m = 2 * t * t + t - 4)
@@ -346,13 +351,14 @@ theorem erdos_19.variants.two_triple_disjoint_volume_starvation (t m cap_disj : 
   sorry
 
 /--
-**Theorem 3.4(i) [2.4(a)] of [Pa26] (Vizing–Fournier Shadow-Slack Identity):**
-Substituting the PBD pair-degree identity $n - 1 = d_2(v) + 2 d_{\ge 3}(v) + \sum_{E \ni v}(|E| - 3)$
-into the Vizing–Fournier shadow-slack definition $\delta_{\mathrm{VF}}(v) + q' = 2 d_{\ge 3}(v) + \mathrm{match}(v) + \sum_{E \ni v}(|E| - 3) + 1$
-yields $(n - 1) + \mathrm{match}(v) + 1 = d_2(v) + \delta_{\mathrm{VF}}(v) + q'$.
+**Arithmetic Lemma for Theorem 3.4(i) [2.4(a)] of [Pa26] (Linear Elimination for Shadow-Slack):**
+For natural numbers satisfying `n_minus_1 = d_2 + 2 * d_ge3 + rank_excess` and
+`delta_vf + q_prime = 2 * d_ge3 + match_v + rank_excess + 1`, eliminating `2 * d_ge3 + rank_excess`
+yields `n_minus_1 + match_v + 1 = d_2 + delta_vf + q_prime` (the arithmetic elimination step in
+the Vizing–Fournier shadow-slack identity of Theorem 3.4(i) in [Pa26]).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L96"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L88"]
 theorem erdos_19.variants.vizing_fournier_shadow_slack_identity
     (n_minus_1 d_2 d_ge3 rank_excess match_v q_prime delta_vf : ℕ)
     (h_pbd_deg : n_minus_1 = d_2 + 2 * d_ge3 + rank_excess)
@@ -361,41 +367,39 @@ theorem erdos_19.variants.vizing_fournier_shadow_slack_identity
   sorry
 
 /--
-**Theorem 3.5(i) & 3.11(i) [2.5(a) & 2.10(a)] of [Pa26] (Fournier 2-Core Forest Degree-Sum Bound):**
-Every acyclic forest on $V_T \ge 1$ vertices with $c \ge 1$ connected components has
-$E_T = V_T - c$ edges, so $2 E_T + 2c = 2 V_T$ and $2 E_T < 2 V_T$, guaranteeing at least
-$2c \ge 2$ leaf incidences of degree $\le 1$ for Kempe-chain peeling.
+**Arithmetic Lemma for Theorem 3.5(i) & 3.11(i) of [Pa26] (Forest Edge-Double Identity):**
+For natural numbers `1 ≤ c ≤ V_T` and `E_T = V_T - c`, `2 * E_T + 2 * c = 2 * V_T` and
+`2 * E_T < 2 * V_T` (the arithmetic step relating forest edge count `E_T = V_T - c` to twice
+the vertex count `2 * V_T` in Theorem 3.5(i) of [Pa26]).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L112"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L103"]
 theorem erdos_19.variants.fournier_forest_degree_sum_lt (V_T E_T c : ℕ)
     (_hV : 1 ≤ V_T) (hc : 1 ≤ c) (hc_le : c ≤ V_T) (h_forest : E_T = V_T - c) :
     2 * E_T + 2 * c = 2 * V_T ∧ 2 * E_T < 2 * V_T := by
   sorry
 
 /--
-**Theorem 3.6(i) [2.6(a)] of [Pa26] (Shadow-Slack Decomposition Identity):**
-For any candidate color class $I$ of cardinality $r$ spanning `e2_I` internal $2$-edges
-and non-$2$-edge block intersection sum `S_B`, with `pair_twice` $= r(r - 1) \ge 2 \cdot \text{e2\_I}$,
-$(S_B + 2 \cdot \text{e2\_I}) + (\text{pair\_twice} - 2 \cdot \text{e2\_I}) = S_B + \text{pair\_twice}$.
+**Arithmetic Lemma for Theorem 3.6(i) [2.6(a)] of [Pa26] (Additive Cancellation Identity):**
+For natural numbers `S_B`, `pair_twice`, and `e2_I` with `2 * e2_I ≤ pair_twice`,
+`(S_B + 2 * e2_I) + (pair_twice - 2 * e2_I) = S_B + pair_twice` (the arithmetic cancellation step
+in the Shadow-Slack identity of Theorem 3.6(i) in [Pa26]).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L126"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L116"]
 theorem erdos_19.variants.shadow_slack_identity (S_B pair_twice e2_I : ℕ)
     (h_le : 2 * e2_I ≤ pair_twice) :
     (S_B + 2 * e2_I) + (pair_twice - 2 * e2_I) = S_B + pair_twice := by
   sorry
 
 /--
-**Theorem 3.7(a) [2.6(b)] of [Pa26] (Edmonds Blossom Odd-Set Shadow-Slack Bound):**
-For any odd vertex subset $U$ of cardinality $|U| = 2t + 1 \ge 3$ in the residual $2$-edge graph
-$G_{\mathrm{res}}$ of maximum degree $\Delta = n - q' \ge 1$, if at most $2$ vertices of $U$ lie in
-the deficit-zero set $D = \{v : \delta_{\mathrm{VF}}(v) = 0\}$ and the remaining $2t - 1$ vertices
-have degree $\le \Delta - 1$, then $2|E(G_{\mathrm{res}}[U])| \le 2\Delta + (2t - 1)(\Delta - 1)$,
-which for all $\Delta + 1 \le 2t$ forces $2|E(G_{\mathrm{res}}[U])| \le 2t\Delta = (|U| - 1)(n - q')$.
+**Arithmetic Lemma for Theorem 3.7(a) [2.6(b)] of [Pa26] (Linear Degree-Sum Inequality):**
+For natural numbers `t ≥ 1` and `delta ≥ 1` with `delta + 1 ≤ 2 * t`, any `deg_sum_U` satisfying
+`deg_sum_U ≤ 2 * delta + (2 * t - 1) * (delta - 1)` also satisfies `deg_sum_U ≤ 2 * t * delta`
+(the arithmetic inequality used in the odd-set degree-sum bound of Theorem 3.7(a) in [Pa26]).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L143"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L129"]
 theorem erdos_19.variants.edmonds_blossom_odd_set_slack_bound
     (t delta deg_sum_U : ℕ)
     (ht : 1 ≤ t) (hdelta : 1 ≤ delta)
@@ -405,13 +409,13 @@ theorem erdos_19.variants.edmonds_blossom_odd_set_slack_bound
   sorry
 
 /--
-**Theorem 3.8(i) [2.8(a)] of [Pa26] (Resolvent Parallel-Class Peeling Slack Gain):**
-Coloring $p \ge 1$ parallel classes of disjoint $3$-blocks consumes $p$ colors while reducing
-every vertex's $3$-block shadow penalty $2 d_{\ge 3}(v)$ by $2p$, increasing the net per-vertex
-color margin by $+p \ge 1$.
+**Arithmetic Lemma for Theorem 3.8(i) [2.8(a)] of [Pa26] (Linear Slack Increment Identity):**
+For natural numbers `1 ≤ p ≤ d_ge3` and `2 * d_ge3 ≤ n`, `(n - p) - 2 * (d_ge3 - p) = (n - 2 * d_ge3) + p`
+and `n - 2 * d_ge3 < (n - p) - 2 * (d_ge3 - p)` (the arithmetic step showing a `+p` slack increase
+when `d_ge3` decreases by `p` and `n` decreases by `p` in Theorem 3.8(i) of [Pa26]).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L171"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L155"]
 theorem erdos_19.variants.parallel_class_peeling_slack (n d_ge3 p : ℕ)
     (hp : 1 ≤ p) (hd : p ≤ d_ge3) (hn : 2 * d_ge3 ≤ n) :
     (n - p) - 2 * (d_ge3 - p) = (n - 2 * d_ge3) + p ∧
@@ -419,65 +423,64 @@ theorem erdos_19.variants.parallel_class_peeling_slack (n d_ge3 p : ℕ)
   sorry
 
 /--
-**Theorem 3.9(i) [2.9(a)] of [Pa26] (Large-Block Disjointness Overflow):**
-For $s = \lfloor\sqrt{n}\rfloor$ with $n \le s(s + 2)$, any $s + 1$ pairwise vertex-disjoint blocks
-of size $\ge \tau = s + 1$ would require $(s + 1)^2 > s(s + 2) \ge n$ vertices, proving that at most
-$s$ large blocks of size $\ge \lfloor\sqrt{n}\rfloor + 1$ can be mutually disjoint.
+**Arithmetic Lemma for Theorem 3.9(i) [2.9(a)] of [Pa26] (Square Overflow Inequality):**
+For natural numbers `n, s` with `n ≤ s * (s + 2)`, `n < (s + 1) * (s + 1)` since
+`(s + 1)^2 = s(s + 2) + 1` (the arithmetic step used in Theorem 3.9(i) of [Pa26] to show that
+`s + 1` disjoint blocks of size `≥ s + 1` require more than `s(s + 2) ≥ n` vertices).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L187"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L169"]
 theorem erdos_19.variants.large_block_disjoint_overflow (n s : ℕ)
     (hn : n ≤ s * (s + 2)) :
     n < (s + 1) * (s + 1) := by
   sorry
 
 /--
-**Theorem 3.10(i) [2.9(b)] of [Pa26] (Exact Chromatic Slack Identity for $\mathrm{AG}(2, q)^{+p}$):**
-Whenever $1 \le p \le q$ and $q \ge 2$, $(q - 1)p + (q + 1)$ plus the non-negative slack
-$(q - 1)(q - p) + (p - 1)$ equals $q^2 + p = n$.
+**Arithmetic Lemma for Theorem 3.10(i) [2.9(b)] of [Pa26] (Polynomial Slack Identity for `1 ≤ p ≤ q`):**
+Whenever `1 ≤ p ≤ q` and `q ≥ 2`, `(q - 1) * p + (q + 1) + (q - 1) * (q - p) + (p - 1) = q * q + p`
+(the arithmetic identity comparing `(q - 1)p + (q + 1)` and `q^2 + p` in Theorem 3.10(i) of [Pa26]).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L205"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L187"]
 theorem erdos_19.variants.ag2q_ideal_point_exact_slack_formula (q p : ℕ)
     (hq : 2 ≤ q) (hp_pos : 1 ≤ p) (hp : p ≤ q) :
     (q - 1) * p + (q + 1) + (q - 1) * (q - p) + (p - 1) = q * q + p := by
   sorry
 
 /--
-**Theorem 3.10(i) & 3.11(ii) [2.9(b) & 2.10(b)] of [Pa26] (Affine-to-Projective Chromatic Slack Inequality):**
-For every integer $q \ge 2$ and $0 \le p \le q$, extending the affine plane $\mathrm{AG}(2, q)$ by
-$p$ ideal points on the line at infinity yields vertex count $n = q^2 + p$ and chromatic
-index $\chi' = (q - 1)p + (q + 1) \le q^2 + p$.
+**Arithmetic Lemma for Theorem 3.10(i) & 3.11(ii) of [Pa26] (Polynomial Inequality `(q - 1)p + (q + 1) ≤ q^2 + p`):**
+For every natural number `q ≥ 2` and `0 ≤ p ≤ q`, `(q - 1) * p + (q + 1) ≤ q * q + p`
+(the arithmetic inequality showing that the formula `(q - 1)p + (q + 1)` does not exceed `q^2 + p`
+in Theorem 3.10(i) of [Pa26]).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L223"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L205"]
 theorem erdos_19.variants.ag2q_ideal_point_chromatic_le_n (q p : ℕ)
     (hq : 2 ≤ q) (hp : p ≤ q) :
     (q - 1) * p + (q + 1) ≤ q * q + p := by
   sorry
 
 /--
-**Theorem 3.10(ii) & 3.11(i) [2.10(a)] of [Pa26] (Three-Tier Pair-Budget Non-Negativity):**
-In any PBD completion on $n$ vertices partitioned into Tier-1 large blocks (`large_pairs`),
-Tier-2 medium blocks (`med_pairs`), and Tier-3 $2$-edges (`e2`), the exact identity
-`large_pairs + med_pairs + e2 = total_pairs` forces `total_pairs - large_pairs - med_pairs = e2`.
+**Arithmetic Lemma for Theorem 3.10(ii) & 3.11(i) of [Pa26] (Three-Term Partition Subtraction):**
+For natural numbers `total_pairs`, `large_pairs`, `med_pairs`, and `e2` satisfying
+`large_pairs + med_pairs + e2 = total_pairs`, `total_pairs - large_pairs - med_pairs = e2`.
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L249"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L230"]
 theorem erdos_19.variants.three_tier_pair_budget_nonneg (total_pairs large_pairs med_pairs e2 : ℕ)
     (h_pbd : large_pairs + med_pairs + e2 = total_pairs) :
     total_pairs - large_pairs - med_pairs = e2 := by
   sorry
 
 /--
-**Theorem 3.11(a) [2.10(a)] of [Pa26] (Global Shadow-Slack & Residual 2-Edge Conservation Identity):**
-In any PBD completion on $n$ vertices where $2(P_L + P_M + e_2) = n(n - 1)$, summing the
-per-vertex Vizing–Fournier shadow-slack identity across all $n$ vertices proves that
-$\sum_{v \in V} \delta_{\mathrm{VF}}(v) + 2(e_2 - F_{\mathrm{tot}}) = n(n - q')$ and
-$2(P_L + P_M + F_{\mathrm{tot}}) = n(q' - 1) + \sum_{v \in V} \delta_{\mathrm{VF}}(v)$.
+**Arithmetic Lemma for Theorem 3.11(a) [2.10(a)] of [Pa26] (Global Linear Conservation Identity):**
+For natural numbers `1 ≤ q' ≤ n` and `F_tot ≤ e2` satisfying `2 * (P_L + P_M + e2) = n * (n - 1)`
+and `sum_delta_vf + n * (q' - 1) = 2 * (P_L + P_M + F_tot)`, we have
+`sum_delta_vf + 2 * (e2 - F_tot) = n * (n - q')` and `2 * (P_L + P_M + F_tot) = n * (q' - 1) + sum_delta_vf`
+(the linear elimination step in Theorem 3.11(a) of [Pa26]).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L263"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L242"]
 theorem erdos_19.variants.global_shadow_slack_conservation
     (n q' P_L P_M e2 F_tot sum_delta_vf : ℕ)
     (hq_pos : 1 ≤ q') (hq_le : q' ≤ n) (hF_le : F_tot ≤ e2)
@@ -488,16 +491,13 @@ theorem erdos_19.variants.global_shadow_slack_conservation
   sorry
 
 /--
-**Theorem 3.11(c) [2.10(c)] of [Pa26] (Three-Tier Fournier 2-Core Pair-Budget Obstruction Bound):**
-If a residual configuration has a Fournier cyclic $2$-core $D_2 \subseteq D$ of size $k = |D_2| \ge 3$
-where every vertex $u \in D_2$ has $\delta_{\mathrm{VF}}(u) = 0$ ($d_{G_{\mathrm{res}}}(u) = n - q'$),
-then $2(e_2 - F_{\mathrm{tot}}) = k(n - q') + \text{deg\_sum\_outside}$; combining this with
-$2(P_L + P_M + e_2) = n(n - 1)$ proves that whenever
-$2(P_L + P_M + F_{\mathrm{tot}}) + k(n - q') + \text{deg\_sum\_outside} > n(n - 1)$,
-no such Fournier $2$-core of size $k$ can exist (`False`).
+**Arithmetic Lemma for Theorem 3.11(c) [2.10(c)] of [Pa26] (Linear Budget Contradiction):**
+For natural numbers satisfying `F_tot ≤ e2`, `2 * (P_L + P_M + e2) = n * (n - 1)`, and
+`2 * (e2 - F_tot) = k * (n - q') + deg_sum_outside`, the strict inequality
+`n * (n - 1) < 2 * (P_L + P_M + F_tot) + k * (n - q') + deg_sum_outside` is impossible (`False`).
 -/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L285"]
+@[category API, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L261"]
 theorem erdos_19.variants.three_tier_fournier_obstruction_bound
     (n q' k P_L P_M e2 F_tot deg_sum_outside : ℕ)
     (_hk : 3 ≤ k) (_hk_le : k ≤ n) (_hq_le : q' ≤ n) (hF_le : F_tot ≤ e2)
@@ -516,6 +516,11 @@ def pairsOfBlock : List ℕ → List (ℕ × ℕ)
 def allBlockPairs (blocks : List (List ℕ)) : List (ℕ × ℕ) :=
   blocks.foldr (fun b acc => pairsOfBlock b ++ acc) []
 
+/-- Boolean check that a list of natural numbers contains no duplicate entries. -/
+def listNoDups : List ℕ → Bool
+  | [] => true
+  | v :: rest => !(rest.contains v) && listNoDups rest
+
 /-- Boolean check that a list of vertex pairs contains no duplicate entries. -/
 def pairListNoDups : List (ℕ × ℕ) → Bool
   | [] => true
@@ -524,7 +529,7 @@ def pairListNoDups : List (ℕ × ℕ) → Bool
 /-- Boolean verifier that `blocks` forms a `(n, k, 1)` projective plane on `{0, ..., n-1}`. -/
 def isCertifiedProjectivePlane (n k : ℕ) (blocks : List (List ℕ)) : Bool :=
   (blocks.length == n) &&
-  (blocks.all (fun b => b.length == k)) &&
+  (blocks.all (fun b => b.length == k && listNoDups b && b.all (fun v => v < n))) &&
   (let pairs := allBlockPairs blocks
    (pairs.length == n * (n - 1) / 2) && pairListNoDups pairs)
 
