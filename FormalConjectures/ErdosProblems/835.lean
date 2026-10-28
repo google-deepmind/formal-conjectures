@@ -52,7 +52,9 @@ colours appear among the $k$-sized subsets of $A$?
 theorem erdos_835 : ∃ k > 2, Property k := by
   sorry
 
-@[category test, AMS 5]
+@[category test, AMS 5,
+  formal_proof using lean4 at
+  "https://github.com/stokes/erdos835-lean/blob/c60f1dedc4e6b4886fb06a4060f0f13dbcb53ea6/Erdos835Proof.lean"]
 theorem property_iff_chromaticNumber (k : ℕ) (hk : 0 < k) :
     (J(2 * k, k).chromaticNumber = k + 1) ↔
     Property k := by
@@ -84,7 +86,9 @@ The smallest case not on this page is $k=9$:
 But that one can be solved as well:
 The chromatic number of $J(18, 9)$ is at least $11$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+  "https://github.com/stokes/erdos835-lean/blob/c60f1dedc4e6b4886fb06a4060f0f13dbcb53ea6/Erdos835Proof.lean"]
 theorem johnsonGraph_18_9_chromaticNumber : J(18, 9).chromaticNumber > 9 + 1 := by
   sorry
 
@@ -129,7 +133,9 @@ theorem chromaticNumber_johnson_2k_k_lower_bound_odd (hk : 3 ≤ k) (hk' : k ≤
 /--
 It can be seen that the chromatic number of $J(2k,k)$ is $>k+1$ for all odd $k>2$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+  "https://github.com/stokes/erdos835-lean/blob/c60f1dedc4e6b4886fb06a4060f0f13dbcb53ea6/Erdos835Proof.lean"]
 theorem johnson_chromaticNumber_odd (k : ℕ) (hk : 2 < k) (h : Odd k) :
     k + 1 < J(2 * k, k).chromaticNumber :=
   sorry
@@ -138,7 +144,9 @@ theorem johnson_chromaticNumber_odd (k : ℕ) (hk : 2 < k) (h : Odd k) :
 Ma and Tang have proved that the chromatic number of $J(2k,k)$ is $>k+1$ for all $k>2$ not of the
 form $p-1$ for prime $p$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+  "https://github.com/stokes/erdos835-lean/blob/c60f1dedc4e6b4886fb06a4060f0f13dbcb53ea6/Erdos835Proof.lean"]
 theorem johnson_chromaticNumber_composite (k : ℕ) (hk : 2 < k) (h : (k + 1).Composite) :
     k + 1 < J(2 * k, k).chromaticNumber :=
   sorry
