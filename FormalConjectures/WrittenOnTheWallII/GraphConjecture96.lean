@@ -53,7 +53,7 @@ where the independence number and even-distance count are both one, but the maxi
 local independence number is zero, giving $1 ≤ 0$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/87abc0ca2ce35f9b49103de3f4134b92335259ad/Proofs/WOWII9684/Full96.lean#L78"]
+  formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/dc627898f166729d714f7b8ffeb63f1de2d86eca/Proofs/WOWII9684/Full96.lean#L78"]
 theorem conjecture96 (G : SimpleGraph α) (h : G.Connected) :
     let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
     let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)
