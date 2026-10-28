@@ -309,7 +309,7 @@ of size $\ge 3$ and the remaining `e2` uncovered vertex pairs are completed by $
 the total pair count equals `total_pairs` $= \binom{n}{2}$, and `e2 = total_pairs - p_blocks`.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L35"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L36"]
 theorem erdos_19.variants.pbd_two_edge_completion_conservation (total_pairs p_blocks e2 : ℕ)
     (h_partition : p_blocks + e2 = total_pairs) :
     total_pairs - p_blocks = e2 ∧ p_blocks ≤ total_pairs := by
@@ -322,7 +322,7 @@ $m = 2t^2 + t - 2$ hyperedges, whereas $(n - 1) = 2t$ color classes can cover at
 $t + (2t - 1)t = 2t^2 < m$ hyperedges, forcing $\chi'(\mathcal{H}_1(n)) = n$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L52"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L53"]
 theorem erdos_19.variants.single_triple_parity_saturation_chromatic (t m cap_nm1 : ℕ)
     (ht : 3 ≤ t)
     (hm : m = 2 * t * t + t - 2)
@@ -337,7 +337,7 @@ the $(n - 1)$-color capacity $2t + (2t - 2)(t - 1) = 14$ is strictly less than $
 $\chi'(\mathcal{H}_{2,\mathrm{disj}}(7)) = 7$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L75"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L76"]
 theorem erdos_19.variants.two_triple_disjoint_volume_starvation (t m cap_disj : ℕ)
     (ht : t = 3)
     (hm : m = 2 * t * t + t - 4)
@@ -352,7 +352,7 @@ into the Vizing–Fournier shadow-slack definition $\delta_{\mathrm{VF}}(v) + q'
 yields $(n - 1) + \mathrm{match}(v) + 1 = d_2(v) + \delta_{\mathrm{VF}}(v) + q'$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L95"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L96"]
 theorem erdos_19.variants.vizing_fournier_shadow_slack_identity
     (n_minus_1 d_2 d_ge3 rank_excess match_v q_prime delta_vf : ℕ)
     (h_pbd_deg : n_minus_1 = d_2 + 2 * d_ge3 + rank_excess)
@@ -367,7 +367,7 @@ $E_T = V_T - c$ edges, so $2 E_T + 2c = 2 V_T$ and $2 E_T < 2 V_T$, guaranteeing
 $2c \ge 2$ leaf incidences of degree $\le 1$ for Kempe-chain peeling.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L111"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L112"]
 theorem erdos_19.variants.fournier_forest_degree_sum_lt (V_T E_T c : ℕ)
     (_hV : 1 ≤ V_T) (hc : 1 ≤ c) (hc_le : c ≤ V_T) (h_forest : E_T = V_T - c) :
     2 * E_T + 2 * c = 2 * V_T ∧ 2 * E_T < 2 * V_T := by
@@ -380,10 +380,28 @@ and non-$2$-edge block intersection sum `S_B`, with `pair_twice` $= r(r - 1) \ge
 $(S_B + 2 \cdot \text{e2\_I}) + (\text{pair\_twice} - 2 \cdot \text{e2\_I}) = S_B + \text{pair\_twice}$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L125"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L126"]
 theorem erdos_19.variants.shadow_slack_identity (S_B pair_twice e2_I : ℕ)
     (h_le : 2 * e2_I ≤ pair_twice) :
     (S_B + 2 * e2_I) + (pair_twice - 2 * e2_I) = S_B + pair_twice := by
+  sorry
+
+/--
+**Theorem 3.7(a) [2.6(b)] of [Pa26] (Edmonds Blossom Odd-Set Shadow-Slack Bound):**
+For any odd vertex subset $U$ of cardinality $|U| = 2t + 1 \ge 3$ in the residual $2$-edge graph
+$G_{\mathrm{res}}$ of maximum degree $\Delta = n - q' \ge 1$, if at most $2$ vertices of $U$ lie in
+the deficit-zero set $D = \{v : \delta_{\mathrm{VF}}(v) = 0\}$ and the remaining $2t - 1$ vertices
+have degree $\le \Delta - 1$, then $2|E(G_{\mathrm{res}}[U])| \le 2\Delta + (2t - 1)(\Delta - 1)$,
+which for all $\Delta + 1 \le 2t$ forces $2|E(G_{\mathrm{res}}[U])| \le 2t\Delta = (|U| - 1)(n - q')$.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L143"]
+theorem erdos_19.variants.edmonds_blossom_odd_set_slack_bound
+    (t delta deg_sum_U : ℕ)
+    (ht : 1 ≤ t) (hdelta : 1 ≤ delta)
+    (h_large_odd : delta + 1 ≤ 2 * t)
+    (h_deg_bound : deg_sum_U ≤ 2 * delta + (2 * t - 1) * (delta - 1)) :
+    deg_sum_U ≤ 2 * t * delta := by
   sorry
 
 /--
@@ -393,7 +411,7 @@ every vertex's $3$-block shadow penalty $2 d_{\ge 3}(v)$ by $2p$, increasing the
 color margin by $+p \ge 1$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L140"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L171"]
 theorem erdos_19.variants.parallel_class_peeling_slack (n d_ge3 p : ℕ)
     (hp : 1 ≤ p) (hd : p ≤ d_ge3) (hn : 2 * d_ge3 ≤ n) :
     (n - p) - 2 * (d_ge3 - p) = (n - 2 * d_ge3) + p ∧
@@ -407,7 +425,7 @@ of size $\ge \tau = s + 1$ would require $(s + 1)^2 > s(s + 2) \ge n$ vertices, 
 $s$ large blocks of size $\ge \lfloor\sqrt{n}\rfloor + 1$ can be mutually disjoint.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L156"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L187"]
 theorem erdos_19.variants.large_block_disjoint_overflow (n s : ℕ)
     (hn : n ≤ s * (s + 2)) :
     n < (s + 1) * (s + 1) := by
@@ -419,7 +437,7 @@ Whenever $1 \le p \le q$ and $q \ge 2$, $(q - 1)p + (q + 1)$ plus the non-negati
 $(q - 1)(q - p) + (p - 1)$ equals $q^2 + p = n$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L174"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L205"]
 theorem erdos_19.variants.ag2q_ideal_point_exact_slack_formula (q p : ℕ)
     (hq : 2 ≤ q) (hp_pos : 1 ≤ p) (hp : p ≤ q) :
     (q - 1) * p + (q + 1) + (q - 1) * (q - p) + (p - 1) = q * q + p := by
@@ -432,7 +450,7 @@ $p$ ideal points on the line at infinity yields vertex count $n = q^2 + p$ and c
 index $\chi' = (q - 1)p + (q + 1) \le q^2 + p$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L192"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L223"]
 theorem erdos_19.variants.ag2q_ideal_point_chromatic_le_n (q p : ℕ)
     (hq : 2 ≤ q) (hp : p ≤ q) :
     (q - 1) * p + (q + 1) ≤ q * q + p := by
@@ -445,7 +463,7 @@ Tier-2 medium blocks (`med_pairs`), and Tier-3 $2$-edges (`e2`), the exact ident
 `large_pairs + med_pairs + e2 = total_pairs` forces `total_pairs - large_pairs - med_pairs = e2`.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L218"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L249"]
 theorem erdos_19.variants.three_tier_pair_budget_nonneg (total_pairs large_pairs med_pairs e2 : ℕ)
     (h_pbd : large_pairs + med_pairs + e2 = total_pairs) :
     total_pairs - large_pairs - med_pairs = e2 := by
@@ -459,7 +477,7 @@ $\sum_{v \in V} \delta_{\mathrm{VF}}(v) + 2(e_2 - F_{\mathrm{tot}}) = n(n - q')$
 $2(P_L + P_M + F_{\mathrm{tot}}) = n(q' - 1) + \sum_{v \in V} \delta_{\mathrm{VF}}(v)$.
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L232"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L263"]
 theorem erdos_19.variants.global_shadow_slack_conservation
     (n q' P_L P_M e2 F_tot sum_delta_vf : ℕ)
     (hq_pos : 1 ≤ q') (hq_le : q' ≤ n) (hF_le : F_tot ≤ e2)
@@ -467,24 +485,6 @@ theorem erdos_19.variants.global_shadow_slack_conservation
     (h_slack_sum : sum_delta_vf + n * (q' - 1) = 2 * (P_L + P_M + F_tot)) :
     sum_delta_vf + 2 * (e2 - F_tot) = n * (n - q') ∧
     2 * (P_L + P_M + F_tot) = n * (q' - 1) + sum_delta_vf := by
-  sorry
-
-/--
-**Theorem 3.7(a) [2.6(b)] of [Pa26] (Edmonds Blossom Odd-Set Shadow-Slack Bound):**
-For any odd vertex subset $U$ of cardinality $|U| = 2t + 1 \ge 3$ in the residual $2$-edge graph
-$G_{\mathrm{res}}$ of maximum degree $\Delta = n - q' \ge 1$, if at most $2$ vertices of $U$ lie in
-the deficit-zero set $D = \{v : \delta_{\mathrm{VF}}(v) = 0\}$ and the remaining $2t - 1$ vertices
-have degree $\le \Delta - 1$, then $2|E(G_{\mathrm{res}}[U])| \le 2\Delta + (2t - 1)(\Delta - 1)$,
-which for all $\Delta + 1 \le 2t$ forces $2|E(G_{\mathrm{res}}[U])| \le 2t\Delta = (|U| - 1)(n - q')$.
--/
-@[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L255"]
-theorem erdos_19.variants.edmonds_blossom_odd_set_slack_bound
-    (t delta deg_sum_U : ℕ)
-    (ht : 1 ≤ t) (hdelta : 1 ≤ delta)
-    (h_large_odd : delta + 1 ≤ 2 * t)
-    (h_deg_bound : deg_sum_U ≤ 2 * delta + (2 * t - 1) * (delta - 1)) :
-    deg_sum_U ≤ 2 * t * delta := by
   sorry
 
 /--
@@ -497,7 +497,7 @@ $2(P_L + P_M + F_{\mathrm{tot}}) + k(n - q') + \text{deg\_sum\_outside} > n(n - 
 no such Fournier $2$-core of size $k$ can exist (`False`).
 -/
 @[category research solved, AMS 5,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L282"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_19/blob/main/Erdos19/Proofs.lean#L285"]
 theorem erdos_19.variants.three_tier_fournier_obstruction_bound
     (n q' k P_L P_M e2 F_tot deg_sum_outside : ℕ)
     (_hk : 3 ≤ k) (_hk_le : k ≤ n) (_hq_le : q' ≤ n) (hF_le : F_tot ≤ e2)
