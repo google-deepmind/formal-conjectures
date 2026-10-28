@@ -124,7 +124,7 @@ theorem cube_hamiltonian_arc_decomposition {m : ℕ} [NeZero m] (hm : Odd m) (hm
 
 /-- The case `m = 2` is impossible: the cube digraph on `(ZMod 2)³` does not have a
 Hamiltonian arc decomposition [Aub82]. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/d2c4fd7ef4d83d831f0843d2be706e02cb5163c9/Solution.lean#L74"]
 theorem cube_hamiltonian_arc_decomposition_impossible_m2 :
     ¬ HasHamiltonianArcDecomposition 2 := by
   sorry

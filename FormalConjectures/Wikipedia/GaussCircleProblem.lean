@@ -64,7 +64,7 @@ for sufficiently large $r$.
 
 [Ha59]  Hardy, G. H. (1959). _Ramanujan: Twelve Lectures on Subjects Suggested by His Life and Work_(3rd ed.). New York: Chelsea Publishing Company. p. 67
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/69d53449a4fb7566edc668c65bb0f756dd245ae2/Solution.lean#L131"]
 theorem error_le : ∀ᶠ r in atTop, |E r| ≤ 2 * √2 * π * r := by
   sorry
 
@@ -100,7 +100,7 @@ $$
     \left\lfloor\frac{r^2}{4i + 3}\right\rfloor\right).
 $$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/ebe22c661a2d04633343776a703fc6a6427b784e/Solution.lean#L521"]
 theorem exact_form_floor (r : ℝ) (hr : 0 ≤ r) :
     N r = 1 + 4 * ∑' (i : ℕ), (⌊r ^ 2 / (4 * i + 1)⌋ - ⌊r ^ 2 / (4 * i + 3)⌋) := by
   sorry
