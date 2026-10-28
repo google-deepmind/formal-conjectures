@@ -70,26 +70,4 @@ theorem infinitely_many_cullen_primes.variants.equivalence :
       Set.Infinite {n : ℕ | 1 ≤ n ∧ (n * 2 ^ n + 1).Prime} := by
   sorry
 
-/--
-A generalized Cullen number in base $b \ge 2$ is a natural number of the form
-$n \cdot b^n + 1$ with $n + 2 > b$.
--/
-def IsGeneralizedCullenNumber (b c : ℕ) : Prop :=
-  2 ≤ b ∧ ∃ n : ℕ, b < n + 2 ∧ c = n * b ^ n + 1
-
-/--
-A generalized Cullen prime in base $b \ge 2$ is a prime number that is a generalized Cullen
-number in base $b$.
--/
-def IsGeneralizedCullenPrime (b p : ℕ) : Prop :=
-  p.Prime ∧ IsGeneralizedCullenNumber b p
-
-/--
-For every integer base $b \ge 2$, there are infinitely many generalized Cullen primes of base $b$.
--/
-@[category research open, AMS 11]
-theorem infinitely_many_generalized_cullen_primes :
-    ∀ b ≥ 2, Set.Infinite {p : ℕ | IsGeneralizedCullenPrime b p} := by
-  sorry
-
 end CullenPrime
