@@ -197,13 +197,27 @@ theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤
   sorry
 
 /--
+**Theorem 2.5(b) & Theorem 2.11(c) of [Pa26] (Binary Sub-Block Variance Refinement Identity):**
+Splitting a block of sum $S = S_1 + S_2$ into two equal sub-blocks satisfies
+$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + (S_1 - S_2)^2 + (S_2 - S_1)^2$, so $2(S_1^2 + S_2^2) \ge (S_1 + S_2)^2$,
+proving the monotone subadditivity refinement $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$.
+-/
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L132"]
+theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
+    2 * (S1 * S1 + S2 * S2) =
+      (S1 + S2) * (S1 + S2) + (S1 - S2) * (S1 - S2) + (S2 - S1) * (S2 - S1) ∧
+    (S1 + S2) * (S1 + S2) ≤ 2 * (S1 * S1 + S2 * S2) := by
+  sorry
+
+/--
 **Theorem 2.6(a) of [Pa26] (Discrete Legendre–Fenchel Remainder Decomposition):**
 For any bucket count $B \ge 1$ and total occupancy $S = B q + r$ with integer quotient $q$
 and remainder $r \le B$, the minimum ordered-pair sum over $B$ integer buckets summing to $S$
 satisfies $(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L132"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L220"]
 theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
     (hr : r ≤ B) :
     (B - r) * (q * (q - 1)) + r * ((q + 1) * q) =
@@ -217,7 +231,7 @@ $B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$, isolating the strictly non-ne
 discrete integrality excess $r(B - r) = B^2 \theta(1 - \theta)$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L151"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L239"]
 theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
     (hr : r ≤ B) :
     B * (B * (q * q) + 2 * (r * q)) + B * r =
@@ -231,24 +245,23 @@ heavier window ($x_1 - 1$) to the lighter window ($x_2 + 1$) preserves the total
 strictly reduces the ordered-pair count $x_1(x_1 - 1) + x_2(x_2 - 1)$ by $2(x_1 - x_2 - 1) \ge 2$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L174"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L262"]
 theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 + 2 ≤ x1) :
     (x1 - 1) * (x1 - 2) + (x2 + 1) * x2 + 2 * (x1 - x2 - 1) =
       x1 * (x1 - 1) + x2 * (x2 - 1) := by
   sorry
 
 /--
-**Theorem 2.5(b) of [Pa26] (Binary Sub-Block Variance Refinement Identity):**
-Splitting a block of sum $S = S_1 + S_2$ into two equal sub-blocks satisfies
-$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + (S_1 - S_2)^2 + (S_2 - S1)^2$, so $2(S_1^2 + S_2^2) \ge (S_1 + S_2)^2$,
-proving the monotone subadditivity refinement $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$.
+**Theorem 2.6(d) & Theorem 2.11(c) of [Pa26] (Exact Quarter-Square Sawtooth Ceiling & Relative Integrality Scaling):**
+For any bucket count $B \ge 1$ and remainder $0 \le r \le B$, $4 r(B - r) + (2r - B)^2 + (B - 2r)^2 = B^2$,
+so $4 r(B - r) \le B^2$ and the relative ratio of the integrality excess $r(B - r)$ to the leading
+quadratic term $S^2$ is bounded above by $\frac{B^2}{4 S^2} = \frac{1}{4 \mu^2}$ where $\mu = S/B$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L382"]
-theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
-    2 * (S1 * S1 + S2 * S2) =
-      (S1 + S2) * (S1 + S2) + (S1 - S2) * (S1 - S2) + (S2 - S1) * (S2 - S1) ∧
-    (S1 + S2) * (S1 + S2) ≤ 2 * (S1 * S1 + S2 * S2) := by
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L293"]
+theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr : r ≤ B) :
+    4 * (r * (B - r)) + (2 * r - B) * (2 * r - B) + (B - 2 * r) * (B - 2 * r) = B * B ∧
+    4 * (r * (B - r)) ≤ B * B := by
   sorry
 
 /--
@@ -258,7 +271,7 @@ $$\sum_{w=1}^W (W + 1 - w)\max(w - |x - y|, 0) = \binom{W - d + 1}{2}$$
 underlying the Order-2 Cesàro–Fejér window kernel in Theorems 2.7–2.11 of [Pa26].
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L367"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L362"]
 theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
     m * (m - 1) + 2 * m = (m + 1) * m := by
   sorry
@@ -270,7 +283,7 @@ the sliding-window width exponent $k - (s + r)$ and sub-block count exponent $(s
 sum to $k - 1$ independently of $s$ and $r$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L203"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L378"]
 theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     (k - (s + r)) + ((s + r) - 1) = k - 1 := by
@@ -283,7 +296,7 @@ the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r -
 satisfy $w \cdot B = 2^{k - 1} = |I_k|$ across all scales $s$ and octaves $r$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L214"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L389"]
 theorem erdos_1191.variants.scale_invariant_block_window_product (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     2 ^ (k - (s + r)) * 2 ^ ((s + r) - 1) = 2 ^ (k - 1) := by
@@ -296,22 +309,9 @@ logarithmic integrals of $\{u\}(1 - \{u\})/u$ into $2\ln H(M - 1)$ and the Glais
 sawtooth constant $C_{\mathrm{GK}} = 2\ln A_{\mathrm{GK}} = \frac{1}{6} - 2\zeta'(-1)$.
 -/
 @[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L228"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L403"]
 theorem erdos_1191.variants.hyperfactorial_sawtooth_abel_step (m : ℕ) (hm : 1 ≤ m) :
     m * (m + 1) - (m - 1) * m = 2 * m := by
-  sorry
-
-/--
-**Theorem 2.6(d) & Theorem 2.11(c) of [Pa26] (Exact Quarter-Square Sawtooth Ceiling & Relative Integrality Scaling):**
-For any bucket count $B \ge 1$ and remainder $0 \le r \le B$, $4 r(B - r) + (2r - B)^2 + (B - 2r)^2 = B^2$,
-so $4 r(B - r) \le B^2$ and the relative ratio of the integrality excess $r(B - r)$ to the leading
-quadratic term $S^2$ is bounded above by $\frac{B^2}{4 S^2} = \frac{1}{4 \mu^2}$ where $\mu = S/B$.
--/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L246"]
-theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr : r ≤ B) :
-    4 * (r * (B - r)) + (2 * r - B) * (2 * r - B) + (B - 2 * r) * (B - 2 * r) = B * B ∧
-    4 * (r * (B - r)) ≤ B * B := by
   sorry
 
 /--
@@ -344,19 +344,6 @@ def hasNoDuplicates : List ℕ → Bool
 def isCertifiedSidon (A : List ℕ) : Bool :=
   isStrictlyIncreasing A && hasNoDuplicates (allPositiveDiffs A)
 
-/-- Optimal maximin lower-envelope Sidon witness $A^* = \{1, 2, 5, 7, 14, 22, 32\}$ at $N = 32$. -/
-def maximinWitnessN32 : List ℕ := [1, 2, 5, 7, 14, 22, 32]
-
-/--
-Machine-checked verification that the maximin witness $A^* = [1, 2, 5, 7, 14, 22, 32]$ at $N = 32$
-([Pa26, Table 2]) is a valid Sidon set with all $\binom{7}{2} = 21$ positive differences distinct.
--/
-@[category test, AMS 5 11]
-theorem maximinWitnessN32_is_sidon :
-    isCertifiedSidon maximinWitnessN32 = true ∧
-    (allPositiveDiffs maximinWitnessN32).length = 21 := by
-  decide
-
 /-- First 10 terms of the Mian–Chowla greedy Sidon sequence (OEIS `A005282`). -/
 def mianChowlaPrefix10 : List ℕ := [1, 2, 4, 8, 13, 21, 31, 45, 66, 81]
 
@@ -369,6 +356,19 @@ with $\binom{10}{2} = 45$ distinct positive differences.
 theorem mianChowlaPrefix10_is_sidon :
     isCertifiedSidon mianChowlaPrefix10 = true ∧
     (allPositiveDiffs mianChowlaPrefix10).length = 45 := by
+  decide
+
+/-- Optimal maximin lower-envelope Sidon witness $A^* = \{1, 2, 5, 7, 14, 22, 32\}$ at $N = 32$. -/
+def maximinWitnessN32 : List ℕ := [1, 2, 5, 7, 14, 22, 32]
+
+/--
+Machine-checked verification that the maximin witness $A^* = [1, 2, 5, 7, 14, 22, 32]$ at $N = 32$
+([Pa26, Table 2]) is a valid Sidon set with all $\binom{7}{2} = 21$ positive differences distinct.
+-/
+@[category test, AMS 5 11]
+theorem maximinWitnessN32_is_sidon :
+    isCertifiedSidon maximinWitnessN32 = true ∧
+    (allPositiveDiffs maximinWitnessN32).length = 21 := by
   decide
 
 end Erdos1191
