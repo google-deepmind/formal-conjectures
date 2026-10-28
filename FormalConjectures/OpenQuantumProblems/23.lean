@@ -61,14 +61,18 @@ constructors used in the low-dimensional benchmark cases:
 - `bb84Family`.
 
 ### Complete open conjecture
-The main open theorem is:
+The main open theorems are:
 - `sicPOVMs`, expressing the conjecture that for every `d ≥ 1`, there exists a
   SIC-POVM in dimension `d`.
+- `zauners_conjecture`, expressing Zauner's conjecture on the existence of a SIC-POVM
+  in every finite dimension (Issue #1823).
 
 ### Special cases
 The file also isolates several special cases:
 - solved low-dimensional benchmark cases:
   `hasSICPOVM_zero`, `hasSICPOVM_one`, `hasSICPOVM_two`, `hasSICPOVM_three`;
+  constructive proofs for $d=2$ and $d=3$ with exact discrete matrix frame bounds
+  and Zauner order-3 symmetry are linked via `formal_proof using lean4`.
 - a negative benchmark result:
   `bb84Family_not_isSICFamily`, showing that the BB84 family in dimension `2`
   does not form a SIC family;
@@ -96,6 +100,8 @@ placeholder proofs `by sorry`; they are intended to be proved in the next PR.
   https://oqp.iqoqi.oeaw.ac.at/sic-povms-and-zauners-conjecture
 - Formal Conjectures issue #1823:
   https://github.com/google-deepmind/formal-conjectures/issues/1823
+- External machine-checked constructive proof repository:
+  https://github.com/Cloudhabil/sic-povm-lean4
 
 ### Foundational references
 - J. M. Renes, R. Blume-Kohout, A. J. Scott, and M. C. Caves,
@@ -275,7 +281,8 @@ lemma qubitSICFamily_pairwise :
     HasConstantOverlapSq (sicOverlapSq 2) qubitSICFamily := by sorry
 
 /-- Dimension $2$ admits a SIC-POVM, witnessed by the tetrahedral qubit SIC. -/
-@[category test, AMS 15 47 81]
+@[category research solved, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Cloudhabil/sic-povm-lean4/blob/e63e89534bfeb283c8db7d094f7a19d967f238a9/SICPOVM.lean#L462"]
 theorem hasSICPOVM_two : HasSICPOVM 2 := by sorry
 
 /-- Every vector in the Hesse qutrit SIC family is normalized. -/
@@ -297,7 +304,8 @@ lemma hesseFamily_pairwise :
     HasConstantOverlapSq (sicOverlapSq 3) hesseFamily := by sorry
 
 /-- Dimension $3$ admits a SIC-POVM, witnessed by the Hesse qutrit SIC. -/
-@[category test, AMS 15 47 81]
+@[category research solved, AMS 15 47 81,
+  formal_proof using lean4 at "https://github.com/Cloudhabil/sic-povm-lean4/blob/e63e89534bfeb283c8db7d094f7a19d967f238a9/SICPOVM.lean#L482"]
 theorem hasSICPOVM_three : HasSICPOVM 3 := by sorry
 
 /-- Every vector in the BB84 family is normalized. -/
@@ -364,6 +372,15 @@ theorem hasSICPOVM_75 : HasSICPOVM 75 := by sorry
 /-- Do SIC-POVMs exist in every finite dimension? -/
 @[category research open, question, AMS 15 47 81]
 theorem sicPOVMs :
+    ∀ d : ℕ, 1 ≤ d → HasSICPOVM d := by
+  sorry
+
+/-- Zauner's conjecture (existence of a SIC-POVM in every finite dimension):
+for every dimension $d ≥ 1$, there exists a symmetric informationally
+complete positive operator-valued measure (SIC-POVM).
+See issue #1823. -/
+@[category research open, question, AMS 15 47 81]
+theorem zauners_conjecture :
     ∀ d : ℕ, 1 ≤ d → HasSICPOVM d := by
   sorry
 
