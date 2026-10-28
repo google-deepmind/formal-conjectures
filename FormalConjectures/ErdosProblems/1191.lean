@@ -116,30 +116,31 @@ theorem erdos_1191.variants.parts_i_implies_liminf_le
   rw [h A hAinf hAsid]
   exact zero_le
 
-/-! ## Formalized Decomposition & Multi-Octave Haar Sawtooth Variants from [Pa26] -/
+/-! ## Arithmetic Lemmas & Certified Sidon Witnesses Used in [Pa26] -/
 
 /--
-**Theorem 2.1(a) of [Pa26] (Harmonic-Difference Partial-Fraction Numerator Identity):**
-For any positive integers $1 \le a_i < a_j$ with difference $d = a_j - a_i$,
-$(d + 1) + (a_i - 1) = a_j$. Dividing by $(d + 1) a_j$ yields the exact identity
-$\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a_j} = \frac{1}{a_j - a_i + 1}$
-underlying the non-asymptotic Harmonic-Integral Conservation Law.
+**Arithmetic Lemma for Theorem 2.1(a) of [Pa26] (Harmonic-Difference Numerator Identity):**
+For any natural numbers $1 \le a_i < a_j$ with difference $d = a_j - a_i$,
+the numerator identity $(d + 1) + (a_i - 1) = a_j$ holds on $\mathbb{N}$ (used to derive the
+partial-fraction decomposition $\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a_j} = \frac{1}{a_j - a_i + 1}$
+in Theorem 2.1(a) of [Pa26]).
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L35"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L34"]
 theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
     (h_pos : 1 ≤ a_i) (h_lt : a_i < a_j) (h_diff : d = a_j - a_i) :
     (d + 1) + (a_i - 1) = a_j := by
   sorry
 
 /--
-**Theorem 2.2(a) of [Pa26] (Two-Shell Inter-Shell Difference Localization):**
-For $I_j = (2^{j-1}, 2^j]$ and $I_k = (2^{k-1}, 2^k]$ with $1 \le j \le k - 2$, any elements
-$1 \le x \le 2^{k-2}$ and $2^{k-1} < y \le 2^k$ satisfy $2^{k-2} < y - x < 2^k$, so every
-distant cross-shell difference lies in the two dyadic difference shells $D_{k-1} \cup D_k$.
+**Arithmetic Lemma for Theorem 2.2(a) of [Pa26] (Two-Shell Difference Localization Bound):**
+For natural numbers $x, y, \text{pow\_km2}$ satisfying $1 \le x \le \text{pow\_km2}$ and
+$2 \cdot \text{pow\_km2} < y \le 4 \cdot \text{pow\_km2}$, the difference $y - x$ satisfies
+$\text{pow\_km2} < y - x < 4 \cdot \text{pow\_km2}$ (used to localize cross-shell differences
+into $D_{k-1} \cup D_k$ when $\text{pow\_km2} = 2^{k-2}$ in Theorem 2.2(a) of [Pa26]).
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L50"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L48"]
 theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ)
     (hx_pos : 1 ≤ x)
     (hx_hi : x ≤ pow_km2)
@@ -149,61 +150,63 @@ theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ
   sorry
 
 /--
-Scaled bilinear sum for the powers-of-two Sidon set $A = \{2^n : n \ge 0\}$, where $m_k = 1$
-and $A(2^{k-1}) = k$ for every $k \ge 1$. Multiplying $\sum_{k=1}^M \frac{2 m_k(m_k-1) + 2 m_k A(2^{k-1})}{2^k}$
-by $2^M$ yields the integer sum $\sum_{k=1}^M k \cdot 2^{M - k + 1}$.
+Recursive integer sum $S(0) = 0$, $S(M + 1) = 2 S(M) + 2(M + 1)$, representing the
+$2^M$-scaled sum $\sum_{k=1}^M k \cdot 2^{M - k + 1}$ evaluated on the powers-of-two
+sequence $A = \{2^n : n \ge 0\}$ ($m_k = 1, A(2^{k-1}) = k$) in Remark 2.3 of [Pa26].
 -/
 def powersOfTwoScaledBilinear : ℕ → ℕ
   | 0 => 0
   | M + 1 => 2 * powersOfTwoScaledBilinear M + 2 * (M + 1)
 
 /--
-**Remark 2.3 of [Pa26] (Exact Closed-Form Bilinear Identity on $A = \{2^n : n \ge 0\}$):**
-For every $M \ge 0$, the $2^M$-scaled bilinear sum on $A = \{2^n : n \ge 0\}$ satisfies the
-exact closed-form identity $\bigl(\sum_{k=1}^M k \cdot 2^{M - k + 1}\bigr) + 2M + 4 = 2^{M + 2}$
-(evaluating to $11/4 = 2.75$ at $M = 3$).
+**Arithmetic Lemma for Remark 2.3 of [Pa26] (Closed-Form Identity for `powersOfTwoScaledBilinear`):**
+For every $M \ge 0$, the recursively defined integer sum `powersOfTwoScaledBilinear M`
+satisfies the exact closed-form identity
+$\text{powersOfTwoScaledBilinear}(M) + 2M + 4 = 2^{M + 2}$
+(used to evaluate the powers-of-two bilinear sum in Remark 2.3 of [Pa26]).
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L75"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L72"]
 theorem erdos_1191.variants.powers_of_two_bilinear_identity (M : ℕ) :
     powersOfTwoScaledBilinear M + 2 * M + 4 = 2 ^ (M + 2) := by
   sorry
 
 /--
-**Theorem 2.2(b) & Remark 2.3 of [Pa26] (Verification of Corrected Bilinear Bound on $A = \{2^n : n \ge 0\}$):**
-For every $M \ge 1$, the $2^M$-scaled bilinear sum on $A = \{2^n : n \ge 0\}$ is bounded above by
-the $2^M$-scaled tight upper bound $(M + 1) 2^M - 2 = 2^M(M + 1 - 2^{-(M-1)})$ (certifying $22 \le 30$,
-i.e., $11/4 \le 15/4$, at $M = 3$).
+**Arithmetic Lemma for Theorem 2.2(b) & Remark 2.3 of [Pa26] (Upper Bound on `powersOfTwoScaledBilinear`):**
+For every $M \ge 1$, the recursively defined sum `powersOfTwoScaledBilinear M` satisfies
+$\text{powersOfTwoScaledBilinear}(M) \le (M + 1) 2^M - 2$
+(certifying $22 \le 30$ at $M = 3$ for the $2^M$-scaled powers-of-two sum in Remark 2.3 of [Pa26]).
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L92"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L89"]
 theorem erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound (M : ℕ) (hM : 1 ≤ M) :
     powersOfTwoScaledBilinear M ≤ (M + 1) * 2 ^ M - 2 := by
   sorry
 
 /--
-**Lemma 2.4 of [Pa26] (KKT Convex-Cone Increment Positivity for $k \ge 4$):**
-For every shell index $k \ge 4$, $16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16 k^2 < 18(k^2 - 1)$.
-Together with $9 > 8$ at $k = 3$, this certifies that the KKT multipliers $\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1})$
-of the convex quadratic envelope program are strictly positive for all $k \ge 3$, so the cumulative
-lower bound $A(2^k) \ge c\sqrt{2^k / \ln(2^k)}$ attains its unique global minimum on the boundary
-$m_k^* = c \rho_k$.
+**Arithmetic Lemma for Lemma 2.4 of [Pa26] (Quadratic Polynomial Inequality for $k \ge 4$):**
+For every natural number $k \ge 4$, $16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and
+$16 k^2 < 18(k^2 - 1)$. In Lemma 2.4 of [Pa26], this integer inequality is used to verify
+that $\frac{1}{\sqrt{k-1}} + \frac{1}{\sqrt{k+1}} < \frac{3}{\sqrt{2k}}$ for all $k \ge 4$
+(alongside $9 > 8$ at $k = 3$) when establishing positivity of the KKT multipliers
+$\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1})$.
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L115"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L111"]
 theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤ k) :
     16 * (k * k) + 2 * (k * k - 9) = 18 * (k * k - 1) ∧
     16 * (k * k) < 18 * (k * k - 1) := by
   sorry
 
 /--
-**Theorem 2.5(b) & Theorem 2.11(c) of [Pa26] (Binary Sub-Block Variance Refinement Identity):**
-Splitting a block of sum $S = S_1 + S_2$ into two equal sub-blocks satisfies
-$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + (S_1 - S_2)^2 + (S_2 - S_1)^2$, so $2(S_1^2 + S_2^2) \ge (S_1 + S_2)^2$,
-proving the monotone subadditivity refinement $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$.
+**Arithmetic Lemma for Theorem 2.5(b) & Theorem 2.11(c) of [Pa26] (Binary Sub-Block Variance Refinement Identity):**
+For any natural numbers $S_1, S_2 \in \mathbb{N}$, $2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2$
+(encoded in Lean via truncated subtraction on $\mathbb{N}$ as $(S_1 - S_2)^2 + (S_2 - S_1)^2$, where one of
+$S_1 - S_2$ or $S_2 - S_1$ is zero), and hence $(S_1 + S_2)^2 \le 2(S_1^2 + S_2^2)$. This provides the
+arithmetic step used in the sub-block refinement bound $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$ of [Pa26].
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L132"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L128"]
 theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
     2 * (S1 * S1 + S2 * S2) =
       (S1 + S2) * (S1 + S2) + (S1 - S2) * (S1 - S2) + (S2 - S1) * (S2 - S1) ∧
@@ -211,13 +214,14 @@ theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
   sorry
 
 /--
-**Theorem 2.6(a) of [Pa26] (Discrete Legendre–Fenchel Remainder Decomposition):**
-For any bucket count $B \ge 1$ and total occupancy $S = B q + r$ with integer quotient $q$
-and remainder $r \le B$, the minimum ordered-pair sum over $B$ integer buckets summing to $S$
-satisfies $(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q$.
+**Arithmetic Lemma for Theorem 2.6(a) of [Pa26] (Discrete Legendre–Fenchel Remainder Decomposition):**
+For any natural numbers $B, q, r \in \mathbb{N}$ with $r \le B$, the two-level sum
+$(B - r) q(q - 1) + r(q + 1) q$ satisfies the exact algebraic decomposition
+$(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q$
+(used to evaluate the minimum ordered-pair count over $B$ integer buckets of sum $S = B q + r$ in Theorem 2.6(a) of [Pa26]).
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L220"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L216"]
 theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
     (hr : r ≤ B) :
     (B - r) * (q * (q - 1)) + r * ((q + 1) * q) =
@@ -225,13 +229,13 @@ theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
   sorry
 
 /--
-**Theorem 2.6(b) of [Pa26] (Squared-Total Discrete Legendre–Fenchel Integrality Identity):**
-Multiplying the minimum ordered-pair count by $B$ yields the exact additive identity
-$B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$, isolating the strictly non-negative
-discrete integrality excess $r(B - r) = B^2 \theta(1 - \theta)$.
+**Arithmetic Lemma for Theorem 2.6(b) of [Pa26] (Squared-Total Discrete Legendre–Fenchel Integrality Identity):**
+For any natural numbers $B, q, r \in \mathbb{N}$ with $r \le B$,
+$B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$,
+separating the quadratic term $(B q + r)^2$ from the remainder product $r(B - r)$ in Theorem 2.6(b) of [Pa26].
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L239"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L235"]
 theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
     (hr : r ≤ B) :
     B * (B * (q * q) + 2 * (r * q)) + B * r =
@@ -239,77 +243,78 @@ theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
   sorry
 
 /--
-**Theorem 2.6(c) of [Pa26] (Karamata Integer Convexity / Robin-Hood Smoothing Step):**
-Whenever two sub-windows have occupancies $x_1 \ge x_2 + 2$, transferring one element from the
-heavier window ($x_1 - 1$) to the lighter window ($x_2 + 1$) preserves the total occupancy and
-strictly reduces the ordered-pair count $x_1(x_1 - 1) + x_2(x_2 - 1)$ by $2(x_1 - x_2 - 1) \ge 2$.
+**Arithmetic Lemma for Theorem 2.6(c) of [Pa26] (Karamata Integer Convexity / Robin-Hood Smoothing Step):**
+Whenever two natural numbers satisfy $x_1 \ge x_2 + 2$, replacing $(x_1, x_2)$ by $(x_1 - 1, x_2 + 1)$
+satisfies $(x_1 - 1)(x_1 - 2) + (x_2 + 1)x_2 + 2(x_1 - x_2 - 1) = x_1(x_1 - 1) + x_2(x_2 - 1)$,
+giving the elementary Robin-Hood smoothing step in Theorem 2.6(c) of [Pa26].
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L262"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L258"]
 theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 + 2 ≤ x1) :
     (x1 - 1) * (x1 - 2) + (x2 + 1) * x2 + 2 * (x1 - x2 - 1) =
       x1 * (x1 - 1) + x2 * (x2 - 1) := by
   sorry
 
 /--
-**Theorem 2.6(d) & Theorem 2.11(c) of [Pa26] (Exact Quarter-Square Sawtooth Ceiling & Relative Integrality Scaling):**
-For any bucket count $B \ge 1$ and remainder $0 \le r \le B$, $4 r(B - r) + (2r - B)^2 + (B - 2r)^2 = B^2$,
-so $4 r(B - r) \le B^2$ and the relative ratio of the integrality excess $r(B - r)$ to the leading
-quadratic term $S^2$ is bounded above by $\frac{B^2}{4 S^2} = \frac{1}{4 \mu^2}$ where $\mu = S/B$.
+**Arithmetic Lemma for Theorem 2.6(d) & Theorem 2.11(c) of [Pa26] (Quarter-Square Identity & Bound):**
+For any natural numbers $B, r \in \mathbb{N}$ with $r \le B$, the scaled product $4 r(B - r)$
+plus the single square $(2r - B)^2$ (encoded in Lean via truncated subtraction on $\mathbb{N}$
+as $(2r - B)^2 + (B - 2r)^2$, where one of $2r - B$ or $B - 2r$ is zero) equals $B^2$, and hence
+$4 r(B - r) \le B^2$. This provides the arithmetic bound $r(B - r) \le B^2 / 4$ used to bound the
+relative integrality excess $r(B - r)/S^2 \le 1/(4\mu^2)$ ($\mu = S/B$) in [Pa26].
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L293"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L287"]
 theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr : r ≤ B) :
     4 * (r * (B - r)) + (2 * r - B) * (2 * r - B) + (B - 2 * r) * (B - 2 * r) = B * B ∧
     4 * (r * (B - r)) ≤ B * B := by
   sorry
 
 /--
-**Theorem 2.7(a) of [Pa26] (Order-2 Cesàro–Fejér Triangular Kernel Step):**
-For every $m \in \mathbb{N}$, $m(m - 1) + 2 m = (m + 1) m$, which gives the inductive step for
-$$\sum_{w=1}^W (W + 1 - w)\max(w - |x - y|, 0) = \binom{W - d + 1}{2}$$
-underlying the Order-2 Cesàro–Fejér window kernel in Theorems 2.7–2.11 of [Pa26].
+**Arithmetic Lemma for Theorem 2.7(a) of [Pa26] (Order-2 Cesàro–Fejér Hockey-Stick Recurrence):**
+For every $m \in \mathbb{N}$, $m(m - 1) + 2 m = (m + 1) m$, giving the arithmetic recurrence step
+for the unweighted Order-2 Cesàro–Fejér sum $\sum_{w=1}^W \max(w - d, 0) = \binom{W - d + 1}{2}$
+(with $d = |x - y| < W$) in Theorem 2.7(a) of [Pa26].
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L362"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L356"]
 theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
     m * (m - 1) + 2 * m = (m + 1) * m := by
   sorry
 
 /--
-**Theorem 2.9(a) of [Pa26] (Scale-Invariant Block-Window Exponent Identity):**
+**Arithmetic Lemma for Theorem 2.9(a) of [Pa26] (Scale-Invariant Block-Window Exponent Identity):**
 For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
 the sliding-window width exponent $k - (s + r)$ and sub-block count exponent $(s + r) - 1$
 sum to $k - 1$ independently of $s$ and $r$.
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L378"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L372"]
 theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     (k - (s + r)) + ((s + r) - 1) = k - 1 := by
   sorry
 
 /--
-**Theorem 2.9(b) of [Pa26] (Scale-Invariant Block-Window Product Identity):**
+**Arithmetic Lemma for Theorem 2.9(b) of [Pa26] (Scale-Invariant Block-Window Product Identity):**
 For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
 the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r - 1}$
 satisfy $w \cdot B = 2^{k - 1} = |I_k|$ across all scales $s$ and octaves $r$.
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L389"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L383"]
 theorem erdos_1191.variants.scale_invariant_block_window_product (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     2 ^ (k - (s + r)) * 2 ^ ((s + r) - 1) = 2 ^ (k - 1) := by
   sorry
 
 /--
-**Theorem 2.11(b) of [Pa26] (Hyperfactorial Sawtooth Abel Coefficient Identity):**
-For every integer period $m \ge 1$, $m(m + 1) - (m - 1)m = 2m$, telescoping the piecewise
-logarithmic integrals of $\{u\}(1 - \{u\})/u$ into $2\ln H(M - 1)$ and the Glaisher–Kinkelin
-sawtooth constant $C_{\mathrm{GK}} = 2\ln A_{\mathrm{GK}} = \frac{1}{6} - 2\zeta'(-1)$.
+**Arithmetic Lemma for Theorem 2.11(b) of [Pa26] (Hyperfactorial Sawtooth Abel Coefficient Identity):**
+For every integer period $m \ge 1$, $m(m + 1) - (m - 1)m = 2m$, giving the coefficient step used
+when telescoping the piecewise logarithmic integrals of $\{u\}(1 - \{u\})/u$ in Theorem 2.11(b) of [Pa26].
 -/
-@[category research solved, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L403"]
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L397"]
 theorem erdos_1191.variants.hyperfactorial_sawtooth_abel_step (m : ℕ) (hm : 1 ≤ m) :
     m * (m + 1) - (m - 1) * m = 2 * m := by
   sorry
