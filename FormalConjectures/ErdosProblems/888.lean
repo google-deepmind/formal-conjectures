@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 888
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er98] Erdős, Paul, Some of my new and almost new problems and results in combinatorial number
   theory. Number theory (Eger, 1996) (1998), 169-180.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -44,6 +47,7 @@ exists.
 def p (n : ℕ) (k : ℕ) : Prop := ∃ A : Finset ℕ, RequiredCondition A n ∧ A.card = k
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the size of the largest $A\subseteq \{1,\ldots,n\}$ such that if
 $a\leq b\leq c\leq d\in A$ are such that $abcd$ is a square then $ad=bc$?
@@ -83,8 +87,8 @@ also works, showing $(1+o(1))\frac{\log\log n}{\log n}n \leq \lvert A\rvert$ is 
 -/
 @[category research solved, AMS 11]
 theorem erdos_888.variants.semiprimes :
-    (fun n : ℕ ↦ (Nat.findGreatest (p n) n : ℝ)) ≫
-      (fun n : ℕ ↦ (n : ℝ) * Real.log (Real.log n) / Real.log n) := by
+    ∃ c : ℕ → ℝ, c =o[atTop] (1 : ℕ → ℝ) ∧ ∀ᶠ n : ℕ in atTop,
+      (1 + c n) * ((n : ℝ) * Real.log (Real.log n) / Real.log n) ≤ Nat.findGreatest (p n) n := by
   sorry
 
 end Erdos888

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Combinatorial representation of the recurrence $a(n+2) = 2a(n+1) + 2a(n)$
@@ -25,6 +26,8 @@ A028859 (OEIS): $a(n+2) = 2 \cdot a(n+1) + 2 \cdot a(n)$; $a(0) = 1$, $a(1) = 3$
 - [A028859](https://oeis.org/A028859)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA28859
 
@@ -58,6 +61,7 @@ lemma a_3 : a 3 = 22 := by native_decide
 lemma a_4 : a 4 = 60 := by native_decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: The sequence a(n) is also the number of compositions of $n$ into positive integers
 such that adjacent parts and the largest part differ by at most 1. - _Gus Wiseman_, May 19 2020

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mathoverflow 235893
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [mathoverflow/235893](https://mathoverflow.net/questions/235893)
 asked by user [*Willie Wong*](https://mathoverflow.net/users/3948/willie-wong)
 -/
+
+@[expose] public section
 
 open scoped EuclideanGeometry
 
@@ -200,9 +203,9 @@ Assume for $n>1$, $f:\mathbb{R}^n\to\mathbb{R}^n$ is a bijection, where $\mathbb
 with the standard topology. Does the connectedness of (the induced power set map) $f$ imply
 that of $f^{-1}$?
 -/
-@[category research open, AMS 26 54]
+@[category research open, question, AMS 26 54]
 theorem mathoverflow_235893 :
-    answer(sorry) ↔ ∀ n > 1, ∀ (f : ℝ^n ≃ ℝ^n), IsConnectedMap f → IsConnectedMap f.symm := by
+    ∀ n > 1, ∀ (f : ℝ^n ≃ ℝ^n), IsConnectedMap f → IsConnectedMap f.symm := by
   sorry
 
 /--

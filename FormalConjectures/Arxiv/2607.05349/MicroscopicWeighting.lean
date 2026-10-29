@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The microscopic weighting on a metric space
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 **The microscopic weighting on a metric space**
 by *Emily Roff, Simon Willerton*
 -/
+
+@[expose] public section
 
 open Filter Matrix
 
@@ -86,6 +89,7 @@ def HasFiniteConcentration (M : Matrix X X ℝ) : Prop :=
 -- In the docstring below, matrix rows are separated by `\cr` rather than `\\`: the website's
 -- markdown processing strips one backslash from `\\` before KaTeX runs, which destroys the
 -- row breaks.
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture 3.3 (Roff-Willerton, 2026).** A finite metric space admits a microscopic weighting
 if and only if its distance matrix has finite concentration.
@@ -136,11 +140,11 @@ q^\top = \frac{1}{128472094291} \begin{pmatrix} 43681853675722 \cr -538732482936
 $$
 This certificate shows that the obstruction $v^\top B$ annihilates $\ker A$, making it impossible to construct a convergent weighting.
 -/
-@[category research solved, AMS 15 51,
+@[category research solved, question, AMS 15 51,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/microscopic-weighting-counterexample/blob/eff8979/lean/MicroscopicWeightingCounterexampleFC.lean#L886-L894"]
 theorem microscopic_weighting_iff_finite_concentration :
-    answer(False) ↔ ∀ (X : Type) [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X],
+    ¬ ∀ (X : Type) [Fintype X] [DecidableEq X] [Nonempty X] [MetricSpace X],
       HasMicroscopicWeighting X ↔ HasFiniteConcentration (distanceMatrix X) := by
   sorry
 

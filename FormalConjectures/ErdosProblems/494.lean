@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 494
@@ -27,7 +28,11 @@ import FormalConjecturesUtil
       221-254.
   - [GFS62] Gordon, B. and Fraenkel, A. S. and Straus, E. G., On the determination of sets
       by the sets of sums of a certain order. Pacific J. Math. (1962), 187--196.
+  - [FoIz94] Fomin, D. V. and Izhboldin, O. T., Sets of multiple sums. Proc. St. Petersburg
+      Math. Soc. 3 (1994), 244-259.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -43,16 +48,19 @@ noncomputable def sumMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
 def Erdos494Unique (k : ℕ) (card : ℕ) :=
   ∀ A B : Finset ℂ, A.card = card → B.card = card → sumMultiset A k = sumMultiset B k → A = B
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Selfridge and Straus [SeSt58] showed that the conjecture is true when $k = 2$ and
 $|A| \ne 2^l$ for $l \ge 0$.
 They also gave counterexamples when $k = 2$ and $|A| = 2^l$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/a2d6dcb99d4f11469cbb40c18959357031786c4c/erdos-494/Solution.lean#L26"]
 theorem erdos_494.variants.k_eq_2_card_not_pow_two :
     ∀ card : ℕ, (∀ l : ℕ, card ≠ 2 ^ l) → Erdos494Unique 2 card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Selfridge and Straus [SeSt58] gave counterexamples to the conjecture
 when $k = 2$ and $|A| = 2^l$.
@@ -64,16 +72,22 @@ theorem erdos_494.variants.k_eq_2_card_pow_two :
     ∀ card : ℕ, (∃ l : ℕ, card = 2 ^ l) → ¬Erdos494Unique 2 card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Selfridge and Straus [SeSt58] also showed that the conjecture is true when
-1) $k = 3$ and $|A| > 6$ or
+1) $k = 3$ and $|A| > 6$, except possibly for $|A| = 27$ and $|A| = 486$, or
 2) $k = 4$ and $|A| > 12$.
 More generally, they proved that $A$ is determined by $A_k$ (and $|A|$) if $|A|$ is divisible by
 a prime greater than $k$.
+
+The cases $|A| = 27$ and $|A| = 486$ were left open in [SeSt58]. Fomin and Izhboldin [FoIz94]
+later found two distinct sets of each of these sizes with the same multiset of $3$-sums, so
+these exceptions are genuine.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/a2d6dcb99d4f11469cbb40c18959357031786c4c/erdos-494/Solution.lean#L30"]
 theorem erdos_494.variants.k_eq_3_card_gt_6 :
-    ∀ card > 6, Erdos494Unique 3 card := by
+    ∀ card > 6, card ≠ 27 → card ≠ 486 → Erdos494Unique 3 card := by
   sorry
 
 /--
@@ -94,6 +108,7 @@ theorem erdos_494.variants.card_divisible_by_prime_gt_k :
     ∀ (k card p : ℕ), p.Prime → k ∈ Set.Ioo 0 p → p ∣ card → Erdos494Unique k card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Kruyt noted that the conjecture fails when $|A| = k$, by rotating $A$ around an appropriate point.
 -/
@@ -104,6 +119,7 @@ theorem erdos_494.variants.k_eq_card :
     ∀ k > 2, ¬Erdos494Unique k k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Similarly, Tao noted that the conjecture fails when $|A| = 2k$, by taking $A$ to be a set of
 the total sum 0 and considering $-A$.
@@ -132,6 +148,7 @@ $A = \{1, \zeta_6, \zeta_6^2, \zeta_6^4\}$ and $B = \{1, \zeta_6^2, \zeta_6^3, \
 noncomputable def prodMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
   ((A.powersetCard k).val.map (fun s => s.prod id))
 
+set_option linter.style.formal_proof_palomar false in
 /-- A counterexample to the product version of the conjecture (by Steinerberger). -/
 @[category research solved, AMS 5,
   formal_proof using formal_conjectures at

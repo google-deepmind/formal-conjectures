@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Fibonacci-Collatz sequence
@@ -25,6 +26,8 @@ if $\mathrm{fib}$ is odd then $a(n) = 3 \cdot \mathrm{fib} + 1$ else $a(n) = \ma
 *References:*
 - [A105801](https://oeis.org/A105801)
 -/
+
+@[expose] public section
 
 namespace OeisA105801
 
@@ -56,6 +59,7 @@ theorem a_4 : a 4 = 6 := by decide
 @[category test, AMS 11]
 theorem a_5 : a 5 = 8 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: for every $k > 0$ there is an index $m$ such that all the $a(n)$ with $n > m$
 have the same residue $\bmod 3^k$.

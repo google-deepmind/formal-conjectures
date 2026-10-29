@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 453
@@ -35,6 +36,8 @@ import FormalConjecturesUtil
 - [Po79] Pomerance, Carl, *The prime number graph*. Math. Comp. (1979), 399-408.
 -/
 
+@[expose] public section
+
 namespace Erdos453
 
 /-- The eventual prime inequality asked in Erdős Problem 453, using Mathlib's zero-based primes. -/
@@ -44,6 +47,7 @@ def EventuallyHasPrimeWitness : Prop :=
       (Nat.nth Nat.Prime n) ^ (2 : ℕ) <
         Nat.nth Nat.Prime (n + i) * Nat.nth Nat.Prime (n - i)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for all sufficiently large $n$, there exists some $i<n$ such that
 $$
@@ -53,8 +57,8 @@ where $p_k$ is the $k$th prime?
 
 Pomerance proved that the answer is no.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos453.lean"]
-theorem erdos_453 : answer(False) ↔ EventuallyHasPrimeWitness := by
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos453.lean"]
+theorem erdos_453 : ¬ EventuallyHasPrimeWitness := by
   sorry
 
 end Erdos453

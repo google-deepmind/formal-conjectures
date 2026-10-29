@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 221
@@ -25,10 +26,13 @@ import FormalConjecturesUtil
 - [Ru72] Ruzsa, Jr., I., *On a problem of P. Erdős*. Canad. Math. Bull. (1972), 309-310.
 -/
 
+@[expose] public section
+
 open Filter Asymptotics
 
 namespace Erdos221
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a set $A\subset\mathbb{N}$ such that, for all large $N$,
 $$\lvert A\cap\{1,\ldots,N\}\rvert \ll N/\log N$$
@@ -39,9 +43,9 @@ Lorentz [Lo54] proved there is such a set with, for all large $N$,
 $$\lvert A\cap\{1,\ldots,N\}\rvert \ll \frac{\log\log N}{\log N}N$$
 The answer is yes, proved by Ruzsa [Ru72].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem221.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem221.lean"]
 theorem erdos_221 :
-    answer(True) ↔ ∃ A : Set ℕ,
+    ∃ A : Set ℕ,
       ((fun N => ({a ∈ A | a ≤ N}.ncard : ℝ)) ≪ (fun N => (N : ℝ) / Real.log N)) ∧
       ∀ᶠ N in atTop, ∃ k a, 0 ≤ k ∧ a ∈ A ∧ N = 2 ^ k + a := by
   sorry

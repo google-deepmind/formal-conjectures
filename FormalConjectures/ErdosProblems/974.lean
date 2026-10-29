@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 974
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/974](https://www.erdosproblems.com/974)
 - [Ti66] Tijdeman, R., *On a conjecture of Turán and Erdős*. Indag. Math. (1966), 374-383.
 -/
+
+@[expose] public section
 
 namespace Erdos974
 
@@ -37,6 +40,7 @@ def IsTuranConfiguration {n : ℕ} (z : Fin n → ℂ) : Prop :=
     (Even n → ∃ c : ℂ, ‖c‖ = 1 ∧ c ≠ 1 ∧
       Set.range z = {ζ : ℂ | ζ ^ (n / 2) = 1} ∪ {ζ : ℂ | ζ ^ (n / 2) = c})
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $z_1,\ldots,z_n\in \mathbb{C}$ be a sequence such that $z_1=1$. Suppose that the sequence of
 $$s_k=\sum_{1\leq i\leq n}z_i^k$$
