@@ -33,14 +33,15 @@ polynomial time on a deterministic classical Turing machine.
 
 namespace PolyTime
 
-open ComplexityTheory Classical
+open ComplexityTheory
 
+open scoped Classical in
 /--
-The decision version of the discrete logarithm problem in `(ℤ/pℤ)ˣ`:
-Given `(g, h, p, k)`, where `p` is prime and `g, h` are nonzero residues modulo `p`,
-does there exist `x ≤ k` such that `g^x ≡ h (mod p)`?
+The decision version of the discrete logarithm problem in $(\mathbb{Z}/p\mathbb{Z})^\times$:
+Given $(g, h, p, k)$, where $p$ is prime and $g, h$ are nonzero residues modulo $p$,
+does there exist $x \le k$ such that $g^x \equiv h \pmod{p}$?
 
-For inputs outside the intended group domain (`p` not prime or `g, h` not in `(0, p)`),
+For inputs outside the intended group domain ($p$ not prime or $g, h$ not in $(0, p)$),
 the decision problem evaluates to `false`.
 -/
 noncomputable def discreteLogDecision (input : ℕ × ℕ × ℕ × ℕ) : Bool :=
@@ -51,14 +52,16 @@ noncomputable def discreteLogDecision (input : ℕ × ℕ × ℕ × ℕ) : Bool 
     false
 
 /--
-**The discrete logarithm problem is not in P**:
+**The discrete logarithm problem**: Can the discrete logarithm decision problem in
+$(\mathbb{Z}/p\mathbb{Z})^\times$ be solved in polynomial time on a deterministic classical computer?
 
-The conjecture that the discrete logarithm problem cannot be solved in
-polynomial time on a deterministic classical computer.
+*References:*
+- [Wikipedia: List of unsolved problems in computer science](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_computer_science#Polynomial_versus_nondeterministic-polynomial_time_for_specific_algorithmic_problems)
+- [Wikipedia: Discrete logarithm](https://en.wikipedia.org/wiki/Discrete_logarithm)
 -/
 @[category research open, question, AMS 68]
-theorem discrete_logarithm_not_in_P :
-    ¬ IsPolyTime discreteLogDecision := by
+theorem isPolyTime_discreteLogDecision :
+    IsPolyTime discreteLogDecision := by
   sorry
 
 end PolyTime
