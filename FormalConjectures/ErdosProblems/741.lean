@@ -51,9 +51,14 @@ theorem erdos_741.parts.i : ∀ A : Set ℕ, 0 < upperDensity (A + A) → ∃ A�
 Let $A\subseteq \mathbb{N}$ be such that $A+A$ has positive lower density.
 Can one always decompose $A=A_1\sqcup A_2$ such that $A_1+A_1$ and $A_2+A_2$
 both have positive lower density?
+
+This was disproved by Ilia Pauzner using Gemini 4 Carbon.
 -/
-@[category research open, question, AMS 5]
-theorem erdos_741.variants.lower : ∀ A : Set ℕ, 0 < lowerDensity (A + A) → ∃ A₁ A₂,
+@[category research solved, question, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/ilpauzner/formal-conjectures/blob/aa88a549a5c17fce7cc97aef62949ebab69e2fb9/FormalConjectures/ErdosProblems/741.lean#L932"]
+theorem erdos_741.variants.lower :
+    ¬ ∀ A : Set ℕ, 0 < lowerDensity (A + A) → ∃ A₁ A₂,
     A = A₁ ∪ A₂ ∧ Disjoint A₁ A₂ ∧ 0 < lowerDensity (A₁ + A₁)
     ∧ 0 < lowerDensity (A₂ + A₂) := by
   sorry
