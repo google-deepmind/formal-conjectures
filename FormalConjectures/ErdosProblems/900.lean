@@ -54,6 +54,7 @@ theorem uniformEdgeProbability_of_lt (n m : ℕ) (P : SimpleGraph (Fin n) → Pr
     (h : n.choose 2 < m) : uniformEdgeProbability n m P = 0 := by
   simp [uniformEdgeProbability, Nat.choose_eq_zero_of_lt h]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There is a function $f:(1/2,\infty)\to \mathbb{R}$ such that $f(c)\to 0$ as $c\to 1/2$ and
 $f(c)\to 1$ as $c\to \infty$ and every random graph with $n$ vertices and $cn$ edges has (with
