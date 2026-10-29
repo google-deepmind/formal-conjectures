@@ -25,6 +25,8 @@ public import FormalConjecturesUtil
 - [Er70b] Erdős, P., *Some applications of graph theory to number theory*. Proc. Second Chapel
   Hill Conf. on Combinatorial Mathematics and its Applications (Univ. North Carolina, Chapel
   Hill, N.C., 1970) (1970), 136-145. [PDF](https://www.renyi.hu/~p_erdos/1970-20.pdf)
+- [Po79] Pomerance, C., *The prime number graph*. Math. Comp. 33 (1979), 399-408.
+  [PDF](https://math.dartmouth.edu/~carlp/PDF/paper19.pdf)
 -/
 
 @[expose] public section
@@ -68,10 +70,21 @@ as $n\to \infty$?
 
 This is the first part. The primes may depend on $A$. Erdős and Straus conjectured this
 [Er70b, p. 138 and p. 140].
+
+The answer is no: Liam Price and GPT-5.5 Pro showed on the
+[forum](https://www.erdosproblems.com/forum/thread/983#post-6104) that
+$f(\pi(n)+1,n)=2\pi(n^{1/2})+1$ for infinitely many $n$; see the
+[explanation](https://www.erdosproblems.com/forum/thread/983#post-6525) by Nat Sothanaphan.
+Write $p_k$ for the $k$-th prime. By [Po79, Corollary after Theorem 2.2] there are infinitely
+many $N$ with $p_{N-i}p_{N+i}<p_N^2$ for $1\leq i<N$. Take $n=p_N^2-1$, so
+$\pi(n^{1/2})=N-1$. Let $A$ consist of the products of adjacent primes on the path
+$p_{2N-1},p_1,p_{2N-2},p_2,\ldots,p_{N+1},p_{N-1},p_N$, its two endpoint primes, and the
+other primes up to $n$. Then $\lvert A\rvert=\pi(n)+1$, and for any $r\leq 2N-2$ primes at
+most $r$ elements of $A$ are divisible only by those primes, so $f(\pi(n)+1,n)\geq 2N-1$.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_983.parts.i :
-    Tendsto (fun n : ℕ ↦
+    ¬ Tendsto (fun n : ℕ ↦
       2 * (Nat.primeCounting (Nat.sqrt n) : ℤ) - (f (Nat.primeCounting n + 1) n : ℤ))
       atTop atTop := by
   sorry
