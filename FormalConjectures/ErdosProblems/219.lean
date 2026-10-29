@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 219
 
 *Reference:* [erdosproblems.com/219](https://www.erdosproblems.com/219)
 -/
+
+@[expose] public section
 
 namespace Erdos219
 
@@ -66,14 +69,16 @@ lemma pair_mem_primeArithmeticProgressions
   let ⟨n, h⟩ := Nat.exists_eq_add_of_lt hpq
   simpa [primeArithmeticProgressions, hp, hq] using ⟨2, by norm_num, Nat.isAPOfLength_pair hpq⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there arbitrarily long arithmetic progressions of primes?
 Solution: yes.
 Ref: Green, Ben and Tao, Terence, _The primes contain arbitrarily long arithmetic progressions_
 -/
 
-@[category research solved, AMS 5 11]
-theorem erdos_219 : answer(True) ↔ ∀ N : ℕ, ∃ l ∈ primeArithmeticProgressions, N ≤ ENat.card l := by
+@[category research solved, question, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos219.lean"]
+theorem erdos_219 : ∀ N : ℕ, ∃ l ∈ primeArithmeticProgressions, N ≤ ENat.card l := by
   sorry
 
 end Erdos219

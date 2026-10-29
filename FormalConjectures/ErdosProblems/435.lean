@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 435
@@ -27,8 +28,11 @@ import FormalConjecturesUtil
   binomial coefficients*. arXiv:2412.17882 (2024).
 -/
 
+@[expose] public section
+
 namespace Erdos435
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n\in\mathbb{N}$ with $n\neq p^k$ for any prime $p$ and $k\geq 0$. What is the largest
 integer not of the form

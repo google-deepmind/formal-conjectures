@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Schur's theorem on Galois groups of truncated exponential polynomials
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 
 *Reference* (https://mathoverflow.net/questions/477077)
 -/
+
+@[expose] public section
 
 /-
 Note: This was asked by Nick Katz. Quasi-autoformalized using Claude 4.0 Sonnet.
@@ -42,6 +45,7 @@ given by `∑_{j=0}^{n} x^j / j!` over `ℚ`, which is the
 noncomputable def truncatedExp (n : ℕ) : ℚ[X] :=
   ∑ j ∈ Finset.range (n + 1), (1 / j ! : ℚ) • X ^ j
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Schur's Theorem (1924):**
 Let `f_n(x) = ∑_{j=0}^n x^j/j!` be the `n`-th truncated
@@ -50,7 +54,7 @@ exponential polynomial over `ℚ`. Then for `n ≥ 2`:
 - If `n ≡ 0 (mod 4)`, the Galois group of `f_n` is isomorphic to the alternating group `A_n`
 - If `n ≢ 0 (mod 4)`, the Galois group of `f_n` is isomorphic to the symmetric group `S_n`
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/83f95df1123bfdc7937bb7358bb65f658c30d554/Proofs/T_SchurTruncatedExponential_schur_truncatedExp_galoisGroup_equiv.lean#L2204"]
 theorem schur_truncatedExp_galoisGroup_equiv (n : ℕ) (hn : n ≥ 2) :
   letI f := truncatedExp n
   if n % 4 = 0 then

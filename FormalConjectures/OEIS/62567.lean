@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Reversible multiples $a(3^n) = 10^{3^{n-2}} - 1$ for powers of $3$
@@ -26,6 +27,8 @@ or 0 if no such multiple exists.
 - [A062567](https://oeis.org/A062567)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA62567
 
@@ -99,6 +102,7 @@ lemma a_5 : a 5 = 5 := by
   apply a_eq_self 5 (by omega) (by rw [reverseNat_of_lt 5 (by decide) (by decide)])
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The conjecture that $a(3^n) = 10^{3^{n-2}} - 1$ for $n > 1$ was shown to be false for $4 < n < 21$
 by Farideh Firoozbakht, who conjectured that for all $n > 4$, $a(3^n) \neq 10^{3^{n-2}} - 1$.

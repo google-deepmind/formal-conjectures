@@ -13,15 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 567
 
 Let $G$ be either $Q_3$ or $K_{3,3}$ or $H_5$ (the last formed by adding two vertex-disjoint chords
 to $C_5$). Is it true that, if $H$ has $m$ edges and no isolated vertices, then
-$$ \hat{r}(G,H) \ll m? $$
+$$ R(G,H) \ll m? $$
 
 In other words, is $G$ Ramsey size linear? A special case of Problem 566.
 
@@ -30,6 +31,8 @@ In other words, is $G$ Ramsey size linear? A special case of Problem 566.
 [EFRS93] Erdős, Faudree, Rousseau and Schelp, _Ramsey size linear graphs_.
 Combin. Probab. Comput. (1993), 389-399.
 -/
+
+@[expose] public section
 
 namespace Erdos567
 
@@ -53,8 +56,8 @@ def H5 : SimpleGraph (Fin 5) :=
 
 Is $Q_3$ (the 3-dimensional hypercube) Ramsey size linear?
 -/
-@[category research open, AMS 5]
-theorem erdos_567.parts.i : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
+@[category research open, question, AMS 5]
+theorem erdos_567.parts.i : IsRamseySizeLinear Q3 := by
   sorry
 
 /--
@@ -62,8 +65,8 @@ theorem erdos_567.parts.i : answer(sorry) ↔ IsRamseySizeLinear Q3 := by
 
 Is $K_{3,3}$ Ramsey size linear?
 -/
-@[category research open, AMS 5]
-theorem erdos_567.parts.ii : answer(sorry) ↔ IsRamseySizeLinear K33 := by
+@[category research open, question, AMS 5]
+theorem erdos_567.parts.ii : IsRamseySizeLinear K33 := by
   sorry
 
 /--
@@ -71,8 +74,8 @@ theorem erdos_567.parts.ii : answer(sorry) ↔ IsRamseySizeLinear K33 := by
 
 Is $H_5$ ($C_5$ with two vertex-disjoint chords) Ramsey size linear?
 -/
-@[category research open, AMS 5]
-theorem erdos_567.parts.iii : answer(sorry) ↔ IsRamseySizeLinear H5 := by
+@[category research open, question, AMS 5]
+theorem erdos_567.parts.iii : IsRamseySizeLinear H5 := by
   sorry
 
 end Erdos567

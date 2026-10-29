@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1034
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
   [staff.ustc.edu.cn/~jiema/Erdos-1034.pdf](http://staff.ustc.edu.cn/~jiema/Erdos-1034.pdf)
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace Erdos1034
@@ -38,6 +41,7 @@ vertices of `T`.
 def JoinedToTwo {V : Type*} (G : SimpleGraph V) (T Y : Finset V) : Prop :=
   ∀ y ∈ Y, ∃ u ∈ T, ∃ v ∈ T, u ≠ v ∧ G.Adj y u ∧ G.Adj y v
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph on $n$ vertices with $>n^2/4$ many edges. Must there be a triangle $T$ in $G$
 and vertices $y_1,\ldots,y_t$, where $t>(\frac{1}{2}-o(1))n$, such that every $y_i$ is joined to
@@ -49,9 +53,9 @@ This has been solved in the negative by Ma and Tang [MaTa25], who construct a gr
 vertices and $>n^2/4$ edges in which every triangle has at most $(2-(5/2)^{1/2}+o(1))n$ vertices
 adjacent to at least two of its vertices (note that $2-(5/2)^{1/2}\approx 0.4189$).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1034.lean"]
-theorem erdos_1034 : answer(False) ↔
-    ∀ ε : ℝ, 0 < ε → ∀ᶠ (n : ℕ) in atTop, ∀ G : SimpleGraph (Fin n),
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1034.lean"]
+theorem erdos_1034 :
+    ¬ ∀ ε : ℝ, 0 < ε → ∀ᶠ (n : ℕ) in atTop, ∀ G : SimpleGraph (Fin n),
       (n : ℝ) ^ 2 / 4 < (G.edgeSet.ncard : ℝ) →
         ∃ T : Finset (Fin n), G.IsNClique 3 T ∧ ∃ Y : Finset (Fin n),
           JoinedToTwo G T Y ∧ (1 / 2 - ε) * (n : ℝ) < (Y.card : ℝ) := by

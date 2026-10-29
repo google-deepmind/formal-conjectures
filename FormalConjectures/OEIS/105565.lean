@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Indicator sequence for 5 Fibonacci numbers with n digits
@@ -27,6 +28,8 @@ and $\beta = \log(5)/(2\log(\phi)) - 1$.
 *References:*
 - [A105565](https://oeis.org/A105565)
 -/
+
+@[expose] public section
 
 namespace OeisA105565
 
@@ -84,6 +87,7 @@ noncomputable def betaConst : Real := Real.log 5 / (2 * Real.log phi) - 1
 noncomputable def s (n : ℕ) : Real :=
   (Finset.Icc 1 n).sum (fun k => (a k : Real))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $\beta-2 < S(n)-\alpha n < \beta-1$.
 The constants $\alpha$ and $\beta$ are as defined in the formula section.

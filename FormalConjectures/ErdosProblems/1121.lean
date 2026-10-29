@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1121
@@ -28,10 +29,13 @@ import FormalConjecturesUtil
 - [Ha47] Hadwiger, H., *Nonseparable convex systems*. Amer. Math. Monthly (1947), 583-585.
 -/
 
+@[expose] public section
+
 namespace Erdos1121
 
 open scoped EuclideanGeometry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $C_1,\ldots,C_n$ are circles in $\mathbb{R}^2$ with radii $r_1,\ldots,r_n$ such that no line
 disjoint from all the circles divides them into two non-empty sets then the circles can be

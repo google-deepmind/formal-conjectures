@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 692
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Ca25] Cambie, S., *Resolution of Erdős' problems about unimodularity*.
   arXiv:2501.10333 (2025).
 -/
+
+@[expose] public section
 
 namespace Erdos692
 
@@ -47,6 +50,15 @@ def IsDelta₁ (n m : ℕ) (δ : ℝ) : Prop :=
   (exactlyOneDivisorIn n m).HasDensity δ
 
 /--
+The set of local maxima of the sequence `f` on `(a, ∞)`. Each local maximum is recorded by the
+first index `m` of a maximal interval `[m, b]` on which `f` is constant, with `f` strictly smaller
+at `m - 1` and at `b + 1`.
+-/
+def localMaxima (f : ℕ → ℝ) (a : ℕ) : Set ℕ :=
+  {m | a < m ∧ f (m - 1) < f m ∧ ∃ b, m ≤ b ∧ (∀ j ∈ Set.Icc m b, f j = f m) ∧ f (b + 1) < f m}
+
+set_option linter.style.formal_proof_palomar false in
+/--
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
 Is $\delta_1(n,m)$ unimodular for $m>n+1$ (i.e. increases until some $m$ then decreases
 thereafter)?
@@ -55,20 +67,22 @@ Cambie has calculated that unimodularity fails even for $n=2$ and $n=3$.
 
 This was formalized in Lean by Monticone using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
 "https://gist.githubusercontent.com/pitmonticone/96516af9100a37a1da81908dc0b0410c/raw/a1d6ca7f3835c58b257e5e715c8fdf3a224e1bd0/Erdos692.lean"]
-theorem erdos_692.parts.i : answer(False) ↔
-    ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) → ∀ n, UnimodularOn (δ n) (n + 1) := by
+theorem erdos_692.parts.i :
+    ¬ ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) → ∀ n, UnimodularOn (δ n) (n + 1) := by
   sorry
+
+def erdos_692.parts.ii.answer : ℕ := sorry
 
 /--
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
 For fixed $n$, where does $\delta_1(n,m)$ achieve its maximum?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_692.parts.ii (n : ℕ) :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
-      IsGreatest (δ n '' Set.Ioi (n + 1)) (δ n answer(sorry)) := by
+      IsGreatest (δ n '' Set.Ioi (n + 1)) (δ n erdos_692.parts.ii.answer) := by
   sorry
 
 /--
@@ -82,11 +96,13 @@ theorem erdos_692.variants.erdos_upper_bound :
       ∃ c > (0 : ℝ), ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ m, δ n m ≤ C / Real.log n ^ c := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Cambie has calculated that unimodularity fails even for $n=2$ and $n=3$. For example,
 $$\delta_1(3,6)= 0.35\quad \delta_1(3,7)\approx 0.33\quad \delta_1(3,8)\approx 0.3619.$$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/b8e7531a14cbe5c18ea1ae2e9e85b811bc3c7a46/erdos-692/Solution.lean#L26"]
 theorem erdos_692.variants.cambie_three :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
       δ 3 7 < δ 3 6 ∧ δ 3 7 < δ 3 8 := by
@@ -94,13 +110,13 @@ theorem erdos_692.variants.cambie_three :
 
 /--
 Cambie [Ca25] has shown that, for fixed $n$, the sequence $\delta_1(n,m)$ has superpolynomially
-many local maxima $m$.
+many local maxima $m$. A local maximum is a maximal run of equal values of the sequence that is
+strictly larger than the values just before and just after the run.
 -/
 @[category research solved, AMS 11]
 theorem erdos_692.variants.cambie_local_maxima (k : ℕ) :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
-      ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ k ≤
-        ({m : ℕ | n + 1 < m ∧ δ n (m - 1) ≤ δ n m ∧ δ n (m + 1) ≤ δ n m}.ncard : ℝ) := by
+      ∀ᶠ n : ℕ in atTop, (n : ℕ∞) ^ k ≤ (localMaxima (δ n) (n + 1)).encard := by
   sorry
 
 end Erdos692
