@@ -13,20 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 474
 
 *References:*
 - [erdosproblems.com/474](https://www.erdosproblems.com/474)
-- [Er95d] Erdős, P. *Some of my favourite problems which recently have been solved.*
-  In Proc. of the Conf. Topology and Measure VII (Wustrow, 1994), p. 64 (1995).
-- [Sh88] Shelah, S. *Consistency of positive partition theorems for graphs and models.*
-  In Set theory and its applications (1988), pp. 167–193.
-- [Va99] Vaughan, J.E. *Open problems in topology II*, problem 7.81 (1999).
+- [Er95d] Erdős, P. *On some problems in combinatorial set theory.*
+  Publ. Inst. Math. 57(71) (1995), 61–65.
+- [Sh88] Shelah, S. *Was Sierpiński right? I.* Israel J. Math. 62 (1988), 355–380.
+- [Va99] Various, *Some of Paul’s favorite problems*, Budapest conference booklet,
+  problem 7.81 (1999).
 -/
+
+@[expose] public section
 
 open Cardinal Combinatorics
 open scoped Cardinal
@@ -47,9 +50,9 @@ $A \subseteq \mathbb{R}^2$ has $A^2$ containing a pair of each color?
 The currently open *specific* form (asked in [Va99, 7.81]) is whether the negative
 relation is consistent assuming $\mathfrak{c} = \aleph_2$.
 -/
-@[category research open, AMS 3]
+@[category research open, question, AMS 3]
 theorem erdos_474 :
-    answer(sorry) ↔ ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
+    ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
   sorry
 
 /- ### Known results -/
@@ -59,11 +62,8 @@ namespace erdos_474.variants
 /--
 **Sierpinski–Kurepa (2 colors).** $2^{\aleph_0} \not\to [\aleph_1]^2_2$ holds in ZFC.
 
-For any 2-coloring of pairs from the continuum there is no uncountable subset on which
-some color is missed; equivalently (since one of two colors must be missed if the
-coloring is not surjective), there is no monochromatic uncountable subset, contradicting
-$2^{\aleph_0} \to (\aleph_1)^2_2$. This negative direction is a ZFC theorem due to
-Sierpinski and (independently) Kurepa.
+There exists a 2-coloring of pairs from the continuum with no uncountable monochromatic
+subset. Equivalently, every uncountable subset contains a pair of each colour.
 -/
 @[category research solved, AMS 3]
 theorem sierpinski_kurepa : ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 2 := by
@@ -91,8 +91,8 @@ extension in which the positive bracket partition relation holds. We express thi
 property (not provable nor refutable in ZFC). The Lean-side encoding is the
 mathematical statement, with the consistency aspect documented above.
 -/
-@[category research solved, AMS 3]
-theorem shelah_consistent : answer(sorry) ↔ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
+@[category research solved, question, AMS 3]
+theorem shelah_consistent : cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3 := by
   sorry
 
 /--
@@ -103,9 +103,9 @@ Is it consistent with $\mathfrak{c} = \aleph_2$ that $2^{\aleph_0} \not\to [\ale
 This narrows the open question to a specific cardinal arithmetic regime (intermediate
 between Erdős's CH case and Shelah's very-large-$\mathfrak{c}$ case).
 -/
-@[category research open, AMS 3]
+@[category research open, question, AMS 3]
 theorem vaughan_aleph_two :
-    answer(sorry) ↔ (𝔠 = ℵ_ 2 ∧ ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3) := by
+    (𝔠 = ℵ_ 2 ∧ ¬ cardinalBracketRamsey2 (𝔠) (ℵ_ 1) 3) := by
   sorry
 
 end erdos_474.variants
@@ -116,12 +116,9 @@ end erdos_474.variants
 it holds with any $r' \ge r$ colors: more colors only make missing one easier. -/
 @[category test, AMS 3]
 theorem cardinalBracketRamsey2_mono_colors {α β : Cardinal.{u}} {r r' : ℕ}
-    (h : cardinalBracketRamsey2 α β r) (hrr' : r ≤ r') :
+    (hr : 0 < r) (h : cardinalBracketRamsey2 α β r) (hrr' : r ≤ r') :
     cardinalBracketRamsey2 α β r' := by
   intro X hX f hsym
-  -- Compose `f` with the inclusion `Fin r → Fin r'` (via `Fin.castLE`) to reduce to the
-  -- `r`-color case. Any `Y` witnessing the `r`-version still misses the same color in
-  -- the `r'`-version since the new colors are not in the image.
   sorry
 
 /-- **Monotonicity in the subset size.** If the bracket relation holds for target $\beta$,
