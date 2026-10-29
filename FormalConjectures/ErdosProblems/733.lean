@@ -83,6 +83,7 @@ def allLinesSequences (n : ℕ) : Set (List ℕ) :=
   {X | ∃ P : Finset ℝ², P.card = n ∧
     ∃ L : Finset Line, (∀ ℓ : Line, ℓ ∈ L ↔ 2 ≤ lineCount P ℓ) ∧ X = lineSizeSequence P L}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Call a sequence $1<X_1\leq\cdots\leq X_m\leq n$ line-compatible if there is a set of $n$ points in
 $\mathbb{R}^2$ such that there are $m$ lines $\ell_1,\ldots,\ell_m$ containing at least two
