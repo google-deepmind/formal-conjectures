@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The Erdős–Faber–Lovász conjecture (1972)
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   Erdős–Faber–Lovász conjecture." *Ann. of Math.* 198, pp. 537--618.
   [arXiv:2101.04698](https://arxiv.org/abs/2101.04698)
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
@@ -58,7 +61,7 @@ def unionGraph {n : ℕ} (S : Fin n → Finset V) : SimpleGraph V :=
 **The Erdős–Faber–Lovász conjecture (1972; proved for all large $n$ by Kang, Kelly, Kühn,
 Methuku and Osthus, 2023).**
 
-If a graph is the union of $n$ cliques, each with $n$ vertices, such that any two of the cliques
+For $n \ge 1$, if a graph is the union of $n$ cliques, each with $n$ vertices, such that any two of the cliques
 share at most one vertex, then the graph is $n$-colourable.
 
 Equivalently (in hypergraph language): every linear hypergraph with $n$ vertices has chromatic
@@ -68,7 +71,7 @@ holds for *every* $n$ remains open.
 @[category research open, AMS 5]
 theorem erdos_faber_lovasz_conjecture :
     ∀ {V : Type} [Fintype V] [DecidableEq V] (n : ℕ) (S : Fin n → Finset V),
-      IsEFLFamily n S → (unionGraph S).Colorable n := by
+      0 < n → IsEFLFamily n S → (unionGraph S).Colorable n := by
   sorry
 
 /--
@@ -83,14 +86,14 @@ theorem erdos_faber_lovasz_conjecture.variants.large_n :
   sorry
 
 /--
-**Chang–Lawler (1988): $\lceil 3n/2 - 2 \rceil$ colours always suffice.**
+**Chang–Lawler (1988).** For $n \ge 3$, $\lceil 3n/2 - 2 \rceil$ colours suffice.
 
 *Reference:* [CL88].
 -/
 @[category research solved, AMS 5]
 theorem erdos_faber_lovasz_conjecture.variants.chang_lawler
     {V : Type} [Fintype V] [DecidableEq V] (n : ℕ) (S : Fin n → Finset V)
-    (hS : IsEFLFamily n S) :
+    (hS : IsEFLFamily n S) (hn : 3 ≤ n) :
     (unionGraph S).Colorable ((3 * n - 3) / 2) := by
   sorry
 
