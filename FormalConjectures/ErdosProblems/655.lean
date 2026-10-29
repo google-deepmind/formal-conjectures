@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 655
 
 *Reference:* [erdosproblems.com/655](https://www.erdosproblems.com/655)
 -/
+
+@[expose] public section
 
 open Filter Finset EuclideanGeometry
 
@@ -31,6 +34,7 @@ no circle whose centre is one of the $x_i$ contains three other points. -/
 def IsValid (X : Finset ℝ²) : Prop :=
   ∀ᵉ (x ∈ X) (r > 0), ¬3 ≤ (Metric.sphere x r ∩ X).ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $x_1,\ldots,x_n\in \mathbb{R}^2$ be such that no circle whose centre is one
 of the $x_i$ contains three other points. Are there at least
@@ -45,9 +49,9 @@ the points are in general position was intended; see `erdos_655.variants.general
 
 The disproof — the regular `n`-gon construction together with its supporting lemmas — is formalised
 at the linked commit. -/
-@[category research solved, AMS 5 52, formal_proof using formal_conjectures at "https://github.com/AlperTheKing/formal-conjectures/blob/4aaaf544b6ed0ef22580787a8d8a19e85dc49556/FormalConjectures/ErdosProblems/655.lean"]
+@[category research solved, question, AMS 5 52, formal_proof using formal_conjectures at "https://github.com/AlperTheKing/formal-conjectures/blob/4aaaf544b6ed0ef22580787a8d8a19e85dc49556/FormalConjectures/ErdosProblems/655.lean"]
 theorem erdos_655 :
-    answer(False) ↔ ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ (X : Finset ℝ²), #X = n → IsValid X →
+    ¬ ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ (X : Finset ℝ²), #X = n → IsValid X →
       (1 + c) * n / 2 ≤ distinctDistances X := by
   sorry
 
@@ -59,9 +63,9 @@ all $n$ sufficiently large?
 In the spirit of related conjectures of Erdős and others, presumably
 some kind of assumption that the points are in general position
 (e.g. no three on a line and no four on a circle) was intended.-/
-@[category research open, AMS 5 52]
+@[category research open, question, AMS 5 52]
 theorem erdos_655.variants.general_position :
-    answer(sorry) ↔ ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ (X : Finset ℝ²), #X = n → IsValid X →
+    ∃ c > (0 : ℝ), ∀ᶠ n in atTop, ∀ (X : Finset ℝ²), #X = n → IsValid X →
       InGeneralPosition X → (1 + c) * n / 2 ≤ distinctDistances X := by
   sorry
 

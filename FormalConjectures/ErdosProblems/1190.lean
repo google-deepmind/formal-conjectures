@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1190
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
   (1980), 89-115.
 -/
+
+@[expose] public section
 
 open Filter Real
 
@@ -43,6 +46,7 @@ noncomputable def eps (m : ℕ) : ℝ :=
     (∀ n ∈ S, ∀ n' ∈ S, n ≠ n' → ¬ ∃ x : ℤ, x ≡ a n [ZMOD n] ∧ x ≡ a n' [ZMOD n']) ∧
     (∑ n ∈ S, (n : ℝ)⁻¹) = s}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let
 $$\epsilon_m=\max \sum \frac{1}{n_i}$$

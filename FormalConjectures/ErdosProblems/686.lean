@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 686
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   Acad. Sci. Hungar. (1979), 71-80.
 -/
 
+@[expose] public section
+
 namespace Erdos686
 
 /--
@@ -32,9 +35,9 @@ Can every integer $N≥2$ be written as
 $$N=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
 for some $k≥2$ and $m≥n+k$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_686 :
-    answer(sorry) ↔ ∀ N ≥ (2 : ℕ), ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+    ∀ N ≥ (2 : ℕ), ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (N : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
   sorry
 
@@ -43,9 +46,9 @@ Can every square $N≥2$ be written as
 $$N=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
 for some $k≥2$ and $m≥n+k$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_686.variants.square :
-    answer(sorry) ↔ ∀ N ≥ (2 : ℕ),  (IsSquare N) → ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+    ∀ N ≥ (2 : ℕ),  (IsSquare N) → ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (N : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
   sorry
 
@@ -54,9 +57,9 @@ Can $4$ be written as
 $$4=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
 for some $k≥2$ and $m≥n+k$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_686.variants.four :
-    answer(sorry) ↔ ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+    ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (4 : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
   sorry
 
@@ -97,12 +100,11 @@ Can $9$ be written as
 $$9=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
 for some $k≥2$ and $m≥n+k$?
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_686.variants.nine :
-    answer(True) ↔ ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+    ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (9 : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
   -- Witness: k = 3, n = 11, m = 25, since (26·27·28)/(12·13·14) = 19656/2184 = 9.
-  simp only [true_iff]
   refine ⟨3, by norm_num, 11, 25, by norm_num, ?_⟩
   norm_num [Finset.prod_Icc_succ_top, Finset.Icc_self, Finset.prod_singleton]
 
@@ -111,9 +113,9 @@ Can $25$ be written as
 $$25=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
 for some $k≥2$ and $m≥n+k$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_686.variants.twenty_five :
-    answer(sorry) ↔ ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+    ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (25 : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
   sorry
 
@@ -122,11 +124,11 @@ Can every non-square $N≥2$ be written as
 $$N=\frac{\prod_{1\leq i\leq k}(m+i)}{\prod_{1\leq i\leq k}(n+i)}$$
 for some $k≥2$ and $m≥n+k$?
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_686.variants.non_square :
-    answer(True) ↔ ∀ N ≥ (2 : ℕ), (¬ IsSquare N) → ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
+    ∀ N ≥ (2 : ℕ), (¬ IsSquare N) → ∃ᵉ (k ≥ 2) (n : ℕ) (m ≥ n + k),
       (N : ℚ) = (∏ i ∈ Finset.Icc 1 k, (m + i)) / (∏ i ∈ Finset.Icc 1 k, (n + i)) := by
-  refine ⟨fun _ N hN_ge_2 hN_not_square => ?_, fun _ => trivial⟩
+  intro N hN_ge_2 hN_not_square
 
   have hN_not_square' : ¬ ∃ s, s * s = N := fun ⟨s, hs⟩ => hN_not_square ⟨s, hs.symm⟩
 
