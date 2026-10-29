@@ -77,6 +77,7 @@ noncomputable def chainRate (c : ℕ → ℕ) : ℝ≥0∞ :=
     ((((Finset.Ico 1 ⌈x⌉₊).filter (· ∈ Set.range c)).card : ℝ) /
       Real.log (Real.log x))) atTop
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{a_1<a_2<\cdots\}$ be an infinite sequence of positive integers with positive lower
 logarithmic density.
@@ -99,6 +100,7 @@ theorem erdos_1217 :
         weightedRate (Set.range a) ≤ chainRate (a ∘ n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The answer to `erdos_1217` is yes even without the assumption that $A$ has positive lower
 logarithmic density [ABLLPSTT26]: it suffices that the doubly harmonic rate on the right-hand
@@ -112,6 +114,7 @@ theorem erdos_1217.variants.without_density :
         weightedRate (Set.range a) ≤ chainRate (a ∘ n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The set form of [ABLLPSTT26, Theorem 1.6]: if $A \subseteq \mathbb{N}$ has positive upper doubly
 logarithmic density
@@ -126,6 +129,7 @@ theorem erdos_1217.variants.abllpstt (A : Set ℕ) (hA : 0 < weightedRate A) :
       weightedRate A ≤ chainRate d := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Davenport and Erdős [DaEr51] proved that (assuming $A$ has positive lower logarithmic density)
 there exists a sequence $n_1<\cdots$ such that $a_{n_i}\mid a_{n_{i+1}}$ for all $i\geq 1$
@@ -138,6 +142,7 @@ theorem erdos_1217.variants.davenport_erdos :
       ∃ n : ℕ → ℕ, StrictMono n ∧ ∀ i, a (n i) ∣ a (n (i + 1)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős, Sárközi, and Szemerédi [ESS66, Theorem 2] proved that if
 $$\limsup_{x\to \infty}\frac{1}{\log\log x}\sum_{a_n<x}\frac{1}{a_n\log a_n}=c>0,$$
