@@ -35,8 +35,6 @@ edge-disjoint exactly when their vertex sets share at most one vertex.
   Canad. J. Math. (1981).
 * [Ka92] Kahn, J., *Coloring nearly-disjoint hypergraphs with $n + o(n)$ colors*.
   J. Combin. Theory Ser. A (1992).
-* [RoSa07] Romero, D. and Sánchez-Arroyo, A., *Adding evidence to the Erdős–Faber–Lovász
-  conjecture*. Ars Combin. 85 (2007), 71-84.
 * [RoAl14] Romero, D. and Alonso-Pecina, F., *The Erdős–Faber–Lovász conjecture is true for
   $n \le 12$*. Discrete Math. Algorithms Appl. 6 (2014), 1450039.
 * [KKKMO21] Kang, D. Y., Kelly, T., Kühn, D., Methuku, A. and Osthus, D., *A proof of the
@@ -258,8 +256,7 @@ theorem erdos_19.variants.erdos_19_implies_lt_ten
   exact h V n C
 
 /--
-Romero and Alonso-Pecina [RoAl14] proved the Erdős–Faber–Lovász conjecture for $n \le 12$
-(extending the $n \le 10$ result of Romero and Sánchez-Arroyo [RoSa07]).
+Romero and Alonso-Pecina [RoAl14] proved the Erdős–Faber–Lovász conjecture for $n \le 12$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_19.variants.le_twelve :
