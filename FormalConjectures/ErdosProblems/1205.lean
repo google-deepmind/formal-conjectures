@@ -78,6 +78,7 @@ theorem F_zero : F 0 = 0 := by
 /-- The answer: $F(x)\sim\log x$. -/
 noncomputable def erdos_1205.answer (x : ℕ) : ℝ := Real.log x
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $F(x)$ be maximal such that there exists, for all $n\leq x$, a congruence class
 $a_n\pmod{n}$ such that every $m\leq x$ satisfies at least $F(x)$ of these congruences.
@@ -94,6 +95,7 @@ paper.
 theorem erdos_1205 : (fun x : ℕ ↦ (F x : ℝ)) ~[atTop] erdos_1205.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The pigeonhole principle implies $F(x)\leq \sum_{n\leq x}\frac{1}{n}= \log x+O(1)$.
 
