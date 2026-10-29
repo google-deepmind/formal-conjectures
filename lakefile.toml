@@ -58,6 +58,7 @@ weak.linter.style.ams_attribute = true
 weak.linter.style.category_attribute = true
 weak.linter.style.conditional_formal_proof = true
 weak.linter.style.moduleDocstring = true
+weak.linter.style.statement_sorry = true
 weak.linter.style.latex_docstring = true
 weak.linter.style.imports = true
 # Mathlib linter: warn when a module has only private declarations,

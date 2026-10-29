@@ -71,6 +71,9 @@ Are there infinitely many primes in each class?-/
 theorem erdos_1055 (r) : {p | p.Prime ∧ IsOfClass r p}.Infinite := by
   sorry
 
+-- The definition `p` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
@@ -81,6 +84,9 @@ theorem erdos_1055.variants.erdos_limit :
     Filter.atTop.Tendsto (fun r ↦ (p r : ℝ) ^ (1 / r : ℝ)) Filter.atTop := by
   sorry
 
+-- The definition `p` is built from a theorem proved by `sorry`, which the statement
+-- inherits. See #6690.
+set_option linter.style.statement_sorry false in
 /-- A prime $p$ is in class $1$ if the only prime divisors of $p+1$ are
 $2$ or $3$. In general, a prime $p$ is in class $r$ if every prime factor
 of $p+1$ is in some class $\leq r-1$, with equality for at least one prime factor.
