@@ -13,14 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1105
 
 *References:*
 - [erdosproblems.com/1105](https://www.erdosproblems.com/1105)
+- [PALOMAR-2026-10-13-000006](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-13-000006&version=1)
 - [ESS75] Erdős, P. and Simonovits, M. and Sós, V. T., Anti-{R}amsey theorems. (1975), 633--643.
 - [MoNe05] Montellano-Ballesteros, J. J. and Neumann-Lara, V., An anti-{R}amsey theorem on cycles.
   Graphs Combin. (2005), 343--354.
@@ -29,10 +31,13 @@ import FormalConjecturesUtil
 - [Yu21] L.-T. Yuan, The anti-Ramsey number for paths. arXiv:2102.00807 (2021).
 -/
 
+@[expose] public section
+
 namespace Erdos1105
 
 open SimpleGraph Asymptotics Filter
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The anti-Ramsey number $\mathrm{AR}(n,G)$ is the maximum possible number of colours in which the
 edges of $K_n$ can be coloured without creating a rainbow copy of $G$ (i.e. one in which all edges
@@ -45,13 +50,15 @@ Montellano-Ballesteros and Neumann-Lara [MoNe05] gave an exact formula for $\mat
 which implies in particular that
 $\mathrm{AR}(n,C_k)=\left(\frac{k-2}{2}+\frac{1}{k-1}\right)n+O(1).$
 -/
-@[category research solved, AMS 5]
-theorem erdos_1105.parts.i : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ba96303b34a95ac458958c1eb0bbdee54733484a/erdos-1105/Solution.lean#L72"]
+theorem erdos_1105.parts.i :
     ∀ k, 3 ≤ k →
     ((fun n => (antiRamseyNum (cycleGraph k) n : ℝ) - ((k - 2 : ℝ) / 2 + 1 / (k - 1)) * n)
       =O[atTop] (fun _ => (1 : ℝ))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $P_k$ be the path on $k$ vertices and $\ell=\lfloor\frac{k-1}{2}\rfloor$. If $n\geq k\geq 5$
 then is $\mathrm{AR}(n,P_k)$ equal to $\max\left(\binom{k-2}{2}+1,
@@ -61,8 +68,9 @@ $\epsilon=2$ otherwise?
 A proof of the formula for $\mathrm{AR}(n,P_k)$ for all $n\geq k\geq 5$ has been announced by
 Yuan [Yu21].
 -/
-@[category research solved, AMS 5]
-theorem erdos_1105.parts.ii : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ba96303b34a95ac458958c1eb0bbdee54733484a/erdos-1105/Solution.lean#L79"]
+theorem erdos_1105.parts.ii :
     ∀ (k n : ℕ), 5 ≤ k → k ≤ n →
     let ℓ := (k - 1) / 2
     let ε := if Odd k then 1 else 2

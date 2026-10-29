@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 350
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [HSS77] Hanson, F. and Steele, J. M. and Stenger, F., Distinct sums over subsets. Proc. Amer.
   Math. Soc. (1977), 179-180.
 -/
+
+@[expose] public section
 
 namespace Erdos350
 
@@ -56,6 +59,7 @@ theorem DistinctSubsetSums_iff_DecidableDistinctSubsetSums
     DistinctSubsetSums (A : Set M) ↔ DecidableDistinctSubsetSums A := by
   rw [DistinctSubsetSums, DecidableDistinctSubsetSums, Set.Pairwise] ; simp_all
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n < 2`.
 Proved by Ryavec.

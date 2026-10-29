@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes $p$ such that $2^n \le p \le 2^n + \mathrm{prime}(n)$
@@ -26,6 +27,8 @@ for $n \ge 1$, and $a(0) = 0$.
 
 *References:*
 - [A069923](https://oeis.org/A069923)-/
+
+@[expose] public section
 
 namespace OeisA69923
 

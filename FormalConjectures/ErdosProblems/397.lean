@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 397
@@ -24,10 +25,13 @@ import FormalConjecturesUtil
 - [MathOverflow] (https://mathoverflow.net/questions/138209/product-of-central-binomial-coefficients)
 -/
 
+@[expose] public section
+
 open Nat
 
 namespace Erdos397
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there only finitely many solutions to
 $$
@@ -45,13 +49,12 @@ argument gives infinitely many solutions (although Bloom believes that it can).
 
 This was formalized in Lean by Wu using Aristotle.
 -/
-@[category research solved, AMS 11,
-formal_proof using lean4 at "https://gist.github.com/llllvvuu/40d68cfa9de9f43eece07ff4fdc3b0ef",
+@[category research solved, question, AMS 11,
+formal_proof using lean4 at "https://gist.githubusercontent.com/llllvvuu/40d68cfa9de9f43eece07ff4fdc3b0ef/raw/966750065320fe126fbe5a8a7ea50439d7519c6c/397.lean",
 formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/3c356a50a21bcbf3543f960b0c92d7fb26228cb6/FormalConjectures/ErdosProblems/397.lean#L147"]
 theorem erdos_397 :
-    answer(False) ↔
-      {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
-      ∏ i ∈ M, centralBinom i = ∏ j ∈ N, centralBinom j}.Finite := by
+    ¬ {(M, N) : Finset ℕ × Finset ℕ | Disjoint M N ∧
+    ∏ i ∈ M, centralBinom i = ∏ j ∈ N, centralBinom j}.Finite := by
   sorry
 
 end Erdos397

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 330
 
 *Reference:* [erdosproblems.com/330](https://www.erdosproblems.com/330)
 -/
+
+@[expose] public section
 
 namespace Erdos330
 
@@ -51,6 +54,7 @@ additive basis by removing any element from it. -/
 def MinAsymptoticAddBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
   IsAsymptoticAddBasisOfOrder A h ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasisOfOrder (A \ {n}) h
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a minimal basis $A \subset \mathbb{N}$ with positive density
 such that, for any $n \in A$, the (upper) density of integers which
@@ -65,10 +69,10 @@ posed. See #3979.
 
 Such a set exists, so the answer is yes. The linked proof gives one of order `2`.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/Jayyhk/erdos-lean/blob/a5ffc87b3d684fc00ea906b9e746c283740da900/problems/330/Erdos330.lean"]
 theorem erdos_330_statement :
-    answer(True) ↔ ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧
+    ∃ (A : Set ℕ), ∃ h, MinAsymptoticAddBasisOfOrder A h ∧
     0 < A.upperDensity ∧ ∀ n ∈ A, 0 < (UnrepWithout A n h).upperDensity := by
   sorry
 
