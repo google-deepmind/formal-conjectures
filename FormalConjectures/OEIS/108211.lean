@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = 16n^2 + 1$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A108211](https://oeis.org/A108211)
 -/
+
+@[expose] public section
 
 namespace OeisA108211
 
@@ -49,6 +52,7 @@ theorem a_5 : a 5 = 401 := by decide
 
 open Real
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture:
 $$a(n) = \left\lfloor \frac{1}{\frac{1}{4n} - \log(2) +

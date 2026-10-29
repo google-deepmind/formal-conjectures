@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 69
 
 *Reference:* [erdosproblems.com/69](https://www.erdosproblems.com/69)
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.omega
 
@@ -47,6 +50,9 @@ $$
 theorem erdos_69.variants.specialisation_of_erdos_257 :
     let A := { n : ℕ | n.Prime }
     ∑' n, ω (n + 2) / (2 ^ (n + 2) : ℝ) = ∑' p : A, 1 / (2 ^ p.1 - 1) := by
-  sorry
+  dsimp only
+  rw [← ArithmeticFunction.tsum_cardDistinctFactors_div_two_pow]
+  rw [← ArithmeticFunction.summable_cardDistinctFactors_div_two_pow.sum_add_tsum_nat_add 2]
+  simp [Finset.sum_range_succ]
 
 end Erdos69

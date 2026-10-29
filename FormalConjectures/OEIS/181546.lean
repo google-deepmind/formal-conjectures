@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of fourth powers of Fibonacci-like binomial coefficients
@@ -24,6 +25,8 @@ $$a(n) = \sum_{k=0}^{\lfloor n/2 \rfloor} \binom{n-k}{k}^4.$$
 
 *References:*
 - [A181546](https://oeis.org/A181546)-/
+
+@[expose] public section
 
 namespace OeisA181546
 
@@ -66,12 +69,14 @@ theorem a_3 : a 3 = 17 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 83 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: Given $F(n,L) = \sum_{k=0}^{\lfloor n/2 \rfloor} \binom{n-k}{k}^L$, then
 $\lim_{n\to\infty} F(n+1,L)/F(n,L) = (\mathrm{Fibonacci}(L)\sqrt{5} + \mathrm{Lucas}(L))/2$ for
 $L \ge 0$ where $\mathrm{Fibonacci}(n) = \mathrm{A000045}(n)$ and
 $\mathrm{Lucas}(n) = \mathrm{A000032}(n)$.-/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/f02efd9a8c5fc6a735d2a90c33e24f7278ce0ffc/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_181546_conjecture_0/Submission/Spec.lean#L1210"]
 theorem conjecture (L : ℕ) :
     Tendsto (fun n => (F (n + 1) L : ℝ) / (F n L : ℝ)) atTop (nhds (limitValue L)) := by
   sorry

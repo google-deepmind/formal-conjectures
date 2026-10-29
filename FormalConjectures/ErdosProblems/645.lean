@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 645
@@ -25,9 +26,12 @@ import FormalConjecturesUtil
   differences. Bull. Austral. Math. Soc. (1999), 21--35.
 -/
 
+@[expose] public section
+
 
 namespace Erdos645
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If ℕ is $2$-coloured then there must exist a monochromatic three-term arithmetic progression
 $x,x+d,x+2d$ such that $d>x$.

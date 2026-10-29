@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 751
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [BoVi98] Bondy, J. A. and Vince, A., Cycles in a graph whose lengths differ by one or two.
   J. Graph Theory (1998), 11--15.
 -/
+
+@[expose] public section
 
 namespace Erdos751
 
@@ -43,11 +46,10 @@ that is not $3$-colourable has a finite subgraph that is not $3$-colourable, and
 subgraph are cycles of the whole. Mathlib does not have de Bruijn-Erdős, so that step is not
 formalised here.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_751.parts.i :
-    answer(False) ↔
-      ∀ k : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧
-        ∀ m ∈ G.cycleLengths, ∀ m' ∈ G.cycleLengths, m < m' → m + k ≤ m' := by
+    ¬ ∀ k : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧
+      ∀ m ∈ G.cycleLengths, ∀ m' ∈ G.cycleLengths, m < m' → m + k ≤ m' := by
   sorry
 
 /--
@@ -59,11 +61,10 @@ The answer is no: Bondy and Vince [BoVi98] proved that every graph with minimum 
 has two cycles whose lengths differ by at most $2$, and hence the same is true for every graph with
 chromatic number $4$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_751.parts.ii :
-    answer(False) ↔
-      ∀ k g : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧ g ≤ G.girth ∧
-        ∀ m ∈ G.cycleLengths, ∀ m' ∈ G.cycleLengths, m < m' → m + k ≤ m' := by
+    ¬ ∀ k g : ℕ, ∃ (V : Type) (G : SimpleGraph V), G.chromaticNumber = 4 ∧ g ≤ G.girth ∧
+      ∀ m ∈ G.cycleLengths, ∀ m' ∈ G.cycleLengths, m < m' → m + k ≤ m' := by
   sorry
 
 /--
@@ -76,6 +77,7 @@ theorem erdos_751.variants.bondy_vince {V : Type*} [Fintype V] (G : SimpleGraph 
     ∃ m ∈ G.cycleLengths, ∃ m' ∈ G.cycleLengths, m < m' ∧ m' ≤ m + 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The finite case of `erdos_751.parts.i`, which is what the Lean proof establishes: a finite graph
 with chromatic number at least $4$ has two cycles whose lengths differ by $1$ or $2$.

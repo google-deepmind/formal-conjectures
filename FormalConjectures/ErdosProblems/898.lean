@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 898
@@ -26,10 +27,13 @@ import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Mordell_inequality)
 -/
 
+@[expose] public section
+
 open Affine EuclideanGeometry
 
 namespace Erdos898
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A,B,C\in \mathbb{R}^2$ form a triangle and $P$ is a point in the interior then, if $N$ is
 where the perpendicular from $P$ to $AB$ meets the triangle, and similarly for $M$ and $L$,
