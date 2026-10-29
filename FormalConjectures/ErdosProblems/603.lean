@@ -78,7 +78,7 @@ which is easier to state in the context of Problem 603's `ℕ`-valued colouring 
 with colour 1 (say) and everything else with colour 0. By disjointness, the choices for
 different sets do not conflict, and no `A i` is monochromatic. -/
 @[category research solved, AMS 3 5]
-theorem erdos_603.variants.disjoint : 
+theorem erdos_603.variants.disjoint :
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Infinite) →
       (∀ i j, i ≠ j → Disjoint (A i) (A j)) →
@@ -189,7 +189,7 @@ set monochromatic.
 
 (The case `|A₀ ∩ A₁| = 2` is excluded by hypothesis.) -/
 @[category textbook, AMS 3 5]
-theorem erdos_603.variants.two_sets : 
+theorem erdos_603.variants.two_sets :
     ∀ {α : Type*} (A : Fin 2 → Set α),
       (∀ i, (A i).Infinite) →
       (A 0 ∩ A 1).Finite →

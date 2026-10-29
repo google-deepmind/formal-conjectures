@@ -33,10 +33,8 @@ namespace Erdos602
 
 We work with families of countably infinite subsets of an arbitrary ground set `α`. A set is
 **countably infinite** if it is both countable (`Set.Countable`) and infinite (`Set.Infinite`).
-This generalises the original formulation which restricted to subsets of `ℕ`; the original
-remark that any countably infinite set is in bijection with `ℕ` shows that the two formulations
-are equivalent up to renaming. We use an arbitrary ground type so that the statement covers, for
-example, families of countably infinite subsets of uncountable spaces.
+We use an arbitrary ground type so that the statement covers families whose union may be
+uncountable. Countability of each member does not imply countability of their union.
 
 A **2-colouring** of `α` is a function `f : α → Fin 2`. A set `A ⊆ α` is **monochromatic**
 under `f` if `f` is constant on `A`. **Property B** for a family `(A_i)_{i ∈ I}` asserts
@@ -46,15 +44,11 @@ An **almost-disjoint family** is one in which pairwise intersections are finite.
 Problem 602 asks whether every almost-disjoint family of countably infinite sets whose
 pairwise intersections all have size ≠ 1 has Property B. -/
 
-/-- A set `A ⊆ α` is **monochromatic** under a 2-colouring `f : α → Fin 2`
-if all elements of `A` receive the same colour. -/
-def IsMonochromatic {α : Type*} (f : α → Fin 2) (A : Set α) : Prop :=
-  ∀ x ∈ A, ∀ y ∈ A, f x = f y
+open Combinatorics
 
-/-- A family `(A_i)_{i ∈ I}` of subsets of `α` has **Property B** if there exists
-a 2-colouring `f : α → Fin 2` such that no `A_i` is monochromatic. -/
-def HasPropertyB {α : Type*} (I : Type*) (A : I → Set α) : Prop :=
-  ∃ f : α → Fin 2, ∀ i, ¬IsMonochromatic f (A i)
+/-- Property B is the two-colour case of the shared chromatic Property B predicate. -/
+abbrev HasPropertyB {α : Type*} (I : Type*) (A : I → Set α) : Prop :=
+  HasChromaticPropertyB (Fin 2) I A
 
 /- ## Main open problem -/
 
@@ -70,10 +64,7 @@ monochromatic?
 This is an open question about Property B for almost-disjoint families with a
 forbidden intersection size of 1.
 
-**Note:** This generalises the formulation in which the ground set is `ℕ`. Since every
-countably infinite set is in bijection with `ℕ`, the two formulations are equivalent, but
-working over an arbitrary ground type makes the statement apply immediately to, e.g.,
-almost-disjoint families of countable subsets of an uncountable space. -/
+-/
 @[category research open, question, AMS 3 5]
 theorem erdos_602 :
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
