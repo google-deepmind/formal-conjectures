@@ -44,6 +44,7 @@ open Filter
 
 namespace Erdos110
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there some $F(n)$ such that every graph with chromatic number $\aleph_1$ has, for all large
 $n$, a subgraph with chromatic number $n$ on at most $F(n)$ vertices?
