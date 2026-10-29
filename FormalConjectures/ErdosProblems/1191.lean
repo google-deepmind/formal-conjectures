@@ -126,7 +126,7 @@ partial-fraction decomposition $\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a
 in Theorem 2.1(a) of [Pa26]).
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L34"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L34"]
 theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
     (h_pos : 1 ≤ a_i) (h_lt : a_i < a_j) (h_diff : d = a_j - a_i) :
     (d + 1) + (a_i - 1) = a_j := by
@@ -140,7 +140,7 @@ $\text{pow\_km2} < y - x < 4 \cdot \text{pow\_km2}$ (used to localize cross-shel
 into $D_{k-1} \cup D_k$ when $\text{pow\_km2} = 2^{k-2}$ in Theorem 2.2(a) of [Pa26]).
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L48"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L48"]
 theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ)
     (hx_pos : 1 ≤ x)
     (hx_hi : x ≤ pow_km2)
@@ -166,7 +166,7 @@ $\text{powersOfTwoScaledBilinear}(M) + 2M + 4 = 2^{M + 2}$
 (used to evaluate the powers-of-two bilinear sum in Remark 2.3 of [Pa26]).
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L72"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L72"]
 theorem erdos_1191.variants.powers_of_two_bilinear_identity (M : ℕ) :
     powersOfTwoScaledBilinear M + 2 * M + 4 = 2 ^ (M + 2) := by
   sorry
@@ -178,7 +178,7 @@ $\text{powersOfTwoScaledBilinear}(M) \le (M + 1) 2^M - 2$
 (certifying $22 \le 30$ at $M = 3$ for the $2^M$-scaled powers-of-two sum in Remark 2.3 of [Pa26]).
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L89"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L89"]
 theorem erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound (M : ℕ) (hM : 1 ≤ M) :
     powersOfTwoScaledBilinear M ≤ (M + 1) * 2 ^ M - 2 := by
   sorry
@@ -192,7 +192,7 @@ that $\frac{1}{\sqrt{k-1}} + \frac{1}{\sqrt{k+1}} < \frac{3}{\sqrt{2k}}$ for all
 $\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1})$.
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L111"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L111"]
 theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤ k) :
     16 * (k * k) + 2 * (k * k - 9) = 18 * (k * k - 1) ∧
     16 * (k * k) < 18 * (k * k - 1) := by
@@ -206,7 +206,7 @@ $S_1 - S_2$ or $S_2 - S_1$ is zero), and hence $(S_1 + S_2)^2 \le 2(S_1^2 + S_2^
 arithmetic step used in the sub-block refinement bound $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$ of [Pa26].
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L128"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L128"]
 theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
     2 * (S1 * S1 + S2 * S2) =
       (S1 + S2) * (S1 + S2) + (S1 - S2) * (S1 - S2) + (S2 - S1) * (S2 - S1) ∧
@@ -221,7 +221,7 @@ $(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q$
 (used to evaluate the minimum ordered-pair count over $B$ integer buckets of sum $S = B q + r$ in Theorem 2.6(a) of [Pa26]).
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L216"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L216"]
 theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
     (hr : r ≤ B) :
     (B - r) * (q * (q - 1)) + r * ((q + 1) * q) =
@@ -235,7 +235,7 @@ $B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$,
 separating the quadratic term $(B q + r)^2$ from the remainder product $r(B - r)$ in Theorem 2.6(b) of [Pa26].
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L235"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L235"]
 theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
     (hr : r ≤ B) :
     B * (B * (q * q) + 2 * (r * q)) + B * r =
@@ -249,7 +249,7 @@ satisfies $(x_1 - 1)(x_1 - 2) + (x_2 + 1)x_2 + 2(x_1 - x_2 - 1) = x_1(x_1 - 1) +
 giving the elementary Robin-Hood smoothing step in Theorem 2.6(c) of [Pa26].
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L258"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L258"]
 theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 + 2 ≤ x1) :
     (x1 - 1) * (x1 - 2) + (x2 + 1) * x2 + 2 * (x1 - x2 - 1) =
       x1 * (x1 - 1) + x2 * (x2 - 1) := by
@@ -264,7 +264,7 @@ $4 r(B - r) \le B^2$. This provides the arithmetic bound $r(B - r) \le B^2 / 4$ 
 relative integrality excess $r(B - r)/S^2 \le 1/(4\mu^2)$ ($\mu = S/B$) in [Pa26].
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L287"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L287"]
 theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr : r ≤ B) :
     4 * (r * (B - r)) + (2 * r - B) * (2 * r - B) + (B - 2 * r) * (B - 2 * r) = B * B ∧
     4 * (r * (B - r)) ≤ B * B := by
@@ -277,7 +277,7 @@ for the unweighted Order-2 Cesàro–Fejér sum $\sum_{w=1}^W \max(w - d, 0) = \
 (with $d = |x - y| < W$) in Theorem 2.7(a) of [Pa26].
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L356"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L356"]
 theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
     m * (m - 1) + 2 * m = (m + 1) * m := by
   sorry
@@ -289,7 +289,7 @@ the sliding-window width exponent $k - (s + r)$ and sub-block count exponent $(s
 sum to $k - 1$ independently of $s$ and $r$.
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L372"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L372"]
 theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     (k - (s + r)) + ((s + r) - 1) = k - 1 := by
@@ -302,7 +302,7 @@ the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r -
 satisfy $w \cdot B = 2^{k - 1} = |I_k|$ across all scales $s$ and octaves $r$.
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L383"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L383"]
 theorem erdos_1191.variants.scale_invariant_block_window_product (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
     2 ^ (k - (s + r)) * 2 ^ ((s + r) - 1) = 2 ^ (k - 1) := by
@@ -314,7 +314,7 @@ For every integer period $m \ge 1$, $m(m + 1) - (m - 1)m = 2m$, giving the coeff
 when telescoping the piecewise logarithmic integrals of $\{u\}(1 - \{u\})/u$ in Theorem 2.11(b) of [Pa26].
 -/
 @[category API, AMS 5 11,
-  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/main/Erdos1191/Proofs.lean#L397"]
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L397"]
 theorem erdos_1191.variants.hyperfactorial_sawtooth_abel_step (m : ℕ) (hm : 1 ≤ m) :
     m * (m + 1) - (m - 1) * m = 2 * m := by
   sorry
