@@ -13,14 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Seymour's second neighbourhood conjecture (1990)
 
 *References:*
-* [Wikipedia](https://en.wikipedia.org/wiki/Seymour%27s_second_neighborhood_conjecture)
+* [Wikipedia](https://en.wikipedia.org/wiki/Second_neighborhood_problem)
 * [DL95] Dean, N. and Latka, B. J. (1995). "Squaring the tournament — an open problem."
   *Congr. Numer.* 109, pp. 73--80.
 * [Fi96] Fisher, D. C. (1996). "Squaring a tournament: a proof of Dean's conjecture."
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
 * [CSY03] Chen, G., Shen, J. and Yuster, R. (2003). "Second neighborhood via first neighborhood
   in digraphs." *Ann. Comb.* 7, pp. 15--20.
 -/
+
+@[expose] public section
 
 open Finset
 
