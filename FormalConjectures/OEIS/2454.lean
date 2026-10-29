@@ -25,7 +25,9 @@ Central factorial numbers: $a(n) = 4^n (n!)^2 = ((2n)!!)^2$.
 *References:*
 - [A002454](https://oeis.org/A002454)
 - [SSX22] [She, Y.-F., Sun, Z.-W., Xia, W., *A novel permanent identity with applications*,
-  arXiv:2208.12167 (2022)](https://arxiv.org/abs/2208.12167)-/
+  arXiv:2208.12167 (2022)](https://arxiv.org/abs/2208.12167)
+- [Li26] Wentao Li, [Lean formalization and proof notes](https://github.com/VictorLiwentao/lean-oeis-proofs/blob/1cc54d7f3ecfdcea49625ce31c8df3e22d4c6146/proofs/new-formalization/A002454/PROOF.md), 2026.
+-/
 
 @[expose] public section
 
@@ -64,8 +66,13 @@ where $m(j,k)$ is $1$ or $(1+\zeta^{j-k})/(1-\zeta^{j-k})$ according as $j = k$ 
 Proved by [SSX22], Theorem 1.3(ii): for odd $m > 1$ and $\zeta$ a primitive $m$-th root of
 unity, the permanent of $[c_{j,k}]_{1 \le j,k \le m-1}$ is $((m-1)!!)^2/m$. Take $m = 2n+1$;
 translating both matrix indices by one leaves $j - k$ unchanged. For $n = 0$ the matrix is
-empty and both sides are $1$.-/
-@[category research solved, AMS 11 15]
+empty and both sides are $1$.
+
+Lean formalization by Wentao Li; see [Li26].
+AI assistance was used for development and verification.
+-/
+@[category research solved, AMS 11 15,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/1cc54d7f3ecfdcea49625ce31c8df3e22d4c6146/LeanOeisProofs/NewFormalization/A002454.lean#L521"]
 theorem conjecture (n : ℕ) :
     let N : ℕ := 2 * n
     let K : ℕ := N + 1
