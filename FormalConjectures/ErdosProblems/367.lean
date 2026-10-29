@@ -82,6 +82,7 @@ theorem erdos_367.variants.k_ge_three_lower :
         ((∏ m ∈ .Ico n (n + 3), B 2 m : ℕ) : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It would also be interesting to find upper and lower bounds for the analogous product with $B_r$
 for $r \geq 3$, where $B_r(n)$ is the $r$-full part of $n$ (that is, the product of prime powers

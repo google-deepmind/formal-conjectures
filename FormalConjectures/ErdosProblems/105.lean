@@ -36,6 +36,7 @@ open EuclideanGeometry
 
 namespace Erdos105
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A,B\subset \mathbb{R}^2$ be disjoint sets of size $n$ and $n-3$ respectively, with not all
 of $A$ contained on a single line. Is there a line which contains at least two points from $A$
@@ -71,6 +72,7 @@ theorem erdos_105.variants.beck_szemeredi_trotter : ∃ c > (0 : ℝ),
       ∃ p ∈ A, ∃ q ∈ A, p ≠ q ∧ ∀ b ∈ B, b ∉ line[ℝ, p, q] := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It remains possible that this holds with $n-4$ (or in general with $n-O(1)$ or $(1-o(1))n$).
 

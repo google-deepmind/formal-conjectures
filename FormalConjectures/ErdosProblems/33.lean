@@ -48,6 +48,7 @@ theorem erdos_33 : ⨅ A : {A : Set ℕ | AdditiveBasisCondition A}, Filter.atTo
     (A.1 ∩ Icc 1 N).ncard / (√N : EReal)) = erdos_33.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdos observed that this value is finite and > 1. This records the lower bound `> 1`,
 i.e. that `1` is a strict lower bound for every admissible `A`; the finiteness is
@@ -60,6 +61,7 @@ theorem erdos_33.variants.one_mem_lowerBounds :
       (A.1 ∩ Icc 1 N).ncard / (√N : EReal)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The smallest possible value of `lim sup n → ∞ |A ∩ {1, …, N}| / N^(1/2)`
 is at most `2φ^(5/2) ≈ 6.66`, with `φ` equal to the golden ratio. Proven by

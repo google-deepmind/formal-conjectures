@@ -43,6 +43,7 @@ i.e. the maximal $a_1$ in a representation $n! = a_1 \cdots a_n$ with $a_1 \leq 
 noncomputable def t (n : ℕ) : ℕ :=
   sSup {k : ℕ | ∃ a : Fin n → ℕ, ∏ i, a i = n.factorial ∧ ∀ i, k ≤ a i}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $t(n)$ be maximal such that there is a representation
 $$n!=a_1\cdots a_n$$
@@ -70,6 +71,7 @@ theorem erdos_391 :
     Tendsto (fun n : ℕ => (t n : ℝ) / n) atTop (𝓝 (1 / Real.exp 1)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Furthermore, does there exist some constant $c>0$ such that
 $$\frac{t(n)}{n} \leq \frac{1}{e}-\frac{c}{\log n}$$

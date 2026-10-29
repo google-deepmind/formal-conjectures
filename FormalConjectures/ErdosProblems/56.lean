@@ -142,6 +142,7 @@ lemma weaklyDivisible_firstPrimesMultiples (N k : ℕ) :
   have : p > 1 := hp_prime.one_lt
   omega
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Suppose $A \subseteq \{1,\dots,N\}$ is such that there are no $k+1$ elements of $A$ which are
 relatively prime. An example is the set of all multiples of the first $k$ primes.

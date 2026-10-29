@@ -50,6 +50,7 @@ theorem erdos_886 :
     ∀ ε > 0, ∃ K : ℕ, ∀ᶠ n in atTop, (Erdos886Divisors n ε 1).card ≤ K := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Rosenfeld [ErRo97] proved that there are infinitely many $n$ such that there are
 four divisors of $n$ in $(n^{1/2},n^{1/2}+16n^{1/4})$.
@@ -60,6 +61,7 @@ theorem erdos_886.variants.rosenfeld_infinite :
     Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4) 16).card} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Rosenfeld [ErRo97] proved that, for any constant $C>0$, all large $n$ have at most
 $1+C^2$ many divisors in $[n^{1/2}, n^{1/2}+Cn^{1/4}]$.

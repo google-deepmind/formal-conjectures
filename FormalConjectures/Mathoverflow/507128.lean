@@ -27,6 +27,7 @@ asked by user [*Junyan Xu*](https://mathoverflow.net/users/3332/junyan-xu)
 
 namespace Mathoverflow507128
 
+set_option linter.style.formal_proof_palomar false in
 /-- There exists a proper ideal `I` in a (commutative) total ring `R` of fractions that is an invertible module.
 If `I ⊊ R` is such an example, `I` must have infinite order in the Picard group.
 Moreover, `R` must not be Noetherian (otherwise it must be semi-local and therefore have trivial Picard group).

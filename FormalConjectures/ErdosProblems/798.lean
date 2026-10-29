@@ -53,6 +53,7 @@ cover all points in $\{1,\ldots,n\}^2$.
 noncomputable def t (n : ℕ) : ℕ :=
   sInf {k | ∃ S : Set (ℝ × ℝ), IsLineCover n S ∧ S.ncard = k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $t(n)$ be the minimum number of points in $\{1,\ldots,n\}^2$ such that the $\binom{t}{2}$
 lines determined by these points cover all points in $\{1,\ldots,n\}^2$.

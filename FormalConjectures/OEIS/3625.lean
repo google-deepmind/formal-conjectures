@@ -66,6 +66,7 @@ theorem a_19 : A 19 := by
   unfold A
   decide +native
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: Represents primes $p$ where the polynomial $x^2 + x + 2$ is irreducible over $\text{GF}(p)$.
 - _Federico Provvedi_, Jul 21 2018

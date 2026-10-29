@@ -40,6 +40,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos164
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A set $A\subset \mathbb{N}$ is primitive if no member of $A$ divides another. Is the sum
 $$\sum_{n\in A}\frac{1}{n\log n}$$

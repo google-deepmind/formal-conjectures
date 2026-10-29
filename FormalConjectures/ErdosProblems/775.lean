@@ -33,6 +33,7 @@ open Filter
 
 namespace Erdos775
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a $3$-uniform hypergraph on $n$ vertices which contains at least $n-O(1)$ different
 sizes of cliques (maximal complete subgraphs)?

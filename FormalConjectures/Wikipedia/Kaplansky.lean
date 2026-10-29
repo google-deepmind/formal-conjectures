@@ -40,6 +40,7 @@ include hG
 namespace Kaplansky
 
 omit hG in
+set_option linter.style.formal_proof_palomar false in
 /--
 **The zero-divisor conjecture**
 
@@ -144,6 +145,7 @@ theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
   have ⟨G, _, _, hG⟩ := counter_unit_conjecture
   ⟨G, _, ‹_›, hG p hp⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The **Zero-divisor Conjecture** is false: there is a finitely presented torsion-free group $G$
 and non-zero $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$.

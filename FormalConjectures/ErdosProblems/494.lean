@@ -48,6 +48,7 @@ noncomputable def sumMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
 def Erdos494Unique (k : ℕ) (card : ℕ) :=
   ∀ A B : Finset ℂ, A.card = card → B.card = card → sumMultiset A k = sumMultiset B k → A = B
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Selfridge and Straus [SeSt58] showed that the conjecture is true when $k = 2$ and
 $|A| \ne 2^l$ for $l \ge 0$.
@@ -59,6 +60,7 @@ theorem erdos_494.variants.k_eq_2_card_not_pow_two :
     ∀ card : ℕ, (∀ l : ℕ, card ≠ 2 ^ l) → Erdos494Unique 2 card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Selfridge and Straus [SeSt58] gave counterexamples to the conjecture
 when $k = 2$ and $|A| = 2^l$.
@@ -70,6 +72,7 @@ theorem erdos_494.variants.k_eq_2_card_pow_two :
     ∀ card : ℕ, (∃ l : ℕ, card = 2 ^ l) → ¬Erdos494Unique 2 card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Selfridge and Straus [SeSt58] also showed that the conjecture is true when
 1) $k = 3$ and $|A| > 6$, except possibly for $|A| = 27$ and $|A| = 486$, or
@@ -105,6 +108,7 @@ theorem erdos_494.variants.card_divisible_by_prime_gt_k :
     ∀ (k card p : ℕ), p.Prime → k ∈ Set.Ioo 0 p → p ∣ card → Erdos494Unique k card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Kruyt noted that the conjecture fails when $|A| = k$, by rotating $A$ around an appropriate point.
 -/
@@ -115,6 +119,7 @@ theorem erdos_494.variants.k_eq_card :
     ∀ k > 2, ¬Erdos494Unique k k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Similarly, Tao noted that the conjecture fails when $|A| = 2k$, by taking $A$ to be a set of
 the total sum 0 and considering $-A$.
@@ -143,6 +148,7 @@ $A = \{1, \zeta_6, \zeta_6^2, \zeta_6^4\}$ and $B = \{1, \zeta_6^2, \zeta_6^3, \
 noncomputable def prodMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
   ((A.powersetCard k).val.map (fun s => s.prod id))
 
+set_option linter.style.formal_proof_palomar false in
 /-- A counterexample to the product version of the conjecture (by Steinerberger). -/
 @[category research solved, AMS 5,
   formal_proof using formal_conjectures at
