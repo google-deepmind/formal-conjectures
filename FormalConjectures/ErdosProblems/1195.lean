@@ -66,6 +66,7 @@ monotone $F$, `IntegrableOn` is equivalent to this integral being finite. -/
 def erdos_1195.answer : Set (ℝ → ℝ) :=
   {F | IsGrowthRate F ∧ IntegrableOn (fun x ↦ F x / x ^ 2) (Set.Ici 1)}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $S\subset \mathbb{R}$ be a set of infinite measure such that $x/y$ is never an integer for all
 distinct $x,y\in S$.
