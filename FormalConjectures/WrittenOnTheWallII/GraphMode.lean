@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Graph Degree Mode Invariants
@@ -37,6 +38,8 @@ Intuitively, in any connected graph every vertex has at least one neighbour, so
 the degree-0 class is empty and the modal degree value must be positive.
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphMode
 
 open SimpleGraph
@@ -44,14 +47,14 @@ open SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-WOWII-style conjecture: For a simple connected graph `G` with at least 2 vertices,
+For a simple connected graph `G` with at least 2 vertices,
 the minimum modal degree satisfies `modeDegreeMin G ≥ 1`.
 
 In a connected graph every vertex has degree ≥ 1, so `countDegreeK G 0 = 0`.
 Because some vertex has degree ≥ 1, there exists `d ≥ 1` with
 `countDegreeK G d > 0 = countDegreeK G 0`.  Hence the modal degree value must be ≥ 1.
 -/
-@[category research open, AMS 5]
+@[category textbook, AMS 5]
 theorem modeDegreeMin_pos (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) :
     1 ≤ modeDegreeMin G := by
@@ -77,11 +80,11 @@ example : modeDegreeMin (⊤ : SimpleGraph (Fin 3)) = 2 := by
   unfold modeDegreeMin maxDegreeCount countDegreeK
   sorry
 
-/-- In the path `P₄` (0–1–2–3), degrees are 1,2,2,1.  So the mode is 2 and
-`modeDegreeMin P₄ = 2`. -/
+/-- In the path `P₄` (0–1–2–3), degrees are 1,2,2,1.  Both degrees are modal, so
+`modeDegreeMin P₄ = 1`. -/
 @[category test, AMS 5]
 example : modeDegreeMin
-    (SimpleGraph.fromEdgeSet {s(0,1), s(1,2), s(2,3)} : SimpleGraph (Fin 4)) = 2 := by
+    (SimpleGraph.fromEdgeSet {s(0,1), s(1,2), s(2,3)} : SimpleGraph (Fin 4)) = 1 := by
   unfold modeDegreeMin maxDegreeCount countDegreeK
   sorry
 

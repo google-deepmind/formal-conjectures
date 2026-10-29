@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Edge Connectivity
 
@@ -48,6 +48,8 @@ the complement of any independent set spans at most `n - α(G)` vertices, which
 must still be connected; removing all edges incident to an independent set
 disconnects at most `α(G)` vertices.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphEdgeConnectivity
 

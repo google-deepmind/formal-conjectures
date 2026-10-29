@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Metric Dimension of Graphs
 
@@ -38,6 +38,8 @@ for any connected graph `G` with `|V(G)| ≥ 2`, where `diam(G)` is the diameter
 
 We also state the trivial resolved lower bound `dim(G) ≥ 1` for `|V(G)| ≥ 2`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphMetricDimension
 

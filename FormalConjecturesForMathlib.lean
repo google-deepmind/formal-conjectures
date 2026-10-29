@@ -62,7 +62,6 @@ public import FormalConjecturesForMathlib.Combinatorics.Enumerative.Partition.Ba
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Extremal
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Finite
-public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.ThreeUniform
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Uniform
 public import FormalConjecturesForMathlib.Combinatorics.LatinSquare
 public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon

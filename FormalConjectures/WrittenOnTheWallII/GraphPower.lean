@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Graph Power and Radius of Power
@@ -42,6 +43,8 @@ subgraph of `graphPower G (k+1)`, so distances in the latter are at most those i
 the former.
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphPower
 
 open SimpleGraph
@@ -49,27 +52,25 @@ open SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-WOWII-style conjecture: for a connected graph `G` and any `k ≥ 1`,
+For a connected graph `G` and any `k ≥ 1`,
 the radius of the `(k+1)`-th power is at most the radius of the `k`-th power:
   `radiusOfPower G (k + 1) ≤ radiusOfPower G k`.
 
 This is a monotonicity statement: taking higher graph powers brings vertices
 closer together, so the radius can only decrease.
 -/
-@[category research open, AMS 5]
+@[category textbook, AMS 5]
 theorem radiusOfPower_antitone (G : SimpleGraph α) [DecidableRel G.Adj]
-    (hconn : G.Connected) (k : ℕ) :
+    (hconn : G.Connected) (k : ℕ) (hk : 1 ≤ k) :
     radiusOfPower G (k + 1) ≤ radiusOfPower G k := by
   sorry
 
 /--
 For a connected graph `G`, the radius of the 1st power is at most the radius
 of `G` itself (i.e., `radiusOfPower G 1 ≤ G.radius.toNat`).
-This holds because in a connected graph `graphPower G 1` agrees with `G` on
-adjacency (distance 1 = adjacent), but distances in the power graph may differ
-for non-adjacent pairs.
+In a connected graph, `graphPower G 1 = G`, so their radii are equal.
 -/
-@[category research open, AMS 5]
+@[category textbook, AMS 5]
 theorem radiusOfPower_one_le (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) :
     radiusOfPower G 1 ≤ G.radius.toNat := by

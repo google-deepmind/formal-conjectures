@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Bandwidth
 
@@ -45,6 +45,8 @@ diametral path at distance at most `n − 1` on the line, while those endpoints
 are connected by a path of length `diam(G)`, forcing some edge to stretch by
 at least `(n − 1) / diam(G)`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphBandwidth
 

@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Achromatic Number
 
@@ -44,6 +44,8 @@ exists.
    `ψ(T) ≤ ⌊(1 + √(8n − 7)) / 2⌋`.  This bound is tight and partly resolved, but
    its full proof is non-trivial.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphAchromaticNumber
 

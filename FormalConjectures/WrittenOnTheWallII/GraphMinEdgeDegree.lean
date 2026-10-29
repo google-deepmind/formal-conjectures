@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Minimum Edge Degree Conjecture
 
@@ -40,6 +40,8 @@ for a connected graph `G`, the independence number satisfies
 This is a strengthening of the greedy bound `α ≥ n / (1 + Δ)` since
 `minEdgeDegree ≤ δ ≤ Δ`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphMinEdgeDegree
 

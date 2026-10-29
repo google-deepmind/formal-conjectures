@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Toughness and Chvátal's Conjecture
 
@@ -45,6 +45,8 @@ We count connected components as the number of equivalence classes of the
 Chvátal himself conjectured the weaker bound `τ ≥ 1` implies Hamiltonicity,
 which was disproved.  The current open conjecture is that `τ ≥ 3/2` suffices.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphToughness
 

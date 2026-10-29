@@ -210,15 +210,6 @@ end BFS
 section Connectivity
 variable [Fintype V] [DecidableEq V]
 
-/-- The vertex connectivity `κ(G)`: the minimum number of vertices whose removal
-disconnects the graph (or `n - 1` when the graph is complete).
-Vertex connectivity is not yet in Mathlib; we define it here as the minimum size of
-a vertex separator, where removing `S` leaves the induced subgraph on `Sᶜ` disconnected. -/
-noncomputable def vertexConnectivity (G : SimpleGraph V) : ℕ :=
-  if Fintype.card V ≤ 1 then 0
-  else sInf { k | ∃ S : Finset V, S.card = k ∧
-    (¬(G.induce (↑Sᶜ : Set V)).Connected ∨ S.card = Fintype.card V - 1) }
-
 /-- The **edge connectivity** `λ(G)` of a simple graph `G`.
 
 We define it as the minimum size of a set of edges `F ⊆ E(G)` whose removal

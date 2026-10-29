@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Degeneracy and the Coloring Bound
 
@@ -36,6 +36,8 @@ A classical greedy argument (resolved) shows:
 
 The bound is tight: for the complete graph `Kₙ`, `d(Kₙ) = n − 1` and `χ(Kₙ) = n`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphDegeneracy
 

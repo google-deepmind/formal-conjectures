@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Roman Domination Number
 
@@ -44,6 +44,8 @@ domination number `γ(G)`:
    for `v ∈ D` and `f(v) = 0` otherwise; this is Roman dominating with weight
    `2 · |D| = 2 · γ(G)`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphRomanDomination
 

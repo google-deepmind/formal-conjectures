@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Rainbow Connection Number
 
@@ -44,6 +44,8 @@ unordered pairs; values on non-edges are ignored).
    `rc(G) ≤ n - 1`.  Assigning distinct colors to the edges of any spanning tree
    gives a rainbow-connected coloring.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphRainbowConnection
 

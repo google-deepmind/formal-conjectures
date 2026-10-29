@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Even Mode-Min Count Invariant
 
@@ -42,6 +42,8 @@ The right-hand side bounds the independence number by the product of the
 plus 1.  This mirrors the Graffiti.pc philosophy of combining frequency
 statistics with neighbourhood invariants.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphEvenModeMin
 

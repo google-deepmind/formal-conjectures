@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Girth of the Complement Graph
 
@@ -39,6 +39,8 @@ or edgeless graph).
    its complement `Gᶜ` is "sparse enough" that the girth of `Gᶜ` is a valid
    upper bound for the independence number of `G`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphGirthComplement
 

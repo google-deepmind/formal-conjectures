@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Degree Mode Maximum Invariant
 
@@ -42,6 +42,8 @@ picks the *smallest* such degree.
    `modeDegreeMin G + modeDegreeMax Gᶜ ≥ Fintype.card α - 1`
    is a WOWII-style conjecture relating modal degrees across complementary graphs.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphModeMax
 

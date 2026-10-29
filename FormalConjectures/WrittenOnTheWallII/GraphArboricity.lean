@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Arboricity and the Nash-Williams Formula
 
@@ -38,6 +38,8 @@ We state the classical upper bound `a(G) ≤ ⌈Δ(G) / 2⌉ + 1`
 (a consequence of the Nash-Williams formula that follows from the bound
 `|E(H)| ≤ |V(H)| · Δ(G) / 2`), which is an open Graffiti.pc-style conjecture.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphArboricity
 

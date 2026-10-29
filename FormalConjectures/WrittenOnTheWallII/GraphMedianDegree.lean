@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Median Degree Invariant
 
@@ -39,6 +39,8 @@ For any simple connected graph `G` with at least 2 vertices,
 In a connected graph every vertex has degree at least 1, so every entry of the
 sorted degree sequence is at least 1; in particular the middle entry is ≥ 1.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphMedianDegree
 

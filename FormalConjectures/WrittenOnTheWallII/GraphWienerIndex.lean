@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Wiener Index Conjecture
 
@@ -42,6 +42,8 @@ pair of vertices has distance 1).
 A second, deeper open conjecture involves relating `wienerIndex` to the
 independence number: `wienerIndex(G) ≥ (n choose 2) + α(G) − 1`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphWienerIndex
 

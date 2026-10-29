@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Graph Circumference Conjecture
@@ -31,9 +32,11 @@ defined to be 0.
 ## Conjecture
 
 A classical result due to Dirac (1952) states that every 2-connected graph
-satisfies `circumference(G) ≥ 2 · δ(G)` where `δ(G)` is the minimum degree.
-We state it as a conjecture in the Graffiti.pc style.
+satisfies `circumference(G) ≥ min(n(G), 2 · δ(G))` where `δ(G)` is the minimum degree.
+We record this standard bound.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphCircumference
 
@@ -42,13 +45,13 @@ open SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /-- Dirac's theorem (1952): Every 2-connected graph `G` on `n ≥ 3` vertices
-satisfies `circumference(G) ≥ 2 · δ(G)`.
+satisfies `circumference(G) ≥ min(n(G), 2 · δ(G))`.
 Here `δ(G) = G.minDegree` is the minimum degree and 2-connectivity means
 `vertexConnectivity G ≥ 2`. -/
 @[category research solved, AMS 5]
 theorem dirac_circumference (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : 2 ≤ vertexConnectivity G) :
-    2 * G.minDegree ≤ circumference G := by
+    min (Fintype.card α) (2 * G.minDegree) ≤ circumference G := by
   sorry
 
 -- Sanity checks

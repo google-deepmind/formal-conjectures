@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Graph Odd Girth Conjecture
 
@@ -39,6 +39,8 @@ This holds because odd-cycle-containing graphs have chromatic number at least
 roughly `oddGirth / (oddGirth − 1) + 1`.  In particular, for `oddGirth = 3`
 (triangles present) we get `χ ≥ 2`, and for `oddGirth = 5` we get `χ ≥ 3`.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphOddGirth
 

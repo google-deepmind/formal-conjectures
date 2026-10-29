@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Geodetic Number of Graphs
 
@@ -44,6 +44,8 @@ so we instead state the resolved classical lower bound `g(G) ≥ 2` for connecte
 graphs with at least 2 vertices, and the Graffiti.pc-style upper bound
 `g(G) ≤ n − diam(G) + 1` for connected graphs (a known resolved bound).
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphGeodeticNumber
 

@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # Isoperimetric Number (Cheeger Constant) of a Graph
 
@@ -43,6 +43,8 @@ has a small boundary.
    where `λ₁(G)` is the smallest positive eigenvalue of the Laplacian of `G`
    (algebraic connectivity / Fiedler value).
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphIsoperimetric
 

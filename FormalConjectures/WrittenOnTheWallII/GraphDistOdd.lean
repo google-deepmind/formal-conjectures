@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-
+public import FormalConjecturesUtil
 /-!
 # distOdd Invariant and WOWII Conjecture
 
@@ -48,6 +48,8 @@ numbered WOWII conjecture.
 For bipartite graphs, one of the two parts has all vertices at even (resp. odd) distance
 from any fixed vertex in one part; so `distOdd` tracks the "opposite part" size.
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphDistOdd
 
