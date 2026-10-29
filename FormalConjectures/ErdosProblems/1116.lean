@@ -61,6 +61,7 @@ def UnboundedCountRatio (f : ℂ → ℂ) (a b : ℂ) : Prop :=
   ∀ M : ℕ, ∀ R : ℝ, ∃ r : ℝ, R < r ∧
     0 < aPointCount f r b ∧ M * aPointCount f r b < aPointCount f r a
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For a meromorphic function $f$ let $n(r,a)$ count the number of roots of $f(z)=a$ in the disc
 $\lvert z\rvert <r$. Does there exist a meromorphic (or entire) $f$ such that for every
