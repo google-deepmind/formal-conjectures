@@ -58,6 +58,7 @@ and $S=0$.
 noncomputable def S (N : ℕ) (A c : ℝ) : ℝ :=
   volume.real (approximableSet N A c)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $S(N,A,c)$ be the measure of the set of those $\alpha\in (0,1)$ such that
 $$\left\lvert \alpha-\frac{x}{y}\right\rvert< \frac{A}{y^2}$$
@@ -76,6 +77,7 @@ theorem erdos_1001.parts.i (A c : ℝ) (hA : 0 < A) (hc : 1 ≤ c) :
     ∃ f : ℝ, Tendsto (fun N : ℕ ↦ S N A c) atTop (𝓝 f) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős, Szüsz, and Turán [EST58] proved that
 $$f(A,c)=\frac{12 A\log c}{\pi^2}$$
