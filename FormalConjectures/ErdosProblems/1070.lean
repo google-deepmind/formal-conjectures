@@ -81,13 +81,13 @@ Let $f(n)$ be maximal such that, given any $n$ points in $\mathbb{R}^2$, there e
 such that no two are distance $1$ apart. Estimate $f(n)$. In particular, is it true that
 $f(n)\geq n/4$?
 
-This is the second part, read as the inequality for every $n$. A 2026 preprint of Dúcz and Varga
-[DuVa26] constructs a finite unit distance graph with independence number below one quarter of
-its order, which would answer this negatively; the authors report that the construction is
-formalised in Lean. The site still lists the problem as open.
+This is the second part, read as the inequality for every $n$. The answer is no: Dúcz and Varga
+[DuVa26, Theorem 1] construct a finite unit distance graph $G$ in the plane with
+$\alpha(G) < |V(G)|/4$. For its vertex set $X$, `f_le X` gives
+$f(|X|) \leq \alpha(U_X) \leq \alpha(G) < |X|/4$, where $U_X$ is the unit distance graph on $X$.
 -/
-@[category research open, question, AMS 5 52]
-theorem erdos_1070.parts.ii : ∀ n : ℕ, (n : ℝ) / 4 ≤ (f n : ℝ) := by
+@[category research solved, question, AMS 5 52]
+theorem erdos_1070.parts.ii : ¬ ∀ n : ℕ, (n : ℝ) / 4 ≤ (f n : ℝ) := by
   sorry
 
 /--
