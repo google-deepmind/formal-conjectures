@@ -34,6 +34,7 @@ namespace Erdos178
 
 open Finset BigOperators
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A_1,A_2,\ldots$ be an infinite collection of infinite sets of integers, say
 $A_i=\{a_{i1}<a_{i2}<\cdots\}$. Does there exist some $f:\mathbb{N}\to\{-1,1\}$ such that

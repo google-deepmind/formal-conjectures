@@ -50,6 +50,7 @@ theorem erdos_726 :
     ~[atTop] (fun n : ℕ ↦ Real.log (Real.log (n : ℝ)) / 2) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The classical estimate of Mertens states that $\sum_{p\leq n}\frac{1}{p}\sim \log\log n$.
 -/

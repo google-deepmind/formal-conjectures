@@ -37,6 +37,7 @@ namespace Erdos34
 
 open scoped BigOperators
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For any permutation $\pi\in S_n$ of $\{1,\ldots,n\}$ let $S(\pi)$ count the number of distinct consecutive sums, that is, sums of the shape $\sum_{u\leq i\leq v}\pi(i)$. Is it true that
 $$

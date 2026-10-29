@@ -52,6 +52,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos582
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a graph $G$ which contains no $K_4$, and yet any $2$-colouring of the edges
 produces a monochromatic $K_3$?

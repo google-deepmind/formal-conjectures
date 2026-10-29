@@ -36,6 +36,7 @@ open scoped ExponentialSum
 
 namespace Erdos512
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, if $A\subset \mathbb{Z}$ is a finite set of size $N$, then
 $$\int_0^1 \left\lvert \sum_{n\in A}e(n\theta)\right\rvert \mathrm{d}\theta \gg \log N,$$

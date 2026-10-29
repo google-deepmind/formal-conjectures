@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 
 namespace RiemannZetaValues
 
+set_option linter.style.formal_proof_palomar false in
 /--
 $\zeta(5)$ is irrational.
 

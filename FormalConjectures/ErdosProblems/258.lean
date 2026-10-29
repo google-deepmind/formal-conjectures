@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos258
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_n \to \infty$ be a sequence of non-zero natural numbers. Is
 $\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of divisors of $n$?
@@ -59,6 +60,7 @@ theorem erdos_258.variants.monotone :
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is $\sum_n \frac{d(n)}{t^n}$ irrational, where $t ≥ 2$ is an integer.
 

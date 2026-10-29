@@ -38,6 +38,7 @@ open Filter Metric
 
 namespace Erdos466
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $N(X,\delta)$ denote the maximum number of points $P_1,\ldots,P_n$ which can be chosen in a
 circle of radius $X$ such that

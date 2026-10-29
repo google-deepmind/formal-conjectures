@@ -53,6 +53,7 @@ theorem a_3 : a 3 = 13040 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 778840 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1:
 "Conjecture: $a(n)$ is divisible by $n+1$."

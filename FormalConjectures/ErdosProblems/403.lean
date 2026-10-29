@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos403
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does the equation
 $$2^m=a_1!+\cdots+a_k!$$

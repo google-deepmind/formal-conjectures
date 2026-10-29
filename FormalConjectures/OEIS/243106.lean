@@ -66,6 +66,7 @@ lemma a_4 : a 4 = 8910 := by rfl
 lemma a_5 : a 5 = -91090 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: When expressed in base $b \ge 5$, the absolute value of any partial sum $\sum \pm b^k$ only contains digits belonging to $\{0, 1, b-2, b-1\}$.
 

@@ -34,6 +34,7 @@ open scoped Topology
 
 namespace Erdos183
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $R(3;k)$ be the minimal $n$ such that if the edges of $K_n$ are coloured with $k$ colours
 then there must exist a monochromatic triangle. Determine
@@ -50,6 +51,7 @@ theorem erdos_183 :
       atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The explicit bound behind `erdos_183`: for every $k\geq 2$,
 $$R(3;k)\geq \left(\frac{k^{1/3}}{6e^{38}\log k}\right)^k.$$

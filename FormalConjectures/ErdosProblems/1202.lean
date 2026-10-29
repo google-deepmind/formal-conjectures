@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos1202
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon > 0$. Does there exist $k$ such that, for every $n$, any primes
 $p_1 < \cdots < p_k < n^{1-\epsilon}$ and any sets $A_i$ of $\frac{p_i - 1}{2}$ residue classes
@@ -42,7 +43,8 @@ Price (with GPT-5.4 Pro) gave a construction in which the $A_i$ are intervals of
 least $(1/2 - c) n$ integers in $[1, n]$ survive. The large sieve gives a positive answer when
 $p_k < n^{1/2}$ instead. See also `Green44` for a related special case.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1202.lean"]
 theorem erdos_1202 :
     ¬ ∀ ε : ℝ, 0 < ε → ∃ k : ℕ, ∀ (n : ℕ) (p : Fin k → ℕ) (A : (i : Fin k) → Finset (ZMod (p i))),
       (∀ i, (p i).Prime) →
