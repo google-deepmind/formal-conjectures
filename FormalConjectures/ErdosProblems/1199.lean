@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1199
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Ow74] J. Owings, E2494. Amer. Math. Monthly (1974), 902.
 -/
 
+@[expose] public section
+
 open Pointwise
 
 namespace Erdos1199
@@ -36,13 +39,13 @@ such that all elements of $A+A$ are the same colour?
 
 A conjecture of Owings [Ow74].
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1199 :
-    answer(sorry) ↔
     ∀ (color : ℕ → Fin 2), ∃ (A : Set ℕ),
     A.Infinite ∧ ∀ n ∈ (A+A), ∀ m ∈ (A+A), color n = color m := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Hindman [Hi79] has shown that this is false for 3-colourings.
 -/

@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
 
 /-!
 # Written on the Wall II - Conjecture 103
@@ -22,6 +25,8 @@ import FormalConjecturesUtil
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
+
+@[expose] public section
 
 namespace WrittenOnTheWallII.GraphConjecture103
 
@@ -60,7 +65,7 @@ theorem wowii103Counterexample_averageEccentricity :
   unfold averageEccentricity
   have hsum : (∑ v : Fin 11, (wowii103Counterexample.eccent v).toNat) = 30 := by
     simp_rw [eccent_eq_computable wowii103Counterexample wowii103Counterexample_connected]
-    decide +native
+    decide
   rw [hsum]
   norm_num
 
@@ -87,13 +92,11 @@ This conjecture is false. The graph `wowii103Counterexample` has independence nu
 largest induced bipartite subgraph size $10$, and average eccentricity $30/11$. Since
 $1 < \ln(30/11) < 2$, the proposed upper bound is $8$.
 -/
-@[category research solved, AMS 5]
-theorem conjecture103 : answer(False) ↔
-    ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
+@[category research solved, question, AMS 5]
+theorem conjecture103 :
+    ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) (_h : G.Connected),
       (G.indepNum : ℝ) ≤ ⌊b G - Real.log (averageEccentricity G)⌋ := by
-  show False ↔ _
-  rw [false_iff]
   intro h
   have hbad := h (Fin 11) wowii103Counterexample wowii103Counterexample_connected
   rw [wowii103Counterexample_indepNum, b, wowii103Counterexample_bipartiteSize,

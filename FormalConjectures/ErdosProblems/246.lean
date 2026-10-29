@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 246
@@ -34,12 +35,15 @@ import FormalConjecturesUtil
   Publ. Math. Debrecen (2024), 253--261.
 -/
 
+@[expose] public section
+
 namespace Erdos246
 
 /-- The set $\{a^k b^l : k,l \geq 0\}$. -/
 def Gamma (a b : ℕ) : Set ℕ :=
   {x | ∃ k l : ℕ, x = a ^ k * b ^ l}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $(a,b)=1$. The set $\{a^kb^l: k,l\geq 0\}$ is complete - that is, every large integer is the sum of distinct integers of the form $a^kb^l$ with $k,l\geq 0$.
 

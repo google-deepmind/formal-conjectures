@@ -19,6 +19,7 @@ public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
+public import Mathlib.Data.Fintype.EquivFin
 public import Mathlib.Order.Lattice.Nat
 
 @[expose] public section
@@ -54,6 +55,33 @@ def IsKConnected {V : Type*} [Fintype V] (G : SimpleGraph V) (k : ℕ) : Prop :=
 theorem not_isKConnected_of_card_le {V : Type*} [Fintype V] {G : SimpleGraph V} {k : ℕ}
     (h : Fintype.card V ≤ k) : ¬ IsKConnected G k :=
   fun hG => absurd hG.1 (not_lt.mpr h)
+
+/-- The vertex connectivity of a finite graph: the minimum number of vertices whose removal
+leaves a disconnected graph, with the complete-graph convention of $|V| - 1$.
+Graphs with at most one vertex have vertex connectivity zero. -/
+noncomputable def vertexConnectivity {V : Type*} [Fintype V] (G : SimpleGraph V) : ℕ :=
+  open scoped Classical in
+  if Fintype.card V ≤ 1 then 0
+  else sInf {k | ∃ S : Finset V, S.card = k ∧
+    (¬(G.induce ((S : Set V)ᶜ)).Connected ∨ S.card = Fintype.card V - 1)}
+
+/-- Graphs with at most one vertex have vertex connectivity zero. -/
+@[simp]
+theorem vertexConnectivity_of_subsingleton {V : Type*} [Fintype V] [Subsingleton V]
+    (G : SimpleGraph V) : G.vertexConnectivity = 0 := by
+  simp [vertexConnectivity, Fintype.card_le_one_iff_subsingleton.mpr inferInstance]
+
+/-- A disconnected graph has vertex connectivity zero. -/
+theorem vertexConnectivity_eq_zero_of_not_connected {V : Type*} [Fintype V]
+    (G : SimpleGraph V) (hG : ¬G.Connected) : G.vertexConnectivity = 0 := by
+  classical
+  unfold vertexConnectivity
+  split_ifs
+  · rfl
+  · apply Nat.eq_zero_of_le_zero
+    refine csInf_le' ⟨(∅ : Finset V), rfl, Or.inl ?_⟩
+    rw [Finset.coe_empty, Set.compl_empty]
+    exact mt G.induceUnivIso.connected_iff.mp hG
 
 /-!
 ### Deciding reachability by breadth-first search

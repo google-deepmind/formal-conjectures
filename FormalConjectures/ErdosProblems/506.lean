@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 506
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [PuSm] Purdy and Smith. No reference found.
 -/
 
+@[expose] public section
+
 namespace Erdos506
 
 open EuclideanGeometry
@@ -40,6 +43,8 @@ of the non-collinear triples of `P`.)
 -/
 noncomputable def numCircles (P : Set ℝ²) : ℕ :=
   Set.ncard { s : Sphere ℝ² | 3 ≤ {p ∈ P | p ∈ s}.ncard }
+
+def erdos_506.answer : ℕ := sorry
 
 /--
 What is the minimum number of circles determined by any $n$ points in $\mathbb{R}^2$, not all on a
@@ -57,13 +62,15 @@ remain open for small $n$ (see `erdos_506.variants.small_n`).
 -- * The hypothesis `4 ≤ n` is not a restriction of the problem, but excludes the degenerate range
 --   where no admissible configuration exists: fewer than three points are collinear, and any three
 --   non-collinear points lie on a common circle, so the set below is empty for `n < 4`.
-@[category research open, AMS 51 52]
+@[category research open, question value, AMS 51 52]
 theorem erdos_506 (n : ℕ) (hn : 4 ≤ n) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer(sorry) := by
+      erdos_506.answer := by
   sorry
+
+def erdos_506.variants.large_n.answer (n : ℕ) : ℕ := (n - 1).choose 2 + 1 - (n - 1) / 2
 
 /--
 For $n > 393$ the answer is $\binom{n-1}{2} + 1 - \left\lfloor \frac{n-1}{2} \right\rfloor$
@@ -71,25 +78,27 @@ For $n > 393$ the answer is $\binom{n-1}{2} + 1 - \left\lfloor \frac{n-1}{2} \ri
 both a lower bound for every such configuration and is attained, e.g. by a circle with $n - 1$
 points together with a single point off the circle.
 -/
-@[category research solved, AMS 51 52]
+@[category research solved, question value, AMS 51 52]
 theorem erdos_506.variants.large_n (n : ℕ) (hn : 393 < n) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer((n - 1).choose 2 + 1 - (n - 1) / 2) := by
+      (erdos_506.variants.large_n.answer n) := by
   sorry
+
+def erdos_506.variants.small_n.answer : ℕ := sorry
 
 /--
 The problem appears to remain open for small $n$: Elliott's answer is established only for
 $n > 393$, so the minimum number of circles determined by $n$ points, not all on a line and not all
 on a circle, is unknown for $n \le 393$.
 -/
-@[category research open, AMS 51 52]
+@[category research open, question value, AMS 51 52]
 theorem erdos_506.variants.small_n (n : ℕ) (hn : 4 ≤ n) (hn' : n ≤ 393) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      answer(sorry) := by
+      erdos_506.variants.small_n.answer := by
   sorry
 
 /--

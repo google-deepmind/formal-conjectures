@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 100
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 * [GuKa15](Guth, Larry and Katz, Nets Hawk, On the Erd\H{o}s distinct distances problem in the plane. Ann. of Math. (2) (2015), 155-190.)
 * [Piepmeyer](No references found)
 -/
+
+@[expose] public section
 
 open Set Metric Filter Real
 open scoped EuclideanGeometry
@@ -37,9 +40,9 @@ def DistancesSeparated (A : Finset ℝ²) : Prop :=
     |dist p₁ q₁ - dist p₂ q₂| ≥ 1
 
 /-- Is the diameter of $A$ at least $Cn$ for some constant $C > 0$? -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_100 :
-    answer(sorry) ↔ ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
+    ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ A : Finset ℝ²,
       A.card = n →
       DistancesSeparated A →
       diam (A : Set ℝ²) > C * n := by
@@ -73,6 +76,7 @@ theorem erdos_100.variants.guth_katz :
       diam (A : Set ℝ²) ≥ C * n / log n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- From [Piepmeyer]: 9 points with diameter $< 5$.
 TODO: find reference -/
 @[category research solved, AMS 52, formal_proof using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-100-piepmeyer/FormalConjectures/ErdosProblems/100.lean"]

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Squares of double factorials
@@ -23,7 +24,11 @@ Squares of double factorials: $a(n) = ((2n-1)!!)^2 = (1 \cdot 3 \cdot 5 \cdots (
 
 *References:*
 - [A001818](https://oeis.org/A001818)
+- [She, Sun, Xia, *A novel permanent identity with applications*, Theorem 1.3(ii)](https://arxiv.org/abs/2208.12167)
+- [Yang, Zhang, *Sun-type determinant and permanent congruences*, Proposition 17](https://arxiv.org/abs/2605.19502)
 -/
+
+@[expose] public section
 
 namespace OeisA1818
 
@@ -63,13 +68,18 @@ noncomputable def fEntry {p : ℕ} (i j : ℕ) : ZMod (p ^ 2) :=
     let den : R := (iInt - jInt : ℤ)
     num * den⁻¹
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1: For any primitive $2n$-th root $\zeta$ of unity, the permanent of the $2n \times 2n$
 matrix $[m(j,k)]_{j,k=1..2n}$ coincides with $a(n) = ((2n-1)!!)^2$, where $m(j,k)$ is
 $(1+\zeta^{j-k})/(1-\zeta^{j-k})$ if $j \neq k$, and $1$ otherwise.
 - Zhi-Wei Sun, Dec 21 2021
+
+Proved by She, Sun and Xia, Theorem 1.3(ii) in the reference above.
+Lean formalization by Wentao Li, with AI assistance.
 -/
-@[category research open, AMS 11 15]
+@[category research solved, AMS 11 15,
+  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/0a23974e54b90afd1453ef02c27cf8f617bad940/LeanOeisProofs/NewFormalization/A001818.lean#L7753"]
 theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) :
     ∀ (ζ : ℂ), IsPrimitiveRoot ζ (2 * n) →
       Matrix.permanent (fun (i j : Fin (2 * n)) =>
@@ -86,7 +96,7 @@ $[f(j,k)]_{j,k=1..p-1}$ is congruent to $a((p-1)/2) = ((p-2)!!)^2 \pmod{p^2}$,
 where $f(j,k)$ is $(j+k)/(j-k)$ if $j \neq k$, and $f(j,k) = 1$ otherwise.
 - Zhi-Wei Sun, Dec 22 2021
 -/
-@[category research open, AMS 11 15]
+@[category research solved, AMS 11 15]
 theorem conjecture2 {p : ℕ} (hp : p.Prime) (h_odd : p ≠ 2) :
     let N : ℕ := p - 1
     let R := ZMod (p ^ 2)

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture relating two characterizations of a set of integers.
@@ -37,6 +38,8 @@ taking 1 off each number in the sequence defined by 2.
 - [A80170](https://oeis.org/A80170)
 - [A51283](https://oeis.org/A51283)
 -/
+
+@[expose] public section
 
 namespace OeisA80170
 
@@ -70,6 +73,7 @@ theorem a_5 : ¬A 5 := by unfold A; decide
 @[category test, AMS 11]
 theorem a_6 : ¬A 6 := by unfold A; decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: The gcd condition is equivalent to the prime power condition.
 This has been conjectured by Ralf Stephan.

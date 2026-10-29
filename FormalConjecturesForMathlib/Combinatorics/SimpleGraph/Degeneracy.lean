@@ -13,21 +13,45 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+
 module
 
+public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Data.Finset.Card
 public import Mathlib.Data.Fintype.Powerset
 
 @[expose] public section
 
 /-!
-# Degeneracy
+# Graph degeneracy
 
-This file defines `SimpleGraph.degeneracy`, the maximum over all nonempty
-induced subgraphs of the minimum degree.
+A graph is $r$-degenerate if each nonempty finite vertex set contains a vertex with at most
+$r$ neighbours in that set.
 -/
 
 namespace SimpleGraph
+
+open scoped Classical in
+/-- The neighbours of `v` lying inside `s`. -/
+noncomputable def neighborsWithin {V : Type*} (H : SimpleGraph V) (s : Finset V) (v : V) :
+    Finset V := s.filter (H.Adj v)
+
+/-- `H` is `r`-degenerate when every induced subgraph has a vertex of degree at most `r`, that is,
+every nonempty vertex set contains a vertex with at most `r` neighbours inside it. -/
+def IsDegenerate {V : Type*} (H : SimpleGraph V) (r : ℕ) : Prop :=
+  ∀ s : Finset V, s.Nonempty → ∃ v ∈ s, (neighborsWithin H s v).card ≤ r
+
+@[simp]
+lemma neighborsWithin_empty {V : Type*} (H : SimpleGraph V) (v : V) :
+    H.neighborsWithin ∅ v = ∅ := by
+  simp [neighborsWithin]
+
+@[simp]
+lemma isDegenerate_bot {V : Type*} (r : ℕ) : (⊥ : SimpleGraph V).IsDegenerate r := by
+  intro s hs
+  obtain ⟨v, hv⟩ := hs
+  exact ⟨v, hv, by simp [neighborsWithin]⟩
 
 open Classical in
 /-- The **degeneracy** of `G`: the maximum, over all nonempty induced subgraphs `H`,

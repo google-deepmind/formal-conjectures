@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 540
@@ -39,20 +40,23 @@ import FormalConjecturesUtil
   (1970), 227-229.
 -/
 
+@[expose] public section
+
 namespace Erdos540
 
 /-- A finite set has a non-empty subset whose sum is zero. -/
 def HasZeroSubsetSum {G : Type*} [AddCommMonoid G] (A : Finset G) : Prop :=
   ∃ S : Finset G, S ⊆ A ∧ S.Nonempty ∧ S.sum id = 0
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $A\subseteq \mathbb{Z}/N\mathbb{Z}$ has size $\gg N^{1/2}$ then there exists
 some non-empty $S\subseteq A$ such that $\sum_{n\in S}n\equiv 0\pmod{N}$?
 
 Szemerédi proved the answer is yes, in fact for arbitrary finite abelian groups.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos540.lean"]
-theorem erdos_540 : answer(True) ↔
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos540.lean"]
+theorem erdos_540 :
     ∃ C : ℝ, 0 < C ∧
       ∀ (N : ℕ), 0 < N → ∀ A : Finset (ZMod N),
         C * Real.sqrt N ≤ A.card →

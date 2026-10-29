@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Central Binomial Tail Bounds, Conjecture 6.3
@@ -23,12 +24,15 @@ import FormalConjecturesUtil
 **Central Binomial Tail Bounds**
 by *Matus Telgarsky*
 -/
+
+@[expose] public section
 namespace Arxiv.«0911.2077»
 open NNReal ENNReal ProbabilityTheory
 
 /-- As usual, let $\Phi$ be the distribution function of the standard normal. -/
 local notation "Φ" => cdf (gaussianReal 0 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Empirical evidence seems to suggest that Slud's bound does not hold for all $p$, and in fact, as $n\to\infty$,
 the maximal permissible $p$ shrinks to $\frac{1}{2}$. Also, the following appears to be true:
