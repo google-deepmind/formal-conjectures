@@ -16,8 +16,14 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public import FormalConjecturesForMathlib.Complexity.TrapezoidalBitArray
-public import FormalConjecturesForMathlib.Complexity.NandCircuit
+
+/-!
+# Bounds on clique-detecting circuits in tiny graphs
+
+*References:*
+- [Formal Conjectures Issue #4404](https://github.com/google-deepmind/formal-conjectures/issues/4404)
+- [lean-clique-nand](https://github.com/joshtburdick/lean-clique-nand)
+-/
 
 @[expose] public section
 
@@ -50,8 +56,10 @@ def IsMinCliqueCircuit (n k num_gates : Nat) : Prop :=
   ∃ (h_pos : 0 < num_gates),
     let gates : ℕ+ := ⟨num_gates, h_pos⟩
     (∃ (c : NandCircuit (trapezoid_size n 0) gates), cliqueDetectorCircuit n k gates c) ∧
-    (∀ (g : ℕ+) (hg : g.val < num_gates),
+    (∀ (g : ℕ+), g.val < num_gates →
       ¬ ∃ (c : NandCircuit (trapezoid_size n 0) g), cliqueDetectorCircuit n k g c)
+
+def clique_8_4_bound.answer : ℕ := sorry
 
 /--
 **Minimum Circuit Size for Clique Detection on Tiny Graphs**:
@@ -60,8 +68,8 @@ The exact minimum number of unbounded fan-in NAND gates required to detect
 a 4-vertex clique in an 8-vertex graph. This problem is posed as a miniaturized
 testbed for circuit complexity lower bounds.
 -/
-@[category research open, AMS 03]
-theorem clique_8_4_bound : IsMinCliqueCircuit 8 4 answer(sorry) := by
+@[category research open, question value, AMS 3]
+theorem clique_8_4_bound : IsMinCliqueCircuit 8 4 clique_8_4_bound.answer := by
   sorry
 
 end CliqueCircuit
