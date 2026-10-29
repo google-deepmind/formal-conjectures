@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 615
@@ -41,11 +42,14 @@ $\mathrm{rt}(n; 4, ne^{-f(n)}) = o(n^2)$ whenever $f(n)/\sqrt{\log n} \to \infty
   Ramsey-Turán problem*. Combinatorica 35 (2015), 435--476.
 -/
 
+@[expose] public section
+
 open Filter SimpleGraph
 
 namespace Erdos615
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist some constant $c > 0$ such that for all sufficiently large $n$, if $G$ is a
 graph with $n$ vertices and at least $(1/8 - c)n^2$ edges then $G$ must contain either a $K_4$
@@ -53,9 +57,10 @@ or an independent set on at least $n/\log n$ vertices?
 
 The answer is no, as shown by Fox, Loh, and Zhao [FLZ15].
 -/
-@[category research solved, AMS 5]
-theorem erdos_615 : answer(False) ↔
-    ∃ c : ℝ, 0 < c ∧ ∀ᶠ (n : ℕ) in atTop,
+@[category research solved, question, AMS 5,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos615.lean#L492"]
+theorem erdos_615 :
+    ¬ ∃ c : ℝ, 0 < c ∧ ∀ᶠ (n : ℕ) in atTop,
       ∀ G : SimpleGraph (Fin n), (1 / 8 - c) * n ^ 2 ≤ G.edgeFinset.card →
         ¬ G.CliqueFree 4 ∨ (n : ℝ) / Real.log n ≤ G.indepNum := by
   sorry

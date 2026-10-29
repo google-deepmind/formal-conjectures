@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integrality and supercongruences of the factorial ratio $\frac{(6n)! n!}{(3n)! (2n)!^2}$
@@ -25,7 +26,11 @@ $$a(n) = \frac{(30n)! n!}{(15n)! (10n)! (6n)!}$$
 *References:*
 - [A211417](https://oeis.org/A211417)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
+- [Me11] R. Meštrović, *Wolstenholme's theorem: Its Generalizations and Extensions in the last
+  hundred and fifty years (1862-2012)*, [arXiv:1111.3057](https://arxiv.org/abs/1111.3057) (2011).
 -/
+
+@[expose] public section
 
 namespace OeisA211417
 
@@ -68,6 +73,7 @@ lemma a_3 : a 3 = 43880754270176401422739454033276880 := by rfl
 lemma a_4 : a 4 = 38113558705192522309151157825210540422513019720 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It appears that $a(n)/(30n - 1)$ is integral for all $n$ (checked up to $n = 1000$). - _Peter Bala_, Aug 28 2025
 
@@ -79,6 +85,7 @@ A formal proof has been found with the methods described in
 theorem thirty_mul_sub_one_dvd_a (n : ℕ) : (30 * (n : ℤ) - 1) ∣ (a n : ℤ) := by
     sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "7*a(n)/(2*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
@@ -90,6 +97,7 @@ theorem seven_mul_a_dvd_two_mul_add_one (n : ℕ) :
     (2 * (n : ℤ) + 1) ∣ 7 * (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "a(n)/(3*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
@@ -101,6 +109,7 @@ theorem a_dvd_three_mul_add_one (n : ℕ) :
     (3 * (n : ℤ) + 1) ∣ (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "a(n)/(5*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
@@ -112,6 +121,7 @@ theorem a_dvd_five_mul_add_one (n : ℕ) :
     (5 * (n : ℤ) + 1) ∣ (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "42*a(n)/((2*n + 1)*(3*n + 1)*(5*n + 1)) [is an] integer for all n
 (checked up to n = 1000)." - _Peter Bala_, Aug 28 2025
@@ -124,6 +134,7 @@ theorem forty_two_mul_a_dvd_product (n : ℕ) :
       42 * (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "More generally, for r >= 1, we conjecture that there exists a constant D(r) such that
 D(r)*a(n)/Product_{i = 1..r, i coprime to 30} (30*n - i) is integral for all n."
@@ -142,19 +153,30 @@ divisor product is divisible by $p^k$), and a uniform low-layer budget for $p^k 
 absorbed by the witness constant.
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
-"https://github.com/chy4pro/formal-conjectures/blob/fbc6706451b0e80787580d91ee6c252c121e0165/FormalConjectures/OEIS/211417.lean#L651"]
+"https://github.com/chy4pro/formal-conjectures/blob/fbc6706451b0e80787580d91ee6c252c121e0165/FormalConjectures/OEIS/211417.lean#L555"]
 theorem general_divisibility (r : ℕ) (hr : 1 ≤ r) :
     ∃ D : ℤ, 0 < D ∧ ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Supercongruence: "a(p^k) == a(p^(k-1)) ( mod p^(3*k) ) for any prime p >= 5 and any positive
 integer k." - _Peter Bala_, Jan 24 2020
 
 More generally, "the congruences a(n*p^k) == a(n*p^(k-1)) ( mod p^(3*k) ) may hold for any
 prime p >= 5 and any positive integers n and k."
+
+The same OEIS comment (Peter Bala, Jan 24 2020) already sketches an informal proof of the
+supercongruence: write
+$a(n) = \binom{30n}{15n}\binom{15n}{5n} / \binom{6n}{n}$ and apply [Me11, eq. (39), p. 12].
+
+Solved: a Lean 4 proof, derived from the Atlas proofs in
+[facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
+`formal_proof`.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/OeisA211417.lean#L848"]
 theorem supercongruence (p k : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) (hk : 0 < k) :
     (p : ℤ) ^ (3 * k) ∣ ((a (p ^ k) : ℤ) - (a (p ^ (k - 1)) : ℤ)) := by
   sorry

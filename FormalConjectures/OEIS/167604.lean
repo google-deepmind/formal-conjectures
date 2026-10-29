@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Chua's Euclidean prime sequence
@@ -28,6 +29,8 @@ whether every prime occurs.
 - Andrew R. Booker,
   [A variant of the Euclid--Mullin sequence containing every prime](https://arxiv.org/abs/1605.08929)
 -/
+
+@[expose] public section
 
 namespace OeisA167604
 
@@ -68,9 +71,9 @@ theorem a_4 : a 4 = 11 := by
     show (30 : ℕ).divisors = {1, 2, 3, 5, 6, 10, 15, 30} by decide]
 
 /-- Does Chua's sequence contain every prime? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∃ n ≥ 1, a n = p := by
+    ∀ p : ℕ, p.Prime → ∃ n ≥ 1, a n = p := by
   sorry
 
 end OeisA167604

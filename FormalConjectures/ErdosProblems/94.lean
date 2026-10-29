@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 94
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   (1995), 379-408.
 -/
 
+@[expose] public section
+
 open Filter EuclideanGeometry
 
 namespace Erdos94
@@ -38,6 +41,7 @@ noncomputable def regularNGon (n : ℕ) : Finset ℝ² :=
   (Finset.range n).image fun k : ℕ =>
     !₂[Real.cos (2 * Real.pi * k / n), Real.sin (2 * Real.pi * k / n)]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Suppose $n$ points in $\mathbb{R}^2$ determine a convex polygon and the set of distances between
 them is $\{u_1,\ldots,u_t\}$. Suppose $u_i$ appears as the distance between $f(u_i)$ many pairs of
@@ -56,8 +60,8 @@ Note it is trivial that $\sum f(u_i)=\binom{n}{2}$.
 -/
 @[category test, AMS 5 52]
 theorem erdos_94.variants.sum_multiplicity (P : Finset ℝ²) :
-    ∑ u ∈ distanceSet P, distanceMultiplicity P u = P.card.choose 2 := by
-  sorry
+    ∑ u ∈ distanceSet P, distanceMultiplicity P u = P.card.choose 2 :=
+  sum_distanceMultiplicity P
 
 /--
 Lefmann and Theile [LeTh95] prove a stronger version of this question, that

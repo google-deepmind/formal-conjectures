@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 537
@@ -25,10 +26,13 @@ import FormalConjecturesUtil
   theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) (1973), 117-138.
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace Erdos537
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon>0$ and $N$ be sufficiently large. If $A\subseteq \{1,\ldots,N\}$ has
 $\lvert A\rvert \geq \epsilon N$ then must there exist $a_1,a_2,a_3\in A$ and distinct primes
@@ -45,9 +49,9 @@ $a_i\in A$ and $p_1,p_2,p_3$ are distinct primes. Without loss of generality we 
 that $a_2>a_3$ and hence $p_2<p_3$, and so since $p_2p_3\mid a_1\in A$ we must have
 $2<p_3/p_2$. On the other hand $p_3/p_2=a_2/a_3\in (1,2)$, a contradiction.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos537.lean"]
-theorem erdos_537 : answer(False) ↔
-    ∀ ε : ℝ, 0 < ε → ∀ᶠ N : ℕ in atTop,
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos537.lean"]
+theorem erdos_537 :
+    ¬ ∀ ε : ℝ, 0 < ε → ∀ᶠ N : ℕ in atTop,
       ∀ A ⊆ Finset.Icc 1 N, (A.card : ℝ) ≥ ε * N →
         ∃ a₁ ∈ A, ∃ a₂ ∈ A, ∃ a₃ ∈ A, ∃ p₁ p₂ p₃ : ℕ,
           p₁.Prime ∧ p₂.Prime ∧ p₃.Prime ∧

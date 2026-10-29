@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 501
@@ -33,6 +34,8 @@ import FormalConjecturesUtil
 - [NPS87] Newelski, L., Pawlikowski, J., and Seredyński, F. Infinite independent sets in
   the closed case. Acta Math. Acad. Sci. Hungar. (1987).
 -/
+
+@[expose] public section
 
 open Set MeasureTheory
 open scoped Cardinal ENNReal
@@ -64,8 +67,8 @@ of size $3$?
 Known results: Erdős–Hajnal [ErHa60] proved the existence of arbitrarily large finite
 independent sets. Hechler [He72] showed the answer is **no** assuming the continuum
 hypothesis. -/
-@[category research open, AMS 5 28]
-theorem erdos_501 : answer(sorry) ↔
+@[category research open, question, AMS 5 28]
+theorem erdos_501 :
     ∀ (A : ℝ → Set ℝ),
       (∀ x, Bornology.IsBounded (A x)) →
       (∀ x, volume.toOuterMeasure (A x) < 1) →
@@ -81,8 +84,8 @@ For every `n : ℕ` and every family `A : ℝ → Set ℝ` of bounded sets with 
 outer measure `< 1`, there exists a finite independent set of size at least `n`.
 
 This was proved by Erdős and Hajnal [ErHa60]. -/
-@[category research solved, AMS 5 28]
-theorem erdos_501.variants.erdosHajnal_finite : answer(True) ↔
+@[category research solved, question, AMS 5 28]
+theorem erdos_501.variants.erdosHajnal_finite :
     ∀ (n : ℕ) (A : ℝ → Set ℝ),
       (∀ x, Bornology.IsBounded (A x)) →
       (∀ x, volume.toOuterMeasure (A x) < 1) →
@@ -95,8 +98,8 @@ hypothesis.**
 
 Assuming CH (`ℵ₁ = 𝔠`), there exists a family `A : ℝ → Set ℝ` of bounded sets with
 Lebesgue outer measure `< 1` for which no infinite independent set exists. -/
-@[category research solved, AMS 5 28]
-theorem erdos_501.variants.hechler_CH : answer(True) ↔
+@[category research solved, question, AMS 5 28]
+theorem erdos_501.variants.hechler_CH :
     (ℵ₁ = 𝔠) →
     ∃ (A : ℝ → Set ℝ),
       (∀ x, Bornology.IsBounded (A x)) ∧
@@ -104,6 +107,7 @@ theorem erdos_501.variants.hechler_CH : answer(True) ↔
       ¬ ∃ X : Set ℝ, X.Infinite ∧ X.Pairwise (fun x y => x ∉ A y) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Closed sets case: existence of an independent set of size 3.**
 
@@ -112,23 +116,25 @@ independent set of size 3?
 
 This is implied by the stronger theorem of Newelski–Pawlikowski–Seredyński [NPS87] below;
 Gladysz [Gl62] earlier proved the existence of an independent set of size 2. -/
-@[category research solved, AMS 5 28]
-theorem erdos_501.variants.closed_size3 : answer(True) ↔
+@[category research solved, question, AMS 5 28, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos501.lean#L38"]
+theorem erdos_501.variants.closed_size3 :
     ∀ (A : ℝ → Set ℝ),
       (∀ x, IsClosed (A x)) →
       (∀ x, volume (A x) < 1) →
       ∃ X : Set ℝ, 3 ≤ X.ncard ∧ X.Pairwise (fun x y => x ∉ A y) := by
-  simp only [true_iff]
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Newelski–Pawlikowski–Seredyński (1987) [NPS87]: infinite independent set in the closed case.**
 
 If all the sets `A x` are closed with Lebesgue measure `< 1`, then there **is** an
 infinite independent set. This gives a strong affirmative answer to the second
 question of Problem 501. -/
-@[category research solved, AMS 5 28]
-theorem erdos_501.variants.newelski_pawlikowski_seredynski : answer(True) ↔
+@[category research solved, question, AMS 5 28, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos501.lean#L31"]
+theorem erdos_501.variants.newelski_pawlikowski_seredynski :
     ∀ (A : ℝ → Set ℝ),
       (∀ x, IsClosed (A x)) →
       (∀ x, volume (A x) < 1) →
@@ -143,8 +149,8 @@ distinct reals `x y` such that `x ∉ A y` and `y ∉ A x`.
 
 This is a weaker result proved by Gladysz before the full Newelski–Pawlikowski–
 Seredyński theorem [NPS87]. -/
-@[category research solved, AMS 5 28]
-theorem erdos_501.variants.gladysz_size2 : answer(True) ↔
+@[category research solved, question, AMS 5 28]
+theorem erdos_501.variants.gladysz_size2 :
     ∀ (A : ℝ → Set ℝ),
       (∀ x, IsClosed (A x)) →
       (∀ x, volume (A x) < 1) →

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 42
@@ -29,8 +30,13 @@ import FormalConjecturesUtil
   The sphere packing problem in dimension 24. Annals of mathematics, 185(3), 1017-1033.
 - [Sa21] Sardari, Naser Talebizadeh. "Higher Fourier interpolation on the plane."
   arXiv preprint arXiv:2102.08753 (2021).
+- [OAI26a] OpenAI, *A sharp Fourier certificate for planar circle packing*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-sharp-Fourier-certificate-for-planar-circle-packing-September-23-2026/paper.pdf
 
 -/
+
+@[expose] public section
 
 open Real Complex MeasureTheory
 open scoped EuclideanGeometry FourierTransform
@@ -50,11 +56,12 @@ noncomputable def fHat (f : V → ℝ) (t : V) : ℝ :=
   (𝓕 (fun x ↦ (f x : ℂ)) t).re
 
 /--
-Definition 2.1 from [CoEl03]: A function is admissible if both the function and its Fourier
-transform decay sufficiently fast.
+Definition 2.1 from [CoEl03]: A function is admissible if it is continuous and both the function
+and its Fourier transform decay sufficiently fast. Continuity is essential: changing `f` at a
+single point leaves `fHat f` unchanged, so without it every positive bound would be achievable.
 -/
 def CohnElkiesAdmissible (f : V → ℝ) : Prop :=
-  ∃ C > 0, ∃ δ > 0,
+  Continuous f ∧ ∃ C > 0, ∃ δ > 0,
     (∀ x : V, |f x| ≤ C / (1 + ‖x‖) ^ ((Module.finrank ℝ V : ℝ) + δ)) ∧
     (∀ t : V, |fHat f t| ≤ C / (1 + ‖t‖) ^ ((Module.finrank ℝ V : ℝ) + δ))
 
@@ -79,12 +86,18 @@ def CohnElkiesOptimal (d : ℕ) (bound : ℝ) : Prop :=
     SatisfiesCohnElkiesScheme f ∧
     f 0 / fHat f 0 = bound
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can the Cohn-Elkies scheme be used to prove the optimal bound for circle-packings in 2 dimensions?
+
+The answer is "yes". This was proved by an internal OpenAI model in September 2026 [OAI26a]; see
+the linked Lean proof, which constructs a radial Schwartz certificate normalised to minimum
+distance $1$.
 -/
-@[category research open, AMS 51 52]
+@[category research solved, question, AMS 51 52, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/PlanarPacking/Main.lean#L32"]
 theorem green_42 :
-    answer(sorry) ↔ CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
+    CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
   sorry
 
 /-- [CoEl03] proved this when $d = 1$. -/
@@ -93,12 +106,14 @@ theorem green_42.variants.dimension_one :
     CohnElkiesOptimal 1 (1 / 2) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- [Vi17] established the case $d = 8$. -/
 @[category research solved, AMS 51 52, formal_proof using lean4 at "https://github.com/math-inc/Sphere-Packing-Lean/blob/main/SpherePacking/Dim8/MainTheorem.lean"]
 theorem green_42.variants.dimension_eight :
     CohnElkiesOptimal 8 (1 / 16) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- In [CKM17], [Vi17] was adapted to $d = 24$. -/
 @[category research solved, AMS 51 52, formal_proof using lean4 at "https://github.com/math-inc/Sphere-Packing-Lean/blob/main/SpherePacking/Dim24/MainTheorem.lean"]
 theorem green_42.variants.dimension_twenty_four :
