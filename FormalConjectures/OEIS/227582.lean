@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representation of sequence terms by harmonic numbers $\lfloor \frac{1}{2H(n) - H(n^2+n-1) - \gamma} \rfloor$
@@ -31,6 +32,8 @@ The sequence is 1-indexed in OEIS, so $a(n)$ is the $(n-1)$-th term of the 0-ind
 - [A227582](https://oeis.org/A227582)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA227582
 
@@ -107,6 +110,7 @@ theorem baseSeq_recurrence (n : ℕ) :
     show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 6 = 2 from rfl]
   ring
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture (from A227581): $a(n) = \lfloor 1/(2 H(n) - H(n^2 + n - 1) - \gamma) \rfloor$,
 where $H$ denotes harmonic numbers and $\gamma$ denotes the Euler-Mascheroni constant.

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 318
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   - [La26] D. Larsen, [Erdős problem 318](https://github.com/Larsen-Daniel/Erdos-318/blob/main/318.pdf) (2026)
 -/
 
+@[expose] public section
+
 open Set Real
 
 namespace Erdos318
@@ -43,13 +46,17 @@ def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
   Set.range f ⊆ {1, -1} →
   ∃ S : Finset ℕ, S.Nonempty ∧ ↑S ⊆ A \ {0} ∧ ∑ n ∈ S, f n / n = 0
 
+set_option linter.style.formal_proof_palomar false in
 /-- `ℕ` has property `P₁`. This is proved in [ErSt75]. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L761"]
 theorem erdos_318.variants.univ : P₁ univ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Sattler proved in [Sa75] that the set of odd numbers has property `P₁`. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L782"]
 theorem erdos_318.variants.odd : P₁ {n | Odd n} := by
   sorry
 
@@ -99,11 +106,13 @@ theorem erdos_318.variants.squares : ¬ P₁ ({n | IsSquare n}) := by
     have : p ≠ 1 := by grind
     simp_all [neg_div, zero_lt_iff, (not_iff_not.2 mem_singleton_iff).1 (hs hp).2]
 
-/-- For any set `A` containing exactly one even number, `A` does not have property `P₁`. Sattler
-[Sa82] credits this observation to Erdős, who presumably found this after [ErGr80]. -/
+/-- For any infinite set `A` containing exactly one positive even number, `A` does not have
+property `P₁`. Sattler [Sa82] credits this observation to Erdős, who presumably found this after
+[ErGr80]. The element `0` is not counted, since `P₁` ignores it, and the infinitude hypothesis
+excludes degenerate sets such as `{2}`, on which `P₁` holds vacuously. -/
 @[category research solved, AMS 11]
-theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : {n | n ∈ A ∧ Even n}.ncard = 1) :
-    ¬ P₁ A := by
+theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : A.Infinite)
+    (hA' : {n | n ∈ A \ {0} ∧ Even n}.ncard = 1) : ¬ P₁ A := by
   sorry
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
@@ -118,8 +127,10 @@ odd numbers together with one even number have density `1 / 2` on the nose. -/
 theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every infinite arithmetic progression has property `P₁`. This is proved in [Sa82b]. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L599"]
 theorem erdos_318.variants.infinite_AP {A : Set ℕ} (hA : A.IsAPOfLength ⊤) : P₁ A := by
   sorry
 
@@ -128,8 +139,8 @@ Does the set of squares excluding 1 have property `P₁`?
 
 Larsen [La26] proved that this set does have property `P₁`.
 -/
-@[category research solved, AMS 11]
-theorem erdos_318.parts.ii : answer(True) ↔  P₁ ({n | IsSquare n} \ {1}) := by
+@[category research solved, question, AMS 11]
+theorem erdos_318.parts.ii : P₁ ({n | IsSquare n} \ {1}) := by
   sorry
 
 end Erdos318

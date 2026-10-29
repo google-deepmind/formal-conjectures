@@ -13,80 +13,50 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 603
 
 *References:*
 - [erdosproblems.com/603](https://www.erdosproblems.com/603)
-- [Er87] Erdős, Paul, Problems and results on set systems and hypergraphs.
+- [Er87] Erdős, P., *Some problems on finite and infinite graphs*, in
+  *Logic and combinatorics* (1987), 223–228, §12.
+- [Ch26] *A note on Erdős Problem #603* (2026).
+  https://www.ulam.ai/research/erdos603.pdf
 -/
 
-open Set Cardinal Combinatorics
+@[expose] public section
 
 namespace Erdos603
 
-/- ## Setup
-
-The colouring infrastructure (`IsMonochromatic`, `HasChromaticPropertyB`) used throughout
-this file is shared with Erdős Problem 602 and lives in
-`FormalConjecturesForMathlib.Combinatorics.Hypergraph.PropertyB`. -/
-
-/- ## Main open problem -/
+open Cardinal Filter Asymptotics Combinatorics
 
 /--
-**Erdős Problem 603.**
-
-Let $(A_i)$ be a family of countably infinite sets such that $|A_i \cap A_j| \neq 2$ for all
-$i \neq j$. Find the smallest cardinal $C$ such that $\cup A_i$ can always be coloured with at
+Let $(A_i)$ be a family of countably infinite sets such that $\lvert A_i\cap A_j\rvert \neq 2$ for
+all $i\neq j$. Find the smallest cardinal $C$ such that $\cup A_i$ can always be coloured with at
 most $C$ colours so that no $A_i$ is monochromatic.
 
-Formally: we ask for the smallest cardinal `C` (i.e., the smallest type `κ` with
-`#κ = C`) such that: for every type `α`, every family `(A_i)_{i ∈ I}` of countably infinite
-subsets of `α` with `Set.ncard (A_i ∩ A_j) ≠ 2` for all `i ≠ j`, there exists a
-`κ`-colouring of `α` with no monochromatic `A_i`.
-
-The answer `C` is the chromatic number of the "non-2-intersection hypergraph" over countably
-infinite sets.
-
-**Note on the analogous known result:** Komjáth proved that for the condition
-$|A_i \cap A_j| \neq 1$, one can always colour with at most $\aleph_0$ colours (Problem 602).
-The current problem — the minimum $C$ for the condition $|A_i \cap A_j| \neq 2$ — is open.
-
-**Note on generalisation:** We work over an arbitrary ground type `α : Type*` so that the
-statement covers families of countably infinite subsets of uncountable ambient spaces.
-Since every countably infinite set bijects with `ℕ`, this is equivalent to the standard
-formulation over `ℕ`.
-
-**Formalization note on "smallest cardinal":** The problem asks for the *minimum* `C`. We
-formalize this as: `C` is the least cardinal `κ` (i.e., `IsLeast` over the set of cardinals
-that work) such that whenever a representative type of cardinality `κ` is used as the
-colour set, every admissible family admits a non-monochromatic colouring.
-
-Concretely, the answer is the least element of the set
-`{ κ : Cardinal | ∀ {α I : Type*} (A : I → Set α), … → HasChromaticPropertyB κ.out I A }`.
-The `answer(sorry)` placeholder represents the (currently unknown) cardinal value. -/
-@[category research open, AMS 3 5]
+GPT 5.4 Pro (prompted by Chojecki) proved there is no uniform bound on such $C$: for every cardinal
+$C$ there is a family of countably infinite sets $(A_i)$ such that $\lvert A_i\cap A_j\rvert \neq 2$
+for all $i\neq j$, and in any colouring of $\cup A_i$ with $C$ colours some $A_i$ is monochromatic.
+-/
+@[category research solved, AMS 3 5]
 theorem erdos_603 :
-    IsLeast { κ : Cardinal.{0} |
-      ∀ {α : Type*} {I : Type*} (A : I → Set α),
-        (∀ i, (A i).Countable ∧ (A i).Infinite) →
-        (∀ i j, i ≠ j → Set.ncard (A i ∩ A j) ≠ 2) →
-        HasChromaticPropertyB κ.out I A }
-    answer(sorry) := by
+    ∀ C : Cardinal.{0}, ∃ (V : Type) (F : Set (Set V)),
+    (∀ A ∈ F, Cardinal.mk A = ℵ₀) ∧
+    F.Pairwise (fun (A B : Set V) ↦ Cardinal.mk ↥(A ∩ B) ≠ 2) ∧
+    ⋃₀ F = Set.univ ∧
+    ∀ c : V → C.out, ∃ A ∈ F, ∀ x ∈ A, ∀ y ∈ A, c x = c y := by
   sorry
 
-/--
-**ℕ-valued variant of Erdős Problem 603.**
-
-Demoted from the original headline statement: this fixes the colour type to `ℕ` and asks
-only whether countably-many colours suffice. The full open problem (`erdos_603`) asks for
-the *least* cardinal that works, which is captured via `IsLeast` over `Cardinal` above. -/
-@[category research open, AMS 3 5]
-theorem erdos_603.variants.nat_colours : answer(sorry) ↔
-    ∀ {α : Type*} {I : Type*} (A : I → Set α),
+/-- No countable colour set works uniformly for the families in Erdős Problem 603.
+This is the case $C = \aleph_0$ of the negative solution [Ch26]. -/
+@[category research solved, question, AMS 3 5]
+theorem erdos_603.variants.nat_colours :
+    ¬ ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
       (∀ i j, i ≠ j → Set.ncard (A i ∩ A j) ≠ 2) →
       HasChromaticPropertyB ℕ I A := by
@@ -108,12 +78,11 @@ which is easier to state in the context of Problem 603's `ℕ`-valued colouring 
 with colour 1 (say) and everything else with colour 0. By disjointness, the choices for
 different sets do not conflict, and no `A i` is monochromatic. -/
 @[category research solved, AMS 3 5]
-theorem erdos_603.variants.disjoint : answer(True) ↔
+theorem erdos_603.variants.disjoint : 
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Infinite) →
       (∀ i j, i ≠ j → Disjoint (A i) (A j)) →
       HasChromaticPropertyB ℕ I A := by
-  simp only [true_iff]
   intro α I A hInfinite hDisjoint
   -- For each i, pick two distinct elements a_fn i, b_fn i ∈ A i.
   have ha_b : ∀ i, ∃ a b : α, a ∈ A i ∧ b ∈ A i ∧ a ≠ b := by
@@ -220,13 +189,12 @@ set monochromatic.
 
 (The case `|A₀ ∩ A₁| = 2` is excluded by hypothesis.) -/
 @[category textbook, AMS 3 5]
-theorem erdos_603.variants.two_sets : answer(True) ↔
+theorem erdos_603.variants.two_sets : 
     ∀ {α : Type*} (A : Fin 2 → Set α),
       (∀ i, (A i).Infinite) →
       (A 0 ∩ A 1).Finite →
       Set.ncard (A 0 ∩ A 1) ≠ 2 →
       HasChromaticPropertyB ℕ (Fin 2) A := by
-  simp only [true_iff]
   intro α A hInfinite hFin hNcard
   classical
   -- Case split on the size of the intersection.
