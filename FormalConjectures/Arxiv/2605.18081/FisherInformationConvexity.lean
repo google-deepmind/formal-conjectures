@@ -76,6 +76,7 @@ def IsWeaklyAdmissible {d : ℕ} (f : EuclideanSpace ℝ (Fin d) → ℝ) : Prop
   ContDiff ℝ ∞ f ∧ (∀ x, 0 < f x) ∧ ∫ x, f x = 1 ∧
     Integrable (fun x => ‖fderiv ℝ (fun y => log (f y)) x‖ ^ 2 * f x)
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is the Fisher information convex along the heat flow for every admissible density
 [ZFGW26, Section 7.3, Problem (iii)]? The answer is no [Ki26]. -/
 @[category research solved, question, AMS 35 60,
@@ -85,6 +86,7 @@ theorem fisherInformationConvexity :
       ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The same question for every smooth positive probability density with finite Fisher
 information. The answer is no [Ki26]. -/
 @[category research solved, question, AMS 35 60,

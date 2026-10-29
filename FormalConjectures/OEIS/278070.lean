@@ -66,6 +66,7 @@ lemma a_3 : a 3 = 106 := by rfl
 lemma a_4 : a 4 = 1457 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n+k) \equiv a(n) \pmod{k}$ for all $n$ and $k$. - _Peter Bala_, Mar 12 2023
 

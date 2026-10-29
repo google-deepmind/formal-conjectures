@@ -55,6 +55,7 @@ members of $\mathcal{F}$. -/
 noncomputable def comparableEdges {n : ℕ} (𝓕 : Finset (Finset (Fin n))) : ℕ :=
   (comparableGraph 𝓕).edgeFinset.card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\mathcal{F}$ is a family of subsets of $\{1,\ldots,n\}$ then we write $G_{\mathcal{F}}$ for the
 graph on $\mathcal{F}$ where $A\sim B$ if $A$ and $B$ are comparable - that is, $A\subseteq B$ or
@@ -73,6 +74,7 @@ theorem erdos_777.parts.i :
       (𝓕.card : ℝ) ≤ (2 - ε) * (2 : ℝ) ^ ((n : ℝ) / 2) → comparableEdges 𝓕 < 2 ^ n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\mathcal{F}$ is a family of subsets of $\{1,\ldots,n\}$ then we write $G_{\mathcal{F}}$ for the
 graph on $\mathcal{F}$ where $A\sim B$ if $A$ and $B$ are comparable - that is, $A\subseteq B$ or
@@ -93,6 +95,7 @@ theorem erdos_777.parts.ii :
         (𝓕.card : ℝ) ≤ C * (2 : ℝ) ^ ((n : ℝ) / 2) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\mathcal{F}$ is a family of subsets of $\{1,\ldots,n\}$ then we write $G_{\mathcal{F}}$ for the
 graph on $\mathcal{F}$ where $A\sim B$ if $A$ and $B$ are comparable - that is, $A\subseteq B$ or

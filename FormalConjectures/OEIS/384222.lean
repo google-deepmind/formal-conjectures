@@ -67,6 +67,7 @@ theorem row_70 : row 70 = [2, 4, 2] := by decide
 @[category test, AMS 11]
 theorem oddRow_70 : oddRow 70 = [1, 2, 1] := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture 1: row n is a palindromic composition of A000005(n)."
 
@@ -82,6 +83,7 @@ theorem conjecture_1 (n : ℕ) (hn : 0 < n) :
     (∀ k ∈ row n, 0 < k) ∧ (row n).sum = n.divisors.card ∧ (row n).reverse = row n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "T(n,k) = A384225(n,k) * A001511(n) = A384225(n,k) * A000005(n) / A001227(n). (conjectured)."
 - Omar E. Pol, Apr 13 2026

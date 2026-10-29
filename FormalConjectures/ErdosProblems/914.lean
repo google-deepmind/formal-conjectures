@@ -33,6 +33,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos914
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $r\geq 2$ and $m\geq 1$. Every graph with $rm$ vertices and minimum degree at least $m(r-1)$
 contains $m$ vertex disjoint copies of $K_r$.

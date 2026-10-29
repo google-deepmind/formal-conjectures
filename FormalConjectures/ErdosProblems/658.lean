@@ -35,6 +35,7 @@ open Filter
 
 namespace Erdos658
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\delta>0$ and $N$ be sufficiently large depending on $\delta$. Is it true that if
 $A\subseteq \{1,\ldots,N\}^2$ has $\lvert A\rvert \geq \delta N^2$ then $A$ must contain the

@@ -87,6 +87,7 @@ theorem min_modulus :
       ∀ A : Finset (ZMod N), #A = n → ¬ IsValidMod A := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Theorem A (Fonollosa, 2026).** `minModulus n` admits a valid set of `n` residues, the
 super-increasing set $\{2^k - 1 : 0 \leq k \leq n - 1\}$. This bounds the least valid modulus

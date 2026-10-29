@@ -47,6 +47,7 @@ def EventuallyHasPrimeWitness : Prop :=
       (Nat.nth Nat.Prime n) ^ (2 : ℕ) <
         Nat.nth Nat.Prime (n + i) * Nat.nth Nat.Prime (n - i)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for all sufficiently large $n$, there exists some $i<n$ such that
 $$

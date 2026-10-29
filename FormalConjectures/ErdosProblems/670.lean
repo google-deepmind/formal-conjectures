@@ -84,6 +84,7 @@ theorem erdos_670.variants.choose_two (d : ℕ) (A : Finset (EuclideanSpace ℝ 
     (A.card.choose 2 : ℝ) ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ho [Ho26] showed that the claim fails if $n$ grows with $d$: there exist infinitely many $n$
 and, with $d = n^2 - n$, a set $A\subset \mathbb{R}^d$ of $n$ points such that all pairwise

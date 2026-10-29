@@ -101,6 +101,7 @@ theorem a_4 : a 4 = 3 := by
 noncomputable def c (n : ℕ) : ℤ :=
   ∑ k ∈ Finset.range (n + 1), a k * a (n - k)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 $a(n)$ differs in sign from $a(n-1)$ if and only if $n$ is a triangular number
 (checked up to $n = 1225 = (50 \cdot 51)/2$).
@@ -112,6 +113,7 @@ theorem conjecture1 (n : ℕ) (hn : 0 < n) :
     a n * a (n - 1) < 0 ↔ IsTriangular n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The coefficients $c(n)$ of $A(x)^2 = (\sum_{n \ge 0} a(n) x^n)^2$ differ in sign from $c(n-1)$
 if and only if $n$ is a triangular number.
@@ -136,6 +138,7 @@ theorem conjecture2 (n : ℕ) (hn : 0 < n) :
     c n * c (n - 1) < 0 ↔ IsTriangular n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The Gauss congruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^k}$ hold
 for all primes $p$ and positive integers $n$ and $k$.

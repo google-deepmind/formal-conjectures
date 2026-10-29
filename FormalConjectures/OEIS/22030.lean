@@ -65,6 +65,7 @@ theorem a_4 : a 4 = 984 := by rfl
 @[category test, AMS 11]
 theorem a_5 : a 5 = 3889 := by rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n) = 4 a(n-1) - a(n-3) + a(n-4)$.
 - Colin Barker, Feb 16 2012

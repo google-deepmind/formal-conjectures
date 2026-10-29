@@ -37,6 +37,7 @@ namespace Erdos1105
 
 open SimpleGraph Asymptotics Filter
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The anti-Ramsey number $\mathrm{AR}(n,G)$ is the maximum possible number of colours in which the
 edges of $K_n$ can be coloured without creating a rainbow copy of $G$ (i.e. one in which all edges
@@ -57,6 +58,7 @@ theorem erdos_1105.parts.i :
       =O[atTop] (fun _ => (1 : ℝ))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $P_k$ be the path on $k$ vertices and $\ell=\lfloor\frac{k-1}{2}\rfloor$. If $n\geq k\geq 5$
 then is $\mathrm{AR}(n,P_k)$ equal to $\max\left(\binom{k-2}{2}+1,

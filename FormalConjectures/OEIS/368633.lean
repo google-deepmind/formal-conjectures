@@ -76,6 +76,7 @@ theorem a_4 : a 4 = 114 := by
   rw [a_eq]
   norm_num [conv2, Finset.sum_range_succ, a_0, a_1, a_2, a_3]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The parity conjecture (Conjecture 1):
 "Conjecture: $a(n)$ is odd when $n = 2^k - 1$ for $k \ge 0$ and even elsewhere."
