@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1127
@@ -27,9 +28,11 @@ import FormalConjecturesUtil
   without repeated distances_, Proc. Cambridge Philos. Soc. 72 (1972), 179–183.
 - [Ku87] Kunen, K., _Partitioning Euclidean space_,
   Math. Proc. Cambridge Philos. Soc. 102 (1987), 379–383.
-- [Er81b] Erdős, P., _Problems and results in combinatorial analysis and
-  combinatorial number theory_ (1981), p. 31.
+- [Er81b] Erdős, P., _My Scottish Book ‘Problems’_, in *The Scottish Book*,
+  pp. 31–32 (second-edition numbering).
 -/
+
+@[expose] public section
 
 open Cardinal
 open scoped Cardinal
@@ -53,11 +56,11 @@ pairwise distances within each set are distinct?
 The answer is independent of ZFC: it is yes under the continuum hypothesis
 (Kunen [Ku87], building on Erdős–Kakutani [ErKa43] for $n = 1$ and
 Davies [Da72] for $n = 2$), while Erdős and Hajnal showed that if the continuum
-hypothesis fails then even a decomposition of $\mathbb{R}$ into finitely many
+hypothesis fails then even a decomposition of $\mathbb{R}$ into countably many
 such sets is impossible.
 -/
 @[category research solved, AMS 3 52]
-theorem erdos_1127 : answer(sorry) ↔ ∀ n : ℕ, Decomposable n := by
+theorem erdos_1127 : (𝔠 = ℵ_ 1) ↔ ∀ n : ℕ, Decomposable n := by
   sorry
 
 /--
@@ -80,26 +83,26 @@ theorem erdos_1127.variants.davies (hCH : 𝔠 = ℵ_ 1) : Decomposable 2 := by
 
 /--
 Erdős and Kakutani [ErKa43] proved that the continuum hypothesis is equivalent
-to the statement that $\mathbb{R}$ is the union of countably many sets, each of
+to the statement that $\mathbb{R} \setminus \{0\}$ is the union of countably many sets, each of
 which is linearly independent over $\mathbb{Q}$. In particular, the continuum
 hypothesis implies the case $n = 1$ of Erdős Problem 1127.
 -/
 @[category research solved, AMS 3 52]
 theorem erdos_1127.variants.erdos_kakutani :
     (𝔠 = ℵ_ 1) ↔ ∃ A : ℕ → Set ℝ,
-      (⋃ i, A i) = Set.univ ∧ ∀ i, LinearIndepOn ℚ id (A i) := by
+      (⋃ i, A i) = ({0} : Set ℝ)ᶜ ∧ ∀ i, LinearIndepOn ℚ id (A i) := by
   sorry
 
 /--
 Erdős and Hajnal proved that if the continuum hypothesis fails, then in any
-decomposition of $\mathbb{R}$ into finitely many sets, one of the sets contains
+decomposition of $\mathbb{R}$ into countably many sets, one of the sets contains
 four points determining only four distances. In particular, $\mathbb{R}$ cannot
-be decomposed into finitely many sets within each of which all pairwise
+be decomposed into countably many sets within each of which all pairwise
 distances are distinct.
 -/
 @[category research solved, AMS 3 52]
 theorem erdos_1127.variants.erdos_hajnal (hCH : ℵ_ 1 < 𝔠) :
-    ¬ ∃ (k : ℕ) (A : Fin k → Set ℝ),
+    ¬ ∃ A : ℕ → Set ℝ,
       (⋃ i, A i) = Set.univ ∧ ∀ i, PairwiseDistinctDistances (A i) := by
   sorry
 
