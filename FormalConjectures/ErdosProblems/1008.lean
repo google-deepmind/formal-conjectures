@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1008
@@ -27,10 +28,13 @@ import FormalConjecturesUtil
   Combinatorial Mathematics and its Applications (Proc. Conf., Oxford, 1969) (1971), 97-109.
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Erdos1008
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every graph with $m$ edges contain a subgraph with $\gg m^{2/3}$ edges which contains
 no $C_4$?
@@ -38,8 +42,8 @@ no $C_4$?
 This problem was first solved in the affirmative by Conlon, Fox, and Sudakov [CFS14b]. A simple
 proof is given by Hunter in the comments.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1008.lean"]
-theorem erdos_1008 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1008.lean"]
+theorem erdos_1008 :
     ∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       ∃ H ≤ G, (cycleGraph 4).Free H ∧
         c * (G.edgeSet.ncard : ℝ) ^ (2 / 3 : ℝ) ≤ (H.edgeSet.ncard : ℝ) := by
@@ -50,9 +54,9 @@ Originally asked by Bollobás and Erdős in 'a colloquium on graph theory at Tih
 replaced by $m^{3/4}$. Folkman showed this is false with the counterexample $K_{n,n^2}$, which has
 $n^3$ edges, and yet every subgraph with $>n^2+\binom{n}{2}$ edges contains a $C_4$.
 -/
-@[category research solved, AMS 5]
-theorem erdos_1008.variants.three_quarters : answer(False) ↔
-    ∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
+@[category research solved, question, AMS 5]
+theorem erdos_1008.variants.three_quarters :
+    ¬ ∃ c > (0 : ℝ), ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       ∃ H ≤ G, (cycleGraph 4).Free H ∧
         c * (G.edgeSet.ncard : ℝ) ^ (3 / 4 : ℝ) ≤ (H.edgeSet.ncard : ℝ) := by
   sorry

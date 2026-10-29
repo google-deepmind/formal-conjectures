@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 821
@@ -30,7 +31,12 @@ import FormalConjecturesUtil
   without large prime factors. arXiv:2211.09641 (2022).
 - [LuPo11] Luca, Florian and Pollack, Paul, An arithmetic function arising from {C}armichael's
   conjecture. J. Théor. Nombres Bordeaux (2011), 697--714.
+- [OpenAI26] OpenAI, *Weighted dilation graphs, smooth shifted primes and totient fibers*.
+  OpenAI Math Release preprint (September 2026).
+  [github.com/openai/math](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Weighted-Dilation-Graphs-Smooth-Shifted-Primes-and-Totient-Fibers-September-24-2026/paper.pdf)
 -/
+
+@[expose] public section
 
 open Nat Filter
 
@@ -42,13 +48,17 @@ Let $g(n)$ count the number of $m$ such that $\phi(m)=n$.
 noncomputable def g (n : ℕ) : ℕ :=
   { m : ℕ | totient m = n }.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $\epsilon>0$, there exist infinitely many $n$ such that
 $g(n) > n^{1-\epsilon}$?
+
+This was proved in [OpenAI26]; see the linked formal proof for more explanations.
 -/
-@[category research open, AMS 11]
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at "https://github.com/cadamcat/totient-fibers-lean4/blob/dfce35707a67fce7362cb2bd95af8b80a0b0373e/Erdos821/Theorem.lean#L18"]
 theorem erdos_821 :
-    answer(sorry) ↔ ∀ ε > (0 : ℝ), { n : ℕ | (g n : ℝ) > (n : ℝ) ^ (1 - ε) }.Infinite := by
+    ∀ ε > (0 : ℝ), { n : ℕ | (g n : ℝ) > (n : ℝ) ^ (1 - ε) }.Infinite := by
   sorry
 
 /--

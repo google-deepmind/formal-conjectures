@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 315
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [LiTa25] Z. Li and Q. Tang, *On a conjecture of Erdős and Graham about the Sylvester's
   sequence*. arXiv:2503.12277 (2025).
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -45,6 +48,7 @@ $n$-th term $u_n^{1/2^n}$ of the defining sequence is `(u i : ℝ) ^ ((1 / 2 : �
 `i = n - 1`. -/
 noncomputable def c₀ : ℝ := limUnder atTop fun i => (u i : ℝ) ^ ((1 / 2 : ℝ) ^ (i + 1))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $u_1=1$ and $u_{n+1}=u_n(u_n+1)$, so that $\sum_{k\geq 1}\frac{1}{u_k+1}$ and
 $u_k=\lfloor c_0^{2^k}+1\rfloor$ for $k\geq 1$, where
@@ -58,8 +62,8 @@ An earlier interpretation of this question on this site defined $u_1=2$ and
 $u_{n+1}=u_n^2-u_n+1$ (Sylvester's sequence), which is the same sequence shifted by $1$; we use
 the phrasing above as more faithful to [ErGr80]. The constant $c_0$ is called the Vardi constant.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos315.lean"]
-theorem erdos_315 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos315.lean"]
+theorem erdos_315 :
     ∀ a : ℕ → ℕ, (∀ i, 0 < a i) → StrictMono a → (∃ i, a i ≠ u i + 1) →
       ∑' i, (1 : ℝ) / a i = 1 →
       atTop.liminf (fun i => (a i : ℝ) ^ ((1 / 2 : ℝ) ^ (i + 1))) < c₀ := by

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 798
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Al91] Alon, N., *Economical coverings of sets of lattice points*. Geom. Funct. Anal. (1991),
   224-230.
 -/
+
+@[expose] public section
 
 namespace Erdos798
 
@@ -50,6 +53,7 @@ cover all points in $\{1,\ldots,n\}^2$.
 noncomputable def t (n : ℕ) : ℕ :=
   sInf {k | ∃ S : Set (ℝ × ℝ), IsLineCover n S ∧ S.ncard = k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $t(n)$ be the minimum number of points in $\{1,\ldots,n\}^2$ such that the $\binom{t}{2}$
 lines determined by these points cover all points in $\{1,\ldots,n\}^2$.
@@ -60,8 +64,8 @@ A problem of Erdős and Purdy, who proved $t(n) \gg n^{2/3}$.
 
 Resolved by Alon [Al91] who proved $t(n) \ll n^{2/3}\log n$.
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos798.lean"]
-theorem erdos_798 : answer(True) ↔
+@[category research solved, question, AMS 5 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos798.lean"]
+theorem erdos_798 :
     (fun n : ℕ => (t n : ℝ)) =o[atTop] (fun n : ℕ => (n : ℝ)) := by
   sorry
 

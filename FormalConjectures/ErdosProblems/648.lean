@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 648
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er95c] Erdős, Paul, *Some problems in number theory*. Octogon Math. Mag. (1995), 3-5.
 - [Ca25b] S. Cambie, *On Erdős problem #648*. arXiv:2503.22691 (2025).
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 
@@ -46,6 +49,7 @@ noncomputable def g (n : ℕ) : ℕ :=
   sSup {t | ∃ a : Fin t → ℕ, StrictMono a ∧ (∀ i, a i ∈ Set.Ico 2 n) ∧
     StrictAnti fun i => (a i).maxPrimeFac}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $g(n)$ denote the largest $t$ such that there exist integers $2\leq a_1<a_2<\cdots <a_t <n$
 such that $$P(a_1)>P(a_2)>\cdots >P(a_t)$$ where $P(m)$ is the greatest prime factor of $m$.

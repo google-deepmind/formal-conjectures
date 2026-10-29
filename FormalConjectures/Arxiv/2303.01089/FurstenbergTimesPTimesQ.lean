@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Furstenberg's `times p, times q` conjectures
@@ -25,20 +26,17 @@ with some large Fourier coefficients**
 by *Catalin Badea, Sophie Grivaux*
 -/
 
+@[expose] public section
+
 noncomputable section
 
 open scoped Topology
 open Filter MeasureTheory UnitAddCircle
+open Nat (MultiplicativelyIndependent)
 
 namespace Arxiv.id2303_01089
 
 notation "𝕋" => UnitAddCircle
-
-/--
-Two integers $p, q \ge 2$ are multiplicatively independent if
-$\log p / \log q$ is irrational.
--/
-def MultiplicativelyIndependent (p q : ℕ) : Prop := Irrational (Real.log p / Real.log q)
 
 /--
 The map $T_n$ sends $x$ to $nx \bmod 1$ on the additive circle.
@@ -86,14 +84,13 @@ theorem conjecture_1_3 {p q : ℕ} (hp : 2 <= p) (hq : 2 <= q) (hpq : Multiplica
 $\mathbb{T}$, then $T_{q^n}\mu$ converges weak-star to Lebesgue measure.
 This paper disproves the conjecture.
 -/
-@[category research solved, AMS 37]
+@[category research solved, question, AMS 37]
 theorem conjecture_1_4 :
-    answer(False) ↔
-      ∀ p q : ℕ, 2 <= p → 2 <= q → MultiplicativelyIndependent p q →
-        ∀ μ : ProbabilityMeasure 𝕋,
-          MeasureTheory.IsAtomLess μ.1 → MeasurePreserving (Tn p) μ μ →
-          Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
-            (𝓝 UnitAddCircle.ProbabilityMeasure) := by
+    ¬ ∀ p q : ℕ, 2 <= p → 2 <= q → MultiplicativelyIndependent p q →
+      ∀ μ : ProbabilityMeasure 𝕋,
+        MeasureTheory.IsAtomLess μ.1 → MeasurePreserving (Tn p) μ μ →
+        Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
+          (𝓝 UnitAddCircle.ProbabilityMeasure) := by
   sorry
 
 end Arxiv.id2303_01089
