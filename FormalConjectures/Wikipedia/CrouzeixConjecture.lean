@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Crouzeix's conjecture
 
 *References:*
 * [Wikipedia](https://en.wikipedia.org/wiki/Crouzeix%27s_conjecture)
+* [LS26] Lorist, E. and Schwenninger, F. L. (2026). "A solution to Crouzeix’s conjecture."
+  [arXiv:2608.03841v2](https://arxiv.org/abs/2608.03841v2).
 * [Cr04] Crouzeix, M. (2004). "Bounds for analytical functions of matrices."
   *Integral Equations Operator Theory* 48, pp. 461--477.
 * [Cr07] Crouzeix, M. (2007). "Numerical range and functional calculus in Hilbert space."
@@ -28,6 +31,8 @@ import FormalConjecturesUtil
 * [CP17] Crouzeix, M. and Palencia, C. (2017). "The numerical range is a $(1+\sqrt{2})$-spectral
   set." *SIAM J. Matrix Anal. Appl.* 38, pp. 649--655.
 -/
+
+@[expose] public section
 
 open Polynomial ComplexInnerProductSpace
 
@@ -46,9 +51,10 @@ For every complex square matrix `T` (viewed as an operator on `ℂⁿ`) and ever
 $$\|p(T)\| \le 2 \sup_{z \in W(T)} |p(z)|,$$
 where `W(T)` is the numerical range of `T` and the left-hand side is the operator norm.
 Crouzeix [Cr07] proved the inequality with constant `11.08`; Crouzeix and Palencia [CP17]
-improved this to `1 + √2`. The constant `2` would be optimal (see `variants.sharp`).
+improved this to `1 + √2`. Lorist and Schwenninger [LS26, Theorem 3] proved the bound with constant $2$.
+The constant $2$ is optimal (see `variants.sharp`).
 -/
-@[category research open, AMS 15 47]
+@[category research solved, AMS 15 47]
 theorem crouzeix_conjecture {n : ℕ}
     (T : EuclideanSpace ℂ (Fin n) →L[ℂ] EuclideanSpace ℂ (Fin n)) (p : ℂ[X]) :
     ‖aeval T p‖ ≤ 2 * sSup ((fun z => ‖p.eval z‖) '' numericalRange T) := by
@@ -129,7 +135,7 @@ lemma norm_le_half_of_mem_numericalRange_shift {z : ℂ} (hz : z ∈ numericalRa
   nlinarith [sq_nonneg (‖x 0‖ - ‖x 1‖)]
 
 /--
-**The constant `2` would be optimal.**
+**The constant $2$ is optimal.**
 
 Any constant `C` for which $\|p(T)\| \le C \sup_{z \in W(T)} |p(z)|$ holds for all operators
 and polynomials satisfies `2 ≤ C`. The witness is the nilpotent shift `T = !![0, 1; 0, 0]`
