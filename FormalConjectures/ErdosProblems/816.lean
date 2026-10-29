@@ -81,6 +81,31 @@ open scoped Classical in
 theorem erdos_816.variants.complete_bipartite : ∀ n : ℕ,
     (completeBipartiteGraph (Fin n) (Fin (n + 1))).edgeFinset.card = n ^ 2 + n ∧
       ¬ HasEqualDegreePathThree (completeBipartiteGraph (Fin n) (Fin (n + 1))) := by
-  sorry
+  intro n
+  set G := completeBipartiteGraph (Fin n) (Fin (n + 1))
+  have hdegL : ∀ a, G.degree (Sum.inl a) = n + 1 := by
+    intro a
+    rw [← card_neighborFinset_eq_degree,
+      show G.neighborFinset (Sum.inl a) = Finset.univ.map Function.Embedding.inr by
+        ext x; cases x <;> simp [G]]
+    simp
+  have hdegR : ∀ b, G.degree (Sum.inr b) = n := by
+    intro b
+    rw [← card_neighborFinset_eq_degree,
+      show G.neighborFinset (Sum.inr b) = Finset.univ.map Function.Embedding.inl by
+        ext x; cases x <;> simp [G]]
+    simp
+  constructor
+  · have h := G.sum_degrees_eq_twice_card_edges
+    rw [Fintype.sum_sum_type] at h
+    simp only [hdegL, hdegR, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+      smul_eq_mul] at h
+    nlinarith
+  · rintro ⟨u, v, -, hdeg, p, -, hlen⟩
+    have hodd : Odd p.length := by rw [hlen]; decide
+    have h := ((CompleteBipartiteGraph.bicoloring (Fin n) (Fin (n + 1))).odd_length_iff_not_congr
+      p).mp hodd
+    cases u <;> cases v <;>
+      simp_all [CompleteBipartiteGraph.bicoloring, Coloring.mk, RelHom.coeFn_mk]
 
 end Erdos816
