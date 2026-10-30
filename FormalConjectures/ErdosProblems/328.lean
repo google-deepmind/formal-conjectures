@@ -38,7 +38,6 @@ open AdditiveCombinatorics
 
 namespace Erdos328
 
-set_option linter.style.formal_proof_palomar false in
 /--
 Suppose $A\subseteq\mathbb{N}$ and $C>0$ is such that $1_A\ast 1_A(n)\leq C$ for all
 $n\in\mathbb{N}$. Can $A$ be partitioned into $t$ many subsets $A_1,\ldots,A_t$ (where
@@ -52,17 +51,11 @@ Erdős [Er80e] had previously shown the answer is no for $C=3,4$ and infinitely 
 values of $C$.
 
 See also [774].
-
-The linked proof writes the representation function as
-`Set.ncard {p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 + p.2 = n}`, which counts the same ordered
-pairs as `sumRep`, and states the partition condition as a named definition with the same two
-conjuncts used below. Its `∃ t` additionally carries `1 ≤ t`, which costs nothing: `t = 0`
-forces `A = ∅`, and `A = {1}` has all representation counts at most `C` for `C ≥ 1`.
 -/
-@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/328/Erdos328.lean"]
+@[category research solved, question, AMS 11]
 theorem erdos_328 :
-    ¬ ∀ C : ℕ, 0 < C →
-      ∃ t : ℕ, ∀ A : Set ℕ, (∀ n, sumRep A n ≤ C) →
+    ∀ C : ℕ, 0 < C →
+      ¬ ∃ t : ℕ, ∀ A : Set ℕ, (∀ n, sumRep A n ≤ C) →
         ∃ P : Fin t → Set ℕ, (⋃ i, P i) = A ∧
           Set.univ.PairwiseDisjoint P ∧
           ∀ i, ∀ n, sumRep (P i) n < C := by
