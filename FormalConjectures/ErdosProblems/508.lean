@@ -40,7 +40,14 @@ open scoped EuclideanGeometry
 
 namespace Erdos508
 
-scoped notation "χ(ℝ²)" => SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)
+/-- **Tao's Optimization Constant 27a / The chromatic number of the plane**:
+the minimum number of colors needed to color the Euclidean plane so that no two points at
+distance exactly one have the same color. -/
+@[optimization_constant "27a"]
+noncomputable def planeChromaticNumber : ℕ∞ :=
+  SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)
+
+scoped notation "χ(ℝ²)" => planeChromaticNumber
 
 def HadwigerNelsonProblem.answer : ℕ∞ := sorry
 
