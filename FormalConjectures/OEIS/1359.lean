@@ -72,11 +72,14 @@ Primes $p_k$ such that $p_k! \equiv 1 \pmod{p_{k+1}}$ with the exception of $p_{
 other unknown primes $p_k$ for which $(p_k+1)(p_k+2)\cdots(p_{k+1}-2) \equiv 1 \pmod{p_{k+1}}$
 where $p_{k+1} - p_k > 2$.
 
-A formal proof is hosted at the `formal_proof` link: a Wilson-theorem argument with a
-fixed-divisor trial-division sieve and a verified length-7840 certificate.
+A formal proof is hosted at the `formal_proof` link: a Wilson-theorem argument —
+`(q-1)! = P! * W * (q-1)` with `W = ∏ i ∈ [P+1, q-2], i` gives `P! * W ≡ 1 [MOD q]`
+without any division — where the twin-prime branch is the empty-product case
+`q = P + 2`, and the only further content is the finite fact `7841! ≡ 1 (mod 7853)`
+at the exceptional index `k = 991` (mechanically, `W ≡ 11! = 7853 * 5083 + 1`).
 -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
-"https://github.com/robzilla1738/formal-conjectures/blob/c7de1452e5b9b8165a30466637b83f7fedfb95fe/FormalConjectures/OEIS/1359.lean#L589"]
+"https://github.com/Stayfoool/formal-conjectures-proofs/blob/7220fc39a2219db15473886ce577824cbd77f4f6/FormalConjecturesProofs/OeisA1359.lean#L273"]
 theorem conjecture (k : ℕ) (hk : k > 1) :
     let Pk := Nat.nth Nat.Prime (k - 1)
     let Pk_succ := Nat.nth Nat.Prime k
