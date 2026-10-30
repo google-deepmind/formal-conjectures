@@ -355,6 +355,14 @@ theorem hadwiger_nelson : UnitDistancePlaneGraph.chromaticNumber = hadwiger_nels
 - Once the question is answered, fill in the definition, for example
   `def foo.answer : ℕ := 5`, and leave the statement unchanged. The proof then
   proves the statement for that value.
+- An `answer` definition is only for an unknown the source asks to determine.
+  A claim that some value exists is stated with `∃` and carries no tag:
+  `theorem foo : ∃ n, n = 2 + 2` is a conjecture, not a question.
+- The environment linters (`lake exe lint_env`, run by CI after the build, or
+  `#lint` in a file) check that a theorem whose statement uses its `answer`
+  definition carries `@[question value]`, and that a statement mentions no
+  other theorem's `answer`, except in a `test` or `API` theorem, which may
+  state a sanity check about one. The attribute checks the converse.
 
 ### Problems that require answers
 
