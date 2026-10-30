@@ -905,7 +905,10 @@ theorem ame_11_10_open :
 The answer is yes. Bevins and Bidav construct an explicit Hermitian self-dual MDS code with
 parameters $[12,6,7]_{25}$, whose associated nonbinary stabilizer state is an
 $\mathrm{AME}(12,5)$ state. -/
-@[category research solved, question, AMS 5 15 81 94]
+@[category research solved, question, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/KitaKen1/ame-11-10-lean/blob/6b7d009a43970587a3386b690221bec4339ce271/lean/QuinaryParent.lean#L21-L22",
+formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-12-5/blob/02cdd78d2782ce02bb3f609f2ee72787cf6f84c8/AME125/FormalTarget.lean#L30-L31"]
 theorem ame_12_5_open :
     ExistsAME 12 5 := by
   sorry
