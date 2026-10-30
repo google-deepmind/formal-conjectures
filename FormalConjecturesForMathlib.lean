@@ -174,6 +174,7 @@ public import FormalConjecturesForMathlib.Geometry.OrdinaryLines
 public import FormalConjecturesForMathlib.Geometry.«2d»
 public import FormalConjecturesForMathlib.Geometry.«3d»
 public import FormalConjecturesForMathlib.GroupTheory.DerivedLength
+public import FormalConjecturesForMathlib.GroupTheory.DimensionSubgroup
 public import FormalConjecturesForMathlib.GroupTheory.ElementOrders
 public import FormalConjecturesForMathlib.GroupTheory.GroupAction.InvolutionFixedPoints
 public import FormalConjecturesForMathlib.GroupTheory.GroupAction.MovedPoints
