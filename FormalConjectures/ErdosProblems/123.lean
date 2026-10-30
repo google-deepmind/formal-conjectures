@@ -108,7 +108,9 @@ problem, but it was quickly proven by Jansen and others using a simple inductive
 - If $n$ is odd, let $3^k$ be the largest power of $3$ with $3^k ≤ n$, and apply the
   inductive hypothesis to $n - 3^k$ (which is even).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+  "https://github.com/stokes/erdos-proofs/blob/2a9eb1a1bdd869f09f9fad2c654db8508c6ad7fc/ErdosProofs/Erdos123.lean"]
 theorem erdos_123.variants.powers_2_3 : IsDComplete (↑(powers 2) * ↑(powers 3)) := by sorry
 
 /--
