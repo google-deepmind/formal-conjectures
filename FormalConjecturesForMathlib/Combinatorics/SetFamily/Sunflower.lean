@@ -52,3 +52,17 @@ theorem isSunflower_empty : IsSunflower (∅ : Set (Set α)) := by
 
 theorem isSunflower_singleton (A : Set α) : IsSunflower {A} := by
   simp [IsSunflower, isSunflowerWithKernel_singleton]
+
+/-- A family is `ℓ`-uniform if every member is finite of cardinality `ℓ`. -/
+def IsUniform (ℓ : ℕ) (F : Set (Set α)) : Prop :=
+  ∀ A ∈ F, A.Finite ∧ A.ncard = ℓ
+
+/-- For positive `ℓ`, the cardinality condition in `IsUniform` already implies finiteness. -/
+theorem isUniform_iff_ncard {ℓ : ℕ} (hℓ : 0 < ℓ) (F : Set (Set α)) :
+    IsUniform ℓ F ↔ ∀ A ∈ F, A.ncard = ℓ := by
+  constructor
+  · intro h A hA
+    exact (h A hA).2
+  · intro h A hA
+    have hcard := h A hA
+    exact ⟨Set.finite_of_ncard_ne_zero (hcard.symm ▸ hℓ.ne'), hcard⟩
