@@ -126,7 +126,8 @@ It is easy to check that $f(1)=3$ and $f(2)=7$.
 
 This is the statement for $f(2)$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/410fa9071d430791d9342617e35eeb94da78bbc8/erdos-902/Solution.lean#L225"]
 theorem erdos_902.variants.f_two : f 2 = 7 := by
   sorry
 
@@ -136,7 +137,8 @@ $$2^{n+1}-1 \leq f(n) \ll n^22^n.$$
 
 This is the lower bound.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/410fa9071d430791d9342617e35eeb94da78bbc8/erdos-902/Solution.lean#L229"]
 theorem erdos_902.variants.erdos_lower (n : ℕ) : 2 ^ (n + 1) - 1 ≤ f n := by
   sorry
 
@@ -158,7 +160,8 @@ $$n2^n \ll f(n).$$
 
 This is the statement for $f(3)$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/410fa9071d430791d9342617e35eeb94da78bbc8/erdos-902/Solution.lean#L236"]
 theorem erdos_902.variants.szekeres_f_three : f 3 = 19 := by
   sorry
 
@@ -168,7 +171,8 @@ $$n2^n \ll f(n).$$
 
 This is the lower bound.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/410fa9071d430791d9342617e35eeb94da78bbc8/erdos-902/Solution.lean#L240"]
 theorem erdos_902.variants.szekeres_lower :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, c * n * 2 ^ n ≤ (f n : ℝ) := by
   sorry
