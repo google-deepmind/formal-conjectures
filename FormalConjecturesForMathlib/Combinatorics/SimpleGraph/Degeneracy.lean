@@ -17,7 +17,9 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Powerset
 
 @[expose] public section
 
@@ -50,5 +52,17 @@ lemma isDegenerate_bot {V : Type*} (r : ℕ) : (⊥ : SimpleGraph V).IsDegenerat
   intro s hs
   obtain ⟨v, hv⟩ := hs
   exact ⟨v, hv, by simp [neighborsWithin]⟩
+
+open Classical in
+/-- The **degeneracy** of `G`: the maximum, over all nonempty induced subgraphs `H`,
+of the minimum degree of `H`.
+
+We take the supremum over all nonempty vertex subsets `S : Finset α` of
+`minDegree(G[S])`.  For the empty set we contribute 0 so the `sup` is over a
+nonempty domain (`Finset.univ` includes `∅`). -/
+noncomputable def degeneracy {α : Type*} [Fintype α] [DecidableEq α]
+    (G : SimpleGraph α) : ℕ :=
+  Finset.univ.sup (fun S : Finset α =>
+    if S.Nonempty then (G.induce (S : Set α)).minDegree else 0)
 
 end SimpleGraph

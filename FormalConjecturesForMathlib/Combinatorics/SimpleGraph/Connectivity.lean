@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
 public import Mathlib.Data.Fintype.EquivFin
@@ -205,4 +206,21 @@ instance decidableConnected : Decidable G.Connected :=
       fun _ _ ↦ Subsingleton.elim ..
 
 end BFS
+
+section Connectivity
+variable [Fintype V] [DecidableEq V]
+
+/-- The **edge connectivity** `λ(G)` of a simple graph `G`.
+
+We define it as the minimum size of a set of edges `F ⊆ E(G)` whose removal
+renders `G` disconnected.  If no such set exists (i.e., `G` has ≤ 1 vertex or
+is already disconnected), we define `λ(G) = 0`. -/
+noncomputable def edgeConnectivity (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
+  sInf { k | ∃ F : Finset (Sym2 V),
+    F.card = k ∧
+    (↑F : Set (Sym2 V)) ⊆ G.edgeSet ∧
+    ¬ (G.deleteEdges ↑F).Connected }
+
+end Connectivity
+
 end SimpleGraph
