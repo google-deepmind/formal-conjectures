@@ -47,7 +47,7 @@ variable {K : Type*} [Field K] {n : ℕ}
 matrices over a field $K$, then the unital $K$-algebra $K[A, B]$ they generate
 has dimension at most $n$.
 -/
-@[category research solved, AMS 15 16]
+@[category research solved, AMS 15 16, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Gerstenhaber_finrank_adjoin_pair_le.lean#L1733"]
 theorem finrank_adjoin_pair_le (A B : Matrix (Fin n) (Fin n) K) (hAB : Commute A B) :
     Module.finrank K (Algebra.adjoin K {A, B}) ≤ n := by
   sorry
