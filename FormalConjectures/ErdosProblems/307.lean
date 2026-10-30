@@ -20,7 +20,11 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 307
 
-*Reference:* [erdosproblems.com/307](https://www.erdosproblems.com/307)
+*References:*
+- [erdosproblems.com/307](https://www.erdosproblems.com/307)
+- Bonfioli, V., *On the equation n'' = n and a problem of Erdős and Barbeau on products of
+  prime-reciprocal sums*,
+  [doi:10.5281/zenodo.20684626](https://doi.org/10.5281/zenodo.20684626)
 -/
 
 @[expose] public section
@@ -108,6 +112,29 @@ theorem erdos_307.barrier_sixty {P Q : Finset ℕ}
     (hP : ∀ p ∈ P, p.Prime) (hQ : ∀ q ∈ Q, q.Prime)
     (heq : 1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) :
     60 ≤ #(P ∪ Q) := by
+  sorry
+
+/--
+A further strengthening of the barrier (Bonfioli, 2026): any solution of Erdős 307 uses at least
+`61` primes in total, i.e. no solution has exactly `60`. A `60`-prime support of mass above `2` is
+either a one-new-prime extension of one of the admissible `59`-prime bases or lies in the "pair
+sector"; both are shown empty by finite computation (Proposition `prop:level60closed` of the paper).
+
+**This statement is not fully machine-checked, and no `formal_proof` attribute is given.** In the
+linked repository (release v1.76.2, doi:10.5281/zenodo.23447903) the pair sector, the kill stage and
+the tail sieve are checked in Lean in a separate tier that uses `native_decide` (39 compiled
+evaluations). The kill stage checks a list of `3698` surviving bases (called pools in the Lean source)
+together with the divisor kills; the factoring search that produced that list is not in Lean.
+`erdos307_sixtyone_of_stageA` (`Computational/QSieveFinal.lean`) derives the barrier `61` from one
+remaining named statement, `StageAList`: no listed pool carries a cycle in the lower window
+(`α² · 2^40 ≤ D`). An independent program re-ran that lower-window enumeration on the same `3698`
+bases with no hit, but it is not in Lean. The earlier barriers above do carry a `formal_proof`.
+-/
+@[category research solved, AMS 11]
+theorem erdos_307.barrier_sixtyone {P Q : Finset ℕ}
+    (hP : ∀ p ∈ P, p.Prime) (hQ : ∀ q ∈ Q, q.Prime)
+    (heq : 1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹)) :
+    61 ≤ #(P ∪ Q) := by
   sorry
 
 end Erdos307
