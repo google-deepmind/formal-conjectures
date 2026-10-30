@@ -203,6 +203,20 @@ theorem IsSidon.eq_of_tsub {β : Type*} [AddCommMonoid β] [PartialOrder β]
 def maxSidonSubsetCard (A : Finset α) [DecidableEq α] : ℕ :=
   (A.powerset.filter fun B : Finset α ↦ IsSidon (B : Set α)).sup Finset.card
 
+/-- A finite set has a Sidon subset of size at least $n > 0$ iff it has one of size exactly $n$. -/
+theorem le_maxSidonSubsetCard_iff [DecidableEq α] (n : ℕ) (hn : 0 < n) (A : Finset α) :
+    n ≤ A.maxSidonSubsetCard ↔
+      ∃ B ⊆ A, B.card = n ∧ IsSidon (B : Set α) := by
+  rw [Finset.maxSidonSubsetCard, Finset.le_sup_iff hn]
+  constructor
+  · rintro ⟨B, hB, hnB⟩
+    obtain ⟨C, hCB, hC⟩ := Finset.exists_subset_card_eq hnB
+    obtain ⟨hBA, hB⟩ := Finset.mem_filter.mp hB
+    exact ⟨C, hCB.trans (Finset.mem_powerset.mp hBA), hC,
+      Set.IsSidon.subset hB (Finset.coe_subset.mpr hCB)⟩
+  · rintro ⟨B, hBA, rfl, hB⟩
+    exact ⟨B, Finset.mem_filter.mpr ⟨Finset.mem_powerset.mpr hBA, hB⟩, le_rfl⟩
+
 /-- If `A` is finite Sidon, then `A ∪ {s}` is also Sidon provided `s ≥ A.max + 1`. -/
 theorem IsSidon.insert_ge_max' {A : Finset ℕ} (h : A.Nonempty) (hA : IsSidon (A : Set ℕ)) {s : ℕ}
     (hs : 2 * A.max' h + 1 ≤ s) :
