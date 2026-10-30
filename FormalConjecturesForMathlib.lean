@@ -187,6 +187,8 @@ public import FormalConjecturesForMathlib.InformationTheory.FiniteEntropy
 public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
 public import FormalConjecturesForMathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 public import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
+public import FormalConjecturesForMathlib.LinearAlgebra.Matrix.MultiplicationTensor
+public import FormalConjecturesForMathlib.LinearAlgebra.PiTensorProduct.Rank
 public import FormalConjecturesForMathlib.LinearAlgebra.QuadraticForm.UInvariant
 public import FormalConjecturesForMathlib.LinearAlgebra.SpecialLinearGroup
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
