@@ -27,11 +27,11 @@ public import FormalConjecturesUtil
 The **median degree** of a graph `G` on `n` vertices is the middle value of the
 sorted degree sequence.  Concretely, we sort the list of degrees of all vertices
 in non-decreasing order and return the element at index `n / 2` (integer
-division), which is the lower median when `n` is even.
+division), which is the upper median when `n` is even.
 
 For the empty graph (`n = 0`) the median degree is defined to be 0.
 
-## Conjecture
+## Basic bound
 
 For any simple connected graph `G` with at least 2 vertices,
 `1 ≤ medianDegree G`.
@@ -49,14 +49,14 @@ open SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-**WOWII-style conjecture**: For a simple connected graph `G` with at least
+For a simple connected graph `G` with at least
 2 vertices, `1 ≤ medianDegree G`.
 
 In a connected graph, every vertex has degree at least 1.  Hence the sorted degree
 sequence consists entirely of values ≥ 1, and in particular the element at the
 median position is ≥ 1.
 -/
-@[category research open, AMS 5]
+@[category textbook, AMS 5]
 theorem medianDegree_pos (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) :
     1 ≤ medianDegree G := by

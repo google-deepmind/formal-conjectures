@@ -21,26 +21,6 @@ public import FormalConjecturesUtil
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-## Definitions
-
-For a graph `G`, recall that `countDegreeK G d` is the number of vertices having
-degree exactly `d`, and `maxDegreeCount G` is the mode frequency (the highest
-frequency among all degree values).
-
-The **mode-max degree** `modeDegreeMax G` is the *largest* degree value that
-attains the mode frequency; it is the supremum of the set of modal degree values.
-This is the complement of `modeDegreeMin G` (from `GraphMode.lean`), which
-picks the *smallest* such degree.
-
-## Conjectures
-
-1. (Trivially TRUE) `modeDegreeMin G ≤ modeDegreeMax G` — the smallest modal
-   degree cannot exceed the largest modal degree.
-
-2. (Open) For a graph `G` with complement `Gᶜ`, the sum
-   `modeDegreeMin G + modeDegreeMax Gᶜ ≥ Fintype.card α - 1`
-   is a WOWII-style conjecture relating modal degrees across complementary graphs.
 -/
 
 @[expose] public section
@@ -64,15 +44,14 @@ theorem modeDegreeMin_le_modeDegreeMax (G : SimpleGraph α) [DecidableRel G.Adj]
   sorry
 
 /--
-**WOWII-style open conjecture**: For any simple graph `G` on `n ≥ 2` vertices,
+For any simple graph `G` on `n ≥ 2` vertices,
 `modeDegreeMin G + modeDegreeMax Gᶜ ≥ Fintype.card α - 1`.
 
-Informally: the smallest modal degree of `G` and the largest modal degree of its
-complement `Gᶜ` together "cover" at least `n - 1`.  This is plausible because
-complementation exchanges high-degree and low-degree vertices: if many vertices
-have a small degree in `G` then many vertices have a large degree in `Gᶜ`.
+Complementation sends degree `d` to `n - 1 - d` and preserves its frequency.
+Thus the smallest modal degree of `G` and the largest modal degree of `Gᶜ`
+sum to `n - 1`, which gives the stated bound.
 -/
-@[category research open, AMS 5]
+@[category textbook, AMS 5]
 theorem modeDegreeMin_add_modeDegreeMax_compl (G : SimpleGraph α) [DecidableRel G.Adj] :
     Fintype.card α - 1 ≤ modeDegreeMin G + modeDegreeMax Gᶜ := by
   sorry

@@ -21,32 +21,6 @@ public import FormalConjecturesUtil
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-## Definitions
-
-The **edge connectivity** `λ(G)` is the minimum number of edges whose removal
-disconnects `G` (or reduces it to a single vertex).  Formally,
-  `λ(G) = min { |F| | F ⊆ E(G), G - F is disconnected }`.
-
-For the edgeless graph or a single-vertex graph, we define `λ(G) = 0`.
-
-## Classical bound
-
-`λ(G) ≤ δ(G)` — the edge connectivity is at most the minimum degree.
-
-This is a classical theorem: for any vertex `v` of minimum degree, the `δ(G)`
-edges incident to `v` form a disconnecting set (removing them isolates `v`).
-
-## WOWII-style conjecture
-
-A Graffiti.pc lower bound relating edge connectivity to the independence number:
-
-`α(G) ≤ n(G) - λ(G)`
-
-where `α(G)` is the independence number and `n = |V(G)|`.  This holds because
-the complement of any independent set spans at most `n - α(G)` vertices, which
-must still be connected; removing all edges incident to an independent set
-disconnects at most `α(G)` vertices.
 -/
 
 @[expose] public section
@@ -71,18 +45,16 @@ theorem edgeConnectivity_le_minDegree (G : SimpleGraph α) [DecidableRel G.Adj]
   sorry
 
 /--
-**Independence-number upper bound** (WOWII-style).
+**Independence-number upper bound.**
 
 For a connected graph `G`,
 `α(G) + λ(G) ≤ n(G)`
 i.e., `G.indepNum + edgeConnectivity G ≤ Fintype.card α`.
 
-Intuitively, the complement of a maximum independent set induces a connected
-subgraph (since `G` is connected and removing an independent set cannot alone
-disconnect the rest without removing edges); a sharper version says we need at
-least `λ(G)` edge removals to disconnect, so `n - α ≥ λ`.
+The minimum degree is at most `n - α`: a vertex of a maximum independent set
+has neighbours only outside that set. Combine this with `λ(G) ≤ δ(G)`.
 -/
-@[category research open, AMS 5]
+@[category textbook, AMS 5]
 theorem indepNum_add_edgeConnectivity_le_card (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) :
     G.indepNum + edgeConnectivity G ≤ Fintype.card α := by

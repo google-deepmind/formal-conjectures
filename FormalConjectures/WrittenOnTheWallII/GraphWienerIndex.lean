@@ -17,30 +17,10 @@ module
 
 public import FormalConjecturesUtil
 /-!
-# Graph Wiener Index Conjecture
+# Wiener index bounds
 
 *Reference:*
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
-## Definitions
-
-The **Wiener index** `W(G)` of a connected graph `G` is the sum of distances
-between all unordered pairs of vertices:
-  `W(G) = ∑_{u < v} dist(u, v)`.
-
-The `wienerIndex` function is already defined in `FormalConjecturesForMathlib` as
-the sum over all `Sym2 α`, which counts each unordered pair once.
-
-## Conjecture
-
-We state a Graffiti.pc–style conjecture:
-for a connected graph `G` on `n` vertices,
-`wienerIndex(G) ≥ n · (n − 1) / 2`
-(the lower bound is attained when `G` is the complete graph `Kₙ`, where every
-pair of vertices has distance 1).
-
-A second, deeper open conjecture involves relating `wienerIndex` to the
-independence number: `wienerIndex(G) ≥ (n choose 2) + α(G) − 1`.
 -/
 
 @[expose] public section
@@ -55,7 +35,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 the value achieved by the complete graph `Kₙ` (all distances equal 1).
 This is a sharp lower bound since `dist(u, v) ≥ 1` for all `u ≠ v` in a
 connected graph. -/
-@[category research open, AMS 5]
+@[category textbook, AMS 5]
 theorem wienerIndex_lower_bound (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) :
     Fintype.card α * (Fintype.card α - 1) / 2 ≤ wienerIndex G := by
@@ -64,7 +44,7 @@ theorem wienerIndex_lower_bound (G : SimpleGraph α) [DecidableRel G.Adj]
 /-- For a connected graph `G`, the Wiener index also satisfies
 `wienerIndex(G) ≥ Fintype.card α * (Fintype.card α − 1) / 2 + G.indepNum − 1`.
 This refines the trivial lower bound using the independence number. -/
-@[category research open, AMS 5]
+@[category textbook, AMS 5]
 theorem wienerIndex_indepNum_lower_bound (G : SimpleGraph α) [DecidableRel G.Adj]
     (hconn : G.Connected) :
     Fintype.card α * (Fintype.card α - 1) / 2 + G.indepNum - 1 ≤ wienerIndex G := by

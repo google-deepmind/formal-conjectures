@@ -22,21 +22,6 @@ public import FormalConjecturesUtil
 *Reference:*
 [C. St. J. A. Nash-Williams, Decomposition of finite graphs into forests,
 J. London Math. Soc. 39 (1964) 12](https://doi.org/10.1112/jlms/s1-39.1.12)
-
-## Definition
-
-The **arboricity** `a(G)` of a graph `G` is the minimum number of forests
-needed to cover all edges of `G`.  Formally:
-  `a(G) = min { k | ∃ F₁, …, Fₖ forests such that E(G) ⊆ E(F₁) ∪ ⋯ ∪ E(Fₖ) }`.
-
-## Conjecture
-
-The **Nash-Williams formula** (1964, resolved) states:
-  `a(G) = max { ⌈|E(H)| / (|V(H)| − 1)⌉ | H induced subgraph, |V(H)| ≥ 2 }`.
-
-We state the classical upper bound `a(G) ≤ ⌈Δ(G) / 2⌉ + 1`
-(a consequence of the Nash-Williams formula that follows from the bound
-`|E(H)| ≤ |V(H)| · Δ(G) / 2`), which is an open Graffiti.pc-style conjecture.
 -/
 
 @[expose] public section
@@ -52,11 +37,8 @@ variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 For any simple graph `G`,
   `arboricity(G) = max { ⌈|E(H)| / (|V(H)| − 1)⌉ | H induced subgraph, |V(H)| ≥ 2 }`.
 
-We state the equivalent upper-bound consequence:
-`a(G) ≤ ⌈Δ(G) / 2⌉ + 1`,
-which follows because for any induced subgraph `H` with `|V(H)| ≥ 2`,
-  `|E(H)| ≤ |V(H)| · Δ(G) / 2`,
-giving `⌈|E(H)| / (|V(H)| − 1)⌉ ≤ ⌈Δ(G) / 2⌉ + 1`. -/
+We record the standard upper-bound consequence:
+`a(G) ≤ ⌊Δ(G) / 2⌋ + 1`. -/
 @[category research solved, AMS 5]
 theorem arboricity_le_maxDegree_div_two_add_one (G : SimpleGraph α) [DecidableRel G.Adj] :
     arboricity G ≤ G.maxDegree / 2 + 1 := by
@@ -69,7 +51,7 @@ For any induced subgraph `H` on a set `S` of vertices with `|S| ≥ 2`,
 @[category research solved, AMS 5]
 theorem arboricity_ge_induced_subgraph_bound (G : SimpleGraph α) [DecidableRel G.Adj]
     (S : Finset α) (hS : 2 ≤ S.card) :
-    (G.induce (S : Set α)).edgeFinset.card / (S.card - 1) ≤ arboricity G := by
+    (G.induce (S : Set α)).edgeFinset.card ≤ arboricity G * (S.card - 1) := by
   sorry
 
 -- Sanity checks
