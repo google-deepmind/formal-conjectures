@@ -23,7 +23,7 @@ public import FormalConjecturesUtil
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Gromov%27s_theorem_on_groups_of_polynomial_growth#The_gap_conjecture)
 - [On the Gap Conjecture concerning group growth](https://arxiv.org/pdf/1202.6044) by
-  *Rostislav Grigorchuk*
+  *Rostislav Grigorchuk*. Section 4, Conjectures 1 and 4.
 -/
 
 @[expose] public section
@@ -33,12 +33,29 @@ namespace GapConjecture
 open Filter GromovPolynomialGrowth
 
 /--
-If a finitely generated group has superpolynomial growth, then with respect to any finite
-generating set its growth function is at least $e^{\sqrt n}$ in Grigorchuk's preorder on
-growth functions, where the comparison is witnessed by linearly rescaling the radius.
+The Gap Conjecture [Grigorchuk, Conjecture 1]: if the growth of a finitely generated group is
+strictly below $e^{\sqrt n}$ in the growth-function preorder, then the group has polynomial growth.
+Here $f \preceq g$ means that $f(n) \leq g(Cn)$ for some integer $C > 1$ and all $n \geq 1$.
+Strict comparison means $f \preceq g$ and $g \not\preceq f$.
 -/
 @[category research open, AMS 20]
-theorem gap_conjecture :
+theorem gap_conjecture (G : Type) [Group G] (S : Set G) (hS : S.Finite)
+    (hgen : Subgroup.closure S = ⊤)
+    (hupper : ∃ C : ℕ, 1 < C ∧ ∀ n : ℕ, 1 ≤ n →
+      (GrowthFunction S n : ℝ) ≤ Real.exp (Real.sqrt (C * n : ℝ)))
+    (hlower : ¬ ∃ C : ℕ, 1 < C ∧ ∀ n : ℕ, 1 ≤ n →
+      Real.exp (Real.sqrt (n : ℝ)) ≤ (GrowthFunction S (C * n) : ℝ)) :
+    HasPolynomialGrowth G := by
+  sorry
+
+/--
+The strengthened Gap Conjecture $G^*(1/2)$ [Grigorchuk, Conjecture 4]: if a finitely generated
+group has superpolynomial growth, then with respect to any finite generating set its growth
+function is at least $e^{\sqrt n}$ in Grigorchuk's preorder on growth functions, where the
+comparison is witnessed by linearly rescaling the radius.
+-/
+@[category research open, AMS 20]
+theorem gap_conjecture.variants.strong :
     ∀ (G : Type) [Group G] (S : Set G), S.Finite → Subgroup.closure S = ⊤ →
       HasSuperPolynomialGrowth G →
       ∃ C : ℕ, 0 < C ∧
