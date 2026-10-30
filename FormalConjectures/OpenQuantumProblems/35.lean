@@ -753,7 +753,8 @@ computational-basis state is AME under the definitions of this file.
 Shi--Zhang--Zhao--Li (2026) construct cyclic quadratic-phase states in every odd dimension and
 a coupled binary--odd-dimensional state in every dimension congruent to `2` modulo `4`; together
 with power-of-two constructions and the product property, this covers every `d ≥ 3`. -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+"https://github.com/zblore/fc-ame-7/blob/cf65a3b902a94583dc03012bc191ae1b1b1cfc46/AME7/FormalTarget.lean#L45-L46"]
 theorem ame_7_exists_iff (d : ℕ) (hd : 2 ≤ d) : ExistsAME 7 d ↔ 3 ≤ d := by
   sorry
 
