@@ -80,8 +80,8 @@ Liu and Sawhney [LiSa24] proved that the count is $2^{(0.91\cdots+o(1))N}$, wher
 an explicit number defined as the solution to a certain integral equation; independently the same
 asymptotic was proved by Conlon, Fox, He, Mubayi, Pham, Suk, and Verstraëte [CFHMPSV24]. We
 formalise the question as asking for the exponential growth rate
-$\lim_{N\to\infty} \frac{1}{N}\log_2 \#\{A\}$. The first conjunct is the existence and uniqueness of $\lambda^*$, which [LiSa24] state with the
-theorem.
+$\lim_{N\to\infty} \frac{1}{N}\log_2 \#\{A\}$. The first conjunct is the existence and
+uniqueness of $\lambda^*$, which [LiSa24] state with the theorem.
 -/
 @[category research solved, question value, AMS 11]
 theorem erdos_297 : (∃! l : ℝ, massIntegral l = 1) ∧
