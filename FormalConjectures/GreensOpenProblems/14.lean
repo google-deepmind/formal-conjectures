@@ -36,10 +36,14 @@ public import FormalConjecturesUtil
   numbers." Journal of Combinatorial Theory, Series A 115.7 (2008): 1304-1309.
 - [LiSh10] Li, Yusheng, and Jinlong Shu. "A lower bound for off-diagonal van der Waerden numbers."
   Advances in Applied Mathematics 44.3 (2010): 243-247.
+- [Ku10] Kullmann, Oliver. "Exact Ramsey Theory: Green-Tao numbers and SAT." arXiv preprint
+  arXiv:1004.0653 (2010).
 - [Ko15] Kouril, Michal. "Leveraging FPGA clusters for SAT computations." Parallel Computing:
   On the Road to Exascale (2015): 525-532.
 - [CCH23] Chowdhury, Md Solimul, Cayden R. Codel, and Marijn J. H. Heule. "A linear weight
   transfer rule for local search." NASA Formal Methods (NFM 2023), Springer (2023).
+- [Na26] Nahmias, Eitan. "w(2;3,21) = 416, settled with LPM (Large Proof Model)." Preprint
+  (2026), doi:10.5281/zenodo.23776306; verification package doi:10.5281/zenodo.23749222.
 -/
 
 @[expose] public section
@@ -247,8 +251,12 @@ theorem W_3_20 : W 3 20 = 389 := by sorry
 @[category research solved, question, AMS 5 11]
 theorem W_3_21_lower : W 3 21 ≥ 416 := sorry
 
-/-- [AKS14, Table 2] conjectures that $W(3, 21) = 416$. -/
-@[category research open, question, AMS 5 11]
+/-- $W(3, 21) = 416$, conjectured by Kullmann [Ku10, p. 5] and in [AKS14, Table 2], and
+established in [Na26] by a conditional Lean 4 theorem: its hypotheses, that 38,661,140 leaf
+formulas and the cover formulas of 209 cases and of 235,314 items in the 16 two-level cases are
+unsatisfiable, are each discharged by a certificate checked by the verified LRAT checker
+`cake_lpr` outside the kernel. -/
+@[category research solved, question, AMS 5 11]
 theorem W_3_21_eq : W 3 21 = 416 := sorry
 
 /-- $W(3, 22) \ge 464$ from [AKS14, Table 2], proved by an explicit good partition. -/
