@@ -38,6 +38,7 @@ open Filter
 
 namespace Erdos171
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that for every $\epsilon>0$ and integer $t\geq 1$, if $N$ is sufficiently large and
 $A$ is a subset of $[t]^N$ of size at least $\epsilon t^N$ then $A$ must contain a combinatorial

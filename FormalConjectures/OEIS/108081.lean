@@ -79,6 +79,7 @@ inductive XWord : Word → Prop
 def xN (n : ℕ) : Set Word :=
   {w : Word | XWord w ∧ w.length = n}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "The number of words of length $n$ for $n \le 12$ is given by $a(n+1)$. Is this always true?"
 

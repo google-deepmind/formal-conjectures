@@ -132,6 +132,7 @@ theorem c7a_lt_14_797075 : C7a < 14.797075 := by
 theorem c7a_upper_bound : C7a < 7.103205334138 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The irrationality measure of $\pi$ is exactly $2$, proved by OpenAI in [OAI2026]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/main/lean/ComparatorChallenges/PiExponent.lean"]

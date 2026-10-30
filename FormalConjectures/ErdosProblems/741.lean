@@ -34,6 +34,7 @@ open Set
 namespace Erdos741
 
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $A\subseteq \mathbb{N}$ be such that $A+A$ has positive upper density.
 Can one always decompose $A=A_1\sqcup A_2$ such that $A_1+A_1$ and $A_2+A_2$
 both have positive upper density?
@@ -58,6 +59,7 @@ theorem erdos_741.variants.lower : ∀ A : Set ℕ, 0 < lowerDensity (A + A) →
     ∧ 0 < lowerDensity (A₂ + A₂) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be such that $A+A$ has positive density in the literal sense that its
 natural density exists and is positive.
@@ -74,6 +76,7 @@ theorem erdos_741.variants.exact_density :
     ∧ HasPosDensity (A₂ + A₂) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a basis $A$ of order $2$ such that if $A=A_1\sqcup A_2$ then $A_1+A_1$ and $A_2+A_2$
 cannot both have bounded gaps?

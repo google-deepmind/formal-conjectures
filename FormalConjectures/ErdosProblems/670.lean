@@ -78,12 +78,14 @@ $1 \leq \lvert d(a, c) - d(b, c)\rvert \leq d(a, b)$, so every distance is at le
 $\binom{n}{2}$ distances are at least $1$ apart, so the largest one is at least $\binom{n}{2}$.
 For $n = 2$ the hypothesis is vacuous, and two points at distance $1/2$ show that the bound fails.
 -/
-@[category textbook, AMS 52]
+@[category textbook, AMS 52, formal_proof using lean4 at
+  "https://github.com/veljjanoski/formal-conjectures-proofs/blob/638a2315428e3a1c2f1a784bcaeffea6580d1cbd/FcProofs/Erdos670.lean#L65"]
 theorem erdos_670.variants.choose_two (d : ℕ) (A : Finset (EuclideanSpace ℝ (Fin d)))
     (hA : HasSeparatedDistances A) (hn : A.card ≠ 2) :
     (A.card.choose 2 : ℝ) ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ho [Ho26] showed that the claim fails if $n$ grows with $d$: there exist infinitely many $n$
 and, with $d = n^2 - n$, a set $A\subset \mathbb{R}^d$ of $n$ points such that all pairwise

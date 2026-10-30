@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos907
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f:\mathbb{R}\to \mathbb{R}$ be such that $f(x+h)-f(x)$ is continuous for every $h>0$. Is it
 true that

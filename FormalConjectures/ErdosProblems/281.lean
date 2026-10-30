@@ -46,6 +46,7 @@ def avoidAll (n : ℕ → ℕ) (a : ResidueChoice n) : Set ℤ :=
 def avoidPrefix (n : ℕ → ℕ) (a : ResidueChoice n) (k : ℕ) : Set ℤ :=
   {m | ∀ i : ℕ, i < k → (m : ZMod (n i)) ≠ a i}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n_1<n_2<\cdots$ be an infinite sequence such that, for any choice of congruence classes
 $a_i\pmod{n_i}$, the set of integers not satisfying any of the congruences $a_i\pmod{n_i}$ has

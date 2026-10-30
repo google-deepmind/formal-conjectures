@@ -61,6 +61,7 @@ theorem exists_connected_component_contains_two_roots :
 
 end ComponentLemma
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let
 $$ f(z) = \prod_{i=1}^{n} (z - z_i) \in \mathbb{C}[x] $$

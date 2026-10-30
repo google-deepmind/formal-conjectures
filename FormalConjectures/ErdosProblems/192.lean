@@ -43,6 +43,7 @@ def IsPositiveUnitWalk {d : ℕ} (a : ℕ → Fin d → ℝ) : Prop :=
 
 def erdos_192.answer : Set ℕ := Set.Iic 3
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{a_1,a_2,\ldots\}\subset \mathbb{R}^d$ be an infinite sequence such that $a_{i+1}-a_i$
 is a positive unit vector (i.e. is of the form $(0,0,\ldots,1,0,\ldots,0)$). For which $d$ must

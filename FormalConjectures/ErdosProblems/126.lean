@@ -35,6 +35,7 @@ def IsMaximalAddFactorsCard (f : ℕ → ℕ) : Prop := ∀ n,
         m ≤ (∏ ⟨a, b⟩ ∈ A.offDiag, (a + b)).primeFactors.card}
       (f n)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be maximal such that if $A\subseteq\mathbb{N}$ has $|A| = n$ then
 $\prod_{a\neq b\in A}(a + b)$ has at least $f(n)$ distinct prime factors.

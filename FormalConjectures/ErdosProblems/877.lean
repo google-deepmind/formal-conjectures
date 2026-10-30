@@ -51,6 +51,7 @@ open scoped Classical in
 noncomputable def fm (n : ℕ) : ℕ :=
   ((Finset.Icc 1 n).powerset.filter fun A : Finset ℕ ↦ IsMaximalSumFree n A).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f_m(n)$ count the number of maximal sum-free subsets $A\subseteq\{1,\ldots,n\}$ - that is,
 there are no solutions to $a=b+c$ in $A$ and $A$ is maximal with this property. Estimate $f(n)$
@@ -68,6 +69,7 @@ theorem erdos_877 :
     (fun n : ℕ ↦ (fm n : ℝ)) =o[atTop] fun n : ℕ ↦ (2 : ℝ) ^ ((n : ℝ) / 2) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Łuczak and Schoen [LuSc01] proved that there exists a constant $c<1/2$ such that
 $f_m(n)<2^{cn}$ for all large $n$. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at

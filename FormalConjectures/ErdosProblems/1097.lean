@@ -43,6 +43,7 @@ is a non-trivial three-term arithmetic progression `a, b, c ∈ A` with
 def CommonDifferencesThreeTermAP (A : Finset ℤ) : Set ℤ :=
   {d : ℤ | d ≠ 0 ∧ ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, b - a = d ∧ c - b = d}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The main conjecture: for any finite set of integers $A$ with $|A| = n$, the number of distinct
 common differences in three-term arithmetic progressions is $O(n^{3/2})$.

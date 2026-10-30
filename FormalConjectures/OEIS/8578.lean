@@ -50,6 +50,7 @@ theorem a_5 : A 5 := by norm_num [A]
 @[category test, AMS 11]
 theorem a_7 : A 7 := by norm_num [A]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: the sequence contains exactly those k such that sigma(k) > k*BigOmega(k)."
 - Irina Gerasimova, Jun 08 2013

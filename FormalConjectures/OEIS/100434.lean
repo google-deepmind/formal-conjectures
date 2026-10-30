@@ -149,6 +149,7 @@ theorem a_odd (n : ℕ) : a (2 * n + 1) = d (2 * n + 1) := by
       exact ih2
     rw [ih1, ih2']
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
@@ -165,6 +166,7 @@ plus linear arithmetic. (Numerically verified for $n < 600$ before formalization
 theorem conjecture1 (n : ℕ) : c n + d n = b n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
@@ -181,6 +183,7 @@ plus linear arithmetic. (Numerically verified for $n < 600$ before formalization
 theorem conjecture2 (n : ℕ) : e n + f n = b n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.

@@ -37,6 +37,7 @@ open scoped EuclideanGeometry
 
 namespace Erdos502
 
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the size of the largest $A\subseteq \mathbb{R}^n$ such that there are only two distinct
 distances between elements of $A$? That is,
