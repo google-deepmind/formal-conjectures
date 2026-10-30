@@ -56,6 +56,7 @@ def cliqueSubdivision (k : ℕ) : SimpleGraph (Fin k ⊕ Set.powersetCard (Fin k
     intro x
     cases x <;> simp
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $k \geq 3$, there is a constant $c_k > 0$ such that
 $$\mathrm{ex}(n, G_k) \ll n^{3/2 - c_k},$$
@@ -75,6 +76,7 @@ theorem erdos_1021 :
         fun n : ℕ ↦ (n : ℝ) ^ (3 / 2 - c) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Janzer [Ja19] proved that one can take $c_k = \frac{1}{4k - 6}$. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1021.lean#L2336"]

@@ -126,6 +126,7 @@ theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp' : (2 * p - 1).Prime) (h3 : 3 <
     (a p / 12).Prime := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture II: if $\frac{a(n)}{12}$ is prime, then $\frac{a(n-1)}{12} - (n-1)$,
 $\frac{a(n)}{12} - n$ and $\frac{a(n+2)}{12} - (n+2)$ are multiples of 6.

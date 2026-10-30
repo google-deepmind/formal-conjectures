@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos871
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be an additive basis of order $2$, and suppose $1_A\ast 1_A(n)\to \infty$ as $n\to \infty$. Can $A$ be partitioned into two disjoint additive bases of order $2$?
 

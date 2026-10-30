@@ -40,6 +40,7 @@ def nonCommutingGraph (G : Type*) [Group G] : SimpleGraph G where
 theorem nonCommutingGraph_adj {G : Type*} [Group G] (g h : G) :
     (nonCommutingGraph G).Adj g h ↔ g * h ≠ h * g := Iff.rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a group and $\Gamma=\Gamma(G)$ be the non-commuting graph, with vertices the elements
 of $G$ and an edge between $g$ and $h$ if and only if $g$ and $h$ do not commute, $gh\neq hg$.

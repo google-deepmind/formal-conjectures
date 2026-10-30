@@ -37,6 +37,7 @@ numbers together with the odd non-squarefree numbers. -/
 def evenOrOddNonSquarefree (N : ℕ) : Finset ℕ :=
   (Finset.Icc 1 N).filter (fun n => 2 ∣ n ∨ ¬ Squarefree n)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \{1,\ldots,N\}$ be such that, for all $a,b\in A$, the product $ab$ is not
 squarefree.
