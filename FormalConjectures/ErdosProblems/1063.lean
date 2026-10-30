@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
    Lockhart, E., Le, Q. V., Gokturk, B., Luong, T., Pfister, T., & Peng, N. (2026). _LEAP:
    Supercharging LLMs for Formal Mathematics with Agentic Frameworks_.
    [arXiv:2606.03303](https://arxiv.org/abs/2606.03303).
+ * [PALOMAR-2026-10-23-000014](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-23-000014&version=1)
 -/
 
 @[expose] public section
@@ -171,6 +172,39 @@ set_option linter.style.formal_proof_palomar false in
 theorem erdos_1063.variants.exp_upper_bound :
     ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
       ∀ k, (n k : ℝ) ≤ exp ((1 + f k) * k) := by
+  sorry
+
+/--
+Lower bound: for $k \ge 2$,
+$$n_k \ge \prod_{p^a \| k} p^{a + \lfloor \log_p (k - 1) \rfloor}.$$
+The user rickyc proved this in the comments at
+[erdosproblems.com/1063](https://www.erdosproblems.com/forum/thread/1063), first with
+$\lfloor \log_p (k/2) \rfloor$ in the exponent and then with $\lfloor \log_p (k - 1) \rfloor$.
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Paulee314/erdos1063-lean/blob/ba104cbcf0bb7c555a8b2f0d58018989a08c638e/Solution.lean#L34"]
+theorem erdos_1063.variants.lower_bound {k : ℕ} (hk : 2 ≤ k) :
+    ∏ p ∈ k.primeFactors, p ^ (padicValNat p k + Nat.log p (k - 1)) ≤ n k := by
+  sorry
+
+/--
+Let $n \ge 2k$ and $k \ge 2$. If $n - i$ divides $\binom{n}{k}$ for every $0 \le i < k$ with
+$i \ne e$, then $e = n \bmod k$ and
+$$\prod_{p^a \| k} p^{a + v_p\left(\binom{k-1}{e}\right)
+  + \lfloor \log_p \max(e, k - 1 - e) \rfloor} \mid n - e.$$
+The user rickyc proved this in the comments at
+[erdosproblems.com/1063](https://www.erdosproblems.com/forum/thread/1063).
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Paulee314/erdos1063-lean/blob/ba104cbcf0bb7c555a8b2f0d58018989a08c638e/Solution.lean#L42"]
+theorem erdos_1063.variants.exception_dvd {n k e : ℕ} (hk : 2 ≤ k) (h : 2 * k ≤ n) (he : e < k)
+    (hgood : ∀ i < k, i ≠ e → (n - i) ∣ n.choose k) :
+    e = n % k ∧
+      ∏ p ∈ k.primeFactors,
+        p ^ (padicValNat p k + padicValNat p ((k - 1).choose e) + Nat.log p (max e (k - 1 - e)))
+        ∣ n - e := by
   sorry
 
 end Erdos1063
