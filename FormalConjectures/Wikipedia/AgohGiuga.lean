@@ -109,7 +109,7 @@ $$
 \sum_{p\mid n} \frac{1}{p} - \frac{1}{n} \in\mathbb{N}.
 $$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/d4e112619d3d00a40b39ccb50b8fdf9cf46db2ab/Solution.lean#L175"]
 theorem isWeakGiuga_iff_sum_primeFactors {n : ℕ} (hn : n.Composite) :
     IsWeakGiuga n ↔ ∃ m : ℕ, ∑ p ∈ n.primeFactors, (1 / p : ℚ) - 1 / n = m := by
   sorry
@@ -203,7 +203,7 @@ Carmichael and `∑_{p|n} 1/p - 1/n ∈ ℕ` (i.e., if and only if it is Carmich
 and weak Giuga).
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/9e79333b40ff376cb761f200d9989193113387bf/Solution.lean#L179"]
 theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
     IsStrongGiuga a ↔ IsCarmichael a ∧ ∃ n : ℕ, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
   sorry
@@ -221,7 +221,7 @@ theorem agoh_giuga.variants.isStrongGiuga_implies_isCarmichael
 Giuga showed that a Giuga number has at least 9 prime factors.
 Ref: G. Giuga, _Su una presumibile proprieta caratteristica dei numeri primi_
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/d22ecd7653a24f616d6bfb523fbc973ff40ef1d6/Solution.lean#L110"]
 theorem agoh_giuga.variants.le_primeFactors_card_of_isStrongGiuga
     (a : ℕ) (ha : IsStrongGiuga a) : 9 ≤ a.primeFactors.card := by
   sorry
