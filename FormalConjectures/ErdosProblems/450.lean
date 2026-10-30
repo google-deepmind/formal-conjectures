@@ -49,7 +49,7 @@ def IsSufficientScale (Y : ℝ → ℕ → ℕ) : Prop :=
 noncomputable def windowThreshold (ε : ℝ) (n : ℕ) : ℕ∞ :=
   ⨅ y : {y : ℕ // ∀ z ≥ y, UniformlySparse ε n z}, (y.1 : ℕ∞)
 
-def erdos_450.answer : ℕ∞ := sorry
+def erdos_450.answer : ℝ → ℕ → ℕ∞ := by sorry
 
 /--
 How large must $y=y(\epsilon,n)$ be such that the number of integers in
@@ -61,7 +61,7 @@ A **linear** scale $y \le C(\epsilon) n$ is known to suffice for fixed $\epsilon
 and all large $n$ (see `erdos_450.linear_scale_suffices`).
 -/
 @[category research open, question value, AMS 11]
-theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) : windowThreshold ε n = erdos_450.answer := by
+theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) : windowThreshold ε n = erdos_450.answer ε n := by
   sorry
 
 set_option linter.style.formal_proof_palomar false in
