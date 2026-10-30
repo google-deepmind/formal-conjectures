@@ -42,13 +42,17 @@ TxGraffiti [Conjecture 3](https://arxiv.org/abs/2507.17780):
 for every $r$-regular graph $G$ ($r \ge 1$),
 $$i(G) \le \mu^*(G).$$
 
-This conjecture is **open**.
+This conjecture is **false**. A $3$-regular counterexample on $48$ vertices,
+with $i(G) = 16$ and $\mu^*(G) \le 15$, is given in
+<https://github.com/ipitchford/txgraffiti-order48-successor>;
+the linked Lean proof checks it against this statement.
 -/
-@[category research open, AMS 5]
-theorem tx_graffiti_conjecture_3 (V : Type) [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) [DecidableRel G.Adj]
-    (r : ℕ) (_hReg : ∀ v, G.degree v = r) (_hr : 1 ≤ r) :
-    G.indepDominationNumber ≤ G.saturationNumber := by
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/4d006aa2add6f41604be1d143adfc6a645394621/Solution.lean#L140"]
+theorem tx_graffiti_conjecture_3 :
+    ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
+      (G : SimpleGraph V) [DecidableRel G.Adj]
+      (r : ℕ) (_hReg : ∀ v, G.degree v = r) (_hr : 1 ≤ r),
+      G.indepDominationNumber ≤ G.saturationNumber := by
   sorry
 
 end Arxiv.«2507.17780»
