@@ -74,7 +74,11 @@ theorem not_hasTranslationProperty_singleton_one : ¬ HasTranslationProperty {1}
 $1 + t$, $2 + t$ and $3 + t$ are all squarefree. -/
 @[category test, AMS 11]
 theorem minTranslation_squarefree_three : minTranslation {m : ℕ | Squarefree m} 3 = 4 := by
-  sorry
+  refine IsLeast.csInf_eq ⟨⟨by norm_num, fun a ha1 ha3 ↦ ?_⟩, fun t ⟨ht1, ht⟩ ↦ ?_⟩
+  · interval_cases a <;> simp [Nat.squarefree_iff_nodup_primeFactorsList]
+  · by_contra! h
+    have := ht (4 - t) (by omega) (by omega)
+    interval_cases t <;> simp [Nat.squarefree_iff_nodup_primeFactorsList] at this
 
 /-- If `P` contains every prime, then `composedOf P` is the set of all positive integers. -/
 @[category test, AMS 11]
