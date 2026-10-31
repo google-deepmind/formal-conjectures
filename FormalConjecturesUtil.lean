@@ -16,9 +16,6 @@ limitations under the License.
 module
 
 public import Mathlib
-public import FormalConjecturesForMathlib
-public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
-public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
 public import FormalConjecturesUtil.Linters.AMSLinter
 public import FormalConjecturesUtil.Linters.CategoryDocstringLinter
 public import FormalConjecturesUtil.Linters.CategoryLinter
@@ -34,5 +31,7 @@ public import FormalConjecturesUtil.Linters.StubLinter
 /-!
 # Standard imports for open problems
 
-This file provides a standard set of imports used by problem files throughout the project.
+This file provides Mathlib, the attributes and the linters to every problem file. Problem files
+add `public import` lines for the `FormalConjecturesForMathlib` modules they use, so that a change
+to one of those modules rebuilds only its importers.
 -/

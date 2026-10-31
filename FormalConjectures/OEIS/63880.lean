@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.Full
+public import FormalConjecturesForMathlib.NumberTheory.Primitive
 
 /-!
 # Conjectures associated with A063880

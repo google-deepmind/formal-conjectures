@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.NumberTheory.Carmichael
 
 /-!
 # Number of parts in the symmetric representation of $\sigma(n)$

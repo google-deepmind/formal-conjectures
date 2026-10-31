@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
+public import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 
 /-!
 # Erdős Problem 219

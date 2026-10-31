@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
 
 /-!
 # Finite generation of the cohomology of finite-dimensional Hopf algebras

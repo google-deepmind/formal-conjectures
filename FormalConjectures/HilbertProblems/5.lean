@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Geometry.Manifold.LieGroupPresentation
 
 /-!
 # Hilbert's Fifth Problem and the Hilbert–Smith Conjecture

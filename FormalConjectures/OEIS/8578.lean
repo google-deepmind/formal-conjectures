@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 
 /-!
 # Prime numbers at the beginning of the 20th century

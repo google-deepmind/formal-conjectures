@@ -23,10 +23,12 @@ public import Mathlib.Tactic.Linter.Header
 
 This file implements a linter that enforces import conventions in `FormalConjectures`:
 
-1. **Disallow direct `Mathlib` and `FormalConjecturesForMathlib` imports**: Problem files in
-   `FormalConjectures` must not import `Mathlib`, `Mathlib.*`, `FormalConjecturesForMathlib`,
-   or any `FormalConjecturesForMathlib.*` module directly. They should use
-   `import FormalConjecturesUtil` instead.
+1. **Disallow direct `Mathlib` imports and the `FormalConjecturesForMathlib` aggregate**:
+   Problem files in `FormalConjectures` must not import `Mathlib`, `Mathlib.*`, or the
+   aggregate module `FormalConjecturesForMathlib` directly. Mathlib comes with
+   `import FormalConjecturesUtil`. A `FormalConjecturesForMathlib.*` module that the file uses
+   is imported with `public import FormalConjecturesForMathlib.*`; a plain `import` of it is
+   private and is rejected like a plain `import FormalConjecturesUtil` (rule 4).
 2. **Require `FormalConjecturesUtil`**: Problem files in `FormalConjectures` must
    import `FormalConjecturesUtil`.
 
@@ -105,10 +107,14 @@ def checkImports (header : HeaderSyntax) (isFormalConjecturesModule : Bool := tr
       Linter.logLintIf linter.style.imports imp.getIdent
         m!"Direct imports from 'Mathlib' (such as '{modName}') are disallowed in 'FormalConjectures'. \
            Use 'import FormalConjecturesUtil' instead."
-    if modName == `FormalConjecturesForMathlib || modName.getRoot == `FormalConjecturesForMathlib then
+    if modName == `FormalConjecturesForMathlib then
       Linter.logLintIf linter.style.imports imp.getIdent
-        m!"Direct imports from 'FormalConjecturesForMathlib' (such as '{modName}') are disallowed in 'FormalConjectures'. \
-           Use 'import FormalConjecturesUtil' instead."
+        m!"Importing the whole of 'FormalConjecturesForMathlib' is disallowed in 'FormalConjectures'. \
+           Instead, 'public import' only the 'FormalConjecturesForMathlib' modules that the file uses."
+    else if modName.getRoot == `FormalConjecturesForMathlib && !imp.isExported then
+      Linter.logLintIf linter.style.imports imp.getIdent
+        m!"Use 'public import {modName}'. In a module, a plain 'import' is private, \
+           so the statements of public declarations cannot use it."
 
   if isFormalConjecturesModule then
     let targetStx := imports[0]?.map (·.getIdent.raw) |>.getD firstCmdStx
@@ -131,8 +137,10 @@ def checkImports (header : HeaderSyntax) (isFormalConjecturesModule : Bool := tr
 private initialize checkedFiles : IO.Ref (Std.HashSet String) ← IO.mkRef {}
 
 /-- The import linter ensures that:
-- Files in `FormalConjectures` do not import `Mathlib`, `Mathlib.*`, `FormalConjecturesForMathlib`, or `FormalConjecturesForMathlib.*` directly.
-- Files in `FormalConjectures` import `FormalConjecturesUtil`.
+- Files in `FormalConjectures` do not import `Mathlib`, `Mathlib.*`, or the aggregate
+  `FormalConjecturesForMathlib` directly.
+- Files in `FormalConjectures` import `FormalConjecturesUtil`, and the
+  `FormalConjecturesForMathlib.*` modules they use, with `public import`.
 - Files in `FormalConjectures` do not `meta import` a whole library (`FormalConjecturesUtil`,
   `FormalConjecturesForMathlib` or `Mathlib`).
 - Files in `FormalConjectures` are modules that `public import FormalConjecturesUtil`.

@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
+public import FormalConjecturesForMathlib.Topology.Homogeneous
+public import FormalConjecturesForMathlib.Topology.LebesgueCoveringDimension
 
 /-!
 # The Bing-Borsuk Conjecture

@@ -17,6 +17,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
+public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 /-!
 # Bugeaud Collection of Conjectures and Open Questions: Pisot orbits on the Cantor set
 

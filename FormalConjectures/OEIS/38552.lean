@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.Squarefree
+public import FormalConjecturesForMathlib.NumberTheory.NumberField.FundamentalDiscriminant
 
 /-!
 # Conjectures associated with A038552

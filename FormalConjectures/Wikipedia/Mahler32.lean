@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.NumberTheory.DiophantineApproximation.ZNumber
 
 /-!
 # Mahler's 3/2 Problem

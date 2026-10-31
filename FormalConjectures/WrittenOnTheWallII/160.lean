@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degrees
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
 
 /-!
 # Written on the Wall II - Conjecture 160

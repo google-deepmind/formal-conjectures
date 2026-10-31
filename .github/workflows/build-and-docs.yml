@@ -189,13 +189,16 @@ jobs:
           ./scripts/mk_all_formathlib.sh
 
       # Generating All.lean aggregates all problem files into a single module to detect
-      # clashing declaration names across problem modules during compilation.
+      # clashing declaration names across problem modules during compilation. It also
+      # imports all of FormalConjecturesForMathlib: a problem file imports only the
+      # modules it uses, so a clash with a module it does not import shows up only here.
       - name: Generate All.lean
         if: steps.mode.outputs.website_only != 'true'
         run: |
           rm -f FormalConjectures/All.lean
           lake exe mk_all --lib FormalConjectures || true
           mv FormalConjectures.lean FormalConjectures/All.lean
+          sed -i '1i import FormalConjecturesForMathlib' FormalConjectures/All.lean
           echo "set_option linter.style.moduleDocstring false" >> FormalConjectures/All.lean
 
       - name: Begin Lean problem matcher

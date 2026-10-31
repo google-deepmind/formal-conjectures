@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Data.ZMod.PerfectDifferenceSet
 
 /-!
 # Erdős Problem 707: Embedding Sidon Sets in Perfect Difference Sets
