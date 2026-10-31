@@ -79,6 +79,7 @@ noncomputable def prodFactorMinus (m n : ℕ) : ℝ :=
   (productIndices m).prod fun k =>
     ((2 * m * n : ℝ) - (k : ℝ))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The recurrence given below can be rewritten in the form
 $$(2n+1)(2n+2)P(2,n)a(n+1) - (2n-1)(2n-2)P(2,-n)a(n-1) = Q(2,n^2)a(n),$$

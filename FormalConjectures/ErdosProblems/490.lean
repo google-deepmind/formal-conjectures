@@ -40,6 +40,7 @@ open Filter
 
 namespace Erdos490
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A,B\subseteq \{1,\ldots,N\}$ be such that all the products $ab$ with $a\in A$ and $b\in B$
 are distinct. Is it true that

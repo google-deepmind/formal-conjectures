@@ -41,6 +41,7 @@ def Decreasing (F : Finset (Finset α)) : Prop :=
 def Intersecting (F : Finset (Finset α)) : Prop :=
     ∀ A ∈ F, ∀ B ∈ F, A ∩ B ≠ ∅
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If F is a decreasing family of sets of some finite type α, then there is some element
 x of α such that the family consisting of all members of F containing x is an intersecting

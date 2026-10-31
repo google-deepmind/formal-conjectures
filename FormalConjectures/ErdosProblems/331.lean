@@ -34,6 +34,7 @@ open scoped Asymptotics
 namespace Erdos331
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A,B\subseteq \mathbb{N}$ such that for all large $N$$$\lvert A\cap \{1,\ldots,N\}\rvert \gg
 N^{1/2}$$and$$\lvert B\cap \{1,\ldots,N\}\rvert \gg N^{1/2}.$$

@@ -58,6 +58,7 @@ theorem erdos9A_not_contains_five : 5 ∉ Erdos9A := by
   simp only [pow_zero, Nat.reduceAdd]
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The set is known to be infinite. In [Er77c] Erdős credits Schinzel with proving that there are
 infinitely many odd integers not of this form, but gives no reference.

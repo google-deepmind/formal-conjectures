@@ -46,6 +46,7 @@ of `graphSquare G`. -/
 noncomputable def graphSquareRadius (G : SimpleGraph α) : ℕ :=
   (graphSquare G).radius.toNat
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 146](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

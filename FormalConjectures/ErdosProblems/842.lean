@@ -41,6 +41,7 @@ def IsTrianglesPlusHamiltonianCycle {V : Type*} (G : SimpleGraph V) (n : ℕ) : 
     (∃ e : V ≃ Fin n × Fin 3, ∀ u v, T.Adj u v ↔ u ≠ v ∧ (e u).1 = (e v).1) ∧
     ∃ e : Fin (3 * n) ≃ V, C = (cycleGraph (3 * n)).map e.toEmbedding
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph on $3n$ vertices formed by taking $n$ vertex disjoint triangles and adding a
 Hamiltonian cycle (with all new edges) between these vertices. Does $G$ have chromatic number at

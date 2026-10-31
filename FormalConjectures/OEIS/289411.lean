@@ -67,6 +67,7 @@ lemma a_3 : a 3 = 1 := by decide
 lemma a_4 : a 4 = 0 := by decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: For $k \ge 1$, let $m_k = 10^k / 2 - 1$. Then for $i = 0, \ldots, m_k$, we have $a(m_k - i) = a(m_k + i)$.
 

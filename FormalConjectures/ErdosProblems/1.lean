@@ -38,6 +38,7 @@ $A\subseteq\{1, ..., N\}$ and the sums $\sum_{a\in S}a$ are distinct for all $S\
 abbrev IsSumDistinctSet (A : Finset ℕ) (N : ℕ) : Prop :=
     A ⊆ Finset.Icc 1 N ∧ (fun (⟨S, _⟩ : A.powerset) => S.sum id).Injective
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A\subseteq\{1, ..., N\}$ with $|A| = n$ is such that the subset sums $\sum_{a\in S}a$ are
 distinct for all $S\subseteq A$ then
@@ -92,6 +93,7 @@ theorem erdos_1.variants.lb : ∃ (o : ℕ → ℝ) (_ : o =o[atTop] (1 : ℕ �
       (1 / 4 - o A.card) * 2 ^ A.card / (A.card : ℝ).sqrt ≤ N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A number of improvements of the constant $\frac{1}{4}$ have been given, with the current
 record $\sqrt{2 / \pi}$ first provided in unpublished work of Elkies and Gleason.

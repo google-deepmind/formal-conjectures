@@ -33,6 +33,7 @@ namespace Erdos836
 
 open Filter Asymptotics
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $r\geq 2$ and let $G$ be an intersecting $r$-uniform hypergraph with chromatic number
 $3$. Must $G$ contain $O(r^2)$ many vertices? Vertices are counted in the union of the edges,
@@ -50,6 +51,7 @@ theorem erdos_836.parts.i :
         ((H.biUnion id).card : ℝ) ≤ C * (r : ℝ) ^ 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In an intersecting $r$-uniform hypergraph with chromatic number $3$, must there be two
 distinct edges which meet in $\gg r$ many vertices?

@@ -47,6 +47,7 @@ theorem erdos_287 :
     3 ≤ max_gap k s:= by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The lower bound of $\geq 2$ is equivalent to saying that $1$ is not the sum of reciprocals of
 consecutive integers, proved by Erdős [Er32].
