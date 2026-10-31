@@ -52,6 +52,7 @@ theorem a_5 : a 5 = 401 := by decide
 
 open Real
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture:
 $$a(n) = \left\lfloor \frac{1}{\frac{1}{4n} - \log(2) +

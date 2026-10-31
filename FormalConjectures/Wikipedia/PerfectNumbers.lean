@@ -51,9 +51,9 @@ Are there infinitely many perfect numbers?
 *Reference:*
 [Wikipedia](https://en.wikipedia.org/wiki/Perfect_number)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_perfect :
-    answer(sorry) ↔ {n : ℕ | Perfect n}.Infinite := by
+    {n : ℕ | Perfect n}.Infinite := by
   sorry
 
 /--
@@ -67,9 +67,9 @@ has the form $2^{p-1}(2^p - 1)$ where $2^p - 1$ is a Mersenne prime.
 *Reference:*
 [Wikipedia](https://en.wikipedia.org/wiki/Perfect_number)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_even_perfect :
-    answer(sorry) ↔ {n : ℕ | Perfect n ∧ Even n}.Infinite := by
+    {n : ℕ | Perfect n ∧ Even n}.Infinite := by
   sorry
 
 /--
@@ -95,6 +95,7 @@ theorem odd_perfect_number.lower_bound (n : ℕ) (hn : Odd n) (hp : Perfect n) :
     n > 10^1500 ∧ (n.primeFactorsList).length ≥ 101 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A known result: If an odd perfect number exists, it must be of the form
 $p^α * m^2$ where $p$ is prime, $p \equiv 1 \pmod{4}$, $\alpha \equiv 1 \pmod{4}$,

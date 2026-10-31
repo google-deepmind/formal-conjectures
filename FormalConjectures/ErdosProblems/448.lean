@@ -63,6 +63,7 @@ $\epsilon < 1$ comparison in the problem meaningful. -/
 theorem tauPlus_le_tau (n : ℕ) : tauPlus n ≤ n.divisors.card :=
   Finset.card_image_le
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\tau(n)$ count the divisors of $n$ and $\tau^+(n)$ count the number of $k$ such that $n$ has a
 divisor in $[2^k, 2^{k+1})$. Is it true that, for all $\epsilon > 0$,
@@ -80,10 +81,10 @@ $$ \sum_{n \leq x} \tau^+(n) \asymp x\frac{(\log x)^{1-\alpha}}{(\log\log x)^{3/
 where
 $$ \alpha = 1-\frac{1+\log\log 2}{\log 2} = 0.08607\cdots. $$
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos448.lean#L35"]
-theorem erdos_448 : answer(False) ↔
-    ∀ ε : ℝ, 0 < ε →
+theorem erdos_448 :
+    ¬ ∀ ε : ℝ, 0 < ε →
       {n : ℕ | (tauPlus n : ℝ) < ε * (n.divisors.card : ℝ)}.HasDensity 1 := by
   sorry
 

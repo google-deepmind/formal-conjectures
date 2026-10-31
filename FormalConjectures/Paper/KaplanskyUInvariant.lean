@@ -118,6 +118,8 @@ theorem not_bddAbove_anisotropicDims_real : ¬ BddAbove (anisotropicDims ℝ) :=
   rw [anisotropicDims_eq_univ]
   exact not_bddAbove_univ
 
+def u_invariant_values.answer : Set ℕ := sorry
+
 /--
 **The values of the $u$-invariant**, stated as in [MerkurjevParimala2025, §5.1]: which integers
 are $u$-invariants of fields (of characteristic not $2$)? The question goes back to
@@ -130,10 +132,9 @@ $u$-invariant (`u_invariant_values.variants.even`), $3$, $5$ and $7$ are not
 (`u_invariant_values.variants.karpenko`), the answer is known for every $n$ except $n = 2^r - 1$
 and $n = 2^r - 3$ with $r \ge 4$.
 -/
-@[category research open, AMS 11 12]
+@[category research open, question value, AMS 11 12]
 theorem u_invariant_values :
-    let S : Set ℕ := answer(sorry)
-    ∀ n, n ∈ S ↔ IsUInvariant n := by
+    ∀ n, n ∈ u_invariant_values.answer ↔ IsUInvariant n := by
   sorry
 
 /--
@@ -141,9 +142,9 @@ theorem u_invariant_values :
 $2$ whenever it is finite. Disproved by Merkurjev, who constructed a field of $u$-invariant $6$
 [Merkurjev1989] (`u_invariant_values.variants.even`).
 -/
-@[category research solved, AMS 11 12]
+@[category research solved, question, AMS 11 12]
 theorem u_invariant_values.variants.kaplansky_conjecture :
-    answer(False) ↔ ∀ n, IsUInvariant n → ∃ k, n = 2 ^ k := by
+    ¬ ∀ n, IsUInvariant n → ∃ k, n = 2 ^ k := by
   sorry
 
 /-- The $u$-invariant is never $3$ [Kaplansky1953, Theorem 2]; see also
@@ -162,6 +163,7 @@ theorem u_invariant_values.variants.not_five : ¬ IsUInvariant 5 := by
 theorem u_invariant_values.variants.not_seven : ¬ IsUInvariant 7 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every power of $2$ is a $u$-invariant [Kaplansky1953, p. 202]: Theorem 3 of [Kaplansky1953]
 gives $u(F((t))) = 2u(F)$, so $u(\mathbb{C}((t_1)) \cdots ((t_k))) = 2^k$; see also
@@ -224,19 +226,19 @@ The expectation recorded in [MerkurjevParimala2025, §5.1]: every odd integer $\
 $u$-invariant. By `u_invariant_values.variants.karpenko` this is open exactly for the integers
 $2^r - 1$ and $2^r - 3$ with $r \ge 4$.
 -/
-@[category research open, AMS 11 12]
+@[category research open, question, AMS 11 12]
 theorem u_invariant_values.variants.odd :
-    answer(sorry) ↔ ∀ n, Odd n → 9 ≤ n → IsUInvariant n := by
+    ∀ n, Odd n → 9 ≤ n → IsUInvariant n := by
   sorry
 
 /-- The smallest open case of the form $2^r - 3$: is there a field of $u$-invariant $13$? -/
-@[category research open, AMS 11 12]
-theorem u_invariant_values.variants.thirteen : answer(sorry) ↔ IsUInvariant 13 := by
+@[category research open, question, AMS 11 12]
+theorem u_invariant_values.variants.thirteen : IsUInvariant 13 := by
   sorry
 
 /-- The smallest open case of the form $2^r - 1$: is there a field of $u$-invariant $15$? -/
-@[category research open, AMS 11 12]
-theorem u_invariant_values.variants.fifteen : answer(sorry) ↔ IsUInvariant 15 := by
+@[category research open, question, AMS 11 12]
+theorem u_invariant_values.variants.fifteen : IsUInvariant 15 := by
   sorry
 
 end KaplanskyUInvariant

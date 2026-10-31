@@ -37,6 +37,7 @@ predicate `IsLacunary` ($\exists c > 1$ with $c \cdot n_k < n_{k+1}$ for all suf
 $k$); for a strictly increasing sequence of positive integers this is equivalent to the problem's
 condition $n_{k+1} \geq (1+\epsilon) n_k$ for all $k$. -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{n_1<n_2<\cdots\}\subset \mathbb{N}$ be a lacunary sequence (so there exists some
 $\epsilon>0$ with $n_{k+1}\geq (1+\epsilon)n_k$ for all $k$). Is it true that there must exist a
@@ -52,9 +53,9 @@ such that $\inf_k \| \theta n_k\|>\delta$. In particular, the solution to
 best known quantitative bound, due to Peres and Schlag [PeSc10], being that there is a colouring
 with no solutions using at most $\ll \epsilon^{-1}\log(1/\epsilon)$ colours.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos894.lean#L310"]
-theorem erdos_894 : answer(True) ↔
+theorem erdos_894 :
     ∀ n : ℕ → ℕ, StrictMono n → (∀ k, 0 < n k) → IsLacunary n →
       ∃ (r : ℕ) (c : ℕ → Fin r), ∀ b k, c (b + n k) ≠ c b := by
   sorry

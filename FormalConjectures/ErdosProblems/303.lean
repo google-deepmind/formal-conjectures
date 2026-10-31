@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos303
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that in any finite colouring of the integers there exists a monochromatic solution
 to $\frac 1 a = \frac 1 b + \frac 1 c$ with distinct $a, b, c$?
@@ -38,9 +39,8 @@ This is true, as proved by Brown and Rödl [BrRo91].
 
 This was formalized in Lean by Yuan using Seed-Prover.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/303"]
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/303"]
 theorem erdos_303 :
-    answer(True) ↔
     -- For any finite colouring of the integers
     ∀ (𝓒 : ℤ → ℤ), (Set.range 𝓒).Finite →
       -- There exists integers `a, b, c`

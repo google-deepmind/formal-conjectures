@@ -38,6 +38,7 @@ open scoped Pointwise
 
 namespace Erdos154
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subset \{1,\ldots,N\}$ be a Sidon set with $\lvert A\rvert\sim N^{1/2}$. Must $A+A$ be
 well-distributed over all small moduli? In particular, must about half the elements of $A+A$ be
@@ -52,9 +53,9 @@ $A_k\subseteq\{0,\ldots,N_k\}$ with $N_k\to\infty$ and $\lvert A_k\rvert\sim N_k
 modulus $m\geq 2$, the proportion of elements of $A_k+A_k$ congruent to $i\pmod m$ (i.e. the count
 divided by $\lvert A_k+A_k\rvert$) tends to $1/m$ for every residue $i<m$.
 -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using lean4 at "https://github.com/willblair0708/lean-proofs/blob/f297d710018270c66b296082766334974260bcbc/ErdosProblems/Erdos154/Sumset.lean#L555"]
-theorem erdos_154 : answer(True) ↔
+theorem erdos_154 :
     ∀ (m : ℕ) (hm : 2 ≤ m) (N : ℕ → ℕ) (A : ℕ → Finset ℕ),
       Tendsto (fun k => (N k : ℝ)) atTop atTop →
       (∀ k, ∀ x ∈ A k, x ≤ N k) →
@@ -65,6 +66,7 @@ theorem erdos_154 : answer(True) ↔
         atTop (nhds (1 / m)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Lindström's result for $A$ itself [Li98], later strengthened by Kolountzakis [Ko99]: for any
 sequence of Sidon sets $A_k\subseteq\{0,\ldots,N_k\}$ with $N_k\to\infty$ and

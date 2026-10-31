@@ -84,9 +84,9 @@ Does $v_1(n) = 1$ have finite solutions?
 
 [ErSe67] Erdős, P. and Selfridge, J. L., Some problems on the prime factors of consecutive integers. Illinois J. Math. (1967), 428--430.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_889.variants.v1_eq_1_finite :
-    answer(sorry) ↔ {n | v_l 1 n = 1}.Finite := by
+    {n | v_l 1 n = 1}.Finite := by
   sorry
 
 /--
@@ -105,6 +105,7 @@ $V_l(n)$ is the supremum of $V(n,k)$ for all $k \ge l$
 noncomputable def V_l (l n : ℕ) : ℕ∞ :=
   ⨆ k ≥ l, (V n k : ℕ∞)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does $V_1(n) = 1$ have finite solutions?
 
@@ -117,11 +118,11 @@ that there are only finitely many $n$ with $V_1(n) = 1$.
 
 [ErSe67] Erdős, P. and Selfridge, J. L., Some problems on the prime factors of consecutive integers. Illinois J. Math. (1967), 428--430.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-889-capital-v1-finite/blob/44d38dd7f618dbaa0b08fb976c0378b4897021cd/lean/Erdos889V1FiniteFC.lean#L999-L1004"]
 theorem erdos_889.variants.V1_eq_1_finite :
-    answer(True) ↔ {n | V_l 1 n = 1}.Finite := by
+    {n | V_l 1 n = 1}.Finite := by
   sorry
 
 end Erdos889

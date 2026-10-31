@@ -43,6 +43,7 @@ def consecutiveSums (n : ℕ) (p : Equiv.Perm (Fin n)) : Finset ℕ :=
   (Finset.univ.filter (fun x : Fin n × Fin n => x.1 ≤ x.2)).image
     (fun x => ∑ k ∈ Finset.Icc x.1 x.2, ((p k : ℕ) + 1))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For any permutation $\pi\in S_n$ of $\{1,\ldots,n\}$ let $S(\pi)$ count the number of distinct consecutive sums, that is, sums of the shape $\sum_{u\leq i\leq v}\pi(i)$. Is it true that
 $$
@@ -52,10 +53,10 @@ for all $\pi\in S_n$?
 
 Hegyvári [He86] gave a counterexample.
 -/
-@[category research solved, AMS 5 11,
+@[category research solved, question, AMS 5 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos34.lean"]
-theorem erdos_34 : answer(False) ↔
-    ∀ c : ℝ, 0 < c → ∃ N : ℕ, ∀ n ≥ N, ∀ p : Equiv.Perm (Fin n),
+theorem erdos_34 :
+    ¬ ∀ c : ℝ, 0 < c → ∃ N : ℕ, ∀ n ≥ N, ∀ p : Equiv.Perm (Fin n),
       ((consecutiveSums n p).card : ℝ) < c * (n : ℝ) ^ 2 := by
   sorry
 

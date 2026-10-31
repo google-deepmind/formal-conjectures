@@ -60,12 +60,13 @@ $F(n) = \pi(n) + O(n^{2/3} (\log n)^{-2})$. The answer is yes, with $c = 27/2$: 
 GPT-5.6 Sol (prompted by Chojecki), refining the argument of [Er38]; see
 `erdos_793.variants.constant`.
 -/
-@[category research solved, AMS 11]
-theorem erdos_793 : answer(True) ↔
+@[category research solved, question, AMS 11]
+theorem erdos_793 :
     ∃ c : ℝ, Tendsto (fun n : ℕ ↦ ((F n : ℝ) - Nat.primeCounting n) /
       ((n : ℝ) ^ ((2 : ℝ) / 3) / (log n) ^ 2)) atTop (𝓝 c) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The constant in Problem 793 is $c = 27/2$, i.e.
 $$F(n) = \pi(n) + \left(\frac{27}{2} + o(1)\right) \frac{n^{2/3}}{(\log n)^2}.$$

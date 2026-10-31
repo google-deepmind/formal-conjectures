@@ -34,6 +34,7 @@ open Function
 
 namespace Erdos947
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There is no exact covering system - that is, a finite collection of congruence classes
 $a_i\pmod{n_i}$ with distinct $n_i$ such that every integer satisfies exactly one of these

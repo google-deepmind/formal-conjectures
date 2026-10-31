@@ -159,7 +159,8 @@ def ABφθSpec (A B φ θ : ℝ) : Prop :=
 
 /-- There exist unique constants $A$, $B$, $\varphi$, and $\theta$ satisfying the spec. -/
 @[category textbook, AMS 49,
-  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Defs.lean#L173"]
+  formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Defs.lean#L173",
+  formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/blob/v1.0.0/GerverSofa/KernelOnly/PartE/E24KC6KernelFinalClosure.lean"]
 theorem ABφθSpec.existsUnique : ∃! ABφθ : ℝ × ℝ × ℝ × ℝ,
     ABφθSpec ABφθ.1 ABφθ.2.1 ABφθ.2.2.1 ABφθ.2.2.2 :=
   sorry
@@ -201,6 +202,7 @@ end GerversSofa
 def gerversSofa : Set ℝ² :=
   sofaOfRotateTranslatePath GerversSofa.p
 
+set_option linter.style.formal_proof_palomar false in
 /-- Gerver's concrete sofa admits a valid hallway motion. -/
 @[category research solved, AMS 49,
   formal_proof using lean4 at "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0",
@@ -214,6 +216,7 @@ open MeasureTheory
 open scoped ENNReal
 
 /-- The **sofa constant** is the maximal area of a moving sofa. -/
+@[optimization_constant "41a"]
 def sofaConstant : ℝ≥0∞ := ⨆ (s : Set ℝ²) (_ : ∃ m, IsMovingSofa s m), volume s
 
 /-- The sofa constant is at least 1, as witnessed by the unit square. -/
@@ -223,15 +226,19 @@ theorem one_le_sofaConstant : 1 ≤ sofaConstant := by
     _ = volume unitSquare := (OrthonormalBasis.volume_parallelepiped _).symm
     _ ≤ sofaConstant := le_iSup₂ (α := ℝ≥0∞) unitSquare isMovingSofa_unitSquare
 
+def sofaConstant_eq.answer : ℝ≥0∞ := volume gerversSofa
+
+set_option linter.style.formal_proof_palomar false in
 /-- What is the sofa constant? -/
-@[category research solved, AMS 49,
+@[category research solved, question value, AMS 49,
   formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
   formal_proof using lean4 at "https://github.com/RuifengCao/sofa-formal/blob/838baca722560f30ea8e60b8c711b20147626175/SofaSubmission/Solution.lean#L26",
   formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/16653ae81e0e4f52a362bafae2ad3440100ad065/Solution.lean#L171-L173",
   formal_proof using lean4 at "https://github.com/vltanh/lean4-moving-sofa/blob/0addd87e5a0a4550ab8a60019180f012167fa24f/Solution.lean#L124-L125"]
-theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
+theorem sofaConstant_eq : sofaConstant = sofaConstant_eq.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Gerver's sofa attains the sofa constant, conjectured by [Ge92] and claimed by [Ba24]. -/
 @[category research solved, AMS 49,
   formal_proof using lean4 at "https://github.com/deancureton/MovingSofa/blob/a0753860f1d2b4424e059c35e64ad611be71a415/MovingSofaSubmission/Solution.lean#L20",
@@ -241,6 +248,7 @@ theorem sofaConstant_eq : sofaConstant = answer(volume gerversSofa) := by
 theorem sofaConstant_eq_volume_gerversSofa : sofaConstant = volume gerversSofa := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Gerver's sofa is the unique sofa that attains the sofa constant, up to a rigid motion.
 

@@ -45,6 +45,7 @@ def harrisHypergraph : Finset (Finset (Fin 9)) :=
         (Finset.image (fun v : Fin 9 => (v : ℕ) / 3) e).card = 3)
       (Finset.powersetCard 3 Finset.univ))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that every $3$-uniform hypergraph on $3n$ vertices with at least $n^3+1$ edges must
 contain either a subgraph on $4$ vertices with $3$ edges or a subgraph on $5$ vertices with $7$
@@ -54,9 +55,9 @@ Harris has provided the following simple counterexample to the problem as stated
 $3$-uniform graph on $\{1,\ldots,9\}$ with $28$ edges, formed by taking $27$ edges by choosing
 one element each from $\{1,2,3\},\{4,5,6\},\{7,8,9\}$, and then adding the edge $\{1,2,3\}$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos794.lean"]
-theorem erdos_794 : answer(False) ↔
-    ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsUniform 3 →
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos794.lean"]
+theorem erdos_794 :
+    ¬ ∀ n : ℕ, ∀ H : Finset (Finset (Fin (3 * n))), H.IsUniform 3 →
       n ^ 3 + 1 ≤ H.card → H.ContainsSubgraph 4 3 ∨ H.ContainsSubgraph 5 7 := by
   sorry
 

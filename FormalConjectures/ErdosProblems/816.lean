@@ -43,6 +43,7 @@ def HasEqualDegreePathThree {V : Type*} [Fintype V] (G : SimpleGraph V) : Prop :
   ∃ u v : V, u ≠ v ∧ G.degree u = G.degree v ∧ ∃ p : G.Walk u v, p.IsPath ∧ p.length = 3
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph with $2n+1$ vertices and $n^2+n+1$ edges. Must $G$ contain two vertices of the
 same degree which are joined by a path of length $3$?
@@ -56,9 +57,9 @@ vertices of the same degree joined by a path of length $3$, except $K_{n,n+1}$.
 
 For $n = 1$ the graph is a triangle, which contains no path of length $3$, so we assume $n \geq 2$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos816.lean#L939"]
-theorem erdos_816 : answer(True) ↔ ∀ n : ℕ, 2 ≤ n → ∀ G : SimpleGraph (Fin (2 * n + 1)),
+theorem erdos_816 : ∀ n : ℕ, 2 ≤ n → ∀ G : SimpleGraph (Fin (2 * n + 1)),
     G.edgeFinset.card = n ^ 2 + n + 1 → HasEqualDegreePathThree G := by
   sorry
 
