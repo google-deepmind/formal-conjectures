@@ -23,6 +23,10 @@ public import FormalConjecturesUtil
 by B. Curtin, G. R. Pourgholi
 
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
+
+- [vDJMM26] W. van Doorn, E. Judin, P. Monticone and D. Morrison,
+  *On Some Problems from the Kourovka Notebook*,
+  [arXiv:2607.17477v1](https://arxiv.org/abs/2607.17477v1), Theorem 4.1.
 -/
 
 @[expose] public section
@@ -36,10 +40,16 @@ Let $G$ and $H$ be finite groups of the same order with
 $\sum_{g \in G} \phi(|g|) = \sum_{h \in H} \phi(|h|)$,
 where $\phi$ is the Euler totient function. Suppose that $G$ is simple. Is
 $H$ necessarily simple?
+
+The answer is negative by [vDJMM26, Theorem 4.1]. The groups
+$G = \operatorname{PSU}(3,3)$ and $H = C_6 \times S_4 \times (C_7 \rtimes C_6)$
+both have order $6048$ and totient sum $23984$, but only $G$ is simple.
+In the semidirect product, a generator of $C_6$ acts on $C_7$ by multiplication
+by $3$ modulo $7$.
 -/
-@[category research open, question, AMS 20]
+@[category research solved, question, AMS 20]
 theorem kourovka_19_25 :
-    ∀ (G H : Type) [Group G] [Group H] [Fintype G] [Fintype H],
+    ¬ ∀ (G H : Type) [Group G] [Group H] [Fintype G] [Fintype H],
        Fintype.card G = Fintype.card H →
        ∑ g : G, φ (orderOf g) = ∑ h : H, φ (orderOf h) →
        IsSimpleGroup G → IsSimpleGroup H := by
