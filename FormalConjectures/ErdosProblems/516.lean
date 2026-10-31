@@ -45,6 +45,7 @@ def OfFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
   (⨅ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log / (⨆ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function of finite order such that `nₖ / k → ∞`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
 @[category research solved, AMS 30, formal_proof using lean4 at
@@ -66,15 +67,16 @@ theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → �
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is it true that for all entire functions `f = ∑ aₖzⁿₖ` such that `∑' 1 / nₖ < ∞`,
 `limsup (fun r => ratio r f) atTop = 1`?
 
 The answer is no: [Ki26] gives an explicit counterexample whose `limsup` is not `1`. -/
-@[category research solved, AMS 30,
+@[category research solved, question, AMS 30,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/erdos-516-fejer-counterexample/blob/675d078d1c9fee4fcaa1c1a2eecde1c174853ff5/lean/Erdos516FejerFC.lean#L1304-L1314"]
-theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps : answer(False) ↔
-    ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
+theorem erdos_516.variants.limsup_ratio_eq_one_of_hasFejerGaps :
+    ¬ ∀ {f : ℂ → ℂ} {n : ℕ → ℕ} (hn : HasFejerGaps n) {a : ℕ → ℂ} (ha : ∀ n, a n ≠ 0)
     (hfn : ∀ z, HasSum (fun k => a k * z ^ n k) (f z)),
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry

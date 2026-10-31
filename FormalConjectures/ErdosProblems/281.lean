@@ -46,6 +46,7 @@ def avoidAll (n : ℕ → ℕ) (a : ResidueChoice n) : Set ℤ :=
 def avoidPrefix (n : ℕ → ℕ) (a : ResidueChoice n) (k : ℕ) : Set ℤ :=
   {m | ∀ i : ℕ, i < k → (m : ZMod (n i)) ≠ a i}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n_1<n_2<\cdots$ be an infinite sequence such that, for any choice of congruence classes
 $a_i\pmod{n_i}$, the set of integers not satisfying any of the congruences $a_i\pmod{n_i}$ has
@@ -55,8 +56,8 @@ $a_i\pmod{n_i}$ for $1\leq i\leq k$ is less than $\epsilon$?
 
 The answer is yes; the linked Lean proof formalizes Somani's argument.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos281.lean"]
-theorem erdos_281 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos281.lean"]
+theorem erdos_281 :
     ∀ (n : ℕ → ℕ), StrictMono n → (∀ i, 0 < n i) →
       (∀ a : ResidueChoice n, Set.HasIntDensity (avoidAll n a) 0) →
         ∀ ε : ℝ, 0 < ε →

@@ -63,6 +63,7 @@ theorem a_4 : a 4 = 12 := by rfl
 @[category test, AMS 11]
 theorem a_5 : a 5 = 29 := by rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Do we have $a(n) = 2^n - 1 - \operatorname{A105033}(n-1)$ for $n \ge 1$?
 
@@ -70,10 +71,10 @@ Note: The OEIS comment suggests $n-1$ which means this applies at least for $n \
 as we assume $\operatorname{A105033}(\mathbb{N})$ is defined on $\mathbb{N}$.
 We include the case $n=1$ which relies on $A105033(0)$, which is 0.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a102371/blob/d80fba9/lean/OeisA102371FC.lean#L490-L497"]
-theorem conjecture : answer(True) ↔ ∀ n : ℕ, 0 < n → a n = 2^n - 1 - OeisA105033.a (n - 1) := by
+theorem conjecture : ∀ n : ℕ, 0 < n → a n = 2^n - 1 - OeisA105033.a (n - 1) := by
   sorry
 
 end OeisA102371

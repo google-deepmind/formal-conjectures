@@ -46,6 +46,7 @@ def lemniscate (f : ℂ[X]) : Set ℂ := {z | ‖f.eval z‖ < 1}
 /-- The closed unit lemniscate $\{z : \lvert f(z)\rvert \leq 1\}$ of a complex polynomial. -/
 def closedLemniscate (f : ℂ[X]) : Set ℂ := {z | ‖f.eval z‖ ≤ 1}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f\in \mathbb{C}[x]$ be a monic polynomial and
 $$E=\{ z: \lvert f(z)\rvert <1\}.$$
@@ -62,12 +63,13 @@ The condition that $E$ is connected is equivalent to $E$ containing all zeros of
 The answer is yes, and in fact the centre of this disc can be taken to be
 $\frac{z_1+\cdots+z_n}{n}$, where the $z_i$ are the roots of $f$, as shown by Pommerenke [Po59].
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at
+@[category research solved, question, AMS 30, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1046.lean#L329"]
-theorem erdos_1046 : answer(True) ↔ ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
+theorem erdos_1046 : ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
     ∃ c : ℂ, lemniscate f ⊆ ball c 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Pommerenke [Po59] showed that the centre of the disc can be taken to be the centroid
 $\frac{z_1+\cdots+z_n}{n}$ of the roots $z_i$ of $f$.
@@ -87,8 +89,8 @@ $\{ z: \lvert f(z)\rvert\leq 1\}$ has logarithmic capacity $1$ [Ra95, Theorem 5.
 [Po28] proved $\mathrm{cap}(E) \leq \frac{1}{2}\operatorname{diam}(E)$ for every compact
 $E \subseteq \mathbb{C}$, see [BPS02, (1.2)]. Hence the diameter is at least $2$.
 -/
-@[category research solved, AMS 30]
-theorem erdos_1046.variants.diameter : answer(True) ↔ ∀ f : ℂ[X], f.Monic →
+@[category research solved, question, AMS 30]
+theorem erdos_1046.variants.diameter : ∀ f : ℂ[X], f.Monic →
     IsConnected (closedLemniscate f) → 2 ≤ Metric.ediam (closedLemniscate f) := by
   sorry
 

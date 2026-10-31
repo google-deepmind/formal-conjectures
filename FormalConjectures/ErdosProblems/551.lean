@@ -38,6 +38,7 @@ open Filter
 
 namespace Erdos551
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Prove that
 $$R(C_k,K_n)=(k-1)(n-1)+1$$
@@ -47,7 +48,8 @@ Asked by Erdős, Faudree, Rousseau, and Schelp.
 This problem is #18 in Ramsey Theory in the graphs problem collection.
 OpenAI [OAI26, Theorem 1.1] establishes the full parameter range.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Ramsey/CycleClique/MainTheorem.lean#L23"]
 theorem erdos_551 :
     ∀ (k n : ℕ), 3 ≤ n → n ≤ k → ¬(n = 3 ∧ k = 3) →
       SimpleGraph.graphRamsey (SimpleGraph.cycleGraph k)

@@ -78,6 +78,7 @@ theorem a_3 : a 3 = 8 := by
     rw [IsLeast.csInf_eq (by use ⟨by constructor, by norm_num⟩, fun and' => And.left)])
     (by constructor))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For statistical reasons it is conjectured that the sequence is finite.
 Finite means here that for some $n$, no power $b^n$ with base $b > 1$ has a zeroless decimal
@@ -109,7 +110,7 @@ depending on the divisibility of $b$ by $2$ and $5$:
 
 In every case, the decimal representation of $N$ contains the digit $0$, so $a(2500) = 0$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA103662_conjecture.lean#L191"]
 theorem conjecture : ∃ n : ℕ, a n = 0 := by
   sorry
 

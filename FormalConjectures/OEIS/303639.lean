@@ -75,6 +75,7 @@ theorem a_5 : A 5 :=
 theorem a_6 : A 6 :=
   ⟨2, 0, 0, 0, by decide⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Zhi-Wei Sun's Conjecture (A303639)**: any integer $n > 1$ can be written as
 $a^2 + b^2 + \binom{2c+1}{c} + \binom{2d+1}{d}$ with $a, b, c, d$ nonnegative integers.
@@ -95,6 +96,7 @@ below formalises this argument, and was produced by Claude Opus 5 prompted by Su
 theorem conjecture : ¬ ∀ n : ℕ, 1 < n → A n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The counterexample witnessing that A303639 vanishes: $a(800322180) = 0$. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at "https://github.com/DCLXAI/a303639-counterexample/blob/8e21c57c622b05a1815bcf9927458ebb3973ef2e/lean/A303639/Counterexample.lean"]

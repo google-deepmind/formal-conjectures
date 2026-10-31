@@ -53,6 +53,7 @@ noncomputable def generalRecurrence (g : ℕ) (a b ε : ℝ) : ℕ → ℤ
       if Even n then ⌊a * ((generalRecurrence g a b ε n : ℝ) + ε)⌋
       else ⌊b * ((generalRecurrence g a b ε n : ℝ) + 1 / ((g : ℝ) - 1))⌋
 
+set_option linter.style.formal_proof_palomar false in
 /-- Define a sequence by $a_1=1$ and $$a_{n+1}=\lfloor\sqrt{2}(a_n+1/2)\rfloor$$ for $n\geq 1$.
 The difference $a_{2n+1}-2a_{2n-1}$ is the $n$th digit in the binary expansion of $\sqrt{2}$.
 
@@ -75,6 +76,7 @@ theorem erdos_482 :
       Real.ofDigits (Real.digits (√2 / 2) 2) = √2 / 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Stoll's general answer to the open-ended part [St05]: for every real $w > 0$ and every base
 $g \ge 2$, there are parameters $a$, $b$, and $\varepsilon$, with $ab = g$, such that the
 corresponding Graham–Pollak-type recurrence reads the base-$g$ digits of $w$.
@@ -112,6 +114,7 @@ noncomputable def binaryDigit (t : ℝ) : ℕ → Fin 2
   | 1 => 1
   | k + 2 => Real.digits (t - 1) 2 k
 
+set_option linter.style.formal_proof_palomar false in
 /-- The explicit binary answer to the open-ended part [RaGi91], [St05]: for every normalized real
 $t \in [1, 2)$, the recurrence with coefficients $\alpha(t) = 2(t+1)/(t+2)$ and
 $\beta(t) = (t+2)/(t+1)$ reads off the binary digits of $t$, and those digits reconstruct $t$.
@@ -123,6 +126,26 @@ theorem erdos_482.variants.binary_explicit (t : ℝ) (ht1 : 1 ≤ t) (ht2 : t < 
     (∀ n, 1 ≤ n →
         stollBinary t (2 * n) - 2 * stollBinary t (2 * n - 2) = (binaryDigit t n).val) ∧
       Real.ofDigits (fun k ↦ binaryDigit t (k + 2)) = t - 1 := by
+  sorry
+
+/-- The explicit base-$g$ construction in Stoll [St05, Theorem 1.3]. For a normalized
+$t \in [1,g)$, take $a = g/((g-1)(t+g))$ and $b = (g-1)(t+g)$. Every parameter
+$-1/g \le \varepsilon < (g+1)(g-2)/g$ gives the same significant digits of $t$.
+
+The sequence is indexed from zero, so the difference at $2n+2$ and $2n$ gives digit $n$,
+including the leading digit at $n=0$. The floor difference uses the terminating expansion
+when $t$ has two base-$g$ expansions. -/
+@[category research solved, AMS 11]
+theorem erdos_482.variants.stoll_explicit (g : ℕ) (hg : 2 ≤ g) (t : ℝ)
+    (ht : 1 ≤ t) (htg : t < g) (ε : ℝ)
+    (hεlo : -1 / (g : ℝ) ≤ ε)
+    (hεhi : ε < ((g : ℝ) + 1) * ((g : ℝ) - 2) / g) :
+    let a := (g : ℝ) / (((g : ℝ) - 1) * (t + g))
+    let b := ((g : ℝ) - 1) * (t + g)
+    ∀ n : ℕ,
+      generalRecurrence g a b ε (2 * n + 2) -
+          (g : ℤ) * generalRecurrence g a b ε (2 * n) =
+        ⌊t * (g : ℝ) ^ n⌋ - (g : ℤ) * ⌊t * (g : ℝ) ^ n / g⌋ := by
   sorry
 
 end Erdos482

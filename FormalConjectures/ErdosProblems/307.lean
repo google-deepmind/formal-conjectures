@@ -41,8 +41,8 @@ Asked by Barbeau [Ba76].
 
 [Ba76] Barbeau, E. J., _Computer challenge corner: Problem 477: A brute force program._
 -/
-@[category research open, AMS 11]
-theorem erdos_307 : answer(sorry) ↔ ∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ (∀ q ∈ Q, q.Prime) ∧
+@[category research open, question, AMS 11]
+theorem erdos_307 : ∃ P Q : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ (∀ q ∈ Q, q.Prime) ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
   sorry
 
@@ -59,23 +59,23 @@ $$
 $$
 -/
 @[category textbook, AMS 5 11]
-theorem erdos_307.variants.coprime : answer(True) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
+theorem erdos_307.variants.coprime : ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 < #P ∧ 1 < #Q ∧
     Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
-  show True ↔ _
-  simp only [Finset.mem_inter, not_and, true_iff]
+  simp only [Finset.mem_inter, not_and]
   use {1, 5}, {2, 3}
   norm_num +decide
 
 /--
 There are no examples known of the weakened coprime version if we insist that $1\not\in P\cup Q$.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_307.variants.coprime_one_notMem : answer(sorry) ↔ ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 ∉ P ∪ Q ∧
+@[category research open, question, AMS 5 11]
+theorem erdos_307.variants.coprime_one_notMem : ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 ∉ P ∪ Q ∧
     1 < #P ∧ 1 < #Q ∧ Set.Pairwise P Nat.Coprime ∧ Set.Pairwise Q Nat.Coprime ∧
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A machine-checked **barrier** for Erdős 307 (Bonfioli, 2026): any solution with `Q` nonempty uses at
 least 59 primes in total, and `(∏_{p ∈ P} p)² ≥ 4·10¹¹²` — i.e. `∏_{p ∈ P} p ≥ 2·10⁵⁶` (and, by
@@ -93,6 +93,7 @@ theorem erdos_307.barrier {P Q : Finset ℕ}
     59 ≤ #(P ∪ Q) ∧ (4 * 10 ^ 112 : ℚ) ≤ (∏ p ∈ P, (p : ℚ)) ^ 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A stronger machine-checked **barrier** (Bonfioli, 2026), closing the 59-prime level: any solution of
 Erdős 307 in fact uses at least `60` primes in total. The full `sorry`-free proof is `erdos307_sixty`
