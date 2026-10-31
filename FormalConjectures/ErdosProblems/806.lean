@@ -35,6 +35,7 @@ open scoped Pointwise
 
 namespace Erdos806
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \{1,\ldots,n\}$ with $\lvert A\rvert \leq n^{1/2}$. Must there exist some
 $B\subset\mathbb{Z}$ with $\lvert B\rvert=o(n^{1/2})$ such that $A\subseteq B+B$?
@@ -49,9 +50,9 @@ $$\lvert B\rvert \ll \frac{\log\log n}{\log n}n^{1/2}.$$
 
 See also [333](https://www.erdosproblems.com/333).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos806.lean#L744"]
-theorem erdos_806 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
+theorem erdos_806 : ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop,
     ∀ A : Finset ℕ, A ⊆ Finset.Icc 1 n → (A.card : ℝ) ≤ √n →
       ∃ B : Finset ℤ, A.map Nat.castEmbedding ⊆ B + B ∧ (B.card : ℝ) ≤ ε * √n := by
   sorry

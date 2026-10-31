@@ -38,9 +38,10 @@ size at least `t`, such that for every nonempty finite set `X` there are `< c * 
 `A ∈ F` with `A ⊆ X`, has property B. -/
 def SparseImpliesPropertyB (t : ℕ) (c : ℝ) : Prop :=
   ∀ F : Finset (Finset ℕ), (∀ A ∈ F, t ≤ A.card) →
-    (∀ X : Finset ℕ, X.Nonempty → ((F.filter (· ⊆ X)).card : ℝ) < c * (X.card : ℝ)) →
+    (∀ X : Finset ℕ, X.Nonempty → ((F.hypergraphInduce X).card : ℝ) < c * (X.card : ℝ)) →
     F.HasPropertyB
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a constant $c_t$, where $c_t\to \infty$ as $t\to \infty$, such that if $\mathcal{F}$
 is a finite family of finite sets, all of size at least $t$, and for every set $X$ there are
@@ -54,10 +55,10 @@ comments.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
 "https://github.com/plby/lean-proofs/blob/main/src/latest/ErdosProblems/Erdos1022.lean"]
-theorem erdos_1022 : answer(False) ↔
-    ∃ c : ℕ → ℝ, Filter.Tendsto c Filter.atTop Filter.atTop ∧
+theorem erdos_1022 :
+    ¬ ∃ c : ℕ → ℝ, Filter.Tendsto c Filter.atTop Filter.atTop ∧
       ∀ t : ℕ, SparseImpliesPropertyB t (c t) := by
   sorry
 
@@ -67,8 +68,8 @@ constructs, for any $r\geq 2$, a triangle-free $2$-degenerate $r$-uniform hyperg
 chromatic number $3$. A similar counterexample was found independently by KoishiChan in the
 comments.
 -/
-@[category research solved, AMS 5]
-theorem erdos_1022.variants.lt_two : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_1022.variants.lt_two :
     ∀ (t : ℕ) (c : ℝ), SparseImpliesPropertyB t c → c < 2 := by
   sorry
 

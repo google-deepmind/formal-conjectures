@@ -50,6 +50,7 @@ noncomputable def g (k n : ℕ) : ℕ :=
   sSup {m | ∃ G : SimpleGraph (Fin n),
     ¬ HasCycleWithIncidentChords G k ∧ G.edgeFinset.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $g_k(n)$ be the maximal number of edges possible on a graph with $n$ vertices which does not
 contain a cycle with $k$ chords incident to a vertex on the cycle. Is it true that
@@ -58,9 +59,9 @@ for $n$ sufficiently large?
 
 The answer is yes: the conjectured equality was proved for $n\geq 3k+3$ by Jiang [Ji04].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos767.lean#L1566"]
-theorem erdos_767 : answer(True) ↔
+theorem erdos_767 :
     ∀ k ≥ 1, ∀ n ≥ 3 * k + 3, g k n = (k + 1) * n - (k + 1) ^ 2 := by
   sorry
 

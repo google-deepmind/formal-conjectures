@@ -72,6 +72,7 @@ def conjecture309Statement : Prop :=
       (G.totalDominationNumber : ℝ) ≤
         ((maxEvenCorrection G : ℝ) + (mt : ℝ)) / 2
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every finite simple connected graph $G$ of order greater than two satisfy
 $$
@@ -81,9 +82,9 @@ $$
 $$
 Gebendorfer disproved the statement with the family $C_5[K_k]$, $k \geq 3$.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/Kuberwastaken/c5-k4/blob/c9daf0f594d6d5b264c6cd54dc9eec488cb64741/lean/GraphConjecture309.lean"]
-theorem conjecture309 : answer(False) ↔ conjecture309Statement := by
+theorem conjecture309 : ¬ conjecture309Statement := by
   sorry
 
 end WrittenOnTheWallII.GraphConjecture309

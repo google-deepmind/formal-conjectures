@@ -34,6 +34,7 @@ namespace Erdos178
 
 open Finset BigOperators
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A_1,A_2,\ldots$ be an infinite collection of infinite sets of integers, say
 $A_i=\{a_{i1}<a_{i2}<\cdots\}$. Does there exist some $f:\mathbb{N}\to\{-1,1\}$ such that
@@ -42,8 +43,8 @@ for all $d\geq 1$?
 
 Erdős remarks 'it seems certain that the answer is affirmative'. This was solved by Beck [Be81]. Recently Beck [Be17] proved that one can replace $\ll_d 1$ with $\ll d^{4+\epsilon}$ for any $\epsilon>0$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos178.lean"]
-theorem erdos_178 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos178.lean"]
+theorem erdos_178 :
     ∀ (a : ℕ → ℕ → ℕ) (ha : ∀ i, StrictMono (a i)),
     ∃ f : ℕ → ℤ, (∀ n, f n = 1 ∨ f n = -1) ∧
       ∀ d : ℕ, ∃ C : ℕ, ∀ m i : ℕ, i < d →

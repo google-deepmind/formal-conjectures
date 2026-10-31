@@ -37,6 +37,7 @@ open SimpleGraph
 namespace Erdos1010
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $t<\lfloor n/2\rfloor$. Does every graph on $n$ vertices with $\lfloor n^2/4\rfloor+t$ edges
 contain at least $t\lfloor n/2\rfloor$ triangles?
@@ -49,9 +50,9 @@ for some constant $c>0$.
 This is true, and was proved independently by Lovász and Simonovits [LoSi76] and Nikiforov and
 Khadzhiivanov [NiKh81].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1010.lean#L612"]
-theorem erdos_1010 : answer(True) ↔ ∀ n t : ℕ, t < n / 2 → ∀ G : SimpleGraph (Fin n),
+theorem erdos_1010 : ∀ n t : ℕ, t < n / 2 → ∀ G : SimpleGraph (Fin n),
     G.edgeFinset.card = n ^ 2 / 4 + t → t * (n / 2) ≤ (G.cliqueFinset 3).card := by
   sorry
 

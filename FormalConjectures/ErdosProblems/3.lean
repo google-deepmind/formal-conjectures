@@ -31,6 +31,9 @@ public import FormalConjecturesUtil
   Annual Symposium on Foundations of Computer Science (FOCS) (2023).
 - [LSS24] Leng, James, Sah, Ashwin and Sawhney, Mehtaab, *Improved bounds for Szemerédi's
   theorem*. arXiv:2402.17995 (2024).
+- [OAI26] OpenAI, *Quasipolynomial Bounds for Arithmetic Progressions*. OpenAI Math Release
+  preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Quasipolynomial-Bounds-for-Arithmetic-Progressions-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -39,25 +42,19 @@ open Asymptotics Filter
 
 namespace Erdos3
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$, then must $A$ contain arbitrarily
 long arithmetic progressions?
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26]; see the linked Lean
+proof.
 -/
-@[category research open, AMS 11]
-theorem erdos_3 : answer(sorry) ↔ ∀ A : Set ℕ,
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Progressions/Results/Conclusions.lean#L38"]
+theorem erdos_3 : ∀ A : Set ℕ,
     (¬ Summable fun a : A ↦ 1 / (a : ℝ)) →
     ∃ᶠ (k : ℕ) in Filter.atTop, ∃ S ⊆ A, S.IsAPOfLength k := by
-  sorry
-
-/--
-The case of $3$-term progressions: if $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$,
-then $A$ contains a non-trivial $3$-term arithmetic progression.
-
-Proved by Bloom and Sisask [BlSi20].
--/
-@[category research solved, AMS 11]
-theorem erdos_3.variants.three : ∀ A : Set ℕ,
-    (¬ Summable fun a : A ↦ 1 / (a : ℝ)) → ∃ S ⊆ A, S.IsAPOfLength 3 := by
   sorry
 
 /--
@@ -74,6 +71,21 @@ Proved by Kelley and Meka [KeMe23].
 @[category research solved, AMS 11]
 theorem erdos_3.variants.kelley_meka : ∃ β > (0 : ℝ), ∃ c > (0 : ℝ),
     (fun N ↦ (r 3 N : ℝ)) ≪ fun N : ℕ ↦ (N : ℝ) * Real.exp (-c * Real.log N ^ β) := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+The case of $3$-term progressions: if $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$,
+then $A$ contains a non-trivial $3$-term arithmetic progression.
+
+Proved by Bloom and Sisask [BlSi20].
+-/
+@[category research solved, AMS 11,
+  conditional formal_proof using lean4 at
+    "https://github.com/wilsonwu-ai/sundai-erdos-3/blob/8a58287a16558bf1e708eaa2d0f7cba4c86566a3/lean/Erdos3ThreeCase.lean#L96-L97"
+    assuming erdos_3.variants.kelley_meka]
+theorem erdos_3.variants.three : ∀ A : Set ℕ,
+    (¬ Summable fun a : A ↦ 1 / (a : ℝ)) → ∃ S ⊆ A, S.IsAPOfLength 3 := by
   sorry
 
 /--

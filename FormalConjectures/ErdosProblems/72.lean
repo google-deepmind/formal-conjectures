@@ -44,6 +44,7 @@ open Filter SimpleGraph
 namespace Erdos72
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a set $A\subset \mathbb{N}$ of density $0$ and a constant $c>0$ such that every graph on
 sufficiently many vertices with average degree $\geq c$ contains a cycle whose length is in $A$?
@@ -62,14 +63,15 @@ Liu and Montgomery [LiMo20] proved that in fact this is true when $A$ is the set
 (more generally any set of even numbers which doesn't grow too quickly) - in particular this
 contradicts the previous belief of Erdős.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos72.lean#L184"]
-theorem erdos_72 : answer(True) ↔ ∃ A : Set ℕ, A.HasDensity 0 ∧ ∃ c : ℚ, 0 < c ∧
+theorem erdos_72 : ∃ A : Set ℕ, A.HasDensity 0 ∧ ∃ c : ℚ, 0 < c ∧
     ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n), c ≤ G.averageDegree →
       ∃ (v : Fin n) (w : G.Walk v v), w.IsCycle ∧ w.length ∈ A := by
   sorry
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Liu and Montgomery [LiMo20] proved that there is a constant $c > 0$ such that every graph on
 sufficiently many vertices with average degree $\geq c$ contains a cycle whose length is a power

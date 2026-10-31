@@ -41,6 +41,7 @@ family is the union of other members of the family.
 noncomputable def F (n : ℕ) : ℕ :=
   sSup {m | ∃ S ⊆ (Finset.Icc 1 n).powerset, S.SubfamilyUnionFree ∧ S.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $F(n)$ be the maximal size of a family of subsets of $\{1,\ldots,n\}$ such that no set in
 this family is the union of other members of the family. Is it true that there is a constant
@@ -50,8 +51,8 @@ $$F(n)\sim c \frac{2^n}{n^{1/2}}?$$
 Hunter observes in the comments that this follows from the solution to [447], which implies
 $F(n)\sim \binom{n}{n/2}$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1023.lean"]
-theorem erdos_1023 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1023.lean"]
+theorem erdos_1023 :
     ∃ c : ℝ, 0 < c ∧
       ((fun n : ℕ => (F n : ℝ)) ~[atTop]
         (fun n : ℕ => c * 2 ^ n / (n : ℝ) ^ (1 / 2 : ℝ))) := by
