@@ -725,6 +725,23 @@ def reverseConjLabels {G : Type*} [TopologicalSpace G] [Group G] [CompactSimpleL
 def reverseReflectConfig {n : ℕ} (x : Fin n → EuclideanSpace4) (i : Fin n) : EuclideanSpace4 :=
   timeReflect (x ⟨n - 1 - i.val, by omega⟩)
 
+/-- A Euclidean configuration `X : Fin n → EuclideanSpace4` has strictly ordered positive
+    Euclidean times: $0 < X_0^0 < X_1^0 < \dots < X_{n-1}^0$.
+    This guarantees that all points in $X$ and their Osterwalder–Schrader time reflections
+    $\theta X$ are pairwise distinct, preventing coincident-point ultraviolet divergences. -/
+def StrictlyTimeOrderedPos {n : ℕ} (X : Fin n → EuclideanSpace4) : Prop :=
+  (∀ i : Fin n, 0 < toCoords (X i) 0) ∧
+  StrictMono (fun i : Fin n => toCoords (X i) 0)
+
+/-- Shift all points in a Euclidean configuration by Euclidean time $t \ge 0$ and spatial vector $\mathbf{a} \in \mathbb{R}^3$:
+    $X_i \mapsto X_i + (t, \mathbf{a})$. -/
+def euclideanShift {n : ℕ} (t : ℝ) (a : MinkowskiSpace) (X : Fin n → EuclideanSpace4) :
+    Fin n → EuclideanSpace4 :=
+  fun i =>
+    let c := toCoords (X i)
+    let ca := toCoords a
+    vec4 (c 0 + t) (c 1 + ca 1) (c 2 + ca 2) (c 3 + ca 3)
+
 /-- Pairwise disjoint support condition for an $n$-tuple of Schwartz test functions on $\mathbb{R}^4$
 (testing the zero-time / non-coincident test function space $\mathcal{S}_0(\mathbb{R}^{4n})$ of OS I & II). -/
 def DisjointSupports {n : ℕ} (f : Fin n → SchwartzMap EuclideanSpace4 ℂ) : Prop :=
@@ -887,12 +904,18 @@ Any Euclidean Yang–Mills theory `os : OsterwalderSchraderYangMills G Curv` sat
 uniform linear growth condition ($\text{E}0'$), multilinearity, Euclidean invariance (E1), mixed-degree reflection
 positivity (E2), permutation symmetry (E3), full exponential clustering (E4) with rate `os.mass_rate`,
 and short-distance asymptotic freedom reconstructs a relativistic `WightmanQuantumYangMills G ℋ Curv`
-equipped with a dense positive-time embedding `os_embed` satisfying:
-1. Empty configuration maps to the vacuum: `os_embed 0 ops0 x0 = theory.vacuum`,
-2. Dense linear span of positive-time embedded states in $\mathcal{H}$,
-3. Euclidean semigroup inner products equal `os.schwinger` with infinitesimal generator $-H$,
-4. Reconstructed Hamiltonian spectral gap on $(\mathbb{C}\Omega)^\perp$ bounded below
-   by `os.mass_rate` ($\Delta \ge m > 0$). -/
+equipped with a self-adjoint Euclidean contraction semigroup `euclidean_contraction` ($e^{-tH}$) and
+a positive-time embedding `os_embed` satisfying the five canonical OS II conditions:
+1. OS Gram identity on strictly time-ordered positive configurations:
+   $\langle \operatorname{embed}(X), \operatorname{embed}(Y) \rangle = S_{n+m}(\Theta X^\star, Y)$,
+2. Vacuum identification: $\operatorname{embed}(0, \text{ops}_0, X_0) = \Omega$,
+3. Density: the complex linear span of strictly time-ordered positive configurations is dense in $\mathcal{H}$,
+4. Contraction semigroup & spatial translation intertwining:
+   $\operatorname{embed}(X + (t, \mathbf{a})) = e^{-tH} U(0, \mathbf{a}) \operatorname{embed}(X)$ for all $t \ge 0$,
+5. Field insertion compatibility (OS II, p. 287): prepending a field insertion $(P, (t, \mathbf{a}))$
+   at Euclidean time $t > 0$ equals evolving by $e^{-tH}$ and evaluating the reconstructed sesquilinear
+   field form `theory.local_field_form P a`, which is linked to `theory.smeared_field` via test-function integration,
+6. Hamiltonian spectral gap on $(\mathbb{C}\Omega)^\perp$ bounded below by `os.mass_rate` ($\Delta \ge m > 0$). -/
 @[category research solved, AMS 81]
 theorem osterwalder_schrader_reconstruction
     {G : Type*} [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G]
@@ -901,34 +924,56 @@ theorem osterwalder_schrader_reconstruction
     ∃ (ℋ : Type*) (_ : NormedAddCommGroup ℋ) (_ : InnerProductSpace ℂ ℋ)
       (_ : CompleteSpace ℋ) (_ : SeparableSpace ℋ)
       (theory : WightmanQuantumYangMills G ℋ Curv)
+      (euclidean_contraction : ℝ → (ℋ →L[ℂ] ℋ))
+      (euclidean_contraction_dom : ℝ → theory.domain → theory.domain)
       (os_embed : (n : ℕ) → (Fin n → ObservableLabel G Curv) →
         (Fin n → EuclideanSpace4) → theory.domain),
-      (∀ (ops0 : Fin 0 → ObservableLabel G Curv) (x0 : Fin 0 → EuclideanSpace4),
-         (os_embed 0 ops0 x0 : ℋ) = theory.vacuum) ∧
-      Dense ((Submodule.span ℂ (Set.range (fun (cfg : Σ n : ℕ,
-          (Fin n → ObservableLabel G Curv) × (Fin n → EuclideanSpace4)) =>
-          (os_embed cfg.1 cfg.2.1 cfg.2.2 : ℋ)))) : Set ℋ) ∧
+      (∀ (t : ℝ) (ψ : theory.domain),
+         (euclidean_contraction_dom t ψ : ℋ) = euclidean_contraction t (ψ : ℋ)) ∧
+      (euclidean_contraction 0 = ContinuousLinearMap.id ℂ ℋ) ∧
+      (∀ (t1 t2 : ℝ), 0 ≤ t1 → 0 ≤ t2 →
+         euclidean_contraction (t1 + t2) =
+           (euclidean_contraction t1).comp (euclidean_contraction t2)) ∧
+      (∀ ψ : theory.domain,
+         HasDerivWithinAt (fun t : ℝ => euclidean_contraction t (ψ : ℋ))
+           (- theory.Hamiltonian ψ) (Set.Ici 0) 0) ∧
+      -- [1] OS Gram Identity on strictly time-ordered positive configurations
       (∀ (n m : ℕ) (ops1 : Fin n → ObservableLabel G Curv)
          (ops2 : Fin m → ObservableLabel G Curv)
          (X : Fin n → EuclideanSpace4) (Y : Fin m → EuclideanSpace4),
-         (∀ i : Fin n, 0 < toCoords (X i) 0) →
-         (∀ j : Fin m, 0 < toCoords (Y j) 0) →
+         StrictlyTimeOrderedPos X →
+         StrictlyTimeOrderedPos Y →
          inner ℂ (os_embed n ops1 X : ℋ) (os_embed m ops2 Y : ℋ) =
-           os.schwinger (n + m) (safeReflectConcatLabels ops1 ops2) (safeReflectConcatMixed X Y)) ∧
+           os.schwinger (n + m) (safeReflectConcatLabels ops1 ops2)
+             (safeReflectConcatMixed X Y)) ∧
+      -- [2] Vacuum Identification: 0-point configuration maps to the vacuum Ω
+      (∀ (ops0 : Fin 0 → ObservableLabel G Curv) (X0 : Fin 0 → EuclideanSpace4),
+         (os_embed 0 ops0 X0 : ℋ) = theory.vacuum) ∧
+      -- [3] Cyclicity / Density: linear span of strictly time-ordered configurations is dense in ℋ
+      Dense (Submodule.span ℂ
+        { ψ : ℋ | ∃ (n : ℕ) (ops : Fin n → ObservableLabel G Curv)
+          (X : Fin n → EuclideanSpace4),
+          StrictlyTimeOrderedPos X ∧ ψ = (os_embed n ops X : ℋ) } : Set ℋ) ∧
+      -- [4] Contraction Semigroup & Spatial Translation Intertwining
+      (∀ (n : ℕ) (ops : Fin n → ObservableLabel G Curv)
+         (X : Fin n → EuclideanSpace4) (t : ℝ) (a : MinkowskiSpace),
+         StrictlyTimeOrderedPos X → 0 ≤ t → toCoords a 0 = 0 →
+         (os_embed n ops (euclideanShift t a X) : ℋ) =
+           euclidean_contraction t
+             (theory.poincare_rep (PoincareGroup.ofTranslation a) (os_embed n ops X : ℋ))) ∧
+      -- [5] Field Insertion Compatibility (OS II, p. 287) via reconstructed sesquilinear form
       (∀ (n m : ℕ) (ops1 : Fin n → ObservableLabel G Curv)
          (ops2 : Fin m → ObservableLabel G Curv)
-         (X : Fin n → EuclideanSpace4) (Y : Fin m → EuclideanSpace4),
-         (∀ i : Fin n, 0 < toCoords (X i) 0) →
-         (∀ j : Fin m, 0 < toCoords (Y j) 0) →
-         (∀ t : ℝ, 0 ≤ t →
-           inner ℂ (os_embed n ops1 X : ℋ) (os_embed m ops2 (translateConfig (vec4 t 0 0 0) Y) : ℋ) =
-             os.schwinger (n + m) (safeReflectConcatLabels ops1 ops2)
-               (safeReflectConcatMixed X (translateConfig (vec4 t 0 0 0) Y))) ∧
-         HasDerivWithinAt
-           (fun t : ℝ => inner ℂ (os_embed n ops1 X : ℋ)
-             (os_embed m ops2 (translateConfig (vec4 t 0 0 0) Y) : ℋ))
-           (- inner ℂ (os_embed n ops1 X : ℋ) (theory.Hamiltonian (os_embed m ops2 Y)))
-           (Set.Ici 0) 0) ∧
+         (X : Fin n → EuclideanSpace4) (Y : Fin m → EuclideanSpace4)
+         (P : Curv.Poly) (t : ℝ) (a : MinkowskiSpace),
+         StrictlyTimeOrderedPos X → StrictlyTimeOrderedPos Y → 0 < t → toCoords a 0 = 0 →
+         inner ℂ (os_embed n ops1 X : ℋ)
+           (os_embed (m + 1) (Fin.cons (.localCurv P) ops2)
+             (Fin.cons (vec4 t (toCoords a 1) (toCoords a 2) (toCoords a 3)) (euclideanShift t a Y)) : ℋ) =
+         theory.local_field_form P a
+           (euclidean_contraction_dom t (os_embed n ops1 X))
+           (os_embed m ops2 Y)) ∧
+      -- [6] Spectral Gap bounded below by Euclidean clustering rate
       (∀ ψ : theory.domain,
         inner ℂ theory.vacuum (ψ : ℋ) = (0 : ℂ) →
         os.mass_rate * ‖(ψ : ℋ)‖ ≤ ‖theory.Hamiltonian ψ‖) ∧
