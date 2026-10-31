@@ -50,6 +50,7 @@ noncomputable def f (N : ℕ) : ℕ := sInf {k | 0 < k ∧ ¬ IsRepresentable N 
 /-- `m N = ⌊∑_{n ≤ N} 1/n⌋`. -/
 def m (N : ℕ) : ℕ := ⌊harmonic N⌋₊
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $N\geq 1$. What is the smallest integer not representable as the sum of distinct unit
 fractions with denominators from $\{1,\ldots,N\}$?
@@ -63,6 +64,7 @@ $m_N=\lfloor \sum_{n\leq N}\frac{1}{n}\rfloor$.
 theorem erdos_308.parts.i : ∀ᶠ N : ℕ in atTop, f N = m N ∨ f N = m N + 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $N\geq 1$. Is it true that the set of integers representable as the sum of distinct unit
 fractions with denominators from $\{1,\ldots,N\}$ has the shape $\{1,\ldots,m\}$ for some $m$?
@@ -75,6 +77,7 @@ theorem erdos_308.parts.ii :
     ∀ᶠ N : ℕ in atTop, ∃ m, representable N = Set.Icc 1 m := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $m_N=\lfloor \sum_{n\leq N}\frac{1}{n}\rfloor$, then the set of integers representable is, for
 all $N$ sufficiently large, either $\{1,\ldots,m_N-1\}$ or $\{1,\ldots,m_N\}$.

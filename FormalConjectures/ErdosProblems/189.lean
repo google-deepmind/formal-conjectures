@@ -37,6 +37,7 @@ def Erdos189For (P : ℝ² → ℝ² → ℝ² → ℝ² → Prop) (A : ℝ² �
       A a b c d = area ∧
       P a b c d
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\mathbb{R}^2$ is finitely coloured then must there exist some colour class which contains the
 vertices of a rectangle of every area?

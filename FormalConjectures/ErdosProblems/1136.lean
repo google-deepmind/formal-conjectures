@@ -40,6 +40,7 @@ def AvoidsPowersOfTwo (A : Set ℕ) : Prop :=
 /-- The set of all integers congruent to $3\cdot 2^i\pmod{2^{i+2}}$ for some $i\geq 0$. -/
 def muellerSet : Set ℕ := {n | ∃ i : ℕ, n ≡ 3 * 2 ^ i [MOD 2 ^ (i + 2)]}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist $A\subset \mathbb{N}$ with lower density $>1/3$ such that $a+b\neq 2^k$ for
 any $a,b\in A$ and $k\geq 0$?

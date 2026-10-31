@@ -49,6 +49,7 @@ noncomputable abbrev Nat.NcardUnrepresentable (A : Set ℕ) :=
 
 def erdos_434.parts.i.answer (n : ℕ) (k : ℕ) : Set ℕ := Set.Icc (n - k + 1 : ℕ) n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k \le n$. What choice of $A\subseteq\{1, \dots, n\}$ (with $\text{gcd}(A) = 1$) of size $|A| = k$
 maximises the number of integers not representable as the sum of finitely
@@ -68,6 +69,7 @@ theorem erdos_434.parts.i (n k : ℕ) (hn : 1 ≤ n) (hk : 2 ≤ k) (h : k ≤ n
       (Nat.NcardUnrepresentable <| erdos_434.parts.i.answer n k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For $2 \le k \le n$, the interval $A = \{n, n - 1, \dots, n - k + 1\}$ maximises the number
 of integers not representable as the sum of finitely many elements from $A$ (with repetitions

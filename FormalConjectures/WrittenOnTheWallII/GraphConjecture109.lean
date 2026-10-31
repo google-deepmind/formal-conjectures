@@ -29,6 +29,7 @@ public import FormalConjecturesUtil
 namespace WrittenOnTheWallII.GraphConjecture109
 
 open SimpleGraph
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 109](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

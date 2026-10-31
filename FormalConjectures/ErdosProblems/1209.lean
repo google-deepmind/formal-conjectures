@@ -182,6 +182,7 @@ theorem erdos_1209.parts.ii :
     rwa [show n - 1 + 1 = n by omega])
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there $n$ such that $n+2^{2^k}$ is always a prime?
 

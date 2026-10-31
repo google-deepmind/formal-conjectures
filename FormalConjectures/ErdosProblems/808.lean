@@ -84,6 +84,7 @@ theorem mem_edgeProducts_iff {V R : Type*} [Fintype V] [DecidableEq R] [CommMagm
     r ∈ edgeProducts a G ↔ ∃ u v, G.Adj u v ∧ r = a u * a v :=
   mem_edgeValues_iff (fun u v ↦ a u * a v) (fun u v ↦ mul_comm (a u) (a v)) G r
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $c,\epsilon>0$ and $n$ be sufficiently large. If $A\subset \mathbb{N}$ has $\lvert A\rvert=n$
 and $G$ is any graph on $A$ with at least $n^{1+c}$ edges then
@@ -130,6 +131,7 @@ theorem erdos_808.variants.positive :
             max ((edgeSums a G).card : ℝ) ((edgeProducts a G).card : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Alon, Ruzsa, and Solymosi do prove, however, that if $A$ has size $n$ and $G$ has $m$ edges then
 $$\max(\lvert A+_GA\rvert,\lvert A\cdot_G A\rvert) \gg m^{3/2}n^{-7/4}.$$

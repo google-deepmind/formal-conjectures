@@ -96,6 +96,7 @@ def supportFn (a : G → ℂ) (S : Set (G → ℂ)) : ℝ :=
   sSup (functional G a '' S)
 
 
+set_option linter.style.formal_proof_palomar false in
 /-- For $G = \mathbb{Z}/3\mathbb{Z}$ and the functional $a(0) = -1$, $a(1) = -3$, $a(2) = 3$,
 does the support function of $\Phi$ at $a$ strictly exceed that of $\Phi'$?
 
@@ -113,6 +114,7 @@ theorem green_57.variants.z3_functional :
     supportFn (ZMod 3) a (Φ' (ZMod 3)) < supportFn (ZMod 3) a (Φ (ZMod 3)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Do $\Phi(\mathbb{Z}/3\mathbb{Z})$ and $\Phi'(\mathbb{Z}/3\mathbb{Z})$ coincide?
 
 Numerical evidence suggests the answer is **no**: the integer functional $a = (-1, -3, 3)$
@@ -125,6 +127,7 @@ $\max_{\Phi'} \operatorname{Re}\langle a, \varphi \rangle < 6.112 < 6.115 \appro
 theorem green_57.variants.z3 :
     ¬ (Φ (ZMod 3) = Φ' (ZMod 3)) := by
   sorry
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that for every finite abelian group $G$ the spaces $\Phi(G)$ and $\Phi'(G)$,
 obtained from kernels $\phi(g) = \mathbb{E}_{x_1 + x_2 + x_3 = g} f_1(x_2, x_3)

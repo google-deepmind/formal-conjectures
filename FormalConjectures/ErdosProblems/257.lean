@@ -86,6 +86,7 @@ theorem erdos_257.variants.tsum_top_eq :
   rw [← (tsum_zero_pnat_eq_tsum_nat hsummL), ← (tsum_zero_pnat_eq_tsum_nat hsummR)]
   simpa using key
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Show that
 $$
@@ -101,6 +102,7 @@ theorem erdos_257.variants.tsum_top :
     Irrational <| ∑' n, n.divisors.card / (2 ^ n : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A \subseteq \mathbb{N}$ be infinite with $\sum_{a \in A} 1/a < \infty$.
 For every integer base $b \ge 2$, the series

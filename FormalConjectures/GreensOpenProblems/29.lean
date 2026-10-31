@@ -37,6 +37,7 @@ open scoped Pointwise
 
 namespace Green29
 
+set_option linter.style.formal_proof_palomar false in
 /-- Suppose that $A$ is a $K$-approximate group (not necessarily abelian). Is there $S \subset A$,
 $|S| \gg K^{-O(1)} |A|$, with $S^8 \subset A^4$?
 

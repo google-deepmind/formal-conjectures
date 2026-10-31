@@ -61,6 +61,7 @@ lemma a_3 : a 3 = 22 := by native_decide
 lemma a_4 : a 4 = 60 := by native_decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: The sequence a(n) is also the number of compositions of $n$ into positive integers
 such that adjacent parts and the largest part differ by at most 1. - _Gus Wiseman_, May 19 2020

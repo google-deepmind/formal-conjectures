@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos457
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there some $\epsilon > 0$ such that there are infinitely
 many $n$ where all primes $p \le (2 + \epsilon) \log n$ divide

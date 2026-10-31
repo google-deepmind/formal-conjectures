@@ -43,6 +43,7 @@ def HasDisjointUnitDecomps (N k : ℕ) : Prop :=
     (∀ i, recipSum (f i) = 1) ∧
     (∀ i j : Fin k, i ≠ j → Disjoint (f i) (f j))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $N\geq 1$ and let $k(N)$ be maximal such that there are $k$ disjoint $A_1,\ldots,A_k\subseteq \{1,\ldots,N\}$ with $\sum_{n\in A_i}\frac{1}{n}=1$ for all $i$. Estimate $k(N)$. Is it true that $k(N)=o(\log N)$?
 

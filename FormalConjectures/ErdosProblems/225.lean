@@ -48,6 +48,7 @@ of $z\in\mathbb{C}$. -/
 noncomputable def trigPoly (n : ℕ) (c : ℕ → ℂ) (z : ℂ) : ℂ :=
   ∑ k ∈ Finset.range (n + 1), c k * Complex.exp (Complex.I * (k * z))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let
 $$ f(\theta) = \sum_{0\leq k\leq n}c_k e^{ik\theta}$$
