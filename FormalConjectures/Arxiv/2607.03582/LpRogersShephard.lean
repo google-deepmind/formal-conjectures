@@ -88,6 +88,7 @@ theorem volume_lpSum_eq_of_isParallelogramAtOrigin (K : Set ℝ²)
     volume (lpSum p K (-K)) = ENNReal.ofReal (rsConstant q) * volume K := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture 5 (Fradelizi-Manui-Meyer-Ndiaye, 2026).** Among planar convex bodies with a
 centre of symmetry containing the origin, for $p > 1$, equality in Corollary 29 holds only for

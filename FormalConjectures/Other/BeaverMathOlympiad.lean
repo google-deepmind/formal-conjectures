@@ -118,6 +118,7 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
       2 * ((Finset.Ico 0 n).filter fun x ↦ Even (a x)).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 [BMO#3](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch))
 
@@ -147,6 +148,7 @@ theorem beaver_math_olympiad_problem_3
     ¬ (∃ n k, a n = 4 ^ k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 [BMO#4](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#4._1RB3RB---1LB0LA_2LA4RA3LA4RB1LB_(bbch))
 

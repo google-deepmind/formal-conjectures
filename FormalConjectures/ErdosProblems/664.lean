@@ -34,6 +34,7 @@ open Filter Real Finset
 
 namespace Erdos664
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $c<1$ be some constant and $A_1,\ldots,A_m\subseteq \{1,\ldots,n\}$ be such that
 $\lvert A_i\rvert >c\sqrt{n}$ for all $i$ and $\lvert A_i\cap A_j\rvert\leq 1$ for all $i\neq j$.
@@ -56,6 +57,7 @@ theorem erdos_664 :
           ∀ i, (B ∩ A i).card ≤ K := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Alon's counterexample already works for $c=2/5$. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos664.lean#L214"]

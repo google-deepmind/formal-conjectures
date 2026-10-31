@@ -34,6 +34,7 @@ theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
       ∃ I J : Ideal Rᵐᵒᵖ, I.IsMaximal ∧ J.IsMaximal ∧ I ≠ J := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- There exists a semiring with a unique left maximal ideal and a unique right maximal ideal
 which are not the same as sets.
 

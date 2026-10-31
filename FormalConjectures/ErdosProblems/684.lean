@@ -40,6 +40,7 @@ def smallPrimePart (n k : ℕ) : ℕ :=
 theorem smallPrimePart_zero (n : ℕ) : smallPrimePart n 0 = 1 := by
   simp [smallPrimePart]
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $f(n)$ be the smallest $0 \leq k \leq n$ for which the factor of
 $\binom{n}{k}$ supported on primes at most $k$ exceeds $n^2$. Give bounds for $f(n)$.
 
@@ -53,6 +54,7 @@ theorem erdos_684.upper_bound :
       (k : ℝ) ≤ 514 * (log (n : ℝ)) ^ 2 ∧ n ^ 2 < smallPrimePart n k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The elementary argument of an internal OpenAI model [APSSV26] constructs arbitrarily
 large $n$ such that $f(n) \geq (1/2-o(1))\log n$. The following weaker form has coefficient
 $1/8$: for arbitrarily large $n>1$, the small-prime part equals one for every

@@ -36,6 +36,7 @@ open Filter
 
 namespace Erdos429
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, if $A\subseteq \mathbb{N}$ is sparse enough and does not cover all residue
 classes modulo $p$ for any prime $p$, then there exists some $n\in \mathbb{Z}$ such that $n+a$ is

@@ -64,6 +64,7 @@ and all large $n$ (see `erdos_450.linear_scale_suffices`).
 theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) : windowThreshold ε n = erdos_450.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A translate-uniform **linear** scale suffices: there is a sufficient window
 length `Y` with `Y ε n ≤ C(ε) · n`. This is an upper bound on the optimal scale,

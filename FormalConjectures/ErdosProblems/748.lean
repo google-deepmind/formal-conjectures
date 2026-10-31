@@ -44,6 +44,7 @@ solutions to $a=b+c$ with $a,b,c\in A$. -/
 noncomputable def f (n : ℕ) : ℕ :=
   ((Finset.Icc 1 n).powerset.filter fun A : Finset ℕ ↦ IsSumFree (A : Set ℕ)).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ count the number of sum-free $A\subseteq \{1,\ldots,n\}$, i.e. $A$ contains no
 solutions to $a=b+c$ with $a,b,c\in A$. Is it true that

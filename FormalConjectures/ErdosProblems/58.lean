@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos58
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $G$ is a graph which contains odd cycles of $\leq k$ different lengths then $\chi(G)\leq 2k+2$,
 with equality if and only if $G$ contains $K_{2k+2}$.

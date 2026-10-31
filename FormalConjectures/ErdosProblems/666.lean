@@ -39,6 +39,7 @@ open scoped Finset
 
 namespace Erdos666
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $Q_n$ be the $n$-dimensional hypercube graph (so that $Q_n$ has $2^n$ vertices and $n2^{n-1}$
 edges). Is it true that, for every $\epsilon>0$, if $n$ is sufficiently large, every subgraph of

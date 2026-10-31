@@ -54,6 +54,7 @@ additive basis by removing any element from it. -/
 def MinAsymptoticAddBasisOfOrder (A : Set ℕ) (h : ℕ) : Prop :=
   IsAsymptoticAddBasisOfOrder A h ∧ ∀ n ∈ A, ¬ IsAsymptoticAddBasisOfOrder (A \ {n}) h
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a minimal basis $A \subset \mathbb{N}$ with positive density
 such that, for any $n \in A$, the (upper) density of integers which

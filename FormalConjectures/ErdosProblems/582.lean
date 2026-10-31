@@ -62,6 +62,7 @@ def EdgeRamseyTriangle {V : Type*} (G : SimpleGraph V) : Prop :=
     ∃ (u v w : V) (huv : G.Adj u v) (hvw : G.Adj v w) (huw : G.Adj u w),
       c ⟨s(u, v), huv⟩ = c ⟨s(v, w), hvw⟩ ∧ c ⟨s(v, w), hvw⟩ = c ⟨s(u, w), huw⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a graph $G$ which contains no $K_4$, and yet any $2$-colouring of the edges
 produces a monochromatic $K_3$?

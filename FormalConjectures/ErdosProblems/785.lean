@@ -64,6 +64,7 @@ def IsExactAdditiveComplement (A B : Set ℕ) : Prop :=
   IsAdditiveComplement A B ∧
     Tendsto (fun x : ℕ => (counting A x * counting B x : ℝ) / (x : ℝ)) atTop (𝓝 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A,B\subseteq \mathbb{N}$ be infinite sets of positive integers such that $A+B$ contains all
 large integers. Let $A(x)=\lvert A\cap [1,x]\rvert$ and similarly for $B(x)$. Is it true that if

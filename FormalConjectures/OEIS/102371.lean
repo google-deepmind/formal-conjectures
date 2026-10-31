@@ -63,6 +63,7 @@ theorem a_4 : a 4 = 12 := by rfl
 @[category test, AMS 11]
 theorem a_5 : a 5 = 29 := by rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Do we have $a(n) = 2^n - 1 - \operatorname{A105033}(n-1)$ for $n \ge 1$?
 

@@ -42,6 +42,7 @@ distances, i.e. the least `m` with `n ≤ minimalDistinctDistances (EuclideanSpa
 noncomputable def g (d n : ℕ) : ℕ :=
   sInf {m : ℕ | n ≤ minimalDistinctDistances (EuclideanSpace ℝ (Fin d)) m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $g_d(n)$ be minimal such that every collection of $g_d(n)$ points in $\mathbb{R}^d$ determines
 at least $n$ many distinct distances. Estimate $g_d(n)$. In particular, does
@@ -61,6 +62,7 @@ theorem erdos_1089 :
       Tendsto (fun d : ℕ => (g d n : ℝ) / (d : ℝ) ^ (n - 1)) atTop (𝓝 L) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For $n \ge 2$ one has $\binom{d+1}{n-1} + 1 \le g_d(n) \le \binom{d+n-1}{n-1} + 1$ for all
 $d \ge 1$, and $g_d(n) / d^{n-1} \to 1/(n-1)!$ as $d \to \infty$.

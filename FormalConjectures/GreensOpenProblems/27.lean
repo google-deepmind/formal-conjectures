@@ -95,13 +95,15 @@ theorem green_27.variants.lower_be23 :
     ∀ᶠ p in primesAtTop,
       ω p * Real.log (p : ℝ) ≤ m p := by
   sorry
-
+  
 /-- Lower bound: $\log p \log \log p \ll m(p)$ [CY26, Theorem 1.1]. -/
 @[category research solved, AMS 5 11]
 theorem green_27.variants.lower_cy26 :
   (fun p ↦ Real.log (p : ℝ) * Real.log (Real.log (p : ℝ))) =O[primesAtTop] m := by
   sorry
 
+
+set_option linter.style.formal_proof_palomar false in
 /-- Upper bound: $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
 @[category research solved, AMS 5 11,
   formal_proof using lean4 at "https://github.com/mkwatson/unique-sums-notes/blob/d4383f93a52e3a916ccce78d5fb7739c3bf3dabc/Green27Upper/Theorem.lean#L26"]

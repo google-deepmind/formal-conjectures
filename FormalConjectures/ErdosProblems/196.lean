@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 @[expose] public section
 namespace Erdos196
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Must every permutation of $\mathbb{N}$ contain a monotone 4-term arithmetic progression?
 

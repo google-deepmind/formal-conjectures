@@ -70,6 +70,7 @@ Requires all three input values to be pairwise coprime to each other.
 -/
 def PairwiseCoprime (a b c : ℕ) : Prop := Pairwise (Nat.Coprime.onFun ![a, b, c])
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a, b, c$ be three integers which are pairwise coprime. Is every large integer
 the sum of distinct integers of the form $a^k b^l c^m$ ($k, l, m ≥ 0$), none of which

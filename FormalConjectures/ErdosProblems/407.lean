@@ -41,6 +41,7 @@ $n=2^a+3^b+2^c3^d$. -/
 noncomputable def w (n : ℕ) : ℕ :=
   {x : ℕ × ℕ × ℕ × ℕ | 2 ^ x.1 + 3 ^ x.2.1 + 2 ^ x.2.2.1 * 3 ^ x.2.2.2 = n}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $w(n)$ count the number of solutions to
 $$n=2^a+3^b+2^c3^d$$
