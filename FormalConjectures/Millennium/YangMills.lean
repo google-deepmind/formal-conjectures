@@ -246,6 +246,11 @@ def PoincareGroup.actLoop (g : PoincareGroup) (gamma : ClosedLoop4D) : ClosedLoo
   curve := fun s => euclideanTransform g.lorentz g.translation (gamma.curve s)
   periodic := fun s => by simp [gamma.periodic s]
 
+/-- Two Schwartz test functions on Minkowski spacetime have spacelike separated supports
+    if every point where $f(x) \neq 0$ is spacelike separated from every point where $g(y) \neq 0$. -/
+def SchwartzSpacelikeSeparated (f g : SchwartzMap MinkowskiSpace ℂ) : Prop :=
+  ∀ x y : MinkowskiSpace, f x ≠ 0 → g y ≠ 0 → SpacelikeSeparated x y
+
 /- ### 2b. Classical Gauge-Invariant Curvature Polynomials and Perturbative UV Data -/
 
 /-- Specification of the graded commutative algebra of classical gauge-invariant local differential polynomials
@@ -268,6 +273,7 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   Poly : Type
   [commRing : CommRing Poly]
   [algebra : Algebra ℂ Poly]
+  [nontrivial : Nontrivial Poly]
 
   /-- Star involution / Hermitian conjugation on classical curvature polynomials -/
   conj : Poly → Poly
@@ -304,6 +310,8 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   F : Fin 4 → Fin 4 → LiePoly
   F_antisymm : ∀ μ ν : Fin 4, F μ ν = - F ν μ
   F_dim : ∀ μ ν : Fin 4, μ ≠ ν → classicalDimLie (F μ ν) = 2
+  /-- Non-degeneracy: non-zero curvature for distinct spacetime indices -/
+  F_nonzero : ∀ μ ν : Fin 4, μ ≠ ν → F μ ν ≠ 0
 
   /-- Classical spacetime covariant derivative generators $D_\alpha$ of dimension $1$ -/
   covDeriv : Fin 4 → LiePoly →ₗ[ℂ] LiePoly
@@ -374,6 +382,7 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
 
 attribute [instance] CurvaturePolynomialAlgebra.commRing
 attribute [instance] CurvaturePolynomialAlgebra.algebra
+attribute [instance] CurvaturePolynomialAlgebra.nontrivial
 attribute [instance] CurvaturePolynomialAlgebra.addCommGroupLie
 attribute [instance] CurvaturePolynomialAlgebra.moduleLie
 
@@ -401,18 +410,17 @@ def ObservableLabel.conj {G : Type*} [TopologicalSpace G] [Group G] [CompactSimp
 
 /- ### 3. Wightman Axioms for 4D Quantum Yang–Mills Theory -/
 
-/-- Recursive helper applying a finite list of local curvature field operators to a domain state `ψ ∈ D`. -/
-def applyLocalFieldList {G ℋ : Type*} [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G]
-    [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ]
+/-- Recursive helper applying a finite list of smeared local curvature field operators to a domain state `ψ ∈ D`. -/
+noncomputable def applySmearedFieldList {G ℋ : Type*} [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G]
+    [AddCommGroup ℋ] [Module ℂ ℋ]
     (Curv : CurvaturePolynomialAlgebra G)
     (D : Submodule ℂ ℋ)
-    (Φ : Curv.Poly → MinkowskiSpace → (D →ₗ[ℂ] ℋ))
-    (hΦ : ∀ P x (ψ : D), Φ P x ψ ∈ D) :
-    List (Curv.Poly × MinkowskiSpace) → D → D
+    (Φ : Curv.Poly →ₗ[ℂ] SchwartzMap MinkowskiSpace ℂ →ₗ[ℂ] (D →ₗ[ℂ] D)) :
+    List (Curv.Poly × SchwartzMap MinkowskiSpace ℂ) → D → D
   | [], ψ => ψ
-  | (P, x) :: rest, ψ =>
-      let ψ' := applyLocalFieldList Curv D Φ hΦ rest ψ
-      ⟨Φ P x ψ', hΦ P x ψ'⟩
+  | (P, f) :: rest, ψ =>
+      let ψ' := applySmearedFieldList Curv D Φ rest ψ
+      Φ P f ψ'
 
 /-- Recursive helper applying a finite list of Wilson-loop operators to a domain state `ψ ∈ D`. -/
 def applyWilsonList {G ℋ : Type*} [Group G]
@@ -498,128 +506,136 @@ structure WightmanQuantumYangMills (G : Type*) (ℋ : Type*)
                 (inner ℂ (ψ : ℋ) (Momentum 1 ψ)).re,
                 (inner ℂ (ψ : ℋ) (Momentum 2 ψ)).re ] ∈ ClosedForwardLightCone
 
-  /-- (Jaffe–Witten §4, p. 6) Local Quantum Field Operators $\mathcal{O}_P(x)$ in correspondence
-      with gauge-invariant local differential polynomials $P \in \mathrm{Curv.Poly}$ in the
-      curvature $F$ and its covariant derivatives, together with their Schwartz-smeared
-      operator-valued tempered distributions $\mathcal{O}_P(f) : \mathcal{D} \to \mathcal{H}$. -/
-  local_field : Curv.Poly → MinkowskiSpace → (domain →ₗ[ℂ] ℋ)
-  local_field_domain_invariant : ∀ P x (ψ : domain), local_field P x ψ ∈ domain
-  local_smeared_field : Curv.Poly → SchwartzMap MinkowskiSpace ℂ → (domain →ₗ[ℂ] ℋ)
-  local_smeared_domain_invariant : ∀ P f (ψ : domain), local_smeared_field P f ψ ∈ domain
-  local_smeared_tempered : ∀ (P : Curv.Poly) (ψ φ : domain),
+  /-- (Jaffe–Witten §4, p. 6; Streater–Wightman 1964)
+      Local Quantum Fields formulated strictly as Operator-Valued Tempered Distributions
+      mapping each classical curvature polynomial `P` and Schwartz test function `f`
+      to a linear endomorphism of the dense invariant domain `domain ⊆ ℋ`.
+      Pointwise operators do not exist in 4D QFT due to short-distance singularities;
+      all quantum fields are operator-valued tempered distributions. -/
+  smeared_field : Curv.Poly →ₗ[ℂ] (SchwartzMap MinkowskiSpace ℂ →ₗ[ℂ] (domain →ₗ[ℂ] domain))
+
+  /-- Temperedness (Continuity): For each state pair $\psi, \phi \in \mathcal{D}$ and polynomial $P \in \mathrm{Poly}$,
+      the matrix element functional $f \mapsto \langle \phi, \mathcal{O}_P(f)\psi \rangle$ is a tempered distribution on $\mathcal{S}(\mathbb{R}^{1,3})$. -/
+  smeared_field_tempered : ∀ (P : Curv.Poly) (ψ φ : domain),
     ∃ (C : ℝ) (k : ℕ), 0 < C ∧
       ∀ f : SchwartzMap MinkowskiSpace ℂ,
-        ‖inner ℂ (φ : ℋ) (local_smeared_field P f ψ)‖ ≤ C * SchwartzMap.seminorm ℝ k k f
-  /-- Linearity of the operator-valued tempered distribution $\mathcal{O}_P(f)$ in the test function $f$ -/
-  local_smeared_linear_test : ∀ (P : Curv.Poly) (c1 c2 : ℂ)
-    (f1 f2 : SchwartzMap MinkowskiSpace ℂ) (ψ : domain),
-    local_smeared_field P (c1 • f1 + c2 • f2) ψ =
-      c1 • local_smeared_field P f1 ψ + c2 • local_smeared_field P f2 ψ
-  /-- Linearity of the operator-valued tempered distribution $\mathcal{O}_P(f)$ in the polynomial $P$ -/
-  local_smeared_linear_poly : ∀ (c1 c2 : ℂ) (P1 P2 : Curv.Poly)
-    (f : SchwartzMap MinkowskiSpace ℂ) (ψ : domain),
-    local_smeared_field (c1 • P1 + c2 • P2) f ψ =
-      c1 • local_smeared_field P1 f ψ + c2 • local_smeared_field P2 f ψ
-  /-- Integral Compatibility connecting the operator-valued tempered distribution
-      $\mathcal{O}_P(f)$ to the pointwise quantum field $\mathcal{O}_P(x)$ (Streater–Wightman 1964):
-      For any matrix element between domain states $\phi, \psi \in \mathcal{D}$,
-      $\langle \phi, \mathcal{O}_P(f) \psi \rangle = \int_{\mathbb{R}^4} f(x) \langle \phi, \mathcal{O}_P(x) \psi \rangle dx$. -/
-  local_field_smear_compat : ∀ (P : Curv.Poly) (f : SchwartzMap MinkowskiSpace ℂ) (φ ψ : domain),
-    inner ℂ (φ : ℋ) (local_smeared_field P f ψ) =
-      ∫ x : MinkowskiSpace, (f x) * inner ℂ (φ : ℋ) (local_field P x ψ)
+        ‖inner ℂ (φ : ℋ) (smeared_field P f ψ : ℋ)‖ ≤ C * SchwartzMap.seminorm ℝ k k f
 
-  /-- Dimension-Filtered Local Operator Correspondence (Jaffe–Witten §4, p. 6 & Footnote 1):
-      Linearity of the correspondence $P \mapsto \mathcal{O}_P$. -/
-  local_field_linear : ∀ (c1 c2 : ℂ) (P1 P2 : Curv.Poly) (x : MinkowskiSpace) (ψ : domain),
-    local_field (c1 • P1 + c2 • P2) x ψ =
-      c1 • local_field P1 x ψ + c2 • local_field P2 x ψ
+  /-- Faithful Representation: Every non-zero classical polynomial $P \neq 0$ acts non-trivially
+      on the vacuum state through some Schwartz test function $f \in \mathcal{S}(\mathbb{R}^{1,3})$. -/
+  smeared_field_non_trivial : ∀ (P : Curv.Poly),
+    P ≠ 0 → ∃ (f : SchwartzMap MinkowskiSpace ℂ),
+      (smeared_field P f ⟨vacuum, vacuum_in_domain⟩ : ℋ) ≠ 0
 
-  /-- Non-trivial faithful module representation of classical polynomials into local operators:
-      Every non-zero polynomial $P$ has non-zero operator norm on the vacuum sector. -/
-  local_field_non_trivial : ∀ (P : Curv.Poly),
-    P ≠ 0 → ∃ (x : MinkowskiSpace) (ψ : domain),
-      inner ℂ (local_field P x ψ) (local_field (Curv.conj P) x ψ) ≠ 0
+  /-- (W4) Vacuum Cyclicity under Smeared Local Fields:
+      Polynomials of smeared local curvature fields acting on the vacuum $\Omega$ span a dense subspace of $\mathcal{H}$. -/
+  smeared_field_cyclic :
+    Dense ((Submodule.span ℂ (Set.range (fun ops : List (Curv.Poly × SchwartzMap MinkowskiSpace ℂ) =>
+      (applySmearedFieldList Curv domain smeared_field ops
+        ⟨vacuum, vacuum_in_domain⟩ : ℋ)))) : Set ℋ)
 
-  /-- Vacuum Cyclicity under Local Curvature Fields: Finite products of local curvature
-      operators acting on the vacuum $\Omega$ span a dense subspace of $\mathcal{H}$. -/
-  local_vacuum_cyclic :
-    Dense ((Submodule.span ℂ (Set.range (fun ops : List (Curv.Poly × MinkowskiSpace) =>
-      (applyLocalFieldList Curv domain local_field local_field_domain_invariant ops
-        ⟨vacuum, vacuum_in_domain⟩ : ℋ))) : Submodule ℂ ℋ) : Set ℋ)
+  /-- Action of Poincaré transformations on Schwartz test functions by pullback
+      $(g \cdot f)(x) = f(\Lambda^{-1}(x - a))$, characterized by $(g \cdot f)(\Lambda x + a) = f(x)$. -/
+  test_poincare_action : PoincareGroup → (SchwartzMap MinkowskiSpace ℂ →ₗ[ℂ] SchwartzMap MinkowskiSpace ℂ)
+  test_poincare_action_apply : ∀ (g : PoincareGroup) (f : SchwartzMap MinkowskiSpace ℂ) (x : MinkowskiSpace),
+    test_poincare_action g f (euclideanTransform g.lorentz g.translation x) = f x
 
-  /-- Poincaré Covariance of Local Curvature Fields:
-      $U(a, \Lambda) \mathcal{O}_P(x) U(a, \Lambda)^{-1} = \mathcal{O}_{\Lambda \cdot P}(a + \Lambda x)$. -/
-  local_field_poincare_covariant :
-    ∀ (g : PoincareGroup) (P : Curv.Poly) (x : MinkowskiSpace) (ψ : domain),
-      poincare_rep g (local_field P x ψ) =
-        local_field (Curv.transform g.lorentz P)
-          (euclideanTransform g.lorentz g.translation x)
-          ⟨poincare_rep g (ψ : ℋ), poincare_domain_invariant g (ψ : ℋ) ψ.2⟩
+  /-- (W1) Poincaré Covariance of Smeared Local Fields:
+      $U(g) \mathcal{O}_P(f) U(g)^{-1} = \mathcal{O}_{\Lambda \cdot P}(g \cdot f)$ on $\mathcal{D}$. -/
+  smeared_field_poincare_covariant :
+    ∀ (g : PoincareGroup) (P : Curv.Poly) (f : SchwartzMap MinkowskiSpace ℂ) (ψ : domain),
+      poincare_rep g (smeared_field P f ψ : ℋ) =
+        (smeared_field (Curv.transform g.lorentz P) (test_poincare_action g f)
+          ⟨poincare_rep g (ψ : ℋ), poincare_domain_invariant g (ψ : ℋ) ψ.2⟩ : ℋ)
 
-  /-- Microcausality of Local Curvature Fields:
-      Local curvature operators at spacelike separated points commute on $\mathcal{D}$. -/
-  local_field_microcausality : ∀ (P Q : Curv.Poly) (x y : MinkowskiSpace),
-    SpacelikeSeparated x y →
-    ∀ ψ : domain,
-      local_field P x ⟨local_field Q y ψ, local_field_domain_invariant Q y ψ⟩ =
-      local_field Q y ⟨local_field P x ψ, local_field_domain_invariant P x ψ⟩
+  /-- (W3) Microcausality (Locality) of Smeared Fields:
+      Smeared field operators commute on `domain` whenever their test functions have
+      spacelike separated supports. -/
+  smeared_field_local :
+    ∀ (P Q : Curv.Poly) (f g : SchwartzMap MinkowskiSpace ℂ),
+      SchwartzSpacelikeSeparated f g →
+      (smeared_field P f).comp (smeared_field Q g) =
+      (smeared_field Q g).comp (smeared_field P f)
 
-  /-- Local Stress-Energy Tensor Correspondence (Jaffe–Witten §4, p. 6):
-      The local operator $T_{\mu\nu}(x) = \mathcal{O}_{\mathrm{stress\_energy}\,\mu\,\nu}(x)$ is
-      symmetric and non-trivial on $(\mathbb{C}\Omega)^\perp$. -/
-  stress_tensor_symmetric : ∀ (μ ν : Fin 4) (x : MinkowskiSpace) (ψ : domain),
-    local_field (Curv.stress_energy μ ν) x ψ = local_field (Curv.stress_energy ν μ) x ψ
+  /-- Local Stress-Energy Tensor Symmetry (Jaffe–Witten §4, p. 6):
+      $T_{\mu\nu}(f) = T_{\nu\mu}(f)$ on `domain`. -/
+  stress_tensor_symmetric : ∀ (μ ν : Fin 4) (f : SchwartzMap MinkowskiSpace ℂ),
+    smeared_field (Curv.stress_energy μ ν) f =
+    smeared_field (Curv.stress_energy ν μ) f
 
   /-- Stress-Energy Generator Property (Jaffe–Witten §4, p. 6):
-      The energy density component $T_{00}(x)$ generates the Hamiltonian $H$
+      The energy density component $T_{00}(f)$ generates the Hamiltonian $H$
       under spatial slice integration with flat cutoff sequences on the dense domain $\mathcal{D}$. -/
   stress_tensor_generates_hamiltonian : ∀ (ψ : domain),
     ∃ (seq : ℕ → SchwartzMap MinkowskiSpace ℂ),
-      Filter.Tendsto (fun k => local_smeared_field (Curv.stress_energy 0 0) (seq k) ψ)
+      Filter.Tendsto (fun k => (smeared_field (Curv.stress_energy 0 0) (seq k) ψ : ℋ))
         Filter.atTop (nhds (Hamiltonian ψ))
+
+  /-- Pointwise field matrix element (sesquilinear form on `domain × domain`), NOT an
+      operator into `ℋ`. By translation covariance on smooth vectors in `domain`, the matrix
+      element $x \mapsto \langle \phi, \mathcal{O}_P(x)\psi \rangle$ is a smooth function even though
+      $\mathcal{O}_P(x)\psi$ is not a vector in $\mathcal{H}$ (Reed & Simon Vol. II, §X.7). -/
+  local_field_form : Curv.Poly → MinkowskiSpace → domain → domain → ℂ
+  local_field_form_smul_left : ∀ P x (c : ℂ) (φ ψ : domain),
+    local_field_form P x (c • φ) ψ = starRingEnd ℂ c * local_field_form P x φ ψ
+  local_field_form_add_left : ∀ P x (φ1 φ2 ψ : domain),
+    local_field_form P x (φ1 + φ2) ψ = local_field_form P x φ1 ψ + local_field_form P x φ2 ψ
+  local_field_form_smul_right : ∀ P x (c : ℂ) (φ ψ : domain),
+    local_field_form P x φ (c • ψ) = c * local_field_form P x φ ψ
+  local_field_form_add_right : ∀ P x (φ ψ1 ψ2 : domain),
+    local_field_form P x φ (ψ1 + ψ2) = local_field_form P x φ ψ1 + local_field_form P x φ ψ2
+
+  /-- Compatibility between the smeared operator-valued distribution and the pointwise
+      sesquilinear form on `domain`: the matrix element of the smeared operator equals the
+      test-function integral of the pointwise sesquilinear form. -/
+  smeared_field_form_compatibility : ∀ (P : Curv.Poly) (f : SchwartzMap MinkowskiSpace ℂ)
+    (φ ψ : domain),
+    inner ℂ (φ : ℋ) (smeared_field P f ψ : ℋ) =
+      ∫ x : MinkowskiSpace, (f x) * (local_field_form P x φ ψ)
+
+  /-- The vacuum Wightman two-point correlation function $\mathcal{W}_2(P, Q)(x)$ at non-coincident
+      points $x \neq 0$ (smooth on $\mathbb{R}^{1,3} \setminus \{0\}$ by the Bargmann–Hall–Wightman theorem). -/
+  wightman_two_point : Curv.Poly → Curv.Poly → { x : MinkowskiSpace // x ≠ 0 } → ℂ
 
   /-- Short-Distance Asymptotic Freedom of Local Curvature Correlators (Jaffe–Witten §4, p. 6):
       For any non-zero local curvature polynomial $P$ of classical scaling dimension $d = \dim(P) \ge 4$,
-      the vacuum-subtracted short-distance correlation $\langle \Omega, \mathcal{O}_{P^*}(\lambda x) \mathcal{O}_P(0) \Omega \rangle_c$
-      at spacelike separation $x \neq 0$ scales as $\lambda \to 0^+$ according to perturbative
-      asymptotic freedom with power $\lambda^{-2d}$ and logarithmic running coupling power
-      $(-\log \lambda)^{-\gamma_P}$ governed by $b_0 > 0$:
-      $$\lim_{\lambda \to 0^+} \lambda^{2d} (-\log \lambda)^{\gamma_P}
-      \langle \mathcal{O}_P(\lambda x)\Omega_c, \mathcal{O}_P(0)\Omega_c \rangle =
-      \frac{c_P}{\|x\|^{2d}}$$ -/
+      the connected two-point Wightman function at non-coincident spacelike separation scales as
+      $\lambda \to 0^+$ with power $\lambda^{-2d} (-\log \lambda)^{-\gamma_P}$:
+      $$\lim_{\lambda \to 0^+} \lambda^{2d} (-\log \lambda)^{\gamma_P} \operatorname{Re} \mathcal{W}_{2, c}(P^*, P)(\lambda x) = \frac{c_P}{\|x\|^{2d}}$$ -/
   short_distance_asymptotic_freedom :
-    ∀ (P : Curv.Poly) (x : MinkowskiSpace),
-      P ≠ 0 → 4 ≤ Curv.classicalDim P → x ≠ 0 →
-      let v0 : domain := ⟨vacuum, vacuum_in_domain⟩
+    ∀ (P : Curv.Poly) (x : MinkowskiSpace) (hx : x ≠ 0),
+      P ≠ 0 → 4 ≤ Curv.classicalDim P →
       let d := Curv.classicalDim P
       let γ := Curv.anomalous_exponent P
       let c_P := Curv.uv_two_point_coeff P
       Filter.Tendsto
         (fun (scale : ℝ) =>
-          (scale ^ (2 * d)) * ((-Real.log scale) ^ γ) *
-          (inner ℂ (local_field P (scale • x) v0 - (inner ℂ vacuum (local_field P (scale • x) v0)) • vacuum)
-            (local_field P 0 v0 - (inner ℂ vacuum (local_field P 0 v0)) • vacuum)).re)
+          if h_scale : scale ≠ 0 then
+            have h_scaled : scale • x ≠ 0 := smul_ne_zero h_scale hx
+            (scale ^ (2 * d)) * ((-Real.log scale) ^ γ) *
+            (wightman_two_point (Curv.conj P) P ⟨scale • x, h_scaled⟩).re
+          else 0)
         (nhdsWithin 0 (Set.Ioi 0))
         (nhds (c_P / (‖x‖ ^ (2 * d))))
 
   /-- Short-Distance Operator Product Expansion (OPE) (Jaffe–Witten §4, p. 6):
       For any local curvature polynomials $P, Q$ and truncation dimension $D \in \mathbb{N}$,
-      there exists a finite set of basis polynomials $\{R_k\}$ of dimension $\le D$ such that
-      as $\lambda \to 0^+$ ($x \neq 0$), the product $\mathcal{O}_P(y + \lambda x) \mathcal{O}_Q(y)$
-      agrees with the perturbative asymptotic freedom OPE expansion to order $\lambda^{D - \dim P - \dim Q}$. -/
+      there exists a finite set of basis polynomials $\{R_k\}$ of dimension $\le D$ and non-coincident
+      vacuum expectations $v_R$ such that as $\lambda \to 0^+$ ($x \neq 0$), the Wightman function
+      $\mathcal{W}_2(P, Q)(\lambda x)$ agrees with the asymptotic freedom OPE expansion to order $\lambda^{D - \dim P - \dim Q}$. -/
   operator_product_expansion :
-    ∀ (P Q : Curv.Poly) (D : ℕ) (x y : MinkowskiSpace) (ψ φ : domain),
-      x ≠ 0 → Curv.classicalDim P + Curv.classicalDim Q ≤ D →
-      ∃ (basis : Finset Curv.Poly),
+    ∀ (P Q : Curv.Poly) (D : ℕ) (x : MinkowskiSpace) (hx : x ≠ 0),
+      Curv.classicalDim P + Curv.classicalDim Q ≤ D →
+      ∃ (basis : Finset Curv.Poly) (vev : Curv.Poly → ℂ),
         (∀ R ∈ basis, Curv.classicalDim R ≤ D) ∧
         Filter.Tendsto
           (fun (scale : ℝ) =>
-            (scale ^ (Curv.classicalDim P + Curv.classicalDim Q - D : ℤ)) *
-            ‖inner ℂ (φ : ℋ)
-              (local_field P (ofCoords (fun μ => toCoords y μ + scale * toCoords x μ))
-                ⟨local_field Q y ψ, local_field_domain_invariant Q y ψ⟩ -
-               ∑ R ∈ basis,
-                 (Curv.ope_coeff P Q R (scale • x)) • local_field R y ψ)‖)
+            if h_scale : scale ≠ 0 then
+              have h_scaled : scale • x ≠ 0 := smul_ne_zero h_scale hx
+              (scale ^ (Curv.classicalDim P + Curv.classicalDim Q - D : ℤ)) *
+              ‖wightman_two_point P Q ⟨scale • x, h_scaled⟩ -
+                 ∑ R ∈ basis, (Curv.ope_coeff P Q R (scale • x)) * vev R‖
+            else 0)
           (nhdsWithin 0 (Set.Ioi 0))
           (nhds 0)
 
