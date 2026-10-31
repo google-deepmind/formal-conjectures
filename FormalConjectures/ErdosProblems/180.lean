@@ -71,12 +71,13 @@ This is the Erdős–Simonovits compactness conjecture. The answer is no: OpenAI
 family of connected bipartite graphs, none of them acyclic, for which no single member controls
 the family extremal number. See `erdos_180.variants.counterexample`.
 -/
-@[category research solved, AMS 5]
-theorem erdos_180 : answer(False) ↔
-    ∀ family : Finset FiniteGraph,
+@[category research solved, question, AMS 5]
+theorem erdos_180 :
+    ¬ ∀ family : Finset FiniteGraph,
       family.Nonempty → IsCyclicFamily family → IsCompactFamily family := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The counterexample: a nonempty family of connected bipartite graphs, none acyclic, that is not
 compact.

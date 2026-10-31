@@ -71,6 +71,8 @@ def extremalGap (n : ℕ) : ℕ := by
   classical
   exact Nat.findGreatest (AttainableGap n) (Nat.choose n 2)
 
+def erdos_959.answer : ℕ → ℝ := sorry
+
 /--
 Let $A\subseteq \mathbb{R}^2$ be a set of size $n$ and let $\{d_1,\ldots,d_k\}$ be
 the set of distinct distances determined by $A$. Let $f(d)$ be the number of times
@@ -79,11 +81,12 @@ $f(d_1)\geq f(d_2)\geq \cdots \geq f(d_k)$. Estimate
 $$\max (f(d_1)-f(d_2)),$$
 where the maximum is taken over all $A$ of size $n$ (this is `extremalGap n`).
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem erdos_959 :
-    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] erdos_959.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A superlinear lower bound: there is a $c>0$ with
 $$\text{extremalGap}(n)\geq n^{1 + c/\log\log n}$$

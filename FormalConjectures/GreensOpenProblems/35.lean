@@ -64,22 +64,26 @@ def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
   sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
+def green_35.lower.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
+
 /-- Lower bound for $c(p)$ for $1 < p \le \infty$, improving the known value $\sqrt{4/7}$ at
 $p = 2$ or the known value $0.64$ at $p = \infty$. -/
-@[category research open, AMS 26 28 42]
+@[category research open, question value, AMS 26 28 42]
 theorem green_35.lower :
-    let lb : ℝ≥0∞ → ℝ≥0∞ := answer(sorry)
-    (∀ p, 1 < p → lb p ≤ c p) ∧
-      (ENNReal.ofReal (Real.sqrt (4 / 7)) < lb 2 ∨ 0.64 < lb ∞) := by
+    (∀ p, 1 < p → green_35.lower.answer p ≤ c p) ∧
+      (ENNReal.ofReal (Real.sqrt (4 / 7)) < green_35.lower.answer 2 ∨
+        0.64 < green_35.lower.answer ∞) := by
   sorry
+
+noncomputable def green_35.upper.answer : ℝ≥0∞ → ℝ≥0∞ :=
+  fun p ↦ if p = ∞ then 0.7515 else ⊤
 
 /-- Upper bound for $c(p)$ for $1 < p \le \infty$. The TTT-Discover construction gives
 $c(\infty) \le 0.751435$ after rescaling to $[0,1]$ [YD26].
 The answer is informative only at $p = \infty$ and is `⊤` otherwise. -/
-@[category research solved, AMS 26 28 42]
+@[category research solved, question value, AMS 26 28 42]
 theorem green_35.upper :
-    let ub : ℝ≥0∞ → ℝ≥0∞ := answer(fun p : ℝ≥0∞ ↦ if p = ∞ then 0.7515 else ⊤)
-    (∀ p, 1 < p → c p ≤ ub p) ∧ ub ∞ < 0.7516 := by
+    (∀ p, 1 < p → c p ≤ green_35.upper.answer p) ∧ green_35.upper.answer ∞ < 0.7516 := by
   sorry
 
 /-  Known bounds and comparisons. -/

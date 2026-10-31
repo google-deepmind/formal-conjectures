@@ -36,6 +36,9 @@ increasing triples `uₙ < uₙ₊₁ < uₙ₊₂` or decreasing triples `uₙ 
 in the distribution of prime numbers, Springer (2018), 1–21.
 
 [Ma15] Maynard, J., _Small gaps between primes_. Ann. of Math. (2015), 383–413.
+
+[OAI26a] OpenAI, _Positive lower density of large prime gaps_. OpenAI Math Release preprint (2026).
+https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Positive-lower-density-of-large-prime-gaps-September-25-2026/main.pdf
 -/
 
 @[expose] public section
@@ -55,11 +58,16 @@ This corresponds to the classical sequence `(p₁/1, p₂/2, p₃/3, ...)` while
 noncomputable def u (n : ℕ) : ℝ :=
   (n.nth Nat.Prime : ℝ) / (n + 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does the set `{n | u n < u (n+1)}` have positive lower density?
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
+Lean proof.
 -/
-@[category research open, AMS 11]
-theorem erdos_968 : answer(sorry) ↔ 0 < {n : ℕ | u n < u (n + 1)}.lowerDensity := by
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PrimeGaps/RatioCorollary.lean#L30"]
+theorem erdos_968 : 0 < {n : ℕ | u n < u (n + 1)}.lowerDensity := by
   sorry
 
 /--
@@ -91,9 +99,9 @@ infinitely many `n` with two consecutive prime gaps larger than `pₙ / n ∼ lo
 and Tao [FMT18] proved that for every fixed `k` there are infinitely many `n` with `k` consecutive
 prime gaps all of size `≫ log pₙ · log log pₙ · log log log log pₙ / log log log pₙ`.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_968.variants.infinite_increasingTriples :
-    answer(True) ↔ {n : ℕ | u n < u (n + 1) ∧ u (n + 1) < u (n + 2)}.Infinite := by
+    {n : ℕ | u n < u (n + 1) ∧ u (n + 1) < u (n + 2)}.Infinite := by
   sorry
 
 /--
@@ -103,9 +111,9 @@ The answer is yes. Since `uₙ > uₙ₊₁` is equivalent to `pₙ₊₁ - pₙ
 infinitely many `n` with `pₙ₊₂ - pₙ` bounded, because `pₙ / n → ∞`. Maynard [Ma15] proved that
 `liminf (pₙ₊₂ - pₙ) < ∞`.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_968.variants.infinite_decreasingTriples :
-    answer(True) ↔ {n : ℕ | u n > u (n + 1) ∧ u (n + 1) > u (n + 2)}.Infinite := by
+    {n : ℕ | u n > u (n + 1) ∧ u (n + 1) > u (n + 2)}.Infinite := by
   sorry
 
 end Erdos968

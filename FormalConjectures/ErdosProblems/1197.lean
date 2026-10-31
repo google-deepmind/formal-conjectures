@@ -35,6 +35,7 @@ open scoped Pointwise
 
 namespace Erdos1197
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $E\subset (0,\infty)$ be a set of positive measure. Is it true that, for almost all $x>0$,
 for all sufficiently large (depending on $x$) integers $n$ there exists an integer $r\geq 1$ such
@@ -56,9 +57,9 @@ sufficiently large (depending on $x$) $n$.
 This was solved in the negative by ebarschkis in the comments, who constructed a counterexample
 using a variant of the Buczolich-Mauldin construction.
 -/
-@[category research solved, AMS 11 28, formal_proof using lean4 at
+@[category research solved, question, AMS 11 28, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1197.lean#L705"]
-theorem erdos_1197 : answer(False) ↔ ∀ E : Set ℝ, MeasurableSet E → E ⊆ Set.Ioi 0 → 0 < volume E →
+theorem erdos_1197 : ¬ ∀ E : Set ℝ, MeasurableSet E → E ⊆ Set.Ioi 0 → 0 < volume E →
     ∀ᵐ x ∂(volume.restrict (Set.Ioi (0 : ℝ))), ∀ᶠ n : ℕ in atTop,
       ∃ r : ℕ, 1 ≤ r ∧ (n : ℝ) * x ∈ (r : ℝ) • E := by
   sorry
