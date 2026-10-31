@@ -54,21 +54,25 @@ noncomputable def maxEdges (n : ℕ) : ℕ :=
   sSup {m | ∃ G : SimpleGraph (Fin n), ¬ HasTwoEdgeDisjointCyclesSameVertexSet G ∧
     G.edgeSet.ncard = m}
 
+def erdos_585.answer (n : ℕ) : ℕ := sorry
+
 /--
 What is the maximum number of edges that a graph on $n$ vertices can have if it does not contain
 two edge-disjoint cycles with the same vertex set?
 -/
-@[category research open, AMS 5]
-theorem erdos_585 : ∀ n, maxEdges n = (answer(sorry) : ℕ → ℕ) n := by
+@[category research open, question value, AMS 5]
+theorem erdos_585 : ∀ n, maxEdges n = erdos_585.answer n := by
   sorry
+
+def erdos_585.variants.isTheta.answer : ℕ → ℝ := sorry
 
 /--
 What is the maximum number of edges that a graph on $n$ vertices can have if it does not contain
 two edge-disjoint cycles with the same vertex set? Here the question asks for the order of growth.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_585.variants.isTheta :
-    (fun n ↦ (maxEdges n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n ↦ (maxEdges n : ℝ)) =Θ[atTop] erdos_585.variants.isTheta.answer := by
   sorry
 
 /--
