@@ -22,9 +22,17 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/1191](https://www.erdosproblems.com/1191)
+- [Er55] Stöhr, Alfred, *Gelöste und ungelöste Fragen über Basen der natürlichen Zahlenreihe. II*.
+  J. Reine Angew. Math. 194 (1955), 111-140.
+- [ErRe60] Erdős, P. and Rényi, A., *Additive properties of random sequences of positive integers*.
+  Acta Arith. 6 (1960), 83-110.
+- [HaRo66] Halberstam, H. and Roth, K. F., *Sequences. Vol. I*. (1966), xx+291.
 - [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
   (1980), 89-115.
-- [HaRo66] Halberstam, H. and Roth, K. F., *Sequences. Vol. I*. (1966), xx+291.
+- [Pa26] Parobek, Lucas, *Unconditional Diophantine Haar Closure, Exact Harmonic-Difference
+  Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191*. (2026),
+  [Manuscript PDF](https://github.com/doublegate/Erdos_1191/blob/main/paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf),
+  [github.com/doublegate/Erdos_1191](https://github.com/doublegate/Erdos_1191).
 -/
 
 @[expose] public section
@@ -38,7 +46,11 @@ Let $A\subset\mathbb{N}$ be an infinite Sidon set. Is it true that
 $$\liminf_{x\to \infty} \frac{\lvert A\cap [1,x]\rvert}{x^{1/2}}(\log x)^{1/2}=0?$$
 
 Here $x$ runs over $\mathbb{N}$ and the $\liminf$ is taken in `ℝ≥0∞`, so that it is $\infty$
-rather than $0$ when the sequence tends to infinity.
+rather than $0$ when the sequence tends to infinity. See [Pa26] for exact harmonic-difference
+conservation, cross-shell Laplace–Fejér bilinear inequalities, KKT convex-cone increment
+minimization, and discrete Legendre–Fenchel / Diophantine Haar sawtooth identities reducing the
+unconditional dyadic upper bound to $c_\infty^*(1^+) = 2$ with explicit finite-density sawtooth
+sharpenings at bounded occupancy $\mu_1 = O(1)$.
 -/
 @[category research open, question, AMS 5 11]
 theorem erdos_1191.parts.i : ∀ A : Set ℕ, A.Infinite → IsSidon A →
@@ -60,7 +72,23 @@ theorem erdos_1191.parts.ii : ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧
   sorry
 
 /--
-Erdős proved (see for example [HaRo66]) that if $A$ is an infinite Sidon set then
+An affirmative answer to `erdos_1191.parts.i` immediately rules out the $c = 1/2$ case of
+`erdos_1191.parts.ii`.
+-/
+@[category API, AMS 5 11]
+theorem erdos_1191.variants.parts_i_implies_not_parts_ii_half
+    (h : ∀ A : Set ℕ, A.Infinite → IsSidon A →
+      liminf (fun x : ℕ ↦ ENNReal.ofReal
+        ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ (1 / 2 : ℝ))) atTop = 0) :
+    ¬ ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧
+      0 < liminf (fun x : ℕ ↦ ENNReal.ofReal
+        ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ (1 / 2 : ℝ))) atTop := by
+  rintro ⟨A, hAinf, hAsid, hpos⟩
+  rw [h A hAinf hAsid] at hpos
+  exact lt_irrefl 0 hpos
+
+/--
+Erdős proved (see for example [Er55] and [HaRo66]) that if $A$ is an infinite Sidon set then
 $$\liminf_{x\to \infty} \frac{\lvert A\cap [1,x]\rvert}{x^{1/2}}(\log x)^{1/2}\leq c$$
 for some constant $c>0$. See also `erdos_158.variants.isSidon'`.
 -/
@@ -70,5 +98,282 @@ theorem erdos_1191.variants.liminf_le {A : Set ℕ} (hAinf : A.Infinite) (hAsid 
       ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ (1 / 2 : ℝ))) atTop ≤
         ENNReal.ofReal c := by
   sorry
+
+/--
+An affirmative answer to `erdos_1191.parts.i` immediately implies `erdos_1191.variants.liminf_le`
+with any $c > 0$.
+-/
+@[category API, AMS 5 11]
+theorem erdos_1191.variants.parts_i_implies_liminf_le
+    (h : ∀ A : Set ℕ, A.Infinite → IsSidon A →
+      liminf (fun x : ℕ ↦ ENNReal.ofReal
+        ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ (1 / 2 : ℝ))) atTop = 0)
+    {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
+    ∃ c > (0 : ℝ), liminf (fun x : ℕ ↦ ENNReal.ofReal
+      ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ (1 / 2 : ℝ))) atTop ≤
+        ENNReal.ofReal c := by
+  refine ⟨1, zero_lt_one, ?_⟩
+  rw [h A hAinf hAsid]
+  exact zero_le
+
+/-! ## Arithmetic Lemmas & Certified Sidon Witnesses Used in [Pa26] -/
+
+/--
+**Arithmetic Lemma for Theorem 2.1(a) of [Pa26] (Harmonic-Difference Numerator Identity):**
+For any natural numbers $1 \le a_i < a_j$ with difference $d = a_j - a_i$,
+the numerator identity $(d + 1) + (a_i - 1) = a_j$ holds on $\mathbb{N}$ (used to derive the
+partial-fraction decomposition $\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a_j} = \frac{1}{a_j - a_i + 1}$
+in Theorem 2.1(a) of [Pa26]).
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L34"]
+theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
+    (h_pos : 1 ≤ a_i) (h_lt : a_i < a_j) (h_diff : d = a_j - a_i) :
+    (d + 1) + (a_i - 1) = a_j := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.2(a) of [Pa26] (Two-Shell Difference Localization Bound):**
+For natural numbers $x, y, \text{pow\_km2}$ satisfying $1 \le x \le \text{pow\_km2}$ and
+$2 \cdot \text{pow\_km2} < y \le 4 \cdot \text{pow\_km2}$, the difference $y - x$ satisfies
+$\text{pow\_km2} < y - x < 4 \cdot \text{pow\_km2}$ (used to localize cross-shell differences
+into $D_{k-1} \cup D_k$ when $\text{pow\_km2} = 2^{k-2}$ in Theorem 2.2(a) of [Pa26]).
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L48"]
+theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ)
+    (hx_pos : 1 ≤ x)
+    (hx_hi : x ≤ pow_km2)
+    (hy_lo : 2 * pow_km2 < y)
+    (hy_hi : y ≤ 4 * pow_km2) :
+    pow_km2 < y - x ∧ y - x < 4 * pow_km2 := by
+  sorry
+
+/--
+Recursive integer sum $S(0) = 0$, $S(M + 1) = 2 S(M) + 2(M + 1)$, representing the
+$2^M$-scaled sum $\sum_{k=1}^M k \cdot 2^{M - k + 1}$ evaluated on the powers-of-two
+sequence $A = \{2^n : n \ge 0\}$ ($m_k = 1, A(2^{k-1}) = k$) in Remark 2.3 of [Pa26].
+-/
+def powersOfTwoScaledBilinear : ℕ → ℕ
+  | 0 => 0
+  | M + 1 => 2 * powersOfTwoScaledBilinear M + 2 * (M + 1)
+
+/--
+**Arithmetic Lemma for Remark 2.3 of [Pa26] (Closed-Form Identity for `powersOfTwoScaledBilinear`):**
+For every $M \ge 0$, the recursively defined integer sum `powersOfTwoScaledBilinear M`
+satisfies the exact closed-form identity
+$\text{powersOfTwoScaledBilinear}(M) + 2M + 4 = 2^{M + 2}$
+(used to evaluate the powers-of-two bilinear sum in Remark 2.3 of [Pa26]).
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L72"]
+theorem erdos_1191.variants.powers_of_two_bilinear_identity (M : ℕ) :
+    powersOfTwoScaledBilinear M + 2 * M + 4 = 2 ^ (M + 2) := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.2(b) & Remark 2.3 of [Pa26] (Upper Bound on `powersOfTwoScaledBilinear`):**
+For every $M \ge 1$, the recursively defined sum `powersOfTwoScaledBilinear M` satisfies
+$\text{powersOfTwoScaledBilinear}(M) \le (M + 1) 2^M - 2$
+(certifying $22 \le 30$ at $M = 3$ for the $2^M$-scaled powers-of-two sum in Remark 2.3 of [Pa26]).
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L89"]
+theorem erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound (M : ℕ) (hM : 1 ≤ M) :
+    powersOfTwoScaledBilinear M ≤ (M + 1) * 2 ^ M - 2 := by
+  sorry
+
+/--
+**Arithmetic Lemma for Lemma 2.4 of [Pa26] (Quadratic Polynomial Inequality for $k \ge 4$):**
+For every natural number $k \ge 4$, $16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and
+$16 k^2 < 18(k^2 - 1)$. In Lemma 2.4 of [Pa26], this integer inequality is used to verify
+that $\frac{1}{\sqrt{k-1}} + \frac{1}{\sqrt{k+1}} < \frac{3}{\sqrt{2k}}$ for all $k \ge 4$
+(alongside $9 > 8$ at $k = 3$) when establishing positivity of the KKT multipliers
+$\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1})$.
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L111"]
+theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤ k) :
+    16 * (k * k) + 2 * (k * k - 9) = 18 * (k * k - 1) ∧
+    16 * (k * k) < 18 * (k * k - 1) := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.5(b) & Theorem 2.11(c) of [Pa26] (Binary Sub-Block Variance Refinement Identity):**
+For any natural numbers $S_1, S_2 \in \mathbb{N}$, $2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2$
+(encoded in Lean via truncated subtraction on $\mathbb{N}$ as $(S_1 - S_2)^2 + (S_2 - S_1)^2$, where one of
+$S_1 - S_2$ or $S_2 - S_1$ is zero), and hence $(S_1 + S_2)^2 \le 2(S_1^2 + S_2^2)$. This provides the
+arithmetic step used in the sub-block refinement bound $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$ of [Pa26].
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L128"]
+theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
+    2 * (S1 * S1 + S2 * S2) =
+      (S1 + S2) * (S1 + S2) + (S1 - S2) * (S1 - S2) + (S2 - S1) * (S2 - S1) ∧
+    (S1 + S2) * (S1 + S2) ≤ 2 * (S1 * S1 + S2 * S2) := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.6(a) of [Pa26] (Discrete Legendre–Fenchel Remainder Decomposition):**
+For any natural numbers $B, q, r \in \mathbb{N}$ with $r \le B$, the two-level sum
+$(B - r) q(q - 1) + r(q + 1) q$ satisfies the exact algebraic decomposition
+$(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q$
+(used to evaluate the minimum ordered-pair count over $B$ integer buckets of sum $S = B q + r$ in Theorem 2.6(a) of [Pa26]).
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L216"]
+theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
+    (hr : r ≤ B) :
+    (B - r) * (q * (q - 1)) + r * ((q + 1) * q) =
+      B * (q * (q - 1)) + 2 * (r * q) := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.6(b) of [Pa26] (Squared-Total Discrete Legendre–Fenchel Integrality Identity):**
+For any natural numbers $B, q, r \in \mathbb{N}$ with $r \le B$,
+$B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$,
+separating the quadratic term $(B q + r)^2$ from the remainder product $r(B - r)$ in Theorem 2.6(b) of [Pa26].
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L235"]
+theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
+    (hr : r ≤ B) :
+    B * (B * (q * q) + 2 * (r * q)) + B * r =
+      (B * q + r) * (B * q + r) + r * (B - r) := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.6(c) of [Pa26] (Karamata Integer Convexity / Robin-Hood Smoothing Step):**
+Whenever two natural numbers satisfy $x_1 \ge x_2 + 2$, replacing $(x_1, x_2)$ by $(x_1 - 1, x_2 + 1)$
+satisfies $(x_1 - 1)(x_1 - 2) + (x_2 + 1)x_2 + 2(x_1 - x_2 - 1) = x_1(x_1 - 1) + x_2(x_2 - 1)$,
+giving the elementary Robin-Hood smoothing step in Theorem 2.6(c) of [Pa26].
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L258"]
+theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 + 2 ≤ x1) :
+    (x1 - 1) * (x1 - 2) + (x2 + 1) * x2 + 2 * (x1 - x2 - 1) =
+      x1 * (x1 - 1) + x2 * (x2 - 1) := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.6(d) & Theorem 2.11(c) of [Pa26] (Quarter-Square Identity & Bound):**
+For any natural numbers $B, r \in \mathbb{N}$ with $r \le B$, the scaled product $4 r(B - r)$
+plus the single square $(2r - B)^2$ (encoded in Lean via truncated subtraction on $\mathbb{N}$
+as $(2r - B)^2 + (B - 2r)^2$, where one of $2r - B$ or $B - 2r$ is zero) equals $B^2$, and hence
+$4 r(B - r) \le B^2$. This provides the arithmetic bound $r(B - r) \le B^2 / 4$ used to bound the
+relative integrality excess $r(B - r)/S^2 \le 1/(4\mu^2)$ ($\mu = S/B$) in [Pa26].
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L287"]
+theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr : r ≤ B) :
+    4 * (r * (B - r)) + (2 * r - B) * (2 * r - B) + (B - 2 * r) * (B - 2 * r) = B * B ∧
+    4 * (r * (B - r)) ≤ B * B := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.7(a) of [Pa26] (Order-2 Cesàro–Fejér Hockey-Stick Recurrence):**
+For every $m \in \mathbb{N}$, $m(m - 1) + 2 m = (m + 1) m$, giving the arithmetic recurrence step
+for the unweighted Order-2 Cesàro–Fejér sum $\sum_{w=1}^W \max(w - d, 0) = \binom{W - d + 1}{2}$
+(with $d = |x - y| < W$) in Theorem 2.7(a) of [Pa26].
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L356"]
+theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
+    m * (m - 1) + 2 * m = (m + 1) * m := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.9(a) of [Pa26] (Scale-Invariant Block-Window Exponent Identity):**
+For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
+the sliding-window width exponent $k - (s + r)$ and sub-block count exponent $(s + r) - 1$
+sum to $k - 1$ independently of $s$ and $r$.
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L372"]
+theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
+    (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
+    (k - (s + r)) + ((s + r) - 1) = k - 1 := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.9(b) of [Pa26] (Scale-Invariant Block-Window Product Identity):**
+For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
+the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r - 1}$
+satisfy $w \cdot B = 2^{k - 1} = |I_k|$ across all scales $s$ and octaves $r$.
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L383"]
+theorem erdos_1191.variants.scale_invariant_block_window_product (k s r : ℕ)
+    (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
+    2 ^ (k - (s + r)) * 2 ^ ((s + r) - 1) = 2 ^ (k - 1) := by
+  sorry
+
+/--
+**Arithmetic Lemma for Theorem 2.11(b) of [Pa26] (Hyperfactorial Sawtooth Abel Coefficient Identity):**
+For every integer period $m \ge 1$, $m(m + 1) - (m - 1)m = 2m$, giving the coefficient step used
+when telescoping the piecewise logarithmic integrals of $\{u\}(1 - \{u\})/u$ in Theorem 2.11(b) of [Pa26].
+-/
+@[category API, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/doublegate/Erdos_1191/blob/faf0ce94febe33568b6b08e4a07a6ca593b83288/Erdos1191/Proofs.lean#L397"]
+theorem erdos_1191.variants.hyperfactorial_sawtooth_abel_step (m : ℕ) (hm : 1 ≤ m) :
+    m * (m + 1) - (m - 1) * m = 2 * m := by
+  sorry
+
+/--
+**Section 4 of [Pa26] (Bit-Reversed Shift Difference Identity):**
+In a 64-bit register holding $\mathrm{rev\_mask} = \sum_{a \in A} 2^{63 - a}$, right-shifting by $63 - x$
+places the bit for $a < x \le 63$ at bit position $(63 - a) - (63 - x) = x - a$.
+-/
+@[category API, AMS 5 11]
+theorem erdos_1191.variants.bitshift_sidon_difference_index (a x : ℕ) (h_lt : a < x) (h_hi : x ≤ 63) :
+    (63 - a) - (63 - x) = x - a := by
+  omega
+
+/-- All positive pairwise differences of a list of natural numbers. -/
+def allPositiveDiffs : List ℕ → List ℕ
+  | [] => []
+  | a :: rest => (rest.map (fun b => b - a)) ++ allPositiveDiffs rest
+
+/-- Boolean check that a list of natural numbers is strictly increasing. -/
+def isStrictlyIncreasing : List ℕ → Bool
+  | [] => true
+  | [_] => true
+  | a :: b :: rest => (a < b) && isStrictlyIncreasing (b :: rest)
+
+/-- Boolean check that a list of natural numbers contains no duplicate entries. -/
+def hasNoDuplicates : List ℕ → Bool
+  | [] => true
+  | d :: rest => !(rest.contains d) && hasNoDuplicates rest
+
+/-- Boolean Sidon legality checker over a finite list of strictly increasing naturals. -/
+def isCertifiedSidon (A : List ℕ) : Bool :=
+  isStrictlyIncreasing A && hasNoDuplicates (allPositiveDiffs A)
+
+/-- First 10 terms of the Mian–Chowla greedy Sidon sequence (OEIS `A005282`). -/
+def mianChowlaPrefix10 : List ℕ := [1, 2, 4, 8, 13, 21, 31, 45, 66, 81]
+
+/--
+Machine-checked verification that the first 10 terms of the Mian–Chowla greedy sequence
+$[1, 2, 4, 8, 13, 21, 31, 45, 66, 81]$ ([Pa26, Table 1], OEIS `A005282`) form a valid Sidon set
+with $\binom{10}{2} = 45$ distinct positive differences.
+-/
+@[category test, AMS 5 11]
+theorem mianChowlaPrefix10_is_sidon :
+    isCertifiedSidon mianChowlaPrefix10 = true ∧
+    (allPositiveDiffs mianChowlaPrefix10).length = 45 := by
+  decide
+
+/-- Optimal maximin lower-envelope Sidon witness $A^* = \{1, 2, 5, 7, 14, 22, 32\}$ at $N = 32$. -/
+def maximinWitnessN32 : List ℕ := [1, 2, 5, 7, 14, 22, 32]
+
+/--
+Machine-checked verification that the maximin witness $A^* = [1, 2, 5, 7, 14, 22, 32]$ at $N = 32$
+([Pa26, Table 2]) is a valid Sidon set with all $\binom{7}{2} = 21$ positive differences distinct.
+-/
+@[category test, AMS 5 11]
+theorem maximinWitnessN32_is_sidon :
+    isCertifiedSidon maximinWitnessN32 = true ∧
+    (allPositiveDiffs maximinWitnessN32).length = 21 := by
+  decide
 
 end Erdos1191
