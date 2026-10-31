@@ -31,6 +31,9 @@ public import FormalConjecturesUtil
   Formal Proof Search* by George Tsoukalas et al.
 - [CFS26] Campos, M., Fox, J. and Schildkraut, C., A new lower bound for two-color van der Waerden
   numbers. [arXiv:2608.20824](https://arxiv.org/abs/2608.20824) (2026).
+- [OAI26] OpenAI, *Quantitative Superexponential Bounds for van der Waerden Numbers*. OpenAI Math
+  Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Quantitative-Superexponential-Bounds-for-van-der-Waerden-Numbers-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -74,21 +77,26 @@ must contain a monochromatic arithmetic progression of length `k`.
 noncomputable abbrev W : ℕ → ℕ := monoAPNumber 2
 
 @[category test, AMS 11,
-formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/6c7a16e8998d1c597fa2a5c6329bc9301fcc56e2/FormalConjectures/ErdosProblems/138.lean#L79"]
+formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/55a6458d655c56201904e417d25d7289dc7c5306/FormalConjectures/ErdosProblems/138.lean#L79"]
 theorem monoAPNumber_two_one : W 1 = 1 := by
   sorry
 
 @[category test, AMS 11,
-formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/6c7a16e8998d1c597fa2a5c6329bc9301fcc56e2/FormalConjectures/ErdosProblems/138.lean#L142"]
+formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/55a6458d655c56201904e417d25d7289dc7c5306/FormalConjectures/ErdosProblems/138.lean#L142"]
 theorem monoAPNumber_two_two : W 2 = 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er80] Erdős asks whether
 $$ \lim_{k \to \infty} (W(k))^{1/k} = \infty $$
+
+Yes. This was proved by an internal OpenAI model in September 2026 [OAI26], which shows
+$W(k) > k^{k/100000}$ for all large $k$; see the linked Lean proof.
 -/
-@[category research open, AMS 11]
-theorem erdos_138 : answer(sorry) ↔ atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/ProgressionColoring/Main.lean#L12"]
+theorem erdos_138 : atTop.Tendsto (fun k => (W k : ℝ)^(1/(k : ℝ))) atTop := by
   sorry
 
 
@@ -109,22 +117,24 @@ theorem erdos_138.variants.upper (k : ℕ) : W k ≤ 2 ^ (2 ^ (2 ^ 2 ^ 2 ^ (k + 
 /--
 In [Er81] Erdős asks whether $\frac{W(k+1)}{W(k)} \to \infty$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_138.variants.quotient :
-    answer(sorry) ↔ atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
+    atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er81] Erdős asks whether $W(k+1) - W(k) \to \infty$.
 
 The DeepMind prover agent has found a formal proof of this statement.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/6ac8d0cbe1a85e71747c62c1391a84788015ebc1/FormalConjectures/ErdosProblems/138.lean#L844"]
 theorem erdos_138.variants.difference :
-    answer(True) ↔ atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
+    atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er80] Erdős asks whether $W(k)/2^k\to \infty$.
 
@@ -137,9 +147,9 @@ Solved: a Lean 4 proof, derived from the Atlas proofs in
 [facebookresearch/atlas-lean](https://github.com/facebookresearch/atlas-lean), is linked in
 `formal_proof`.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/niketp03/atlas-fc-verified/blob/15e4b3a7584e218cec531aeaf71cce72a8a9ecb1/AtlasFCSolutions/Erdos138.lean#L1033"]
 theorem erdos_138.variants.dvd_two_pow :
-    answer(True) ↔ atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
+    atTop.Tendsto (fun k => ((W k : ℚ)/ (2 ^ k))) atTop := by
   sorry

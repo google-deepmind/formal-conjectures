@@ -35,15 +35,16 @@ open Filter SimpleGraph
 
 namespace Erdos801
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $G$ is a graph on $n$ vertices containing no independent set on $>n^{1/2}$ vertices then there
 is a set of $\leq n^{1/2}$ vertices containing $\gg n^{1/2}\log n$ edges.
 
 Proved by Alon [Al96b].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos801.lean#L1841"]
-theorem erdos_801 : answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
+theorem erdos_801 : ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
     ∀ G : SimpleGraph (Fin n), (G.indepNum : ℝ) ≤ √n →
       ∃ S : Finset (Fin n), (S.card : ℝ) ≤ √n ∧
         c * √n * Real.log n ≤ (G.induce (S : Set (Fin n))).edgeSet.ncard := by

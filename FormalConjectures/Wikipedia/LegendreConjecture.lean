@@ -34,11 +34,12 @@ namespace LegendreConjecture
 /--
 Does there always exist at least one prime between consecutive perfect squares?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem legendre_conjecture :
-    answer(sorry) ↔ ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
+    ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If there exists a constant `c > 0` such that
 `(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all large `n`,

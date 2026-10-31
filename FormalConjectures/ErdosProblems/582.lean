@@ -62,6 +62,7 @@ def EdgeRamseyTriangle {V : Type*} (G : SimpleGraph V) : Prop :=
     ∃ (u v w : V) (huv : G.Adj u v) (hvw : G.Adj v w) (huw : G.Adj u w),
       c ⟨s(u, v), huv⟩ = c ⟨s(v, w), hvw⟩ ∧ c ⟨s(v, w), hvw⟩ = c ⟨s(u, w), huw⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a graph $G$ which contains no $K_4$, and yet any $2$-colouring of the edges
 produces a monochromatic $K_3$?
@@ -72,8 +73,8 @@ often called Folkman numbers.) The current best bounds on the minimal number of 
 such a graph are $21 \leq N \leq 786$, where the lower bound is due to Bikov and Nenov [BiNe20]
 and the upper bound is due to Lange, Radziszowski, and Xu [LRX14].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos582.lean"]
-theorem erdos_582 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos582.lean"]
+theorem erdos_582 :
     ∃ (V : Type*) (_ : Fintype V) (G : SimpleGraph V),
       G.CliqueFree 4 ∧ EdgeRamseyTriangle G := by
   sorry

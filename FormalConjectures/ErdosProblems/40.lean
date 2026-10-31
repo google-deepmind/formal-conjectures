@@ -41,14 +41,16 @@ def Erdos40For (g : ℕ → ℝ) : Prop :=
     (fun N : ℕ ↦ √N / g N) =O[atTop] (fun N ↦ ((A ∩ .Icc 1 N).ncard : ℝ)) →
     limsup (fun N ↦ (sumRep A N : ℕ∞)) atTop = ⊤
 
+def erdos_40.answer : Set (ℕ → ℝ) := sorry
+
 /--
 For what functions $g(N) → \infty$ is it true that
 $$\lvert A\cap \{1,\ldots,N\}\rvert \gg \frac{N^{1/2}}{g(N)}$$
 implies $\limsup 1_A\ast 1_A(n)=\infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_40 :
-    {g : ℕ → ℝ | Tendsto g atTop atTop ∧ Erdos40For g} = answer(sorry) := by
+    {g : ℕ → ℝ | Tendsto g atTop atTop ∧ Erdos40For g} = erdos_40.answer := by
   sorry
 
 /--
@@ -61,9 +63,9 @@ the implication for even one $g(N) → \infty$ already answers Erdős Problem 28
 positively, because a basis of order $2$ satisfies
 $\lvert A\cap \{1,\ldots,N\}\rvert \gg N^{1/2}$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_40.variants.weaker :
-    answer(sorry) ↔ ∃ g : ℕ → ℝ, Tendsto g atTop atTop ∧ Erdos40For g := by
+    ∃ g : ℕ → ℝ, Tendsto g atTop atTop ∧ Erdos40For g := by
   sorry
 
 /--

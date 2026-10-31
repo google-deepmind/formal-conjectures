@@ -42,6 +42,7 @@ open scoped ArithmeticFunction.sigma
 
 namespace Erdos418
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many integers not of the form $n - \phi(n)$?
 
@@ -54,8 +55,8 @@ This is discussed in problem B36 of Guy's collection [Gu04].
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos418.lean"]
-theorem erdos_418 : answer(True) ↔ { (n - n.totient : ℕ) | n }ᶜ.Infinite := by
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos418.lean"]
+theorem erdos_418 : { (n - n.totient : ℕ) | n }ᶜ.Infinite := by
   sorry
 
 /--
@@ -134,9 +135,9 @@ theorem erdos_418.variants.soln :
 /--
 It is open whether the set of non-cototients has positive (lower) density.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_418.variants.density :
-    answer(sorry) ↔ 0 < { (n - n.totient : ℕ) | n }ᶜ.lowerDensity := by
+    0 < { (n - n.totient : ℕ) | n }ᶜ.lowerDensity := by
   sorry
 
 end Erdos418

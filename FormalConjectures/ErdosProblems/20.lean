@@ -50,12 +50,13 @@ theorem f_0_1 : f 0 1 = 1 := by
 /--
 Is it true that $f(n,k) < c_k^n$ for some constant $c_k>0$ and for all $n > 0$?
 -/
-@[category research open, AMS 5]
-theorem erdos_20 : answer(sorry) ↔ ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f n k < (c k) ^ n := by
+@[category research open, question, AMS 5]
+theorem erdos_20 : ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f n k < (c k) ^ n := by
   sorry
 
 -- TODO(firsching): add the various known bounds as variants.
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Rado [ErRa60] proved the factorial upper bound for the $k$-sunflower
 threshold: any family of $n$-uniform sets with more than $(k-1)^n \, n!$ members

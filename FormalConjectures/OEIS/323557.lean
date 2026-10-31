@@ -77,6 +77,7 @@ lemma a_3 : a 3 = -2 := by rfl
 lemma a_4 : a 4 = 2 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: Odd terms occur only at positions $n(n+1)$ for $n \ge 0$ (verified for initial 32600 terms).
 

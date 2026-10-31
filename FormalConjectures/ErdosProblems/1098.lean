@@ -40,6 +40,7 @@ def nonCommutingGraph (G : Type*) [Group G] : SimpleGraph G where
 theorem nonCommutingGraph_adj {G : Type*} [Group G] (g h : G) :
     (nonCommutingGraph G).Adj g h ↔ g * h ≠ h * g := Iff.rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a group and $\Gamma=\Gamma(G)$ be the non-commuting graph, with vertices the elements
 of $G$ and an edge between $g$ and $h$ if and only if $g$ and $h$ do not commute, $gh\neq hg$.
@@ -51,8 +52,8 @@ This was solved by Neumann [Ne76], who proved that $\Gamma$ contains no infinite
 if and only if the centre of the group has finite index, and noted that if the centre has index $n$
 then $\Gamma$ contains no complete subgraph on $>n$ vertices.
 -/
-@[category research solved, AMS 5 20, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1098.lean"]
-theorem erdos_1098 : answer(True) ↔
+@[category research solved, question, AMS 5 20, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1098.lean"]
+theorem erdos_1098 :
     ∀ (G : Type*) [Group G],
       (∀ s : Set G, (nonCommutingGraph G).IsClique s → s.Finite) →
         ∃ n : ℕ, ∀ s : Finset G, (nonCommutingGraph G).IsClique (s : Set G) → s.card ≤ n := by
