@@ -37,6 +37,7 @@ open scoped Pointwise
 
 namespace Erdos333
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be a set of density zero. Does there exist a $B$ such that
 $A\subseteq B+B$ and

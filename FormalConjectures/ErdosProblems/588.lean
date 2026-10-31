@@ -73,7 +73,8 @@ theorem erdos_588 :
 The trivial upper bound, by counting pairs of points: for $k \geq 2$,
 $$f_k(n) \cdot k(k-1) \leq n(n-1).$$
 -/
-@[category textbook, AMS 52]
+@[category textbook, AMS 52, formal_proof using lean4 at
+  "https://github.com/veljjanoski/formal-conjectures-proofs/blob/a199537b29d77124f8e1ea0d816a881e96f0cc0f/FcProofs/Erdos588.lean#L81"]
 theorem erdos_588.variants.trivial_upper (k n : ℕ) (hk : 2 ≤ k) :
     numLinesWithPointsMax k n * (k * (k - 1)) ≤ n * (n - 1) := by
   sorry

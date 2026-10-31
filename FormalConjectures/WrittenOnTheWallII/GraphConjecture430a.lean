@@ -54,6 +54,7 @@ def caroWei {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] : ℚ :=
   ∑ v : V, 1 / ((G.degree v + 1 : ℕ) : ℚ)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII Conjecture 430a asked whether every connected graph `G` of order
 greater than three satisfies

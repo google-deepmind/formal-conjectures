@@ -56,6 +56,7 @@ theorem a_3 : a 3 = 381 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 6219 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: the supercongruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^{3k}}$ hold
 for primes $p \ge 5$ and positive integers $n$ and $k$.-/
@@ -86,6 +87,7 @@ theorem aInt_neg_1 : aInt (-1) = -1 := by decide
 @[category test, AMS 11]
 theorem aInt_neg_2 : aInt (-2) = 255 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture (Peter Bala, 2022):
 The supercongruences $a(n \cdot p^k) \equiv a(n \cdot p^{k-1}) \pmod{p^{3k}}$ hold

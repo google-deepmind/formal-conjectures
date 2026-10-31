@@ -43,6 +43,7 @@ noncomputable def factorialDivisorRatio (n : ℕ) : ℝ :=
 def limitPointSet : Set ℝ :=
   {1} ∪ {x | ∃ k : ℕ, 1 ≤ k ∧ x = 1 + 1 / (k : ℝ)}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\tau(n)$ counts the number of divisors of $n$, then what is the set of limit points of
 $$

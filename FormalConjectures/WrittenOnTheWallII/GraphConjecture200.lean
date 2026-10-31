@@ -55,6 +55,7 @@ namespace WrittenOnTheWallII.GraphConjecture200
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 200](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

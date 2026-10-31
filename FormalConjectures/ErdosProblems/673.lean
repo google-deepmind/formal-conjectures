@@ -40,6 +40,7 @@ $$G(n) = \sum_{1\leq i<\tau(n)}\frac{d_i}{d_{i+1}}.$$ -/
 noncomputable def G (n : ℕ) : ℝ :=
   ∑ i : Fin (n.divisors.card - 1), (Nat.nth (· ∣ n) i : ℝ) / Nat.nth (· ∣ n) (i + 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $1=d_1<\cdots <d_{\tau(n)}=n$ be the divisors of $n$ and
 $$G(n) = \sum_{1\leq i<\tau(n)}\frac{d_i}{d_{i+1}}.$$
@@ -54,6 +55,7 @@ conjecture and observes that it is indeed trivial that $G(n)\to \infty$ for almo
 theorem erdos_673.parts.i : ∀ C : ℝ, {n : ℕ | C < G n}.HasDensity 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can one prove an asymptotic formula for $\sum_{n\leq X}G(n)$?
 
@@ -65,6 +67,7 @@ theorem erdos_673.parts.ii :
     (fun X : ℕ ↦ ∑ n ∈ Finset.Icc 1 X, G n) ~[atTop] fun X : ℕ ↦ (X : ℝ) * log X := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Erdős writes it is 'easy' to prove $\frac{1}{X}\sum_{n\leq X}G(n)\to \infty$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos673.lean#L914"]

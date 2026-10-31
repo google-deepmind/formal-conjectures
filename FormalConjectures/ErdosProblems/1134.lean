@@ -43,6 +43,7 @@ namespace Erdos1134
 def A : Set ℕ :=
   ⋂₀ {S : Set ℕ | 1 ∈ S ∧ ∀ x ∈ S, 2 * x + 1 ∈ S ∧ 3 * x + 1 ∈ S ∧ 6 * x + 1 ∈ S}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be the smallest set which contains $1$ and is closed under the
 operations
@@ -71,6 +72,7 @@ Their proof is given in [La16]. This problem is repeated by Guy [Gu83b] in an ar
 theorem erdos_1134 : ¬ 0 < A.lowerDensity := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The counting function of $A$ is sublinear: $\lvert A\cap [1,X]\rvert \ll X^{\tau+o(1)}$ with
 $\tau < 1$, so in particular $\lvert A \cap [1, X]\rvert \ll X^{19/20}$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -79,6 +81,7 @@ theorem erdos_1134.variants.sublinear :
     ∃ C : ℝ, 0 < C ∧ ∀ X : ℕ, ((A ∩ Set.Iic X).ncard : ℝ) ≤ C * (X : ℝ) ^ (19 / 20 : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Klarner has several (open) variants of this problem - see Section 8.9 of [La16]. For example, it
 is unknown if the smallest set $A$ which contains $0$ and is closed under

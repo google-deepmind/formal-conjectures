@@ -53,6 +53,7 @@ def squareMaximumDegreeVertices {V : Type} [Fintype V] [DecidableEq V]
     (Finset.univ.filter fun w => v ≠ w ∧ computable_dist G v w ≤ 2).card
   {v | squareDegree v = Finset.univ.sup squareDegree}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII Conjecture 172 asked whether every nontrivial finite connected simple
 graph `G` satisfies

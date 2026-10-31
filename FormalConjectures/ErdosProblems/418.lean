@@ -43,6 +43,7 @@ open scoped ArithmeticFunction.sigma
 
 namespace Erdos418
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many integers not of the form $n - \phi(n)$?
 

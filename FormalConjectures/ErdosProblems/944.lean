@@ -94,6 +94,7 @@ theorem erdos_944.variants.dirac_conjecture.k_ge_five (k : ℕ) (hk : 5 ≤ k) :
     ∃ (V : Type u) (G : SimpleGraph V), G.IsErdos944 k 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The case $k=4$ and $r=1$ was the remaining open case: Are there $4$-critical graphs
 without any critical edges?

@@ -44,6 +44,7 @@ open Asymptotics Filter
 
 namespace Erdos3
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$, then must $A$ contain arbitrarily
 long arithmetic progressions?
@@ -74,6 +75,7 @@ theorem erdos_3.variants.kelley_meka : ∃ β > (0 : ℝ), ∃ c > (0 : ℝ),
     (fun N ↦ (r 3 N : ℝ)) ≪ fun N : ℕ ↦ (N : ℝ) * Real.exp (-c * Real.log N ^ β) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The case of $3$-term progressions: if $A \subset \mathbb{N}$ has $\sum_{n \in A}\frac 1 n = \infty$,
 then $A$ contains a non-trivial $3$-term arithmetic progression.

@@ -112,6 +112,7 @@ noncomputable def mutualInfo {n : ℕ} (f : Cube n → Bool) (p : ℝ) : ℝ :=
   entropy (fun b => ∑ y, jointProb f p b y) + entropy (fun y => ∑ b, jointProb f p b y) -
     entropy (fun z : Bool × Cube n => jointProb f p z.1 z.2)
 
+set_option linter.style.formal_proof_palomar false in
 /-- **The Courtade–Kumar conjecture.** For every $n$, every Boolean function $f$ on
 $\{0,1\}^n$ and every crossover probability $p \in [0, 1]$, $I(f(X); Y) \le 1 - h(p)$. -/
 @[category research solved, AMS 94,
@@ -143,6 +144,7 @@ instance (n : ℕ) (p : ℝ) (hp₀ : 0 ≤ p) (hp₁ : p ≤ 1) :
 
 namespace variants
 
+set_option linter.style.formal_proof_palomar false in
 /-- **The Courtade–Kumar conjecture, in random-variable form.**
 
 The pushforward in the hypothesis is the joint distribution of $(X, Z)$. The uniform measure on

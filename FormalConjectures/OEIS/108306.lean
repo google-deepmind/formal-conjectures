@@ -111,6 +111,7 @@ def genMatrix (a b : ℕ) : Matrix (Fin 2) (Fin 2) ℕ :=
   | 1, 0 => 1
   | 1, 1 => b
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The conjecture: The INVERT transform of a sequence starting
 $(1, a, ab, ab^2, ab^3, \ldots)$ is equivalent to extracting the upper left terms

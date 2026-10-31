@@ -42,6 +42,7 @@ def SparseImpliesPropertyB (t : ℕ) (c : ℝ) : Prop :=
     (∀ X : Finset ℕ, X.Nonempty → ((F.hypergraphInduce X).card : ℝ) < c * (X.card : ℝ)) →
     F.HasPropertyB
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a constant $c_t$, where $c_t\to \infty$ as $t\to \infty$, such that if $\mathcal{F}$
 is a finite family of finite sets, all of size at least $t$, and for every set $X$ there are

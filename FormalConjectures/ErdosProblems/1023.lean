@@ -42,6 +42,7 @@ family is the union of other members of the family.
 noncomputable def F (n : ℕ) : ℕ :=
   sSup {m | ∃ S ⊆ (Finset.Icc 1 n).powerset, S.SubfamilyUnionFree ∧ S.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $F(n)$ be the maximal size of a family of subsets of $\{1,\ldots,n\}$ such that no set in
 this family is the union of other members of the family. Is it true that there is a constant

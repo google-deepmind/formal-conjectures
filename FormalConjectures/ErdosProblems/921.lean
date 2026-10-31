@@ -36,6 +36,7 @@ open Filter
 
 namespace Erdos921
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 4$ and let $f_k(n)$ be the largest $m$ such that there is a graph on $n$ vertices
 with chromatic number $k$ in which every odd cycle has length $> m$.

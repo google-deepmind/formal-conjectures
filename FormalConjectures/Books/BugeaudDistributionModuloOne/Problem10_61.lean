@@ -104,6 +104,7 @@ theorem problem_10_61.variants.almost_every (α : ℝ) (hα : 1 < α) :
       IsEquidistributedModuloOne fun n : ℕ => ξ * α ^ (n + 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The covering criterion, [Ste26, Theorem C(i)], at a quadratic setup: $\alpha > 1$ is a root
 of $X^2 - aX - b$ whose conjugate $\beta = a - \alpha$ is non-zero of modulus less than
@@ -121,6 +122,7 @@ theorem problem_10_61.variants.covering_criterion {a b : ℤ} {α : ℝ}
     ∀ ξ ∈ pisotCantorSet α, ¬ IsEquidistributedModuloOne fun n : ℕ => ξ * α ^ (n + 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The exact range of the covering criterion, [Ste26, Theorem C(ii)]: at a quadratic setup of
 norm $-b$ one has $A(\alpha) < 1$ if and only if
@@ -136,6 +138,7 @@ theorem problem_10_61.variants.covering_criterion_range {a b : ℤ} {α : ℝ}
       1 < (Real.logb 2 α - 1) * (Real.logb 2 α - Real.logb 2 |(b : ℝ)| - 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 [Ste26, Theorem D] at $\alpha = 2 + \sqrt 5$, the smallest $\alpha$ the covering criterion
 reaches: Problem 10.61 holds there in the strong form. There is one open interval
@@ -150,6 +153,7 @@ theorem problem_10_61.variants.two_add_sqrt_five :
         Int.fract (ξ * (2 + Real.sqrt 5) ^ n) ∉ Set.Ioo (x - r) (x + r) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 [Ste26, Theorem D] at $\alpha = 2 + \sqrt 3$: Problem 10.61 holds there, by a
 confinement-gap certificate in exact $\mathbb{Z}[\sqrt 3]$ arithmetic. This $\alpha$ lies

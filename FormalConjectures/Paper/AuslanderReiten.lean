@@ -90,6 +90,7 @@ end Converse
 
 section ArtinAlgebra
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **The Auslander-Reiten conjecture** [AR75] is false. The conjecture states: let $\Lambda$ be an
 Artin algebra and $M$ a finitely generated $\Lambda$-module with

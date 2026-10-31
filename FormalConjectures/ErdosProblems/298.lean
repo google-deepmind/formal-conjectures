@@ -30,6 +30,7 @@ public import FormalConjecturesForMathlib.Data.Set.Density
 
 namespace Erdos298
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every set $A \subseteq \mathbb{N}$ of positive density contain some finite $S \subset A$ such that
 $\sum_{n \in S} \frac{1}{n} = 1$?

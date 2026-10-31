@@ -47,6 +47,7 @@ open MeasureTheory
 
 namespace Erdos116
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $p(z)=\prod_{i=1}^n (z-z_i)$ for $\lvert z_i\rvert \leq 1$. Is it true that
 $$\lvert\{ z: \lvert p(z)\rvert <1\}\rvert>n^{-O(1)}$$

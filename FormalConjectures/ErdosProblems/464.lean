@@ -61,6 +61,7 @@ namespace Erdos464
   terms does not affect density modulo one.
 -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{n_1<n_2<\cdots\}\subset \mathbb{N}$ be a lacunary sequence (so there exists some
 $\epsilon>0$ with $n_{k+1}\geq (1+\epsilon)n_k$ for all $k$). Must there exist an irrational

@@ -36,6 +36,7 @@ namespace Bugeaud05
 
 open Filter
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Problem 10.5 (first part). Let $\mathbb{K}$ be a real number field. Then, for any
 $\varepsilon > 0$, there exists a lacunary sequence $(t_n)_{n \ge 1}$ of positive numbers
@@ -59,6 +60,7 @@ theorem problem_10_5 (K : IntermediateField ℚ ℝ) [FiniteDimensional ℚ K]
         (1 - ε) ≤ limsup (fun n => Int.fract (ξ * (t n : ℝ))) atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Problem 10.5 ("moreover" clause). With the same hypotheses as `problem_10_5`, the
 sequence $(t_n)$ can be chosen so that, for any real $\xi$ not in $\mathbb{K}$, each

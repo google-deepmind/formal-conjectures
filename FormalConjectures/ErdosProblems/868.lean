@@ -77,6 +77,7 @@ theorem erdos_868.variants.fixed_ε :
       B.IsAsymptoticAddBasisOfOrder 2 ∧ ∀ b ∈ B, ¬(B \ {b}).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Härtter and Nathanson proved that there exist additive bases which do not contain
 any minimal additive bases. -/
 @[category research solved, AMS 5 11,

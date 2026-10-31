@@ -57,6 +57,7 @@ theorem erdos_20 : ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f n k < (c k) ^ n :
 
 -- TODO(firsching): add the various known bounds as variants.
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Rado [ErRa60] proved the factorial upper bound for the $k$-sunflower
 threshold: any family of $n$-uniform sets with more than $(k-1)^n \, n!$ members

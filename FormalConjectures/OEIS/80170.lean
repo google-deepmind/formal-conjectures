@@ -73,6 +73,7 @@ theorem a_5 : ¬A 5 := by unfold A; decide
 @[category test, AMS 11]
 theorem a_6 : ¬A 6 := by unfold A; decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: The gcd condition is equivalent to the prime power condition.
 This has been conjectured by Ralf Stephan.

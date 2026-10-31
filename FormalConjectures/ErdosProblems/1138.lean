@@ -54,6 +54,7 @@ equalling the largest prime gap before $x$, scaled by a constant $C$.
 noncomputable def primeCount_Ioc_mul_const (C : ℝ) : (ℝ × ℝ) → ℝ :=
   fun (x, y) ↦ (primeCounting ⌊y + C * sup_primeGap x⌋₊ - primeCounting ⌊y⌋₊)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 1138.**
 Let $x/2 < y < x$ and $C > 1$. If $d = \max_{p_n < x}(p_{n+1} - p_n)$,

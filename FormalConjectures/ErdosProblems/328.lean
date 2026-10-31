@@ -39,6 +39,7 @@ open AdditiveCombinatorics
 
 namespace Erdos328
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Suppose $A\subseteq\mathbb{N}$ and $C>0$ is such that $1_A\ast 1_A(n)\leq C$ for all
 $n\in\mathbb{N}$. Can $A$ be partitioned into $t$ many subsets $A_1,\ldots,A_t$ (where

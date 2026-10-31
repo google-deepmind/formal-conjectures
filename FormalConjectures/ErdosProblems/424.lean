@@ -53,6 +53,7 @@ def sequenceSet : ℕ → Set ℕ
 /-- The set of integers which eventually appear in the sequence, which is the union of all $A_n$. -/
 def generatedSet : Set ℕ := ⋃ n : ℕ, sequenceSet n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_1 = 2$ and $a_2 = 3$ and continue the sequence by appending to $a_1, \ldots, a_n$ all possible
 values of $a_i a_j - 1$ with $i \neq j$.

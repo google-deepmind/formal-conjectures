@@ -48,6 +48,7 @@ which contains no $K_k$.
 noncomputable def f (k n : ℕ) : ℕ :=
   sSup {(G.chromaticNumber) | (G : SimpleGraph (Fin n)) (_ : G.CliqueFree k)}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for $k\geq 4$, $f_k(n) \gg \frac{n^{1-\frac{1}{k-1}}}{(\log n)^{c_k}}$ for some
 constant $c_k>0$?

@@ -77,6 +77,7 @@ theorem erdos_100.variants.guth_katz :
       diam (A : Set ℝ²) ≥ C * n / log n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- From [Piepmeyer]: 9 points with diameter $< 5$.
 TODO: find reference -/
 @[category research solved, AMS 52, formal_proof using formal_conjectures at "https://github.com/theaustinhatfield/formal-conjectures/blob/solve-erdos-100-piepmeyer/FormalConjectures/ErdosProblems/100.lean"]

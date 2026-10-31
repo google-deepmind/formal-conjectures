@@ -41,6 +41,7 @@ namespace Erdos764
 $1_A\ast 1_A\ast 1_A(n)$. -/
 noncomputable def tripleRep (A : Set ℕ) : ℕ → ℕ := 𝟙_A ∗ 𝟙_A ∗ 𝟙_A
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$. Can there exist some constant $c>0$ such that
 $$\sum_{n\leq N} 1_A\ast 1_A\ast 1_A(n) = cN+O(1)?$$

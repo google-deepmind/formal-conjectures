@@ -52,6 +52,7 @@ theorem erdos_146 :
           (fun n : ℕ => (n : ℝ) ^ ((2 : ℝ) - 1 / (r : ℝ))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The counterexample: a connected bipartite `2`-degenerate `H` whose extremal number exceeds
 $n^{3/2+\epsilon}$ infinitely often, so the `r = 2` case of `erdos_146` fails.

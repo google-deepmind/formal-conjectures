@@ -89,6 +89,7 @@ theorem erdos_90 : ¬ ∃ (O : ℕ → ℝ) (hO : O =O[atTop] (fun n => 1 / (n :
     (fun n => (maxUnitDistances n : ℝ)) =ᶠ[atTop] fun (n : ℕ) => (n : ℝ) ^ (1 + O n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Constructive form of the disproof.** There is an absolute constant $c > 0$ such that
 infinitely many $n$ admit a configuration realising at least $n^{1+c}$ unit distances.
@@ -179,6 +180,7 @@ theorem sawin_lattice_reduction
         2 * (unitDistNum U : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Sawin's Lemmas 11–12 / Remarks Proposition 2.3: the totally real tower.**
 

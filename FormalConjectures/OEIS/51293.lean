@@ -71,6 +71,7 @@ lemma a_4 : a 4 = 8 := by rfl
 lemma a_5 : a 5 = 15 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n) = 2^{n+1}/n \cdot (1 + 1/n + 3/n^2 + 13/n^3 + 75/n^4 + 541/n^5 + o(1/n^5))$. - _Benoit Cloitre_, Oct 20 2002
 

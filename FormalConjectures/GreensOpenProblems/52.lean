@@ -44,6 +44,7 @@ theorem green_52 :
         n ≤ Module.finrank (ZMod 2) V.direction + c K := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Could $2A$ even contain a coset of codimension $O(\log K)$?
 

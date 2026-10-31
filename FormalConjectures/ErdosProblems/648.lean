@@ -50,6 +50,7 @@ noncomputable def g (n : ℕ) : ℕ :=
   sSup {t | ∃ a : Fin t → ℕ, StrictMono a ∧ (∀ i, a i ∈ Set.Ico 2 n) ∧
     StrictAnti fun i => (a i).maxPrimeFac}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $g(n)$ denote the largest $t$ such that there exist integers $2\leq a_1<a_2<\cdots <a_t <n$
 such that $$P(a_1)>P(a_2)>\cdots >P(a_t)$$ where $P(m)$ is the greatest prime factor of $m$.

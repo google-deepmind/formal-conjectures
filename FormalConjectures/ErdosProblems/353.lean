@@ -41,6 +41,7 @@ open scoped Real
 
 namespace Erdos353
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{R}^2$ be a measurable set with infinite measure. Must $A$ contain the
 vertices of an isosceles trapezoid of area $1$? What about an isosceles triangle, or a
@@ -62,6 +63,7 @@ theorem erdos_353 :
         volume (convexHull ℝ {a, b, c, d}) = 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every measurable $A\subseteq \mathbb{R}^2$ with infinite measure contains the vertices of an
 isosceles triangle of area $1$.
@@ -81,6 +83,7 @@ theorem erdos_353.variants.isosceles_triangle :
         volume (convexHull ℝ {a, b, c}) = 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every measurable $A\subseteq \mathbb{R}^2$ with infinite measure contains the vertices of a
 right-angled triangle of area $1$.
@@ -100,6 +103,7 @@ theorem erdos_353.variants.right_angled_triangle :
         volume (convexHull ℝ {a, b, c}) = 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every measurable $A\subseteq \mathbb{R}^2$ with infinite measure contains the vertices of a
 cyclic quadrilateral of area $1$.
@@ -116,6 +120,7 @@ theorem erdos_353.variants.cyclic_quadrilateral :
         volume (convexHull ℝ Q) = 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The answer is negative for convex polygons with congruent sides: Kovač and Predojević
 [KoPr24] prove that there exists a set of infinite measure such that every convex polygon

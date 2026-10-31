@@ -40,6 +40,7 @@ namespace Erdos1014
 
 local notation "R(" k ", " l ")" => SimpleGraph.classicalRamsey k l
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $R(k,l)$ be the Ramsey number, so the minimal $n$ such that every graph on at least $n$
 vertices contains either a $K_k$ or an independent set on $l$ vertices.

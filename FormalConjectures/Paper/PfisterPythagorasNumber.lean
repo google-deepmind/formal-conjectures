@@ -103,6 +103,7 @@ theorem pfister_problem.variants.eq_two_pow :
     ∀ n : ℕ, IsLeast (pythagorasBounds (MvRatFunc (Fin n) ℝ)) (2 ^ n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Pfister's theorem**: every sum of squares in $\mathbb{R}(X_1, \dots, X_n)$ is a sum of $2^n$
 squares [Pfister1995, p. 95]; this is Corollary 1 of Theorem 2 in [Pfister1971]. For positive
@@ -114,6 +115,7 @@ theorem pfister_problem.variants.upper_bound (n : ℕ) :
     2 ^ n ∈ pythagorasBounds (MvRatFunc (Fin n) ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Cassels' theorem** [Cassels1964], as quoted in Problem 1 of [Pfister1971, §4]:
 $1 + X_1^2 + \dots + X_n^2$ is not a sum of $n$ squares in $\mathbb{R}(X_1, \dots, X_n)$.

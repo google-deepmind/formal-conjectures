@@ -30,6 +30,7 @@ public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 
 namespace Erdos194
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 3$. Must any ordering of $\mathbb{R}$ contain a monotone $k$-term arithmetic progression,
 that is, some $x_1 <\cdots < x_k$ which forms an increasing or decreasing $k$-term arithmetic

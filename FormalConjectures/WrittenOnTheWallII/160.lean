@@ -62,6 +62,7 @@ noncomputable def maxTrianglesAtVertex (G : SimpleGraph α) [DecidableRel G.Adj]
 
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 160](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

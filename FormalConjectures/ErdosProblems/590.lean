@@ -36,6 +36,7 @@ namespace Erdos590
 
 universe u
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $α$ be the infinite ordinal $\omega^{\omega}$. It was proved by Chang [Ch72] that any red/blue
 colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.

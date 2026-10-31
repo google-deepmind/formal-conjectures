@@ -59,6 +59,7 @@ This corresponds to the classical sequence `(p₁/1, p₂/2, p₃/3, ...)` while
 noncomputable def u (n : ℕ) : ℝ :=
   (n.nth Nat.Prime : ℝ) / (n + 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does the set `{n | u n < u (n+1)}` have positive lower density?
 

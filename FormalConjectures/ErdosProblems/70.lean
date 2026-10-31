@@ -145,6 +145,7 @@ theorem omega_times_two_four :
     RealCardinalRamsey3 (ω * 2) 4 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Trivial boundary case**: $\mathfrak{c} \to (\omega, 3)^3_2$, stated for the initial
 ordinal $\mathfrak{c}.\mathrm{ord}$ of the cardinality of the continuum.

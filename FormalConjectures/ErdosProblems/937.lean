@@ -42,6 +42,7 @@ def IsCoprimePowerfulAP4 (a d : ℕ) : Prop :=
   a.Coprime (a + d) ∧ a.Coprime (a + 2 * d) ∧ a.Coprime (a + 3 * d) ∧
   (a + d).Coprime (a + 2 * d) ∧ (a + d).Coprime (a + 3 * d) ∧ (a + 2 * d).Coprime (a + 3 * d)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many four-term arithmetic progressions of coprime powerful numbers?
 (A number $n$ is *powerful* if $p \mid n \to p^2 \mid n$; `Nat.Powerful`.)

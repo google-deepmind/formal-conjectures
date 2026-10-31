@@ -33,6 +33,7 @@ open Filter Asymptotics
 
 namespace Erdos221
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a set $A\subset\mathbb{N}$ such that, for all large $N$,
 $$\lvert A\cap\{1,\ldots,N\}\rvert \ll N/\log N$$

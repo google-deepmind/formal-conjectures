@@ -38,6 +38,7 @@ open Filter
 
 namespace Green47
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Suppose that a large sieve process leaves a set of quadratic size. Is that set quadratic?
 

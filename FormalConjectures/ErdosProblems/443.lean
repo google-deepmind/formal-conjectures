@@ -37,6 +37,7 @@ The set $\{k(m-k) : 1\leq k\leq m/2\}$, where `m / 2` is `ℕ` floor division.
 -/
 def A (m : ℕ) : Finset ℕ := (Finset.Icc 1 (m / 2)).image fun k => k * (m - k)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $m,n\geq 1$. What is
 $$\# \{ k(m-k) : 1\leq k\leq m/2\} \cap \{ l(n-l) : 1\leq l\leq n/2\}?$$
@@ -53,6 +54,7 @@ theorem erdos_443.parts.i :
     ∀ s : ℕ, ∃ m n : ℕ, n < m ∧ s ≤ (A n ∩ A m).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $m,n\geq 1$. What is
 $$\# \{ k(m-k) : 1\leq k\leq m/2\} \cap \{ l(n-l) : 1\leq l\leq n/2\}?$$

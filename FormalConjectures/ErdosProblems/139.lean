@@ -33,6 +33,7 @@ namespace Erdos139
 
 noncomputable abbrev r := Set.IsAPOfLengthFree.maxCard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 139**:
 Let $r_k(N)$ be the size of the largest subset of ${1,...,N}$ which does not contain a non-trivial

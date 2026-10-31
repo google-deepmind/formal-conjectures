@@ -37,6 +37,7 @@ open Filter
 
 namespace Erdos986
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For any fixed $s\geq 3$,
 $$R(s,k) \gg \frac{k^{s-1}}{(\log k)^c}$$

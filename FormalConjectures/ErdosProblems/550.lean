@@ -34,6 +34,7 @@ open Filter
 
 namespace Erdos550
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $m_1\leq\cdots\leq m_k$ and $n$ be sufficiently large. If $T$ is a tree on $n$ vertices
 and $G$ is the complete multipartite graph with vertex class sizes $m_1,\ldots,m_k$ then prove that

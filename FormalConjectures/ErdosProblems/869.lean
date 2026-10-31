@@ -36,6 +36,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 
 namespace Erdos869
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A_1, A_2$ are disjoint additive bases of order $2$ (i.e. $A_i + A_i$ contains all large
 integers) then must $A = A_1 \cup A_2$ contain a minimal additive basis of order $2$ (one such that

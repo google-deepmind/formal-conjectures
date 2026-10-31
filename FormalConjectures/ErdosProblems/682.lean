@@ -37,6 +37,7 @@ namespace Erdos682
 /-- The `n`th prime, indexed from zero: `p 0 = 2`, `p 1 = 3`, ... -/
 noncomputable abbrev p (n : ℕ) : ℕ := Nat.nth Nat.Prime n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that for almost all $n$ there exists some $m\in (p_n,p_{n+1})$ such that
 $$p(m) \geq p_{n+1}-p_n,$$

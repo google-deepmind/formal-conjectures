@@ -65,6 +65,7 @@ This conjecture has been **disproved**:
 def Erdos884Prop : Prop :=
     sumDivisorInvPairwiseDifference ≪ 1 + sumDivisorInvConsecutiveDifference
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For a natural number n, let $1 = d_1 < \dotsc < d_{\tau(n)} = n$ denote the divisors of $n$
 in increasing order.

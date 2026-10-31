@@ -87,6 +87,7 @@ theorem erdos_959 :
     (fun n ↦ (extremalGap n : ℝ)) =Θ[atTop] erdos_959.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A superlinear lower bound: there is a $c>0$ with
 $$\text{extremalGap}(n)\geq n^{1 + c/\log\log n}$$

@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos532
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\mathbb{N}$ is 2-coloured then is there some infinite set $A\subseteq \mathbb{N}$ such that
 all finite subset sums$$ \sum_{n\in S}n$$(as $S$ ranges over all non-empty finite subsets of $A$)

@@ -49,6 +49,7 @@ theorem isUniqueSubgraph_bot_bot {V : Type*} : IsUniqueSubgraph (⊥ : SimpleGra
   rintro G' ⟨hle, -⟩
   exact le_bot_iff.mp hle
 
+set_option linter.style.formal_proof_palomar false in
 /--
 We say $H$ is a unique subgraph of $G$ if there is exactly one way to find $H$ as a subgraph
 (not necessarily induced) of $G$. Is there a graph on $n$ vertices with

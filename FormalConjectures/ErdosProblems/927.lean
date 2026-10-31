@@ -47,6 +47,7 @@ noncomputable def g (n : ℕ) : ℕ := by
   exact Finset.sup (Finset.univ (α := SimpleGraph (Fin n)))
     fun G => (SimpleGraph.cliqueSizes G).ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $g(n)$ be the maximum number of different sizes of cliques that can occur in a graph on $n$
 vertices. Estimate $g(n)$ - in particular, is it true that

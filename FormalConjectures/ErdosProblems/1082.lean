@@ -39,6 +39,7 @@ theorem erdos_1082.parts.i : ∀ (A : Finset ℝ²) (hA_n3c : NonTrilinear (A : 
     A.card / 2 ≤ distinctDistances A:= by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subset \mathbb{R}^2$ be a set of $n$ points with no three on a line.
 Must there exist a single point from which there are at least $\lfloor n/2\rfloor$ distinct

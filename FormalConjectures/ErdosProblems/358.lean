@@ -67,6 +67,7 @@ When $A_n = n$, the function $f$ defined above counts the number of odd divisors
 theorem f_id : f id = fun n ↦ #{d ∈ n.divisors | Odd d} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
 solutions to $$n=\sum_{u\leq i\leq v}a_i.$$
@@ -79,6 +80,7 @@ theorem erdos_358.parts.i :
     ∃ A, StrictMono A ∧ atTop.Tendsto (f A) atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{a_1 < \cdots\}$ be an infinite sequence of integers. Let $f(n)$ count the number of
 solutions to $$n=\sum_{u\leq i\leq v}a_i.$$

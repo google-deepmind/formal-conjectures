@@ -37,6 +37,7 @@ namespace Erdos290
 $\sum_{a \leq n \leq b}\frac{1}{n}$. -/
 noncomputable def harmonicDen (a b : ℕ) : ℕ := (harmonicBlock a b).den
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a\geq 1$. Must there exist some $b>a$ such that
 $$\sum_{a\leq n\leq b}\frac{1}{n}=\frac{r_1}{s_1}\textrm{ and }

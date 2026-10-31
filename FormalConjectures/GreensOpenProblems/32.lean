@@ -117,6 +117,7 @@ theorem green_32.variants.szemeredi_regime :
       HasLargeGapDilate ω := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In the regime $\omega(p) \le c \log p$, this is basically Dirichlet's lower bound for the size of
 Bohr sets [Gr24].

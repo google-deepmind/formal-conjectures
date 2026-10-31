@@ -51,6 +51,7 @@ open EuclideanGeometry
 
 namespace Erdos93
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $n$ distinct points in $\mathbb{R}^2$ form a convex polygon then they determine at least
 $\lfloor \frac{n}{2}\rfloor$ distinct distances.

@@ -43,6 +43,7 @@ def HasEqualDegreePathThree {V : Type*} [Fintype V] (G : SimpleGraph V) : Prop :
   ∃ u v : V, u ≠ v ∧ G.degree u = G.degree v ∧ ∃ p : G.Walk u v, p.IsPath ∧ p.length = 3
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph with $2n+1$ vertices and $n^2+n+1$ edges. Must $G$ contain two vertices of the
 same degree which are joined by a path of length $3$?

@@ -37,6 +37,7 @@ arithmetic progression contains infinitely many integers that are the sum of dis
 def RepresentsAPs (a : ℕ → ℕ) : Prop :=
     StrictMono a ∧ ∀ l, l.IsAPOfLength ⊤ → (subsetSums (Set.range a) ∩ l).Infinite
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_1 < a_2 < \dotsc$ be an infinite sequence of positive integers such that
 $\frac{a_{i+1}}{a_i} \to 1$. If every arithmetic progression contains infinitely many

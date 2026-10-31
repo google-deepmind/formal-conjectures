@@ -54,6 +54,7 @@ def HasRedCopies (n : ℕ) : Prop :=
 red copy of every set of `k` points. -/
 noncomputable def k : ℕ := sSup {n | HasRedCopies n}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $S\subset \mathbb{R}^2$ be such that no two points in $S$ are distance $1$ apart. Must the
 complement of $S$ contain four points which form a unit square?

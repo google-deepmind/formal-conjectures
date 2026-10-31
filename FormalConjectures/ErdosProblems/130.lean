@@ -31,6 +31,7 @@ namespace Erdos130
 
 open EuclideanGeometry SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subset\mathbb{R}^2$ be an infinite set which contains no three points on a
 line and no four points on a circle. Consider the graph with vertices the points

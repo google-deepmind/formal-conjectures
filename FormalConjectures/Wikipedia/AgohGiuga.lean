@@ -94,6 +94,7 @@ $$\sum_{i=1}^{n - 1}i^{n - 1} \equiv -1\pmod{n}$$-/
 def IsStrongGiuga (n : ℕ) : Prop :=
     n.Composite ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A composite number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
 prime divisors $p$ of $n$.
@@ -209,6 +210,7 @@ theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
     IsStrongGiuga a ↔ IsCarmichael a ∧ ∃ n : ℕ, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every strong Giuga number is a Carmichael number.
 -/

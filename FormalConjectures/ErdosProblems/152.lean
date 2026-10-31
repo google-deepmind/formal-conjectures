@@ -45,6 +45,7 @@ noncomputable def f (n : ℕ) : ℕ :=
   ⨅ A : {A : Set ℕ | A.ncard = n ∧ IsSidon A},
   {s : ℕ | s - 1 ∉ A.1 + A.1 ∧ s ∈ A.1 + A.1 ∧ s + 1 ∉ A.1 + A.1}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Must `lim f n = ∞`?
 
@@ -55,6 +56,7 @@ This was proved formally by the DeepMind prover agent [DM26a].
 theorem erdos_152 : Tendsto f atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Must `f n ≫ n ^ 2`?
 

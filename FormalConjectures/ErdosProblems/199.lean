@@ -31,6 +31,7 @@ public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 
 namespace Erdos199
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A\subset \mathbb{R}$ does not contain a 3-term arithmetic progression then must $\mathbb{R}\backslash A$ contain an infinite arithmetic progression?
 

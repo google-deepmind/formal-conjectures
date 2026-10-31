@@ -35,8 +35,9 @@ September 2026 an internal OpenAI model gave a compact counterexample in dimensi
 [OAI26]: the set of rank-one orthogonal projectors on $\mathbb{R}^4$, viewed in the
 nine-dimensional affine space of trace-one symmetric $4 \times 4$ matrices with the Frobenius
 metric, has diameter $\sqrt{2}$ and cannot be covered by $10$ sets of smaller diameter. The
-paper extends this to every dimension $n \geq 9$ (Corollary 7.1); only the case $n = 9$ is
-formalized. The cases $4 \leq n \leq 8$ are open. In dimension $4$, every bounded set can be
+paper extends this to every dimension $n \geq 9$ (Corollary 7.1); see
+`borsuk_conjecture.not_of_nine_le`. The linked Lean proof establishes the case $n = 9$.
+The cases $4 \leq n \leq 8$ are open. In dimension $4$, every bounded set can be
 partitioned into $9$ parts of smaller diameter [La82], and a 2026 preprint reduces this to $8$
 parts [TV26].
 
@@ -98,6 +99,27 @@ least two points.
 def HasBorsukCover (k : ℕ) (s : Set E) : Prop :=
   ∃ c : Fin k → Set E, s ⊆ ⋃ i, c i ∧ ∀ i, ediam (c i) < ediam s
 
+/-- An isometry preserves the existence of a cover by a fixed number of sets of
+strictly smaller diameter. -/
+@[category API, AMS 52]
+theorem HasBorsukCover.isometry_image_iff
+    {E F : Type*} [PseudoEMetricSpace E] [PseudoEMetricSpace F]
+    {f : E → F} (hf : Isometry f) {k : ℕ} {s : Set E} :
+    HasBorsukCover k (f '' s) ↔ HasBorsukCover k s := by
+  constructor
+  · rintro ⟨c, hcover, hsmall⟩
+    refine ⟨fun i => f ⁻¹' c i, ?_, ?_⟩
+    · intro x hx
+      obtain ⟨i, hi⟩ := Set.mem_iUnion.mp (hcover ⟨x, hx, rfl⟩)
+      exact Set.mem_iUnion.mpr ⟨i, hi⟩
+    · intro i
+      grw [(hf.ediam_image _).symm, ediam_mono (Set.image_preimage_subset _ _), hsmall, hf.ediam_image s]
+  · rintro ⟨c, hcover, hsmall⟩
+    refine ⟨fun i => f '' c i, ?_, by grind [hf.ediam_image]⟩
+    · rintro y ⟨x, hx, rfl⟩
+      obtain ⟨i, hi⟩ := Set.mem_iUnion.mp (hcover hx)
+      exact Set.mem_iUnion.mpr ⟨i, x, hi, rfl⟩
+
 /--
 **Borsuk's conjecture** in dimension `n`: every bounded subset of $\mathbb{R}^n$ with at
 least two points can be partitioned into $n + 1$ sets of strictly smaller diameter.
@@ -105,12 +127,13 @@ least two points can be partitioned into $n + 1$ sets of strictly smaller diamet
 def BorsukConjecture (n : ℕ) : Prop :=
   ∀ s : Set (ℝ^n), IsBounded s → s.Nontrivial → HasBorsukCover (n + 1) s
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** fails in the formerly open range $4 \leq n \leq 62$: it is not the case
 that every bounded subset of $\mathbb{R}^n$ with at least two points can be partitioned into
 $n + 1$ sets of strictly smaller diameter for every such $n$.
 
-The conjecture is true for $n \leq 3$ and false for $n \geq 63$. It was disproved in dimension
+The conjecture is true for $n \leq 3$ and false for $n \geq 9$. It was disproved in dimension
 $9$ by an internal OpenAI model in September 2026 [OAI26]; see `borsuk_conjecture.not_nine` and
 the linked Lean proof. The cases $4 \leq n \leq 8$ remain open.
 -/
@@ -162,6 +185,7 @@ splits at the midpoint of its smallest enclosing interval into two parts of smal
 theorem borsuk_conjecture.one : BorsukConjecture 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Borsuk's conjecture** in the plane, proved by Borsuk [Bo33]. -/
 @[category research solved, AMS 52,
   formal_proof using formal_conjectures at
@@ -169,6 +193,7 @@ theorem borsuk_conjecture.one : BorsukConjecture 1 := by
 theorem borsuk_conjecture.two : BorsukConjecture 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Borsuk's conjecture** in dimension $3$, proved by Perkal [Pe47] and Eggleston [Eg55]. -/
 @[category research solved, AMS 52,
   formal_proof using formal_conjectures at
@@ -176,6 +201,7 @@ theorem borsuk_conjecture.two : BorsukConjecture 2 := by
 theorem borsuk_conjecture.three : BorsukConjecture 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** is false in general: Kahn and Kalai [KK93] gave counterexamples in
 dimension $1325$ and in every dimension $n > 2014$.
@@ -186,6 +212,7 @@ dimension $1325$ and in every dimension $n > 2014$.
 theorem borsuk_conjecture.not_forall : ¬ ∀ n, BorsukConjecture n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Borsuk's conjecture** fails in dimension $65$, by Bondarenko [Bo14]. -/
 @[category research solved, AMS 52,
   formal_proof using formal_conjectures at
@@ -193,6 +220,7 @@ theorem borsuk_conjecture.not_forall : ¬ ∀ n, BorsukConjecture n := by
 theorem borsuk_conjecture.not_sixty_five : ¬ BorsukConjecture 65 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** fails in dimension $64$, by Jenrich and Brouwer [JB14]. This is the
 smallest dimension with a refereed counterexample.
@@ -203,6 +231,7 @@ smallest dimension with a refereed counterexample.
 theorem borsuk_conjecture.not_sixty_four : ¬ BorsukConjecture 64 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** fails in dimension $63$, by a 321-point configuration found in 2026
 by Grinsztajn [Gr26] and independently by Konz and Ji [Ji26]. This was the smallest dimension
@@ -214,6 +243,7 @@ with a known counterexample before [OAI26].
 theorem borsuk_conjecture.not_sixty_three : ¬ BorsukConjecture 63 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** fails in dimension $9$: the set of rank-one orthogonal projectors on
 $\mathbb{R}^4$, a compact subset of the nine-dimensional Euclidean space of trace-one symmetric
@@ -225,6 +255,13 @@ currently known to be false.
 @[category research solved, AMS 52, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/Borsuk/Main.lean#L117"]
 theorem borsuk_conjecture.not_nine : ¬ BorsukConjecture 9 := by
+  sorry
+
+/-- **Borsuk's conjecture** fails in every dimension $n \geq 9$. Corollary 7.1 of [OAI26]
+extends the dimension-nine counterexample by adjoining $n - 9$ points at diameter distance
+from one another and from the original set. -/
+@[category research solved, AMS 52]
+theorem borsuk_conjecture.not_of_nine_le (n : ℕ) (hn : 9 ≤ n) : ¬ BorsukConjecture n := by
   sorry
 
 end Borsuk

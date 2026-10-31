@@ -153,19 +153,23 @@ theorem erdos_91 :
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For $n = 3$ the equilateral triangle is the only such set.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-91/Solution.lean#L159"]
 theorem erdos_91.variants.three : UniqueMinimizer 3 := by
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For $n=4$ the square or two equilateral triangles sharing an edge give two
 non-similar examples.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-91/Solution.lean#L162"]
 theorem erdos_91.variants.four : ¬ UniqueMinimizer 4 := by
   sorry
 
@@ -180,18 +184,22 @@ A published proof of this fact is provided by Kovács [Ko24c].
 theorem erdos_91.variants.five : UniqueMinimizer 5 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 6$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-91/Solution.lean#L165"]
 theorem erdos_91.variants.six: ¬ UniqueMinimizer 6 := by
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 7$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-91/Solution.lean#L168"]
 theorem erdos_91.variants.seven: ¬ UniqueMinimizer 7 := by
   sorry
 

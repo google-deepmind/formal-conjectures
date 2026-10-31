@@ -47,6 +47,7 @@ noncomputable def H (k n : ℕ) : ℕ :=
   sSup {r | r ≤ n ∧ ∀ A : Finset ℕ, A.card = n → (∀ m, sumRep A m ≤ k) →
     ∃ S ⊆ A, IsSidon (S : Set ℕ) ∧ r ≤ S.card}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 1$ and $H_k(n)$ be the maximal $r$ such that if $A\subset\mathbb{N}$ has
 $\lvert A\rvert=n$ and $\| 1_A\ast 1_A\|_\infty \leq k$ then $A$ contains a Sidon set of size at
@@ -62,6 +63,7 @@ theorem erdos_772.parts.i :
     ∀ k ≥ 1, Tendsto (fun n : ℕ ↦ (H k n : ℝ) / √n) atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $H_k(n) > n^{1/2+c}$ for some constant $c>0$?
 

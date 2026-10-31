@@ -43,6 +43,7 @@ noncomputable def mMin (n : ℕ) : ℕ := sInf {m | 1 ≤ harmonicBlock n m}
 reaching $1$. -/
 noncomputable def epsilon (n : ℕ) : ℝ := (harmonicBlock n (mMin n) : ℝ) - 1
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n\geq 1$ and let $m$ be minimal such that $\sum_{n\leq k\leq m}\frac{1}{k}\geq 1$. We define
 $$\epsilon(n) = \sum_{n\leq k\leq m}\frac{1}{k}-1.$$

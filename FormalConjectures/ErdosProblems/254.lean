@@ -53,6 +53,7 @@ theorem not_summable_iff_tendsto_partial_sums (A : Set ℕ) (θ : ℝ) :
   not_summable_subtype_iff_tendsto_sum_indicator
     (f := fun m : ℕ => distToNearestInt (θ * (m : ℝ))) fun _ => distToNearestInt_nonneg _
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be such that $\lvert A\cap [1,2x]\rvert -\lvert A\cap [1,x]\rvert \to
 \infty\textrm{ as }x\to \infty$ and $\sum_{n\in A} \{ \theta n\}=\infty$ for every $\theta\in

@@ -50,6 +50,7 @@ noncomputable def squarePeripheryAverage {V : Type} [Fintype V] [DecidableEq V]
   let periphery := Finset.univ.filter fun v => v ∈ maxEccentricityVertices square
   exact (∑ v ∈ periphery, ((square.neighborFinset v).card : ℝ)) / periphery.card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII Conjecture 181 asked whether every nontrivial finite connected simple
 graph `G` satisfies

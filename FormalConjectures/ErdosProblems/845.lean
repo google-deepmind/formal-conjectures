@@ -28,6 +28,7 @@ public import FormalConjecturesForMathlib.Data.Set.Density
 
 namespace Erdos845
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $C > 0$. Is it true that the set of integers of the form $n = b_1 + \cdots + b_t$,
 with $b_1 < \cdots < b_t$, where $b_i = 2^{k_i}3^{l_i}$ for $1 \leq i\leq t$ and

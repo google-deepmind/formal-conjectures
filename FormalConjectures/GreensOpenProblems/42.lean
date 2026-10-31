@@ -87,6 +87,7 @@ def CohnElkiesOptimal (d : ℕ) (bound : ℝ) : Prop :=
     SatisfiesCohnElkiesScheme f ∧
     f 0 / fHat f 0 = bound
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can the Cohn-Elkies scheme be used to prove the optimal bound for circle-packings in 2 dimensions?
 
@@ -106,12 +107,14 @@ theorem green_42.variants.dimension_one :
     CohnElkiesOptimal 1 (1 / 2) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- [Vi17] established the case $d = 8$. -/
 @[category research solved, AMS 51 52, formal_proof using lean4 at "https://github.com/math-inc/Sphere-Packing-Lean/blob/main/SpherePacking/Dim8/MainTheorem.lean"]
 theorem green_42.variants.dimension_eight :
     CohnElkiesOptimal 8 (1 / 16) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- In [CKM17], [Vi17] was adapted to $d = 24$. -/
 @[category research solved, AMS 51 52, formal_proof using lean4 at "https://github.com/math-inc/Sphere-Packing-Lean/blob/main/SpherePacking/Dim24/MainTheorem.lean"]
 theorem green_42.variants.dimension_twenty_four :

@@ -70,6 +70,7 @@ theorem HadwigerNelsonAtLeastFive :
     5 ≤ χ(ℝ²) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The chromatic number of the plane is at least 6: there is no proper 5-colouring of the plane.
 
@@ -81,6 +82,7 @@ theorem HadwigerNelsonAtLeastSix :
     6 ≤ χ(ℝ²) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The "chromatic number of the plane" is at least 4. This can be
 proven by considering the [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)

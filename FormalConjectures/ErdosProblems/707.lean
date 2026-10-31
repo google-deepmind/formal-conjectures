@@ -42,6 +42,7 @@ open Function Set
 namespace Erdos707
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 707**: It is false that any finite Sidon set can be embedded in a perfect
 different set modulo some $n$.

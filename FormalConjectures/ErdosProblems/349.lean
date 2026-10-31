@@ -86,6 +86,7 @@ theorem erdos_349.variants.floor_3_halves_even :
     {n | Even ⌊(3/2 : ℝ) ^ n⌋}.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For $\alpha > 2$ and any $t > 0$, the sequence $\lfloor t\alpha^n\rfloor$ is not additively
 complete; equivalently $(t, \alpha)$ is not a "good pair". A partial result on the open Erdős
 Problem 349: it complements `complete_for_alpha_in_Ioo_one_to_goldenRatio`.
@@ -98,6 +99,7 @@ the repository's proof-length guideline. -/
 theorem alpha_gt_two_not_isGoodPair (t α : ℝ) (ht : 0 < t) (hα : 2 < α) : ¬ IsGoodPair t α := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For $0 < \alpha \le 1$ and any $t > 0$, $(t, \alpha)$ is not a good pair: every term
 $\lfloor t\alpha^n\rfloor$ lies in the finite interval $[0, \lfloor t\rfloor]$ (since
 $\alpha^n \le 1$), so every subset sum is bounded by the constant $\sum_{i \in [0,\lfloor t\rfloor]} i$,
@@ -121,6 +123,7 @@ theorem exists_finsetSum_two_pow (k : ℕ) :
     ∃ E : Finset ℕ, k = ∑ i ∈ E, 2 ^ i := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **The pair $(1, 2)$ is good.** The powers of two $\lfloor 1\cdot 2^n\rfloor = 2^n$ form an
 additively complete set: every $k \ge 1$ is a finite sum of distinct powers of two. -/
 @[category research solved, AMS 11,
@@ -129,6 +132,7 @@ additively complete set: every $k \ge 1$ is a finite sum of distinct powers of t
 theorem one_two_isGoodPair : IsGoodPair 1 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **The dyadic fiber at $\alpha = 2$.** For every $k$, the pair $(1/2^k, 2)$ is good: the
 sequence $\lfloor 2^n / 2^k\rfloor$ is additively complete because at index $n = m + k$ it equals
 the exact power $2^m$, so its range contains all powers of two, which already form an additively
@@ -139,6 +143,7 @@ complete set. Uses monotonicity `IsAddComplete.mono`. -/
 theorem dyadic_two_isGoodPair (k : ℕ) : IsGoodPair (1 / 2 ^ k) 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Integer leading coefficient $t \ge 2$ blocks completeness.** For every integer base
 $\alpha$, the pair $(t, \alpha)$ with integer $t \ge 2$ is not good: $\lfloor t\alpha^n\rfloor =
 t\alpha^n$ is a multiple of $t$, so every subset sum is too, but two consecutive large integers
@@ -151,6 +156,7 @@ theorem int_coeff_ge_two_not_isGoodPair (t : ℤ) (ht : 2 ≤ t) (α : ℤ) :
     ¬ IsGoodPair (t : ℝ) (α : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Erdős Problem 349, complete characterization on positive integer pairs.** For integers
 $t \ge 1$, $\alpha \ge 1$, the pair $(t, \alpha)$ is good (i.e. $\lfloor t\alpha^n\rfloor$ is
 additively complete) iff $(t, \alpha) = (1, 2)$. Assembles the four partial results: $(1,2)$ is
@@ -163,6 +169,7 @@ theorem integer_isGoodPair_iff (t α : ℤ) (ht : 1 ≤ t) (hα : 1 ≤ α) :
     IsGoodPair (t : ℝ) (α : ℝ) ↔ t = 1 ∧ α = 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **The pair $(3/2, 2)$ is NOT good.** The negative companion of `dyadic_two_isGoodPair`:
 while every dyadic coefficient $1/2^k$ gives a good pair at $\alpha = 2$, the non-dyadic rational
 $t = 3/2$ does not. The sequence $\lfloor (3/2)\cdot 2^n\rfloor = 1, 3, 6, 12, 24, \ldots$ is not

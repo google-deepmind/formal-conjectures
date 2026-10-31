@@ -61,6 +61,7 @@ number of the form $k \cdot 2^n + 1$ is divisible by at least one prime in $P$.
 def HasFinitePrimeCoveringSet (k : ℕ) : Prop :=
   ∃ P : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ ∀ n, ∃ p ∈ P, p ∣ (k * 2 ^ n + 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Sierpiński [Si60] proved that there are infinitely many Sierpiński numbers, using covering
 systems to construct suitable covering sets for any $k$ satisfying a certain congruence.

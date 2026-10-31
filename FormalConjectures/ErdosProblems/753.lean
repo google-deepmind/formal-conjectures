@@ -33,6 +33,7 @@ namespace Erdos753
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The list chromatic number $\chi_L(G)$ is defined to be the minimal $k$ such that for any
 assignment of a list of $k$ colours to each vertex of $G$ (perhaps different lists for different

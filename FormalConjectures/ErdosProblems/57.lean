@@ -33,6 +33,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumferenc
 
 namespace Erdos57
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $G$ is a graph with infinite chromatic number and $a_1 < a_2 < \cdots$ are lengths of the odd
 cycles of $G$ then $\sum \frac{1}{a_i} = \infty$.

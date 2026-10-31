@@ -54,6 +54,7 @@ def NoLargeBiclique {V : Type*} (G : SimpleGraph V) (m : ℝ) : Prop :=
   ∀ k : ℕ, ((completeBipartiteGraph (Fin k) (Fin k)).IsContained G ∨
     (completeBipartiteGraph (Fin k) (Fin k)).IsContained Gᶜ) → (2 * k : ℝ) ≤ m
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph on $n$ vertices which does not contain a trivial (empty or complete) graph on
 more than $c\log n$ vertices. Must $G$ contain at least $2^{\Omega_c(n)}$ many induced subgraphs
@@ -64,7 +65,7 @@ This is true, and was proved by Shelah [Sh98].
 @[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1036.lean"]
 theorem erdos_1036 :
     ∀ c : ℝ, 0 < c → ∃ δ : ℝ, 0 < δ ∧ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
-      (G.cliqueNum : ℝ) ≤ c * Real.log (n : ℝ) → (G.indepNum : ℝ) ≤ c * Real.log (n : ℝ) →
+      G.IsCRamsey c →
         HasManyNonIsomorphicInducedSubgraphs G ((2 : ℝ) ^ (δ * (n : ℝ))) := by
   sorry
 
@@ -76,7 +77,7 @@ many non-isomorphic induced subgraphs.
 @[category research solved, AMS 5]
 theorem erdos_1036.variants.alon_hajnal :
     ∀ c : ℝ, 0 < c → ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, ∀ G : SimpleGraph (Fin n),
-      (G.cliqueNum : ℝ) ≤ c * Real.log (n : ℝ) → (G.indepNum : ℝ) ≤ c * Real.log (n : ℝ) →
+      G.IsCRamsey c →
         HasManyNonIsomorphicInducedSubgraphs G
           (Real.exp ((n : ℝ) * Real.log (n : ℝ) ^ (-(C * Real.log (Real.log (n : ℝ)))))) := by
   sorry

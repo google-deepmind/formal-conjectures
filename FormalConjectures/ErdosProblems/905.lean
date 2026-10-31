@@ -34,6 +34,7 @@ namespace Erdos905
 
 open Finset
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every graph with $n$ vertices and $>n^2/4$ edges contains an edge which is in at least $n/6$
 triangles.

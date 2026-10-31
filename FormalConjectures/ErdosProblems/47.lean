@@ -48,6 +48,7 @@ namespace Erdos47
 open Filter
 open scoped BigOperators
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\delta>0$ and $N$ is sufficiently large in terms of $\delta$, and $A\subseteq\{1,\ldots,N\}$ is such that $\sum_{a\in A}\frac{1}{a}>\delta \log N$ then must there exist $S\subseteq A$ such that $\sum_{n\in S}\frac{1}{n}=1$?
 

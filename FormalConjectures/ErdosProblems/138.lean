@@ -87,6 +87,7 @@ formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conject
 theorem monoAPNumber_two_two : W 2 = 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er80] Erdős asks whether
 $$ \lim_{k \to \infty} (W(k))^{1/k} = \infty $$
@@ -122,6 +123,7 @@ theorem erdos_138.variants.quotient :
     atTop.Tendsto (fun k => ((W (k + 1) : ℚ)/(W k))) atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er81] Erdős asks whether $W(k+1) - W(k) \to \infty$.
 
@@ -133,6 +135,7 @@ theorem erdos_138.variants.difference :
     atTop.Tendsto (fun k => (W (k + 1) - W k)) atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er80] Erdős asks whether $W(k)/2^k\to \infty$.
 

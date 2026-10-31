@@ -33,6 +33,7 @@ namespace SizeOrderConnectedDomination
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Theorem 2.1** of [S. Mukwembi, _Size, order, and connected domination_,
 Canad. Math. Bull. 57 (2014), no. 1, 141–144](https://doi.org/10.4153/CMB-2013-020-5)

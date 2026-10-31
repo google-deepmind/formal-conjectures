@@ -35,6 +35,7 @@ open Filter
 
 namespace Erdos547
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $T$ is a tree on $n$ vertices then
 $$R(T) \leq 2n-2.$$

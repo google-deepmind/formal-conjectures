@@ -90,6 +90,7 @@ theorem isSpectral_right_of_product_two_dimensional :
     ∀ (m : ℕ), 0 < m → spectralProductImpliesRightSpectral 2 m := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 [KLM2023, Problem 7.2] For a three-dimensional convex body $A$ and a bounded,
 measurable set $B$, must spectrality of $A \times B$ imply spectrality of $B$?

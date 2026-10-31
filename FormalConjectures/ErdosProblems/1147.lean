@@ -40,6 +40,7 @@ namespace Erdos1147
 def recurrenceSet (α : ℝ) (ε : ℕ → ℝ) : Set ℕ :=
   {n | 1 ≤ n ∧ distToNearestInt (α * n ^ 2) < ε n}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\alpha>0$ be an irrational number. Is the set
 $$A=\left\{ n\geq 1: \| \alpha n^2\| < \frac{1}{\log n}\right\},$$
@@ -58,6 +59,7 @@ theorem erdos_1147 : ¬ ∀ α : ℝ, 0 < α → Irrational α →
     (recurrenceSet α fun n ↦ 1 / Real.log n).IsAsymptoticAddBasisOfOrder 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Konieczny [Ko16b] showed that the set is not an additive basis of order $2$ for
 $\alpha=\sqrt{2}$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at

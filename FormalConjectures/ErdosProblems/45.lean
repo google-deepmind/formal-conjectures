@@ -36,6 +36,7 @@ public import FormalConjecturesForMathlib.Data.Finset.ReciprocalSum
 
 namespace Erdos45
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 2$. Is there an integer $n_k$ such that, if $D=\{ 1<d<n_k : d\mid n_k\}$, then for any
 $k$-colouring of $D$ there is a monochromatic subset $D'\subseteq D$ such that

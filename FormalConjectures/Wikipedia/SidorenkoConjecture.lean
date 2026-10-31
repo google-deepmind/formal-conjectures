@@ -59,6 +59,7 @@ variable {V W : Type*}
 
 /- ## The conjecture -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Sidorenko's conjecture (1993).**
 

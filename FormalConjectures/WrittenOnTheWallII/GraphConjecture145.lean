@@ -64,6 +64,7 @@ number `indepNeighborsCard G v`. This equals $\mathrm{lMin}$ from DeLaVina's not
 noncomputable def localIndependenceMin (G : SimpleGraph α) : ℕ :=
   Finset.univ.inf' Finset.univ_nonempty (indepNeighborsCard G)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 145](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

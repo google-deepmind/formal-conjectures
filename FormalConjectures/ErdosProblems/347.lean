@@ -36,6 +36,7 @@ The set of subset sums of a set `A ⊆ ℕ`.
 -/
 local notation "𝓟" A => subsetSums A
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a sequence $A=\{a_1\leq a_2\leq \cdots\}$ of integers with
 $$\lim \frac{a_{n+1}}{a_n}=2$$

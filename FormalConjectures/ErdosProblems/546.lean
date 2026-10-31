@@ -33,6 +33,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 
 namespace Erdos546
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph with no isolated vertices and $m$ edges. Is it true that
 $$R(G) \leq 2^{O(m^{1/2})}?$$

@@ -50,4 +50,30 @@ theorem erdos_712 :
         atTop (𝓝 (erdos_712.answer k r)) := by
   sorry
 
+
+/-- The normalized extremal numbers have a limit in $[0,1]$. This existence result does
+not determine the value asked for in Erdős Problem 712. -/
+@[category textbook, AMS 5]
+theorem erdos_712.variants.limit_exists (r k : ℕ) :
+    ∃ π ∈ Set.Icc (0 : ℝ) 1,
+      Tendsto (fun n : ℕ ↦ (Hypergraph.cliqueExtremalNumber n r k : ℝ) / n.choose r)
+        atTop (𝓝 π) := by
+  sorry
+
+/-- Turán's theorem gives the graph case:
+$\mathrm{ex}_2(n,K_k)/\binom{n}{2}\to 1-1/(k-1)$. -/
+@[category research solved, AMS 5]
+theorem erdos_712.variants.graph_case (k : ℕ) (hk : 2 ≤ k) :
+    Tendsto (fun n : ℕ ↦ (Hypergraph.cliqueExtremalNumber n 2 k : ℝ) / n.choose 2)
+      atTop (𝓝 (1 - 1 / ((k : ℝ) - 1))) := by
+  sorry
+
+/-- With denominator $n^2$, Turán's graph limit is
+$\frac12(1-1/(k-1))$. The factor $\frac12$ comes from the normalization. -/
+@[category research solved, AMS 5]
+theorem erdos_712.variants.graph_case_div_sq (k : ℕ) (hk : 2 ≤ k) :
+    Tendsto (fun n : ℕ ↦ (Hypergraph.cliqueExtremalNumber n 2 k : ℝ) / (n : ℝ) ^ 2)
+      atTop (𝓝 ((1 / 2) * (1 - 1 / ((k : ℝ) - 1)))) := by
+  sorry
+
 end Erdos712

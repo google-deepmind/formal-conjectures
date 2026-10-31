@@ -43,6 +43,7 @@ open scoped Pointwise
 
 namespace Erdos29
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there an explicit construction of a set $A\subseteq \mathbb{N}$ such that $A+A=\mathbb{N}$ but
 $1_A\ast 1_A(n)=o(n^\epsilon)$ for every $\epsilon>0$?

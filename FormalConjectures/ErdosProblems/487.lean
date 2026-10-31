@@ -37,6 +37,7 @@ public import FormalConjecturesForMathlib.Data.Set.Density
 
 namespace Erdos487
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ have positive density. Must there exist distinct $a,b,c\in A$ such
 that $[a,b]=c$ (where $[a,b]$ is the least common multiple of $a$ and $b$)?

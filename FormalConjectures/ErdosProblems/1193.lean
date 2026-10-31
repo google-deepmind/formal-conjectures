@@ -68,6 +68,7 @@ theorem erdos_1193.parts.ii :
       {n : ℕ | sumRep A n = g n}.upperDensity < c := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Indeed if $A=\mathbb{N}$ (assuming $0\in\mathbb{N}$) then $1_A\ast 1_A(n)=n+1$ for all $n$.
 -/

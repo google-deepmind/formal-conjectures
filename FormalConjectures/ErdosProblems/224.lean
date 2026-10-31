@@ -38,6 +38,7 @@ open scoped EuclideanGeometry
 def ObtuseAt {d : ℕ} (x y z : ℝ^d) : Prop :=
   inner ℝ (y - x) (z - x) < 0
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A\subseteq \mathbb{R}^d$ is any set of $2^d+1$ points then some three points in $A$ determine an obtuse angle.
 

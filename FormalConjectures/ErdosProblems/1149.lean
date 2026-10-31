@@ -35,6 +35,7 @@ public import FormalConjecturesForMathlib.Data.Set.Density
 
 namespace Erdos1149
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\alpha>0$ be a real number, not an integer. The density of integers $n\geq 1$ for which
 $(n,\lfloor n^\alpha\rfloor)=1$ is $6/\pi^2$.

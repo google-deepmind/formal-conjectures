@@ -52,6 +52,7 @@ def IsCycleOrEdge {U : Type*} [Fintype U] (H : SimpleGraph U) : Prop :=
   (H.Connected ∧ H.IsRegularOfDegree 2) ∨ H.edgeFinset.card = 1
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Any graph on $n$ vertices can be decomposed into $O(n)$ many edge-disjoint cycles and edges.
 
@@ -86,6 +87,7 @@ theorem erdos_184.variants.n_log_n :
   sorry
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 The graph $K_{3,n-3}$ shows that at least $(1+c)n$ many cycles and edges are required, for some
 constant $c>0$.

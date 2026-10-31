@@ -33,6 +33,7 @@ public import FormalConjecturesForMathlib.Data.Set.Density
 
 namespace Erdos371
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $P(n)$ denote the largest prime factor of $n$. Show that the set of $n$
 with $P(n+1) > P(n)$ has density $\frac{1}{2}$.

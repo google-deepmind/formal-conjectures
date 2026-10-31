@@ -32,6 +32,7 @@ public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 
 namespace Erdos355
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a lacunary sequence $A\subseteq \mathbb{N}$ (so that $A=\{a_1 < \cdots\}$ and
 there exists some $\lambda > 1$ such that $a_{n+1}/a_n\geq \lambda$ for all $n\geq 1$) such that

@@ -34,6 +34,7 @@ public import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
 
 namespace Erdos649
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $P(m)$ denote the greatest prime factor of $m$. Is it true that, for any two primes $p,q$,
 there exists some integer $n$ such that $P(n)=p$ and $P(n+1)=q$?
@@ -50,6 +51,17 @@ both $n$ and $n+1$.
 theorem erdos_649 :
     ¬ ∀ p q : ℕ, p.Prime → q.Prime → p ≠ q →
       ∃ n : ℕ, n.maxPrimeFac = p ∧ (n + 1).maxPrimeFac = q := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+The number of solutions is finite for any fixed $p,q$ since the largest prime factor of $n(n+1)$
+tends to $\infty$ (Mahler [Ma35] showed that this is $\gg \log\log n$, see
+[368](https://www.erdosproblems.com/368)).
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos649.lean#L97"]
+theorem erdos_649.variants.finite (p q : ℕ) :
+    {n : ℕ | n.maxPrimeFac = p ∧ (n + 1).maxPrimeFac = q}.Finite := by
   sorry
 
 /--
@@ -78,6 +90,7 @@ theorem erdos_649.variants.no_solution_two_seven :
   have hk3 : k % 3 < 3 := Nat.mod_lt _ (by norm_num)
   interval_cases h : k % 3 <;> omega
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Even with such amendments, this problem is false in a strong sense: Alan Tong has provided the
 following elegant elementary proof that, for any given prime $p$, there are infinitely many
@@ -88,7 +101,7 @@ and hence $n$ is a quadratic residue modulo $q$. On the other hand, since $q\equ
 know that $-1$ is not a quadratic residue modulo $q$, and hence $n\not\equiv -1\pmod{q}$, so it
 is impossible for $q\mid n+1$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos649.lean#L374"]
 theorem erdos_649.variants.tong (p : ℕ) (hp : p.Prime) :
     {q : ℕ |
       q.Prime ∧ ¬ ∃ n : ℕ, n.maxPrimeFac = p ∧ (n + 1).maxPrimeFac = q}.Infinite := by
@@ -114,13 +127,36 @@ $73\mid 2^{18}-1\mid n$.
 @[category textbook, AMS 11]
 theorem erdos_649.variants.sampaio :
     ¬ ∃ n : ℕ, n.maxPrimeFac = 19 ∧ (n + 1).maxPrimeFac = 2 := by
-  sorry
+  rintro ⟨n, hn, hn'⟩
+  have hn0 : n ≠ 0 := by
+    rintro rfl
+    simp at hn
+  -- Since `2` is the greatest prime factor of `n + 1`, it is the only one, so `n + 1` is a power
+  -- of `2`.
+  obtain ⟨k, hpow⟩ : ∃ k, n + 1 = 2 ^ k :=
+    ⟨_, Nat.eq_prime_pow_of_unique_prime_dvd (by omega)
+      (fun {q} hq hqd ↦
+        le_antisymm (hn' ▸ Nat.le_maxPrimeFac (by omega) hq hqd) hq.two_le)⟩
+  -- On the other hand `19` divides `n`, i.e. `2 ^ k ≡ 1 (mod 19)`.
+  have h19 : 19 ∣ n := hn ▸ Nat.maxPrimeFac_dvd
+  -- Modulo `2 ^ 18 - 1`, which both `19` and `73` divide, `2 ^ k` depends only on `k % 18`.
+  have hmod : 2 ^ k % (2 ^ 18 - 1) = 2 ^ (k % 18) % (2 ^ 18 - 1) := by
+    conv_lhs => rw [← Nat.div_add_mod k 18, pow_add, pow_mul]
+    rw [Nat.mul_mod, Nat.pow_mod]
+    norm_num
+  -- As `2` is a primitive root modulo `19`, this forces `18 ∣ k`, and then `73 ∣ 2 ^ 18 - 1 ∣ n`.
+  have h73 : 73 ∣ n := by
+    have hk : k % 18 < 18 := Nat.mod_lt _ (by norm_num)
+    interval_cases h : k % 18 <;> omega
+  -- But `73` is a prime factor of `n` larger than `19`.
+  have := hn ▸ Nat.le_maxPrimeFac hn0 (by norm_num) h73
+  omega
 
 /--
 Problem 6 in the 12th Romanian Master of Mathematics Competitions in 2020 was to prove that there
 exist infinitely many odd primes $p$ such that, for every $n$, $P(n)P(n+1)\neq 2p$.
 -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos649.lean#L1090"]
 theorem erdos_649.variants.rmm_2020 :
     {p : ℕ | p.Prime ∧ Odd p ∧
       ∀ n : ℕ, n.maxPrimeFac * (n + 1).maxPrimeFac ≠ 2 * p}.Infinite := by

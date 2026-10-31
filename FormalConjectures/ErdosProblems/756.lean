@@ -61,6 +61,7 @@ theorem erdos_756 :
     (fun n : ℕ => (n : ℝ)) =O[atTop] (fun n : ℕ => (maxRichDistances n : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bhowmick [Bh24] constructs a set of $n$ points in $\mathbb{R}^2$ such that
 $\lfloor\frac{n}{4}\rfloor$ distances occur at least $n+1$ times.

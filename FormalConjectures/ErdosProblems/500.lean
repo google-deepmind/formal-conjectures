@@ -79,6 +79,7 @@ theorem erdos_500.variants.turan_conjecture :
       fun n ↦ 5 / 9 * (n.choose 3 : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The historical upper bound
 $$\mathrm{ex}_3(n,K_4^3)\leq (0.561666+o(1))\binom{n}{3}$$

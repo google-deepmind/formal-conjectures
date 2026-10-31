@@ -63,6 +63,7 @@ theorem t_one {n : ℕ} (hn : 0 < n) : t 1 n = n := by
   rw [prod_range_one, add_zero] at hd
   exact Nat.le_of_dvd hpos hd
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $\sum_{n\leq x}t_2(n)\ll \frac{x^2}{(\log x)^c}$ for some $c>0$?
 -/
@@ -72,6 +73,7 @@ theorem erdos_394.parts.i :
     (t 2 n : ℝ)) ≪ (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for $k\geq 2$, $\sum_{n\leq x}t_{k+1}(n) =o\left(\sum_{n\leq x}t_k(n)\right)?$
 -/

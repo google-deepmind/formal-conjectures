@@ -53,6 +53,7 @@ def HasGallaiTriangle (A : Finset (AffineSubspace ℝ ℝ²)) : Prop :=
       p₁ ∈ L₁ ∧ p₁ ∈ L₂ ∧ p₂ ∈ L₂ ∧ p₂ ∈ L₃ ∧ p₃ ∈ L₃ ∧ p₃ ∈ L₁ ∧
       pointMultiplicity A p₁ = 2 ∧ pointMultiplicity A p₂ = 2 ∧ pointMultiplicity A p₃ = 2
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be a finite collection of $d\geq 4$ non-parallel lines in $\mathbb{R}^2$ such that
 there are no points where at least four lines from $A$ meet. Must there exist a 'Gallai

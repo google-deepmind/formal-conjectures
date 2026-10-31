@@ -32,6 +32,7 @@ namespace Erdos260
 
 open Filter
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_1 < a_2 < \cdots$ be an increasing sequence such that $\frac{a_n}{n} \to \infty$.
 Is the sum $\sum_{n}^{\infty} \frac{a_n}{2^{a_n}}$ irrational?

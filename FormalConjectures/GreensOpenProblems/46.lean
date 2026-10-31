@@ -72,6 +72,7 @@ theorem green_46.improve_lower :
 noncomputable def green_46.improve_upper.answer : ℕ → ℝ :=
   fun x : ℕ ↦ ((x : ℝ) + 1) ^ 2 / (Real.log (Real.log (3 * ((x : ℝ) + 1)))) ^ 2
 
+set_option linter.style.formal_proof_palomar false in
 /-- We conjecture that the best-known upper bound can be improved.
 
 Yes. OpenAI [OAI26a] proved $h(k) \ll k^2 / (\log\log 3k)^2$ for Jacobsthal's function $h$

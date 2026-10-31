@@ -36,6 +36,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Basic
 
 namespace Erdos157
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist an infinite Sidon set which is an asymptotic basis of order $3$?
 

@@ -59,6 +59,7 @@ at `m - 1` and at `b + 1`.
 def localMaxima (f : ℕ → ℝ) (a : ℕ) : Set ℕ :=
   {m | a < m ∧ f (m - 1) < f m ∧ ∃ b, m ≤ b ∧ (∀ j ∈ Set.Icc m b, f j = f m) ∧ f (b + 1) < f m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\delta_1(n,m)$ be the density of the set of integers with exactly one divisor in $(n,m)$.
 Is $\delta_1(n,m)$ unimodular for $m>n+1$ (i.e. increases until some $m$ then decreases
@@ -97,11 +98,13 @@ theorem erdos_692.variants.erdos_upper_bound :
       ∃ c > (0 : ℝ), ∃ C > (0 : ℝ), ∀ᶠ n in atTop, ∀ m, δ n m ≤ C / Real.log n ^ c := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Cambie has calculated that unimodularity fails even for $n=2$ and $n=3$. For example,
 $$\delta_1(3,6)= 0.35\quad \delta_1(3,7)\approx 0.33\quad \delta_1(3,8)\approx 0.3619.$$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/b8e7531a14cbe5c18ea1ae2e9e85b811bc3c7a46/erdos-692/Solution.lean#L26"]
 theorem erdos_692.variants.cambie_three :
     ∀ δ : ℕ → ℕ → ℝ, (∀ a b, IsDelta₁ a b (δ a b)) →
       δ 3 7 < δ 3 6 ∧ δ 3 7 < δ 3 8 := by

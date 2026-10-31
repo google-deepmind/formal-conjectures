@@ -78,6 +78,7 @@ theorem erdos_751.variants.bondy_vince {V : Type*} [Fintype V] (G : SimpleGraph 
     ∃ m ∈ G.cycleLengths, ∃ m' ∈ G.cycleLengths, m < m' ∧ m' ≤ m + 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The finite case of `erdos_751.parts.i`, which is what the Lean proof establishes: a finite graph
 with chromatic number at least $4$ has two cycles whose lengths differ by $1$ or $2$.

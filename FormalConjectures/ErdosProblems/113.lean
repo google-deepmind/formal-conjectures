@@ -42,6 +42,7 @@ open Filter Asymptotics SimpleGraph
 
 namespace Erdos113
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $G$ is bipartite then $\mathrm{ex}(n;G)\ll n^{3/2}$ if and only $G$ is $2$-degenerate, that
 is, $G$ contains no induced subgraph with minimal degree at least 3.

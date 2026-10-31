@@ -36,6 +36,7 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumse
 
 namespace Erdos476
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{F}_p$. Let
 $$

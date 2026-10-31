@@ -31,6 +31,7 @@ public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 
 namespace Erdos966
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k,r\geq 2$. Does there exist a set $A\subseteq \mathbb{N}$ that contains no non-trivial
 arithmetic progression of length $k+1$, yet in any $r$-colouring of $A$ there must exist a
