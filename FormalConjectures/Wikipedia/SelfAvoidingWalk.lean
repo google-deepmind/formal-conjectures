@@ -135,13 +135,15 @@ of `limUnder`.
 noncomputable def connectiveConstant {V : Type*} (G : SimpleGraph V) (v : V) : ℝ :=
   limUnder atTop (fun n => (numSAWFrom G v n : ℝ) ^ (1 / (n : ℝ)))
 
+def self_avoiding_walk_closed_form.answer : ℕ → ℕ → ℕ := sorry
+
 /--
 **Enumeration of self-avoiding walks (open).**  No closed-form formula is currently known
 that yields $c_n(\mathbb{Z}^d)$ for arbitrary $d$ and $n$.  We formalise the question as
 asking for the value of the function $c_n$ itself.
 -/
-@[category research open, AMS 5 68]
-theorem self_avoiding_walk_closed_form : cN = answer(sorry) := by
+@[category research open, question value, AMS 5 68]
+theorem self_avoiding_walk_closed_form : cN = self_avoiding_walk_closed_form.answer := by
   sorry
 
 /--
@@ -156,6 +158,8 @@ theorem tendsto_connectiveConstant_integerLattice (d : ℕ) :
       (𝓝 (connectiveConstant (integerLattice d) (0 : Fin d → ℤ))) := by
   sorry
 
+def connectiveConstant_integerLattice.answer (d : ℕ) : ℝ := sorry
+
 /--
 **Connective constant of the integer lattice (open).**  The exact value of the connective constant
 $\mu(\mathbb{Z}^d)$ is not known in closed form in any dimension $d \ge 2$; on the square lattice
@@ -165,9 +169,10 @@ $c_n = 2$ for $n \ge 1$, so $\mu = 1$ (see §1.6.1 of the lecture notes by
 Bauerschmidt, Duminil-Copin, Goodman and Slade).  (Choosing a dimension $d \ge 2$ picks out a
 different open problem for each lattice $\mathbb{Z}^d$.)
 -/
-@[category research open, AMS 5 82]
+@[category research open, question value, AMS 5 82]
 theorem connectiveConstant_integerLattice (d : ℕ) :
-    connectiveConstant (integerLattice d) (0 : Fin d → ℤ) = answer(sorry) := by
+    connectiveConstant (integerLattice d) (0 : Fin d → ℤ) =
+      connectiveConstant_integerLattice.answer d := by
   sorry
 
 /--
@@ -194,7 +199,7 @@ is `saw_critical_exponent_dim_four`.
 -/
 @[category research open, AMS 5 82]
 theorem saw_critical_exponent :
-    answer(sorry) ↔ ∀ d : ℕ, 0 < d → d ≠ 4 → ∃ γ A : ℝ, 0 < A ∧
+    ∀ d : ℕ, 0 < d → d ≠ 4 → ∃ γ A : ℝ, 0 < A ∧
       Tendsto (fun n => (cN d n : ℝ) /
           (A * connectiveConstant (integerLattice d) (0 : Fin d → ℤ) ^ n * (n : ℝ) ^ (γ - 1)))
         atTop (𝓝 1) := by
@@ -211,7 +216,7 @@ question is open.
 -/
 @[category research open, AMS 5 82]
 theorem saw_critical_exponent_dim_four :
-    answer(sorry) ↔ ∃ A : ℝ, 0 < A ∧
+    ∃ A : ℝ, 0 < A ∧
       Tendsto (fun n => (cN 4 n : ℝ) /
           (A * connectiveConstant (integerLattice 4) (0 : Fin 4 → ℤ) ^ n *
             Real.log (n : ℝ) ^ ((1 : ℝ) / 4)))
@@ -230,7 +235,7 @@ two-dimensional, since the honeycomb lattice is two-dimensional; the dimension-g
 -/
 @[category research open, AMS 5 82]
 theorem saw_universality :
-    answer(sorry) ↔ ∃ γ : ℝ,
+    ∃ γ : ℝ,
       (∃ A : ℝ, 0 < A ∧
         Tendsto (fun n => (cN 2 n : ℝ) /
             (A * connectiveConstant (integerLattice 2) (0 : Fin 2 → ℤ) ^ n * (n : ℝ) ^ (γ - 1)))
@@ -264,14 +269,16 @@ of length $1$ from the origin.
 theorem cHex_one : cHex 1 = 3 := by
   sorry
 
+def cN_two_eighty.answer : ℕ := sorry
+
 /--
 **Smallest unknown value on the square lattice (open).**  The number of self-avoiding
 walks of length $80$ on $\mathbb{Z}^2$ is the smallest value of $c_n(\mathbb{Z}^2)$ that is
 not yet known: as of the most recent enumerations of Iwan Jensen, the sequence
 [OEIS A001411](https://oeis.org/A001411) is known up to $n = 79$.
 -/
-@[category research open, AMS 5 68]
-theorem cN_two_eighty : cN 2 80 = answer(sorry) := by
+@[category research open, question value, AMS 5 68]
+theorem cN_two_eighty : cN 2 80 = cN_two_eighty.answer := by
   sorry
 
 end SelfAvoidingWalk
