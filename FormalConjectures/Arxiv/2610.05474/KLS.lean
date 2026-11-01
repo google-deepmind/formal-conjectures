@@ -83,7 +83,8 @@ def PoincareBound {n : ℕ} (μ : Measure (Space n)) (C : ℝ) : Prop :=
 /-- The Kannan--Lovász--Simonovits inequality in its smooth compactly supported test-function
 formulation: one $C > 0$ bounds the Poincaré inequality for every isotropic log-concave
 probability density on $\mathbb{R}^n$, for every $n \geq 1$. -/
-@[category research solved, AMS 46 52 60]
+@[category research solved, AMS 46 52 60, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000014&version=1"]
 theorem kannan_lovasz_simonovits :
     ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ, 1 ≤ n →
       ∀ ρ : Space n → ℝ, IsLogConcaveDensity ρ → IsIsotropic (densityMeasure ρ) →
