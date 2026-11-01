@@ -32,6 +32,7 @@ open scoped Pointwise
 
 namespace Erdos818
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be a finite set of integers such that $\lvert A+A\rvert \ll \lvert A\rvert$. Is it true that
 $$\lvert AA\rvert \gg \frac{\lvert A\rvert^2}{(\log \lvert A\rvert)^C}$$

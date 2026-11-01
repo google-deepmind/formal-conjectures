@@ -85,6 +85,7 @@ theorem erdos_263.parts.ii :
         atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{\frac{1}{2^n}} = \infty$
 has $\sum \frac{1}{a_n}$ converging to an irrational number.
@@ -111,6 +112,7 @@ theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ)
     ¬ IsIrrationalitySequence a := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 On the other hand, if there exists some $\varepsilon > 0$ such that $a_n$ satisfies
 $\liminf \frac{a_{n+1}}{a_n^{2+\varepsilon}} > 0$, then $a_n$ is an irrationality sequence
@@ -126,6 +128,7 @@ theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
     IsIrrationalitySequence a := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The same folklore result with the growth hypothesis stated as an eventual lower bound
 $a_{n+1} \geq c\, a_n^{2+\varepsilon}$. Unlike the real-valued `liminf` in

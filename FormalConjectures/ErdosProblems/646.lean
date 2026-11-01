@@ -35,6 +35,7 @@ open scoped Nat
 
 namespace Erdos646
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $p_1,\ldots,p_k$ be distinct primes. Are there infinitely many $n$ such that $n!$ is
 divisible by an even power of each of the $p_i$?

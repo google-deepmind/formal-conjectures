@@ -63,6 +63,7 @@ open Metric Set Borsuk
 
 namespace Erdos505
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Erdős Problem 505** (disproved). Borsuk's conjecture is false for
 sufficiently large $n$: there exists a dimension $n$ and a bounded set
 $S \subseteq \mathbb{R}^n$ with at least two points that cannot be

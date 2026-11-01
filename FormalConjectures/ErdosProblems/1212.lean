@@ -51,6 +51,7 @@ def Adj (p q : ℕ × ℕ) : Prop :=
   (p.1 = q.1 ∧ (p.2 = q.2 + 1 ∨ q.2 = p.2 + 1)) ∨
   (p.2 = q.2 ∧ (p.1 = q.1 + 1 ∨ q.1 = p.1 + 1))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be the graph with vertex set those pairs $(x,y)\in \mathbb{N}^2$ with
 $\mathrm{gcd}(x,y)=1$, in which we join two vertices if the differ in only one coordinate, and

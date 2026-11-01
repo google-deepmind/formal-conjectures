@@ -95,6 +95,7 @@ theorem a_5 : a 5 = 4284 := by
   rw [a_of_gt_one (by decide : 1 < 5), hI]
   norm_num [a_1, a_2, a_3, a_4]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: $a(n)$ is odd iff $n$ is a power of $2$ for $n \ge 1$."
 - Paul D. Hanna, Jul 03 2026.
@@ -107,6 +108,7 @@ theorem conjecture_parity (n : ℕ) (hn : 1 ≤ n) :
     Odd (a n) ↔ ∃ k : ℕ, n = 2 ^ k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "$a(n)$ divisible by $3$ for $n > 1$."
 - Paul D. Hanna, Jul 03 2026.

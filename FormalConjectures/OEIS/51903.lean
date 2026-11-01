@@ -70,6 +70,7 @@ theorem conjecture1 :
     ∃ n : ℕ, 4 < n ∧ ¬ n.Prime ∧ n.totient ∣ (n - a n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there odd numbers $n$ such that $a(n) > 1$ and $n \equiv a(n) \pmod{\lambda(n)}$?
 (Equivalently, odd numbers $n$ such that $a(n) > 1$ and $b^n \equiv b^{a(n)} \pmod n$ for all $b$.)
@@ -85,6 +86,7 @@ theorem conjecture2 :
     ∃ n : ℕ, Odd n ∧ 1 < a n ∧ ∀ b : ℕ, b ^ n ≡ b ^ (a n) [MOD n] := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there odd numbers $n$ such that $a(n) > 1$ and $n \equiv a(n) \pmod{\operatorname{ord}_n(2)}$?
 (Equivalently, odd numbers $n$ such that $a(n) > 1$ and $2^n \equiv 2^{a(n)} \pmod n$.)

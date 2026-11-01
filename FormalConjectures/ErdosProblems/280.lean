@@ -41,6 +41,7 @@ noncomputable def uncoveredCount (n a : ℕ → ℕ) (k : ℕ) : ℕ := by
   classical
   exact ((Finset.range (n k)).filter (fun m => ¬ isCoveredBy n a m k)).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n_1<n_2<\cdots $ be an infinite sequence of integers with associated $a_k\pmod{n_k}$, such that for some $\epsilon>0$ we have $n_k>(1+\epsilon)k\log k$ for all $k$. Then
 $$

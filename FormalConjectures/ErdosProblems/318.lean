@@ -46,12 +46,14 @@ def P₁ (A : Set ℕ) : Prop := ∀ (f : ℕ → ℝ),
   Set.range f ⊆ {1, -1} →
   ∃ S : Finset ℕ, S.Nonempty ∧ ↑S ⊆ A \ {0} ∧ ∑ n ∈ S, f n / n = 0
 
+set_option linter.style.formal_proof_palomar false in
 /-- `ℕ` has property `P₁`. This is proved in [ErSt75]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L761"]
 theorem erdos_318.variants.univ : P₁ univ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Sattler proved in [Sa75] that the set of odd numbers has property `P₁`. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L782"]
@@ -125,6 +127,7 @@ odd numbers together with one even number have density `1 / 2` on the nose. -/
 theorem erdos_318.parts.i : ∃ A : Set ℕ, HasPosDensity A ∧ ¬ P₁ A := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every infinite arithmetic progression has property `P₁`. This is proved in [Sa82b]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos318.lean#L599"]

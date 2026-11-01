@@ -35,6 +35,7 @@ open Filter
 
 namespace Erdos639
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if the edges of $K_n$ are 2-coloured then there are at most $n^2/4$ many edges
 which do not occur in a monochromatic triangle?
@@ -83,6 +84,7 @@ theorem erdos_639.variants.exact :
       (if n ≤ 5 then n.choose 2 else if n = 6 then 10 else n ^ 2 / 4) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every two-colouring of $K_n$ with $n\geq 10$ has at most
 $\lfloor n^2/4\rfloor$ uncovered edges [KeSu04, Proposition 2.1]. -/
 @[category research solved, AMS 5, formal_proof using lean4 at

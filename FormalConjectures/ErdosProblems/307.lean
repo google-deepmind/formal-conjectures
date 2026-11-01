@@ -75,6 +75,7 @@ theorem erdos_307.variants.coprime_one_notMem : ∃ P Q : Finset ℕ, 0 ∉ P �
     1 = (∑ p ∈ P, (p : ℚ)⁻¹) * (∑ q ∈ Q, (q : ℚ)⁻¹) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A machine-checked **barrier** for Erdős 307 (Bonfioli, 2026): any solution with `Q` nonempty uses at
 least 59 primes in total, and `(∏_{p ∈ P} p)² ≥ 4·10¹¹²` — i.e. `∏_{p ∈ P} p ≥ 2·10⁵⁶` (and, by
@@ -92,6 +93,7 @@ theorem erdos_307.barrier {P Q : Finset ℕ}
     59 ≤ #(P ∪ Q) ∧ (4 * 10 ^ 112 : ℚ) ≤ (∏ p ∈ P, (p : ℚ)) ^ 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A stronger machine-checked **barrier** (Bonfioli, 2026), closing the 59-prime level: any solution of
 Erdős 307 in fact uses at least `60` primes in total. The full `sorry`-free proof is `erdos307_sixty`
