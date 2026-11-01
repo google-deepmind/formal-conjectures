@@ -56,7 +56,6 @@ theorem erdos_935.parts.i :
       ((Erdos367.B 2 (∏ m ∈ Finset.Icc n (n + ℓ), m) : ℕ) : ℝ) < (n : ℝ) ^ (2 + ε) := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 For any integer $n=\prod p^{k_p}$ let $Q_2(n)$ be the powerful part of $n$, so that
 $$Q_2(n) = \prod_{\substack{p\\ k_p\geq 2}}p^{k_p}.$$
@@ -70,7 +69,7 @@ many $n$. The answer is yes, by the Pell equation construction of `erdos_935.var
 and $Q_2$ does not decrease under divisibility.
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
-  "https://github.com/veljjanoski/formal-conjectures-proofs/blob/03e17cd05ef4d72abf00c889294efcfe9feb0d5f/FcProofs/Erdos935.lean#L104"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000027"]
 theorem erdos_935.parts.ii :
     ∀ ℓ : ℕ, 2 ≤ ℓ → ∀ C : ℝ, ∃ᶠ n : ℕ in atTop,
       C * (n : ℝ) ^ 2 < ((Erdos367.B 2 (∏ m ∈ Finset.Icc n (n + ℓ), m) : ℕ) : ℝ) := by
@@ -92,7 +91,6 @@ theorem erdos_935.parts.iii :
       atTop (nhds 0) := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 A result of Mahler implies, for every $\ell\geq 1$,
 $$\limsup_{n\to \infty}\frac{Q_2(n(n+1)\cdots(n+\ell))}{n^2}\geq 1.$$
@@ -102,13 +100,12 @@ give consecutive powerful numbers. We write $\limsup \geq 1$ as: for every $\var
 $(1-\varepsilon) n^2 < Q_2(\cdots)$ for infinitely many $n$.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/veljjanoski/formal-conjectures-proofs/blob/03e17cd05ef4d72abf00c889294efcfe9feb0d5f/FcProofs/Erdos935.lean#L156"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000027"]
 theorem erdos_935.variants.mahler :
     ∀ ℓ : ℕ, 1 ≤ ℓ → ∀ ε : ℝ, 0 < ε → ∃ᶠ n : ℕ in atTop,
       (1 - ε) * (n : ℝ) ^ 2 < ((Erdos367.B 2 (∏ m ∈ Finset.Icc n (n + ℓ), m) : ℕ) : ℝ) := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The construction of van Doorn for [367] (also given by Aletheia [Fe26, §4.2]) proves the second
 part in the affirmative: a construction via solutions to the Pell equation $x^2-8y^2=1$ implies
@@ -117,7 +114,7 @@ $$\limsup_{n\to \infty}\frac{Q_2(n(n+1)(n+2))}{n^2}=\infty.$$
 This is the case $\ell = 2$, stated as in `erdos_935.parts.ii`.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/veljjanoski/formal-conjectures-proofs/blob/03e17cd05ef4d72abf00c889294efcfe9feb0d5f/FcProofs/Erdos935.lean#L150"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000027"]
 theorem erdos_935.variants.ell_two :
     ∀ C : ℝ, ∃ᶠ n : ℕ in atTop,
       C * (n : ℝ) ^ 2 < ((Erdos367.B 2 (∏ m ∈ Finset.Icc n (n + 2), m) : ℕ) : ℝ) := by
