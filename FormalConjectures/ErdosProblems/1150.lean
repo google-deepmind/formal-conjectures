@@ -40,7 +40,8 @@ degree $n$ with coefficients in $\{-1, 1\}$,
 $$\max_{|z|=1} |P(z)| > (1 + c) \sqrt{n}?$$
 
 No. This was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
-Lean proof.
+Lean proof. It proves `erdos_1150.variants.signs`, which implies this statement by
+`erdos_1150_of_signs`.
 -/
 @[category research solved, question, AMS 12 30, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/Littlewood/Main.lean#L187"]
@@ -49,6 +50,66 @@ theorem erdos_1150 :
       ∀ P : ℂ[X],  (∀ i ≤ P.natDegree, P.coeff i = - 1 ∨ P.coeff i = 1) → P.natDegree = n →
         ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ > (1 + c) * Real.sqrt n := by
   sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+The form of `erdos_1150` proved in [OAI26a]: for every $\eta > 0$ and every large $N$, there are
+signs $\varepsilon_0, \ldots, \varepsilon_{N-1} \in \{-1, 1\}$ with
+$\lvert \sum_{k<N} \varepsilon_k z^k\rvert \le (1 + \eta)\sqrt{N}$ for all $\lvert z\rvert = 1$.
+Here $N$ is the number of coefficients, so the polynomial has degree $N - 1$.
+-/
+@[category research solved, AMS 12 30, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/Littlewood/Main.lean#L187"]
+theorem erdos_1150.variants.signs :
+    ∀ η : ℝ, 0 < η → ∃ N₀ : ℕ, 1 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
+      ∃ ε : Fin N → ℝ, (∀ k, ε k = -1 ∨ ε k = 1) ∧
+        ∀ z : ℂ, ‖z‖ = 1 → ‖∑ k : Fin N, (ε k : ℂ) * z ^ (k : ℕ)‖ ≤ (1 + η) * Real.sqrt N := by
+  sorry
+
+/--
+`erdos_1150.variants.signs` implies `erdos_1150`. Given $c > 0$, take $\eta = c / 2$ and
+$N = n + 1$. For large $n$, $(1 + c/2)\sqrt{n + 1} \le (1 + c)\sqrt{n}$.
+-/
+@[category test, AMS 12 30]
+theorem erdos_1150_of_signs (h : type_of% erdos_1150.variants.signs) :
+    type_of% erdos_1150 := by
+  rintro ⟨c, hc, hev⟩
+  obtain ⟨M, hM⟩ := Filter.eventually_atTop.mp hev
+  obtain ⟨N₀, -, hN₀⟩ := h (c / 2) (by positivity)
+  obtain ⟨K, hK⟩ := exists_nat_gt ((1 + c / 2) ^ 2 / (c + 3 * c ^ 2 / 4))
+  set n := max (max M N₀) K
+  have hMn : M ≤ n := (le_max_left _ _).trans (le_max_left _ _)
+  have hN₀n : N₀ ≤ n + 1 := ((le_max_right _ _).trans (le_max_left _ _)).trans n.le_succ
+  have hKn : (K : ℝ) ≤ n := by exact_mod_cast le_max_right _ _
+  obtain ⟨ε, hε, hbound⟩ := hN₀ (n + 1) hN₀n
+  set P : ℂ[X] := ∑ k : Fin (n + 1), Polynomial.C (ε k : ℂ) * Polynomial.X ^ (k : ℕ) with hP
+  have hcoeff (i : ℕ) (hi : i ≤ n) : P.coeff i = ε ⟨i, Nat.lt_succ_of_le hi⟩ := by
+    rw [hP, Polynomial.finsetSum_coeff, Finset.sum_eq_single ⟨i, Nat.lt_succ_of_le hi⟩]
+    · simp
+    · intro k _ hk
+      rw [Polynomial.coeff_C_mul_X_pow, if_neg fun h => hk (Fin.ext h.symm)]
+    · simp
+  have hpm (i : ℕ) (hi : i ≤ n) : P.coeff i = -1 ∨ P.coeff i = 1 := by
+    rw [hcoeff i hi]
+    rcases hε ⟨i, Nat.lt_succ_of_le hi⟩ with h | h <;> simp [h]
+  have hdeg : P.natDegree = n := by
+    refine Polynomial.natDegree_eq_of_le_of_coeff_ne_zero ?_ ?_
+    · exact Polynomial.natDegree_sum_le_of_forall_le _ _ fun k _ =>
+        (Polynomial.natDegree_C_mul_X_pow_le _ _).trans (Nat.lt_succ_iff.mp k.2)
+    · rcases hpm n le_rfl with h | h <;> simp [h]
+  have hgrow : (1 + c / 2) * Real.sqrt ((n + 1 : ℕ) : ℝ) ≤ (1 + c) * Real.sqrt n := by
+    have hsq : (1 + c / 2) ^ 2 * ((n : ℝ) + 1) ≤ (1 + c) ^ 2 * n := by
+      have := (div_lt_iff₀ (by positivity)).mp (hK.trans_le hKn)
+      nlinarith
+    rw [← Real.sqrt_sq (by positivity : 0 ≤ 1 + c / 2), ← Real.sqrt_sq (by positivity : 0 ≤ 1 + c),
+      ← Real.sqrt_mul (by positivity), ← Real.sqrt_mul (by positivity)]
+    exact Real.sqrt_le_sqrt (by push_cast; linarith)
+  have : Nonempty (Metric.sphere (0 : ℂ) 1) := ⟨⟨1, by simp⟩⟩
+  refine (hM n hMn P (fun i hi => hpm i (hdeg ▸ hi)) hdeg).not_ge (ciSup_le fun z => ?_)
+  have hz : ‖(z : ℂ)‖ = 1 := mem_sphere_zero_iff_norm.mp z.2
+  simp only [hP, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
+    Polynomial.eval_pow, Polynomial.eval_X]
+  exact (hbound z hz).trans hgrow
 
 /--
 The trivial lower bound from Parseval's identity: for any polynomial $P$ of degree $n$ with
