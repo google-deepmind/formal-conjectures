@@ -112,12 +112,80 @@ generated.
 This was proved by an internal OpenAI model in September 2026. The linked Lean proof is for
 [OAI26b]. It shows that the map above is injective and not surjective. That the map is
 continuous and shift-equivariant, as `IsSurjunctive` requires, is not part of the linked
-proof. -/
+proof. It is proved in `counter_gottschalk_surjunctivity_of_odd_kaplansky`. -/
 @[category research solved, AMS 20 37, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/OddKaplansky/Main.lean#L81"]
 theorem counter_gottschalk_surjunctivity :
     ∃ (G : Type) (_ : Group G), ¬ IsSurjunctive G := by
   sorry
+
+/-- The number $M = \binom{1200}{600}$ used in [OAI26b]. -/
+@[irreducible] def sourceM : ℕ := Nat.choose 1200 600
+
+/-- The least prime factor of $(M!)^2 + 1$, where $M$ is `sourceM`. This is the
+characteristic of the field in [OAI26b]. -/
+@[irreducible] def sourcePrime : ℕ := Nat.minFac ((Nat.factorial sourceM)^2 + 1)
+
+/-- The linear cellular automaton of $d \in K[G]$. It sends $x : G \to K$ to
+$g \mapsto \sum_u d_u x(gu)$. -/
+noncomputable def cellular {K G : Type} [Field K] [Group G]
+    (d : MonoidAlgebra K G) (x : G → K) (g : G) : K :=
+  d.coeff.sum fun u c => c * x (g * u)
+
+set_option linter.style.formal_proof_palomar false in
+/-- The statement of the linked Lean proof of [OAI26b]. Let $p$ be `sourcePrime`. Then $p$ is
+an odd prime, and there are a field $K$ with $p^4$ elements, a finitely generated group $G$
+with a non-trivial element of finite order, and $a, b \in K[G]$ with $ab = 1$ and
+$ba \neq 1$, such that `cellular b` is injective and not surjective. -/
+@[category research solved, AMS 16 20 37, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/OddKaplansky/Main.lean#L81"]
+theorem counter_gottschalk_surjunctivity.variants.odd_kaplansky :
+    sourcePrime.Prime ∧ Odd sourcePrime ∧
+    ∃ (K : Type) (_ : Field K) (_ : Fintype K) (_ : CharP K sourcePrime),
+      Fintype.card K = sourcePrime^4 ∧
+      ∃ (G : Type) (_ : Group G) (_ : Group.FG G),
+        (∃ g : G, g ≠ 1 ∧ IsOfFinOrder g) ∧
+        ∃ a b : MonoidAlgebra K G,
+          a * b = 1 ∧ b * a ≠ 1 ∧
+          Function.Injective (cellular b) ∧ ¬ Function.Surjective (cellular b) := by
+  sorry
+
+/-- The cellular automaton of `d` commutes with the left shift. -/
+@[category API, AMS 20 37]
+theorem isShiftEquivariant_cellular {K G : Type} [Field K] [Group G]
+    (d : MonoidAlgebra K G) : IsShiftEquivariant G (cellular d) := by
+  intro g x
+  ext h
+  simp [cellular, mul_assoc]
+
+/-- The cellular automaton of `d` is continuous for the product of discrete topologies. -/
+@[category API, AMS 20 37]
+theorem continuous_cellular {K G : Type} [Field K] [Group G] [TopologicalSpace K]
+    [DiscreteTopology K] (d : MonoidAlgebra K G) : Continuous (cellular d) := by
+  have : ContinuousAdd K := ⟨continuous_of_discreteTopology⟩
+  refine continuous_pi fun g => ?_
+  simp only [cellular, Finsupp.sum]
+  exact continuous_finsetSum _ fun u _ =>
+    (continuous_of_discreteTopology (f := fun c : K => d.coeff u * c)).comp (continuous_apply _)
+
+/-- The statement of [OAI26b] implies `counter_gottschalk_surjunctivity`. -/
+@[category test, AMS 20 37]
+theorem counter_gottschalk_surjunctivity_of_odd_kaplansky
+    (h : type_of% counter_gottschalk_surjunctivity.variants.odd_kaplansky) :
+    type_of% counter_gottschalk_surjunctivity := by
+  obtain ⟨-, -, K, _, _, -, -, G, _, -, -, -, b, -, -, hinj, hsurj⟩ := h
+  refine ⟨G, inferInstance, fun hG => hsurj ?_⟩
+  let : TopologicalSpace K := ⊥
+  have : DiscreteTopology K := ⟨rfl⟩
+  exact hG K (cellular b) (continuous_cellular b) (isShiftEquivariant_cellular b) hinj
+
+/-- The statement of [OAI26b] implies `gottschalk_surjunctivity_conjecture`. -/
+@[category test, AMS 20 37]
+theorem gottschalk_surjunctivity_conjecture_of_odd_kaplansky
+    (h : type_of% counter_gottschalk_surjunctivity.variants.odd_kaplansky) :
+    type_of% gottschalk_surjunctivity_conjecture := by
+  obtain ⟨G, _, hG⟩ := counter_gottschalk_surjunctivity_of_odd_kaplansky h
+  exact fun hall => hG (hall G)
 
 /-- Every finite group is surjunctive. This is a classical result: an injective
 endomorphism of a finite set is surjective. -/
