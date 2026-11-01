@@ -72,7 +72,8 @@ Then $|A| \cdot |B|$ is at most $\frac{q^{2n}}{en}$.
 This problem is from *Maximal sets of strings with no prefix-suffix overlap* and was proved in
 *An isoperimetric inequality for word overlap*.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/karlesmarin/formalizations/blob/25319eb97fad11570a097ec38d053fc5c3c291bf/Formalizations/Combinatorics/Words/SuffixPrefixAvoidance.lean#L677"]
 theorem suffix_prefix_avoidance_bound
     (A B : Finset (Fin n → Fin q))
     (hq : 0 < q) (hn : 0 < n)
