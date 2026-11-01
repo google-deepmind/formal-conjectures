@@ -283,28 +283,99 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   conj_mul : ∀ P Q : Poly, conj (P * Q) = conj P * conj Q
   conj_smul : ∀ (c : ℂ) (P : Poly), conj (c • P) = starRingEnd ℂ c • conj P
 
+  /-- Ascending $\mathbb{N}$-filtration $\mathcal{F}_d \mathcal{P}$ on gauge-invariant curvature polynomials -/
+  polyFiltration : ℕ → Submodule ℂ Poly
+  polyFiltration_mono : Monotone polyFiltration
+
   /-- Classical mass/scaling dimension $\dim(P) \in \mathbb{N}$ ($\dim(F_{\mu\nu}) = 2$, $\dim(D_\mu) = 1$) -/
   classicalDim : Poly → ℕ
   dim_zero : classicalDim 0 = 0
   dim_one : classicalDim 1 = 0
   dim_conj : ∀ P : Poly, classicalDim (conj P) = classicalDim P
-  dim_mul : ∀ P Q : Poly, classicalDim (P * Q) = classicalDim P + classicalDim Q
-  dim_add : ∀ P Q : Poly, classicalDim (P + Q) ≤ max (classicalDim P) (classicalDim Q)
   dim_smul : ∀ (c : ℂ) (P : Poly), c ≠ 0 → classicalDim (c • P) = classicalDim P
 
-  /-- Space of Lie-algebra-valued classical differential forms / polynomials -/
+  /-- Exact bidirectional bridge linking filtration and scaling dimension:
+      $P \in \mathcal{F}_d \mathcal{P} \iff \dim(P) \le d$, sealing disconnection exploits -/
+  mem_polyFiltration_iff_dim_le : ∀ (d : ℕ) (P : Poly), P ∈ polyFiltration d ↔ classicalDim P ≤ d
+
+  /-- Ultrametric subadditivity under addition -/
+  dim_add_le : ∀ P Q : Poly, classicalDim (P + Q) ≤ max (classicalDim P) (classicalDim Q)
+  /-- Multiplicative subadditivity holding unconditionally (including at zero) -/
+  dim_mul_le : ∀ P Q : Poly, classicalDim (P * Q) ≤ classicalDim P + classicalDim Q
+  /-- Exact logarithmic additivity on non-zero polynomials (consistent at zero) -/
+  dim_mul : ∀ P Q : Poly, P ≠ 0 → Q ≠ 0 → P * Q ≠ 0 →
+    classicalDim (P * Q) = classicalDim P + classicalDim Q
+
+  /-- Finite-dimensional real Lie algebra $\mathfrak{g} = \mathrm{Lie}(G)$ of the gauge group $G$ -/
+  Lie : Type
+  [lieRingLie : LieRing Lie]
+  [lieAlgebraLie : LieAlgebra ℝ Lie]
+  [finDimLie : FiniteDimensional ℝ Lie]
+
+  /-- Adjoint action of $G$ on $\mathfrak{g}$ -/
+  adjoint_action : G → Lie →ₗ[ℝ] Lie
+  adjoint_action_one : adjoint_action 1 = LinearMap.id
+  adjoint_action_mul : ∀ g h : G, adjoint_action (g * h) = (adjoint_action g).comp (adjoint_action h)
+
+  /-- Normalized invariant positive-definite inner product $\langle X, Y \rangle_{\mathfrak{g}}$ -/
+  lie_inner : Lie →ₗ[ℝ] Lie →ₗ[ℝ] ℝ
+  lie_inner_symm : ∀ X Y : Lie, lie_inner X Y = lie_inner Y X
+  lie_inner_pos : ∀ X : Lie, X ≠ 0 → 0 < lie_inner X X
+  lie_inner_ad_inv : ∀ (g : G) (X Y : Lie),
+    lie_inner (adjoint_action g X) (adjoint_action g Y) = lie_inner X Y
+
+  /-- Canonical minimal $\mathfrak{su}(2)$ subalgebra generator triple $(X, Y, Z)$
+      locking the normalization scale of `lie_inner`:
+      $[X, Y] = Z, [Y, Z] = X, [Z, X] = Y$ with $\langle X, X \rangle_{\mathfrak{g}} = 1$. -/
+  su2_triple : ∃ (X Y Z : Lie),
+    ⁅X, Y⁆ = Z ∧ ⁅Y, Z⁆ = X ∧ ⁅Z, X⁆ = Y ∧ lie_inner X X = 1
+
+  /-- Adjoint quadratic Casimir invariant $C_2(G) \in \mathbb{N}$ of $G$ ($C_2(\mathrm{SU}(N)) = N$) -/
+  casimir_adjoint : ℕ
+  casimir_adjoint_pos : 2 ≤ casimir_adjoint
+
+  /-- Intrinsic Killing trace identity: $\mathrm{Tr}(\mathrm{ad}_X \circ \mathrm{ad}_Y) = - C_2(G) \langle X, Y \rangle_{\mathfrak{g}}$.
+      Combined with `su2_triple`, this uniquely and intrinsically determines $C_2(G)$ without any rescaling freedom. -/
+  killing_casimir_identity : ∀ X Y : Lie,
+    let adX := LieAlgebra.ad ℝ Lie X
+    let adY := LieAlgebra.ad ℝ Lie Y
+    LinearMap.trace ℝ Lie (adX.comp adY) = - (casimir_adjoint : ℝ) * lie_inner X Y
+
+  /-- One-loop asymptotic freedom coefficient $b_0 = \frac{11 C_2(G)}{48\pi^2} > 0$ strictly determined by $G$ -/
+  beta_b0 : ℝ
+  beta_b0_eq : beta_b0 = (11 * (casimir_adjoint : ℝ)) / (48 * Real.pi ^ 2)
+  beta_b0_pos : 0 < beta_b0
+
+  /-- Space of $\mathfrak{g}$-valued classical differential forms / polynomials -/
   LiePoly : Type
   [addCommGroupLie : AddCommGroup LiePoly]
   [moduleLie : Module ℂ LiePoly]
+  [bracketLiePoly : Bracket LiePoly LiePoly]
 
   /-- Classical adjoint gauge action of $G$ on Lie-algebra-valued polynomials -/
   gauge_action : G → LiePoly →ₗ[ℂ] LiePoly
   gauge_action_one : ∀ X : LiePoly, gauge_action 1 X = X
   gauge_action_mul : ∀ (g h : G) (X : LiePoly), gauge_action (g * h) X = gauge_action g (gauge_action h X)
 
+  /-- Ascending $\mathbb{N}$-filtration $\mathcal{F}_d \mathcal{L}$ on `LiePoly` -/
+  lieFiltration : ℕ → Submodule ℂ LiePoly
+  lieFiltration_mono : Monotone lieFiltration
+
   /-- Scaling dimension grading on Lie-algebra-valued differential polynomials -/
   classicalDimLie : LiePoly → ℕ
   dimLie_zero : classicalDimLie 0 = 0
+  classicalDimLie_smul : ∀ (c : ℂ) (A : LiePoly), c ≠ 0 → classicalDimLie (c • A) = classicalDimLie A
+  classicalDimLie_add_le : ∀ A B : LiePoly, classicalDimLie (A + B) ≤ max (classicalDimLie A) (classicalDimLie B)
+
+  /-- Exact bidirectional bridge linking `lieFiltration` and `classicalDimLie` -/
+  mem_lieFiltration_iff_dim_le : ∀ (d : ℕ) (A : LiePoly), A ∈ lieFiltration d ↔ classicalDimLie A ≤ d
+
+  /-- Canonical $\mathfrak{g}$-valued curvature component embedding identifying curvature generators with $\mathfrak{g} = \mathrm{Lie}(G)$ -/
+  F_comp : Fin 4 → Fin 4 → Lie →ₗ[ℝ] LiePoly
+  F_comp_antisymm : ∀ (μ ν : Fin 4) (X : Lie), F_comp μ ν X = - F_comp ν μ X
+  F_comp_bracket : ∀ (μ ν : Fin 4) (X Y : Lie), ⁅F_comp μ ν X, F_comp μ ν Y⁆ = F_comp μ ν ⁅X, Y⁆
+  F_comp_gauge_equivariant : ∀ (g : G) (μ ν : Fin 4) (X : Lie),
+    gauge_action g (F_comp μ ν X) = F_comp μ ν (adjoint_action g X)
 
   /-- Classical Yang–Mills curvature two-form generators $F_{\mu\nu} \in \mathfrak{g}$ of dimension $2$ -/
   F : Fin 4 → Fin 4 → LiePoly
@@ -315,10 +386,17 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
 
   /-- Classical spacetime covariant derivative generators $D_\alpha$ of dimension $1$ -/
   covDeriv : Fin 4 → LiePoly →ₗ[ℂ] LiePoly
-  covDeriv_dim : ∀ (μ : Fin 4) (X : LiePoly), X ≠ 0 →
+  covDeriv_dim_le : ∀ (μ : Fin 4) (X : LiePoly), classicalDimLie (covDeriv μ X) ≤ classicalDimLie X + 1
+  covDeriv_dim : ∀ (μ : Fin 4) (X : LiePoly), X ≠ 0 → covDeriv μ X ≠ 0 →
     classicalDimLie (covDeriv μ X) = classicalDimLie X + 1
   covDeriv_gauge_equivariant : ∀ (g : G) (μ : Fin 4) (X : LiePoly),
     gauge_action g (covDeriv μ X) = covDeriv μ (gauge_action g X)
+  covDeriv_lie_leibniz : ∀ (μ : Fin 4) (A B : LiePoly),
+    covDeriv μ ⁅A, B⁆ = ⁅covDeriv μ A, B⁆ + ⁅A, covDeriv μ B⁆
+  bianchi_identity : ∀ (l μ ν : Fin 4),
+    covDeriv l (F μ ν) + covDeriv μ (F ν l) + covDeriv ν (F l μ) = 0
+  ricci_commutator : ∀ (μ ν : Fin 4) (A : LiePoly),
+    covDeriv μ (covDeriv ν A) - covDeriv ν (covDeriv μ A) = ⁅F μ ν, A⁆
 
   /-- Gauge-invariant trace pairing contracting two Lie-algebra-valued polynomials into `Poly` -/
   trace_pair : LiePoly → LiePoly → Poly
@@ -327,8 +405,15 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   trace_pair_symm : ∀ X Y : LiePoly, trace_pair X Y = trace_pair Y X
   trace_pair_gauge_invariant : ∀ (g : G) (X Y : LiePoly),
     trace_pair (gauge_action g X) (gauge_action g Y) = trace_pair X Y
+  trace_pair_lie_inner_compat : ∀ (μ ν : Fin 4) (X Y : Lie),
+    lie_inner X Y = 0 → trace_pair (F_comp μ ν X) (F_comp μ ν Y) = 0
+  trace_pair_dim_le : ∀ X Y : LiePoly,
+    classicalDim (trace_pair X Y) ≤ classicalDimLie X + classicalDimLie Y
   trace_pair_dim : ∀ X Y : LiePoly,
+    X ≠ 0 → Y ≠ 0 → trace_pair X Y ≠ 0 →
     classicalDim (trace_pair X Y) = classicalDimLie X + classicalDimLie Y
+  trace_pair_F_dim : ∀ μ ν : Fin 4, μ ≠ ν →
+    classicalDim (trace_pair (F μ ν) (F μ ν)) = 4
 
   /-- Lorentz representation action of $\mathrm{SO}^+(1,3)$ (and Euclidean $\mathrm{SO}(4)$) on local polynomials -/
   transform : Matrix (Fin 4) (Fin 4) ℝ → Poly →ₗ[ℂ] Poly
@@ -350,18 +435,15 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   stress_energy_dim : ∀ μ ν : Fin 4, classicalDim (stress_energy μ ν) = 4
   stress_energy_00_nonzero : stress_energy 0 0 ≠ 0
 
-  /-- Adjoint quadratic Casimir invariant $C_2(G) \in \mathbb{N}$ of the gauge group $G$ ($C_2(\mathrm{SU}(N)) = N$) -/
-  casimir_adjoint : ℕ
-  casimir_adjoint_pos : 2 ≤ casimir_adjoint
-
-  /-- One-loop asymptotic freedom coefficient $b_0 = \frac{11 C_2(G)}{48\pi^2} > 0$ strictly determined by $G$ -/
-  beta_b0 : ℝ
-  beta_b0_eq : beta_b0 = (11 * (casimir_adjoint : ℝ)) / (48 * Real.pi ^ 2)
-  beta_b0_pos : 0 < beta_b0
+  /-- Number of gluon degrees of freedom $\dim_{\mathbb{R}}(\mathfrak{g})$ -/
+  dim_gauge : ℕ := Module.finrank ℝ Lie
 
   /-- Leading perturbative UV normalization constant $c_P > 0$ -/
   uv_two_point_coeff : Poly → ℝ
   uv_two_point_coeff_pos : ∀ P : Poly, P ≠ 0 → 0 < uv_two_point_coeff P
+  /-- Perturbative identification: The leading short-distance two-point coefficient of $\operatorname{Tr}(F^2)$
+      is strictly proportional to the number of gluons $\dim_{\mathbb{R}}(\mathfrak{g})$ -/
+  uv_two_point_tr_F_sq_eq : uv_two_point_coeff tr_F_sq = 48 * (dim_gauge : ℝ) / (Real.pi ^ 4)
 
   /-- One-loop anomalous dimension exponent $\gamma_P = \gamma_P^{(0)} / (2 b_0)$ for short-distance 2-point functions -/
   anomalous_exponent : Poly → ℝ
@@ -385,6 +467,18 @@ attribute [instance] CurvaturePolynomialAlgebra.algebra
 attribute [instance] CurvaturePolynomialAlgebra.nontrivial
 attribute [instance] CurvaturePolynomialAlgebra.addCommGroupLie
 attribute [instance] CurvaturePolynomialAlgebra.moduleLie
+attribute [instance] CurvaturePolynomialAlgebra.bracketLiePoly
+attribute [instance] CurvaturePolynomialAlgebra.lieRingLie
+attribute [instance] CurvaturePolynomialAlgebra.lieAlgebraLie
+attribute [instance] CurvaturePolynomialAlgebra.finDimLie
+
+instance (G : Type*) [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G]
+    (Curv : CurvaturePolynomialAlgebra G) : AddCommGroup Curv.Lie :=
+  Curv.lieRingLie.toAddCommGroup
+
+instance (G : Type*) [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G]
+    (Curv : CurvaturePolynomialAlgebra G) : Module ℝ Curv.Lie :=
+  Curv.lieAlgebraLie.toModule
 
 instance (G : Type*) [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G]
     (Curv : CurvaturePolynomialAlgebra G) : AddCommGroup Curv.Poly :=
@@ -596,6 +690,43 @@ structure WightmanQuantumYangMills (G : Type*) (ℋ : Type*)
   /-- The vacuum Wightman two-point correlation function $\mathcal{W}_2(P, Q)(x)$ at non-coincident
       points $x \neq 0$ (smooth on $\mathbb{R}^{1,3} \setminus \{0\}$ by the Bargmann–Hall–Wightman theorem). -/
   wightman_two_point : Curv.Poly → Curv.Poly → { x : MinkowskiSpace // x ≠ 0 } → ℂ
+
+  /-- Distributional compatibility between the non-coincident Wightman two-point function
+      `wightman_two_point` and the vacuum correlation of two smeared field operators
+      $\langle \Omega, \Phi(P, f) \Phi(Q, g) \Omega \rangle_{\mathcal{H}}$ for test functions
+      $f, g \in \mathcal{S}(\mathbb{R}^{1,3})$ with disjoint supports ($\mathrm{supp}(f) \cap
+      \mathrm{supp}(g) = \emptyset$, so $x - y \neq 0$ on $\mathrm{supp}(f) \times \mathrm{supp}(g)$). -/
+  wightman_two_point_smeared_compatibility :
+    ∀ (P Q : Curv.Poly) (f g : SchwartzMap MinkowskiSpace ℂ),
+      Disjoint (tsupport (f : MinkowskiSpace → ℂ)) (tsupport (g : MinkowskiSpace → ℂ)) →
+      inner ℂ (vacuum : ℋ)
+        (smeared_field P f (smeared_field Q g ⟨vacuum, vacuum_in_domain⟩) : ℋ) =
+        ∫ x : MinkowskiSpace, ∫ y : MinkowskiSpace,
+          (f x) * (g y) * (if hxy : x - y ≠ 0 then wightman_two_point P Q ⟨x - y, hxy⟩ else 0)
+
+  /-- Pointwise two-field sesquilinear form $\mathcal{F}_2(P, Q; x, y)(\varphi, \psi)$ on the
+      dense invariant domain for non-coincident points $x \neq y$, extending `local_field_form` to
+      products of two local curvature insertions. -/
+  local_two_field_form :
+    Curv.Poly → Curv.Poly → { p : MinkowskiSpace × MinkowskiSpace // p.1 ≠ p.2 } →
+    domain → domain → ℂ
+
+  /-- Compatibility between the product of two smeared field operators on `domain` and the
+      non-coincident two-field sesquilinear form `local_two_field_form` on disjointly supported
+      Schwartz test functions. -/
+  smeared_two_field_form_compatibility :
+    ∀ (P Q : Curv.Poly) (f g : SchwartzMap MinkowskiSpace ℂ) (φ ψ : domain),
+      Disjoint (tsupport (f : MinkowskiSpace → ℂ)) (tsupport (g : MinkowskiSpace → ℂ)) →
+      inner ℂ (φ : ℋ) (smeared_field P f (smeared_field Q g ψ) : ℋ) =
+        ∫ x : MinkowskiSpace, ∫ y : MinkowskiSpace,
+          (f x) * (g y) * (if hxy : x ≠ y then local_two_field_form P Q ⟨(x, y), hxy⟩ φ ψ else 0)
+
+  /-- Identification of the vacuum expectation value of `local_two_field_form` with the
+      translation-invariant two-point Wightman function `wightman_two_point`. -/
+  wightman_two_point_eq_local_two_field_vacuum :
+    ∀ (P Q : Curv.Poly) (x y : MinkowskiSpace) (hxy : x ≠ y),
+      local_two_field_form P Q ⟨(x, y), hxy⟩ ⟨vacuum, vacuum_in_domain⟩ ⟨vacuum, vacuum_in_domain⟩ =
+        wightman_two_point P Q ⟨x - y, sub_ne_zero.mpr hxy⟩
 
   /-- Short-Distance Asymptotic Freedom of Local Curvature Correlators (Jaffe–Witten §4, p. 6):
       For any non-zero local curvature polynomial $P$ of classical scaling dimension $d = \dim(P) \ge 4$,
