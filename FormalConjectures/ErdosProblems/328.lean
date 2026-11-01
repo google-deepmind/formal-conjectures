@@ -34,9 +34,12 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open AdditiveCombinatorics
-
 namespace Erdos328
+
+/-- The number of representations of $n$ as $a + b$ with $a \leq b$ and $a, b \in A$. The pairs
+$(a, b)$ and $(b, a)$ count once, as in [NeRo85]; `sumRep` counts ordered pairs. -/
+noncomputable def unorderedSumRep (A : Set ℕ) (n : ℕ) : ℕ :=
+  Set.ncard {p : ℕ × ℕ | p.1 ∈ A ∧ p.2 ∈ A ∧ p.1 ≤ p.2 ∧ p.1 + p.2 = n}
 
 /--
 Suppose $A\subseteq\mathbb{N}$ and $C>0$ is such that $1_A\ast 1_A(n)\leq C$ for all
@@ -51,14 +54,19 @@ Erdős [Er80e] had previously shown the answer is no for $C=3,4$ and infinitely 
 values of $C$.
 
 See also [774].
+
+Representations are counted without order (`unorderedSumRep`), as in [NeRo85, Theorem 2]. With
+the ordered count $1_A\ast 1_A$ the statement fails at $C = 3$: each $b \in A$ is then the middle
+of at most one progression $a < b < c$ in $A$, so colouring $A$ in increasing order with $b$
+opposite to $a$ gives $t = 2$.
 -/
 @[category research solved, question, AMS 11]
 theorem erdos_328 :
     ∀ C : ℕ, 0 < C →
-      ¬ ∃ t : ℕ, ∀ A : Set ℕ, (∀ n, sumRep A n ≤ C) →
+      ¬ ∃ t : ℕ, ∀ A : Set ℕ, (∀ n, unorderedSumRep A n ≤ C) →
         ∃ P : Fin t → Set ℕ, (⋃ i, P i) = A ∧
           Set.univ.PairwiseDisjoint P ∧
-          ∀ i, ∀ n, sumRep (P i) n < C := by
+          ∀ i, ∀ n, unorderedSumRep (P i) n < C := by
   sorry
 
 end Erdos328
