@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Enumeration of Self-Avoiding Walks on Lattices
@@ -49,6 +50,8 @@ Duminil-Copin and Smirnov (2012) proved $\mu = \sqrt{2 + \sqrt{2}}$.
 - [OEIS A001413](https://oeis.org/A001413) — SAWs on the four-dimensional hypercubic lattice $\mathbb{Z}^4$
 -/
 
+@[expose] public section
+
 open Filter
 
 open scoped Topology
@@ -62,10 +65,12 @@ whose edges connect points that differ by $\pm 1$ in exactly one coordinate.
 def integerLattice (d : ℕ) : SimpleGraph (Fin d → ℤ) where
   Adj a b := ∃ i : Fin d, (∀ j, j ≠ i → a j = b j) ∧ |a i - b i| = 1
   symm := by
+    constructor
     rintro a b ⟨i, hj, hi⟩
     refine ⟨i, fun j hji => (hj j hji).symm, ?_⟩
     rw [abs_sub_comm]; exact hi
   loopless := by
+    constructor
     rintro a ⟨i, _, hi⟩
     simp at hi
 
@@ -81,12 +86,14 @@ def hexagonalLattice : SimpleGraph (ℤ × ℤ) where
     (|a.1 - b.1| = 1 ∧ a.2 = b.2) ∨
       (a.1 = b.1 ∧ |a.2 - b.2| = 1 ∧ Even (a.1 + min a.2 b.2))
   symm := by
+    constructor
     rintro a b (⟨h1, h2⟩ | ⟨h1, h2, h3⟩)
     · exact Or.inl ⟨by rw [abs_sub_comm]; exact h1, h2.symm⟩
     · refine Or.inr ⟨h1.symm, by rw [abs_sub_comm]; exact h2, ?_⟩
       rw [← h1, min_comm]
       exact h3
   loopless := by
+    constructor
     rintro a (⟨h, -⟩ | ⟨-, h, -⟩) <;> simp at h
 
 -- TODO: a uniform treatment of arbitrary crystallographic lattices, e.g. Bravais lattices via
