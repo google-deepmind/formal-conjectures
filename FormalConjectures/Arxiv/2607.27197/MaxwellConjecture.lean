@@ -43,7 +43,7 @@ least $24$ non-degenerate critical points, whereas $(5-1)^2 = 16$.
 
 @[expose] public section
 
-namespace Maxwell
+namespace Arxiv.«2607.27197»
 
 open scoped Gradient
 
@@ -268,4 +268,4 @@ theorem maxwell_conjecture.variants.polynomial_bound :
       (equilibria q a).encard ≤ (C * n ^ d : ℕ) := by
   sorry
 
-end Maxwell
+end Arxiv.«2607.27197»
