@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 259
@@ -22,10 +23,13 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/259](https://www.erdosproblems.com/259)
 -/
 
+@[expose] public section
+
 open scoped ArithmeticFunction.Moebius
 
 namespace Erdos259
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is $\sum_{n} \mu(n)^2\frac{n}{2^n}$ irrational?
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Infinitude of Pell number primes
@@ -29,6 +30,8 @@ $P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$. [OEIS A129](https://oeis.org/A129)
 The conjecture says that there are infinitely many prime Pell numbers.
 -/
 
+@[expose] public section
+
 namespace PellNumbers
 
 /-- The *Pell numbers* $P_n$ are defined by $P_0 = 0$, $P_1 = 1$, $P_{n+2} = 2*P_{n+1} + P_n$ -/
@@ -37,15 +40,19 @@ def pellNumber : ℕ → ℕ
   | 1 => 1
   | n + 1 + 1 => 2 * pellNumber (n + 1) + pellNumber n
 
+/-- The initial Pell number is $P_0 = 0$. -/
 @[category test, AMS 11]
 theorem pellNumber_zero : pellNumber 0 = 0 := rfl
 
+/-- The second initial value is $P_1 = 1$. -/
 @[category test, AMS 11]
 theorem pellNumber_one : pellNumber 1 = 1 := rfl
 
+/-- The recurrence gives $P_2 = 2$. -/
 @[category test, AMS 11]
 theorem pellNumber_two : pellNumber 2 = 2 := rfl
 
+/-- The Pell number at index $5$ is $P_5 = 29$. -/
 @[category test, AMS 11]
 theorem pellNumber_five : pellNumber 5 = 29 := rfl
 

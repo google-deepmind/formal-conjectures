@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 484
@@ -29,9 +30,12 @@ import FormalConjecturesUtil
   problems. I*. (1989), 47-59.
 -/
 
+@[expose] public section
+
 namespace Erdos484
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Prove that there exists an absolute constant $c>0$ such that, whenever $\{1,\ldots,N\}$ is
 $k$-coloured (and $N$ is large enough depending on $k$) then there are at least $cN$ many

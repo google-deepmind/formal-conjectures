@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1028
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [ErSp71] Erdős, P. and Spencer, J., *Imbalances in $k$-colorations*. Networks (1971/72),
   379-385.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics
 
@@ -44,6 +47,7 @@ noncomputable def H (n : ℕ) : ℕ :=
   sInf {m | ∃ f : ℕ → ℕ → ℤ, (∀ x y, f x y = 1 ∨ f x y = -1) ∧
     ∀ X ⊆ Finset.Icc 1 n, imbalance f X ≤ (m : ℤ)}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let
 $$H(n)=\min_f \max_{X\subseteq \{1,\ldots,n\}} \left\lvert \sum_{x<y\in X} f(x,y)\right\rvert,$$

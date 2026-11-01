@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 145
@@ -47,6 +48,8 @@ $\lambda_{\min}(\overline{G})$ is the local independence minimum of the compleme
 $\overline{G}$.
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture145
 
 open SimpleGraph
@@ -58,6 +61,7 @@ number `indepNeighborsCard G v`. This equals $\mathrm{lMin}$ from DeLaVina's not
 noncomputable def localIndependenceMin (G : SimpleGraph α) : ℕ :=
   Finset.univ.inf' Finset.univ_nonempty (indepNeighborsCard G)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 145](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

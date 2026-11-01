@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 846
 
 *Reference:* [erdosproblems.com/846](https://www.erdosproblems.com/846)
 -/
+
+@[expose] public section
+
 open EuclideanGeometry
 
 namespace Erdos846
@@ -40,6 +44,7 @@ def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
 
 end Prelims
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 846**
 Let `A ⊂ ℝ²` be an infinite set for which there exists some `ϵ>0` such that in any subset of `A`
@@ -49,8 +54,8 @@ Is it true that `A` is the union of a finite number of sets where no three are o
 In other words, prove or disprove the following statement: every infinite `ε`-non-trilinear subset of the
 plane is weakly non-trilinar.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/2404258180688283e5141021c75464dc2acfb798/FormalConjectures/ErdosProblems/846.lean"]
-theorem erdos_846 : answer(False) ↔ ∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
+@[category research solved, question, AMS 11, formal_proof using formal_conjectures at "https://github.com/google-deepmind/formal-conjectures/blob/2404258180688283e5141021c75464dc2acfb798/FormalConjectures/ErdosProblems/846.lean"]
+theorem erdos_846 : ¬ ∀ᵉ (A : Set ℝ²) (ε > 0), A.Infinite → NonTrilinearFor A ε →
     WeaklyNonTrilinear A := by
   sorry
 

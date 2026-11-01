@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1067
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   number. Combinatorica (2017), 785--793.
 -/
 
+@[expose] public section
+
 open Cardinal SimpleGraph
 
 namespace Erdos1067
@@ -43,6 +46,7 @@ the graph connected.
 def InfinitelyEdgeConnected {V : Type*} (G : SimpleGraph V) : Prop :=
   ∀ ⦃s : Set (Sym2 V)⦄, s.Finite → (G.deleteEdges s).Connected
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every graph with chromatic number $\aleph_1$ contain an infinitely connected subgraph with
 chromatic number $\aleph_1$?
@@ -53,19 +57,22 @@ simpler elementary example was given by Bowler and Pitz [BoPi24].
 
 This was formalized in Lean by Alexeev using Aristotle and Aleph Prover.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1067.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1067.lean"]
 theorem erdos_1067 :
-    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
+    ¬ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyConnected H.coe := by
   sorry
 
 /--
-Thomassen [Th17] constructed a counterexample to the version which asks for infinite
-edge-connectivity (that is, to disconnect the graph requires deleting infinitely many edges).
+Does every graph with chromatic number $\aleph_1$ contain an infinitely edge-connected subgraph
+with chromatic number $\aleph_1$?
+
+Thomassen [Th17] proved that the answer is yes: every graph of uncountable chromatic number has a
+subgraph with infinite edge-connectivity and uncountable chromatic number.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question, AMS 5]
 theorem erdos_1067.variants.infinite_edge_connectivity :
-    answer(False) ↔ ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
+    ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_ 1 →
       ∃ (H : G.Subgraph), H.coe.chromaticCardinal = ℵ_ 1 ∧ InfinitelyEdgeConnected H.coe := by
   sorry
 

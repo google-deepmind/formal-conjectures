@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 61 -- Erdős–Hajnal Conjecture
 
 *Reference:* [erdosproblems.com/61](https://www.erdosproblems.com/61)
 -/
+
+@[expose] public section
 
 open Filter
 open SimpleGraph
@@ -42,9 +45,9 @@ def IsErdosHajnalLowerBound {α : Type*} [Fintype α] [DecidableEq α]
 The Erdős–Hajnal Conjecture states that there is a constant $c(H) > 0$ for each
 $H$ such that we can take $f(n) = n^{c(H)}$ in the above formulation.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_61 :
-    answer(sorry) ↔ ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
+    ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
       ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c) := by
   sorry
 

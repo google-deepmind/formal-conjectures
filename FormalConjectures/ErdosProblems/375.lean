@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.LegendreConjecture
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.LegendreConjecture
 
 /-!
 # Erdős Problem 375
@@ -29,6 +30,8 @@ import FormalConjectures.Wikipedia.LegendreConjecture
  -
 -/
 
+@[expose] public section
+
 open Set Filter Topology Asymptotics
 
 namespace Erdos375
@@ -40,8 +43,8 @@ def Erdos375Prop : Prop := ∀ n ≥ 1, ∀ k, (∀ i < k, ¬ (n + i + 1).Prime)
     ∃ p : Fin k → ℕ, p.Injective ∧ ∀ i, (p i).Prime ∧ p i ∣ n + i + 1
 
 /-- Is `Erdos375Prop` true? -/
-@[category research open, AMS 11]
-theorem erdos_375 : answer(sorry) ↔ Erdos375Prop := by
+@[category research open, question, AMS 11]
+theorem erdos_375 : Erdos375Prop := by
   sorry
 
 /-- If `Erdos375Prop` is true, then `(n + 1).nth Prime - n.nth Prime < (n.nth Prime) ^ (1 / 2 - c)`
@@ -73,7 +76,7 @@ theorem erdos_375.variants.le_two : ∀ n ≥ 1, ∀ k ≤ 2, (∀ i < k, ¬ (n 
     by_contra! hr
     wlog hq : x < y
     · exact this n hn k hk h p hp y x hxy.symm hr.symm (by grind)
-    · have hy : y = x + 1 := by grind
+    · have hy : y = x + 1 := by fin_cases x <;> fin_cases y <;> simp_all
       have := hy ▸ Nat.dvd_sub (hp y).2 (hxy ▸ (hp x).2)
       have := (hp 1).1
       simp_all [Nat.not_prime_one]

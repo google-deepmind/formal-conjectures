@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 200
 
 *Reference:* [erdosproblems.com/200](https://www.erdosproblems.com/200)
 -/
+
+@[expose] public section
 
 open Filter Real
 
@@ -35,8 +38,8 @@ noncomputable def longestPrimeArithmeticProgressions (n : ℕ) : ℕ :=
 /--
 Does the longest arithmetic progression of primes in $\{1,\ldots,N\}$ have length $o(\log N)$?
 -/
-@[category research open, AMS 5 11]
-theorem erdos_200 : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem erdos_200 :
     (fun n => (longestPrimeArithmeticProgressions n : ℝ)) =o[atTop] (fun n => log n) := by
   sorry
 

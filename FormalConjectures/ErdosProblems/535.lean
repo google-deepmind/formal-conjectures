@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 535
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Er73] P. Erdős, _Problems and results on combinatorial number theory_, in
   *A Survey of Combinatorial Theory*, North-Holland, 1973.
 -/
+
+@[expose] public section
 
 open ArithmeticFunction
 open Filter Real

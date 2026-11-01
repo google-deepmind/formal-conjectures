@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 906
@@ -22,12 +23,14 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/906](https://www.erdosproblems.com/906)
 -/
 
+@[expose] public section
+
 namespace Erdos906
 
 /-- Does there exists an entire non-zero transcendental function `f : ℂ → ℂ` such that for any
 sequence `n₀ < n₁ < ...`, `{ z | ∃ k, iteratedDeriv (n k) f z = 0 }` is dense. -/
-@[category research open, AMS 30]
-theorem erdos_906 : answer(sorry) ↔ ∃ f : ℂ → ℂ, Transcendental (Polynomial ℂ) f ∧
+@[category research open, question, AMS 30]
+theorem erdos_906 : ∃ f : ℂ → ℂ, Transcendental (Polynomial ℂ) f ∧
     Differentiable ℂ f ∧ ∀ n : ℕ → ℕ, StrictMono n →
     Dense { z | ∃ k, iteratedDeriv (n k) f z = 0 } := by
   sorry

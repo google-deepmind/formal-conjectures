@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 2
@@ -26,6 +26,8 @@ import FormalConjecturesUtil
   with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture2
 
 open SimpleGraph
@@ -33,6 +35,7 @@ open SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 2](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 5
@@ -44,6 +45,8 @@ import FormalConjecturesUtil
 - [We31] Westzynthius, E., *Über die Verteilung der Zahlen, die zu den n ersten Primzahlen
   teilerfremd sind*. Commentat. Phys. Math. (1931), 1-37.
 -/
+
+@[expose] public section
 
 open Filter MeasureTheory Real Set
 open scoped Topology
@@ -77,8 +80,8 @@ We formalise "an infinite sequence of $n_i$" as a strictly monotone sequence of 
 $p_{n_i}$ and $p_{n_i+1}$, which is `primeGap (n i)`, and not the gap between the primes
 indexed by two consecutive members of the sequence.
 -/
-@[category research open, AMS 11]
-theorem erdos_5 : answer(sorry) ↔ ∀ C : ℝ, 0 ≤ C →
+@[category research open, question, AMS 11]
+theorem erdos_5 : ∀ C : ℝ, 0 ≤ C →
     ∃ n : ℕ → ℕ, StrictMono n ∧ Tendsto (fun i => normalizedGap (n i)) atTop (𝓝 C) := by
   sorry
 
@@ -89,8 +92,8 @@ $S=[0,\infty]$.
 Since $\infty\in S$ is known (see `erdos_5.variants.westzynthius`), the open content is the
 equality of the finite part of $S$ with $[0,\infty)$.
 -/
-@[category research open, AMS 11]
-theorem erdos_5.variants.limit_point_set : answer(sorry) ↔ limitPointSet = Ici 0 := by
+@[category research open, question, AMS 11]
+theorem erdos_5.variants.limit_point_set : limitPointSet = Ici 0 := by
   sorry
 
 /--
@@ -200,8 +203,8 @@ theorem erdos_5.variants.merikoski_bounded_gaps :
 In [Er65b], [Er85c], and [Er97c] Erdős asks whether $S$ is everywhere dense (but Weisenberg
 notes that clearly $S$ is closed so this is equivalent to asking whether $S=[0,\infty]$).
 -/
-@[category research open, AMS 11]
-theorem erdos_5.variants.dense : answer(sorry) ↔ Ici (0 : ℝ) ⊆ closure limitPointSet := by
+@[category research open, question, AMS 11]
+theorem erdos_5.variants.dense : Ici (0 : ℝ) ⊆ closure limitPointSet := by
   sorry
 
 /--
@@ -210,10 +213,8 @@ along which the normalised prime gaps converge, as in the statement of `erdos_5`
 -/
 @[category test, AMS 11]
 theorem mem_limitPointSet_iff (x : ℝ) : x ∈ limitPointSet ↔
-    ∃ n : ℕ → ℕ, StrictMono n ∧ Tendsto (fun i => normalizedGap (n i)) atTop (𝓝 x) := by
-  refine ⟨fun hx => ?_, fun ⟨n, hn, h⟩ => h.mapClusterPt.of_comp hn.tendsto_atTop⟩
-  obtain ⟨ψ, hψ, h⟩ := TopologicalSpace.FirstCountableTopology.tendsto_subseq hx
-  exact ⟨ψ, hψ, h⟩
+    ∃ n : ℕ → ℕ, StrictMono n ∧ Tendsto (fun i => normalizedGap (n i)) atTop (𝓝 x) :=
+  ⟨fun hx => hx.tendsto_subseq, fun ⟨_n, hn, h⟩ => h.mapClusterPt.of_comp hn.tendsto_atTop⟩
 
 /-- The normalised prime gaps are nonnegative. -/
 @[category test, AMS 11]
@@ -243,7 +244,7 @@ The set $S$ of limit points is closed, as Weisenberg notes in the acknowledgemen
 and `erdos_5.variants.limit_point_set` ask the same question.
 -/
 @[category test, AMS 11]
-theorem isClosed_limitPointSet : IsClosed limitPointSet := isClosed_setOf_clusterPt
+theorem isClosed_limitPointSet : IsClosed limitPointSet := isClosed_setOfPred_clusterPt
 
 /--
 Weisenberg's remark, as reported on [erdosproblems.com/5](https://www.erdosproblems.com/5):

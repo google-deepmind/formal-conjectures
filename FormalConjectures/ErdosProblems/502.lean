@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 502
@@ -30,10 +31,13 @@ import FormalConjecturesUtil
   $\mathbb{R}^d$*. Proc. Amer. Math. Soc. (2021), 569-571.
 -/
 
+@[expose] public section
+
 open scoped EuclideanGeometry
 
 namespace Erdos502
 
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the size of the largest $A\subseteq \mathbb{R}^n$ such that there are only two distinct
 distances between elements of $A$? That is,

@@ -68,11 +68,15 @@ theorem exponentialCharacter_memLp {d : ℕ} {Ω : Set (Fin d → ℝ)}
     (MeasureTheory.integrableOn_const (μ := volume) (s := Ω) (C := (1 : ℝ)) hΩ_finite)
 
 /--
-(Ω, Λ) is called a spectral pair if Λ is a spectrum for Ω, i.e.
-a set Λ of frequencies such that the associated exponential characters
- form an orthogonal basis of L^2(Ω).
+(Ω, Λ) is called a spectral pair if Ω is a (Lebesgue) measurable set of positive finite
+measure and Λ is a spectrum for Ω, i.e. a set Λ of frequencies such that the associated
+exponential characters form an orthogonal basis of L^2(Ω).
+
+The positivity requirement matters: if Ω is a null set then L^2(Ω) is the zero space and
+every Λ would vacuously be a spectrum.
 -/
 def spectralPair {d : ℕ} (Ω Λ : Set (Fin d → ℝ)) : Prop :=
+  NullMeasurableSet Ω volume ∧ 0 < volume Ω ∧
   ∃ hΩ_finite : volume Ω ≠ ⊤,
     let e : (Fin d → ℝ) → MeasureTheory.Lp ℂ 2 (volume.restrict Ω) := fun ξ ↦
       MeasureTheory.MemLp.toLp (exponentialCharacter ξ) (exponentialCharacter_memLp hΩ_finite ξ)

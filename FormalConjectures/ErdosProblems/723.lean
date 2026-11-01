@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 723: The prime power conjecture.
 
 *Reference:* [erdosproblems.com/723](https://www.erdosproblems.com/723)
 -/
+
+@[expose] public section
 
 open Configuration
 
@@ -29,9 +32,9 @@ namespace Erdos723
 /--
 If there is a finite projective plane of order $n$ then must $n$ be a prime power?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_723 :
-    answer(sorry) ↔ ∀ {P L : Type} (_: Membership P L) (_ : Fintype P) (_ : Fintype L),
+    ∀ {P L : Type} (_: Membership P L) (_ : Fintype P) (_ : Fintype L),
       ∀ pp : ProjectivePlane P L, IsPrimePow pp.order := by
   sorry
 
@@ -55,8 +58,8 @@ theorem erdos_723.variants.leq_11 {P L : Type} [Membership P L] [Fintype P] [Fin
 /--
 It is open whether there exists a projective plane of order 12.
 -/
-@[category research open, AMS 5]
-theorem erdos_723.variants.eq_12 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_723.variants.eq_12 :
     ∃ (P L : Type) (_ : Membership P L) (_ : Fintype P) (_ : Fintype L) (pp : ProjectivePlane P L),
       pp.order = 12 := by
   sorry

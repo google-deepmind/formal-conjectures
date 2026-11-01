@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 414
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/414](https://www.erdosproblems.com/414)
 
 -/
+
+@[expose] public section
 
 namespace Erdos414
 
@@ -32,8 +35,8 @@ def h (n : ℕ) : ℕ := n + n.divisors.card
 Let $h_1(n) = h(n)$ and $h_k(n) = h(h_{k-1}(n))$. Is it true, for any $m,n$, there exist
 $i$ and $j$ such that $h_i(m) = h_j(n)$?
 -/
-@[category research open, AMS 11]
-theorem erdos_414 : answer(sorry) ↔ ∀ᵉ  (m > 0) (n > 0), ∃ i j, h^[i] m = h^[j] n := by
+@[category research open, question, AMS 11]
+theorem erdos_414 : ∀ᵉ  (m > 0) (n > 0), ∃ i j, h^[i] m = h^[j] n := by
   sorry
 
 end Erdos414

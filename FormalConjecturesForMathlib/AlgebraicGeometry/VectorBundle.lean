@@ -17,7 +17,7 @@ module
 
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous
-public import Mathlib.CategoryTheory.Sites.CoversTop
+public import Mathlib.CategoryTheory.Sites.CoversTop.Basic
 
 @[expose] public section
 

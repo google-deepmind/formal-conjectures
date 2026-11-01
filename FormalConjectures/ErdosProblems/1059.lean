@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1059
 
 *Reference:* [erdosproblems.com/1059](https://www.erdosproblems.com/1059)
 -/
+
+@[expose] public section
 
 namespace Erdos1059
 
@@ -34,9 +37,9 @@ def AllFactorialSubtractionsComposite (n : ℕ) : Prop :=
   ∀d ∈ factorialsLessThanN n, (n - d).Composite
 
 /-- Are there infinitely many primes $p$ such that $p - k!$ is composite for each $k$ such that $1 ≤ k! < p$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1059 :
-    answer(sorry) ↔ Set.Infinite {p | p.Prime ∧ AllFactorialSubtractionsComposite p} := by
+    Set.Infinite {p | p.Prime ∧ AllFactorialSubtractionsComposite p} := by
   sorry
 
 abbrev DecidableIsFactorial (d : ℕ) : Prop :=

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 254
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Ca60] Cassels, J. W. S., On the representation of integers as the sums of distinct summands taken
   from a fixed set. Acta Sci. Math. (Szeged) (1960), 111-124.
 -/
+
+@[expose] public section
 
 open Filter Set
 
@@ -48,6 +51,7 @@ theorem not_summable_iff_tendsto_partial_sums (A : Set ℕ) (θ : ℝ) :
   not_summable_subtype_iff_tendsto_sum_indicator
     (f := fun m : ℕ => distToNearestInt (θ * (m : ℝ))) fun _ => distToNearestInt_nonneg _
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be such that $\lvert A\cap [1,2x]\rvert -\lvert A\cap [1,x]\rvert \to
 \infty\textrm{ as }x\to \infty$ and $\sum_{n\in A} \{ \theta n\}=\infty$ for every $\theta\in

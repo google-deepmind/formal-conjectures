@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ringel's Conjecture and Kotzig's Conjecture for large $n$
@@ -30,6 +31,8 @@ Montgomery–Pokrovskiy–Sudakov actually prove the strictly stronger statement
 Kotzig: the decomposition can always be realized by cyclic shifts of a single copy of $T$.
 Kotzig's conjecture (all $n$) remains open; see `Paper/KotzigConjecture.lean`.
 -/
+
+@[expose] public section
 namespace Arxiv.«2001.02665»
 
 open SimpleGraph

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 369
@@ -31,10 +32,13 @@ import FormalConjecturesUtil
   prime factors*. J. Austral. Math. Soc. Ser. A (1998), 266-276.
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace Erdos369
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon>0$ and $k\geq 2$. Is it true that, for all sufficiently large $n$, there is a
 sequence of $k$ consecutive integers in $\{1,\ldots,n\}$ all of which are $n^\epsilon$-smooth?
@@ -47,8 +51,8 @@ follows directly from the result of Balog and Wooley [BaWo98] for infinitely man
 this is true for all large $n$ does not follow immediately from [BaWo98], but can be deduced
 using a similar construction, as shown by SkyYang.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos369.lean"]
-theorem erdos_369 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos369.lean"]
+theorem erdos_369 :
     ∀ (ε : ℝ) (hε : 0 < ε) (k : ℕ) (hk : 2 ≤ k),
       ∀ᶠ (n : ℕ) in atTop, ∃ a : ℕ, n / 2 ≤ a + 1 ∧ a + k ≤ n ∧
         ∀ j < k, ∀ p ∈ (a + 1 + j).primeFactors, (p : ℝ) ≤ (n : ℝ) ^ ε := by

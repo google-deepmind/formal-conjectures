@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 796
 
 *Reference:* [erdosproblems.com/796](https://www.erdosproblems.com/796)
 -/
+
+@[expose] public section
 
 namespace Erdos796
 
@@ -47,6 +50,7 @@ noncomputable def g (k n : ℕ) : ℕ :=
 noncomputable def normalizedError (n : ℕ) : ℝ :=
   ((g 3 n : ℝ) - (n : ℝ) * Real.log (Real.log n) / Real.log n) / ((n : ℝ) / Real.log n)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 2$ and let $g_k(n)$ be the largest possible size of
 $A\subseteq \{1,\ldots,n\}$ such that every $m$ has $<k$ solutions to
@@ -56,9 +60,9 @@ for some constant $c$?
 
 The answer is yes: the rescaled error `normalizedError` converges.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-796/Research/CanonicalTail.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-796/Research/CanonicalTail.lean"]
 theorem erdos_796 :
-    answer(True) ↔ ∃ c : ℝ, Tendsto normalizedError atTop (𝓝 c) := by
+    ∃ c : ℝ, Tendsto normalizedError atTop (𝓝 c) := by
   sorry
 
 end Erdos796

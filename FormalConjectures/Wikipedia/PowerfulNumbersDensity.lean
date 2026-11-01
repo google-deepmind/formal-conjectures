@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Asymptotic density of powerful numbers
@@ -33,6 +34,8 @@ improvements are known under the Riemann Hypothesis.
 - [BG58] Bateman, P. T. and Grosswald, E., *On a theorem of Erdős and Szekeres*,
   Illinois J. Math. 2 (1958), 88–98.
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Real
 
@@ -76,9 +79,9 @@ $$Q(x) = \frac{\zeta(3/2)}{\zeta(3)} x^{1/2} + \frac{\zeta(2/3)}{\zeta(2)} x^{1/
 O(x^{1/6 - \delta})?$$
 Improvements are known under the Riemann Hypothesis.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem error_term_improvement :
-    answer(sorry) ↔ ∃ δ > (0 : ℝ),
+    ∃ δ > (0 : ℝ),
       (fun x : ℝ => (Q x : ℝ) - A * x ^ ((1 : ℝ) / 2) - B * x ^ ((1 : ℝ) / 3)) =O[atTop]
         fun x => x ^ ((1 : ℝ) / 6 - δ) := by
   sorry

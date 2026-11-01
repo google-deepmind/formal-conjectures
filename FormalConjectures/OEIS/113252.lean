@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A113252
@@ -28,6 +29,8 @@ Initial values are a(0) = -1, a(1) = 4, a(2) = 92, a(3) = 784.
 *References:*
 - [A113252](https://oeis.org/A113252)
 -/
+
+@[expose] public section
 
 namespace OeisA113252
 
@@ -57,6 +60,7 @@ theorem a_3 : a 3 = 784 := by rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = -3856 := by rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
 Specialized for $m=6$, which is A113252.

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 859
 
 *Reference:* [erdosproblems.com/859](https://www.erdosproblems.com/859)
 -/
+
+@[expose] public section
 
 namespace Erdos859
 

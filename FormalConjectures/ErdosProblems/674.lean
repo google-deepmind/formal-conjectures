@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 674
@@ -25,22 +26,26 @@ import FormalConjecturesUtil
   (1940), 31-39.
 -/
 
+@[expose] public section
+
 namespace Erdos674
 
 /-- The set of integer solutions to $x^x y^y = z^z$ with $x, y, z > 1$. -/
 def solutionSet : Set (ℕ × ℕ × ℕ) :=
   {(x, y, z) | 1 < x ∧ 1 < y ∧ 1 < z ∧ x ^ x * y ^ y = z ^ z}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there any integer solutions to $x^xy^y=z^z$ with $x,y,z>1$?
 
 Ko [Ko40] proved there are none if $(x,y)=1$, but there are in fact infinitely many solutions in
 general - for example, $x=2^{12}3^6$, $y = 2^83^8$, and $z = 2^{11}3^7$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos674.lean"]
-theorem erdos_674 : answer(True) ↔ solutionSet.Nonempty := by
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos674.lean"]
+theorem erdos_674 : solutionSet.Nonempty := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There are in fact infinitely many integer solutions to $x^xy^y=z^z$ with $x,y,z>1$.
 -/

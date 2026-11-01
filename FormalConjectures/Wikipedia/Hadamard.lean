@@ -13,16 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hadamard's conjecture
 
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Hadamard_matrix#Hadamard_conjecture)
+ - [Tao's optimization constant 23a](https://teorth.github.io/optimizationproblems/constants/23a.html)
  - [Résolution d'une question relative aux déterminants](https://gallica.bnf.fr/ark:/12148/bpt6k486252g/f400.image.r) by *Jacques Hadamard*,  Bull. des sciences math., p.245, 1893
 -/
+
+@[expose] public section
 
 namespace Hadamard
 
@@ -87,6 +91,14 @@ There exists a Hadamard matrix for all $n = 4k$.
 theorem HadamardConjecture (k : ℕ) : ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
+/--
+The **smallest unsolved order** of the Hadamard conjecture: the smallest $n = 4k$ such that there
+is no Hadamard matrix of order $n$, or $\infty$ if there is none.
+-/
+@[optimization_constant "23a"]
+noncomputable def hadamardConstant : ℕ∞ :=
+  ⨅ (k : ℕ) (_ : ¬ ∃ M, IsHadamard (n := 4 * k) M), (4 * k : ℕ∞)
+
 @[category test, AMS 15]
 theorem exists_hadamard_zero : ∃ M, IsHadamard (n := 0) M := by
   use 0
@@ -113,21 +125,29 @@ which satisfies the condition.
 -/
 @[category test, AMS 15]
 theorem isHadamard_H12 : IsHadamard H12 := by
-  sorry
+  have h : H12.transpose * H12 = (12 : ℝ) • 1 := by
+    rw [← Matrix.ext_iff]
+    norm_num +decide [Fin.forall_fin_succ, Matrix.mul_apply, Fin.sum_univ_succ, H12,
+      Matrix.one_apply]
+  have hd : H12.det ^ 2 = 12 ^ 12 := by simpa [Matrix.det_smul, ← sq] using congrArg Matrix.det h
+  refine ⟨by simp [Fin.forall_fin_succ, H12], ?_⟩
+  rw [← Real.sqrt_sq_eq_abs, hd]
+  norm_num
 
 /--
 For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.
+So `hadamardConstant` is at least $668$.
 -/
 @[category research solved, AMS 15]
-theorem HadamardConjecture.variants.first_cases (k : ℕ) (h : k ≤ 166) :
-    ∃ M, IsHadamard (n := 4 * k) M := by
+theorem HadamardConjecture.variants.first_cases : 668 ≤ hadamardConstant := by
   sorry
 
 /--
 The smallest order for which no Hadamard matrix is presently known is $668 = 4 * 167$.
+Is `hadamardConstant` larger than $668$?
 -/
 @[category research open, AMS 15]
-theorem HadamardConjecture.variants.«167» : ∃ M, IsHadamard (n := 4 * 167) M := by
+theorem HadamardConjecture.variants.«167» : 668 < hadamardConstant := by
   sorry
 
 end Hadamard

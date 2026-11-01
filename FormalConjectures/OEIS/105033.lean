@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sloping binary numbers: read array of binary numbers (right-justified) along diagonals of slope $-1$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A105033](https://oeis.org/A105033)
 -/
+
+@[expose] public section
 
 namespace OeisA105033
 

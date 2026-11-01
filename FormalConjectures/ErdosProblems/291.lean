@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 291
@@ -27,6 +28,8 @@ import FormalConjecturesUtil
 - [WuYa22] Wu, Bing-Ling and Yan, Xiao-Hui, On the denominators of harmonic numbers. {IV}. C. R.
   Math. Acad. Sci. Paris (2022), 53--57.
 -/
+
+@[expose] public section
 
 open Nat Finset Set Filter
 
@@ -56,10 +59,9 @@ $\sum_{1\leq k\leq n}\frac{1}{k}=\frac{a_n}{L_n}$.
 
 Is it true that $(a_n,L_n)=1$ occurs for infinitely many $n$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_291.parts.i :
-    answer(sorry) ↔
-      { n : ℕ | Nat.gcd (a n) (L n) = 1 }.Infinite := by
+    { n : ℕ | Nat.gcd (a n) (L n) = 1 }.Infinite := by
   sorry
 
 /--
@@ -68,10 +70,9 @@ Is it true that $(a_n,L_n)>1$ occurs for infinitely many $n$?
 Steinerberger has observed that the answer to the second question is trivially yes: for example, any
 $n$ which begins with a $2$ in base $3$ has $3\mid (a_n,L_n)$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_291.parts.ii :
-    answer(True) ↔
-      { n : ℕ | Nat.gcd (a n) (L n) > 1 }.Infinite := by
+    { n : ℕ | Nat.gcd (a n) (L n) > 1 }.Infinite := by
   sorry
 
 /--

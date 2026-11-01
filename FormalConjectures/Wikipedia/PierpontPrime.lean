@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Pierpont primes
@@ -26,6 +27,8 @@ nonnegative integers. Marc Gleason conjectured that there are infinitely many.
 - [Wikipedia, Pierpont prime](https://en.wikipedia.org/wiki/Pierpont_prime)
 - [OEIS A005109](https://oeis.org/A005109)
 -/
+
+@[expose] public section
 
 namespace PierpontPrime
 

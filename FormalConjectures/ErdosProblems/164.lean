@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.ErdosProblems.«1196»
-import FormalConjecturesUtil
+public import FormalConjectures.ErdosProblems.«1196»
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 164
@@ -35,8 +36,11 @@ import FormalConjecturesUtil
 - [Li23] Lichtman, J. D., *A proof of the Erdős primitive set conjecture*. arXiv:2202.02384 (2023).
 -/
 
+@[expose] public section
+
 namespace Erdos164
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A set $A\subset \mathbb{N}$ is primitive if no member of $A$ divides another. Is the sum
 $$\sum_{n\in A}\frac{1}{n\log n}$$
@@ -46,8 +50,8 @@ Erdős [Er35] proved that this sum always converges for a primitive set. Lichtma
 that the answer is yes. An alternative, simpler, proof is given by Alexeev, Barreto, Li, Lichtman,
 Price, Shah, Tang, and Tao [ABLLPSTT26].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos164.lean"]
-theorem erdos_164 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos164.lean"]
+theorem erdos_164 :
     ∀ A : Set ℕ, (∀ a ∈ A, 2 ≤ a) → Erdos1196.IsPrimitive A →
       (∑' a : A, 1 / ((a : ℕ) * Real.log (a : ℕ))) ≤
         ∑' p : {p : ℕ | p.Prime}, 1 / ((p : ℕ) * Real.log (p : ℕ)) := by

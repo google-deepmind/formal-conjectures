@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Jacobian conjecture
@@ -22,57 +24,13 @@ import FormalConjecturesUtil
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Jacobian_conjecture)
 -/
 
+@[expose] public section
+
 namespace JacobianConjecture
-
-section Prelims
-
-variable {k : Type*} [CommRing k]
-variable {σ τ ι : Type*}
-
-variable (k σ τ) in
-
-/-- The type of regular functions from $k^σ$ to $k^τ$. -/
-abbrev RegularFunction := τ → MvPolynomial σ k
-
-namespace RegularFunction
-
-/-- The Jacobian of a vector valued polynomial function, viewed as a polynomial. -/
-noncomputable def Jacobian (F : RegularFunction k σ τ) :
-    Matrix σ τ (MvPolynomial σ k) :=
-  Matrix.of fun i j => MvPolynomial.pderiv i (F j)
-
-/-- The composition of two vector valued polynomial functions. -/
-noncomputable def comp
-    (F : RegularFunction k σ τ) (G : RegularFunction k τ ι) :
-    RegularFunction k σ ι :=
-  fun (i : ι) ↦ MvPolynomial.bind₁ F (G i)
-
-variable (k σ) in
-noncomputable def id : RegularFunction k σ σ := MvPolynomial.X
-
-/-- The evaluation of a regular function `f` over `k` at some point `a`
-with coordinates in some algebra over `k`-/
-noncomputable def aeval {σ τ : Type*} {S₁ : Type*} [CommSemiring S₁] [Algebra k S₁]
-    (F : RegularFunction k σ τ) : (σ → S₁) → τ → S₁ :=
-  fun a t ↦ MvPolynomial.aeval a (F t)
-
-/--`aeval` is compatible with composition of regular functions. -/
-@[category API, AMS 14]
-lemma comp_aeval
-    {σ τ ι : Type*}
-    (F : RegularFunction k σ τ) (G : RegularFunction k τ ι)
-    (a : σ → k) : (F.comp G).aeval a = G.aeval (F.aeval a) := by
-  ext i
-  rw [aeval, comp, MvPolynomial.aeval_bind₁, ←aeval]
-  rfl
-
-end RegularFunction
-
-end Prelims
 
 section Conjecture
 
-open RegularFunction MvPolynomial
+open MvPolynomial RegularFunction
 
 variable (k : Type*)
 
@@ -136,7 +94,6 @@ def JacobianConjectureProp (k σ : Type*) [CommRing k] [Fintype σ] [DecidableEq
     ∃ (G : RegularFunction k σ σ), G.comp F = id k σ ∧
     F.comp G = id k σ
 
-set_option linter.style.answer_attribute false in
 /-- The **Jacobian Conjecture**: any regular function
 (i.e. vector valued polynomial function from) `kⁿ → kᵐ`
 whose Jacobian is a non-zero constant has an inverse that
@@ -144,10 +101,9 @@ is given by a regular function, where `k` is a field of characteristic `0`.
 
 This is false: `F` has Jacobian determinant `1` but identifies
 two distinct points, so it admits no inverse. This counterexample works in all characteristics. -/
-@[category research solved, AMS 14]
+@[category research solved, question, AMS 14]
 theorem jacobian_conjecture {k : Type} [CommRing k] [Nontrivial k] :
-    answer(False) ↔ ∀ {σ : Type} [Fintype σ] [DecidableEq σ], JacobianConjectureProp k σ := by
-  rw [false_iff]
+    ¬ ∀ {σ : Type} [Fintype σ] [DecidableEq σ], JacobianConjectureProp k σ := by
   intro h
   obtain ⟨H, -, hGH⟩ := h (G k) (det_jacobian_G k ▸ isUnit_one)
   have hleft : Function.LeftInverse (H.aeval (S₁ := k)) ((G k).aeval) := fun a => by
@@ -158,16 +114,16 @@ theorem jacobian_conjecture {k : Type} [CommRing k] [Nontrivial k] :
   norm_num at h1
 
 /-- Does the Jacobian conjecture hold in the two variable case? -/
-@[category research open, AMS 14]
+@[category research open, question, AMS 14]
 theorem jacobian_conjecture_two_variables :
-    answer(sorry) ↔ ∀ {k : Type} [Field k] [CharZero k], JacobianConjectureProp k (Fin 2) := by
+    ∀ {k : Type} [Field k] [CharZero k], JacobianConjectureProp k (Fin 2) := by
   sorry
 
 end Conjecture
 
 section Tests
 
-open RegularFunction
+open MvPolynomial RegularFunction
 
 variable {k σ : Type} [Fintype σ] [DecidableEq σ] [Field k]
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of parts in the symmetric representation of $\sigma(n)$
@@ -31,6 +32,8 @@ which is a known characterization of the sequence.
 - [A237271](https://oeis.org/A237271)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA237271
 
@@ -99,6 +102,7 @@ lemma a_4 : a 4 = 1 := by native_decide
 lemma a_5 : a 5 = 2 := by native_decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 2: "a(n) is the number of 2-dense sublists of divisors of n.
 We call '2-dense sublists of divisors of n' to the maximal sublists of divisors of n whose terms
@@ -119,22 +123,24 @@ def A001227 (n : ℕ) : ℕ := (n.divisors.filter Odd).card
 def A239657 (n : ℕ) : ℕ :=
   (n.divisors.filter fun m => Odd m ∧ ∃ d ∈ n.divisors, d < m ∧ m < 2 * d).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1 / Theorem: "a(n) is the number of odd divisors of n except the 'e' odd
 divisors described in A005279." - _Omar E. Pol_, Dec 21 2024.
 "The conjecture 1 is true. For a proof see A379288." - _Hartmut F. W. Hoft_, Jan 21 2025.
 Equivalently, $a(n) = \text{A001227}(n) - \text{A239657}(n)$. - _Omar E. Pol_, Mar 23 2014
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA237271_conjecture_1.lean#L211"]
 theorem conjecture_1 (n : ℕ) (hn : 0 < n) :
     a n = A001227 n - A239657 n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Theorem: "a(p^k) = k + 1, where p is an odd prime and k >= 0."
 - _Hartmut F. W. Hoft_, Dec 26 2016
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA237271_a_odd_prime_pow.lean#L165"]
 theorem a_odd_prime_pow (p k : ℕ) (hp : p.Prime) (ho : Odd p) :
     a (p ^ k) = k + 1 := by
   sorry
@@ -154,6 +160,7 @@ theorem conjecture_3 (n : ℕ) :
       fun pair => pair.snd > 2 * pair.fst :=
   conjecture_2 n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 4: "a(A000290(n)) is odd." - _Omar E. Pol_, Oct 21 2025
 
@@ -165,6 +172,7 @@ That is, the number of parts in the symmetric representation of $\sigma(n^2)$ is
 theorem conjecture_4 (n : ℕ) (hn : 0 < n) : Odd (a (n ^ 2)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 5: "a(A000384(n)) is odd." - _Omar E. Pol_, Oct 21 2025
 
@@ -177,6 +185,7 @@ where $n(2n-1)$ is the $n$-th hexagonal number.
 theorem conjecture_5 (n : ℕ) (hn : 0 < n) : Odd (a (n * (2 * n - 1))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Observation: "a(A002997(n)) >= 3, at least for 1 <= n <= 10000."
 - _Omar E. Pol_, Oct 21 2025
@@ -185,8 +194,17 @@ That is, $a(k) \ge 3$ for every Carmichael number $k$.
 A002997 is the sequence of Carmichael numbers: the composite numbers $k$ such that
 $b^{k-1} \equiv 1 \pmod k$ for every $b$ coprime to $k$. This is `IsCarmichael`,
 which also forces $k$ to be composite.
+
+The observation holds for every odd composite $k$, so in particular for every Carmichael
+number. Write $p$ for the least prime factor of $k$ and $q = k/p$. The two smallest divisors
+of $k$ are $1$ and $p$, and the two largest are $q$ and $k$, so $(1, p)$ and $(q, k)$ are both
+consecutive pairs in the sorted divisor list, and they are distinct because $1 < q$. Both
+qualify: $p$ and $k$ are odd, $p \ge 2 \cdot 1$, and $k = pq \ge 3q > 2q$. Hence the count is
+at least $2$ and $a(k) \ge 3$. A Carmichael number is odd: it is composite by the $b = 1$ case
+of `IsCarmichael`, so $k > 2$, and if $k$ were even then the coprime base $k - 1 \equiv -1$
+would give $k \mid (-1)^{k-1} - 1 = -2$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA237271_observation_carmichael.lean#L260"]
 theorem observation_carmichael (k : ℕ) (hk : IsCarmichael k) :
     3 ≤ a k := by
   sorry

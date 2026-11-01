@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ascending descending base exponent transform of factorials
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A113258](https://oeis.org/A113258)
 -/
+
+@[expose] public section
 
 namespace OeisA113258
 
@@ -50,9 +53,9 @@ theorem a_4 : a 4 = 125 := by rfl
 /--
 Is there a nontrivial power after $a(4) = 5^3$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-  answer(sorry) ↔ ∃ n > 4, ∃ b > 1, ∃ e > 1, a n = b ^ e := by
+  ∃ n > 4, ∃ b > 1, ∃ e > 1, a n = b ^ e := by
   sorry
 
 end OeisA113258

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Kotzig's Conjecture
@@ -27,6 +28,8 @@ any $n$-edge tree via cyclic shifts of a single embedding. This is strictly stro
 Ringel's conjecture; see `Paper/RingelConjecture.lean`. The large-$n$ case is proved by
 Montgomery–Pokrovskiy–Sudakov; see `Arxiv/2001.02665/RingelConjecture.lean`.
 -/
+
+@[expose] public section
 namespace KotzigConjecture
 
 open SimpleGraph

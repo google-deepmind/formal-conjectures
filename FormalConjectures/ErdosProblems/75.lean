@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 75
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:*
 * [erdosproblems.com/75] (https://www.erdosproblems.com/75)
 -/
+
+@[expose] public section
 
 open Cardinal
 
@@ -32,9 +35,8 @@ Is there a graph of chromatic number `ℵ_ 1` with `ℵ_ 1` vertices such that f
 `ε > 0`, if `n` is sufficiently large and `H` is a subgraph on `n` vertices,
 then `H` contains an independent set of size `> n ^ (1 - ε)`?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_75 :
-    answer(sorry) ↔
     ∃ (V : Type) (G : SimpleGraph V),
       G.chromaticCardinal = ℵ_ 1 ∧
       #V = ℵ_ 1 ∧

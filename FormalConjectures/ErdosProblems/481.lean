@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 481
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [KoTa22] Kolpakov, Alexander and Talambutsa, Alexey, *On free semigroups of affine maps on the
   real line*. Proc. Amer. Math. Soc. (2022), 2301-2307.
 -/
+
+@[expose] public section
 
 namespace Erdos481
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 762
@@ -27,8 +28,11 @@ import FormalConjecturesUtil
   arXiv:2408.02400 (2024).
 -/
 
+@[expose] public section
+
 namespace Erdos762
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The cochromatic number of $G$, denoted by $\zeta(G)$, is the minimum number of colours needed to
 colour the vertices of $G$ such that each colour class induces either a complete graph or empty
@@ -39,9 +43,9 @@ Is it true that if $G$ has no $K_5$ and $\zeta(G)\geq 4$ then $\chi(G) \leq \zet
 This has been disproved by Steiner [St24b], who constructed a graph $G$ with $\omega(G)=4$,
 $\zeta(G)=4$, and $\chi(G)=7$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos762.lean"]
-theorem erdos_762 : answer(False) ↔
-    ∀ (V : Type*) [Fintype V] (G : SimpleGraph V),
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos762.lean"]
+theorem erdos_762 :
+    ¬ ∀ (V : Type*) [Fintype V] (G : SimpleGraph V),
       G.CliqueFree 5 → 4 ≤ G.cochromaticNumber →
         G.chromaticNumber ≤ G.cochromaticNumber + 2 := by
   sorry

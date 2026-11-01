@@ -64,7 +64,7 @@ theorem Irreducible.powerfree (h : Irreducible m) (hk : 2 ≤ k) :
   induction k with
   | zero => grind
   | succ n ih =>
-  rw [← npow_eq_pow, Monoid.npow_succ, mul_assoc] at hz
+  rw [pow_succ, mul_assoc] at hz
   rcases h.isUnit_or_isUnit hz with (hu | hu)
   · exact (isUnit_pow_iff (by linarith)).1 hu
   · apply isUnit_of_mul_isUnit_left hu

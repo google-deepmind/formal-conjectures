@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Non-Power-of-2 Almost Perfect Numbers Conjecture
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [mathworld](https://mathworld.wolfram.com/AlmostPerfectNumber.html)
 -
 -/
+
+@[expose] public section
 
 namespace AlmostPerfectNumbers
 
@@ -41,9 +44,9 @@ def AlmostPerfect (n : ℕ) : Prop :=
 **Non-Power-of-2 Almost Perfect Numbers Conjecture.**
 Does there exist an almost perfect number that is not a power of 2?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem exists_almost_perfect_not_power_of_two :
-    answer(sorry) ↔ ∃ n : ℕ, AlmostPerfect n ∧ ¬ ∃ k : ℕ, n = 2^k := by
+    ∃ n : ℕ, AlmostPerfect n ∧ ¬ ∃ k : ℕ, n = 2^k := by
   sorry
 
 end AlmostPerfectNumbers

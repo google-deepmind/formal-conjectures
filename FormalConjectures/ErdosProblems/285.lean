@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 285
 
 *Reference:* [erdosproblems.com/285](https://www.erdosproblems.com/285)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -42,9 +45,9 @@ Proved by Martin [Ma00].
 
 [Ma00] Martin, Greg, _Denser Egyptian fractions_. Acta Arith. (2000), 231-260.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_285 :
-    answer(True) ↔ ∀ᵉ (f : ℕ → ℕ)
+    ∀ᵉ (f : ℕ → ℕ)
     (S : Set ℕ)
     (hS : S = {k | ∃ (n : Fin k.succ → ℕ), StrictMono n ∧ 0 ∉ Set.range n ∧
       1 = ∑ i, (1 : ℝ) / n i })

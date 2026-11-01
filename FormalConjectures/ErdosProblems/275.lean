@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 275
@@ -25,10 +26,13 @@ import FormalConjecturesUtil
   2^n integers cover all integers*, Proc. Amer. Math. Soc. 24 (1970), 475-481.
 -/
 
+@[expose] public section
+
 open Set
 
 namespace Erdos275
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If a finite system of $r$ congruences $\{ a_i\pmod{n_i} : 1\leq i\leq r\}$ (the $n_i$ are not
 necessarily distinct) covers $2^r$ consecutive integers then it covers all integers.

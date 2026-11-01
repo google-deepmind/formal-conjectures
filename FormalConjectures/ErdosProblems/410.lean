@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 410
 
 *Reference:* [erdosproblems.com/410](https://www.erdosproblems.com/410)
 -/
+
+@[expose] public section
 
 open ArithmeticFunction Filter
 
@@ -36,8 +39,8 @@ Erdos, Granville, Pomerance, Spiro
 "On the normal behavior of the iterates of some arithmetical functions"
 (page 169 of the book "Analytic Number Theory", 1990).
 -/
-@[category research open, AMS 11]
-theorem erdos_410 : answer(sorry) ↔ ∀ n > 1,
+@[category research open, question, AMS 11]
+theorem erdos_410 : ∀ n > 1,
     Tendsto (fun k : ℕ ↦ ((sigma 1)^[k] n : ℝ) ^ (1 / (k : ℝ))) atTop atTop := by
   sorry
 

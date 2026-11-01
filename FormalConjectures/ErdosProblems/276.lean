@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 276
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 [erdosproblems.com/276](https://www.erdosproblems.com/276)
 -/
+
+@[expose] public section
 
 namespace Erdos276
 
@@ -42,8 +45,8 @@ Is there an infinite Lucas sequence $a_0, a_1, \ldots$ where $a_{n+2} = a_{n+1} 
 $n \ge 0$ such that all $a_k$ are composite, and yet no integer has a common factor with every
 term of the sequence?
 -/
-@[category research open, AMS 11]
-theorem erdos_276 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_276 :
     ∃ (a : ℕ → ℕ),
     IsLucasSequence a ∧ (∀ k, (a k).Composite) ∧ (∀ n > 1, ∃ k, Nat.gcd n (a k) = 1) := by
   sorry

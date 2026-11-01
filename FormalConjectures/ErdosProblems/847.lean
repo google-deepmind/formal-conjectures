@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 847
@@ -23,6 +25,8 @@ import FormalConjecturesUtil
 - [RRS24] Reiher, Christian and R\"odl, Vojt\v ech and Sales, Marcelo, Colouring versus density in integers and {H}ales-{J}ewett cubes. J. Lond. Math. Soc. (2) (2024)
   [arXiv:2311.08556](https://arxiv.org/abs/2311.08556)
 -/
+
+@[expose] public section
 
 namespace Erdos847
 
@@ -34,6 +38,7 @@ three-term arithmetic progression.
 def HasFew3APs (A : Set ℕ) := ∃ (ε : ℝ), ε > 0 ∧ ∀ (B : Set ℕ), B ⊆ A → Finite B →
   ∃ (C : Set ℕ), C ⊆ B ∧ C.ncard ≥ ε * B.ncard ∧ ThreeAPFree C
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A \subset \mathbb{N}$ be an infinite set for which there exists some $\epsilon > 0$ such that
 in any subset of $A$ of size $n$ there is a subset of size at least $\epsilon n$ which contains no
@@ -47,8 +52,9 @@ $0<\mu<1/2$, there exists $A\subseteq \mathbb{N}$ such that every finite colouri
 a three-term arithmetic progression, and yet every subset of $A$ of size $n$ contains a subset of
 size $\geq \mu n$ without a three-term arithmetic progression.
 -/
-@[category research solved, AMS 11]
-theorem erdos_847 : answer(False) ↔ ∀ (A : Set ℕ), Infinite A → HasFew3APs A →
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos847.lean#L113"]
+theorem erdos_847 : ¬ ∀ (A : Set ℕ), Infinite A → HasFew3APs A →
     ∃ n, ∃ (S : Fin n → Set ℕ), (∀ i, ThreeAPFree (S i)) ∧ A = ⋃ i : Fin n, S i := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 912
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
  - [erdosproblems.com/912](https://www.erdosproblems.com/912)
  - [Er82c] Erdős, P., Miscellaneous problems in number theory. Congr. Numer. (1982), 25-45.
 -/
+
+@[expose] public section
 
 open scoped Nat Asymptotics
 open Filter

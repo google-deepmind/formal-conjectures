@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-! # Mathoverflow 17560
 
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *Reference:* [mathoverflow/17560](https://mathoverflow.net/questions/17560)
 asked by user [Alon-Amit](https://mathoverflow.net/users/25/alon-amit)
 -/
+
+@[expose] public section
 
 namespace Mathoverflow17560
 

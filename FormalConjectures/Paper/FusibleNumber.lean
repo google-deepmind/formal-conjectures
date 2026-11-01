@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Main conjecture on fusible numbers
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
 - [Fusible numbers and Peano Arithmetic](https://doi.org/10.46298/lmcs-18%283%3A6%292022),
   Logical Methods in Computer Science, Volume 18, Issue 3 (July 28, 2022).
 -/
+
+@[expose] public section
 
 namespace FusibleNumber
 

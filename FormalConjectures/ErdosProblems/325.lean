@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 325
 *Reference:* [erdosproblems.com/325](https://www.erdosproblems.com/325)
 -/
+
+@[expose] public section
 
 open Asymptotics Filter
 
@@ -36,9 +39,9 @@ noncomputable def cardIsSumThreePowerBelow (k x : ℕ) : ℕ :=
 Writing $f_{k, 3}(x)$ for the number of integers $\leq x$ which are the sum of three $k$th powers,
 is it true that $f_{k, 3}(x) \gg x ^ (3 / k)$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_325 :
-     answer(sorry) ↔ ∀ k : ℕ, 3 ≤ k → (fun x : ℕ => (x : ℝ) ^ (3 / k : ℝ)) =O[atTop]
+     ∀ k : ℕ, 3 ≤ k → (fun x : ℕ => (x : ℝ) ^ (3 / k : ℝ)) =O[atTop]
       (fun x : ℕ => (cardIsSumThreePowerBelow k x : ℝ)) := by
   sorry
 
@@ -46,19 +49,22 @@ theorem erdos_325 :
 Writing $f_{k, 3}(x)$ for the number of integers $\leq x$ which are the sum of three $k$th powers,
 is it even true that $f_{k, 3}(x) \gg_{\epsilon} x ^ (3 / k - \epsilon)$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_325.variants.weaker :
-    answer(sorry) ↔ ∀ ε > 0, ∀ k : ℕ, 3 ≤ k → (fun x : ℕ => (x : ℝ) ^ ((3 / k : ℝ) - ε)) =O[atTop]
+    ∀ ε > 0, ∀ k : ℕ, 3 ≤ k → (fun x : ℕ => (x : ℝ) ^ ((3 / k : ℝ) - ε)) =O[atTop]
       (fun x => (cardIsSumThreePowerBelow k x : ℝ)) := by
   sorry
 
 /--
-For $k = 3$, the best known is due to Wooley [Wo15]
+For $k = 3$, the best known is due to Wooley [Wo15], who proved
+$f_{3, 3}(x) \gg x^{0.91709477}$.
+
 [Wo15] Wooley, Trevor D., Sums of three cubes, II. Acta Arith. (2015), 73-100.
 -/
 @[category research solved, AMS 11]
 theorem erdos_325.variants.wooley :
-    (fun x : ℕ => (x : ℝ) ^ (0.917 : ℝ)) =O[atTop] (fun x => (cardIsSumThreePowerBelow 3 x : ℝ)) := by
+    (fun x : ℕ => (x : ℝ) ^ (0.91709477 : ℝ)) =O[atTop]
+      (fun x => (cardIsSumThreePowerBelow 3 x : ℝ)) := by
   sorry
 
 end Erdos325

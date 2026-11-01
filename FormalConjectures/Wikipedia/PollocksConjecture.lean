@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Pollock's (tetrahedral numbers) conjecture
@@ -29,6 +30,8 @@ Every positive integer is the sum of at most 5 tetrahedral numbers.
 - H. E. Salzer and N. Levine, *Table of integers not exceeding 100000 that are not expressible as the sum of four tetrahedral numbers*, Math. Comp. **12** (1958), 141–144
 - [MathWorld: Pollock's Conjecture](https://mathworld.wolfram.com/PollocksConjecture.html)
 -/
+
+@[expose] public section
 
 namespace PollocksConjecture
 

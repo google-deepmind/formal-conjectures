@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Recurrence for Rule 167 cellular automaton sequence
@@ -26,6 +27,8 @@ starting with a single ON (black) cell.
 - [A267581](https://oeis.org/A267581)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA267581
 
@@ -90,6 +93,7 @@ lemma a_3 : a 3 = 13 := by rfl
 lemma a_4 : a 4 = 26 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n) = 2 a(n-1) + 1 - \lfloor (1/2)^{2^{n+1} \bmod n} \rfloor$ for $n \ge 2$. - _Andres Cicuttin_, Mar 29 2016
 

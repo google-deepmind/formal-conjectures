@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 109
@@ -25,17 +26,21 @@ import FormalConjecturesUtil
   Annals of Math. 189 (2019), 605-652.
 -/
 
+@[expose] public section
+
 open Pointwise
 
 namespace Erdos109
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Any $A\subseteq \mathbb{N}$ of positive upper density contains a sumset $B+C$ where both $B$ and $C$
 are infinite.
 
 The Erdős sumset conjecture. Proved by Moreira, Richter, and Robertson [MRR19].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos109.lean#L9074"]
 theorem erdos_109 (A : Set ℕ) (h : A.upperDensity > 0) :
     ∃ B C : Set ℕ, B.Infinite ∧ C.Infinite ∧ B + C ⊆ A := by
   sorry

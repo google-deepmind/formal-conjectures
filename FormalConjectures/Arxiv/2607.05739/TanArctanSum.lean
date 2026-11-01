@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Integer values of $\tan(\arctan 1 + \arctan 2 + \cdots + \arctan n)$
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
   results of [Ono26], MIT licensed. Its `P`, `A`, `B` and `x` are the definitions used
   here.
 -/
+
+@[expose] public section
 
 open Finset
 
@@ -60,9 +63,9 @@ instance (n : ℕ) : Decidable (IsIntegerValue n) := by unfold IsIntegerValue; i
 $$x_n = \tan(\arctan 1 + \arctan 2 + \cdots + \arctan n)$$
 is not an integer.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem tan_arctan_sum_not_integer :
-    answer(sorry) ↔ ∀ n : ℕ, 5 ≤ n → ¬ IsIntegerValue n := by
+    ∀ n : ℕ, 5 ≤ n → ¬ IsIntegerValue n := by
   sorry
 
 /-- $x_n$ satisfies $x_1 = 1$ and $x_n = \dfrac{x_{n-1} + n}{1 - n x_{n-1}}$, which is the
@@ -93,6 +96,7 @@ noncomputable def angleSum (n : ℕ) : ℝ := ∑ k ∈ Finset.Icc 1 n, Real.arc
 pole of the tangent rather than a large value, and is counted in, reading $|x_n|$ as infinite. -/
 def exceptional : Set ℕ := {n | 5 ≤ n ∧ (A n = 0 ∨ ((n : ℚ) / 2 + 1 < |x n|))}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 An integer value is divisible in a way that forces it to be large: if $x_n = m$ then
 $K_n \mid 1 + m^2$, and $|m| \geq \sqrt{K_n - 1}$ once $K_n > 1$.
@@ -105,6 +109,7 @@ theorem kernel_dvd_of_eq_intCast {n : ℕ} (hn : 1 ≤ n) (hA : A n ≠ 0) {m : 
       (1 < kernel n → Real.sqrt ((kernel n : ℝ) - 1) ≤ |(m : ℝ)|) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every exceptional index sits close to a multiple of $\pi/2$ in angle. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/AxiomMath/TanArctan/blob/5382d3c20ee3f30e2cbd84362eb07a7e93250348/output/solution.lean#L453"]
@@ -112,6 +117,7 @@ theorem exists_near_half_pi {n : ℕ} (hn : n ∈ exceptional) :
     ∃ j : ℤ, |angleSum n - (j : ℝ) * (Real.pi / 2)| < 2 / (n : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The exceptional indices are sparse: $\#(E \cap [1,N]) = O(\log N)$. This is the sense in
 which integer values are rare, and it is what [Ono26] proves. -/
 @[category research solved, AMS 11, formal_proof using lean4 at

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 31
@@ -33,11 +34,14 @@ import FormalConjecturesUtil
   (1954), 838-841.
 -/
 
+@[expose] public section
+
 namespace Erdos31
 
 open Filter
 open scoped Pointwise
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Given any infinite set $A\subset \mathbb{N}$ there is a set $B$ of density $0$ such that $A+B$ contains all except finitely many integers.
 

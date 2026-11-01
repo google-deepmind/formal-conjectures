@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 366
@@ -22,13 +23,15 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/366](https://www.erdosproblems.com/366)
 -/
 
+@[expose] public section
+
 namespace Erdos366
 
 /--
 Are there any $2$-full $n$ such that $n+1$ is $3$-full?
 -/
-@[category research open, AMS 11]
-theorem erdos_366 : answer(sorry) ↔ ∃ n > 0, (2).Full n ∧ (3).Full (n + 1) := by
+@[category research open, question, AMS 11]
+theorem erdos_366 : ∃ n > 0, (2).Full n ∧ (3).Full (n + 1) := by
   sorry
 
 /--
@@ -40,18 +43,21 @@ theorem exists_three_full_then_two_full : ∃ n > 0, (3).Full n ∧ (2).Full (n 
   norm_num +contextual [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]
 
 /--
-Are there infinitely many 3-full $n$ such that $n+1$ is 2-full?
+Erdős and Graham asked whether $(8, 9)$ is the only pair of consecutive integers $n$, $n+1$
+with $n$ $3$-full and $n+1$ $2$-full. The answer is no: $12167 = 23^3$ and
+$12168 = 2^3 3^2 13^2$ is another such pair, already known to Golomb [Go70].
 -/
-@[category research open, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_366.variants.three_two :
-    answer(sorry) ↔ {n | (3).Full n ∧ (2).Full (n + 1)}.Infinite := by
-  sorry
+    ¬ ∀ n > 0, (3).Full n ∧ (2).Full (n + 1) → n = 8 := by
+  refine fun h ↦ absurd (h 12167 (by norm_num) ?_) (by norm_num)
+  norm_num +contextual [Nat.Full, Nat.primeFactors, Nat.primeFactorsList]
 
 /--
 Are there any consecutive pairs of $3$-full integers?
 -/
-@[category research open, AMS 11]
-theorem erdos_366.variants.weaker : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_366.variants.weaker :
     ∃ n > 0, (3).Full n ∧ (3).Full (n + 1) := by
   sorry
 

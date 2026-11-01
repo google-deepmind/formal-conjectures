@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Hilbert's 17th problem
@@ -27,6 +28,8 @@ $f = g_1^2 + g_2^2 + \cdots + g_m^2$. Resolved affirmatively by Artin in 1927.
 - [Wikipedia](https://en.wikipedia.org/wiki/Hilbert%27s_seventeenth_problem)
 - Motzkin, "The arithmetic-geometric inequality". In Shisha, Oved (ed.). Inequalities. Academic Press. pp. 205–224.
 -/
+
+@[expose] public section
 
 open Real MvPolynomial
 
@@ -100,7 +103,8 @@ theorem Hilbert17thProblemHomogenousPoly_zero_right (n : ℕ) :
   rcases eq_or_ne f 0 with (rfl | hf_zero); · exact ⟨0, 0, by simp⟩
   have hfd := f.totalDegree_eq_zero_iff_eq_C.1 <| by simpa using hf.totalDegree hf_zero
   use 1, fun _ ↦ C √(f.coeff 0)
-  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by simpa using hf₀ 0]
+  rw [Finset.sum_congr rfl fun _ _ ↦ (map_pow _ _ _).symm, Real.sq_sqrt <| by
+    simpa [constantCoeff] using hf₀ 0]
   simpa using hfd
 
 /--

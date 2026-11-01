@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1068
 
 *Reference:* [erdosproblems.com/1068](https://www.erdosproblems.com/1068)
 -/
+
+@[expose] public section
 
 open Cardinal SimpleGraph
 
@@ -30,8 +33,8 @@ namespace Erdos1068
 Does every graph with chromatic number $\aleph_1$ contain a countable subgraph which is
 infinitely connected?
 -/
-@[category research open, AMS 5]
-theorem erdos_1068 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_1068 :
     ∀ (V : Type) (G : SimpleGraph V), G.chromaticCardinal = ℵ_  1 →
       ∃ s : Set V, s.Countable ∧ InfinitelyConnected (G.induce s) := by
   sorry

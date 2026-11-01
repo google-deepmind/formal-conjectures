@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 962
@@ -25,6 +27,8 @@ import FormalConjecturesUtil
 - [Tang](https://github.com/QuanyuTang/erdos-problem-962/blob/main/On_Erd%C5%91s_Problem_962.pdf)
 - [Tao](https://www.erdosproblems.com/forum/thread/962)
 -/
+
+@[expose] public section
 
 open Filter Real
 
@@ -51,14 +55,13 @@ Main conjecture:
 
 $\log k(n) \le (\log n)^{(1/2 + o(1))}$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_962 :
-    answer(sorry) ↔
-      ∃ ε : ℕ → ℝ,
-        (∀ δ > 0, ∀ᶠ n in atTop, |ε n| < δ) ∧
-        ∀ᶠ n : ℕ in atTop,
-          log (k n : ℝ)
-            ≤ rpow (log n) ((1 : ℝ) / 2 + ε n) := by
+    ∃ ε : ℕ → ℝ,
+      (∀ δ > 0, ∀ᶠ n in atTop, |ε n| < δ) ∧
+      ∀ᶠ n : ℕ in atTop,
+        log (k n : ℝ)
+          ≤ rpow (log n) ((1 : ℝ) / 2 + ε n) := by
   sorry
 
 /--

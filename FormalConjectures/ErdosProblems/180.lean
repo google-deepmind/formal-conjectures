@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 180
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   Combinatorica (1982), 275-288.
 - [OpenAI26] OpenAI, *Ten advances in mathematics and theoretical computer science*. (2026).
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 
@@ -68,12 +71,13 @@ This is the Erdős–Simonovits compactness conjecture. The answer is no: OpenAI
 family of connected bipartite graphs, none of them acyclic, for which no single member controls
 the family extremal number. See `erdos_180.variants.counterexample`.
 -/
-@[category research solved, AMS 5]
-theorem erdos_180 : answer(False) ↔
-    ∀ family : Finset FiniteGraph,
+@[category research solved, question, AMS 5]
+theorem erdos_180 :
+    ¬ ∀ family : Finset FiniteGraph,
       family.Nonempty → IsCyclicFamily family → IsCompactFamily family := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The counterexample: a nonempty family of connected bipartite graphs, none acyclic, that is not
 compact.

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Partial sums of $\binom{2n}{n}^2$
@@ -24,6 +25,8 @@ $$a(n) = \sum_{k=0}^n \binom{2k}{k}^2$$
 *References:*
 - [A115257](https://oeis.org/A115257)
 -/
+
+@[expose] public section
 
 namespace OeisA115257
 

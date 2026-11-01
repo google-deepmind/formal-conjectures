@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 595
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
   Recent advances in graph theory (Proc. Second Czechoslovak Sympos., Prague, 1974),
   Academia, Prague (1975), 405-412.
 -/
+
+@[expose] public section
 
 open SimpleGraph Set
 
@@ -47,8 +50,8 @@ not the union of countably many triangle-free graphs?
 
 A problem of Erdős and Hajnal [Er87].
 -/
-@[category research open, AMS 5]
-theorem erdos_595 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_595 :
     ∃ (V : Type*) (_ : Infinite V) (G : SimpleGraph V),
       G.CliqueFree 4 ∧ ¬IsCountableUnionOfTriangleFree G := by
   sorry
@@ -70,8 +73,8 @@ More precisely: for every `n : ℕ` with `1 ≤ n`, there exist a finite type `V
 This is the finite analogue of Problem 595. The proofs of Folkman [Fo70] and Nešetřil–Rödl
 [NeRo75] give different explicit constructions.
 -/
-@[category research solved, AMS 5]
-theorem erdos_595.variants.folkman_finite : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_595.variants.folkman_finite :
     ∀ n : ℕ, 1 ≤ n →
     ∃ (V : Type*) (_ : Fintype V) (G : SimpleGraph V),
       G.CliqueFree 4 ∧
@@ -194,8 +197,8 @@ This sanity check confirms the $K_4$-free hypothesis of Problem 595 is non-trivi
 @[category textbook, AMS 5]
 theorem erdos_595.variants.K4_not_cliqueFree :
     ¬ (⊤ : SimpleGraph (Fin 4)).CliqueFree 4 := by
-  rw [not_cliqueFree_iff]
-  exact ⟨(Iso.completeGraph (Fintype.equivFin (Fin 4))).symm.toEmbedding⟩
+  rw [SimpleGraph.not_cliqueFree_iff_top_isContained]
+  exact IsContained.of_le fun ⦃v w⦄ a ↦ a
 
 /--
 **Reformulation via edge colourings**: A graph `G` is a countable union of triangle-free graphs

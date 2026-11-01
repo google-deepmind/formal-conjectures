@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1196
 
 *Reference:* [erdosproblems.com/1196](https://www.erdosproblems.com/1196)
 -/
+
+@[expose] public section
 
 namespace Erdos1196
 
@@ -31,13 +34,14 @@ open scoped Asymptotics
 def IsPrimitive {M : Type*} [CommMonoid M] (A : Set M) : Prop :=
   ∀ᵉ (x ∈ A) (y ∈ A), x ∣ y → Associated x y
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for any $x$, if $A\subset [x,\infty)$ is a primitive set of integers (so that no distinct elements of $A$ divide each other) then$$\sum_{a\in A}\frac{1}{a\log a}&#60; 1+o(1),$$where the $o(1)$ term $\to 0$ as $x\to \infty$?
 --/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/math-inc/Erdos1196/blob/02fba13be7487cc51315f68d8fa7ef277633d3c8/PrimitiveSetsAboveX/FormalConjecturesErdos1196.lean"]
 theorem erdos_1196 :
-    answer(True) ↔ ∃ o : ℕ → ℝ, o =o[Filter.atTop] (1 : ℕ → ℝ) ∧ ∀ x > (0 : ℕ), ∀ A ⊆ Set.Ici x, IsPrimitive A →
+    ∃ o : ℕ → ℝ, o =o[Filter.atTop] (1 : ℕ → ℝ) ∧ ∀ x > (0 : ℕ), ∀ A ⊆ Set.Ici x, IsPrimitive A →
        ∑' (a : A), (1 / ((a.val : ℝ).log * a)) < 1 + o x  := by
   sorry
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 756
@@ -31,20 +32,16 @@ import FormalConjecturesUtil
 - [HoPa34] Hopf, H. and Pannwitz, E., *Aufgabe 167*. Jber. Deutsch. Math. Verein. (1934), 114.
 -/
 
+@[expose] public section
+
 open Filter
 open scoped EuclideanGeometry Asymptotics
 
 namespace Erdos756
 
-/-- The number of unordered pairs of distinct points of `A` which are at distance exactly `d`.
-The division by two accounts for `Finset.offDiag` listing each unordered pair twice. -/
-noncomputable def distanceMultiplicity (A : Finset ℝ²) (d : ℝ) : ℕ :=
-  (A.offDiag.filter fun pair : ℝ² × ℝ² => dist pair.1 pair.2 = d).card / 2
-
 /-- The distances determined by `A` which occur for at least `k` many pairs of points of `A`. -/
 noncomputable def richDistances (A : Finset ℝ²) (k : ℕ) : Finset ℝ :=
-  (A.offDiag.image fun pair : ℝ² × ℝ² => dist pair.1 pair.2).filter
-    fun d => k ≤ distanceMultiplicity A d
+  (distanceSet A).filter fun d => k ≤ distanceMultiplicity A d
 
 /-- The largest number of distinct distances that a set of `n` points in $\mathbb{R}^2$ can
 determine, each of which occurs for more than `n` many pairs of points of the set. -/
@@ -58,11 +55,12 @@ each of which occurs for more than $n$ many pairs from $A$?
 The answer is yes: Bhowmick [Bh24] constructs a set of $n$ points in $\mathbb{R}^2$ such that
 $\lfloor\frac{n}{4}\rfloor$ distances occur at least $n+1$ times.
 -/
-@[category research solved, AMS 52]
-theorem erdos_756 : answer(True) ↔
+@[category research solved, question, AMS 52]
+theorem erdos_756 :
     (fun n : ℕ => (n : ℝ)) =O[atTop] (fun n : ℕ => (maxRichDistances n : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bhowmick [Bh24] constructs a set of $n$ points in $\mathbb{R}^2$ such that
 $\lfloor\frac{n}{4}\rfloor$ distances occur at least $n+1$ times.
@@ -73,11 +71,12 @@ theorem erdos_756.variants.bhowmick (n : ℕ) :
   sorry
 
 /--
-More generally, they construct, for any $m$ and large $n$, a set of $n$ points such that
+More generally, they construct, for any positive integer $m$ and large $n$, a set of $n$ points
+such that
 $\lfloor \frac{n}{2(m+1)}\rfloor$ distances occur at least $n+m$ times.
 -/
 @[category research solved, AMS 52]
-theorem erdos_756.variants.bhowmick_general (m : ℕ) :
+theorem erdos_756.variants.bhowmick_general (m : ℕ) (hm : 1 ≤ m) :
     ∀ᶠ n : ℕ in atTop, ∃ A : Finset ℝ², A.card = n ∧
       n / (2 * (m + 1)) ≤ (richDistances A (n + m)).card := by
   sorry

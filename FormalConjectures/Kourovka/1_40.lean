@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture 1.40
@@ -29,6 +30,10 @@ guarantees that the product of two normal nilpotent subgroups is nilpotent.
 
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 -/
+
+@[expose] public section
+
+open scoped commutatorElement
 
 namespace Kourovka.«1.40»
 
@@ -57,8 +62,8 @@ Since $H$ and $K$ are normal, the product $HK$ coincides with the join
 $H \sqcup K$, so "$G$ is the product of $H$ and $K$" is stated as
 $H \sqcup K = G$.
 -/
-@[category research open, AMS 20]
-theorem kourovka.«1.40» : answer(sorry) ↔
+@[category research open, question, AMS 20]
+theorem kourovka_1_40 :
     ∀ (G : Type) [Group G] (H K : Subgroup G),
       H.Normal → K.Normal → IsEngelGroup H → IsEngelGroup K → H ⊔ K = ⊤ →
       IsEngelGroup G := by

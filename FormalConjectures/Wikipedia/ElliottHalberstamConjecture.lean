@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Elliott–Halberstam conjecture
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [FG89] Friedlander, John and Granville, Andrew, *Limitations to the equi-distribution of
   primes I*, Ann. of Math. (2) 129 (1989), no. 2, 363–382.
 -/
+
+@[expose] public section
 
 namespace ElliottHalberstamConjecture
 

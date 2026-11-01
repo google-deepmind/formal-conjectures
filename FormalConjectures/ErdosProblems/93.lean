@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 93
@@ -43,10 +44,13 @@ import FormalConjecturesUtil
 - [Al63] Altman, E., *On a problem of P. Erdős*. Amer. Math. Monthly (1963), 148-157.
 -/
 
+@[expose] public section
+
 open EuclideanGeometry
 
 namespace Erdos93
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $n$ distinct points in $\mathbb{R}^2$ form a convex polygon then they determine at least
 $\lfloor \frac{n}{2}\rfloor$ distinct distances.

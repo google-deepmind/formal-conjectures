@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 269
 
 *Reference:* [erdosproblems.com/269](https://www.erdosproblems.com/269)
 -/
+
+@[expose] public section
 
 namespace Erdos269
 /--
@@ -56,8 +59,8 @@ are all in $P$. Is the sum
 $$ \sum_{n=1}^\infty \frac{1}{[a_1,\ldots,a_n]} $$
 rational?
 -/
-@[category research open, AMS 11]
-theorem erdos_269.variants.rational : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_269.variants.rational :
     ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
     ∃ (q : ℚ), q = (series (P : Set ℕ)) := by
   sorry
@@ -69,8 +72,8 @@ are all in $P$. Is the sum
 $$ \sum_{n=1}^\infty \frac{1}{[a_1,\ldots,a_n]} $$
 irrational?
 -/
-@[category research open, AMS 11]
-theorem erdos_269.variants.irrational : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_269.variants.irrational :
     ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
     Irrational (series (P : Set ℕ)) := by
   sorry

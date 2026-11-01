@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Vanishing of bases with $b^n \equiv -1 \pmod{2n+1}$ for absolute Euler pseudoprimes
@@ -27,6 +28,8 @@ If $2n+1$ is an absolute Euler pseudoprime, then $a(n) = 0$.
 - [A307865](https://oeis.org/A307865)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA307865
 
@@ -70,6 +73,7 @@ lemma a_3 : a 3 = 3 := by rfl
 lemma a_4 : a 4 = 0 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: if $2n+1$ is an absolute Euler pseudoprime, then $a(n) = 0$.
 

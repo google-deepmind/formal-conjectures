@@ -63,8 +63,7 @@ If `∑ x ∈ s, f x < s.card`, then there exists `a ∈ s` with `f a = 0`.
 theorem Finset.exists_eq_zero_of_sum_lt_card
     {α : Type*} {s : Finset α} {f : α → ℕ} (h : ∑ x ∈ s, f x < s.card) :
     ∃ a ∈ s, f a = 0 := by
-  by_contra hne
-  push_neg at hne
+  by_contra! hne
   have hge : ∀ a ∈ s, 1 ≤ f a :=
     fun a ha => Nat.one_le_iff_ne_zero.mpr (hne a ha)
   have hbound : s.card ≤ ∑ x ∈ s, f x := by

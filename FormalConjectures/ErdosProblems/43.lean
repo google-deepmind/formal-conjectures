@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 43
 
 *Reference:* [erdosproblems.com/43](https://www.erdosproblems.com/43)
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 
@@ -39,9 +42,9 @@ $$\binom{\lvert A\rvert}{2}+\binom{\lvert B\rvert}{2}\leq\binom{f(N)}{2}+O(1)?$$
 The answer is no; the Erdős Problems page notes that this follows from the solution to
 Erdős Problem 42.
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_43.parts.i : answer(False) ↔
-    ∃ C : ℝ, ∀ᶠ N in Filter.atTop, ∀ (A B : Finset ℕ),
+@[category research solved, question, AMS 5 11]
+theorem erdos_43.parts.i :
+    ¬ ∃ C : ℝ, ∀ᶠ N in Filter.atTop, ∀ (A B : Finset ℕ),
       A ⊆ Finset.Icc 1 N →
       B ⊆ Finset.Icc 1 N →
       IsSidon (A : Set ℕ) →
@@ -59,9 +62,9 @@ for some constant $c>0$?
 
 The answer is no; the Erdős Problems page records a negative answer due to Barreto.
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_43.parts.ii : answer(False) ↔
-    ∃ᵉ (c > 0), ∃ o : ℕ → ℝ, o =o[Filter.atTop] (1 : ℕ → ℝ) ∧
+@[category research solved, question, AMS 5 11]
+theorem erdos_43.parts.ii :
+    ¬ ∃ᵉ (c > 0), ∃ o : ℕ → ℝ, o =o[Filter.atTop] (1 : ℕ → ℝ) ∧
     ∀ᶠ N in Filter.atTop, ∀ (A B : Finset ℕ),
       A ⊆ Finset.Icc 1 N →
       B ⊆ Finset.Icc 1 N →

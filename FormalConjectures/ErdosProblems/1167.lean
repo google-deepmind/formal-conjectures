@@ -13,19 +13,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1167
 
-*Reference:* [erdosproblems.com/1167](https://www.erdosproblems.com/1167)
+*References:*
+- [erdosproblems.com/1167](https://www.erdosproblems.com/1167)
+- [EHMR84] P. Erdős, A. Hajnal, A. Máté and R. Rado, *Combinatorial set theory: partition
+  relations for cardinals*. Studies in Logic and the Foundations of Mathematics 106,
+  North-Holland (1984).
 
 The original Erdős–Hajnal problem list gives the additional conditions $\gamma \geq 2$, $r < \omega$,
 and $\kappa_\alpha > r$. Without $\gamma \geq 2$, the statement is false: taking $\gamma = 1$ and
 $\kappa_0 = \aleph_1$ with $\lambda = \aleph_0$ gives a counterexample, since the partition relation
 with one color degenerates to a cardinality comparison (see `erdos_1167.unrestricted_is_false`).
+Without $\kappa_\alpha > r$ it is also false: with $r = 2$, $\lambda = \aleph_0$ and targets
+$(2, \aleph_1)$, the premise $2^{\aleph_0} \to (3, \aleph_1)^3$ holds, but a constant colouring
+of the pairs of $\aleph_0$ has neither a red pair nor a blue set of size $\aleph_1$.
 -/
+
+@[expose] public section
 
 open Cardinal Ordinal Combinatorics
 
@@ -35,7 +45,7 @@ universe u
 
 /--
 **Erdős Problem 1167.** Let $r \geq 2$ be finite, $\gamma \geq 2$, and $\lambda$ be an infinite
-cardinal. Let $\kappa_\alpha$ be cardinals for all $\alpha < \gamma$. Is it true
+cardinal. Let $\kappa_\alpha > r$ be cardinals for all $\alpha < \gamma$. Is it true
 that
 $$2^\lambda \to (\kappa_\alpha + 1)_{\alpha < \gamma}^{r+1}$$
 implies
@@ -45,23 +55,30 @@ if $\kappa_\alpha$ is infinite.
 
 A problem of Erdős, Hajnal, and Rado.
 -/
-@[category research open, AMS 5]
-theorem erdos_1167 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_1167 :
     ∀ (r : ℕ), 2 ≤ r →
     ∀ (lam : Cardinal.{u}), ℵ₀ ≤ lam →
     ∀ (γ : Ordinal.{u}), 2 ≤ γ →
-    ∀ (κ : γ.ToType → Cardinal.{u}),
+    ∀ (κ : γ.ToType → Cardinal.{u}), (∀ α, (r : Cardinal.{u}) < κ α) →
       cardinalPartitionRel ((2 : Cardinal.{u}) ^ lam) (r + 1) γ (fun α => κ α + 1) →
       cardinalPartitionRel lam r γ κ := by
   sorry
 
 namespace erdos_1167.variants
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Finite-target case.** When all $\kappa_\alpha$ are finite, $\kappa_\alpha + 1$
 is the ordinary natural-number successor. Special case of `erdos_1167`.
+
+This case was proved by Erdős, Hajnal, Máté and Rado [EHMR84], using the Erdős–Rado tree
+argument and the negative stepping-up lemma. The statement omits the condition $n_\alpha > r$.
+This is harmless, since a colouring that witnesses
+$\lambda \not\to (n_\alpha)^r_{\alpha < \gamma}$ can only use colours $\alpha$ with $n_\alpha > r$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/5cb725981b3ad137103ef908eb6ecff9e7ed9bdf/ErdosLean/Erdos1167.lean#L990"]
 theorem finite_targets (r : ℕ) (hr : 2 ≤ r) (lam : Cardinal.{u}) (hlam : ℵ₀ ≤ lam)
     (γ : Ordinal.{u}) (hγ : 2 ≤ γ) (n : γ.ToType → ℕ) :
     cardinalPartitionRel ((2 : Cardinal.{u}) ^ lam) (r + 1) γ
@@ -74,7 +91,7 @@ theorem finite_targets (r : ℕ) (hr : 2 ≤ r) (lam : Cardinal.{u}) (hlam : ℵ
 -/
 @[category research open, AMS 5]
 theorem binary_colors (r : ℕ) (hr : 2 ≤ r) (lam : Cardinal.{u}) (hlam : ℵ₀ ≤ lam)
-    (κ : (2 : Ordinal.{u}).ToType → Cardinal.{u}) :
+    (κ : (2 : Ordinal.{u}).ToType → Cardinal.{u}) (hκ : ∀ α, (r : Cardinal.{u}) < κ α) :
     cardinalPartitionRel ((2 : Cardinal.{u}) ^ lam) (r + 1) 2 (fun α => κ α + 1) →
     cardinalPartitionRel lam r 2 κ := by
   sorry
@@ -105,7 +122,8 @@ Erdős–Rado stepping-up/down theorem for pairs.
 -/
 @[category research open, AMS 5]
 theorem r_eq_two (lam : Cardinal.{u}) (hlam : ℵ₀ ≤ lam)
-    (γ : Ordinal.{u}) (hγ : 2 ≤ γ) (κ : γ.ToType → Cardinal.{u}) :
+    (γ : Ordinal.{u}) (hγ : 2 ≤ γ) (κ : γ.ToType → Cardinal.{u})
+    (hκ : ∀ α, (2 : Cardinal.{u}) < κ α) :
     cardinalPartitionRel ((2 : Cardinal.{u}) ^ lam) 3 γ (fun α => κ α + 1) →
     cardinalPartitionRel lam 2 γ κ := by
   sorry

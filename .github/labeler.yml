@@ -63,9 +63,9 @@ mathoverflow:
   - changed-files:
     - any-glob-to-any-file: 'FormalConjectures/Mathoverflow/**'
 
-millenium-problems:
+millennium-problems:
   - changed-files:
-    - any-glob-to-any-file: 'FormalConjectures/Millenium/**'
+    - any-glob-to-any-file: 'FormalConjectures/Millennium/**'
 
 oeis:
   - changed-files:

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 60
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [HeMaYa21] He, J. and Ma, J. and Yang, T., *Some extremal results on 4-cycles*. Journal of
   Combinatorial Theory B (2021).
 -/
+
+@[expose] public section
 
 namespace Erdos60
 
@@ -46,12 +49,15 @@ theorem erdos_60 :
 /- ## Variants and partial results -/
 
 /--
-He, Ma, and Yang [HeMaYa21] proved the conjecture when $n = q^2 + q + 1$ for some even integer $q$.
+He, Ma, and Yang [HeMaYa21] proved the conjecture when $n = q^2 + q + 1$ for some $q = 2^k$: they
+showed that for large even $q$ every graph on $q^2 + q + 1$ vertices with
+$\frac{1}{2}q(q+1)^2 + 1$ edges contains at least $q - 1$ copies of $C_4$, and
+$\mathrm{ex}(q^2 + q + 1; C_4) = \frac{1}{2}q(q+1)^2$ when $q = 2^k$.
 -/
 @[category research solved, AMS 5]
 theorem erdos_60.variants.he_ma_yang :
     ∃ c : ℝ, c > 0 ∧
-      ∀ (q : ℕ) (_hq : Even q),
+      ∀ (q : ℕ) (_hq : q.isPowerOfTwo),
         ∀ (G : SimpleGraph (Fin (q^2 + q + 1))) [DecidableRel G.Adj],
           (extremalNumber (q^2 + q + 1) (cycleGraph 4) < G.edgeFinset.card) →
           (c * Real.sqrt ((q^2 + q + 1) : ℝ) ≤ ({ H' : G.Subgraph | Nonempty (H'.coe ≃g cycleGraph 4) }.ncard : ℝ)) := by

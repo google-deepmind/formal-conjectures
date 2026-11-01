@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Scholz conjecture on addition chains
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [OEIS A003313](https://oeis.org/A003313)
 -/
 
+@[expose] public section
+
 namespace ScholzConjecture
 
 local notation "ℓ(" n ")" => additionChainLength n
@@ -37,9 +40,9 @@ The Scholz conjecture, also known as the Scholz-Brauer conjecture, asserts that
 for every positive integer $n$, the addition-chain length of $2^n - 1$ is at most
 $n - 1 + \ell(n)$.
 -/
-@[category research open, AMS 11 68]
+@[category research open, question, AMS 11 68]
 theorem scholz_conjecture :
-    answer(sorry) ↔ ∀ (n : ℕ), 0 < n → ℓ(2 ^ n - 1) ≤ n - 1 + ℓ(n) := by
+    ∀ (n : ℕ), 0 < n → ℓ(2 ^ n - 1) ≤ n - 1 + ℓ(n) := by
   sorry
 
 -- TODO(eyang07): add solved variants. See Wikipedia reference.

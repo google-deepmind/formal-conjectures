@@ -203,6 +203,27 @@ theorem hasDensity_zero_of_finite {S : Set ℕ} (h : S.Finite) : S.HasDensity 0 
     (tendsto_const_div_atTop_nhds_zero_nat _)
     (fun _ => div_nonneg (cast_nonneg _) (cast_nonneg _)) this
 
+/-- A finite set of natural numbers has density `0` relative to any infinite set `A` of natural
+numbers, because the number of elements of `A` below `b` tends to infinity. -/
+lemma hasDensity_zero_of_finite_of_infinite {T A : Set ℕ} (hT : T.Finite) (hA : A.Infinite) :
+    T.HasDensity 0 A := by
+  have hden : Filter.Tendsto (fun b : ℕ => ((A ∩ Set.Iio b).ncard : ℝ)) Filter.atTop
+      Filter.atTop := by
+    refine tendsto_natCast_atTop_atTop.comp (Filter.tendsto_atTop_atTop_of_monotone
+      (fun m n hmn => Set.ncard_le_ncard (Set.inter_subset_inter_right _
+        (Set.Iio_subset_Iio hmn)) ((Set.finite_Iio n).inter_of_right A)) fun N => ?_)
+    obtain ⟨t, htA, htc⟩ := hA.exists_subset_card_eq N
+    refine ⟨t.sup id + 1, ?_⟩
+    have hsub : (t : Set ℕ) ⊆ A ∩ Set.Iio (t.sup id + 1) := fun x hx =>
+      ⟨htA hx, Nat.lt_succ_of_le (Finset.le_sup (f := id) hx)⟩
+    simpa [htc] using Set.ncard_le_ncard hsub ((Set.finite_Iio _).inter_of_right A)
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds
+    (hden.const_div_atTop (T.ncard : ℝ)) (fun b => ?_) (fun b => ?_)
+  · exact div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)
+  · refine div_le_div_of_nonneg_right ?_ (Nat.cast_nonneg _)
+    refine Nat.cast_le.2 ?_
+    exact Set.ncard_le_ncard (fun x hx => hx.1.1) hT
+
 /-- A set of positive natural density is infinite. -/
 theorem infinite_of_hasDensity_pos {S : Set ℕ} {α : ℝ} (h : S.HasDensity α) (hα : α ≠ 0) :
     S.Infinite :=
