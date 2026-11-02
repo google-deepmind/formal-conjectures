@@ -25,21 +25,35 @@ public import FormalConjecturesUtil
 - [MathWorld: Flint Hills Series](https://mathworld.wolfram.com/FlintHillsSeries.html)
 - [Alekseyev, On the Flint Hills series](https://doi.org/10.48550/arXiv.1104.5100)
 - [MathWorld: Cookson Hills Series](https://mathworld.wolfram.com/CooksonHillsSeries.html)
+- [OAI26] OpenAI, *The irrationality exponent of $\pi$ is 2*. OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/paper.pdf
 -/
 
 @[expose] public section
 
 namespace FlintCooksonHills
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The Flint Hills series summing $csc(n)^2 / n^3$ from $n=1$ to $\infty$ converges.
 (Note that we 0-index the series below.)
+
+Alekseyev showed that the series converges if the irrationality measure of $\pi$ is less than
+$5/2$. OpenAI [OAI26] proved that this measure equals $2$, and proved convergence in Lean.
 -/
-@[category research open, question, AMS 40]
+@[category research solved, question, AMS 40, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PiExponent/Main.lean#L29"]
 theorem flint_hills_series_converges :
     Summable (fun n : ℕ =>
       1 / ((((n + 1) : ℝ)^3) * (Real.sin (n + 1)^2))) := by
   sorry
+
+/-- The linked statement, with the index cast from `ℕ`, gives `flint_hills_series_converges`. -/
+@[category test, AMS 40]
+theorem flint_hills_series_converges_of_natCast
+    (h : Summable (fun n : ℕ => 1 / (((n + 1 : ℕ) : ℝ) ^ 3 * Real.sin (n + 1 : ℕ) ^ 2))) :
+    type_of% flint_hills_series_converges := by
+  simpa using h
 
 /--
 The Cookson Hills series summing $sec(n)^2 / n^3$ from $n=1$ to $\infty$ converges.
