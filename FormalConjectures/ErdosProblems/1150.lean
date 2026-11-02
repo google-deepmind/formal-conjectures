@@ -51,15 +51,13 @@ theorem erdos_1150 :
         ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ > (1 + c) * Real.sqrt n := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The form of `erdos_1150` proved in [OAI26a]: for every $\eta > 0$ and every large $N$, there are
 signs $\varepsilon_0, \ldots, \varepsilon_{N-1} \in \{-1, 1\}$ with
 $\lvert \sum_{k<N} \varepsilon_k z^k\rvert \le (1 + \eta)\sqrt{N}$ for all $\lvert z\rvert = 1$.
 Here $N$ is the number of coefficients, so the polynomial has degree $N - 1$.
 -/
-@[category research solved, AMS 12 30, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/Littlewood/Main.lean#L187"]
+@[category research solved, AMS 12 30]
 theorem erdos_1150.variants.signs :
     ∀ η : ℝ, 0 < η → ∃ N₀ : ℕ, 1 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
       ∃ ε : Fin N → ℝ, (∀ k, ε k = -1 ∨ ε k = 1) ∧

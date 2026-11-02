@@ -49,14 +49,12 @@ theorem erdos_952 :
       ∀ n, Prime (x n) ∧ (x (n + 1) - x n).norm < C := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The form of `erdos_952` proved in [OAI26a]: for every $D$, there is no injective sequence of
 Gaussian primes $z_0,z_1,\ldots$ with $\lvert z_{t+1}-z_t\rvert \le D$ in $\mathbb{C}$.
 This is the first conjunct of the linked theorem.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/GaussianMoat/Main.lean#L102"]
+@[category research solved, AMS 11]
 theorem erdos_952.variants.dist :
     ∀ (D : ℝ) (z : ℕ → GaussianInt),
       (∀ t, Irreducible (z t)) → Function.Injective z →
