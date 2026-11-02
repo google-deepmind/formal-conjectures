@@ -91,6 +91,7 @@ theorem conjecture2 :
     ¬ ∀ n : ℕ, (a n < 0 ↔ (1 < n ∧ n < 58) ∨ 2177 < n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture, (iii): $|a(n)|^{1/n} = o(n^2)$ as $n$ tends to infinity.
 - _Zhi-Wei Sun_, Mar 20 2013

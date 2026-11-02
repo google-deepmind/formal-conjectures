@@ -83,9 +83,9 @@ theorem conjecture1 (n : ℕ) (hn : 599 < n) : 7 < a n := by
 "By Lagrange's Theorem every number can be written as a sum of four squares. Can the same be
 said of the set of $\{a^2 \mid a \text{ is any integer not equal to } 7\}$?"
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture2 :
-    answer(sorry) ↔ ∀ n : ℕ, ∃ a b c d : ℕ,
+    ∀ n : ℕ, ∃ a b c d : ℕ,
       a ≠ 7 ∧ b ≠ 7 ∧ c ≠ 7 ∧ d ≠ 7 ∧ a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n := by
   sorry
 

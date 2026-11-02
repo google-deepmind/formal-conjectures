@@ -56,9 +56,8 @@ theorem a_4 : a 4 = 1061522231810040101 := by rfl
 /--
 Similarly to Sylvester's sequence (A000058), it is unknown if all terms are squarefree.
 -/
-@[category research open, AMS 11]
-theorem conjecture :
-    answer(sorry) ↔ ∀ n : ℕ, Squarefree (a n) := by
+@[category research open, question, AMS 11]
+theorem conjecture : ∀ n : ℕ, Squarefree (a n) := by
   sorry
 
 end OeisA231830

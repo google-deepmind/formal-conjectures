@@ -71,8 +71,8 @@ theorem a_3 : a 3 = 216 := by
 /--
 Is $a(n) \ne 0$ for any $n > 3$?
 -/
-@[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ ∃ n > 3, a n ≠ 0 := by
+@[category research open, question, AMS 11]
+theorem conjecture : ∃ n > 3, a n ≠ 0 := by
   sorry
 
 end OeisA230718

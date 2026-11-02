@@ -73,11 +73,10 @@ $x = p\#7/p\#4 = 2431$. For $n=10$, $x = p\#6/p\#4 = 143$ although $121 = 11^2$ 
 where $a(x)=10$ (see formula section). For $n=8$, $x = p\#12/p\#4, p\#13/p\#4, p\#14/p\#4,
 p\#15/p\#4, p\#16/p\#4$, etc. But is $p\#12/p\#4$ the least such $x$?"
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔
-      IsLeast {x : ℕ | 2 ≤ x ∧ a x = 8}
-        (primorial 12 / primorial (numPrimesLt 8)) := by
+    IsLeast {x : ℕ | 2 ≤ x ∧ a x = 8}
+      (primorial 12 / primorial (numPrimesLt 8)) := by
   sorry
 
 end OeisA251758

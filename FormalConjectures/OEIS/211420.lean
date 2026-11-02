@@ -57,6 +57,7 @@ theorem a_3 : a 3 = 29745716 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 15628090140 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "It appears that $35 \cdot a(n)/(n + 1)$, $3 \cdot a(n)/(2n + 1)$ and $5 \cdot a(n)/(3n + 1)$ are
 integers for all $n$."
@@ -72,6 +73,7 @@ theorem conjecture1 (n : ℕ) :
     (n + 1) ∣ 35 * a n ∧ (2 * n + 1) ∣ 3 * a n ∧ (3 * n + 1) ∣ 5 * a n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "More generally, we conjecture that there are constants $C(k, r) > 0$, $k = 1, 2$ or $3$, $r \ge 1$,
 such that $a(n) \cdot C(k, r)/((kn + 1)(kn + 2)\cdots(kn + r))$ is an integer for all $n$."
@@ -87,6 +89,7 @@ theorem conjecture2 (k r : ℕ) (hk : k = 1 ∨ k = 2 ∨ k = 3) (hr : 1 ≤ r) 
     ∃ C : ℕ, 0 < C ∧ ∀ n : ℕ, (k * n + 1).ascFactorial r ∣ C * a n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "It also appears that $a(n)$ is divisible by $8n - 1$ for all $n$."
 - _Peter Bala_, Aug 26 2025
@@ -100,6 +103,7 @@ theorem conjecture3 (n : ℕ) :
     ((8 * n : ℤ) - 1) ∣ (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "More generally, we conjecture that there are constants $K(r) > 0$, $r \ge 0$, such that
 $a(n) \cdot K(r)/((8n - 1)(8n - 3)\cdots(8n - (2r+1)))$ is an integer for all $n$."
