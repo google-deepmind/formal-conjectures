@@ -101,14 +101,12 @@ theorem green_42 :
     CohnElkiesOptimal 2 (Real.sqrt 3 / 6) := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The form of `green_42` proved in [OAI26a]: there is a radial Schwartz function $f$ on
 $\mathbb{R}^2$ with $\hat f(0) = 1$, $f(0) = 2/\sqrt{3}$, $\hat f$ real and nonnegative, and
 $f(x) \le 0$ for $\lVert x\rVert \ge 1$. This certificate is normalised to minimum distance $1$.
 -/
-@[category research solved, AMS 51 52, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/PlanarPacking/Main.lean#L32"]
+@[category research solved, AMS 51 52]
 theorem green_42.variants.sharp_certificate :
     ∃ f : SchwartzMap (ℝ^2) ℝ, (∀ x y : ℝ^2, ‖x‖ = ‖y‖ → f x = f y) ∧
       𝓕 (fun x ↦ (f x : ℂ)) 0 = 1 ∧ f 0 = 2 / Real.sqrt 3 ∧
