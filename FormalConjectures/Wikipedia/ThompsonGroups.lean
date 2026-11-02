@@ -126,7 +126,6 @@ structure InvariantMean (G : Type uG) [Group G] where
   left_invariant : ∀ (h : G) (f : BoundedReal G),
     toLinearMap (leftPull h f) = toLinearMap f
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **Thompson's group $F$ is not amenable.** There is a group structure on `F` whose
 multiplication is composition, and the resulting group has no left-invariant mean.
@@ -134,10 +133,9 @@ multiplication is composition, and the resulting group has no left-invariant mea
 The group structure is unique, since an element of `F` is determined by its underlying function.
 
 Whether $F$ is amenable was a long-standing open question. An internal OpenAI model proved that
-it is not in September 2026 [OAI26]; see the linked Lean proof.
+it is not in September 2026 [OAI26]; see OpenAI's Lean proof.
 -/
-@[category research solved, AMS 20 43, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/GroupTheory/Thompson/Main.lean#L69"]
+@[category research solved, AMS 20 43]
 theorem thompson_F_nonamenable :
     ∃ group : Group F, letI := group;
       (∀ (h g : F) (x : UnitInterval),
