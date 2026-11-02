@@ -229,13 +229,11 @@ lemma W_eq_monoAPNumber {r k : ℕ} (hk : 2 ≤ k) : W r k = monoAPNumber r k :=
 
 end Quantitative
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The bound of [OAI26], stated with the definitions of the linked Lean proof: for all large `k`
 and all `r ≥ 2`, $W(r, k) > k^{k \lfloor \log_2 r \rfloor / 100000}$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/ProgressionColoring/Main.lean#L12"]
+@[category research solved, AMS 11]
 theorem erdos_138.variants.uniform_lower_bound :
     ∃ K : ℕ, ∀ k ≥ K, ∀ r ≥ 2,
       (k : ℝ) ^ ((1 / 100000 : ℝ) * k * (Nat.log 2 r : ℝ)) < (Quantitative.W r k : ℝ) := by
