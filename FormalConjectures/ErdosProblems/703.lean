@@ -52,6 +52,7 @@ noncomputable def T (n r : ℕ) : ℕ :=
   sSup {k | ∃ 𝓕 : Finset (Finset (Fin n)),
     (∀ A ∈ 𝓕, ∀ B ∈ 𝓕, (A ∩ B).card ≠ r) ∧ 𝓕.card = k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $r\geq 1$ and define $T(n,r)$ to be maximal such that there exists a family $\mathcal{F}$ of
 subsets of $\{1,\ldots,n\}$ of size $T(n,r)$ such that $\lvert A\cap B\rvert\neq r$ for all

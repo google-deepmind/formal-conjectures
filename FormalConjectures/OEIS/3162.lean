@@ -84,6 +84,7 @@ Lean formalization by Wentao Li, with AI assistance; see [Li26].
 theorem a_is_integer (n : ℕ) : (a n).den = 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: Let $b(n) = a(2n-1)$. Then the supercongruence
 $b(np^k) \equiv b(np^{k-1}) \pmod{p^{3k}}$ holds for positive integers $n$ and $k$

@@ -43,6 +43,7 @@ open SimpleGraph
 
 namespace Erdos548
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n\geq k+1$. Every graph on $n$ vertices with at least $\frac{k-1}{2}n+1$ edges contains every tree on $k+1$ vertices.
 -/

@@ -50,6 +50,7 @@ open Filter SimpleGraph
 
 namespace Erdos571
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Show that for any rational $\alpha \in [1,2)$ there exists a bipartite graph $G$ such that $$\mathrm{ex}(n;G)\asymp n^{\alpha}.$$
 

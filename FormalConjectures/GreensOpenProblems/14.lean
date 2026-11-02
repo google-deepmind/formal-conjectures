@@ -155,16 +155,19 @@ theorem green_14_variant_2r2 :
   sorry
 
 -- Known exact values for `W(3,r)` from [AKS14].
+set_option linter.style.formal_proof_palomar false in
 /-- $W(3, 3) = 9$ from [AKS14]. -/
 @[category research solved, AMS 5 11, formal_proof using formal_conjectures at
   "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L289"]
 theorem W_3_3 : W 3 3 = 9 := by sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- $W(3, 4) = 18$ from [AKS14]. -/
 @[category research solved, AMS 5 11, formal_proof using formal_conjectures at
   "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L301"]
 theorem W_3_4 : W 3 4 = 18 := by sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- $W(3, 5) = 22$ from [AKS14]. -/
 @[category research solved, AMS 5 11, formal_proof using formal_conjectures at
   "https://github.com/Konamiu/formal-conjectures/blob/d6a68af97f6ca7856d892569d88ab1ecc8e927bf/FormalConjectures/GreensOpenProblems/14.lean#L313"]
@@ -228,6 +231,7 @@ theorem W_3_19 : W 3 19 = 349 := by sorry
 
 -- Lower bounds for W(3,r) from [AKS14, Table 2], established by the good partitions
 -- (certificates) in [AKS14, Appendix A]; [AKS14] conjectures these bounds to be exact.
+set_option linter.style.formal_proof_palomar false in
 /-- $W(3, 20) \ge 389$ from [AKS14, Table 2], proved by an explicit good partition.
 A kernel-checked Lean proof from the certificate was given by Dominic Dabish. -/
 @[category research solved, question, AMS 5 11, formal_proof using lean4 at

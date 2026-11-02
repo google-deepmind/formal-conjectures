@@ -50,6 +50,7 @@ Prove that $f(n) = 2^{n-2} + 1$.
 theorem erdos_107 : ∀ n ≥ 3, f n = 2^(n - 2) + 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every $n ≥ 3$, there exists $N$ such that any $N$ points, no three on a line,
 contain a convex $n$-gon. -/
 @[category research solved, AMS 52, formal_proof using lean4 at

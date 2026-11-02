@@ -162,6 +162,7 @@ theorem erdos_872.parts.i :
     ∃ ε > (0 : ℝ), ∀ᶠ n in atTop, (L n : ℝ) ≥ ε * n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Erdős Problem 872, part (ii) (strong form): for every $\epsilon > 0$, the game length is at
 least $(1-\epsilon) \cdot n / 2$ for all sufficiently large $n$.
 
@@ -189,6 +190,7 @@ theorem erdos_872.trivial_upper_bound (n : ℕ) (hn : 2 ≤ n) :
         simp only [startPos, Finset.card_empty, Nat.card_Icc]
         omega
 
+set_option linter.style.formal_proof_palomar false in
 /-- Forum-related variant: how small can a maximal primitive subset of $\{2, \dots, n\}$ be?
 The set of primes in $\{2, \dots, n\}$ is a maximal primitive subset of size $\pi(n)$, and the forum
 thread asks whether this is the smallest possible for all $n \geq 2$. Equivalently: must every

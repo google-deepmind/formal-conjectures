@@ -80,6 +80,7 @@ problem is independent of ZFC, with the only undecidable case being
 $\mathfrak{m}^+ = \mathfrak{c}$.
 -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The 'easy' case of Erdős Problem 1119: if moreover $\mathfrak{m}^+ < \mathfrak{c}$, then
 any family of entire functions taking at most $\mathfrak{m}$ distinct values at each

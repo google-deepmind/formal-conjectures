@@ -53,6 +53,7 @@ independence number. A vertex $v$ is in the $\alpha$-core if $\alpha(G - v) < \a
 noncomputable def alphaCore (G : SimpleGraph α) : Finset α :=
   Finset.univ.filter (fun v => indepNumDeleteVertex G v < G.indepNum)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 101](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 
