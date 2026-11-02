@@ -49,11 +49,9 @@ theorem erdos_431 :
       (A + B : Set ℕ) =ᶠ[Filter.cofinite] {n | n.Prime} := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /-- The statement of the linked Lean proof, with its definitions unfolded: for infinite `A` and
 `B`, `A + B` does not agree with the primes from some point on. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Ostmann/Complete.lean#L16"]
+@[category research solved, AMS 11]
 theorem erdos_431.variants.eventually_prime :
     ∀ A B : Set ℕ, A.Infinite → B.Infinite →
       ¬ ∃ N : ℕ, ∀ n, N ≤ n → (n ∈ A + B ↔ n.Prime) := by
