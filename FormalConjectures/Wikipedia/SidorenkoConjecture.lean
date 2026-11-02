@@ -65,7 +65,8 @@ $t(H, G) \ge t(K_2, G)^{e(H)}$, where $K_2$ denotes the single-edge graph on 2 v
 
 This is false. It was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the
 linked Lean proof, which gives a bipartite $H$ with $35$ vertices and $66$ edges and a finite
-host $G$ with $t(H, G) < t(K_2, G)^{66}$.
+host $G$ with $t(H, G) < t(K_2, G)^{66}$. The linked statement, with its own definitions of the
+densities, is `sidorenko_conjecture.variants.explicit`; see `sidorenko_conjecture_of_explicit`.
 -/
 @[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sidorenko/RandomHost.lean#L319"]
@@ -1026,5 +1027,120 @@ theorem sidorenko_conjecture.variants.non_bipartite_necessary :
     simp
   rw [hLHS, hK3edges, hRHSbase]
   norm_num
+
+/- ## The counterexample of [OAI26a]
+
+The definitions in `Counterexample` are copied from the Lean statement linked at
+`sidorenko_conjecture`. It counts homomorphisms as edge-preserving maps and uses `Nat.card`. -/
+
+namespace Counterexample
+
+/-- The 22 triples on 13 points of [OAI26a]. -/
+def faces : Fin 22 → Finset (Fin 13) := ![
+  {0,1,3}, {0,1,9}, {0,2,3}, {0,2,9}, {1,3,10}, {1,7,10},
+  {1,7,12}, {1,9,12}, {2,3,4}, {2,4,9}, {3,4,11}, {3,10,11},
+  {4,8,9}, {4,8,11}, {5,6,7}, {5,6,11}, {5,7,10}, {5,10,11},
+  {6,7,12}, {6,8,11}, {6,8,12}, {8,9,12}]
+
+/-- The vertices of the pattern graph: the 13 points and the 22 triples. -/
+abbrev PatternVertex := Fin 13 ⊕ Fin 22
+
+/-- A point is adjacent to the triples that contain it. -/
+def incidence : PatternVertex → PatternVertex → Prop
+  | .inl point, .inr face => point ∈ faces face
+  | .inr face, .inl point => point ∈ faces face
+  | _, _ => False
+
+/-- The pattern graph of [OAI26a]: the point-triple incidence graph. -/
+def H : SimpleGraph PatternVertex where
+  Adj := incidence
+  symm.symm := by intro left right; cases left <;> cases right <;> simp [incidence]
+  loopless.irrefl := by intro vertex; cases vertex <;> simp [incidence]
+
+/-- The number of edge-preserving maps `V → W`, as defined in [OAI26a]. -/
+noncomputable def homCount {V W : Type*} (F : SimpleGraph V) (G : SimpleGraph W) : ℕ :=
+  Nat.card {hom : V → W // ∀ left right, F.Adj left right → G.Adj (hom left) (hom right)}
+
+/-- The homomorphism density, as defined in [OAI26a]. -/
+noncomputable def homDensity {V W : Type*} (F : SimpleGraph V) (G : SimpleGraph W) : ℝ :=
+  (homCount F G : ℝ) / (Nat.card W : ℝ) ^ Nat.card V
+
+/-- The edge density, as defined in [OAI26a]. -/
+noncomputable def edgeDensity {W : Type*} (G : SimpleGraph W) : ℝ :=
+  2 * (Nat.card G.edgeSet : ℝ) / (Nat.card W : ℝ) ^ 2
+
+instance : DecidableRel H.Adj
+  | .inl point, .inr face => inferInstanceAs (Decidable (point ∈ faces face))
+  | .inr face, .inl point => inferInstanceAs (Decidable (point ∈ faces face))
+  | .inl _, .inl _ => isFalse fun h => (h : False)
+  | .inr _, .inr _ => isFalse fun h => (h : False)
+
+/-- The pattern graph is bipartite: points on one side, triples on the other. -/
+@[category API, AMS 5]
+lemma isBipartite_H : H.IsBipartite :=
+  ⟨Coloring.mk (Sum.elim (fun _ => 0) (fun _ => 1)) fun {a b} h => by
+    cases a <;> cases b <;> first | exact (h : False).elim | simp⟩
+
+/-- The pattern graph has 66 edges: each of the 22 triples has 3 points. -/
+@[category API, AMS 5]
+lemma card_edgeFinset_H : H.edgeFinset.card = 66 := by
+  have h := H.sum_degrees_eq_twice_card_edges
+  have hsum : ∑ v, H.degree v = 132 := by decide
+  omega
+
+/-- The homomorphism density of [OAI26a] is `homDensity`. -/
+@[category API, AMS 5]
+lemma homDensity_eq_homDensity {V W : Type*} [Fintype V] [Fintype W] [DecidableEq V]
+    [DecidableEq W] (F : SimpleGraph V) (G : SimpleGraph W) [DecidableRel F.Adj]
+    [DecidableRel G.Adj] : homDensity F G = SimpleGraph.homDensity F G := by
+  let e : {hom : V → W // ∀ left right, F.Adj left right → G.Adj (hom left) (hom right)} ≃
+      (F →g G) :=
+    { toFun := fun f => ⟨f.1, fun h => f.2 _ _ h⟩
+      invFun := fun f => ⟨f, fun _ _ h => f.map_rel h⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  rw [homDensity, homCount, SimpleGraph.homDensity, SimpleGraph.homCount, Nat.card_congr e,
+    Nat.card_eq_fintype_card, Nat.card_eq_fintype_card, Nat.card_eq_fintype_card]
+
+/-- The edge density of [OAI26a] is the homomorphism density of `K_2`. -/
+@[category API, AMS 5]
+lemma edgeDensity_eq_homDensity {W : Type*} [Fintype W] [DecidableEq W] (G : SimpleGraph W)
+    [DecidableRel G.Adj] : edgeDensity G = SimpleGraph.homDensity (completeGraph (Fin 2)) G := by
+  rw [SimpleGraph.homDensity, homCount_completeGraph_fin_two_eq_two_mul_card_edgeFinset,
+    edgeDensity, edgeFinset_card, Nat.card_eq_fintype_card, Nat.card_eq_fintype_card,
+    Fintype.card_fin]
+  push_cast
+  rfl
+
+end Counterexample
+
+set_option linter.style.formal_proof_palomar false in
+/--
+The counterexample of [OAI26a], stated with the definitions of the linked Lean proof: a finite
+host graph with an edge in which the pattern graph `Counterexample.H` (35 vertices, 66 edges)
+has density below the edge density to the power 66.
+-/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sidorenko/RandomHost.lean#L319"]
+theorem sidorenko_conjecture.variants.explicit :
+    ∃ size : ℕ, 0 < size ∧ ∃ host : SimpleGraph (Fin size),
+      (∃ left right, host.Adj left right) ∧
+      Counterexample.homDensity Counterexample.H host <
+        (Counterexample.edgeDensity host) ^ 66 := by
+  sorry
+
+/-- The counterexample of [OAI26a] refutes `sidorenko_conjecture`: its pattern graph is
+bipartite with 66 edges, and its densities agree with `homDensity`. -/
+@[category test, AMS 5]
+theorem sidorenko_conjecture_of_explicit (h : type_of% sidorenko_conjecture.variants.explicit) :
+    type_of% sidorenko_conjecture := by
+  classical
+  obtain ⟨n, hn, G, -, hlt⟩ := h
+  have : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+  intro hS
+  have key := hS Counterexample.H G Counterexample.isBipartite_H
+  rw [Counterexample.card_edgeFinset_H] at key
+  rw [Counterexample.homDensity_eq_homDensity, Counterexample.edgeDensity_eq_homDensity] at hlt
+  exact absurd key (not_le.mpr hlt)
 
 end SidorenkoConjecture
