@@ -539,12 +539,68 @@ set_option linter.style.formal_proof_palomar false in
 /-- The upper bound $\mu(6) \le 5$: every family of mutually unbiased bases in $\mathbb{C}^6$
 has at most five members. This was proved by an internal OpenAI model in September 2026
 [OAI26a]; see the linked Lean proof. That proof represents each basis as an `OrthonormalBasis`
-of `EuclideanSpace ℂ (Fin 6)`, which corresponds to the columns of a unitary matrix here. -/
+of `EuclideanSpace ℂ (Fin 6)`, which corresponds to the columns of a unitary matrix here; see
+`mutuallyUnbiasedBases_dim6_upper_five_of_orthonormalBasis`. -/
 @[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/MutuallyUnbiased/Main.lean#L22"]
 theorem mutuallyUnbiasedBases_dim6_bounds.variants.upper_five :
     ∀ m : ℕ, HasMUBs 6 m → m ≤ 5 := by
   sorry
+
+set_option linter.style.formal_proof_palomar false in
+/-- The bound $\mu(6) \le 5$ in the form proved in [OAI26a]: a family of orthonormal bases of
+`EuclideanSpace ℂ (Fin 6)`, in which any two vectors from different bases have an inner product
+of squared norm $1 / 6$, has at most five members. This is the second part of the linked
+theorem, with OpenAI's `Attainable` and `IsMUBFamily` unfolded. -/
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/MutuallyUnbiased/Main.lean#L22"]
+theorem mutuallyUnbiasedBases_dim6_bounds.variants.upper_five_orthonormalBasis :
+    ∀ n : ℕ, (∃ B : Fin n → OrthonormalBasis (Fin 6) ℂ (EuclideanSpace ℂ (Fin 6)),
+      ∀ r s, r ≠ s → ∀ i j, Complex.normSq (inner ℂ (B r i) (B s j)) = (1 : ℝ) / 6) →
+      n ≤ 5 := by
+  sorry
+
+/-- The `i`-th column of a unitary matrix, as a vector of `EuclideanSpace ℂ (Fin d)`. -/
+def unitaryCol {d : ℕ} (U : UMat d) (i : Fin d) : EuclideanSpace ℂ (Fin d) :=
+  WithLp.toLp 2 fun k => (U : Matrix (Fin d) (Fin d) ℂ) k i
+
+/-- The inner products of the columns of two unitary matrices are the entries of their
+relative unitary. -/
+@[category API, AMS 5 15 81 94]
+lemma inner_unitaryCol {d : ℕ} (U V : UMat d) (i j : Fin d) :
+    inner ℂ (unitaryCol U i) (unitaryCol V j) = relativeUnitary U V i j := by
+  simp [unitaryCol, relativeUnitary, PiLp.inner_apply, Matrix.mul_apply, mul_comm]
+
+/-- The columns of a unitary matrix are orthonormal. -/
+@[category API, AMS 5 15 81 94]
+lemma orthonormal_unitaryCol {d : ℕ} (U : UMat d) : Orthonormal ℂ (unitaryCol U) := by
+  rw [orthonormal_iff_ite]
+  intro i j
+  rw [inner_unitaryCol, relativeUnitary, Matrix.mem_unitaryGroup_iff'.mp U.2, Matrix.one_apply]
+
+/-- The columns of a unitary matrix, as an orthonormal basis of `EuclideanSpace ℂ (Fin d)`. -/
+def unitaryOrthonormalBasis {d : ℕ} (U : UMat d) :
+    OrthonormalBasis (Fin d) ℂ (EuclideanSpace ℂ (Fin d)) :=
+  (basisOfLinearIndependentOfCardEqFinrank' (unitaryCol U)
+    (orthonormal_unitaryCol U).linearIndependent (by simp)).toOrthonormalBasis
+    (by simpa using orthonormal_unitaryCol U)
+
+@[category API, AMS 5 15 81 94]
+lemma coe_unitaryOrthonormalBasis {d : ℕ} (U : UMat d) :
+    ⇑(unitaryOrthonormalBasis U) = unitaryCol U := by
+  simp [unitaryOrthonormalBasis]
+
+/-- The form of the bound proved in [OAI26a] implies
+`mutuallyUnbiasedBases_dim6_bounds.variants.upper_five`. -/
+@[category test, AMS 5 15 81 94]
+theorem mutuallyUnbiasedBases_dim6_upper_five_of_orthonormalBasis
+    (h : type_of% mutuallyUnbiasedBases_dim6_bounds.variants.upper_five_orthonormalBasis) :
+    type_of% mutuallyUnbiasedBases_dim6_bounds.variants.upper_five := by
+  rintro m ⟨B, hB⟩
+  refine h m ⟨fun r => unitaryOrthonormalBasis (B r), fun r s hrs i j => ?_⟩
+  simp only [coe_unitaryOrthonormalBasis, inner_unitaryCol, Complex.normSq_eq_norm_sq]
+  rw [hB hrs i j]
+  norm_num
 
 /- ## Open problems -/
 
