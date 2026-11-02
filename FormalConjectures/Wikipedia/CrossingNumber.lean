@@ -165,28 +165,24 @@ def hill (order : ℕ) : ℕ :=
 /-- `⌊r/2⌋ ⌊(r-1)/2⌋`, so that `Z(m, n) = axisPairs m * axisPairs n`. -/
 def axisPairs (r : ℕ) : ℕ := (r / 2) * ((r - 1) / 2)
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **Hill's conjecture** [HH63]: the crossing number of $K_n$ is $H(n)$ for $n \ge 3$.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see OpenAI's Lean
 proof.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/CompleteCrossing/Main.lean#L76"]
+@[category research solved, AMS 5]
 theorem hill_conjecture (n : ℕ) (hn : 3 ≤ n) :
     ordinaryCrossingNumber (Graph.complete n) = hill n := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **Zarankiewicz's conjecture** [Za54]: the crossing number of $K_{m,n}$ is $Z(m, n)$.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26b]; see the linked Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26b]; see OpenAI's Lean
 proof.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Crossing/Main.lean#L8"]
+@[category research solved, AMS 5]
 theorem zarankiewicz_conjecture (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
     ordinaryCrossingNumber (Graph.completeBipartite m n) = axisPairs m * axisPairs n := by
   sorry
