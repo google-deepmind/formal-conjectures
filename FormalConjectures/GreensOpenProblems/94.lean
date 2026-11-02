@@ -64,14 +64,12 @@ theorem green_94 :
    ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The statement of the linked Lean proof, with its definition of the dyadic points unfolded: for
 every `0 < η < 1` there is a compact `E ⊆ [0, 1]` of measure greater than `1 - η` such that
 every affine copy `x + s 2^{-n}`, `s ≠ 0`, of $\{2^{-n} : n \geq 1\}$ has a point outside `E`.
 -/
-@[category research solved, AMS 28, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/DyadicAvoidance/Main.lean#L103"]
+@[category research solved, AMS 28]
 theorem green_94.variants.dyadic_affine_avoidance :
     ∀ η : ℝ, 0 < η → η < 1 → ∃ E : Set ℝ,
       E ⊆ Set.Icc (0 : ℝ) 1 ∧ IsCompact E ∧
