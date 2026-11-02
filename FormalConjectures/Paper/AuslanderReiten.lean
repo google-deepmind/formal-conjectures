@@ -114,6 +114,44 @@ theorem auslander_reiten :
       Module.Projective Λ M := by
   sorry
 
+/-- The field $\mathbb{F}_2(q, H_1, H_2)$ over which [OAI26] builds its counterexample. -/
+abbrev counterexampleField : Type := FractionRing (MvPolynomial (Fin 3) (ZMod 2))
+
+set_option linter.style.formal_proof_palomar false in
+/--
+The counterexample of [OAI26]: a finite-dimensional algebra $\Lambda$ over
+$K = \mathbb{F}_2(q, H_1, H_2)$ and a finite-dimensional $\Lambda$-module $M$ that is not
+projective, with $\operatorname{Ext}^i_\Lambda(M, M) = 0$ and
+$\operatorname{Ext}^i_\Lambda(M, \Lambda) = 0$ for all $i > 0$.
+
+The linked theorem states more: $M$ also has a totally acyclic complete resolution, the
+quotient of $\Lambda$ by its Jacobson radical is $K^8$, and all of this survives every base
+change to a field extension of $K$.
+-/
+@[category research solved, AMS 13 16 18, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/AuslanderReiten/All.lean#L738"]
+theorem auslander_reiten.variants.explicit :
+    ∃ (Λ : Type) (_ : Ring Λ) (_ : Algebra counterexampleField Λ)
+      (M : Type) (_ : AddCommGroup M) (_ : Module Λ M) (_ : Module counterexampleField M)
+      (_ : IsScalarTower counterexampleField Λ M),
+      FiniteDimensional counterexampleField Λ ∧ FiniteDimensional counterexampleField M ∧
+      ¬ Module.Projective Λ M ∧
+      (∀ i : ℕ, 0 < i →
+        Subsingleton (Abelian.Ext (ModuleCat.of Λ M) (ModuleCat.of Λ M) i)) ∧
+      (∀ i : ℕ, 0 < i →
+        Subsingleton (Abelian.Ext (ModuleCat.of Λ M) (ModuleCat.of Λ Λ) i)) := by
+  sorry
+
+/-- The counterexample of [OAI26] refutes `auslander_reiten`: a finite-dimensional algebra over
+a field is an Artin algebra, and a module that is finite-dimensional over the field is finitely
+generated over the algebra. -/
+@[category test, AMS 13 16 18]
+theorem auslander_reiten_of_explicit (h : type_of% auslander_reiten.variants.explicit) :
+    type_of% auslander_reiten := by
+  obtain ⟨Λ, _, _, M, _, _, _, _, _, _, hproj, hMM, hMΛ⟩ := h
+  have : Module.Finite Λ M := Module.Finite.of_restrictScalars_finite counterexampleField Λ M
+  exact fun hAR => hproj (hAR Λ M counterexampleField hMΛ hMM)
+
 end ArtinAlgebra
 
 section Commutative
