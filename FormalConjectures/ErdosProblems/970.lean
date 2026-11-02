@@ -75,21 +75,17 @@ theorem erdos_970.variants.iterated_log :
       (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 / (Real.log (Real.log (3 * k))) ^ 2 := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /-- The statement of the linked Lean proof of `erdos_970`, with its definitions unfolded: the
 bound is given by some `m` with `IsJacobsthalBound k m`, not by `jacobsthalFunction k`. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/QuadraticBound.lean#L13"]
+@[category research solved, AMS 11]
 theorem erdos_970.variants.exists_bound :
     ∃ C : ℝ, 0 < C ∧ ∀ k : ℕ, 0 < k →
       ∃ m : ℕ, IsJacobsthalBound k m ∧ (m : ℝ) ≤ C * (k : ℝ) ^ 2 := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /-- The statement of the linked Lean proof of `erdos_970.variants.iterated_log`, with its
 definitions unfolded. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/IteratedLogBound.lean#L59"]
+@[category research solved, AMS 11]
 theorem erdos_970.variants.iterated_log_exists_bound :
     ∃ C : ℝ, 0 < C ∧ ∀ k : ℕ, 0 < k →
       ∃ m : ℕ, IsJacobsthalBound k m ∧
