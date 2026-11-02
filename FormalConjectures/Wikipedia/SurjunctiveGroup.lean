@@ -132,13 +132,11 @@ noncomputable def cellular {K G : Type} [Field K] [Group G]
     (d : MonoidAlgebra K G) (x : G → K) (g : G) : K :=
   d.coeff.sum fun u c => c * x (g * u)
 
-set_option linter.style.formal_proof_palomar false in
 /-- The statement of the linked Lean proof of [OAI26b]. Let $p$ be `sourcePrime`. Then $p$ is
 an odd prime, and there are a field $K$ with $p^4$ elements, a finitely generated group $G$
 with a non-trivial element of finite order, and $a, b \in K[G]$ with $ab = 1$ and
 $ba \neq 1$, such that `cellular b` is injective and not surjective. -/
-@[category research solved, AMS 16 20 37, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/OddKaplansky/Main.lean#L81"]
+@[category research solved, AMS 16 20 37]
 theorem counter_gottschalk_surjunctivity.variants.odd_kaplansky :
     sourcePrime.Prime ∧ Odd sourcePrime ∧
     ∃ (K : Type) (_ : Field K) (_ : Fintype K) (_ : CharP K sourcePrime),
