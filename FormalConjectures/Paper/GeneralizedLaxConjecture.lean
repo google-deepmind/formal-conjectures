@@ -73,15 +73,13 @@ def IsSpectrahedral {n : ℕ} (K : Set (Fin n → ℝ)) : Prop :=
   ∃ N : ℕ, 0 < N ∧ ∃ A : Fin n → Matrix (Fin N) (Fin N) ℝ, (∀ i, (A i).IsSymm) ∧
     K = {x | (∑ i, x i • A i).PosSemidef}
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **The generalized Lax conjecture, disproved.** Not every hyperbolicity cone is spectrahedral.
 
 OpenAI [OAI26] gave an explicit counterexample in 23 variables; see
-`generalized_lax_conjecture.variants.explicit` and the linked Lean proof.
+`generalized_lax_conjecture.variants.explicit` and OpenAI's Lean proof.
 -/
-@[category research solved, AMS 14 90, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/HyperbolicCones/Main.lean#L25"]
+@[category research solved, AMS 14 90]
 theorem generalized_lax_conjecture :
     ¬ ∀ (n : ℕ) (p : MvPolynomial (Fin n) ℝ) (e : Fin n → ℝ),
       IsHyperbolic p e → IsSpectrahedral (hyperbolicityCone p e) := by
@@ -224,14 +222,12 @@ theorem linePolynomial_rename (f : Coord ≃ Fin (Fintype.card Coord)) (x : Ambi
 end Explicit
 
 open Explicit in
-set_option linter.style.formal_proof_palomar false in
 /--
-The statement of the linked Lean proof [OAI26]: `p` is homogeneous of degree 20 on a space of
+The statement of OpenAI's Lean proof [OAI26]: `p` is homogeneous of degree 20 on a space of
 dimension 23, `p(e) = 1`, `p` is hyperbolic with respect to `e`, and its closed hyperbolicity
 cone is not `{x | L x ⪰ 0}` for any linear map `L` into `N × N` real symmetric matrices, `N ≥ 1`.
 -/
-@[category research solved, AMS 14 90, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/HyperbolicCones/Main.lean#L25"]
+@[category research solved, AMS 14 90]
 theorem generalized_lax_conjecture.variants.explicit :
     Module.finrank ℝ Ambient = 23 ∧
     polynomial.IsHomogeneous 20 ∧
