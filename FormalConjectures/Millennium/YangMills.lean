@@ -419,9 +419,14 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   /-- Canonical $\mathfrak{g}$-valued curvature component embedding identifying curvature generators with $\mathfrak{g} = \mathrm{Lie}(G)$ -/
   F_comp : Fin 4 → Fin 4 → Lie →ₗ[ℝ] LiePoly
   F_comp_antisymm : ∀ (μ ν : Fin 4) (X : Lie), F_comp μ ν X = - F_comp ν μ X
-  F_comp_bracket : ∀ (μ ν : Fin 4) (X Y : Lie), ⁅F_comp μ ν X, F_comp μ ν Y⁆ = F_comp μ ν ⁅X, Y⁆
   F_comp_gauge_equivariant : ∀ (g : G) (μ ν : Fin 4) (X : Lie),
     gauge_action g (F_comp μ ν X) = F_comp μ ν (adjoint_action g X)
+  F_comp_injective : ∀ (μ ν : Fin 4), μ ≠ ν → Function.Injective (F_comp μ ν)
+  F_comp_dim : ∀ (μ ν : Fin 4) (X : Lie), μ ≠ ν → X ≠ 0 → classicalDimLie (F_comp μ ν X) = 2
+
+  /-- Sub-additivity of classical scaling dimension under the Lie bracket on `LiePoly` -/
+  classicalDimLie_bracket_le : ∀ A B : LiePoly,
+    classicalDimLie ⁅A, B⁆ ≤ classicalDimLie A + classicalDimLie B
 
   /-- Classical Yang–Mills curvature two-form generators $F_{\mu\nu} \in \mathfrak{g}$ of dimension $2$ -/
   F : Fin 4 → Fin 4 → LiePoly
@@ -439,10 +444,19 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
     gauge_action g (covDeriv μ X) = covDeriv μ (gauge_action g X)
   covDeriv_lie_leibniz : ∀ (μ : Fin 4) (A B : LiePoly),
     covDeriv μ ⁅A, B⁆ = ⁅covDeriv μ A, B⁆ + ⁅A, covDeriv μ B⁆
+  bianchi_identity_comp : ∀ (l μ ν : Fin 4) (X : Lie),
+    covDeriv l (F_comp μ ν X) + covDeriv μ (F_comp ν l X) + covDeriv ν (F_comp l μ X) = 0
   bianchi_identity : ∀ (l μ ν : Fin 4),
     covDeriv l (F μ ν) + covDeriv μ (F ν l) + covDeriv ν (F l μ) = 0
   ricci_commutator : ∀ (μ ν : Fin 4) (A : LiePoly),
     covDeriv μ (covDeriv ν A) - covDeriv ν (covDeriv μ A) = ⁅F μ ν, A⁆
+
+  /-- `LiePoly` is generated as a differential Lie algebra over `ℂ` by the `Lie(G)` curvature components `F_comp` and `covDeriv` -/
+  LiePoly_generated : ∀ (S : Submodule ℂ LiePoly),
+    (∀ (μ ν : Fin 4) (X : Lie), F_comp μ ν X ∈ S) →
+    (∀ (μ : Fin 4) (A : LiePoly), A ∈ S → covDeriv μ A ∈ S) →
+    (∀ A B : LiePoly, A ∈ S → B ∈ S → ⁅A, B⁆ ∈ S) →
+    S = ⊤
 
   /-- Gauge-invariant trace pairing contracting two Lie-algebra-valued polynomials into `Poly` -/
   trace_pair : LiePoly → LiePoly → Poly
@@ -451,8 +465,22 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   trace_pair_symm : ∀ X Y : LiePoly, trace_pair X Y = trace_pair Y X
   trace_pair_gauge_invariant : ∀ (g : G) (X Y : LiePoly),
     trace_pair (gauge_action g X) (gauge_action g Y) = trace_pair X Y
+
+  /-- Exact identification of `F`, `F_comp`, and `trace_pair` with the Lie algebra `Lie(G)` and its inner product `lie_inner`
+      (Jaffe–Witten §4, p. 6): There exists a finite orthonormal basis `B` of `Lie` with respect to `lie_inner` such that
+      `F μ ν` is the sum of the basis curvature components `F_comp μ ν (B i)`, and the invariant trace pairing on `F_comp`
+      is strictly proportional to `lie_inner`. -/
+  F_and_trace_from_Lie : ∃ (d : ℕ) (B : Fin d → Lie),
+    0 < d ∧
+    (∀ i j : Fin d, lie_inner (B i) (B j) = if i = j then 1 else 0) ∧
+    (∀ X : Lie, X = ∑ i : Fin d, lie_inner X (B i) • B i) ∧
+    (∀ μ ν : Fin 4, F μ ν = ∑ i : Fin d, F_comp μ ν (B i)) ∧
+    (∀ (μ ν : Fin 4) (X Y : Lie),
+      (d : ℂ) • trace_pair (F_comp μ ν X) (F_comp μ ν Y) =
+      ((lie_inner X Y : ℝ) : ℂ) • trace_pair (F μ ν) (F μ ν))
+
   trace_pair_lie_inner_compat : ∀ (μ ν : Fin 4) (X Y : Lie),
-    lie_inner X Y = 0 → trace_pair (F_comp μ ν X) (F_comp μ ν Y) = 0
+    μ ≠ ν → (trace_pair (F_comp μ ν X) (F_comp μ ν Y) = 0 ↔ lie_inner X Y = 0)
   trace_pair_dim_le : ∀ X Y : LiePoly,
     classicalDim (trace_pair X Y) ≤ classicalDimLie X + classicalDimLie Y
   trace_pair_dim : ∀ X Y : LiePoly,
@@ -460,6 +488,13 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
     classicalDim (trace_pair X Y) = classicalDimLie X + classicalDimLie Y
   trace_pair_F_dim : ∀ μ ν : Fin 4, μ ≠ ν →
     classicalDim (trace_pair (F μ ν) (F μ ν)) = 4
+
+  /-- The invariant observable algebra `Poly` is generated as a `ℂ`-algebra by the gauge-invariant trace pairings `trace_pair` -/
+  Poly_generated_by_trace_pair : ∀ (S : Submodule ℂ Poly),
+    (1 ∈ S) →
+    (∀ X Y : LiePoly, trace_pair X Y ∈ S) →
+    (∀ P Q : Poly, P ∈ S → Q ∈ S → P * Q ∈ S) →
+    S = ⊤
 
   /-- Lorentz representation action of $\mathrm{SO}^+(1,3)$ (and Euclidean $\mathrm{SO}(4)$) on local polynomials -/
   transform : Matrix (Fin 4) (Fin 4) ℝ → Poly →ₗ[ℂ] Poly
@@ -968,28 +1003,47 @@ structure OsterwalderSchraderYangMills (G : Type*) [TopologicalSpace G] [Group G
     schwinger 0 ops x = 1
 
   /-- (OS0 / E0') Osterwalder–Schrader II Linear Growth & Distributional Regularity Condition
-      (OS II, pp. 282, 287):
-      There exist **uniform** constants $\alpha, \beta > 0$ and a **uniform** integer order $s \in \mathbb{N}$
-      (independent of degree $n$ and observable labels) such that across the entire hierarchy:
+      (OS II, §IV.1, Eq. (IV.3), p. 287):
+      For every finite generating family `gen : Fin k → ObservableLabel G Curv` of local curvature
+      observables and Wilson characters (or specified generating multiplet), there exist constants
+      $\alpha, \beta > 0$ and an integer order $s \in \mathbb{N}$ (depending on the family `gen`,
+      but uniform across all correlation orders $n \in \mathbb{N}$) such that across the entire
+      $n$-point hierarchy of observables drawn from `gen`:
       1. Every smeared $n$-point Schwinger distribution on non-coincident Schwartz test functions
-         is bounded by $\alpha (n!)^\beta \prod_{i=1}^n \|f_i\|_s$ (where $\|\cdot\|_s$ is the $s$-th Schwartz seminorm).
+         is bounded by $\alpha^n (n!)^\beta \prod_{i=1}^n \|f_i\|_s$ (where $\|\cdot\|_s$ is the $s$-th Schwartz seminorm).
       2. Every non-coincident $n$-point function separated by distance $r > 0$ satisfies polynomial growth
-         and short-distance singularity bounds of order at most $s \cdot n$ with factorial prefactor $\alpha (n!)^\beta$. -/
+         and short-distance singularity bounds of order at most $s \cdot n$ with factorial prefactor $\alpha^n (n!)^\beta$.
+
+      Justification for OS II Reconstruction:
+      In Osterwalder & Schrader (OS II, §IV.1, pp. 282, 287), condition (E0') is formulated for a
+      specified field or finite field multiplet $\Phi = (\Phi_1, \dots, \Phi_k)$ with uniform constants
+      $\alpha, \beta, s$ bounding all correlations formed from that multiplet. In gauge theory, the local
+      gauge-invariant observable algebra `Poly` is infinite-dimensional and contains composite operators
+      of arbitrarily high scaling dimension and unnormalized multiples. Formulating (E0') for every
+      finite generating family `gen` ensures that:
+      (i) Rescaling any observable by $c \in \mathbb{C}$ replaces $\alpha$ by $|c| \alpha$, maintaining
+          exact multilinear scaling homogeneity $\alpha^n$ without contradiction.
+      (ii) Higher-degree composite observables are assigned appropriate regularity orders $s$ and growth
+          rates $(\alpha, \beta)$ reflecting their scaling dimensions.
+      (iii) By OS II Theorem $E' \to R'$ (p. 287), every finite family of local observables reconstructs
+          to operator-valued tempered distributions on $\mathcal{H}$ with dense invariant domain $\mathcal{D}$,
+          yielding the complete Wightman quantum field theory. -/
   os0_temperedness :
-    ∃ (α β : ℝ) (s : ℕ), 0 < α ∧ 0 < β ∧
-      (∀ (n : ℕ) (ops : Fin n → ObservableLabel G Curv)
-         (f : Fin n → SchwartzMap EuclideanSpace4 ℂ),
-         DisjointSupports f →
-         ‖schwinger_smeared n ops f‖ ≤
-           α * ((Nat.factorial n : ℝ) ^ β) *
-           ∏ i : Fin n, SchwartzMap.seminorm ℝ s s (f i)) ∧
-      (∀ (n : ℕ) (ops : Fin n → ObservableLabel G Curv)
-         (x : Fin n → EuclideanSpace4) (r : ℝ),
-         0 < r →
-         (∀ i j : Fin n, i ≠ j → r ≤ ‖x i - x j‖) →
-         ‖schwinger n ops x‖ ≤
-           α * ((Nat.factorial n : ℝ) ^ β) *
-           (1 + ∑ i : Fin n, ‖x i‖ ^ 2) ^ (s * n) * (1 + (1 / r)) ^ (s * n))
+    ∀ (k : ℕ) (gen : Fin k → ObservableLabel G Curv),
+      ∃ (α β : ℝ) (s : ℕ), 0 < α ∧ 0 < β ∧
+        (∀ (n : ℕ) (idx : Fin n → Fin k)
+           (f : Fin n → SchwartzMap EuclideanSpace4 ℂ),
+           DisjointSupports f →
+           ‖schwinger_smeared n (fun i => gen (idx i)) f‖ ≤
+             (α ^ n) * ((Nat.factorial n : ℝ) ^ β) *
+             ∏ i : Fin n, SchwartzMap.seminorm ℝ s s (f i)) ∧
+        (∀ (n : ℕ) (idx : Fin n → Fin k)
+           (x : Fin n → EuclideanSpace4) (r : ℝ),
+           0 < r →
+           (∀ i j : Fin n, i ≠ j → r ≤ ‖x i - x j‖) →
+           ‖schwinger n (fun i => gen (idx i)) x‖ ≤
+             (α ^ n) * ((Nat.factorial n : ℝ) ^ β) *
+             (1 + ∑ i : Fin n, ‖x i‖ ^ 2) ^ (s * n) * (1 + (1 / r)) ^ (s * n))
 
   /-- (OS1 / E1) Euclidean Group $\mathrm{ISO}(4) = \mathbb{R}^4 \rtimes \mathrm{SO}(4)$ Invariance:
       For all orthogonal transformations $R \in \mathrm{SO}(4)$ and translations $v \in \mathbb{R}^4$. -/
