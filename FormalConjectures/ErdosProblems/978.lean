@@ -209,14 +209,12 @@ lemma infinite_of_densityStatement {f : ℤ[X]} {k : ℕ} (h : DensityStatement 
 
 end Density
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The theorem of [OAI26a], stated with the definitions of the linked Lean proof: if `f ∈ ℤ[X]`
 is irreducible over `ℚ`, has degree `k ≥ 4`, and no prime `(k - 2)`-th power divides all of
 its values, then the `n` with `f(n)` `(k - 2)`-th power free have a positive density.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PowerFree/Main.lean#L144"]
+@[category research solved, AMS 11]
 theorem erdos_978.variants.all_degrees (f : Polynomial ℤ)
     (hirr : Irreducible (f.map (Int.castRingHom ℚ)))
     (hdeglo : 4 ≤ f.natDegree)
