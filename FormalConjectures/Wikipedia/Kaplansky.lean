@@ -52,7 +52,7 @@ If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero di
 This is false. It was disproved by an internal OpenAI model in September 2026 [OAI26a], which
 constructed a finitely presented torsion-free group $G$ and non-zero
 $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$; see
-`counter_zero_divisor_conjecture` and the linked Lean proof.
+`counter_zero_divisor_conjecture` and OpenAI's Lean proof.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
@@ -80,17 +80,15 @@ section CharZero
 universe u v
 
 omit hG in
-set_option linter.style.formal_proof_palomar false in
 /--
 The idempotent conjecture over every commutative domain $R$ of characteristic zero, as stated
-in the linked Lean proof of [OAI26b]: if every element of finite order in $G$ is the identity,
+in the Lean proof of [OAI26b]: if every element of finite order in $G$ is the identity,
 then $R[G]$ has no idempotents other than $0$ and $1$.
 
-The linked theorem states more: the Bass trace of an idempotent matrix over $\mathbb{C}[G]$ is
+OpenAI's Lean theorem states more: the Bass trace of an idempotent matrix over $\mathbb{C}[G]$ is
 its augmentation rank.
 -/
-@[category research solved, AMS 16 20, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/RingTheory/BassTrace/TorsionFree.lean#L50"]
+@[category research solved, AMS 16 20]
 theorem idempotent_conjecture.variants.charZero :
     ∀ (G : Type u) [Group G], (∀ g : G, IsOfFinOrder g → g = 1) →
       ∀ (R : Type v) [CommRing R] [IsDomain R] [CharZero R] (e : MonoidAlgebra R G),
@@ -98,7 +96,7 @@ theorem idempotent_conjecture.variants.charZero :
   sorry
 
 omit hG in
-/-- The linked statement gives `idempotent_conjecture` for every field of characteristic
+/-- OpenAI's Lean statement gives `idempotent_conjecture` for every field of characteristic
 zero. -/
 @[category test, AMS 16 20]
 theorem idempotent_conjecture_of_charZero
@@ -191,7 +189,7 @@ set_option linter.style.formal_proof_palomar false in
 The **Zero-divisor Conjecture** is false: there is a finitely presented torsion-free group $G$
 and non-zero $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see OpenAI's Lean
 proof.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
