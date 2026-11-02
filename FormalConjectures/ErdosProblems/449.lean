@@ -78,7 +78,7 @@ This is the whole arithmetic content of the argument. -/
 
 /-- If $d_1 < d_2$ lie in the same dyadic block, i.e. `Nat.log 2 d₁ = Nat.log 2 d₂`, then
 $d_2 < 2 d_1$. Indeed $2^k \le d_1$ and $d_2 < 2^{k+1} = 2 \cdot 2^k \le 2 d_1$. -/
-@[category test, AMS 11]
+@[category API, AMS 11]
 theorem lt_two_mul_of_log_eq {d₁ d₂ : ℕ} (h₁ : 0 < d₁) (_hlt : d₁ < d₂)
     (hlog : Nat.log 2 d₁ = Nat.log 2 d₂) : d₂ < 2 * d₁ := by
   have hlow : 2 ^ Nat.log 2 d₁ ≤ d₁ := Nat.pow_log_le_self 2 h₁.ne'
@@ -93,7 +93,7 @@ def blockLt (n k : ℕ) : Finset (ℕ × ℕ) :=
   ((block n k) ×ˢ (block n k)).filter fun p => p.1 < p.2
 
 /-- Every strictly increasing pair inside a single block is a pair counted by $r(n)$. -/
-@[category test, AMS 11]
+@[category API, AMS 11]
 theorem blockLt_subset_closePairs (n k : ℕ) : blockLt n k ⊆ closePairs n := by
   intro p hp
   simp only [blockLt, block, closePairs, mem_filter, mem_product] at hp ⊢
@@ -108,7 +108,7 @@ Two purely combinatorial steps, then Cauchy–Schwarz. -/
 /-- Inside one block: $m_k^2 = 2 \cdot \#\{(d_1,d_2) : d_1 < d_2\} + m_k$, by splitting the
 square `D ×ˢ D` into the diagonal and the two strict halves, which are swapped by
 `Prod.swap`. -/
-@[category test, AMS 11]
+@[category API, AMS 11]
 theorem card_sq_eq (D : Finset ℕ) :
     D.card ^ 2 = 2 * ((D ×ˢ D).filter fun p => p.1 < p.2).card + D.card := by
   classical
@@ -167,7 +167,7 @@ theorem card_sq_eq (D : Finset ℕ) :
 
 /-- The blocks are pairwise disjoint, so the strict pairs they contain are pairwise disjoint
 subsets of `closePairs n`; hence their total count is at most $r(n)$. -/
-@[category test, AMS 11]
+@[category API, AMS 11]
 theorem sum_blockLt_card_le (n : ℕ) :
     ∑ k ∈ blocks n, (blockLt n k).card ≤ r n := by
   classical
@@ -190,7 +190,7 @@ theorem sum_blockLt_card_le (n : ℕ) :
   exact blockLt_subset_closePairs n k hpk
 
 /-- The divisor count splits over the occupied blocks: $\sum_k m_k = \tau(n)$. -/
-@[category test, AMS 11]
+@[category API, AMS 11]
 theorem sum_block_card (n : ℕ) :
     ∑ k ∈ blocks n, (block n k).card = n.divisors.card :=
   (Finset.card_eq_sum_card_image (Nat.log 2) n.divisors).symm
@@ -206,7 +206,7 @@ Cauchy–Schwarz argument actually produces. Note the factor `2` in front of `r 
 to stay in `ℕ`. Combined with the negative solution of Erdős Problem 448 (which gives
 $\tau^+(n) < \varepsilon \tau(n)$ on a set of positive density), this forces
 $r(n) > K \tau(n)$ on a set of positive density, for every `K`. -/
-@[category test, AMS 11]
+@[category API, AMS 11]
 theorem sq_card_divisors_le (n : ℕ) :
     n.divisors.card ^ 2 ≤ tauPlus n * (2 * r n + n.divisors.card) := by
   classical
