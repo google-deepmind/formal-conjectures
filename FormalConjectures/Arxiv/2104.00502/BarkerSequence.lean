@@ -69,10 +69,8 @@ theorem barker_conjecture.variants.odd (a : List ℤ) (hodd : Odd a.length)
     (ha : IsBarkerSequence a) : a.length ≤ 13 := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /-- Every Barker sequence of positive even length has length $2$ or $4$ [OAI26]. -/
-@[category research solved, AMS 5 11 94, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/LinearAlgebra/Barker/Main.lean#L63"]
+@[category research solved, AMS 5 11 94]
 theorem barker_conjecture.variants.even (a : List ℤ) (hpos : 0 < a.length)
     (heven : Even a.length) (ha : IsBarkerSequence a) : a.length = 2 ∨ a.length = 4 := by
   sorry
