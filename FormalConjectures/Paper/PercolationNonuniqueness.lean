@@ -124,17 +124,15 @@ def CayleyEdge {Λ : Type u} [Group Λ] (S : Finset Λ) :=
 def cayleyGraph {Λ : Type u} [Group Λ] (S : Finset Λ) :
     BondGraph Λ (CayleyEdge S) := Subtype.val
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **$p_c < p_u$ on nonamenable Cayley graphs**: the Cayley graph of a finitely generated
 nonamenable group with respect to a finite symmetric generating set satisfies $p_c < p_u$.
 
 This is the Benjamini–Schramm conjecture [BS96] for Cayley graphs. It was proved by an internal
-OpenAI model in September 2026 [OAI26]; see `pc_lt_pu.variants.openai` and the linked Lean
+OpenAI model in September 2026 [OAI26]; see `pc_lt_pu.variants.openai` and OpenAI's Lean
 proof.
 -/
-@[category research solved, AMS 20 60 82, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/UnimodularPercolation/Cayley/Nonuniqueness.lean#L18"]
+@[category research solved, AMS 20 60 82]
 theorem pc_lt_pu {Λ : Type u} [Group Λ] [Group.FG Λ]
     (hna : ¬ AmenableGroup Λ) (S : Finset Λ)
     (hsym : ∀ s ∈ S, s⁻¹ ∈ S) (hgen : Subgroup.closure (S : Set Λ) = ⊤)
@@ -142,15 +140,13 @@ theorem pc_lt_pu {Λ : Type u} [Group Λ] [Group.FG Λ]
     pc (cayleyGraph S) < pu (cayleyGraph S) := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
-The statement of the linked Lean proof [OAI26]: the two-point matrix is bounded on $\ell^2$ at
+The statement of OpenAI's Lean proof [OAI26]: the two-point matrix is bounded on $\ell^2$ at
 $p_c$, $p_c < p_{2 \to 2} \le p_u$, the standard coupling has infinitely many infinite clusters
 simultaneously for all $p$ in some interval, and for every $p \in (p_c, p_u)$ there are almost
 surely infinitely many infinite clusters.
 -/
-@[category research solved, AMS 20 60 82, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/UnimodularPercolation/Cayley/Nonuniqueness.lean#L18"]
+@[category research solved, AMS 20 60 82]
 theorem pc_lt_pu.variants.openai {Λ : Type u} [Group Λ] [Group.FG Λ]
     (hna : ¬ AmenableGroup Λ) (S : Finset Λ)
     (hsym : ∀ s ∈ S, s⁻¹ ∈ S) (hgen : Subgroup.closure (S : Set Λ) = ⊤)
@@ -165,7 +161,7 @@ theorem pc_lt_pu.variants.openai {Λ : Type u} [Group Λ] [Group.FG Λ]
       ∀ᵐ ω ∂law p, (infiniteClusters (cayleyGraph S) ω).Infinite) := by
   sorry
 
-/-- The linked statement gives `p_c < p_u`. -/
+/-- OpenAI's Lean statement gives `p_c < p_u`. -/
 @[category test, AMS 20 60 82]
 theorem pc_lt_pu_of_openai
     (h : type_of% @pc_lt_pu.variants.openai.{u}) : type_of% @pc_lt_pu.{u} := by
