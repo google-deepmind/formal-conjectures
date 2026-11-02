@@ -113,15 +113,13 @@ theorem irrational_catalanConstant :
     Irrational catalanConstant := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 Catalan's constant, written as in the linked Lean statement of [OAI26a] with the denominators
 cast from `ℕ`, is irrational.
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
 -/
-@[category research solved, AMS 11 33, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Catalan/Results/Conclusions.lean#L11"]
+@[category research solved, AMS 11 33]
 theorem irrational_catalanConstant.variants.natCast :
     Irrational (∑' j : ℕ, (-1 : ℝ) ^ j / ((2 * j + 1 : ℕ) : ℝ) ^ 2) := by
   sorry
