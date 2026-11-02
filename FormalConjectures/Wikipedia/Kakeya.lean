@@ -64,15 +64,13 @@ Hausdorff dimension `n`.
 def KakeyaSetConjectureDim (n : ℕ) : Prop :=
   ∀ S : Set (ℝ^n), IsKakeya S → dimH S = n
 
-set_option linter.style.formal_proof_palomar false in
 /-- The Kakeya set conjecture: Kakeya sets in $\mathbb{R}^n$ have Hausdorff dimension $n$.
 
-This was proved by an internal OpenAI model in October 2026 [OAI26a]. The linked Lean proof
+This was proved by an internal OpenAI model in October 2026 [OAI26a]. OpenAI's Lean proof
 covers $n \ge 2$ (`kakeya_set_conjecture.variants.two_le`). The case $n = 1$ is elementary
 (`kakeya_set_conjecture_one`), and `kakeya_set_conjecture_of_two_le` derives this statement
-from the linked one. -/
-@[category research solved, AMS 42, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/lean/OAI/Analysis/Fourier/LocalSmoothing/Comparator.lean#L130"]
+from it. -/
+@[category research solved, AMS 42]
 theorem kakeya_set_conjecture (n : ℕ) (hn : n > 0) :
     KakeyaSetConjectureDim n := by
   sorry
@@ -90,11 +88,9 @@ def IsKakeyaSet {n : ℕ} (F : Set (ℝ^n)) : Prop :=
 
 end Segments
 
-set_option linter.style.formal_proof_palomar false in
-/-- The Kakeya set conjecture in every dimension $n \ge 2$, as stated in the linked Lean proof
+/-- The Kakeya set conjecture in every dimension $n \ge 2$, as stated in OpenAI's Lean proof
 of [OAI26a]. Segments are centred at a point and no measurability is assumed. -/
-@[category research solved, AMS 42, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/lean/OAI/Analysis/Fourier/LocalSmoothing/Comparator.lean#L130"]
+@[category research solved, AMS 42]
 theorem kakeya_set_conjecture.variants.two_le :
     ∀ n : ℕ, 2 ≤ n → ∀ F : Set (ℝ^n), Segments.IsKakeyaSet F → dimH F = n := by
   sorry
@@ -141,7 +137,7 @@ theorem kakeya_set_conjecture_one : KakeyaSetConjectureDim 1 := by
   · rw [Nat.cast_one, ← dimH_affineSegment a _ hv]
     exact dimH_mono ha
 
-/-- The linked statement `kakeya_set_conjecture.variants.two_le` implies
+/-- OpenAI's Lean statement `kakeya_set_conjecture.variants.two_le` implies
 `kakeya_set_conjecture`. -/
 @[category test, AMS 42]
 theorem kakeya_set_conjecture_of_two_le (h : type_of% kakeya_set_conjecture.variants.two_le)
@@ -170,13 +166,11 @@ The three-dimensional case, proved by Wang, Zahl [WaZa25].
 theorem kakeya_3d : KakeyaSetConjectureDim 3 := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The four-dimensional case, proved by an internal OpenAI model [OAI26b]. It is also the case
-$n = 4$ of `kakeya_set_conjecture` [OAI26a], whose linked Lean proof covers it.
+$n = 4$ of `kakeya_set_conjecture` [OAI26a], whose Lean proof covers it.
 -/
-@[category research solved, AMS 42, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/lean/OAI/Analysis/Fourier/LocalSmoothing/Comparator.lean#L130"]
+@[category research solved, AMS 42]
 theorem kakeya_4d : KakeyaSetConjectureDim 4 := by
   sorry
 
