@@ -1114,14 +1114,12 @@ lemma edgeDensity_eq_homDensity {W : Type*} [Fintype W] [DecidableEq W] (G : Sim
 
 end Counterexample
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The counterexample of [OAI26a], stated with the definitions of the linked Lean proof: a finite
 host graph with an edge in which the pattern graph `Counterexample.H` (35 vertices, 66 edges)
 has density below the edge density to the power 66.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sidorenko/RandomHost.lean#L319"]
+@[category research solved, AMS 5]
 theorem sidorenko_conjecture.variants.explicit :
     ∃ size : ℕ, 0 < size ∧ ∃ host : SimpleGraph (Fin size),
       (∃ left right, host.Adj left right) ∧
