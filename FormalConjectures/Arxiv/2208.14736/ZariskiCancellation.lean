@@ -106,15 +106,13 @@ end
 
 end ComplexCancellation
 
-set_option linter.style.formal_proof_palomar false in
 open ComplexCancellation in
 /--
 The counterexample of [OAI26a], stated as in the linked Lean proof: the hypersurface algebra
 `ComplexCancellation.A` is a finitely generated $\mathbb{C}$-domain of Krull dimension $4$ with
 $A[w] \cong \mathbb{C}[x_1, \dots, x_5]$, but $A \not\cong \mathbb{C}[x_1, \dots, x_4]$.
 -/
-@[category research solved, AMS 13 14, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/AffineCancellation/Main.lean#L32"]
+@[category research solved, AMS 13 14]
 theorem zariski_cancellation_problem.variants.explicit :
     Algebra.FiniteType ℂ A ∧ IsDomain A ∧ ringKrullDim A = 4 ∧
       Nonempty (Polynomial A ≃ₐ[ℂ] MvPolynomial (Fin 5) ℂ) ∧
