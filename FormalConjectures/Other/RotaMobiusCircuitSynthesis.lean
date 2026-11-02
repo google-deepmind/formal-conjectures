@@ -105,7 +105,7 @@ theorem boolean_b8_hamming_cap_exact_degree_6_cutoff :
 /--
 For any $b$-bit fixed-point Givens rotation angle $w \in \{0, \dots, 2^b - 1\}$, flipping the
 parent sign $s \mapsto -s$ whenever $w = 2^{b-2}$ maps $+\pi/2 \mapsto -\pi/2 = 3 \cdot 2^{b-2}$,
-enforcing the two's-complement half-range invariant $\operatorname{bit}_{b-1}(w) = \operatorname{bit}_{b-2}(w)$
+enforcing the two's-complement half-range invariant $\mathrm{bit}_{b-1}(w) = \mathrm{bit}_{b-2}(w)$
 across $100\%$ of angle words and folding the most significant bit into a single CNOT gate.
 -/
 @[category API, AMS 68 81 94]
@@ -116,7 +116,7 @@ theorem half_range_givens_msb_cnot_folding (J b : ℕ) (hb : 2 ≤ b) :
   | succ b' => ring
 
 /-- Unknown optimal worst-case Toffoli count for multi-output QROM under arbitrary
-poset incidence-algebra gauges $\zeta_P \in \operatorname{GL}(2^n, \mathbb{F}_2)$. -/
+poset incidence-algebra gauges $\zeta_P \in \mathrm{GL}(2^n, \mathbb{F}_2)$. -/
 def rota_mobius_poset_qrom_min_toffoli.answer (n b : ℕ) : ℕ := sorry
 
 /--

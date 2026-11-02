@@ -21,16 +21,16 @@ public import FormalConjecturesUtil
 # Algebraic Bianchi Plethysm and Exact Sum-of-Squares Dual Calibration
 
 Let $V = \mathbb{R}^n$ be an $n$-dimensional real inner-product space and let
-$D = \binom{n+1}{2}$ denote the dimension of the symmetric square $\operatorname{Sym}^2(V)$.
+$D = \binom{n+1}{2}$ denote the dimension of the symmetric square $\mathrm{Sym}^2(V)$.
 In two-body quantum chemistry and quartic sum-of-squares (SOS) optimization on the
-4-index Coulomb interaction tensor $T \in \operatorname{Sym}^2(\operatorname{Sym}^2(V))$,
+4-index Coulomb interaction tensor $T \in \mathrm{Sym}^2(\mathrm{Sym}^2(V))$,
 the swap-gauge nullspace $\mathcal{N}_{\text{swap}}(n)$ consists of symmetric matrices
-$A \in \operatorname{Sym}^2(\operatorname{Sym}^2(V))$ whose quartic form
+$A \in \mathrm{Sym}^2(\mathrm{Sym}^2(V))$ whose quartic form
 $\langle v \otimes v, A (v \otimes v) \rangle$ vanishes identically on the Veronese
 orbit $\{v \otimes v : v \in V\}$.
 
-By GL$(V)$ plethysm, $\operatorname{Sym}^2(\operatorname{Sym}^2(V))$ decomposes into
-$\operatorname{Sym}^4(V)$ and the Weyl hooks-2 module $\mathbb{S}_{(2,2)}(V)$ of Riemann-like
+By GL$(V)$ plethysm, $\mathrm{Sym}^2(\mathrm{Sym}^2(V))$ decomposes into
+$\mathrm{Sym}^4(V)$ and the Weyl hooks-2 module $\mathbb{S}_{(2,2)}(V)$ of Riemann-like
 tensors satisfying the first algebraic Bianchi identity, yielding
 $$\dim \mathcal{N}_{\text{swap}}(n) = \dim \mathbb{S}_{(2,2)}(V) = \frac{n^2(n^2 - 1)}{12}.$$
 
@@ -48,18 +48,18 @@ $$\dim \mathcal{N}_{\text{swap}}(n) = \dim \mathbb{S}_{(2,2)}(V) = \frac{n^2(n^2
 
 namespace BianchiPlethysmCalibration
 
-/-- Twelve times the dimension $\binom{n+1}{2}$ of $\operatorname{Sym}^2(\mathbb{R}^n)$
+/-- Twelve times the dimension $\binom{n+1}{2}$ of $\mathrm{Sym}^2(\mathbb{R}^n)$
 (scaled by $12$ to avoid natural-number division truncation). -/
 def twelveSym2Dim (n : ℕ) : ℕ :=
   6 * n * (n + 1)
 
 /-- Twelve times the dimension $\binom{\binom{n+1}{2}+1}{2}$ of
-$\operatorname{Sym}^2(\operatorname{Sym}^2(\mathbb{R}^n))$. -/
+$\mathrm{Sym}^2(\mathrm{Sym}^2(\mathbb{R}^n))$. -/
 def twelveSym2Sym2Dim (n : ℕ) : ℕ :=
   3 * n * (n + 1) * (n * (n + 1) + 2)
 
 /-- Twelve times the dimension $\binom{n+3}{4}$ of the totally symmetric quartic
-subspace $\operatorname{Sym}^4(\mathbb{R}^n)$. -/
+subspace $\mathrm{Sym}^4(\mathbb{R}^n)$. -/
 def twelveSym4Dim (n : ℕ) : ℕ :=
   n * (n + 1) * (n + 2) * (n + 3) / 2
 
@@ -70,8 +70,8 @@ def twelveBianchiDim (n : ℕ) : ℕ :=
 
 /--
 In integer arithmetic, the plethysm decomposition
-$12 \dim \operatorname{Sym}^2(\operatorname{Sym}^2(\mathbb{R}^n)) =
-12 \dim \operatorname{Sym}^4(\mathbb{R}^n) + 12 \dim \mathbb{S}_{(2,2)}(\mathbb{R}^n)$
+$12 \dim \mathrm{Sym}^2(\mathrm{Sym}^2(\mathbb{R}^n)) =
+12 \dim \mathrm{Sym}^4(\mathbb{R}^n) + 12 \dim \mathbb{S}_{(2,2)}(\mathbb{R}^n)$
 holds identically for all $n \in \mathbb{Z}$.
 -/
 @[category API, AMS 15 20]
@@ -108,7 +108,7 @@ theorem femoco_n76_bianchi_plethysm_test :
   decide
 
 /--
-For any trace-identity mode $d d^\top$ on $\operatorname{Sym}^2(\mathbb{R}^n)$ with
+For any trace-identity mode $d d^\top$ on $\mathrm{Sym}^2(\mathbb{R}^n)$ with
 $\|d\|_2^2 = n$, adding the canonical rank-1 algebraic Bianchi gauge tensor
 $A_d^* \in \mathcal{N}_{\text{swap}}(n)$ collapses its operator norm from $n$ to $1$,
 giving a net operator-norm reduction of $n - 1$.
@@ -121,7 +121,7 @@ theorem trace_mode_bianchi_norm_collapse (n : ℕ) (hn : 1 ≤ n) :
 set_option linter.style.formal_proof_palomar false in
 /--
 Every two-body slice $X_k$ of a tensor hypercontraction (THC) or double-factorized (DF)
-representation with trace $\tau_k = \operatorname{Tr}(X_k)$ and one-body core shift $W_k$
+representation with trace $\tau_k = \mathrm{Tr}(X_k)$ and one-body core shift $W_k$
 satisfies the triangle-inequality floor
 $$(\tau_k + (W_k + \tau_k))^2 = (2\tau_k + W_k)^2 \le 2(\tau_k^2 + (W_k + \tau_k)^2),$$
 which implies $\frac{1}{4}(|\tau_k| + |W_k + \tau_k|)^2 \ge \frac{1}{4} W_k^2$ with
@@ -145,7 +145,7 @@ theorem sum_sq_le_two_mul_add_sq (a b : ℤ) :
 
 /--
 Does there exist a polynomial-time hierarchy of positive-semidefinite dual certificates
-$(Y, A) \in \operatorname{PSD}(D) \times \mathcal{N}_{\text{swap}}(n)$ with
+$(Y, A) \in \mathrm{PSD}(D) \times \mathcal{N}_{\text{swap}}(n)$ with
 $\lambda_{\max}(Y + A) \le 1$ that closes at least $95\%$ of the gap between the
 degree-4 swap-gauge SOS dual bound and the rank-$M$ tensor-hypercontraction (THC)
 primal minimum on electronic-structure Coulomb tensors for all $n \ge 2$?
