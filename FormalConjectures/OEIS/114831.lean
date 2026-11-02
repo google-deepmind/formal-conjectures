@@ -63,6 +63,7 @@ theorem a_3 : a 3 = 3 := by
 theorem a_4 : a 4 = 5 := by
   norm_num [a, Rat.floor, Int.toNat]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture based on OEIS A114831: What is this sequence, asymptotically?
 If the limit exists, the ratio of consecutive terms must tend to $\sqrt{3}$:

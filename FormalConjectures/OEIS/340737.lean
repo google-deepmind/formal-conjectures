@@ -129,6 +129,7 @@ lemma a_4 : a 4 = 49 := by unfold a; unfold a; unfold a; unfold a; simp
 lemma a_5 : a 5 = 193 := by unfold a; unfold a; unfold a; unfold a; unfold a; simp
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $\lim_{n \to \infty} a(n) / b(n) = e$, where $b(n)$ is the companion denominator sequence.
 

@@ -39,6 +39,7 @@ abbrev S :=
   {(n, m) : ℕ × ℕ | n < m ∧ n.centralBinom.primeFactors = m.centralBinom.primeFactors}
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many pairs of integers $n < m$ such that $\binom{2n}{n}$
 and $\binom{2m}{m}$ have the same set of prime divisors?

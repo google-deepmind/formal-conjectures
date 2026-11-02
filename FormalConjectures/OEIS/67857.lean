@@ -69,6 +69,7 @@ theorem a_4 : a 4 = 14 := by
 theorem a_5 : a 5 = 154 := by
   decide +kernel
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The terms are not all positive. The first negative one is
 $a(30) = -22690644647302814715858124800000$.

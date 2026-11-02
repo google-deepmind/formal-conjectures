@@ -58,6 +58,7 @@ def IsErdosLovaszFamily (n : ℕ) (F : Finset (Finset ℕ)) : Prop :=
 noncomputable def f (n : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ F : Finset (Finset ℕ), IsErdosLovaszFamily n F ∧ F.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be minimal such that there is an intersecting family $\mathcal{F}$ of sets of size $n$
 (so $A\cap B\neq\emptyset$ for all $A,B\in \mathcal{F}$) with $\lvert \mathcal{F}\rvert=f(n)$

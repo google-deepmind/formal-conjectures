@@ -40,6 +40,7 @@ namespace Constant7b
 open ENNReal
 
 /-- **Tao's Optimization Constant 7b / The irrationality measure of $\Gamma(1/4)$**. -/
+@[optimization_constant "7b"]
 noncomputable def C7b : ℝ≥0∞ :=
   Constant7a.irrationalityExponent (Real.Gamma (1 / 4))
 

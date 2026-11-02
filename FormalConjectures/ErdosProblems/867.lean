@@ -41,6 +41,7 @@ $[m,n]$ is not itself an element of $A$. -/
 def ConsecutiveSumFree (A : Finset ℕ) : Prop :=
   ∀ m n : ℕ, 2 ≤ (Finset.Icc m n ∩ A).card → (∑ a ∈ Finset.Icc m n ∩ A, a) ∉ A
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $A=\{a_1<\cdots <a_t\}\subseteq \{1,\ldots,N\}$ has no solutions to
 $$a_i+a_{i+1}+\cdots+a_j\in A$$
@@ -90,6 +91,7 @@ theorem erdos_867.variants.lower_bound :
     push_cast at h4
     linarith
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Adenwalla has observed that
 $$\lvert A\rvert \leq (\tfrac{2}{3}+o(1))N.$$

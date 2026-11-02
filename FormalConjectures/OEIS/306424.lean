@@ -186,6 +186,7 @@ lemma a_5 : a 5 = 5 := by
   omega
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: The sequence is finite, with 43 being the last term.
 

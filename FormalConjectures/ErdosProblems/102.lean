@@ -125,6 +125,7 @@ theorem erdos_102.variants.five :
     ∀ c > 0, ∀ᶠ n in atTop, (5 : ℕ∞) ≤ h c n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is easy to see that $h_c(n) \ll_c n^{1/2}$: for all sufficiently small $c > 0$ there are
 admissible configurations (e.g. grids) in which no line contains more than $C_c n^{1/2}$ points.
@@ -135,6 +136,7 @@ theorem erdos_102.variants.upper_sqrt :
       h c n ≤ (⌈C * Real.sqrt n⌉₊ : ℕ∞) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős [Er95] suggested that perhaps $h_c(n) \gg_c n^{1/2}$. Zach Hunter pointed out that this is
 false: the points of $\{1, \dots, m\}^d$ with $n \approx m^d$, randomly projected to

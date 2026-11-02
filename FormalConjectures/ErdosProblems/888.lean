@@ -47,6 +47,7 @@ exists.
 def p (n : ℕ) (k : ℕ) : Prop := ∃ A : Finset ℕ, RequiredCondition A n ∧ A.card = k
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the size of the largest $A\subseteq \{1,\ldots,n\}$ such that if
 $a\leq b\leq c\leq d\in A$ are such that $abcd$ is a square then $ad=bc$?

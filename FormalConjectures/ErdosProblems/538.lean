@@ -62,6 +62,7 @@ theorem erdos_538 :
     ∀ r : ℕ, 2 ≤ r → maxMass r ~[atTop] erdos_538.answer r := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The reciprocal sum has matching order `Θ_r(log N / loglog N)`: an explicit
 upper bound for every admissible `A`, together with a witnessing construction

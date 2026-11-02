@@ -43,6 +43,7 @@ namespace Erdos246
 def Gamma (a b : ℕ) : Set ℕ :=
   {x | ∃ k l : ℕ, x = a ^ k * b ^ l}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $(a,b)=1$. The set $\{a^kb^l: k,l\geq 0\}$ is complete - that is, every large integer is the sum of distinct integers of the form $a^kb^l$ with $k,l\geq 0$.
 
