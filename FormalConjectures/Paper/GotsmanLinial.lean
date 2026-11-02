@@ -83,29 +83,25 @@ noncomputable def polynomialThreshold {n : ℕ} (p : MvPolynomial (Fin n) ℝ) :
     Cube n → ℝ :=
   fun x => thresholdSign (polynomialValue p x)
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **The Gotsman–Linial conjecture**, asymptotic form [GL94]: the average sensitivity of a
 polynomial threshold function of degree $d$ in $n$ variables is $O(d \sqrt{n})$.
 
 This was proved by an internal OpenAI model in September 2026, with constant $8$ [OAI26]; see
-`gotsman_linial_conjecture.variants.openai` and the linked Lean proof. Multilinearity loses no
+`gotsman_linial_conjecture.variants.openai` and OpenAI's Lean proof. Multilinearity loses no
 generality on the cube.
 -/
-@[category research solved, AMS 6 68, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/GotsmanLinial/Main.lean#L123"]
+@[category research solved, AMS 6 68]
 theorem gotsman_linial_conjecture :
     ∃ C : ℝ, ∀ (n d : ℕ), 1 ≤ d → d ≤ n →
       ∀ p : MvPolynomial (Fin n) ℝ, IsMultilinear p → p.totalDegree ≤ d →
         averageSensitivity (polynomialThreshold p) ≤ C * d * Real.sqrt n := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
-The statement of the linked Lean proof [OAI26]: the bound holds with constant $8$.
+The statement of OpenAI's Lean proof [OAI26]: the bound holds with constant $8$.
 -/
-@[category research solved, AMS 6 68, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/GotsmanLinial/Main.lean#L123"]
+@[category research solved, AMS 6 68]
 theorem gotsman_linial_conjecture.variants.openai :
     ∀ (n d : ℕ), 1 ≤ n → 1 ≤ d → d ≤ n →
       ∀ p : MvPolynomial (Fin n) ℝ,
