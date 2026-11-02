@@ -62,6 +62,7 @@ theorem a_4 : a 4 = 9 := by
 theorem a_5 : a 5 = 171 := by
   rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are all terms integers?
 

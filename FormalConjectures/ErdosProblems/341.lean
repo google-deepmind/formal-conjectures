@@ -34,6 +34,7 @@ open scoped Topology
 
 namespace Erdos341
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{a_1 < \cdots < a_k\}$ be a finite set of integers and extend it to an infinite
 sequence $\overline{A}=\{a_1 < a_2 < \cdots \}$ by defining $a_{n+1}$ for $n \geq k$ to be

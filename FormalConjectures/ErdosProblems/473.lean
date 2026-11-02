@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos473
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a permutation $a_1, a_2, \ldots$ of the positive integers such that $a_k + a_{k+1}$ is
 always prime?

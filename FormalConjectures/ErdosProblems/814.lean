@@ -42,6 +42,7 @@ open Filter Real SimpleGraph
 namespace Erdos814
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 2$ and $G$ be a graph with $n\geq k-1$ vertices and
 $$(k-1)(n-k+2)+\binom{k-2}{2}+1$$
@@ -64,6 +65,7 @@ theorem erdos_814 :
   sorry
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /-- The conclusion holds as soon as $G$ has at least $(k-1)(n-k+2)+inom{k-2}{2}+1$ edges
 (Sauermann [Sa19]). -/
 @[category research solved, AMS 5, formal_proof using lean4 at

@@ -34,6 +34,7 @@ open scoped Asymptotics
 def IsPrimitive {M : Type*} [CommMonoid M] (A : Set M) : Prop :=
   ∀ᵉ (x ∈ A) (y ∈ A), x ∣ y → Associated x y
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for any $x$, if $A\subset [x,\infty)$ is a primitive set of integers (so that no distinct elements of $A$ divide each other) then$$\sum_{a\in A}\frac{1}{a\log a}&#60; 1+o(1),$$where the $o(1)$ term $\to 0$ as $x\to \infty$?
 --/

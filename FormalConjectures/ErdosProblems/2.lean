@@ -37,6 +37,7 @@ Hough [Ho15] proved that the answer is no, and Balister, Bollobás, Morris, Saha
 
 namespace Erdos2
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can the smallest modulus of a covering system be arbitrarily large?
 

@@ -53,6 +53,7 @@ theorem a_3 : a 3 = 88680 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 12386340 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1:
 "Conjecture: For $n > 0$, $a(n)$ is always divisible by $(n+1) * (n+2)$."

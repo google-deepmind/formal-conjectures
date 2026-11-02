@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace BorweinSineSeries
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does the series
 $$

@@ -46,6 +46,7 @@ at least `f m n`. -/
 noncomputable def f (m n : ℕ) : ℕ :=
   sInf {k | ∃ G : SimpleGraph (Fin n), HasLocalIndependence G m ⌈log n⌉₊ ∧ G.indepNum = k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(m,n)$ be maximal such that any graph on $n$ vertices in which every induced subgraph on
 $m$ vertices has an independent set of size at least $\log n$ must contain an independent set of
@@ -63,6 +64,7 @@ theorem erdos_804.parts.i :
       (n : ℝ) ^ (1 / 2 - ε : ℝ) ≤ f ⌊(log n) ^ 2⌋₊ n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $f((\log n)^3,n)\gg (\log n)^3$?
 
@@ -75,6 +77,7 @@ theorem erdos_804.parts.ii :
     ¬ ∃ c > 0, ∀ᶠ n : ℕ in atTop, c * (log n) ^ 3 ≤ f ⌊(log n) ^ 3⌋₊ n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Alon and Sudakov [AlSu07] proved that
 $$\frac{(\log n)^2}{\log\log n}\ll f((\log n)^2,n) \ll (\log n)^2$$
