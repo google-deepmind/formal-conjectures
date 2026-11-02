@@ -102,6 +102,7 @@ theorem erdos_1194 :
       ∃ c > (0 : ℝ), HasLargeElement A (fun n ↦ c * G n * n)} = erdos_1194.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Such a set is called a perfect difference set; they can be constructed, for example, by a greedy
 approach (as detailed by Lev [Le04]).
@@ -114,6 +115,7 @@ theorem erdos_1194.variants.exists_perfect_difference_set :
     ∃ A : Set ℕ, IsPerfectDifferenceSetInt A := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The greedy construction achieves $a_n\ll n^3$.
 
