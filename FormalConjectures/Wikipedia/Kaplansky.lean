@@ -151,7 +151,9 @@ The **Zero-divisor Conjecture** is false: there is a finitely presented torsion-
 and non-zero $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$.
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
-proof.
+proof. The part of the linked statement used here is
+`counter_zero_divisor_conjecture.variants.pow_eq_one`; see
+`counter_zero_divisor_conjecture_of_pow_eq_one`.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
@@ -159,5 +161,42 @@ theorem counter_zero_divisor_conjecture :
     ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G) (_ : Group.IsFinitelyPresented G)
       (α β : MonoidAlgebra (ZMod 2) G), α ≠ 0 ∧ β ≠ 0 ∧ α * β = 0 := by
   sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+The part of the linked statement of [OAI26a] that `counter_zero_divisor_conjecture` uses, with
+its definition of torsion-freeness unfolded: $g^n = 1$ with $n > 0$ forces $g = 1$.
+
+The linked theorem states more: $G$ also has a finite $2$-dimensional $K(G, 1)$.
+-/
+@[category research solved, AMS 16 20, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
+theorem counter_zero_divisor_conjecture.variants.pow_eq_one :
+    ∃ (G : Type) (_ : Group G), Group.IsFinitelyPresented G ∧
+      (∀ (g : G) (n : ℕ), 0 < n → g ^ n = 1 → g = 1) ∧
+      ∃ α β : MonoidAlgebra (ZMod 2) G, α ≠ 0 ∧ β ≠ 0 ∧ α * β = 0 := by
+  sorry
+
+/-- An element of finite order has a positive power equal to `1`. -/
+@[category test, AMS 16 20]
+theorem counter_zero_divisor_conjecture_of_pow_eq_one
+    (h : type_of% counter_zero_divisor_conjecture.variants.pow_eq_one) :
+    type_of% counter_zero_divisor_conjecture := by
+  obtain ⟨G, _, hfp, htf, α, β, hα, hβ, hαβ⟩ := h
+  refine ⟨G, _, fun g hg hfin => ?_, hfp, α, β, hα, hβ, hαβ⟩
+  obtain ⟨n, hn, hpow⟩ := isOfFinOrder_iff_pow_eq_one.mp hfin
+  exact hg (htf g n hn hpow)
+
+/-- The counterexample of [OAI26a] refutes `zero_divisor_conjecture` with `K = 𝔽₂`. -/
+@[category test, AMS 16 20]
+theorem zero_divisor_conjecture_of_pow_eq_one
+    (h : type_of% counter_zero_divisor_conjecture.variants.pow_eq_one) :
+    type_of% zero_divisor_conjecture := by
+  intro hall
+  obtain ⟨G, _, htf, -, α, β, hα, hβ, hαβ⟩ := counter_zero_divisor_conjecture_of_pow_eq_one h
+  have := hall (ZMod 2) G htf
+  rcases mul_eq_zero.mp hαβ with h0 | h0
+  · exact hα h0
+  · exact hβ h0
 
 end Kaplansky
