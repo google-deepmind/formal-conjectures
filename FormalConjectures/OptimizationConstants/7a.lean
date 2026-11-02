@@ -140,14 +140,12 @@ set_option linter.style.formal_proof_palomar false in
 theorem c7a_eq_two : C7a = 2 := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The statement of the linked Lean proof [OAI2026]. For every $\nu > 2$, $|\pi - p/q| \ge q^{-\nu}$
 for all large $q$. The supremum of the exponents $\nu > 0$ for which infinitely many rationals $r$
 satisfy $0 < |\pi - r| < \operatorname{den}(r)^{-\nu}$ is $2$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PiExponent/Main.lean#L17"]
+@[category research solved, AMS 11]
 theorem c7a_eq_two.variants.openai :
     (∀ ν : ℝ, 2 < ν → ∃ Q : ℤ, 2 ≤ Q ∧
       ∀ p q : ℤ, Q ≤ q →
