@@ -104,11 +104,37 @@ set_option linter.style.formal_proof_palomar false in
 Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$ irrational?
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
+The linked statement, which casts the denominators from `ℕ`, is
+`irrational_catalanConstant.variants.natCast`; see `irrational_catalanConstant_of_natCast`.
 -/
 @[category research solved, question, AMS 11 33, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Catalan/Results/Conclusions.lean#L11"]
 theorem irrational_catalanConstant :
     Irrational catalanConstant := by
   sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+Catalan's constant, written as in the linked Lean statement of [OAI26a] with the denominators
+cast from `ℕ`, is irrational.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
+-/
+@[category research solved, AMS 11 33, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Catalan/Results/Conclusions.lean#L11"]
+theorem irrational_catalanConstant.variants.natCast :
+    Irrational (∑' j : ℕ, (-1 : ℝ) ^ j / ((2 * j + 1 : ℕ) : ℝ) ^ 2) := by
+  sorry
+
+/-- The statement of [OAI26a] implies `irrational_catalanConstant`: the two series agree term by
+term. -/
+@[category test, AMS 11 33]
+theorem irrational_catalanConstant_of_natCast
+    (h : type_of% @irrational_catalanConstant.variants.natCast) :
+    type_of% @irrational_catalanConstant := by
+  have hG : catalanConstant = ∑' j : ℕ, (-1 : ℝ) ^ j / ((2 * j + 1 : ℕ) : ℝ) ^ 2 := by
+    simp [catalanConstant]
+  rw [hG]
+  exact h
 
 end Irrational
