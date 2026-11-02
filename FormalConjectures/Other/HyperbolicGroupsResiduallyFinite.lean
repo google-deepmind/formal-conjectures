@@ -43,7 +43,6 @@ index. Both questions were answered negatively by an internal OpenAI model in Se
 
 namespace HyperbolicGroupsResiduallyFinite
 
-set_option linter.style.formal_proof_palomar false in
 /--
 Is every hyperbolic group residually finite?
 
@@ -54,12 +53,11 @@ a torsion-free hyperbolic group that is not residually finite. The
 [Lean proof](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/GroupTheory/Hyperbolic/Main.lean#L7)
 of [OAI26a] defines hyperbolicity by uniformly thin geodesic triangles in a Cayley graph. That
 definition is equivalent to `Group.IsHyperbolic`; the direction needed here is proved in
-`ThinTriangles.isHyperbolic_of_wordHyperbolic`. The linked statement is
+`ThinTriangles.isHyperbolic_of_wordHyperbolic`. OpenAI's Lean statement is
 `hyperbolic_residuallyFinite.variants.thin_triangles`; see
 `hyperbolic_residuallyFinite_of_thin_triangles`.
 -/
-@[category research solved, question, AMS 20, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/GroupTheory/Hyperbolic/Main.lean#L7"]
+@[category research solved, question, AMS 20]
 theorem hyperbolic_residuallyFinite :
     ¬ ∀ (G : Type) [Group G] [Group.IsHyperbolic G], Group.ResiduallyFinite G := by
   sorry
@@ -94,7 +92,7 @@ theorem hyperbolic_residuallyFinite_iff_exists_finiteIndex_ne_top :
 
 /- ## The thin-triangle statement of [OAI26a]
 
-The definitions in `ThinTriangles` are copied from the Lean statement linked at
+The definitions in `ThinTriangles` are copied from OpenAI's Lean statement of
 `hyperbolic_residuallyFinite`. There a group is hyperbolic if some finite set gives a connected
 Cayley graph whose geodesic triangles are uniformly thin, measured on vertices. The lemmas below
 prove that this implies `Group.IsHyperbolic`: thin triangles give the four-point condition for the
@@ -370,14 +368,12 @@ end Group
 
 end ThinTriangles
 
-set_option linter.style.formal_proof_palomar false in
 /-- There is a torsion-free group, hyperbolic in the sense of uniformly thin geodesic triangles in a
 Cayley graph, that is not residually finite. The definitions are those in `ThinTriangles`.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see OpenAI's Lean
 proof. -/
-@[category research solved, AMS 20, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/GroupTheory/Hyperbolic/Main.lean#L7"]
+@[category research solved, AMS 20]
 theorem hyperbolic_residuallyFinite.variants.thin_triangles :
     ∃ (G : Type) (_ : Group G),
       ThinTriangles.TorsionFree G ∧ ThinTriangles.WordHyperbolic G ∧
