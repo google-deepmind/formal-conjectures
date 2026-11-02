@@ -60,6 +60,7 @@ noncomputable def m₁ : ℝ :=
   sSup {d : ℝ | ∃ A : Set ℝ², NullMeasurableSet A volume ∧
     Erdos214.UnitDistanceAvoiding A ∧ upperDensity A = d}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For $A\subset \mathbb{R}^2$ we define the upper density as
 $$\overline{\delta}(A)=\limsup_{R\to \infty}\frac{\lambda(A \cap B_R)}{\lambda(B_R)},$$
@@ -78,6 +79,7 @@ Csiszárik, Matolcsi, Varga, and Zsámboki [ACMVZ23] proved that $m_1\leq 0.247$
 theorem erdos_232 : m₁ ≤ 1 / 4 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ambrus, Csiszárik, Matolcsi, Varga, and Zsámboki [ACMVZ23, Theorem 1]: any Lebesgue measurable,
 $1$-avoiding planar set has upper density at most $0.2470$.
@@ -88,6 +90,7 @@ theorem erdos_232.variants.acmvz_set (A : Set ℝ²) (hA : NullMeasurableSet A v
     (hfree : Erdos214.UnitDistanceAvoiding A) : upperDensity A ≤ 247 / 1000 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ambrus, Csiszárik, Matolcsi, Varga, and Zsámboki [ACMVZ23] proved that $m_1\leq 0.247$.
 -/

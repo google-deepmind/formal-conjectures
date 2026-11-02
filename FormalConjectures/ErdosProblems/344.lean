@@ -40,6 +40,7 @@ open Filter
 
 namespace Erdos344
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A\subseteq \mathbb{N}$ is a set of integers such that
 $$\lvert A\cap \{1,\ldots,N\}\rvert\gg N^{1/2}$$

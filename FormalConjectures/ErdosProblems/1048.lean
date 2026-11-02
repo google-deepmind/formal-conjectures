@@ -39,6 +39,7 @@ open Polynomial Erdos1043
 def openLevelSet (f : Polynomial ℂ) : Set ℂ :=
   {z : ℂ | ‖f.eval z‖ < 1}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $f\in \mathbb{C}[x]$ is a monic polynomial with all roots satisfying
 $\lvert z\rvert \leq r$ for some $0 < r < 2$, then must

@@ -37,6 +37,7 @@ namespace WrittenOnTheWallII.GraphConjecture64
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII Conjecture 64 proposed that every finite simple connected graph $G$ satisfies
 $$

@@ -74,6 +74,7 @@ lemma a_3 : a 3 = 5 := by rfl
 lemma a_4 : a 4 = 14 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: All the rational numbers $\sum_{i=j}^k \frac{1}{a(i)}$ with
 $0 < \min\{2,k\} \le j \le k$ have pairwise distinct fractional parts.

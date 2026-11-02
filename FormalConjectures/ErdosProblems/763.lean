@@ -37,6 +37,7 @@ open Filter Asymptotics AdditiveCombinatorics
 
 namespace Erdos763
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$. Can there exist some constant $c>0$ such that
 $$\sum_{n\leq N} 1_A\ast 1_A(n) = cN+O(1)?$$

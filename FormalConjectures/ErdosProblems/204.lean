@@ -29,6 +29,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos204
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there $n$ such that there is a covering system with moduli the divisors of $n$ which is 'as
 disjoint as possible'?

@@ -61,6 +61,7 @@ noncomputable def periodOfPowerMod (p n : ℕ) : ℕ :=
 
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: let $a_p(n)$ be the length of the period of the sequence $k^p \bmod n$ where $p$ is a prime, then $a_p(n) = n/p$ if $n \equiv 0 \pmod{p^2}$, else $a_p(n) = n$.
 

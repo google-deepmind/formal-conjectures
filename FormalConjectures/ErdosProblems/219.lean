@@ -69,6 +69,7 @@ lemma pair_mem_primeArithmeticProgressions
   let ⟨n, h⟩ := Nat.exists_eq_add_of_lt hpq
   simpa [primeArithmeticProgressions, hp, hq] using ⟨2, by norm_num, Nat.isAPOfLength_pair hpq⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there arbitrarily long arithmetic progressions of primes?
 Solution: yes.
