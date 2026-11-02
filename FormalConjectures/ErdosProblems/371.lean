@@ -46,13 +46,11 @@ theorem erdos_371 :
     { n | Nat.maxPrimeFac (n + 1) > Nat.maxPrimeFac n }.HasDensity (1/2) := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The form of `erdos_371` proved in [OAI26a]: the number of $2 \le n \le X$ with $P(n) < P(n+1)$,
 divided by the real number $X$, tends to $\frac{1}{2}$ as $X \to \infty$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/JointDickman/PaperMain.lean#L21"]
+@[category research solved, AMS 11]
 theorem erdos_371.variants.real_density :
     Filter.Tendsto (fun X : ℝ => (((Finset.Icc 2 ⌊X⌋₊).filter fun n =>
       n.maxPrimeFac < (n + 1).maxPrimeFac).card : ℝ) / X) Filter.atTop (nhds (1 / 2)) := by
