@@ -72,24 +72,21 @@ theorem erdos_986 :
             C * (k : ℝ) ^ (s - 1) / (Real.log k) ^ c := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 For $s = 5$ the exponent of $\log k$ is sharp: for every $\varepsilon > 0$,
 $$R(5,k) \geq \frac{k^4}{(\log k)^{3+\varepsilon}}$$
 for all sufficiently large $k$. This matches the upper bound $R(5,k) \ll k^4/(\log k)^3$ of
 Ajtai, Komlós and Szemerédi [AKS80] up to the $\varepsilon$.
 
-Proved by an internal OpenAI model in September 2026 [OAI26a]; the linked Lean proof also gives
+Proved by an internal OpenAI model in September 2026 [OAI26a]; OpenAI's Lean proof also gives
 the upper bound.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/RamseyFive/Main.lean#L27"]
+@[category research solved, AMS 5]
 theorem erdos_986.variants.log_exponent_five :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ (k : ℕ) in atTop,
       (k : ℝ) ^ 4 / (Real.log k) ^ (3 + ε) ≤ SimpleGraph.classicalRamsey 5 k := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 For every fixed $s \geq 6$ the exponent of $\log k$ is sharp: for every $\varepsilon > 0$,
 $$R(s,k) \geq \frac{k^{s-1}}{(\log k)^{s-2+\varepsilon}}$$
@@ -97,14 +94,13 @@ for all sufficiently large $k$. This matches the upper bound
 $R(s,k) \ll k^{s-1}/(\log k)^{s-2}$ of Ajtai, Komlós and Szemerédi [AKS80] up to the
 $\varepsilon$.
 
-Proved by an internal OpenAI model in September 2026 [OAI26b]; the linked Lean proof also gives
+Proved by an internal OpenAI model in September 2026 [OAI26b]; OpenAI's Lean proof also gives
 the upper bound. For $s = 3$ the order of magnitude $R(3,k) \asymp k^2/\log k$ is due to Kim
 [Ki95]. For $s = 4$, Mattheus and Verstraëte determined $R(4,k)$ up to a factor of order
 $\log^2 k$ [MaVe23]; Chen [Ch26] observes that the bounds for $s \geq 5$, together with the
 proof of the Ajtai–Erdős–Komlós–Szemerédi conjecture, give $R(4,k) = k^3/(\log k)^{2+o(1)}$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/SharpRamsey/Main.lean#L12"]
+@[category research solved, AMS 5]
 theorem erdos_986.variants.log_exponent_ge_six :
     ∀ s : ℕ, 6 ≤ s → ∀ ε : ℝ, 0 < ε → ∀ᶠ (k : ℕ) in atTop,
       (k : ℝ) ^ (s - 1) / (Real.log k) ^ ((s : ℝ) - 2 + ε) ≤ SimpleGraph.classicalRamsey s k := by
