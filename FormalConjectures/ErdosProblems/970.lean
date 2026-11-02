@@ -53,7 +53,8 @@ set_option linter.style.formal_proof_palomar false in
 Let $h(k)$ be Jacobsthal's function, defined to as the minimal $m$ such that, if $n$ has at most $k$ prime factors, then in any set of $m$ consecutive integers there exists an integer coprime to $n$. Determine the order of magnitude of $h(k)$. In particular, is it true that $$h(k) \ll k^2?$$
 
 The bound $h(k) \ll k^2$ was proved by an internal OpenAI model in September 2026 [OAI26a]; see
-the linked Lean proof. The order of magnitude of $h(k)$ remains open.
+the linked Lean proof. The order of magnitude of $h(k)$ remains open. The linked statement is
+`erdos_970.variants.exists_bound`; see `erdos_970_of_exists_bound`.
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/QuadraticBound.lean#L13"]
@@ -63,7 +64,9 @@ theorem erdos_970 :
 
 set_option linter.style.formal_proof_palomar false in
 /--
-The stronger bound $$h(k) \ll \frac{k^2}{(\log\log 3k)^2}$$ proved in [OAI26a].
+The stronger bound $$h(k) \ll \frac{k^2}{(\log\log 3k)^2}$$ proved in [OAI26a]. The linked
+statement is `erdos_970.variants.iterated_log_exists_bound`; see
+`erdos_970_iterated_log_of_exists_bound`.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/IteratedLogBound.lean#L59"]
@@ -71,5 +74,45 @@ theorem erdos_970.variants.iterated_log :
     ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k →
       (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 / (Real.log (Real.log (3 * k))) ^ 2 := by
   sorry
+
+set_option linter.style.formal_proof_palomar false in
+/-- The statement of the linked Lean proof of `erdos_970`, with its definitions unfolded: the
+bound is given by some `m` with `IsJacobsthalBound k m`, not by `jacobsthalFunction k`. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/QuadraticBound.lean#L13"]
+theorem erdos_970.variants.exists_bound :
+    ∃ C : ℝ, 0 < C ∧ ∀ k : ℕ, 0 < k →
+      ∃ m : ℕ, IsJacobsthalBound k m ∧ (m : ℝ) ≤ C * (k : ℝ) ^ 2 := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/-- The statement of the linked Lean proof of `erdos_970.variants.iterated_log`, with its
+definitions unfolded. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/IteratedLogBound.lean#L59"]
+theorem erdos_970.variants.iterated_log_exists_bound :
+    ∃ C : ℝ, 0 < C ∧ ∀ k : ℕ, 0 < k →
+      ∃ m : ℕ, IsJacobsthalBound k m ∧
+        (m : ℝ) ≤ C * (k : ℝ) ^ 2 / (Real.log (Real.log (3 * (k : ℝ)))) ^ 2 := by
+  sorry
+
+/-- `jacobsthalFunction k` is at most any `m` with `IsJacobsthalBound k m`. -/
+@[category test, AMS 11]
+theorem erdos_970_of_exists_bound (h : type_of% erdos_970.variants.exists_bound) :
+    type_of% erdos_970 := by
+  obtain ⟨C, hC, hk⟩ := h
+  refine ⟨C, hC, fun k hk0 => ?_⟩
+  obtain ⟨m, hm, hmC⟩ := hk k hk0
+  exact le_trans (Nat.cast_le.mpr (Nat.sInf_le hm)) hmC
+
+/-- `jacobsthalFunction k` is at most any `m` with `IsJacobsthalBound k m`. -/
+@[category test, AMS 11]
+theorem erdos_970_iterated_log_of_exists_bound
+    (h : type_of% erdos_970.variants.iterated_log_exists_bound) :
+    type_of% erdos_970.variants.iterated_log := by
+  obtain ⟨C, hC, hk⟩ := h
+  refine ⟨C, hC, fun k hk0 => ?_⟩
+  obtain ⟨m, hm, hmC⟩ := hk k hk0
+  exact le_trans (Nat.cast_le.mpr (Nat.sInf_le hm)) hmC
 
 end Erdos970
