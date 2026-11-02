@@ -77,6 +77,7 @@ def erdos_735.answer : Set (Finset ℝ²) :=
   {S | Collinear ℝ (S : Set ℝ²) ∨ (∃ p ∈ S, Collinear ℝ ((S : Set ℝ²) \ {p})) ∨
     NonTrilinear (S : Set ℝ²) ∨ IsFailedFano S}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Given any $n$ points in $\mathbb{R}^2$ when can one give positive weights to the points such that
 the sum of the weights of the points along every line containing at least two points is the same?
@@ -87,7 +88,8 @@ triangle, the angle bisectors, and the incentre (or a projective equivalent). Ac
 Knauer, Pinchasi and Rote [ABKPR08] proved this conjecture. Conversely, every set in these four
 cases is magic.
 -/
-@[category research solved, question value, AMS 51 52]
+@[category research solved, question value, AMS 51 52, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos735/Final.lean#L54"]
 theorem erdos_735 : {S : Finset ℝ² | IsMagic S} = erdos_735.answer := by
   sorry
 
