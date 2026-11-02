@@ -547,13 +547,11 @@ theorem mutuallyUnbiasedBases_dim6_bounds.variants.upper_five :
     ∀ m : ℕ, HasMUBs 6 m → m ≤ 5 := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /-- The bound $\mu(6) \le 5$ in the form proved in [OAI26a]: a family of orthonormal bases of
 `EuclideanSpace ℂ (Fin 6)`, in which any two vectors from different bases have an inner product
 of squared norm $1 / 6$, has at most five members. This is the second part of the linked
 theorem, with OpenAI's `Attainable` and `IsMUBFamily` unfolded. -/
-@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/MutuallyUnbiased/Main.lean#L22"]
+@[category research solved, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim6_bounds.variants.upper_five_orthonormalBasis :
     ∀ n : ℕ, (∃ B : Fin n → OrthonormalBasis (Fin 6) ℂ (EuclideanSpace ℂ (Fin 6)),
       ∀ r s, r ≠ s → ∀ i j, Complex.normSq (inner ℂ (B r i) (B s j)) = (1 : ℝ) / 6) →
