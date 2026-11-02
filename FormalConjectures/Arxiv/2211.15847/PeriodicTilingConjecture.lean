@@ -84,7 +84,6 @@ def EuclideanFullyPeriodic (A : Set (Fin d → ℝ)) : Prop :=
 
 end Euclidean
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **The periodic tiling conjecture** [LW96]: if a finite set $F \subseteq \mathbb{Z}^d$ tiles
 $\mathbb{Z}^d$ by translations, then it also tiles $\mathbb{Z}^d$ with a fully periodic
@@ -92,61 +91,52 @@ translation set.
 
 It is false. Greenfeld and Tao disproved it in a large dimension $d$
 [arxiv/2211.15847]. An internal OpenAI model found a counterexample in dimension three in
-September 2026 [OAI26]; see `periodic_tiling_conjecture.variants.dim_three` and the linked Lean
+September 2026 [OAI26]; see `periodic_tiling_conjecture.variants.dim_three` and OpenAI's Lean
 proof.
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/PeriodicTiling/Counterexample.lean#L23"]
+@[category research solved, AMS 5 52]
 theorem periodic_tiling_conjecture :
     ¬ ∀ (d : ℕ) (F : Finset (Fin d → ℤ)), (∃ A, Tiles F A) →
       ∃ A, Tiles F A ∧ FullyPeriodic A := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The periodic tiling conjecture fails in $\mathbb{Z}^3$: there is a finite tile of
 $\mathbb{Z}^3$ with no fully periodic tiling. Greenfeld and Tao asked whether this holds
 [arxiv/2211.15847]; it was proved by an internal OpenAI model in September 2026 [OAI26].
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/PeriodicTiling/Counterexample.lean#L23"]
+@[category research solved, AMS 5 52]
 theorem periodic_tiling_conjecture.variants.dim_three :
     ∃ F : Finset (Fin 3 → ℤ), (∃ A, Tiles F A) ∧ ∀ A, Tiles F A → ¬ FullyPeriodic A := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The periodic tiling conjecture holds in dimensions $d \le 2$: Newman proved it for $d = 1$
-[Ne77] and Bhattacharya for $d = 2$ [Bh20]. The linked Lean proof includes both cases, as the
+[Ne77] and Bhattacharya for $d = 2$ [Bh20]. OpenAI's Lean proof includes both cases, as the
 minimality part of its statement.
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/PeriodicTiling/Counterexample.lean#L23"]
+@[category research solved, AMS 5 52]
 theorem periodic_tiling_conjecture.variants.dim_le_two (d : ℕ) (hd : d ≤ 2)
     (F : Finset (Fin d → ℤ)) (hF : ∃ A, Tiles F A) : ∃ A, Tiles F A ∧ FullyPeriodic A := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The Euclidean version fails in $\mathbb{R}^3$: the union of unit cubes over the tile of
 `periodic_tiling_conjecture.variants.dim_three` tiles $\mathbb{R}^3$ by translations, up to null
 sets, but never with a fully periodic translation set [OAI26].
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/PeriodicTiling/Counterexample.lean#L23"]
+@[category research solved, AMS 5 52]
 theorem periodic_tiling_conjecture.variants.euclidean_dim_three :
     ∃ F : Finset (Fin 3 → ℤ), (∃ A, AETiles (Thickening F) A) ∧
       ∀ A, AETiles (Thickening F) A → ¬ EuclideanFullyPeriodic A := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
-The statement of the linked Lean proof [OAI26]: a nonempty finite tile of $\mathbb{Z}^3$ with no
+The statement of OpenAI's Lean proof [OAI26]: a nonempty finite tile of $\mathbb{Z}^3$ with no
 fully periodic tiling, whose union of unit cubes tiles $\mathbb{R}^3$ but never periodically,
 and $3$ is the least dimension with such a tile.
 -/
-@[category research solved, AMS 5 52, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Geometry/PeriodicTiling/Counterexample.lean#L23"]
+@[category research solved, AMS 5 52]
 theorem periodic_tiling_conjecture.variants.openai :
     (∃ T : Finset (Fin 3 → ℤ), T.Nonempty ∧
       (∃ A : Set (Fin 3 → ℤ), Tiles T A) ∧
@@ -167,7 +157,7 @@ theorem periodic_tiling_conjecture_of_dim_three
   obtain ⟨A, hA, hper⟩ := hall 3 F hF
   exact hno A hA hper
 
-/-- The linked statement gives the counterexample in dimension three. -/
+/-- OpenAI's Lean statement gives the counterexample in dimension three. -/
 @[category test, AMS 5 52]
 theorem periodic_tiling_conjecture.variants.dim_three_of_openai
     (h : type_of% periodic_tiling_conjecture.variants.openai) :
@@ -175,7 +165,7 @@ theorem periodic_tiling_conjecture.variants.dim_three_of_openai
   obtain ⟨⟨F, -, hF, hno, -⟩, -⟩ := h
   exact ⟨F, hF, hno⟩
 
-/-- The linked statement gives the Euclidean counterexample in dimension three. -/
+/-- OpenAI's Lean statement gives the Euclidean counterexample in dimension three. -/
 @[category test, AMS 5 52]
 theorem periodic_tiling_conjecture.variants.euclidean_dim_three_of_openai
     (h : type_of% periodic_tiling_conjecture.variants.openai) :
@@ -183,7 +173,7 @@ theorem periodic_tiling_conjecture.variants.euclidean_dim_three_of_openai
   obtain ⟨⟨F, -, -, -, hF, hno⟩, -⟩ := h
   exact ⟨F, hF, hno⟩
 
-/-- The minimality part of the linked statement gives the cases $d \le 2$. -/
+/-- The minimality part of OpenAI's Lean statement gives the cases $d \le 2$. -/
 @[category test, AMS 5 52]
 theorem periodic_tiling_conjecture.variants.dim_le_two_of_openai
     (h : type_of% periodic_tiling_conjecture.variants.openai) :
