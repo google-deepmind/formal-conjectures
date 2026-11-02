@@ -36,7 +36,6 @@ public import FormalConjecturesUtil
 
 namespace FlintCooksonHills
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The Flint Hills series summing $csc(n)^2 / n^3$ from $n=1$ to $\infty$ converges.
 (Note that we 0-index the series below.)
@@ -45,14 +44,14 @@ Alekseyev [Ale11, Corollary 4] showed that convergence implies that the irration
 $\mu(\pi)$ is at most $5/2$; conversely, Meiburg [Mei22] showed that the series converges if
 $\mu(\pi) < 5/2$. OpenAI [OAI26] proved that $\mu(\pi) = 2$, and proved convergence in Lean.
 -/
-@[category research solved, question, AMS 40, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PiExponent/Main.lean#L29"]
+@[category research solved, question, AMS 40]
 theorem flint_hills_series_converges :
     Summable (fun n : ℕ =>
       1 / ((((n + 1) : ℝ)^3) * (Real.sin (n + 1)^2))) := by
   sorry
 
-/-- The linked statement, with the index cast from `ℕ`, gives `flint_hills_series_converges`. -/
+/-- OpenAI's Lean statement, with the index cast from `ℕ`, gives
+`flint_hills_series_converges`. -/
 @[category test, AMS 40]
 theorem flint_hills_series_converges_of_natCast
     (h : Summable (fun n : ℕ => 1 / (((n + 1 : ℕ) : ℝ) ^ 3 * Real.sin (n + 1 : ℕ) ^ 2))) :
