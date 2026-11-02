@@ -25,6 +25,9 @@ public import FormalConjecturesUtil
 * [OAI26a] OpenAI, *A Torsion-Free Group Algebra with Zero Divisors*. OpenAI Math Release
   preprint (2026).
   https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-Torsion-Free-Group-Algebra-with-Zero-Divisors-September-23-2026/paper.pdf
+* [OAI26b] OpenAI, *The Bass trace conjecture and the characteristic-zero Kaplansky idempotent
+  conjecture*. OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Bass-trace-conjecture-for-complex-group-rings-September-24-2026/The-Bass-trace-conjecture-for-complex-group-rings-September-24-2026.pdf
 
 Throughout, "torsion-free" means that the identity is the only element of finite order
 (`Monoid.IsTorsionFree`). This is weaker than Mathlib's `IsMulTorsionFree`, which asks for
@@ -62,11 +65,49 @@ theorem zero_divisor_conjecture :
 **The idempotent conjecture**
 
 If `G` is torsion-free, then `K[G]` has no non-trivial idempotents.
+
+The case of characteristic zero was proved by an internal OpenAI model in September 2026
+[OAI26b]; see `idempotent_conjecture.variants.charZero` and
+`idempotent_conjecture_of_charZero`.
 -/
 @[category research open, AMS 16 20]
 theorem idempotent_conjecture (a : MonoidAlgebra K G) (h : IsIdempotentElem a) :
     a = 0 ∨ a = 1 := by
   sorry
+
+section CharZero
+
+universe u v
+
+omit hG in
+set_option linter.style.formal_proof_palomar false in
+/--
+The idempotent conjecture over every commutative domain $R$ of characteristic zero, as stated
+in the linked Lean proof of [OAI26b]: if every element of finite order in $G$ is the identity,
+then $R[G]$ has no idempotents other than $0$ and $1$.
+
+The linked theorem states more: the Bass trace of an idempotent matrix over $\mathbb{C}[G]$ is
+its augmentation rank.
+-/
+@[category research solved, AMS 16 20, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/RingTheory/BassTrace/TorsionFree.lean#L50"]
+theorem idempotent_conjecture.variants.charZero :
+    ∀ (G : Type u) [Group G], (∀ g : G, IsOfFinOrder g → g = 1) →
+      ∀ (R : Type v) [CommRing R] [IsDomain R] [CharZero R] (e : MonoidAlgebra R G),
+        e ^ 2 = e → e = 0 ∨ e = 1 := by
+  sorry
+
+omit hG in
+/-- The linked statement gives `idempotent_conjecture` for every field of characteristic
+zero. -/
+@[category test, AMS 16 20]
+theorem idempotent_conjecture_of_charZero
+    (h : type_of% @idempotent_conjecture.variants.charZero.{u, v})
+    {K : Type v} [Field K] [CharZero K] {G : Type u} [Group G] (hG : Monoid.IsTorsionFree G)
+    (a : MonoidAlgebra K G) (ha : IsIdempotentElem a) : a = 0 ∨ a = 1 :=
+  h G (fun g hg => by_contra fun hne => hG g hne hg) K a (by rw [sq, ha])
+
+end CharZero
 
 variable {K G} in
 /--
