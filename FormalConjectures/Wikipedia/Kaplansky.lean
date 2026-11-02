@@ -54,7 +54,7 @@ If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero di
 This is false. It was disproved by an internal OpenAI model in September 2026 [OAI26a], which
 constructed a finitely presented torsion-free group $G$ and non-zero
 $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$; see
-`counter_zero_divisor_conjecture` and the linked Lean proof.
+`counter_zero_divisor_conjecture` and OpenAI's Lean proof.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
@@ -152,30 +152,26 @@ theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
 
 /-! ## Direct finiteness -/
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **Kaplansky's direct finiteness conjecture** asserts that for every field $K$ and every group
 $G$, the group algebra $K[G]$ is directly finite: $ab = 1$ implies $ba = 1$.
 
 It is false. An internal OpenAI model found a finite field $K$ of characteristic two, a finitely
 generated group $G$ and $a, b \in K[G]$ with $ab = 1$ and $ba \neq 1$ in September 2026
-[OAI26c]; see `direct_finiteness_conjecture.variants.char_two` and the linked Lean proof.
+[OAI26c]; see `direct_finiteness_conjecture.variants.char_two` and OpenAI's Lean proof.
 -/
-@[category research solved, AMS 16 20, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/RingTheory/DirectFiniteness/Main.lean#L9"]
+@[category research solved, AMS 16 20]
 theorem direct_finiteness_conjecture :
     ¬ ∀ (K : Type) [Field K] (G : Type) [Group G],
       IsDedekindFiniteMonoid (MonoidAlgebra K G) := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
-The counterexample of [OAI26c], as stated in the linked Lean proof: a finite field $K$ of
+The counterexample of [OAI26c], as stated in OpenAI's Lean proof: a finite field $K$ of
 characteristic two, a finitely generated group $G$ and $a, b \in K[G]$ with $ab = 1$ and
 $ba \neq 1$.
 -/
-@[category research solved, AMS 16 20, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/RingTheory/DirectFiniteness/Main.lean#L9"]
+@[category research solved, AMS 16 20]
 theorem direct_finiteness_conjecture.variants.char_two :
     ∃ (K : Type) (_ : Field K) (_ : Fintype K) (_ : CharP K 2),
       ∃ (G : Type) (_ : Group G) (_ : Group.FG G),
@@ -204,7 +200,7 @@ set_option linter.style.formal_proof_palomar false in
 The **Zero-divisor Conjecture** is false: there is a finitely presented torsion-free group $G$
 and non-zero $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see OpenAI's Lean
 proof.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
