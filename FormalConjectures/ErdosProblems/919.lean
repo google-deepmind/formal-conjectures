@@ -87,7 +87,7 @@ lexicographic order. Two vertices $(\xi, \eta)$ and $(\xi', \eta')$ with $\xi < 
 when $\xi$ and $\xi'$ are joined and $\eta \geq \xi'$.
 -/
 @[category research solved, AMS 3 5, formal_proof using lean4 at
-  "https://github.com/mnn31/erdos-lean/blob/e7de340be9c1828da18538feb254ee9dfcf3af42/ErdosLean/Erdos919.lean#L848"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000003"]
 theorem erdos_919.variants.iff_erdos_918_i :
     (∃ G : SimpleGraph (ω_ 2 ^ 2 : Ordinal.{u}).ToType, G.chromaticCardinal = ℵ_ 2 ∧
       ∀ X : Set (ω_ 2 ^ 2 : Ordinal.{u}).ToType, typeLT X < ω_ 2 ^ 2 →
@@ -102,7 +102,7 @@ chromatic number $> \aleph_0$ all of whose subgraphs on $\aleph_1$ vertices have
 $\leq \aleph_0$.
 -/
 @[category research solved, AMS 3 5, formal_proof using lean4 at
-  "https://github.com/mnn31/erdos-lean/blob/e7de340be9c1828da18538feb254ee9dfcf3af42/ErdosLean/Erdos919.lean#L859"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000003"]
 theorem erdos_919.variants.aleph_1_iff :
     (∃ G : SimpleGraph (ω_ 2 ^ 2 : Ordinal.{u}).ToType, G.chromaticCardinal = ℵ₁ ∧
       ∀ X : Set (ω_ 2 ^ 2 : Ordinal.{u}).ToType, typeLT X < ω_ 2 ^ 2 →
@@ -115,7 +115,7 @@ theorem erdos_919.variants.aleph_1_iff :
 A positive answer to the $\aleph_2$ question gives a positive answer to the $\aleph_1$ question.
 -/
 @[category research solved, AMS 3 5, formal_proof using lean4 at
-  "https://github.com/mnn31/erdos-lean/blob/e7de340be9c1828da18538feb254ee9dfcf3af42/ErdosLean/Erdos919.lean#L869"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000003"]
 theorem erdos_919.variants.aleph_2_imp_aleph_1 :
     (∃ G : SimpleGraph (ω_ 2 ^ 2 : Ordinal.{u}).ToType, G.chromaticCardinal = ℵ_ 2 ∧
       ∀ X : Set (ω_ 2 ^ 2 : Ordinal.{u}).ToType, typeLT X < ω_ 2 ^ 2 →
@@ -132,7 +132,7 @@ $2^{\aleph_0} = \aleph_1$, and its subgraphs on $\aleph_1$ vertices have chromat
 $\leq \aleph_0$.
 -/
 @[category research solved, AMS 3 5, formal_proof using lean4 at
-  "https://github.com/mnn31/erdos-lean/blob/e7de340be9c1828da18538feb254ee9dfcf3af42/ErdosLean/Erdos919.lean#L883"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000003"]
 theorem erdos_919.variants.aleph_1_of_CH (hCH : 𝔠 = ℵ₁) :
     ∃ G : SimpleGraph (ω_ 2 ^ 2 : Ordinal.{u}).ToType, G.chromaticCardinal = ℵ₁ ∧
       ∀ X : Set (ω_ 2 ^ 2 : Ordinal.{u}).ToType, typeLT X < ω_ 2 ^ 2 →
