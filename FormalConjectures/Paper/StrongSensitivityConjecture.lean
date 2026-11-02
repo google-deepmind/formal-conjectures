@@ -224,14 +224,12 @@ lemma blockSensitivity_le {n : ℕ} (f : (Fin n → Bool) → Bool) :
 
 end Separation
 
-set_option linter.style.formal_proof_palomar false in
 /-- For every `d ≥ 1` there is a Boolean function `f` with
 `bs(f) / s(f)^2 ≥ 2^d / (4 (d + 2)^2)`, stated with the definitions in `Separation`.
 
 This was proved by an internal OpenAI model in September 2026 [OAI26]; see the linked Lean
 proof. -/
-@[category research solved, AMS 68, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sensitivity/Separation.lean#L12"]
+@[category research solved, AMS 68]
 theorem strong_sensitivity_conjecture.variants.quantitative_separation (d : ℕ) (hd : 1 ≤ d) :
     ∃ (n : ℕ) (f : (Fin n → Bool) → Bool),
       0 < n ∧ f (fun _ => false) = false ∧
