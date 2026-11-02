@@ -117,7 +117,6 @@ theorem auslander_reiten :
 /-- The field $\mathbb{F}_2(q, H_1, H_2)$ over which [OAI26] builds its counterexample. -/
 abbrev counterexampleField : Type := FractionRing (MvPolynomial (Fin 3) (ZMod 2))
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The counterexample of [OAI26]: a finite-dimensional algebra $\Lambda$ over
 $K = \mathbb{F}_2(q, H_1, H_2)$ and a finite-dimensional $\Lambda$-module $M$ that is not
@@ -128,8 +127,7 @@ The linked theorem states more: $M$ also has a totally acyclic complete resoluti
 quotient of $\Lambda$ by its Jacobson radical is $K^8$, and all of this survives every base
 change to a field extension of $K$.
 -/
-@[category research solved, AMS 13 16 18, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/AuslanderReiten/All.lean#L738"]
+@[category research solved, AMS 13 16 18]
 theorem auslander_reiten.variants.explicit :
     ∃ (Λ : Type) (_ : Ring Λ) (_ : Algebra counterexampleField Λ)
       (M : Type) (_ : AddCommGroup M) (_ : Module Λ M) (_ : Module counterexampleField M)
