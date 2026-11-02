@@ -31,6 +31,8 @@ A number $k$ is refactorable if its number of divisors, $\tau(k)$, divides $k$.
   J. Integer Seq. 5 (2002), Article 02.2.8.
 - [Sp85] Spiro, C., *How often is the number of divisors of n a divisor of n?*
   J. Number Theory 21 (1985), 81--100.
+- [Ja26] Jack, L., *A proof of Colton's conjecture on refactorable numbers*. Zenodo (2026),
+  [doi:10.5281/zenodo.23874061](https://doi.org/10.5281/zenodo.23874061).
 -/
 
 @[expose] public section
@@ -78,11 +80,11 @@ noncomputable def countRefactorable (x : ℝ) : ℕ :=
 Simon Colton conjectures that the number of refactorable numbers less than $x$ is at least
 $\frac{x}{2\log x}$. This is an asymptotic claim, so we state it for sufficiently large $x$.
 
-In this form it is a theorem: Zelinsky [Ze02, Theorem 7] proved that for every $k$ the number of
+In this form it is a theorem: Zelinsky [Ze02, Theorem 14] proved that for every $k$ the number of
 refactorable numbers $\le n$ exceeds $k \pi(n)$ for all sufficiently large $n$, and
 $\pi(n) \sim n / \log n$. It also follows from Spiro's asymptotic [Sp85], by which the count is
 $\frac{x}{\sqrt{\log x}} (\log \log x)^{-1 + o(1)}$. See `colton_conjecture` for the
-pointwise conjecture that remains open.
+pointwise conjecture.
 -/
 @[category research solved, AMS 11]
 theorem conjecture : ∀ᶠ x in Filter.atTop,
@@ -95,9 +97,10 @@ refactorable numbers $\le n$ is at least half the number of primes $\le n$, i.e.
 $\pi(n) \le 2\,T(n)$.
 
 Zelinsky [Ze02] proved this for all sufficiently large $n$ (see `conjecture`), with an explicit
-bound of $7.42 \cdot 10^{13}$ beyond which it holds; the remaining range is open.
+bound of $7.42 \cdot 10^{13}$ beyond which it holds. Jack [Ja26] proved it for every $n$,
+with equality only at $n = 7$, by a computation up to $10^{10}$ and explicit bounds for $\pi$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem colton_conjecture : ∀ n : ℕ, Nat.primeCounting n ≤ 2 * countRefactorableNat n := by
   sorry
 
