@@ -231,6 +231,7 @@ theorem sq_card_divisors_le (n : ℕ) :
 
 /- ### The problem itself -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $r(n)$ count the number of $d_1, d_2$ such that $d_1 \mid n$ and $d_2 \mid n$ and
 $d_1 < d_2 < 2 d_1$. Is it true that, for every $\epsilon > 0$,
