@@ -162,15 +162,13 @@ theorem counter_zero_divisor_conjecture :
       (α β : MonoidAlgebra (ZMod 2) G), α ≠ 0 ∧ β ≠ 0 ∧ α * β = 0 := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The part of the linked statement of [OAI26a] that `counter_zero_divisor_conjecture` uses, with
 its definition of torsion-freeness unfolded: $g^n = 1$ with $n > 0$ forces $g = 1$.
 
 The linked theorem states more: $G$ also has a finite $2$-dimensional $K(G, 1)$.
 -/
-@[category research solved, AMS 16 20, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
+@[category research solved, AMS 16 20]
 theorem counter_zero_divisor_conjecture.variants.pow_eq_one :
     ∃ (G : Type) (_ : Group G), Group.IsFinitelyPresented G ∧
       (∀ (g : G) (n : ℕ), 0 < n → g ^ n = 1 → g = 1) ∧
