@@ -38,17 +38,15 @@ $1 - \beta = o(1 / \log q)$. The conjecture asserts that such zeros do not exist
 
 namespace SiegelZero
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **There are no Landau–Siegel zeros.** There is an absolute constant $c > 0$ such that for every
 modulus $q \ge 3$, every real primitive Dirichlet character $\chi \ne 1$ modulo $q$ and every
 real zero $\beta \in (0, 1)$ of $L(s, \chi)$, we have $\beta \le 1 - c / \log q$.
 
-This was proved by an internal OpenAI model in October 2026 [OAI26]; see the linked Lean proof.
+This was proved by an internal OpenAI model in October 2026 [OAI26]; see OpenAI's Lean proof.
 The statement is written as $c \le (1 - \beta) \log q$, as in that proof.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/SiegelZeros/Conclusions/Theorem.lean#L11"]
+@[category research solved, AMS 11]
 theorem no_siegel_zeros :
     ∃ c : ℝ, 0 < c ∧
       ∀ (q : ℕ) [NeZero q], 3 ≤ q →
