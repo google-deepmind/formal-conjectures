@@ -99,17 +99,15 @@ positive probability. -/
 noncomputable def criticalProbability : unitInterval :=
   sInf {p : unitInterval | 0 < G.law p G.percolates}
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **No percolation at criticality** [BS96]: on an infinite, connected, locally finite,
 quasi-transitive graph with $p_c < 1$, critical Bernoulli bond percolation has almost surely no
 infinite cluster.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see OpenAI's Lean
 proof.
 -/
-@[category research solved, AMS 60 82, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/CriticalPercolation/Main.lean#L190"]
+@[category research solved, AMS 60 82]
 theorem no_percolation_at_criticality [Infinite V]
     (hconnected : G.fullGraph.Connected)
     (hlocal : G.LocallyFinite)
@@ -192,16 +190,14 @@ noncomputable def bondCritical : ℝ :=
 noncomputable def siteCritical : ℝ :=
   sInf {p : ℝ | p ∈ Set.Icc (0 : ℝ) 1 ∧ 0 < siteLaw p (siteInfiniteAt 0)}
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **No percolation at criticality on $\mathbb{Z}^3$**: at the critical probability, bond
 percolation and site percolation on $\mathbb{Z}^3$ almost surely have only finite clusters.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26b]; see the linked Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26b]; see OpenAI's Lean
 proof.
 -/
-@[category research solved, AMS 60 82, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/CriticalZ3/Main.lean#L107"]
+@[category research solved, AMS 60 82]
 theorem critical_no_infinite :
     (∀ᵐ ω ∂bondLaw bondCritical, ∀ x : Vertex, (bondCluster ω x).Finite) ∧
     (∀ᵐ ω ∂siteLaw siteCritical, ∀ x : Vertex, (siteCluster ω x).Finite) := by
