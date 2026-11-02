@@ -71,21 +71,17 @@ lemma falconer_conjecture (d : ℕ) (h2d : 2 ≤ d) (E : Set <| ℝ^d) (hc : IsC
     (hd : d < 2 * dimH E) :
     0 < volume (image2 dist E E) := sorry
 
-set_option linter.style.formal_proof_palomar false in
 /-- The statement of the linked Lean proof of `falconer_conjecture_two`, with its definitions
 unfolded: the hypothesis is $\dim_H E > 1$ and the distance set is written out. -/
-@[category research solved, AMS 28 42, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/Falconer/Main.lean#L50"]
+@[category research solved, AMS 28 42]
 theorem falconer_conjecture_two.variants.main_target :
     ∀ E : Set (EuclideanSpace ℝ (Fin 2)), IsCompact E → 1 < dimH E →
       0 < volume {r : ℝ | ∃ x ∈ E, ∃ y ∈ E, dist x y = r} := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /-- The statement of the linked Lean proof of `falconer_conjecture`: the hypothesis is
 $\dim_H E > d / 2$ and the distance set is written out. -/
-@[category research solved, AMS 28 42, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/Falconer/Campaign123PlanarFurstenbergProof.lean#L47"]
+@[category research solved, AMS 28 42]
 theorem falconer_conjecture.variants.all_dimensions :
     ∀ (d : ℕ), 2 ≤ d → ∀ E : Set (EuclideanSpace ℝ (Fin d)), IsCompact E →
       (d : ℝ≥0∞) / 2 < dimH E →
