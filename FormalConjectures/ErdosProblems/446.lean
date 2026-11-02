@@ -86,6 +86,7 @@ noncomputable def deltaR (r n : ℕ) : ℝ :=
     (fun m ↦ divisorCount n m = r)).card : ℕ) : ℝ) /
       (intervalLcm n : ℝ))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\delta(n)$ denote the density of integers which are divisible by some integer in $(n,2n)$.
 What is the growth rate of $\delta(n)$? If $\delta_1(n)$ is the density of integers which have
@@ -114,6 +115,7 @@ theorem erdos_446 :
         ¬ (deltaR 1 =o[atTop] delta) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The second question on its own: is it true that $\delta_1(n)=o(\delta(n))$? Ford [Fo08]
 proved that it is not. -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
