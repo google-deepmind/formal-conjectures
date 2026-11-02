@@ -274,7 +274,6 @@ lemma exists_le_integralMeansSpectrum
 
 end IntegralMeans
 
-set_option linter.style.formal_proof_palomar false in
 /-- For every $\varepsilon > 0$ there is $C_\varepsilon$ such that every normalised univalent
 function satisfies
 $$\frac{1}{2\pi} \int_{-\pi}^{\pi} |f'(re^{i\theta})|^{-2} \, d\theta
@@ -285,8 +284,7 @@ for $1/2 \le r < 1$, and the universal spectrum at $-2$ is $1$, with the definit
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof.
 The linked statement also gives the integrability of $|\varphi'|^s$ for $4/3 < s < 4$ for conformal
 maps onto the disk and of $|f'|^t$ for $-2 < t < 2/3$. -/
-@[category research solved, AMS 30, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/IntegralMeans/Main.lean#L10"]
+@[category research solved, AMS 30]
 theorem brennan_universalSpectrum.variants.uniform_bound :
     (∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ f : ℂ → ℂ, IntegralMeans.Schlicht f →
       ∀ r : ℝ, 1 / 2 ≤ r → r < 1 →
