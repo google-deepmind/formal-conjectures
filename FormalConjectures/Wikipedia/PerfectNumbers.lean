@@ -95,6 +95,7 @@ theorem odd_perfect_number.lower_bound (n : ℕ) (hn : Odd n) (hp : Perfect n) :
     n > 10^1500 ∧ (n.primeFactorsList).length ≥ 101 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A known result: If an odd perfect number exists, it must be of the form
 $p^α * m^2$ where $p$ is prime, $p \equiv 1 \pmod{4}$, $\alpha \equiv 1 \pmod{4}$,

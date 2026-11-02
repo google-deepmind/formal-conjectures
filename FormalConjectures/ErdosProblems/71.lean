@@ -35,6 +35,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos71
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that for every infinite arithmetic progression $P$ which contains even numbers
 there is some constant $c=c(P)$ such that every graph with average degree at least $c$

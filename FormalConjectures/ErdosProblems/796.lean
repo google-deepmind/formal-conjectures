@@ -50,6 +50,7 @@ noncomputable def g (k n : ℕ) : ℕ :=
 noncomputable def normalizedError (n : ℕ) : ℝ :=
   ((g 3 n : ℝ) - (n : ℝ) * Real.log (Real.log n) / Real.log n) / ((n : ℝ) / Real.log n)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 2$ and let $g_k(n)$ be the largest possible size of
 $A\subseteq \{1,\ldots,n\}$ such that every $m$ has $<k$ solutions to

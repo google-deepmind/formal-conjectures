@@ -45,6 +45,7 @@ def harrisHypergraph : Finset (Finset (Fin 9)) :=
         (Finset.image (fun v : Fin 9 => (v : ℕ) / 3) e).card = 3)
       (Finset.powersetCard 3 Finset.univ))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that every $3$-uniform hypergraph on $3n$ vertices with at least $n^3+1$ edges must
 contain either a subgraph on $4$ vertices with $3$ edges or a subgraph on $5$ vertices with $7$

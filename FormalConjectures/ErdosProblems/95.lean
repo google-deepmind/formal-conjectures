@@ -41,6 +41,7 @@ open Filter EuclideanGeometry
 
 namespace Erdos95
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $x_1,\ldots,x_n\in\mathbb{R}^2$ determine the set of distances $\{u_1,\ldots,u_t\}$. Suppose
 $u_i$ appears as the distance between $f(u_i)$ many pairs of points. Then for all $\epsilon>0$

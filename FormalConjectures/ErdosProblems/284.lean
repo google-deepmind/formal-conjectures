@@ -59,6 +59,7 @@ theorem eventually_f_isGreatest :
     ∀ᶠ k : ℕ in atTop, IsGreatest (firstDenominators k) (f k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(k)$ be the maximal value of $n_1$ such that there exist $n_1<n_2<\cdots <n_k$ with
 $$1=\frac{1}{n_1}+\cdots+\frac{1}{n_k}.$$

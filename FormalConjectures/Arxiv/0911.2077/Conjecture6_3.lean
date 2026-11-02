@@ -32,6 +32,7 @@ open NNReal ENNReal ProbabilityTheory
 /-- As usual, let $\Phi$ be the distribution function of the standard normal. -/
 local notation "Φ" => cdf (gaussianReal 0 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Empirical evidence seems to suggest that Slud's bound does not hold for all $p$, and in fact, as $n\to\infty$,
 the maximal permissible $p$ shrinks to $\frac{1}{2}$. Also, the following appears to be true:

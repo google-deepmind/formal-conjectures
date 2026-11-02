@@ -42,6 +42,7 @@ open scoped ArithmeticFunction.sigma
 
 namespace Erdos946
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There are infinitely many $n$ such that $τ(n) = τ(n+1)$. Proved in [He84].
 Here τ is the divisor counting function, which is `σ 0` in mathlib.

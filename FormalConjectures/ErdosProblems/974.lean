@@ -40,6 +40,7 @@ def IsTuranConfiguration {n : ℕ} (z : Fin n → ℂ) : Prop :=
     (Even n → ∃ c : ℂ, ‖c‖ = 1 ∧ c ≠ 1 ∧
       Set.range z = {ζ : ℂ | ζ ^ (n / 2) = 1} ∪ {ζ : ℂ | ζ ^ (n / 2) = c})
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $z_1,\ldots,z_n\in \mathbb{C}$ be a sequence such that $z_1=1$. Suppose that the sequence of
 $$s_k=\sum_{1\leq i\leq n}z_i^k$$

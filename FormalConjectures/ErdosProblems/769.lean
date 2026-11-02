@@ -69,6 +69,7 @@ def Erdos769LowerBound : Prop :=
   ∃ A B N : ℕ, 0 < A ∧ 0 < B ∧
     ∀ n c : ℕ, N ≤ n → IsCutoff n c → A * n ^ n ≤ B * c
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $c(n)$ be minimal such that if $k\geq c(n)$ then the $n$-dimensional unit
 cube can be decomposed into $k$ homothetic $n$-dimensional cubes. Give good

@@ -88,6 +88,7 @@ theorem erdos_10.variants.granville_soundararajan_odd :
       {n : ℕ | Even n ∧ n ≠ 0} ⊆ sumPrimeAndTwoPows 4 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bogdan Grechuk has observed that `1117175146` is not the sum of a prime
 and at most $3$ powers of $2$.
@@ -98,6 +99,7 @@ theorem erdos_10.variants.grechuk_example :
     1117175146 ∉ sumPrimeAndTwoPows 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There are infinitely many even integers not the sum of a prime and $2$ powers of $2$
 -/
@@ -106,6 +108,7 @@ theorem erdos_10.variants.two_pows :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bogdan Grechuk has observed that $1117175146$ is not the sum of a prime and at most $3$
 powers of $2$, and pointed out that parity considerations, coupled with the fact that there

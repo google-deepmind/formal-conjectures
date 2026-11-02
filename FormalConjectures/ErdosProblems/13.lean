@@ -36,6 +36,7 @@ if `a < min(b, c)` then `a` does not divide `b + c`.
 def IsForbiddenTripleFree (A : Finset ℕ) : Prop :=
   ∀ a ∈ A, ∀ b ∈ A, ∀ c ∈ A, a < min b c → ¬ (a ∣ b + c)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A \subseteq \{1, ..., N\}$ is a set with no $a, b, c \in A$ such that $a | (b+c)$ and
 $a < \min(b,c)$, then $|A| \le N/3 + O(1)$. This has been solved by Bedert [Be23].

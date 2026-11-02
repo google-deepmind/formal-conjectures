@@ -58,6 +58,7 @@ theorem a_4 : a 4 = 41 := by decide
 def IsWeightedTribonacci (a b c : ℤ) (x : ℕ → ℤ) : Prop :=
   ∀ n, x (n + 3) = a * x (n + 2) + b * x (n + 1) + c * x n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The current sequence contains primes, including $3, 5, 41, 21523361$.
 Is there an $(a, b, c)$ weighted tribonacci sequence with $a, b, c$ relatively prime

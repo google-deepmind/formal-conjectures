@@ -85,6 +85,7 @@ noncomputable def probability (lam : ℝ) (n : ℕ)
     (P : SimpleGraph (Fin n) → Prop) : ℝ :=
   (randomGraph lam n).real {G | P G}
 
+set_option linter.style.formal_proof_palomar false in
 /-- In $G(n,1/n)$ the second-largest component has order $n^{2/3}$ in probability.
 The two positive constants may depend on the probability tolerance. -/
 @[category research solved, AMS 5 60,
@@ -97,6 +98,7 @@ theorem erdos_745 :
           (secondLargestComponentOrder G : ℝ) ≤ C * (n : ℝ) ^ (2 / 3 : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For fixed $\lambda>1$, every constant above
 $(\lambda-1-\log\lambda)^{-1}$ gives a logarithmic upper bound with high probability. -/
 @[category research solved, AMS 5 60,
@@ -108,6 +110,7 @@ theorem erdos_745.variants.supercritical (lam : ℝ) (hlam : 1 < lam) (A : ℝ)
       Filter.atTop (𝓝 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For each fixed $\lambda>0$ with $\lambda\ne1$, the second-largest component size,
 divided by $\log n$, converges in probability to $(\lambda-1-\log\lambda)^{-1}$. -/
 @[category research solved, AMS 5 60,
