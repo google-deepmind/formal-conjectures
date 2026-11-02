@@ -64,6 +64,7 @@ theorem words_naive_bound
     A.card * B.card ≤ q ^ (2 * n) := by
   simp [Nat.mul_le_mul, two_mul, pow_add, (Finset.card_le_univ _).trans_eq]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 $A$ and $B$ are sets of words of length $n$ over alphabet with $q \geq 1$ letters.
 No suffix of a word in $A$ coincides with a prefix of a word in $B$.
