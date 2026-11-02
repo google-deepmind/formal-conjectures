@@ -215,45 +215,39 @@ def BPL : Set Language :=
         (polynomialClock c k x.length)) ∧
       (x ∉ A → M.acceptanceProbability x (polynomialClock c k x.length) ≤ (1 / 3 : ℚ))}
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **$\mathsf{RL} = \mathsf{L}$**: randomized logarithmic space with one-sided error is no more
 powerful than deterministic logarithmic space.
 
 This was proved by an internal OpenAI model in September 2026 [OAI26]; see
-`rl_eq_l.variants.openai` and the linked Lean proof.
+`rl_eq_l.variants.openai` and OpenAI's Lean proof.
 -/
-@[category research solved, AMS 68, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/lean/OAI/Computability/Logspace/Equality.lean#L104"]
+@[category research solved, AMS 68]
 theorem rl_eq_l : RL = L := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 **$\mathsf{BPL} = \mathsf{L}$**: randomized logarithmic space with two-sided error is no more
 powerful than deterministic logarithmic space.
 
 This was proved by an internal OpenAI model in September 2026 [OAI26]; see
-`rl_eq_l.variants.openai` and the linked Lean proof.
+`rl_eq_l.variants.openai` and OpenAI's Lean proof.
 -/
-@[category research solved, AMS 68, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/lean/OAI/Computability/Logspace/Equality.lean#L104"]
+@[category research solved, AMS 68]
 theorem bpl_eq_l : BPL = L := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
-/-- The statement of the linked Lean proof [OAI26]: $\mathsf{L} = \mathsf{RL} = \mathsf{BPL}$. -/
-@[category research solved, AMS 68, formal_proof using lean4 at
-  "https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/lean/OAI/Computability/Logspace/Equality.lean#L104"]
+/-- The statement of OpenAI's Lean proof [OAI26]: $\mathsf{L} = \mathsf{RL} = \mathsf{BPL}$. -/
+@[category research solved, AMS 68]
 theorem rl_eq_l.variants.openai : L = RL ∧ RL = BPL := by
   sorry
 
-/-- The linked statement gives `RL = L`. -/
+/-- OpenAI's Lean statement gives `RL = L`. -/
 @[category test, AMS 68]
 theorem rl_eq_l_of_openai (h : type_of% rl_eq_l.variants.openai) : type_of% rl_eq_l :=
   h.1.symm
 
-/-- The linked statement gives `BPL = L`. -/
+/-- OpenAI's Lean statement gives `BPL = L`. -/
 @[category test, AMS 68]
 theorem bpl_eq_l_of_openai (h : type_of% rl_eq_l.variants.openai) : type_of% bpl_eq_l :=
   (h.1.trans h.2).symm
