@@ -65,6 +65,7 @@ theorem superlevelSet_anti {f : ℂ → ℂ} {c c' : ℝ} (h : c ≤ c') :
     superlevelSet f c' ⊆ superlevelSet f c :=
   fun _ hz ↦ lt_of_le_of_lt h hz
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(z)$ be a non-constant entire function such that, for some $c$, the set
 $E(c)=\{ z: \lvert f(z)\rvert >c\}$ has finite measure.
@@ -80,7 +81,8 @@ the two together answer the question.
 Since $f$ is non-constant, $M(r)\to\infty$ and the integrand is positive for large $r$. We read
 the integral as a condition at infinity: integrability on $(R,\infty)$ for some $R$.
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1118.lean#L5070"]
 theorem erdos_1118.parts.i (f : ℂ → ℂ) (hf : Differentiable ℂ f)
     (hnc : ¬ ∃ a : ℂ, ∀ z, f z = a) (c : ℝ) (hc : volume (superlevelSet f c) < ⊤) :
     ∃ R : ℝ, IntegrableOn (fun r : ℝ ↦ r / Real.log (Real.log (maxModulus f r))) (Set.Ioi R) := by
@@ -106,6 +108,7 @@ theorem erdos_1118.variants.best_possible (φ : ℝ → ℝ) (hφ : Monotone φ)
       ∀ᶠ r in atTop, Real.log (Real.log (maxModulus f r)) < φ r := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $E(c)$ has finite measure then must there exist $c'<c$ such that $E(c')$ has finite measure?
 
@@ -115,18 +118,21 @@ $(m,\infty)$ with $0<m<\infty$ (see the zbMATH review Zbl 0416.30024); the case 
 gives the answer. For $c\le 0$ the set $E(c)$ always has infinite measure, so only $c'>0$
 matters.
 -/
-@[category research solved, question, AMS 30]
+@[category research solved, question, AMS 30, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1118.lean#L5070"]
 theorem erdos_1118.parts.ii :
     ¬ ∀ f : ℂ → ℂ, Differentiable ℂ f → (¬ ∃ a : ℂ, ∀ z, f z = a) →
       ∀ c : ℝ, volume (superlevelSet f c) < ⊤ → ∃ c' < c, volume (superlevelSet f c') < ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Gol'dberg [Go79b] gave an entire function $f$ for which the area $A(c)$ of $E(c)$ is finite for
 some $c$ but not for all $c$ [HaLi18, Update 2.40]. We take $c>0$, since for $c\le 0$ the set
 $E(c)$ always has infinite measure.
 -/
-@[category research solved, AMS 30]
+@[category research solved, AMS 30, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1118.lean#L5070"]
 theorem erdos_1118.variants.goldberg_example :
     ∃ f : ℂ → ℂ, Differentiable ℂ f ∧ (¬ ∃ a : ℂ, ∀ z, f z = a) ∧
       (∃ c : ℝ, 0 < c ∧ volume (superlevelSet f c) < ⊤) ∧
