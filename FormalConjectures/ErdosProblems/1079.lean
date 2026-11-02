@@ -59,6 +59,7 @@ theorem erdos_1079 : ∀ r : ℕ, 4 ≤ r → ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ
           {e ∈ G.edgeSet | ∀ x ∈ e, G.Adj v x}.ncard := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bondy's strengthening [Bo83b]: if $G$ has more than $\mathrm{ex}(n;K_r)$ edges then some vertex
 $v$ of maximum degree has $d(v) \geq n/2$ and its neighbourhood contains more than

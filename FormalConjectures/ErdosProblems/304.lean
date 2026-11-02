@@ -152,6 +152,7 @@ theorem erdos_304.variants.upper_1950 :
       (fun b => Real.log b / Real.log (Real.log b)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In 1950, Erdős [Er50c] proved the lower bound $$\log \log b \ll N(b)$$.
 [Er50c] Erdős, P., Az ${1}/{x_1} + {1}/{x_2} + \ldots + {1}/{x_n} =A/B$ egyenlet eg\'{E}sz sz\'{A}m\'{u} megold\'{A}sairól. Mat. Lapok (1950), 192-210.
@@ -172,6 +173,7 @@ theorem erdos_304.variants.upper_1985 :
       (fun b => Real.sqrt (Real.log b)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $$N(b) \ll \log \log b$$?
 

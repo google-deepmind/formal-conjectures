@@ -32,6 +32,7 @@ namespace Erdos923
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $k$, there is some $f(k)$ such that if $G$ has chromatic number
 $\geq f(k)$ then $G$ contains a triangle-free subgraph with chromatic number $\geq k$?

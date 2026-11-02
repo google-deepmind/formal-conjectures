@@ -55,6 +55,7 @@ There are four possibilities for the density of $A+B$:
 4. $A+B$ has positive upper and lower density that are unequal (and hence no density).
 -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Case 3:
 Does $A + B$ have positive upper and lower density that are equal?
@@ -67,6 +68,7 @@ theorem erdos_125 :
     ¬ (A + B).HasPosDensity := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Literature question:
 Does $A + B$ have positive lower density?
@@ -107,6 +109,7 @@ theorem erdos_125.variants.zero_lower_positive_upper_density :
     (A + B).lowerDensity = 0 ∧ 0 < (A + B).upperDensity := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Case 4:
 Does $A + B$ have positive upper and lower density that are unequal?

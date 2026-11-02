@@ -85,6 +85,7 @@ def avoidsPatternXYZ (l : List ℕ) : Prop :=
 def sequencesCountedByA052709 (n : ℕ) : Set (List ℕ) :=
   { l : List ℕ | l.length = n - 1 ∧ coversInitialInterval l ∧ avoidsPatternXYZ l }
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: for $n > 0$, $a(n)$ is also the number of sequences of length $n - 1$ covering an
 initial interval of positive integers and avoiding three terms

@@ -96,6 +96,7 @@ maximum block sensitivity of `f` over all inputs. -/
 noncomputable def blockSensitivity (f : (Fin n → Bool) → Bool) : ℕ :=
   univ.sup (blockSensitivityAt f)
 
+set_option linter.style.formal_proof_palomar false in
 /-- Strong Sensitivity Conjecture,
 for every Boolean function `f : {0,1}^n → {0,1}`,
 `bs(f) ≤ s(f)^2`.

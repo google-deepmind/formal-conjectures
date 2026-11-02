@@ -49,6 +49,7 @@ theorem erdos_979.variants.k2 :
     Filter.limsup (fun n => (solutionSet n 2).encard) Filter.atTop = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős (unpublished)
 -/

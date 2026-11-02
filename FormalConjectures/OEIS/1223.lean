@@ -61,6 +61,7 @@ theorem a_3 : a 3 = 2 := by
   change Nat.nth Nat.Prime 3 - Nat.nth Nat.Prime 2 = 2
   rw [Nat.nth_prime_three_eq_seven, Nat.nth_prime_two_eq_five]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Any subsequence a(n .. n+m) with n > 2 (as to exclude the
 untypical primes 2 and 3) should occur infinitely many times at other starting points k.

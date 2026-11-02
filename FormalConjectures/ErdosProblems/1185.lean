@@ -48,6 +48,7 @@ theorem not_hasAPWithStepInDiff_singleton (k : ℕ) (A : Finset ℕ) (b : ℕ) :
   simp only [Finset.mem_singleton] at hb₁ hb₂
   omega
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\delta>0$ and $k\geq 3$. Is it true that there exists $m\geq 1$ (depending only on $\delta$
 and $k$) such that, for all large $N$, if $A,B\subseteq \{1,\ldots,N\}$ with
@@ -71,6 +72,7 @@ theorem erdos_1185 :
           δ * (N : ℝ) ≤ (A.card : ℝ) → m ≤ B.card → HasAPWithStepInDiff k A B) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The answer is already negative for $k=3$: there is a density $\delta>0$ such that for every
 $m\geq 1$ and every $N_0$ there are $N\geq N_0$ and $A,B\subseteq\{1,\ldots,N\}$ with

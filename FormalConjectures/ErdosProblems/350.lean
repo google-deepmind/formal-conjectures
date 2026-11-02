@@ -59,6 +59,7 @@ theorem DistinctSubsetSums_iff_DecidableDistinctSubsetSums
     DistinctSubsetSums (A : Set M) ↔ DecidableDistinctSubsetSums A := by
   rw [DistinctSubsetSums, DecidableDistinctSubsetSums, Set.Pairwise] ; simp_all
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If `A ⊂ ℕ` is a finite set of integers all of whose subset sums are distinct then `∑ n ∈ A, 1/n < 2`.
 Proved by Ryavec.

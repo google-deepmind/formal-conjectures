@@ -257,6 +257,7 @@ theorem erdos_18c :
     ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (log n) ^ C := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős's Theorem.**
 Erdős proved that $h(n!) < n$ for all $n \ge 1$.
