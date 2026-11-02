@@ -88,6 +88,7 @@ then are there infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof,
 which gives positive density and does not need $k \neq 2^l$ or a positive leading coefficient.
+The linked statement is `erdos_978.variants.all_degrees`; see `erdos_978_ii_of_all_degrees`.
 -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PowerFree/Main.lean#L144"]
@@ -102,10 +103,180 @@ set_option linter.style.formal_proof_palomar false in
 /-- Does `n ^ 4 + 2` represent infinitely many squarefree numbers?
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof,
-which gives positive density for every irreducible quartic with no fixed square divisor. -/
+which gives positive density for every irreducible quartic with no fixed square divisor; see
+`erdos_978_iii_of_all_degrees`. -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PowerFree/Main.lean#L144"]
 theorem erdos_978.parts.iii : {n : ℕ | Squarefree (n ^ 4 + 2)}.Infinite := by
   sorry
+
+/- The definitions in `Density` are copied from the Lean statement linked at
+`erdos_978.parts.ii`. `count f k X` is the number of `n ∈ [1, X]` with `f(n)` `k`-th power
+free, and `rho f q` is the number of residues `a mod q` with `q ∣ f(a)`. -/
+
+namespace Density
+
+/-- No prime `k`-th power divides `a`. -/
+def PowerFree (k : ℕ) (a : ℤ) : Prop :=
+  ∀ p : ℕ, p.Prime → ¬ (p : ℤ) ^ k ∣ a
+
+/-- The number of residues `a mod q` with `q ∣ f(a)`. -/
+def rho (f : Polynomial ℤ) (q : ℕ) : ℕ :=
+  ((Finset.range q).filter fun a : ℕ => (q : ℤ) ∣ f.eval (a : ℤ)).card
+
+/-- The number of `n ∈ [1, X]` with `f(n)` `k`-th power free. -/
+noncomputable def count (f : Polynomial ℤ) (k : ℕ) (X : ℝ) : ℕ := by
+  classical
+  exact ((Finset.Icc 1 ⌊X⌋₊).filter fun n : ℕ => PowerFree k (f.eval (n : ℤ))).card
+
+/-- No prime `k`-th power divides all values of `f`. -/
+def LocallyAdmissible (f : Polynomial ℤ) (k : ℕ) : Prop :=
+  ∀ p : ℕ, p.Prime → rho f (p ^ k) < p ^ k
+
+/-- The local density at the prime `p`. -/
+noncomputable def localFactor (f : Polynomial ℤ) (k : ℕ) (p : Nat.Primes) : ℝ :=
+  1 - (rho f (p.val ^ k) : ℝ) / (p.val : ℝ) ^ k
+
+/-- The product of the local densities. -/
+noncomputable def densityConstant (f : Polynomial ℤ) (k : ℕ) : ℝ :=
+  ∏' p : Nat.Primes, localFactor f k p
+
+open Filter Asymptotics in
+/-- The product of the local densities converges to a positive constant `c`, and
+`count f k X = c X + o(X)`. -/
+def DensityStatement (f : Polynomial ℤ) (k : ℕ) : Prop :=
+  Multipliable (localFactor f k) ∧
+  0 < densityConstant f k ∧
+  (fun X : ℝ => (count f k X : ℝ) - densityConstant f k * X) =o[atTop]
+    (fun X : ℝ => X)
+
+/-- `PowerFree` implies `Powerfree`: an integer that is not a unit has a prime factor. -/
+@[category API, AMS 11]
+lemma powerfree_of_powerFree {k : ℕ} {a : ℤ} (h : PowerFree k a) : Powerfree k a := by
+  intro x hx
+  by_contra hu
+  obtain ⟨p, hp, hpx⟩ := Nat.exists_prime_and_dvd fun h1 => hu (Int.isUnit_iff_natAbs_eq.mpr h1)
+  exact h p hp ((pow_dvd_pow_of_dvd (Int.natCast_dvd.mpr hpx) k).trans hx)
+
+/-- If for every prime `p` some value of `f` is not divisible by `p ^ k`, then `f` is locally
+admissible: that value modulo `p ^ k` is a residue not counted by `rho`. -/
+@[category API, AMS 11]
+lemma locallyAdmissible_of_forall_exists {f : ℤ[X]} {k : ℕ}
+    (h : ∀ p : ℕ, p.Prime → ∃ n : ℕ, ¬ (p : ℤ) ^ k ∣ f.eval (n : ℤ)) :
+    LocallyAdmissible f k := by
+  intro p hp
+  obtain ⟨n, hn⟩ := h p hp
+  have hq : 0 < p ^ k := pow_pos hp.pos k
+  rw [rho]
+  calc _ < (Finset.range (p ^ k)).card := by
+        refine Finset.card_lt_card (Finset.filter_ssubset.mpr
+          ⟨n % p ^ k, Finset.mem_range.mpr (Nat.mod_lt _ hq), fun hdvd => hn ?_⟩)
+        have h1 := sub_dvd_eval_sub (n : ℤ) ((n % p ^ k : ℕ) : ℤ) f
+        have h2 : (p : ℤ) ^ k ∣ (n : ℤ) - ((n % p ^ k : ℕ) : ℤ) := by
+          have := (Int.mod_modEq (n : ℤ) ((p : ℤ) ^ k)).dvd
+          push_cast
+          exact this
+        have h3 : (p : ℤ) ^ k ∣ f.eval ((n % p ^ k : ℕ) : ℤ) := by exact_mod_cast hdvd
+        simpa using dvd_add (h2.trans h1) h3
+    _ = p ^ k := Finset.card_range _
+
+/-- A positive density gives infinitely many `n` with `f(n)` power free. -/
+@[category API, AMS 11]
+lemma infinite_of_densityStatement {f : ℤ[X]} {k : ℕ} (h : DensityStatement f k) :
+    {n : ℕ | PowerFree k (f.eval (n : ℤ))}.Infinite := by
+  obtain ⟨-, hc, ho⟩ := h
+  intro hfin
+  set c := densityConstant f k
+  have hbound : ∀ Y : ℝ, count f k Y ≤ hfin.toFinset.card := by
+    classical
+    intro Y
+    rw [count]
+    refine Finset.card_le_card fun n hn => ?_
+    rw [Set.Finite.mem_toFinset]
+    exact (Finset.mem_filter.mp hn).2
+  set M : ℝ := (hfin.toFinset.card : ℝ)
+  obtain ⟨Y₀, hY₀⟩ := Filter.eventually_atTop.mp (ho.def (half_pos hc))
+  have hM : 0 ≤ M := Nat.cast_nonneg _
+  set Y := max Y₀ (2 * (M + 1) / c)
+  have hY := hY₀ Y (le_max_left _ _)
+  have hYc : 2 * (M + 1) ≤ Y * c := (div_le_iff₀ hc).mp (le_max_right _ _)
+  have hYpos : 0 < Y := lt_of_lt_of_le (div_pos (by linarith) hc) (le_max_right _ _)
+  simp only [Real.norm_eq_abs] at hY
+  rw [abs_of_pos hYpos] at hY
+  have h1 := neg_abs_le ((count f k Y : ℝ) - c * Y)
+  have h2 : (count f k Y : ℝ) ≤ M := Nat.cast_le.mpr (hbound Y)
+  nlinarith
+
+end Density
+
+set_option linter.style.formal_proof_palomar false in
+/--
+The theorem of [OAI26a], stated with the definitions of the linked Lean proof: if `f ∈ ℤ[X]`
+is irreducible over `ℚ`, has degree `k ≥ 4`, and no prime `(k - 2)`-th power divides all of
+its values, then the `n` with `f(n)` `(k - 2)`-th power free have a positive density.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/PowerFree/Main.lean#L144"]
+theorem erdos_978.variants.all_degrees (f : Polynomial ℤ)
+    (hirr : Irreducible (f.map (Int.castRingHom ℚ)))
+    (hdeglo : 4 ≤ f.natDegree)
+    (hlocal : Density.LocallyAdmissible f (f.natDegree - 2)) :
+    Density.DensityStatement f (f.natDegree - 2) := by
+  sorry
+
+/-- The theorem of [OAI26a] answers `erdos_978.parts.ii`: an irreducible `f ∈ ℤ[X]` of positive
+degree stays irreducible over `ℚ` (Gauss's lemma), and a positive density gives infinitely
+many `n`. -/
+@[category test, AMS 11]
+theorem erdos_978_ii_of_all_degrees (h : type_of% erdos_978.variants.all_degrees) :
+    type_of% @erdos_978.parts.ii := by
+  intro f hi hd _ _ hp
+  have hirr : Irreducible (f.map (Int.castRingHom ℚ)) :=
+    (IsPrimitive.Int.irreducible_iff_irreducible_map_cast (hi.isPrimitive (by omega))).mp hi
+  exact (Density.infinite_of_densityStatement
+    (h f hirr (by omega) (Density.locallyAdmissible_of_forall_exists hp))).mono
+    fun n hn => Density.powerfree_of_powerFree hn
+
+/-- The theorem of [OAI26a] for $f = X^4 + 2$ answers `erdos_978.parts.iii`: `f` is irreducible
+by Eisenstein's criterion at `2`, and `p ^ 2 ∤ f(0) = 2` for every prime `p`. -/
+@[category test, AMS 11]
+theorem erdos_978_iii_of_all_degrees (h : type_of% erdos_978.variants.all_degrees) :
+    type_of% erdos_978.parts.iii := by
+  set f : ℤ[X] := X ^ 4 + C 2 with hf
+  have hdeg : f.natDegree = 4 := natDegree_X_pow_add_C
+  have hmonic : f.Monic := monic_X_pow_add_C 2 (by norm_num)
+  have hirr : Irreducible f := by
+    have hP : (Ideal.span {(2 : ℤ)}).IsPrime :=
+      (Ideal.span_singleton_prime (by norm_num)).mpr Int.prime_two
+    have hdegree : f.degree = 4 := degree_X_pow_add_C (by norm_num) 2
+    refine irreducible_of_eisenstein_criterion hP ?_ ?_ ?_ ?_ hmonic.isPrimitive
+    · rw [hmonic.leadingCoeff, Ideal.mem_span_singleton]
+      norm_num
+    · intro n hn
+      rw [hdegree] at hn
+      have hn4 : n < 4 := by exact_mod_cast hn
+      rw [Ideal.mem_span_singleton]
+      interval_cases n <;> simp [hf, coeff_X_pow]
+    · rw [hdegree]
+      norm_num
+    · rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton]
+      simp [hf]
+  have hq : Irreducible (f.map (Int.castRingHom ℚ)) :=
+    (IsPrimitive.Int.irreducible_iff_irreducible_map_cast hmonic.isPrimitive).mp hirr
+  have hloc : Density.LocallyAdmissible f (f.natDegree - 2) := by
+    refine Density.locallyAdmissible_of_forall_exists fun p hp => ⟨0, fun hdvd => ?_⟩
+    have h0 : f.eval ((0 : ℕ) : ℤ) = 2 := by simp [hf]
+    rw [hdeg, h0] at hdvd
+    have hle := Int.le_of_dvd (by norm_num) hdvd
+    have hp2 : (2 : ℤ) ≤ p := by exact_mod_cast hp.two_le
+    norm_num at hle
+    nlinarith
+  refine (Density.infinite_of_densityStatement (h f hq (by omega) hloc)).mono fun n hn => ?_
+  have hsq : Squarefree (f.eval (n : ℤ)) := by
+    simpa [hdeg] using Density.powerfree_of_powerFree hn
+  show Squarefree (n ^ 4 + 2)
+  rw [← Int.squarefree_natCast]
+  push_cast
+  simpa [hf] using hsq
 
 end Erdos978
