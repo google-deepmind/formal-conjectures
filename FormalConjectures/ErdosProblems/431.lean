@@ -40,13 +40,33 @@ set_option linter.style.formal_proof_palomar false in
 many exceptions?
 
 This was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
-proof. -/
+proof. The linked statement is `erdos_431.variants.eventually_prime`; see
+`erdos_431_of_eventually_prime`. -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Ostmann/Complete.lean#L16"]
 theorem erdos_431 :
     ¬ ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧
       (A + B : Set ℕ) =ᶠ[Filter.cofinite] {n | n.Prime} := by
   sorry
+
+set_option linter.style.formal_proof_palomar false in
+/-- The statement of the linked Lean proof, with its definitions unfolded: for infinite `A` and
+`B`, `A + B` does not agree with the primes from some point on. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Ostmann/Complete.lean#L16"]
+theorem erdos_431.variants.eventually_prime :
+    ∀ A B : Set ℕ, A.Infinite → B.Infinite →
+      ¬ ∃ N : ℕ, ∀ n, N ≤ n → (n ∈ A + B ↔ n.Prime) := by
+  sorry
+
+/-- On `ℕ`, agreeing up to finitely many exceptions is agreeing from some point on. -/
+@[category test, AMS 11]
+theorem erdos_431_of_eventually_prime (h : type_of% erdos_431.variants.eventually_prime) :
+    type_of% erdos_431 := by
+  rintro ⟨A, B, hA, hB, hAB⟩
+  rw [Nat.cofinite_eq_atTop] at hAB
+  obtain ⟨N, hN⟩ := Filter.eventually_atTop.mp hAB
+  exact h A B hA hB ⟨N, fun n hn => Iff.of_eq (hN n hn)⟩
 
 set_option linter.style.formal_proof_palomar false in
 /-- Ostmann's inverse Goldbach conjecture: if $A$ and $B$ each have at least two elements, then
