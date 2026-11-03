@@ -35,6 +35,7 @@ open Filter
 
 namespace Erdos166
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Prove that
 $$R(4,k) \gg \frac{k^3}{(\log k)^{O(1)}}.$$
@@ -47,9 +48,9 @@ The linked formal proof (Codex and GPT-5.6 Sol, via the construction of Bradač 
 Problem 920) gives `k ^ 3 / (log k) ^ c = O(R(4, k))` for a natural `c > 0`, with the Ramsey
 number defined through `CliqueFree`/`IndepSetFree`; this implies the statement below.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos166.lean#L83"]
-theorem erdos_166 : answer(True) ↔
+theorem erdos_166 :
     ∃ (c C : ℝ), 0 < c ∧ 0 < C ∧
       ∀ᶠ (k : ℕ) in atTop,
         (SimpleGraph.classicalRamsey 4 k : ℝ) ≥
@@ -71,7 +72,7 @@ theorem erdos_166.variants.mattheus_verstraete :
 theorem erdos_166.variants.mattheus_verstraete_implies :
     type_of% erdos_166.variants.mattheus_verstraete → type_of% erdos_166 := by
   rintro ⟨C, hC, h⟩
-  refine ⟨fun _ ↦ ⟨4, C, by norm_num, hC, h.mono fun k hk ↦ ?_⟩, fun _ ↦ trivial⟩
+  refine ⟨4, C, by norm_num, hC, h.mono fun k hk ↦ ?_⟩
   simpa using hk
 
 end Erdos166

@@ -33,6 +33,7 @@ open Filter
 
 namespace Erdos775
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a $3$-uniform hypergraph on $n$ vertices which contains at least $n-O(1)$ different
 sizes of cliques (maximal complete subgraphs)?
@@ -41,9 +42,9 @@ The answer is no, as proved by Gao [Ga25]: more generally, for any $k\geq 3$, ev
 hypergraph on $n$ vertices contains at most $n-f_k(n)$ different sizes of cliques, where
 $f_k(n)\to \infty$ as $n\to \infty$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos775.lean"]
-theorem erdos_775 : answer(False) ↔
-    ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : UniformHypergraph (Fin n) 3,
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos775.lean"]
+theorem erdos_775 :
+    ¬ ∃ C : ℕ, ∃ᶠ n : ℕ in atTop, ∃ H : UniformHypergraph (Fin n) 3,
       n - C ≤ (UniformHypergraph.cliqueSizes H).ncard := by
   sorry
 

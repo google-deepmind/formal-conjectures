@@ -95,6 +95,7 @@ instance (n : ℕ) : Decidable (Erdos1141Prop n) :=
     | succ n' =>
       simp [Erdos1141Prop, le_sqrt, pow_two]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many $n$ such that $n-k^2$ is prime for all $k$ with $(n,k)=1$ and $k^2 < n$?
 
@@ -107,11 +108,11 @@ is $1722$.
 The answer is negative: [APSSV26b] proves a stronger finiteness theorem, deducing it from
 Pollack [Po17]. Oriike [Or26] formalised the deduction in Lean.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/Jayyhk/erdos-lean/blob/main/problems/1141/Erdos1141.lean"]
 theorem erdos_1141 :
-    answer(False) ↔ Infinite { n | Erdos1141Prop n } := by
+    ¬ Infinite { n | Erdos1141Prop n } := by
   sorry
 
 @[category test, AMS 11]

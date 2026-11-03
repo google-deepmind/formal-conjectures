@@ -32,6 +32,8 @@ namespace Erdos348
 
 open Erdos348
 
+def erdos_348.answer : Set (ℕ × ℕ) := {(m, n) : ℕ × ℕ | m < n ∧ m ≤ 1}
+
 /--
 For what values of $0 \leq m < n$ is there a complete sequence
 $A = \{a_1 \leq a_2 \leq \cdots\}$ of integers such that
@@ -41,12 +43,12 @@ $A = \{a_1 \leq a_2 \leq \cdots\}$ of integers such that
 Geneson [Ge26, Theorem 1] proved that the pairs are exactly those with $m \leq 1$.
 Completeness allows finitely many exceptions, and deletions remove indexed occurrences.
 -/
-@[category research solved, AMS 11]
+@[category research solved, question value, AMS 11]
 theorem erdos_348 :
     { (m, n) | (m) (n) (_ : m < n) (a : ℕ → ℕ) (_ : Monotone a)
       (_ : ∀ s, s.card = m → IsAddCompleteNatSeq' (Function.updateFinset a s 0))
         (_ : ∀ t, t.card = n → ¬IsAddCompleteNatSeq' (Function.updateFinset a t 0)) } =
-    answer({(m, n) : ℕ × ℕ | m < n ∧ m ≤ 1}) := by
+    erdos_348.answer := by
   sorry
 
 end Erdos348

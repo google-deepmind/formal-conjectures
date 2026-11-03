@@ -526,6 +526,7 @@ end Qubit
 theorem mutuallyUnbiasedBases_dim2 : IsMaxMUBCount 2 3 := by
   simpa using Qubit.qubit_maximal
 
+set_option linter.style.formal_proof_palomar false in
 /-- Known general bounds in dimension $6$: the maximal number of mutually unbiased bases
 satisfies $3 \le \mu(6) \le 7$. -/
 @[category research solved, AMS 5 15 81 94,
@@ -534,6 +535,7 @@ theorem mutuallyUnbiasedBases_dim6_bounds :
     HasMUBs 6 3 ∧ ∀ m : ℕ, HasMUBs 6 m → m ≤ 7 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The upper bound $\mu(6) \le 5$: every family of mutually unbiased bases in $\mathbb{C}^6$
 has at most five members. This was proved by an internal OpenAI model in September 2026
 [OAI26a]; see the linked Lean proof. That proof represents each basis as an `OrthonormalBasis`
@@ -546,46 +548,58 @@ theorem mutuallyUnbiasedBases_dim6_bounds.variants.upper_five :
 
 /- ## Open problems -/
 
+def mutuallyUnbiasedBases_dim6.answer : ℕ := sorry
+
 /-- Special case in dimension $6$: determine the maximal number of mutually unbiased
 orthonormal bases in $\mathbb{C}^6$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim6 :
-    IsMaxMUBCount 6 (answer(sorry)) := by
+    IsMaxMUBCount 6 (mutuallyUnbiasedBases_dim6.answer) := by
   sorry
+
+def mutuallyUnbiasedBases_dim10.answer : ℕ := sorry
 
 /-- Special case in dimension $10$ (not a prime power): determine the maximal number of
 mutually unbiased orthonormal bases in $\mathbb{C}^{10}$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim10 :
-    IsMaxMUBCount 10 (answer(sorry)) := by
+    IsMaxMUBCount 10 (mutuallyUnbiasedBases_dim10.answer) := by
   sorry
+
+def mutuallyUnbiasedBases_dim12.answer : ℕ := sorry
 
 /-- Special case in dimension $12$ (not a prime power): determine the maximal number of
 mutually unbiased orthonormal bases in $\mathbb{C}^{12}$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim12 :
-    IsMaxMUBCount 12 (answer(sorry)) := by
+    IsMaxMUBCount 12 (mutuallyUnbiasedBases_dim12.answer) := by
   sorry
+
+def mutuallyUnbiasedBases_dim14.answer : ℕ := sorry
 
 /-- Special case in dimension $14$ (not a prime power): determine the maximal number of
 mutually unbiased orthonormal bases in $\mathbb{C}^{14}$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim14 :
-    IsMaxMUBCount 14 (answer(sorry)) := by
+    IsMaxMUBCount 14 (mutuallyUnbiasedBases_dim14.answer) := by
   sorry
+
+def mutuallyUnbiasedBases_dim15.answer : ℕ := sorry
 
 /-- Special case in dimension $15$ (not a prime power): determine the maximal number of
 mutually unbiased orthonormal bases in $\mathbb{C}^{15}$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases_dim15 :
-    IsMaxMUBCount 15 (answer(sorry)) := by
+    IsMaxMUBCount 15 (mutuallyUnbiasedBases_dim15.answer) := by
   sorry
+
+def mutuallyUnbiasedBases.answer : ℕ → ℕ := sorry
 
 /-- Open Quantum Problem 13: determine the maximal number of mutually unbiased orthonormal
 bases in $\mathbb{C}^d$ for $d \ge 2$. -/
-@[category research open, AMS 5 15 81 94]
+@[category research open, question value, AMS 5 15 81 94]
 theorem mutuallyUnbiasedBases (d : ℕ) (hd : 2 ≤ d) :
-    IsMaxMUBCount d ((answer(sorry) : ℕ → ℕ) d) := by
+    IsMaxMUBCount d (mutuallyUnbiasedBases.answer d) := by
   sorry
 
 end OpenQuantumProblem13

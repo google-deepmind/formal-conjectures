@@ -35,6 +35,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos897
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
 if $(a,b)=1$ such that $\limsup_{p,k} f(p^k) / \log(p^k) = ∞$.
@@ -43,15 +44,16 @@ Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 The answer is no; this follows from a construction of Wirsing [Wi81], rediscovered by
 Archivara [Ar25] and formalised in Lean by Aristotle [ArWu25].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos897.lean"]
-theorem erdos_897.parts.i : answer(False) ↔ ∀ (f : ℕ → ℝ),
+theorem erdos_897.parts.i : ¬ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
     Filter.atTop.limsup (fun (n : ℕ) => ((f (n+1) - f n) / (n : ℝ).log : EReal)) = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
 if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) / \log(p^k) = ∞$.
@@ -59,15 +61,16 @@ Is it true that $\limsup_n f(n+1)/ f(n) = ∞$?
 
 The answer is no; the same counterexample is formalised in Lean by Aristotle [ArWu25].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos897.lean"]
-theorem erdos_897.parts.ii : answer(False) ↔ ∀ (f : ℕ → ℝ),
+theorem erdos_897.parts.ii : ¬ ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
     Filter.atTop.limsup (fun (n : ℕ) => (f (n+1) / f n : EReal)) = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Wirsing [Wi70] proved that if $|f(n+1)−f(n)| ≤ C$ then $f(n) = c \log n + O(1)$ for some constant
 $c$. This is Erdős Problem 491; see `erdos_491`, whose linked formal proof gives this statement.
@@ -92,8 +95,8 @@ Is it true that $\limsup_n (f(n+1)−f(n))/ \log n = ∞$?
 The known counterexample does not satisfy either of these extra hypotheses, so this variant remains
 open.
 -/
-@[category research open, AMS 11]
-theorem erdos_897.variants.parts.i : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
+@[category research open, question, AMS 11]
+theorem erdos_897.variants.parts.i : ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →
@@ -110,8 +113,8 @@ Is it true that $\limsup_n f(n+1)/f(n) = ∞$?
 The known counterexample does not satisfy either of these extra hypotheses, so this variant remains
 open.
 -/
-@[category research open, AMS 11]
-theorem erdos_897.variants.parts.ii : answer(sorry) ↔ ∀ (f : ℕ → ℝ),
+@[category research open, question, AMS 11]
+theorem erdos_897.variants.parts.ii : ∀ (f : ℕ → ℝ),
     (∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b) →
     ((Filter.atTop ⊓ Filter.principal {(p, k) : ℕ × ℕ | p.Prime}).limsup
       (fun (p, k) => (f (p^k) / (p^k : ℝ).log : EReal)) = ⊤) →

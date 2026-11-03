@@ -72,6 +72,7 @@ theorem inverse_galois_problem.variants.abelian
     IsRealizable ℚ G := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every finite symmetric group is realizable.
 -/

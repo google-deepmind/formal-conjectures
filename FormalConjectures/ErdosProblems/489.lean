@@ -42,6 +42,7 @@ noncomputable def GapSumSq (A : Set ℕ) (x : ℕ) : ℝ :=
   ∑ i < Nat.count (· ∈ B) x, ((b (i + 1) : ℝ) - b i) ^ 2
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be a set such that $\lvert A\cap [1,x]\rvert=o(x^{1/2})$. Let
 $B=\{ n\geq 1 : a\nmid n\textrm{ for all }a\in A\}$.
@@ -54,8 +55,8 @@ and the existence of this limit was proved by Erdős.
 
 See also [208].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-489/F061/Erdos489.lean"]
-theorem erdos_489 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-489/F061/Erdos489.lean"]
+theorem erdos_489 :
     ∀ (A : Set ℕ),
       (fun x : ℕ => (((Finset.Icc 1 x).filter (· ∈ A)).card : ℝ)) =o[atTop]
         (fun x : ℕ => (x : ℝ).sqrt) →

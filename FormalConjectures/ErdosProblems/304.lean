@@ -152,6 +152,7 @@ theorem erdos_304.variants.upper_1950 :
       (fun b => Real.log b / Real.log (Real.log b)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In 1950, Erdős [Er50c] proved the lower bound $$\log \log b \ll N(b)$$.
 [Er50c] Erdős, P., Az ${1}/{x_1} + {1}/{x_2} + \ldots + {1}/{x_n} =A/B$ egyenlet eg\'{E}sz sz\'{A}m\'{u} megold\'{A}sairól. Mat. Lapok (1950), 192-210.
@@ -172,15 +173,16 @@ theorem erdos_304.variants.upper_1985 :
       (fun b => Real.sqrt (Real.log b)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $$N(b) \ll \log \log b$$?
 
 Yes. This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
 Lean proof.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/ShortEgyptian/Main.lean#L33"]
-theorem upper_bound : answer(True) ↔
+theorem upper_bound :
     (fun b : ℕ => (smallestCollectionTo b : ℝ)) =O[atTop] (fun b : ℕ => Real.log (Real.log b)) := by
   sorry
 

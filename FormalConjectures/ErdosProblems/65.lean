@@ -46,8 +46,8 @@ The bound is stated for all sufficiently large $k$: [GKS84, Theorem 4'] proves i
 where $b$ is a constant. The case of $k$ slightly larger than $1$ is a separate problem, studied
 in [GPSV85].
 -/
-@[category research solved, AMS 5]
-theorem erdos_65.parts.i : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_65.parts.i :
     ∃ c > (0 : ℝ), ∀ᶠ k : ℝ in Filter.atTop,
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
         0 < n →
@@ -61,8 +61,8 @@ Is the sum $\sum\frac{1}{a_i}$ minimised when $G$ is a complete bipartite graph?
 
 This problem is #65 in Extremal Graph Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
-theorem erdos_65.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_65.parts.ii :
     ∀ (k : ℝ) (hk : 0 < k),
       ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V),
         0 < n →

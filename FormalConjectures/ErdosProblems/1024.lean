@@ -32,16 +32,18 @@ namespace Erdos1024
 
 open Filter Asymptotics
 
+noncomputable def erdos_1024.answer : ℕ → ℝ := fun n : ℕ ↦ Real.sqrt (n * Real.log n)
+
 /--
 Let $f(n)$ be such that every $3$-uniform linear hypergraph on $n$ vertices contains an independent
 set on $f(n)$ vertices. Estimate $f(n)$.
 
 Phelps and Rödl [PhRo86] proved $f(n) \asymp (n\log n)^{1/2}$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, question value, AMS 5]
 theorem erdos_1024 :
     (fun n ↦ (Hypergraph.linearIndependenceNumber n : ℝ)) =Θ[atTop]
-    (answer(fun n : ℕ ↦ Real.sqrt (n * Real.log n)) : ℕ → ℝ) := by
+    erdos_1024.answer := by
   sorry
 
 end Erdos1024

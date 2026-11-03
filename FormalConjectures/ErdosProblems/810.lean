@@ -56,8 +56,8 @@ def C4RainbowColoring {n : ℕ} (G : SimpleGraph (Fin n))
 /-- Does there exist some $\epsilon>0$ such that, for all sufficiently large $n$, there exists a
 graph $G$ on $n$ vertices with at least $\epsilon n^2$ edges whose edges can be coloured with $n$
 colours so that every $C_4$ receives four distinct colours? -/
-@[category research open, AMS 5]
-theorem erdos_810 : answer(sorry) ↔ ∃ ε > 0, ∀ᶠ n in atTop,
+@[category research open, question, AMS 5]
+theorem erdos_810 : ∃ ε > 0, ∀ᶠ n in atTop,
     ∃ G : SimpleGraph (Fin n), ∃ color : Fin n → Fin n → Fin n,
       ε * (n : ℝ) ^ 2 ≤ (G.edgeSet.ncard : ℝ) ∧ C4RainbowColoring G color := by
   sorry

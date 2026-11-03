@@ -45,8 +45,8 @@ namespace VizingConjecture
 For all finite simple graphs $G$ and $H$, the domination number of the Cartesian (box)
 product satisfies $\gamma(G \,\square\, H) \ge \gamma(G)\,\gamma(H)$.
 -/
-@[category research open, AMS 5]
-theorem vizing_conjecture : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem vizing_conjecture :
     ∀ {α β : Type} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β]
       (G : SimpleGraph α) (H : SimpleGraph β),
       G.dominationNumber * H.dominationNumber ≤ (G □ H).dominationNumber := by

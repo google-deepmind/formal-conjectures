@@ -53,6 +53,7 @@ noncomputable def extremalSize (N : ℕ) : ℕ := by
   classical
   exact ((Finset.Icc 1 N).powerset.filter SquareSumFree).sup Finset.card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 How large can $A \subseteq \{1, \ldots, N\}$ be if $A + A$ contains no square numbers?
 

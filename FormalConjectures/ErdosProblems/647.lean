@@ -33,8 +33,8 @@ open Filter ArithmeticFunction.sigma
 $$
   \max_{m < n}(m + \tau(m)) \leq n + 2?
 $$ -/
-@[category research open, AMS 11]
-theorem erdos_647 : answer(sorry) ↔ ∃ n > 24, ⨆ m : Fin n, m + σ 0 m ≤ n + 2 := by
+@[category research open, question, AMS 11]
+theorem erdos_647 : ∃ n > 24, ⨆ m : Fin n, m + σ 0 m ≤ n + 2 := by
   sorry
 
 /-- This is true for $n = 24$. -/
@@ -47,9 +47,9 @@ fact suggests that
 $$
   lim_{n\to\infty} \max_{m < n}(\tau(m) + m − n) = \infty.
 $$ -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_647.variants.lim :
-    answer(sorry) ↔ atTop.Tendsto (fun n ↦ ⨆ m : Fin n, σ 0 m + m - n) atTop := by
+    atTop.Tendsto (fun n ↦ ⨆ m : Fin n, σ 0 m + m - n) atTop := by
   sorry
 
 /-- Erdős says it 'seems certain' that for every $k$ there are infinitely many $n$
@@ -57,9 +57,9 @@ for which
 $$
   \max_{n−k < m < n}(m + \tau(m)) ≤ n + 2.
 $$ -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_647.variants.infinite :
-    answer(sorry) ↔ ∀ k, { n | ⨆ m : Set.Ioo (n - k) n, ↑m + σ 0 m ≤ n + 2 }.Infinite := by
+    ∀ k, { n | ⨆ m : Set.Ioo (n - k) n, ↑m + σ 0 m ≤ n + 2 }.Infinite := by
   sorry
 
 end Erdos647

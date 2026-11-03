@@ -83,6 +83,35 @@ def PoissonConjectureFor (n : ℕ) : Prop :=
   ∀ φ : MvPolynomial (Fin n ⊕ Fin n) K →ₐ[K] MvPolynomial (Fin n ⊕ Fin n) K,
     IsPoissonEndomorphism φ → Function.Bijective φ
 
+omit [CharZero K] in
+/-- With one canonical pair, the Poisson endomorphism condition is one bracket equation. -/
+@[category API, AMS 17]
+theorem isPoissonEndomorphism_one_iff
+    (φ : MvPolynomial (Fin 1 ⊕ Fin 1) K →ₐ[K] MvPolynomial (Fin 1 ⊕ Fin 1) K) :
+    IsPoissonEndomorphism φ ↔
+      poissonBracket (φ (X (Sum.inl 0))) (φ (X (Sum.inr 0))) = 1 := by
+  constructor
+  · intro h
+    simpa using h (Sum.inl 0) (Sum.inr 0)
+  · intro h v w
+    rcases v with v | v <;> rcases w with w | w <;>
+      have hv : v = 0 := Subsingleton.elim _ _ <;>
+      have hw : w = 0 := Subsingleton.elim _ _ <;> subst v <;> subst w
+    · simp
+    · simpa using h
+    · rw [poissonBracket_swap]
+      simp [h]
+    · simp
+
+omit [CharZero K] in
+/-- The dimension-one conjecture asks for bijectivity from a single bracket equation. -/
+@[category API, AMS 14 17]
+theorem poissonConjectureFor_one_iff : PoissonConjectureFor K 1 ↔
+    ∀ φ : MvPolynomial (Fin 1 ⊕ Fin 1) K →ₐ[K] MvPolynomial (Fin 1 ⊕ Fin 1) K,
+      poissonBracket (φ (X (Sum.inl 0))) (φ (X (Sum.inr 0))) = 1 →
+        Function.Bijective φ := by
+  simp only [PoissonConjectureFor, isPoissonEndomorphism_one_iff]
+
 /--
 The **Poisson Conjecture** ([AvdE07], the characteristic zero case): for every `n`, every
 endomorphism of the `n`-th canonical Poisson algebra over a field `K` of characteristic
@@ -90,7 +119,8 @@ zero is an automorphism. This is **false**: the Jacobian conjecture fails in dim
 [Alp26], hence so does $PC_3$ (via [AvdE07], Theorem 7, or directly via the symplectic
 lift of the counterexample map).
 -/
-@[category research solved, AMS 14 17]
+@[category research solved, AMS 14 17, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000002"]
 theorem poisson_conjecture : ¬ ∀ n, PoissonConjectureFor K n := by
   sorry
 
@@ -119,7 +149,8 @@ This does not settle any conjecture further down the chain of [AvdE07], Theorem 
 propagates falsity upwards: $\lnot PC_2$ gives $\lnot JC_4$, already known from [Alp26].
 $DC_2$, $JC_2$ (Keller's problem), $PC_1$ and $DC_1$ all remain open.
 -/
-@[category research solved, AMS 14 17]
+@[category research solved, AMS 14 17, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000002"]
 theorem poisson_conjecture.variants.dimension_two : ¬ PoissonConjectureFor K 2 := by
   sorry
 
@@ -132,7 +163,8 @@ injective on points — e.g. it identifies $(0, 6, -142, 0, 0, 0)$ and $(1, 0, 2
 — and is therefore no automorphism. Alternatively, $PC_3$ fails by [AvdE07], Theorem 7,
 as it implies the Jacobian conjecture in dimension $3$, contradicting [Alp26].
 -/
-@[category research solved, AMS 14 17]
+@[category research solved, AMS 14 17, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000002"]
 theorem poisson_conjecture.variants.dimension_three : ¬ PoissonConjectureFor K 3 := by
   sorry
 
@@ -140,7 +172,8 @@ theorem poisson_conjecture.variants.dimension_three : ¬ PoissonConjectureFor K 
 The Poisson Conjecture is false in every dimension $n ≥ 2$, by padding the dimension $2$
 counterexample of [Lon26] with identity canonical pairs.
 -/
-@[category research solved, AMS 14 17]
+@[category research solved, AMS 14 17, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000002"]
 theorem poisson_conjecture.variants.dimension_ge_two (n : ℕ) (hn : 2 ≤ n) :
     ¬ PoissonConjectureFor K n := by
   sorry

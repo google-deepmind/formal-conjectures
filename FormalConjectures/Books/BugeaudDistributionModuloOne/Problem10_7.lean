@@ -37,8 +37,8 @@ large real numbers $\alpha$ such that $\alpha$ is not a Pisot number and all the
 fractional parts $\{\alpha^n\}$, $n \ge 1$, are lying in an interval of length
 $\varepsilon / \alpha$? [Bug12b]
 -/
-@[category research open, AMS 11]
-theorem problem_10_7 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem problem_10_7 :
     ∀ ε : ℝ, 0 < ε → ∀ M : ℝ, ∃ α : ℝ, M < α ∧ ¬ IsPisot α ∧
       ∃ c : ℝ, ∀ n : ℕ, 1 ≤ n → Int.fract (α ^ n) ∈ Set.Icc c (c + ε / α) := by
   sorry

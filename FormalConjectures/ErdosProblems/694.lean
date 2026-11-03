@@ -64,9 +64,9 @@ theorem erdos_694 : ∀ᵉ (fmax : ℕ → ℕ) (fmin : ℕ → ℕ),
 Carmichael has asked whether there is an integer $n$ for which $\phi(m) = n$ has
 exactly one solution, that is $\frac{f_\max(n)}{f_\min(n)} = 1$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_694.variants.carmichael :
-    answer(sorry) ↔ ∃ n > 0, ∃! m, Nat.totient m = n := by
+    ∃ n > 0, ∃! m, Nat.totient m = n := by
   sorry
 
 /--

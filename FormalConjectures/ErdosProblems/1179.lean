@@ -56,6 +56,7 @@ noncomputable def successProbability (G : Type*) [AddCommGroup G] [Fintype G] (�
   (((univ : Finset G).powersetCard k).filter (IsBalanced ε)).card /
     ((univ : Finset G).powersetCard k).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $0<\epsilon<1$ and let $g_\epsilon(N)$ be the minimal $k$ such that if $G$ is an abelian
 group of size $N$ and $A\subseteq G$ is a uniformly random subset of size $k$, and
@@ -80,9 +81,9 @@ lower bound is `erdos_1179.variants.lower_bound`.
 
 See also [543](https://www.erdosproblems.com/543).
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1179.lean#L3564"]
-theorem erdos_1179 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ε < 1 → ∃ k : ℕ → ℕ,
+theorem erdos_1179 : ∀ ε : ℝ, 0 < ε → ε < 1 → ∃ k : ℕ → ℕ,
     Tendsto (fun N : ℕ ↦ (k N : ℝ) / Real.logb 2 N) atTop (nhds 1) ∧
       ∀ (G : ℕ → Type) [∀ i, AddCommGroup (G i)] [∀ i, Fintype (G i)],
         Tendsto (fun i ↦ Fintype.card (G i)) atTop atTop →
@@ -90,6 +91,7 @@ theorem erdos_1179 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ε < 1 → ∃ k 
             (nhds 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- It is trivial that $g_\epsilon(N)\geq \log_2N$: an $\epsilon$-balanced set $A$ with
 $\epsilon < 1$ must satisfy $|G| \leq 2^{|A|}$, since every $g$ has a representation. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at

@@ -52,6 +52,7 @@ def HasGallaiTriangle (A : Finset (AffineSubspace ℝ ℝ²)) : Prop :=
       p₁ ∈ L₁ ∧ p₁ ∈ L₂ ∧ p₂ ∈ L₂ ∧ p₂ ∈ L₃ ∧ p₃ ∈ L₃ ∧ p₃ ∈ L₁ ∧
       pointMultiplicity A p₁ = 2 ∧ pointMultiplicity A p₂ = 2 ∧ pointMultiplicity A p₃ = 2
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be a finite collection of $d\geq 4$ non-parallel lines in $\mathbb{R}^2$ such that
 there are no points where at least four lines from $A$ meet. Must there exist a 'Gallai
@@ -61,9 +62,9 @@ each of these intersection points only intersects two lines from $A$?
 Füredi and Palásti [FuPa84] showed this is false when $d\geq 4$ is not divisible by $9$.
 Escudero [Es16] showed this is false for all $d\geq 4$.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/209/Erdos209.lean"]
-theorem erdos_209 : answer(False) ↔
-    ∀ d : ℕ, 4 ≤ d → ∀ A : Finset (AffineSubspace ℝ ℝ²), A.card = d →
+@[category research solved, question, AMS 52, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/110d489ed5c07e5b216453e092e9113127c98c9a/problems/209/Erdos209.lean"]
+theorem erdos_209 :
+    ¬ ∀ d : ℕ, 4 ≤ d → ∀ A : Finset (AffineSubspace ℝ ℝ²), A.card = d →
       (∀ L ∈ A, IsLine L) →
       ((A : Set (AffineSubspace ℝ ℝ²)).Pairwise fun L₁ L₂ => ¬ L₁ ∥ L₂) →
       (∀ p : ℝ², pointMultiplicity A p ≤ 3) →

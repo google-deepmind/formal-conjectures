@@ -1,5 +1,5 @@
 /-
-Copyright 2026 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,93 +13,84 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+
 module
 
 public import FormalConjecturesUtil
 
 /-!
-# Written on the Wall II — Conjecture 91
+# Written on the Wall II - Conjecture 91
+
+**Verbatim statement (WOWII #91, status O):**
+> If G is a simple connected graph, then b(G) ≤ 1 + f(G) * (CEIL[average of λ(v) ])/2
+
+**Source:** http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj91
+
+This conjecture is **false**: Max Talwar found an 11-vertex counterexample
+(graph6 `JBza_CB?wF_`): take `K₃,₃` minus an edge together with a `K₅`, joined
+by two edges into one `K₅`-vertex. There the average neighbourhood
+independence number is exactly `2`, the largest induced forest has `6` vertices,
+and the largest induced bipartite subgraph has `8`, so the conjectured bound
+reads `8 ≤ 1 + 6·⌈2⌉/2 = 7`.
 
 *References:*
-- [E. DeLaVina, Written on the Wall II, Conjecture 91, 10 April 2004](https://cms.uhd.edu/faculty/delavinae/research/wowII/open.html)
-- [J. J. Gebendorfer, The Bipartite–Forest Gap Is Unbounded in Claw-Free Graphs, 25 July 2026; written line-graph family and intake](https://github.com/user-attachments/files/33372239/Gebendorfer_WOWII_91_Intake_2026-10-13.zip)
+- [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+- [Counterexample certificate for WOWII 91 (Max Talwar)](https://github.com/maxtalwar/wowii91-counterexample/releases/tag/v1.0.0)
+- [J. J. Gebendorfer, The Bipartite–Forest Gap Is Unbounded in Claw-Free Graphs,
+  25 July 2026; written line-graph family and intake](https://github.com/user-attachments/files/33372239/Gebendorfer_WOWII_91_Intake_2026-10-13.zip)
 
-The catalogue already records another refutation, obtained by bridging $K_{3,3}$
-to $K_8$. The cited line-graph family is not asserted to be the first refutation.
-The archived O status is not a current worldwide-openness claim.
+Gebendorfer's separate line-graph construction gives a 14-vertex counterexample.
+The linked Lean certificate verifies this finite witness; it does not formalize
+the whole unbounded family or establish first-disproof priority.
 -/
 
 @[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture91
+
 open SimpleGraph
-variable {V : Type*} [Fintype V] [DecidableEq V]
 
-noncomputable def bipartiteNumber (G : SimpleGraph V) : ℕ :=
-  sSup {k : ℕ | ∃ A : Finset V, A.card = k ∧ (G.induce (A : Set V)).IsBipartite}
+variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
-noncomputable def forestNumber (G : SimpleGraph V) : ℕ :=
-  sSup {k : ℕ | ∃ A : Finset V, A.card = k ∧ (G.induce (A : Set V)).IsAcyclic}
+set_option linter.style.formal_proof_palomar false in
+/--
+WOWII [Conjecture 91](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+(disproved, 2026):
 
-/-- The average independence number of the graphs induced by open neighborhoods. -/
-noncomputable def averageLocalIndependence (G : SimpleGraph V) : ℚ := by
-  classical
-  exact (∑ v : V, ((G.induce (G.neighborSet v)).indepNum : ℚ)) / Fintype.card V
+For a simple connected graph `G`,
+`b(G) ≤ 1 + f(G) · ⌈avg_v l(v)⌉ / 2`
+where `b(G)` is the largest induced bipartite subgraph size,
+`f(G) = largestInducedForestSize G` is the largest induced forest size, and
+`avg_v l(v) = l G` is the average independence number of the neighbourhoods.
 
-/-! A finite graph witness: the line graph of three four-cycles
-joined by two bridges. The ordered endpoints encode the fourteen
-edges of the underlying twelve-vertex graph. -/
-def witnessEndpoints (i : Fin 14) : Fin 12 × Fin 12 :=
-  if i = 0 then (0, 1)
-  else if i = 1 then (1, 2)
-  else if i = 2 then (2, 3)
-  else if i = 3 then (3, 0)
-  else if i = 4 then (4, 5)
-  else if i = 5 then (5, 6)
-  else if i = 6 then (6, 7)
-  else if i = 7 then (7, 4)
-  else if i = 8 then (8, 9)
-  else if i = 9 then (9, 10)
-  else if i = 10 then (10, 11)
-  else if i = 11 then (11, 8)
-  else if i = 12 then (0, 4)
-  else (4, 8)
+Disproved by an 11-vertex counterexample (Max Talwar, 2026; graph6
+`JBza_CB?wF_`) with `b(G) = 8`, `f(G) = 6` and `l G = 2`, violating
+`8 ≤ 1 + 6·⌈2⌉/2 = 7`.
 
-def witnessGraph : SimpleGraph (Fin 14) where
-  Adj i j := i ≠ j ∧
-    ((witnessEndpoints i).1 = (witnessEndpoints j).1 ∨
-     (witnessEndpoints i).1 = (witnessEndpoints j).2 ∨
-     (witnessEndpoints i).2 = (witnessEndpoints j).1 ∨
-     (witnessEndpoints i).2 = (witnessEndpoints j).2)
-  symm := ⟨by
-    intro i j h
-    rcases h with ⟨hne, h⟩
-    refine ⟨hne.symm, ?_⟩
-    rcases h with h | h | h | h
-    · exact Or.inl h.symm
-    · exact Or.inr (Or.inr (Or.inl h.symm))
-    · exact Or.inr (Or.inl h.symm)
-    · exact Or.inr (Or.inr (Or.inr h.symm))⟩
-  loopless := ⟨by
-    intro i h
-    exact h.1 rfl⟩
-
-/-- The exact rational contradiction required after proving the
-finite witness's graph invariants. -/
-@[category test, AMS 5]
-theorem witness_numeric_contradiction :
-    ¬ ((12 : ℚ) ≤ 1 + (10 : ℚ) * 2 / 2) := by
-  norm_num
-
-/-- It is false that every connected finite simple graph satisfies
-$b(G)\le1+f(G)\lceil\operatorname{avg}_v\alpha(G[N(v)])\rceil/2$.
-Both induced-subgraph invariants maximize their vertex orders; the factor one
-half is retained as rational division after the ceiling of the average. -/
+The linked Lean certificate uses Gebendorfer's 14-vertex line-graph witness,
+with `b(G) ≥ 12`, `f(G) ≤ 10` and `l G ≤ 2`, so the proposed upper bound is at most 11.
+-/
 @[category research solved, AMS 5,
   formal_proof using lean4 at
     "https://github.com/RhudeJJJJ/formal-conjectures/blob/90d12d635fe42fdb0bc0d021a0180f8565c764c9/Proofs/WOWII91Proof.lean#L365"]
-theorem conjecture91 : ¬ ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.Connected →
-    (bipartiteNumber G : ℚ) ≤ 1 + (forestNumber G : ℚ) *
-      (⌈averageLocalIndependence G⌉₊ : ℚ) / 2 := by
+theorem conjecture91 :
+    ¬ ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
+      ∀ (G : SimpleGraph α) (_ : G.Connected),
+        b G ≤ 1 + (G.largestInducedForestSize : ℝ) * ⌈l G⌉ / 2 := by
   sorry
+
+-- Sanity checks
+
+/-- The invariant `b G` is nonneg. -/
+@[category test, AMS 5]
+example (G : SimpleGraph (Fin 3)) : 0 ≤ b G := Nat.cast_nonneg _
+
+/-- The average indep-neighbors `l G` is nonneg. -/
+@[category test, AMS 5]
+example (G : SimpleGraph (Fin 3)) : 0 ≤ l G := by
+  unfold l averageIndepNeighbors
+  apply div_nonneg
+  · apply Finset.sum_nonneg; intro v _; exact Nat.cast_nonneg _
+  · exact Nat.cast_nonneg _
 
 end WrittenOnTheWallII.GraphConjecture91

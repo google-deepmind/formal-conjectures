@@ -34,6 +34,7 @@ open Asymptotics Filter Finset
 
 namespace Erdos289
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is it true that, for all sufficiently large $k$, there exist finite intervals
 $I_1, \dotsc, I_k \subset \mathbb{N}$, distinct, not overlapping or adjacent, with
 $|I_i| \geq 2$ for $1 \leq i \leq k$ such that
@@ -48,10 +49,10 @@ This is true: a formal proof in Lean 4 was produced by the LEAP prover agent [Ku
 this one (see [erdosproblems.com/forum/thread/289/proof-claims](https://www.erdosproblems.com/forum/thread/289/proof-claims));
 this formalization follows an independent, different proof path.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using formal_conjectures at
     "https://github.com/lfsong-google/formal-conjectures/blob/ff33e501bb78a90ae4703e22e052f8bb38e10146/FormalConjectures/ErdosProblems/289.lean#L9514"]
-theorem erdos_289 : answer(True) ↔
+theorem erdos_289 :
     (∀ᶠ k : ℕ in atTop, ∃ I : Fin k → ℕ × ℕ,
     (∀ i, (I i).1 < (I i).2) ∧
     (∀ i j, i ≠ j → (I i).2 + 1 < (I j).1 ∨ (I j).2 + 1 < (I i).1) ∧
