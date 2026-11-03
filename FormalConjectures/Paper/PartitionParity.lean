@@ -18,6 +18,7 @@ module
 public import FormalConjecturesUtil
 public import FormalConjecturesForMathlib.Algebra.Polynomial.Irreducible
 public import FormalConjecturesForMathlib.Combinatorics.Enumerative.Partition.Basic
+public import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Parities of partition numbers
