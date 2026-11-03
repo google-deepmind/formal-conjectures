@@ -77,7 +77,7 @@ without any division — where the twin-prime branch is the empty-product case
 `q = P + 2`, and the only further content is the finite fact `7841! ≡ 1 (mod 7853)`
 at the exceptional index `k = 991` (mechanically, `W ≡ 11! = 7853 * 5083 + 1`).
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at
+@[category research solved, AMS 11, formal_proof using lean4 at
 "https://github.com/Stayfoool/formal-conjectures-proofs/blob/7220fc39a2219db15473886ce577824cbd77f4f6/FormalConjecturesProofs/OeisA1359.lean#L273"]
 theorem conjecture (k : ℕ) (hk : k > 1) :
     let Pk := Nat.nth Nat.Prime (k - 1)
