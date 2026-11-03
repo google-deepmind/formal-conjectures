@@ -17,6 +17,7 @@ module
 
 public import FormalConjecturesUtil
 public import FormalConjectures.ErdosProblems.«183»
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 
 /-!
 # Erdős Problem 554

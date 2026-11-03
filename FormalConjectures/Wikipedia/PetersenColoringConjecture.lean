@@ -17,6 +17,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cycle
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Petersen
 
 /-!
 # The Petersen colouring conjecture (Jaeger 1988)

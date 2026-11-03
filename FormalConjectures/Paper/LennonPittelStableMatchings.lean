@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.StableMarriage
 
 /-!
 # Lennon–Pittel conjecture on random stable matchings

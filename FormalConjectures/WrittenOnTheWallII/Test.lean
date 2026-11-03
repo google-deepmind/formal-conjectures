@@ -23,6 +23,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Independence
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Petersen
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SzegedIndex
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WienerIndex
