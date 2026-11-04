@@ -45,6 +45,7 @@ noncomputable def medians (G : SimpleGraph V) : Finset V := by
   classical
   exact univ.filter fun v => ∀ w, transmission G v ≤ transmission G w
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple tree of order greater than two satisfies
 $\gamma_t(T)\ge iso(T[M])+|Med(T)|$, where $M$ is its full ambient
 maximum-degree set and $Med(T)$ consists of the vertices minimizing the sum
