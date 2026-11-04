@@ -46,6 +46,7 @@ noncomputable def modeMin (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
 def C4Free (G : SimpleGraph V) : Prop :=
   ∀ a b c d, a ≠ c → b ≠ d → G.Adj a b → G.Adj b c → G.Adj c d → G.Adj d a → False
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple connected graph without isolated vertices and without
 four-cycles was conjectured to satisfy $\gamma_t(G)\ge\operatorname{mode}_{\min}(G)$.
 Four-cycles are excluded as subgraphs, including cycles with chords.
