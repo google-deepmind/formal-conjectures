@@ -61,6 +61,7 @@ def square : SimpleGraph V where
     · exact Or.inr ⟨z,hw.symm,hz.symm⟩⟩
   loopless := ⟨fun _ h => h.1 rfl⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII 397c: every finite simple connected graph $G$ of order greater than two
 satisfies $\gamma_2(G)\leq |V(G)\setminus N_G(P)|+\gamma(G^2)$, where $P$ is the
