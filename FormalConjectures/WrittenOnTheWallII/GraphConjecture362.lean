@@ -43,6 +43,7 @@ def leaves {V : Type*} [Fintype V] (G : SimpleGraph V)
 noncomputable def componentsOn {V : Type*} (G : SimpleGraph V) (S : Finset V) : ℕ :=
   Nat.card (G.induce (S : Set V)).ConnectedComponent
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple tree of order greater than two satisfies
 $\gamma_t(T)\ge c(T[S(T)\cup L(T)])+(1+rad(T))/3$.
 The fraction is rational and is not rounded down. The radius is finite on this
@@ -58,6 +59,7 @@ theorem conjecture362 {V : Type*} [Fintype V] [DecidableEq V]
       (1 + (T.radius.toNat : ℚ)) / 3 ≤ T.totalDominationNumber := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Gebendorfer's stronger bound holds for every connected finite simple graph
 of order at least three:
 $diam(G)+1\le5(\gamma_t(G)-c(G[S(G)]))$.
@@ -74,6 +76,7 @@ theorem conjecture362_diameter {V : Type*} [Fintype V] [DecidableEq V]
       (componentsOn G (supports G) : ℤ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Adjoining each leaf to its unique support changes no component count in a
 connected finite simple graph of order at least three.
 -/
