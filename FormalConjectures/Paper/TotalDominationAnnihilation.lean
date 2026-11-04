@@ -35,6 +35,7 @@ variant. The existing annihilation-number equivalence proof_wanted is unaffected
 namespace DesormeauxHaynesHenning
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every connected finite simple graph of order at least two satisfies
 $\gamma_t(G)\le a(G)+1$. The annihilation number maximizes the cardinality
 of a degree submultiset whose sum is at most the number of edges. -/
