@@ -65,6 +65,7 @@ def twoCliqueJoin (n : ℕ) : SimpleGraph (Fin n) where
   symm := ⟨by intro u v h; aesop⟩
   loopless := ⟨by intro v h; exact h.1 rfl⟩
 
+set_option linter.style.formal_proof_palomar false in
 /-- The original lower bound fails on connected graphs of order at least four
 with at least two missing edges, exactly excluding K_n and K_n-e. -/
 @[category research solved, AMS 5 15, formal_proof using lean4 at
