@@ -49,6 +49,7 @@ noncomputable def positivePeripheralAverage {V : Type*} [Fintype V] [DecidableEq
   (∑ u ∈ periphery G, ∑ v : V, G.dist u v : ℕ) /
     (((periphery G).card * (Fintype.card V - 1) : ℕ) : ℚ)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII Conjecture 373 proposed that every finite simple tree of order greater
 than two has total domination number at least two thirds of its positive
