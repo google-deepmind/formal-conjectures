@@ -85,6 +85,7 @@ noncomputable def orientedCount [Fintype V] (A : V → V → Bool) (k : ℕ) : �
 noncomputable def chromaticCount [Fintype V] (G : SimpleGraph V) (k : ℕ) : ℕ :=
   Nat.card (G.Coloring (Fin k))
 
+set_option linter.style.formal_proof_palomar false in
 /-- Existence of a simple graph with the same chromatic polynomial does not
 characterize absence of obstructing arc pairs in finite oriented graphs. The
 five-vertex manuscript witness and a four-vertex oriented path both disprove
