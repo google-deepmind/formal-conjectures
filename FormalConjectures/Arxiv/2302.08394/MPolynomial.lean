@@ -73,6 +73,7 @@ noncomputable def mPolynomial (T : SimpleGraph V) (root : V) : MvPolynomial (Fin
     ∑ v ∈ boundary T root S,
       (fringeP T root v).divX.eval₂ (Int.castRingHom _) (MvPolynomial.X (2 : Fin 3))
 
+set_option linter.style.formal_proof_palomar false in
 /-- Equality of the M-polynomials does not imply root-preserving isomorphism
 of finite rooted trees. The linked written witness has order 28; no universal
 minimum-order claim is included here. -/
