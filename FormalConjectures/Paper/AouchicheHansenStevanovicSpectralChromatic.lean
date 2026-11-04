@@ -47,6 +47,7 @@ noncomputable def objective {V : Type*} [Fintype V] [DecidableEq V]
 Using a bounded infimum over naturals preserves the lower cutoff $k\ge2$. -/
 noncomputable def kappa (n : ℕ) : ℕ := sInf {k : ℕ | 2 ≤ k ∧ n ≤ k * (k + 1)}
 
+set_option linter.style.formal_proof_palomar false in
 /-- The printed balanced $\lceil\sqrt n\rceil$-partite candidate does not
 maximize $\rho-\chi$ at every connected order $n\ge3$. -/
 @[category research solved, AMS 5,
