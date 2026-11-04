@@ -56,6 +56,7 @@ def leafSupportVertices {V : Type*} [Fintype V] (G : SimpleGraph V)
     [DecidableRel G.Adj] : Set V :=
   {v | G.degree v = 1 ∨ ∃ w, G.degree w = 1 ∧ G.Adj v w}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The explicit half-average version of WOWII Conjecture 360 proposed that every
 finite simple tree $T$ of order greater than two satisfies
