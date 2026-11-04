@@ -50,6 +50,7 @@ def deltaComplement (G : SimpleGraph V) [DecidableRel G.Adj] : SimpleGraph V whe
 def degreeClassCount (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
   (univ.image fun v => G.degree v).card
 
+set_option linter.style.formal_proof_palomar false in
 /-- If a finite simple graph $G$ and its delta-complement have no isolated
 vertices, then $\gamma_t(G)+\gamma_t(G_\delta)\le n+2k$, where $k$ counts
 the distinct degree values in the original $G$. No connectedness hypothesis
