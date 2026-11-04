@@ -102,6 +102,7 @@ theorem not_tied_mode_statement : ¬ tiedModeStatement := by
   have hu := path_four_total_upper
   omega
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The unique-mode interpretation of WOWII 367: a tree on more than two vertices whose
 unique most frequent degree is two has $3\gamma_t(T)\geq4\operatorname{dd}(T)$.
