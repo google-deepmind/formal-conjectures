@@ -49,6 +49,7 @@ def bound {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
     [DecidableRel G.Adj] : ℚ :=
   ((supports G).card : ℚ) + (edgesOn G (degreeTwo G) : ℚ) / 2
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple tree of order greater than two was conjectured to satisfy
 $\gamma_t(T)\ge |S(T)|+\tfrac12|E(T[D_2(T)])|$, where $S$ consists of
 vertices adjacent to leaves and $D_2$ consists of degree-two vertices.
