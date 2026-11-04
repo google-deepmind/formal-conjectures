@@ -43,6 +43,7 @@ noncomputable def componentsOn {V : Type*} (G : SimpleGraph V) (S : Finset V) : 
 def degreeDiversity (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
   (univ.image fun v => G.degree v).card
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every nontrivial finite simple tree satisfies
 $\gamma_t(T)\ge c(T[M])+dd(T)/3$, where $M$ is the full ambient
 maximum-degree set and $dd(T)$ counts distinct degree values. The fraction is
@@ -57,6 +58,7 @@ theorem conjecture379 (T : SimpleGraph V) [DecidableRel T.Adj]
       T.totalDominationNumber := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every total dominating set $D$ in a finite simple tree of order at
 least three, $|D|\ge c(T[M])+\max\{1,(dd(T)-1)/2\}$.
 The rational difference and half are retained, without natural subtraction
