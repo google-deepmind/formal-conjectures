@@ -75,6 +75,7 @@ def proposedBound {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
   (degreeModes G).card + maximumFrequency G + boundaryCount G
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII Conjecture 396 proposed that every connected finite simple graph of order
 greater than two satisfies
