@@ -104,6 +104,7 @@ noncomputable def cyclicAction (m : ℕ) [NeZero m] :
       f.toAdd.val ((i + a.toAdd) + b.toAdd)
     rw [add_assoc]
 
+set_option linter.style.formal_proof_palomar false in
 /-- For n>=2 and m=2n+3, the automorphism group of D_n is
 $C_2\times(C_2^{m-1}\rtimes C_m)$, with the cyclic shift acting on the binary
 augmentation subgroup. RelIso supplies the actual relation-automorphism group. -/
