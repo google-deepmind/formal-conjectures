@@ -38,6 +38,7 @@ namespace WrittenOnTheWallII.GraphConjecture271
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every finite simple connected graph with at least two vertices has total
 domination number at least $\lceil\sqrt{2d_M}\rceil$, where $M$ is its
