@@ -52,6 +52,7 @@ noncomputable def objective {V : Type*} [Fintype V] [DecidableEq V]
   classical
   exact sSup (spectrum ℝ (G.adjMatrix ℝ)) * G.radius.toNat
 
+set_option linter.style.formal_proof_palomar false in
 /-- The printed bag candidate is not a maximizer at every connected order
 n>=3. This is the adjacency spectral-radius product, not a Laplacian product. -/
 @[category research solved, AMS 5 15,
