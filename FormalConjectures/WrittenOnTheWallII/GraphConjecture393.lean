@@ -60,6 +60,7 @@ def edgesOn [DecidableRel G.Adj] (A : Finset V) : ℕ :=
 def uniqueNeighborCount [DecidableRel G.Adj] (A : Finset V) : ℕ :=
   (univ.filter fun v => (G.neighborFinset v ∩ A).card = 1).card
 
+set_option linter.style.formal_proof_palomar false in
 /-- With $P$ the leaves, $S=N(P)$, $R=N(S)$ and $U=V\setminus R$,
 every connected finite simple graph of order greater than two satisfies
 $\gamma_2(G)\le|U|+\mu(G[R])+|P|$. Two-domination constrains only vertices
@@ -75,6 +76,7 @@ theorem conjecture393a [DecidableRel G.Adj] (hG : G.Connected)
       matchingNumberOn G (neighbors G (supports G)) + (pendants G).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The explicit intersection variant393b is
 $\gamma_2(G)\le|U|+|E(G[S])|+|\{v:|N(v)\cap S|=1\}|$
 for connected finite simple graphs of order greater than two.
@@ -88,6 +90,7 @@ theorem conjecture393b_intersection [DecidableRel G.Adj] (hG : G.Connected)
       uniqueNeighborCount G (supports G) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The explicit intersection variant393c is
 $\gamma_2(G)\le|U|+|S|+|\{v:|N(v)\cap(P\cup S)|=1\}|$
 for connected finite simple graphs of order greater than two.
