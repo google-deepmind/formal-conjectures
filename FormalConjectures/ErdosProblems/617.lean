@@ -98,6 +98,7 @@ theorem erdos_617.variants.r2 :
           ∀ (k : Fin r), ∃ u ∈ S, ∃ v ∈ S, u ≠ v ∧ coloring s(u, v) = k}.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every five-colouring of the edges of $K_{26}$ has a six-vertex set on which
 at least one colour is absent.
@@ -114,6 +115,7 @@ theorem erdos_617.variants.r_eq_5 {V : Type} [Fintype V] [DecidableEq V]
       ∀ u ∈ S, ∀ v ∈ S, u ≠ v → coloring s(u, v) ≠ k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every six-colouring of the edges of $K_{37}$ has a seven-vertex set on which
 at least one colour is absent.
