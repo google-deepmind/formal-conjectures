@@ -43,6 +43,7 @@ unique other vertex, and every other vertex is adjacent to that center. -/
 def IsStar (G : SimpleGraph V) : Prop :=
   ∃ c : V, ∀ u v : V, G.Adj u v ↔ u ≠ v ∧ (u = c ∨ v = c)
 
+set_option linter.style.formal_proof_palomar false in
 /-- At every connected order $n\ge2$, the star maximizes squared degree
 coefficient of variation. All subtractions in the numerical bound are real. -/
 @[category research solved, AMS 5 15,
@@ -54,6 +55,7 @@ theorem conjecture2 (G : SimpleGraph V) [DecidableRel G.Adj]
       (4 * ((Fintype.card V : ℝ) - 1)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Equality holds exactly for stars, expressed independently of vertex labels. -/
 @[category research solved, AMS 5 15,
   formal_proof using lean4 at
