@@ -41,15 +41,6 @@ def a (n : ℕ) : ℤ :=
     if (Nat.sqrt sum_one_based) ^ 2 = sum_one_based then 1 else 0
   M.det
 
-open Classical in
-/-- Determinant of the $n \times n$ matrix with $(i,j)$-entry ($i, j = 1, \dots, n$) equal to $1$
-or $0$ according as $i + j$ is a perfect cube or not. -/
-noncomputable def b (n : ℕ) : ℤ :=
-  let M : Matrix (Fin n) (Fin n) ℤ := fun i j =>
-    let sum_one_based : ℕ := i.val + j.val + 2
-    if ∃ m : ℕ, m ^ 3 = sum_one_based then 1 else 0
-  M.det
-
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by decide +kernel
 
@@ -65,11 +56,19 @@ theorem a_4 : a 4 = 0 := by decide +kernel
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by decide +kernel
 
+/-- Determinant of the $n \times n$ matrix with $(i,j)$-entry ($i, j = 1, \dots, n$) equal to $1$
+or $0$ according as $i + j$ is a perfect cube or not. -/
+def b (n : ℕ) : ℤ :=
+  let M : Matrix (Fin n) (Fin n) ℤ := fun i j =>
+    let sum_one_based : ℕ := i.val + j.val + 2
+    if ∃ m ≤ sum_one_based, m ^ 3 = sum_one_based then 1 else 0
+  M.det
+
 /--
 Conjecture: $a(n)$ is nonzero for any $n > 21$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : n > 21) : a n ≠ 0 := by
+theorem conjecture_1 (n : ℕ) (hn : n > 21) : a n ≠ 0 := by
   sorry
 
 /--
@@ -79,7 +78,7 @@ nonzero for any $n > 176$.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : n > 176) : b n ≠ 0 := by
+theorem conjecture_2 (n : ℕ) (hn : n > 176) : b n ≠ 0 := by
   sorry
 
 end OeisA228624

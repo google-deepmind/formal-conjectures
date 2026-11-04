@@ -41,23 +41,18 @@ def a : ℕ → ℤ
   | 1 => 1
   | n + 2 => 5 * a (n + 1) - 8 * a n
 
-/-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
 theorem a_0 : a 0 = 0 := by rfl
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by rfl
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 5 := by rfl
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 17 := by rfl
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 45 := by rfl
 
@@ -76,7 +71,7 @@ Then $S(p) \equiv 0 \pmod{p^2}$ for every odd prime $p$.
 - _Zhi-Wei Sun_, Mar 13 2013
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2) :
+theorem conjecture_1 (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2) :
     sMod p 2 = 0 := by
   sorry
 
@@ -86,7 +81,7 @@ Then $S(p) \equiv 0 \pmod{p^3}$ for any odd prime $p \equiv 1, 2, 4 \pmod 7$.
 - _Zhi-Wei Sun_, Mar 13 2013
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2)
+theorem conjecture_2 (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2)
     (h7 : p % 7 ∈ ({1, 2, 4} : Finset ℕ)) :
     sMod p 3 = 0 := by
   sorry

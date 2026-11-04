@@ -25,8 +25,8 @@ with the set $\{\log(k+1)\}$; complement of A206912.
 
 *References:*
 - [A206911](https://oeis.org/A206911)
-- [OEIS Open](https://arxiv.org/abs/2608.11941)
-  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
+- T. Adamczewski, "OEIS Open: How many conjectures can language models turn into theorems?",
+  [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) [cs.AI], 2026.
 -/
 
 @[expose] public section
@@ -36,18 +36,14 @@ namespace OeisA206911
 /-- Position of $n$-th partial sum of the harmonic series when all the partial sums are jointly
 ranked with the set $\{\log(k+1)\}$. -/
 noncomputable def a (n : ℕ) : ℕ :=
-  n + (Int.floor (Real.exp (∑ k ∈ Finset.range n, 1 / ((k : ℝ) + 1)) - 1)).toNat
-
-@[category test, AMS 11]
-theorem a_0 : a 0 = 0 := by
-  norm_num [a]
+  n + (Int.floor (Real.exp (harmonic n : ℝ) - 1)).toNat
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by
   have h : ⌊Real.exp 1 - 1⌋ = 1 := by
     rw [Int.floor_eq_iff]
     constructor <;> { norm_num; linarith [Real.exp_one_gt_d9, Real.exp_one_lt_d9] }
-  have hsum : (∑ k ∈ Finset.range 1, 1 / ((k : ℝ) + 1)) = 1 := by norm_num
+  have hsum : (harmonic 1 : ℝ) = 1 := by norm_num [harmonic]
   unfold a
   rw [hsum, h]
   rfl
@@ -67,8 +63,8 @@ theorem a_2 : a 2 = 5 := by
   have h : ⌊Real.exp (3 / 2) - 1⌋ = 3 := by
     rw [Int.floor_eq_iff]
     constructor <;> { norm_num; linarith [hexp.1, hexp.2] }
-  have hsum : (∑ k ∈ Finset.range 2, 1 / ((k : ℝ) + 1)) = 3 / 2 := by
-    norm_num [Finset.sum_range_succ]
+  have hsum : (harmonic 2 : ℝ) = 3 / 2 := by
+    norm_num [harmonic, Finset.sum_range_succ]
   unfold a
   rw [hsum, h]
   rfl
@@ -96,8 +92,8 @@ theorem a_3 : a 3 = 8 := by
   have h : ⌊Real.exp (11 / 6) - 1⌋ = 5 := by
     rw [Int.floor_eq_iff]
     constructor <;> { norm_num; linarith [hexp.1, hexp.2] }
-  have hsum : (∑ k ∈ Finset.range 3, 1 / ((k : ℝ) + 1)) = 11 / 6 := by
-    norm_num [Finset.sum_range_succ]
+  have hsum : (harmonic 3 : ℝ) = 11 / 6 := by
+    norm_num [harmonic, Finset.sum_range_succ]
   unfold a
   rw [hsum, h]
   rfl
@@ -125,8 +121,37 @@ theorem a_4 : a 4 = 11 := by
   have h : ⌊Real.exp (25 / 12) - 1⌋ = 7 := by
     rw [Int.floor_eq_iff]
     constructor <;> { norm_num; linarith [hexp.1, hexp.2] }
-  have hsum : (∑ k ∈ Finset.range 4, 1 / ((k : ℝ) + 1)) = 25 / 12 := by
-    norm_num [Finset.sum_range_succ]
+  have hsum : (harmonic 4 : ℝ) = 25 / 12 := by
+    norm_num [harmonic, Finset.sum_range_succ]
+  unfold a
+  rw [hsum, h]
+  rfl
+
+@[category test, AMS 11]
+theorem a_5 : a 5 = 13 := by
+  have hexp : (9 : ℝ) < Real.exp (137 / 60) ∧ Real.exp (137 / 60) < 10 := by
+    have hgt := Real.exp_one_gt_d9
+    have hlt := Real.exp_one_lt_d9
+    have hpos : 0 < Real.exp (137 / 60) := Real.exp_pos _
+    have hpow : (Real.exp (137 / 60)) ^ 60 = (Real.exp 1) ^ 137 := by
+      rw [← Real.exp_nat_mul, ← Real.exp_nat_mul]
+      ring_nf
+    constructor
+    · have : (9 : ℝ) ^ 60 < (Real.exp (137 / 60)) ^ 60 := by
+        rw [hpow]
+        calc (9 : ℝ) ^ 60 < 2.7182818283 ^ 137 := by norm_num
+          _ < (Real.exp 1) ^ 137 := by gcongr
+      exact lt_of_pow_lt_pow_left₀ 60 hpos.le this
+    · have : (Real.exp (137 / 60)) ^ 60 < (10 : ℝ) ^ 60 := by
+        rw [hpow]
+        calc (Real.exp 1) ^ 137 < 2.7182818286 ^ 137 := by gcongr
+          _ < (10 : ℝ) ^ 60 := by norm_num
+      exact lt_of_pow_lt_pow_left₀ 60 (by norm_num) this
+  have h : ⌊Real.exp (137 / 60) - 1⌋ = 8 := by
+    rw [Int.floor_eq_iff]
+    constructor <;> { norm_num; linarith [hexp.1, hexp.2] }
+  have hsum : (harmonic 5 : ℝ) = 137 / 60 := by
+    norm_num [harmonic, Finset.sum_range_succ]
   unfold a
   rw [hsum, h]
   rfl
@@ -144,16 +169,27 @@ noncomputable def count2 (N : ℕ) : ℕ :=
   ∑ n ∈ Finset.range N, if diff (n + 1) = 2 then 1 else 0
 
 /--
-"Conjecture: the difference sequence of A206911 consists of $2$s and $3$s, and the ratio
-(number of $3$s)/(number of $2$s) tends to a number between $3.5$ and $3.6$."
+"Conjecture: the difference sequence of A206911 consists of $2$s and $3$s."
+- _Clark Kimberling_, Feb 13 2012
 
-Proved by Adamczewski (2026).
+Proved in the OEIS Open project, see T. Adamczewski, OEIS Open: How many conjectures can
+language models turn into theorems?, [arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
 -/
 @[category research solved, AMS 11]
-theorem conjecture :
-    (∀ n : ℕ, 1 ≤ n → diff n = 2 ∨ diff n = 3) ∧
-    (∃ l : ℝ, 3.5 < l ∧ l < 3.6 ∧
-      Filter.Tendsto (fun N : ℕ => (count3 N : ℝ) / (count2 N : ℝ)) Filter.atTop (nhds l)) := by
+theorem conjecture_1 (n : ℕ) (hn : 1 ≤ n) : diff n = 2 ∨ diff n = 3 := by
+  sorry
+
+/--
+"Conjecture: the ratio (number of $3$s)/(number of $2$s) tends to a number between $3.5$ and $3.6$."
+- _Clark Kimberling_, Feb 13 2012
+
+Proved in the OEIS Open project, see T. Adamczewski, OEIS Open: How many conjectures can
+language models turn into theorems?, [arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
+-/
+@[category research solved, AMS 11]
+theorem conjecture_2 :
+    ∃ l : ℝ, 3.5 < l ∧ l < 3.6 ∧
+      Filter.Tendsto (fun N : ℕ => (count3 N : ℝ) / (count2 N : ℝ)) Filter.atTop (nhds l) := by
   sorry
 
 end OeisA206911

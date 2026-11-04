@@ -31,7 +31,7 @@ For $n \ge 0$, $a(n)$ is the number of $0$'s in the base-$2$ representation of $
 
 namespace OeisA214560
 
-/-- `a n` is the number of $0$'s in the binary expansion of $n^2$, with `a 0 = 1`. -/
+/-- Number of $0$'s in the binary expansion of $n^2$, with $a(0) = 1$. -/
 def a (n : ℕ) : ℕ :=
   if n = 0 then 1 else (Nat.digits 2 (n ^ 2)).count 0
 

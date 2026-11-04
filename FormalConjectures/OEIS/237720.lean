@@ -37,46 +37,39 @@ def a (n : ℕ) : ℕ :=
   ∑ p ∈ Finset.Icc 1 ((n + 1) / 2),
     if p.Prime ∧ (Nat.sqrt (n - p)).Prime then 1 else 0
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 0 := by decide +native
+theorem a_1 : a 1 = 0 := by decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 0 := by decide +native
+theorem a_2 : a 2 = 0 := by decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 0 := by decide +native
+theorem a_3 : a 3 = 0 := by decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 0 := by decide +native
+theorem a_4 : a 4 = 0 := by decide +kernel
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
-theorem a_5 : a 5 = 0 := by decide +native
+theorem a_5 : a 5 = 0 := by decide +kernel
 
-/-- Value of the sequence `a` at 6. -/
 @[category test, AMS 11]
-theorem a_6 : a 6 = 1 := by decide +native
+theorem a_6 : a 6 = 1 := by decide +kernel
 
-/-- Value of the sequence `a` at 7. -/
 @[category test, AMS 11]
-theorem a_7 : a 7 = 2 := by decide +native
+theorem a_7 : a 7 = 2 := by decide +kernel
 
 /--
 Conjecture (i): $a(n) > 0$ for all $n > 5$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 5 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 5 < n) : 0 < a n := by
   sorry
 
 /--
 Conjecture: $a(n) = 1$ only for $n = 6, 23, 24, 111, 112, \ldots, 120$.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) :
+theorem conjecture_2 (n : ℕ) :
     a n = 1 ↔ n = 6 ∨ n = 23 ∨ n = 24 ∨ (111 ≤ n ∧ n ≤ 120) := by
   sorry
 
@@ -85,7 +78,7 @@ Conjecture (ii): For any integer $n > 2$, there is a prime $p < n$
 with $\lfloor\sqrt{n+p}\rfloor$ prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 2 < n) :
+theorem conjecture_3 (n : ℕ) (hn : 2 < n) :
     ∃ p : ℕ, p.Prime ∧ p < n ∧ (Nat.sqrt (n + p)).Prime := by
   sorry
 

@@ -24,8 +24,8 @@ The sequence $a(n) = \frac{(8n)! n!}{(4n)! (3n)! (2n)!}$, which is always an int
 
 *References:*
 - [A211420](https://oeis.org/A211420)
-- [OEIS Open](https://arxiv.org/abs/2608.11941)
-  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
+- T. Adamczewski, "OEIS Open: How many conjectures can language models turn into theorems?",
+  [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) [cs.AI], 2026.
 - [OEIS-A211420](https://github.com/anshM123/OEIS-A211420)
   by *Ansh Mishra* and *Aryan Senthilkumar* (2026)
 -/
@@ -37,10 +37,6 @@ namespace OeisA211420
 /-- $a(n) = \frac{(8n)! n!}{(4n)! (3n)! (2n)!}$. -/
 def a (n : ℕ) : ℕ :=
   (8 * n).factorial * n.factorial / ((4 * n).factorial * (3 * n).factorial * (2 * n).factorial)
-
-/-- The product $\prod_{i=0}^r (8n - (2i + 1))$ in $\mathbb{Z}$. -/
-def oddDescendingProduct (n r : ℕ) : ℤ :=
-  ∏ i ∈ Finset.range (r + 1), ((8 * n : ℤ) - (2 * i + 1 : ℤ))
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by decide
@@ -57,20 +53,48 @@ theorem a_3 : a 3 = 29745716 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 15628090140 := by decide
 
+/-- The product $\prod_{i=0}^r (8n - (2i + 1))$ in $\mathbb{Z}$. -/
+def oddDescendingProduct (n r : ℕ) : ℤ :=
+  ∏ i ∈ Finset.range (r + 1), ((8 * n : ℤ) - (2 * i + 1 : ℤ))
+
 set_option linter.style.formal_proof_palomar false in
 /--
-"It appears that $35 \cdot a(n)/(n + 1)$, $3 \cdot a(n)/(2n + 1)$ and $5 \cdot a(n)/(3n + 1)$ are
-integers for all $n$."
+"It appears that $35 \cdot a(n)/(n + 1)$ is an integer for all $n$."
 - _Peter Bala_, Aug 26 2025
 
-The divisibility $(3n + 1) \mid 5 a(n)$ follows from a result of Z.-W. Sun (2012). The full
-statement was proved and formalized in Lean 4 by Ansh Mishra and Aryan Senthilkumar (with Claude).
+Proved and formalized in Lean 4 by Ansh Mishra and Aryan Senthilkumar (with Claude).
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/anshM123/OEIS-A211420/blob/2bd4dbf1185a9fa8edc2cb9a61d471583d018d08/lean/DMSolutions/OEIS_A211420/Solution.lean#L25-L28"]
-theorem conjecture1 (n : ℕ) :
-    (n + 1) ∣ 35 * a n ∧ (2 * n + 1) ∣ 3 * a n ∧ (3 * n + 1) ∣ 5 * a n := by
+theorem conjecture_1 (n : ℕ) : (n + 1) ∣ 35 * a n := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+"It appears that $3 \cdot a(n)/(2n + 1)$ is an integer for all $n$."
+- _Peter Bala_, Aug 26 2025
+
+Proved and formalized in Lean 4 by Ansh Mishra and Aryan Senthilkumar (with Claude).
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/anshM123/OEIS-A211420/blob/2bd4dbf1185a9fa8edc2cb9a61d471583d018d08/lean/DMSolutions/OEIS_A211420/Solution.lean#L25-L28"]
+theorem conjecture_2 (n : ℕ) : (2 * n + 1) ∣ 3 * a n := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+"It appears that $5 \cdot a(n)/(3n + 1)$ is an integer for all $n$."
+- _Peter Bala_, Aug 26 2025
+
+Follows from a result of Z.-W. Sun (2012), and formalized in Lean 4 by Ansh Mishra and Aryan
+Senthilkumar (with Claude).
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/anshM123/OEIS-A211420/blob/2bd4dbf1185a9fa8edc2cb9a61d471583d018d08/lean/DMSolutions/OEIS_A211420/Solution.lean#L25-L28"]
+theorem conjecture_3 (n : ℕ) : (3 * n + 1) ∣ 5 * a n := by
   sorry
 
 set_option linter.style.formal_proof_palomar false in
@@ -85,7 +109,7 @@ Aryan Senthilkumar (with Claude).
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/anshM123/OEIS-A211420/blob/2bd4dbf1185a9fa8edc2cb9a61d471583d018d08/lean/DMSolutions/OEIS_A211420/Solution.lean#L30-L33"]
-theorem conjecture2 (k r : ℕ) (hk : k = 1 ∨ k = 2 ∨ k = 3) (hr : 1 ≤ r) :
+theorem conjecture_4 (k r : ℕ) (hk : k = 1 ∨ k = 2 ∨ k = 3) (hr : 1 ≤ r) :
     ∃ C : ℕ, 0 < C ∧ ∀ n : ℕ, (k * n + 1).ascFactorial r ∣ C * a n := by
   sorry
 
@@ -99,7 +123,7 @@ Proved and formalized in Lean 4 by Ansh Mishra and Aryan Senthilkumar (with Clau
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/anshM123/OEIS-A211420/blob/2bd4dbf1185a9fa8edc2cb9a61d471583d018d08/lean/DMSolutions/OEIS_A211420/Solution.lean#L35-L38"]
-theorem conjecture3 (n : ℕ) :
+theorem conjecture_5 (n : ℕ) :
     ((8 * n : ℤ) - 1) ∣ (a n : ℤ) := by
   sorry
 
@@ -109,13 +133,14 @@ set_option linter.style.formal_proof_palomar false in
 $a(n) \cdot K(r)/((8n - 1)(8n - 3)\cdots(8n - (2r+1)))$ is an integer for all $n$."
 - _Peter Bala_, Aug 26 2025
 
-Proved by Adamczewski (2026), and also by Ansh Mishra and Aryan Senthilkumar
-(with Claude).
+Proved in the OEIS Open project, see T. Adamczewski, OEIS Open: How many conjectures can
+language models turn into theorems?, [arXiv:2608.11941](https://arxiv.org/abs/2608.11941),
+and also by Ansh Mishra and Aryan Senthilkumar (with Claude).
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/anshM123/OEIS-A211420/blob/2bd4dbf1185a9fa8edc2cb9a61d471583d018d08/lean/DMSolutions/OEIS_A211420/Solution.lean#L40-L43"]
-theorem conjecture4 (r : ℕ) :
+theorem conjecture_6 (r : ℕ) :
     ∃ K : ℤ, 0 < K ∧ ∀ n : ℕ, oddDescendingProduct n r ∣ (a n : ℤ) * K := by
   sorry
 

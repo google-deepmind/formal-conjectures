@@ -57,11 +57,14 @@ theorem a_4 : a 4 = 1 := by rfl
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by rfl
 
+@[category test, AMS 11]
+theorem a_8 : a 8 = 2 := by decide +kernel
+
 /--
 Conjecture (i): $a(n) > 0$ for all $n > 2$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : n > 2) : a n > 0 := by
+theorem conjecture_1 (n : ℕ) (hn : n > 2) : a n > 0 := by
   sorry
 
 /--
@@ -69,7 +72,7 @@ Conjecture (ii): Any integer $n > 8$ can be written as $x + y + z$ ($x, y, z > 0
 $2x + 1, 2y + 1, 2z - 1, 2x^4 - 1, 2y^4 - 1, 2z^4 - 1$ all prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : n > 8) :
+theorem conjecture_2 (n : ℕ) (hn : n > 8) :
     ∃ x y z : ℕ, 0 < x ∧ 0 < y ∧ 0 < z ∧ x + y + z = n ∧
       (2 * x + 1).Prime ∧ (2 * y + 1).Prime ∧ (2 * z - 1).Prime ∧
       (2 * x ^ 4 - 1).Prime ∧ (2 * y ^ 4 - 1).Prime ∧ (2 * z ^ 4 - 1).Prime := by

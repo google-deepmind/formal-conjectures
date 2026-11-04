@@ -56,7 +56,7 @@ theorem a_8 : a 8 = 1 := by decide
 Conjecture: $a(n) > 0$ for all $n > 2732$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 2732 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 2732 < n) : 0 < a n := by
   sorry
 
 /--
@@ -65,7 +65,7 @@ such that both $n^2 - n + p$ and $n^2 + n - p$ are prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 3512 < n) :
+theorem conjecture_2 (n : ℕ) (hn : 3512 < n) :
     ∃ p : ℕ, p.Prime ∧ n < p ∧ p < 2 * n ∧
       Nat.Prime (n ^ 2 - n + p) ∧ Nat.Prime (n ^ 2 + n - p) := by
   sorry
@@ -76,7 +76,7 @@ both $n^2 - n - p$ and $n^2 + n + p$ are prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 1828 < n) :
+theorem conjecture_3 (n : ℕ) (hn : 1828 < n) :
     ∃ p : ℕ, p.Prime ∧ p < n ∧
       Nat.Prime (n ^ 2 - n - p) ∧ Nat.Prime (n ^ 2 + n + p) := by
   sorry
@@ -87,7 +87,7 @@ such that both $n^2 - n - p$ and $n^2 + n + p$ are prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (n : ℕ) (hn : 4517 < n) :
+theorem conjecture_4 (n : ℕ) (hn : 4517 < n) :
     ∃ p : ℕ, p.Prime ∧ n < p ∧ p < 2 * n ∧
       Nat.Prime (n ^ 2 - n - p) ∧ Nat.Prime (n ^ 2 + n + p) := by
   sorry

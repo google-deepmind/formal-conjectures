@@ -34,8 +34,8 @@ namespace OeisA247824
 
 open Nat Set
 
-/-- The primary sequence $a(n)$: least positive integer $m$ such that $m + n$ divides
-$\mathrm{prime}(m) + \mathrm{prime}(n)$. If no such $m$ exists (or if $n = 0$), it returns $0$. -/
+/-- Least positive integer $m$ such that $m + n$ divides $\mathrm{prime}(m) + \mathrm{prime}(n)$.
+If no such $m$ exists (or if $n = 0$), returns $0$. -/
 noncomputable def a (n : ℕ) : ℕ :=
   if n = 0 then 0 else
   sInf { m : ℕ | 0 < m ∧ (m + n) ∣ (Nat.nth Nat.Prime (m - 1) + Nat.nth Nat.Prime (n - 1)) }
@@ -102,16 +102,27 @@ theorem a_5 : a 5 = 2 := by
     interval_cases m
     · revert hm; norm_num [Nat.nth_prime_zero_eq_two, Nat.nth_prime_four_eq_eleven]
 
-/-- Conjecture: $a(n)$ exists for any $n > 0$. Moreover, $a(n) < n(n-1)$ for all $n > 2$.
-The existence of $a(n)$ for $n > 0$ is formalized by requiring that the defining set is nonempty,
-which is equivalent to $0 < a(n)$. -/
+/--
+Conjecture: $a(n)$ exists for any $n > 0$.
+The existence of $a(n)$ for $n > 0$ is formalized by requiring that the defining set is nonempty
+(equivalently, $0 < a(n)$).
+- _Zhi-Wei Sun_, Sep 25 2014
+-/
 @[category research open, AMS 11]
-theorem conjecture :
-    (∀ n : ℕ, 0 < n →
-      ({ m : ℕ | 0 < m ∧
-        (m + n) ∣ (Nat.nth Nat.Prime (m - 1) + Nat.nth Nat.Prime (n - 1)) }).Nonempty)
-    ∧
-    (∀ n : ℕ, 2 < n → a n < n * (n - 1)) := by
+theorem conjecture_1 (n : ℕ) (hn : 0 < n) :
+    ({ m : ℕ | 0 < m ∧
+      (m + n) ∣ (Nat.nth Nat.Prime (m - 1) + Nat.nth Nat.Prime (n - 1)) }).Nonempty := by
+  sorry
+
+/--
+Conjecture: $a(n) < n(n-1)$ for all $n > 2$.
+- _Zhi-Wei Sun_, Sep 25 2014
+
+Disproved by Khai-Hoan Nguyen-Dang (Oct 30 2026), who found the counterexample
+$n = 1322164$, for which $a(1322164) = 2636932401176 > 1748116320732 = 1322164 \cdot 1322163$.
+-/
+@[category research solved, AMS 11]
+theorem conjecture_2 : ¬ ∀ n : ℕ, 2 < n → a n < n * (n - 1) := by
   sorry
 
 end OeisA247824

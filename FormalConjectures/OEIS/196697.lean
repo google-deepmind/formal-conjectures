@@ -40,23 +40,18 @@ def a (n : ℕ) : ℕ :=
       {2 ^ n + 2 ^ k + 1, 2 ^ n + 2 ^ k - 1, 2 ^ n - 2 ^ k + 1, 2 ^ n - 2 ^ k - 1}
   (candidates.filter Nat.Prime).card
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 4 := by decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 5 := by decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 6 := by decide
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 7 := by decide
 
@@ -65,7 +60,7 @@ Conjecture: all terms of this sequence are greater than $0$.
 - _Lei Zhou_, Oct 05 2011
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
   sorry
 
 /--
@@ -73,7 +68,7 @@ Conjecture: infinitely many elements of this sequence are equal to $0$.
 - _Charles R Greathouse IV_, Nov 21 2011
 -/
 @[category research open, AMS 11]
-theorem conjecture2 : Set.Infinite {n : ℕ | a n = 0} := by
+theorem conjecture_2 : Set.Infinite {n : ℕ | a n = 0} := by
   sorry
 
 end OeisA196697

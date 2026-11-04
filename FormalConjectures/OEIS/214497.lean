@@ -31,57 +31,27 @@ $(3^n - k) 2^n + 1$ form a twin prime pair.
 
 namespace OeisA214497
 
-open scoped Classical in
-/-- `a n` is the smallest $k \ge 0$ such that $(3^n - k) 2^n - 1$ and $(3^n - k) 2^n + 1$
+/-- Smallest $k \ge 0$ such that $(3^n - k) 2^n - 1$ and $(3^n - k) 2^n + 1$
 are both prime, or `none` if no such $k$ exists. -/
-noncomputable def a (n : ℕ) : Option ℕ :=
-  if ∃ k : ℕ, Nat.Prime ((3 ^ n - k) * 2 ^ n - 1) ∧ Nat.Prime ((3 ^ n - k) * 2 ^ n + 1) then
-    some (sInf {k : ℕ | Nat.Prime ((3 ^ n - k) * 2 ^ n - 1) ∧ Nat.Prime ((3 ^ n - k) * 2 ^ n + 1)})
-  else
-    none
+def a (n : ℕ) : Option ℕ :=
+  (List.range (3 ^ n)).find? fun k =>
+    Nat.Prime ((3 ^ n - k) * 2 ^ n - 1) && Nat.Prime ((3 ^ n - k) * 2 ^ n + 1)
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = some 0 := by
-  have h : IsLeast {k : ℕ | Nat.Prime ((3 ^ 1 - k) * 2 ^ 1 - 1) ∧ Nat.Prime ((3 ^ 1 - k) * 2 ^ 1 + 1)} 0 :=
-    ⟨by norm_num, fun x _ => Nat.zero_le x⟩
-  have h_ex : ∃ k : ℕ, Nat.Prime ((3 ^ 1 - k) * 2 ^ 1 - 1) ∧ Nat.Prime ((3 ^ 1 - k) * 2 ^ 1 + 1) := ⟨0, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+theorem a_1 : a 1 = some 0 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = some 6 := by
-  have h : IsLeast {k : ℕ | Nat.Prime ((3 ^ 2 - k) * 2 ^ 2 - 1) ∧ Nat.Prime ((3 ^ 2 - k) * 2 ^ 2 + 1)} 6 := by
-    refine ⟨by norm_num, fun x hx => ?_⟩
-    by_contra! h
-    interval_cases x <;> norm_num at hx
-  have h_ex : ∃ k : ℕ, Nat.Prime ((3 ^ 2 - k) * 2 ^ 2 - 1) ∧ Nat.Prime ((3 ^ 2 - k) * 2 ^ 2 + 1) := ⟨6, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+theorem a_2 : a 2 = some 6 := by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = some 3 := by
-  have h : IsLeast {k : ℕ | Nat.Prime ((3 ^ 3 - k) * 2 ^ 3 - 1) ∧ Nat.Prime ((3 ^ 3 - k) * 2 ^ 3 + 1)} 3 := by
-    refine ⟨by norm_num, fun x hx => ?_⟩
-    by_contra! h
-    interval_cases x <;> norm_num at hx
-  have h_ex : ∃ k : ℕ, Nat.Prime ((3 ^ 3 - k) * 2 ^ 3 - 1) ∧ Nat.Prime ((3 ^ 3 - k) * 2 ^ 3 + 1) := ⟨3, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+theorem a_3 : a 3 = some 3 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = some 9 := by
-  have h : IsLeast {k : ℕ | Nat.Prime ((3 ^ 4 - k) * 2 ^ 4 - 1) ∧ Nat.Prime ((3 ^ 4 - k) * 2 ^ 4 + 1)} 9 := by
-    refine ⟨by norm_num, fun x hx => ?_⟩
-    by_contra! h
-    interval_cases x <;> norm_num at hx
-  have h_ex : ∃ k : ℕ, Nat.Prime ((3 ^ 4 - k) * 2 ^ 4 - 1) ∧ Nat.Prime ((3 ^ 4 - k) * 2 ^ 4 + 1) := ⟨9, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+theorem a_4 : a 4 = some 9 := by decide +kernel
 
+set_option maxRecDepth 10000 in
 @[category test, AMS 11]
-theorem a_5 : a 5 = some 9 := by
-  have h : IsLeast {k : ℕ | Nat.Prime ((3 ^ 5 - k) * 2 ^ 5 - 1) ∧ Nat.Prime ((3 ^ 5 - k) * 2 ^ 5 + 1)} 9 := by
-    refine ⟨by norm_num, fun x hx => ?_⟩
-    by_contra! h
-    interval_cases x <;> norm_num at hx
-  have h_ex : ∃ k : ℕ, Nat.Prime ((3 ^ 5 - k) * 2 ^ 5 - 1) ∧ Nat.Prime ((3 ^ 5 - k) * 2 ^ 5 + 1) := ⟨9, h.1⟩
-  rw [a, if_pos h_ex, h.csInf_eq]
+theorem a_5 : a 5 = some 9 := by decide +kernel
 
 /--
 Conjecture: There is always one such $k$ for each $n > 0$ such that

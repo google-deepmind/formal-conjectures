@@ -33,30 +33,35 @@ namespace OeisA259667
 
 open Nat
 
-/-- The primary sequence $a(n) = C_n \bmod 6$, where $C_n$ is the $n$-th Catalan number. -/
+/-- $a(n) = C_n \bmod 6$, where $C_n$ is the $n$-th Catalan number. -/
 def a (n : ℕ) : ℕ :=
-  ((2 * n).choose n / (n + 1)) % 6
+  _root_.catalan n % 6
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by decide
+theorem a_0 : a 0 = 1 := by
+  simp only [a, catalan_eq_centralBinom_div]; decide
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by decide
+theorem a_1 : a 1 = 1 := by
+  simp only [a, catalan_eq_centralBinom_div]; decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by decide
+theorem a_2 : a 2 = 2 := by
+  simp only [a, catalan_eq_centralBinom_div]; decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 5 := by decide
+theorem a_3 : a 3 = 5 := by
+  simp only [a, catalan_eq_centralBinom_div]; decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 2 := by decide
+theorem a_4 : a 4 = 2 := by
+  simp only [a, catalan_eq_centralBinom_div]; decide
 
 /--
 It is conjectured that the only $k$ which yield $a(2^k - 1) = 1$ are $k = 0, 1$ and $5$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (k : ℕ) :
+theorem conjecture_1 (k : ℕ) :
     a (2 ^ k - 1) = 1 ↔ k = 0 ∨ k = 1 ∨ k = 5 := by
   sorry
 
@@ -64,7 +69,7 @@ theorem conjecture1 (k : ℕ) :
 Conjecture: The only $k$ which yield $a(2^k - 1) = 5$ are $k = 2, 8$.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (k : ℕ) :
+theorem conjecture_2 (k : ℕ) :
     a (2 ^ k - 1) = 5 ↔ k = 2 ∨ k = 8 := by
   sorry
 

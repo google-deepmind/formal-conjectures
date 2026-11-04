@@ -60,7 +60,7 @@ theorem a_18 : a 18 = 2 := by decide
 Conjecture: $a(n) > 0$ for all even $n > 8012$ and odd $n > 15727$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : (Even n ∧ 8012 < n) ∨ (Odd n ∧ 15727 < n)) : a n > 0 := by
+theorem conjecture_1 (n : ℕ) (hn : (Even n ∧ 8012 < n) ∨ (Odd n ∧ 15727 < n)) : a n > 0 := by
   sorry
 
 /--
@@ -70,7 +70,7 @@ $p, q, p - d_1, q + d_2$ all prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (d₁ d₂ : ℤ) (hd₁ : 6 ∣ d₁) (hd₂ : 6 ∣ d₂) :
+theorem conjecture_2 (d₁ d₂ : ℤ) (hd₁ : 6 ∣ d₁) (hd₂ : 6 ∣ d₂) :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
       ∃ p q p' q' : ℕ, q < p ∧ p.Prime ∧ q.Prime ∧ p'.Prime ∧ q'.Prime ∧
         (p : ℤ) - d₁ = p' ∧ (q : ℤ) + d₂ = q' ∧ n = p + (1 + n % 2) * q := by

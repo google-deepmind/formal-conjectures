@@ -37,10 +37,6 @@ def a (n : ℕ) : ℕ :=
     Nat.Prime (x * (x + 1) / 2 + y ^ 2)
   ) |>.card
 
-/-- The $m$-gonal number $p_m(x) = (m-2)x(x-1)/2 + x$. -/
-def polygonalNumber (m x : ℕ) : ℕ :=
-  (m - 2) * x * (x - 1) / 2 + x
-
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by decide
 
@@ -60,7 +56,7 @@ theorem a_5 : a 5 = 2 := by decide
 Conjecture: $a(n) > 0$ for all $n > 1$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : n > 1) : a n > 0 := by
+theorem conjecture_1 (n : ℕ) (hn : n > 1) : a n > 0 := by
   sorry
 
 /--
@@ -68,9 +64,9 @@ We also conjecture that any integer $n > 1$ can be written as $x + y$ ($x, y > 0
 $p_k(x) + p_{k+1}(y)$ prime, if and only if $k$ is among $3, 39, 99$.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (k : ℕ) (hk : 3 ≤ k) :
+theorem conjecture_2 (k : ℕ) (hk : 3 ≤ k) :
     (∀ n : ℕ, 1 < n → ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧
-      Nat.Prime (polygonalNumber k x + polygonalNumber (k + 1) y)) ↔
+      Nat.Prime (Nat.polygonalNumber k x + Nat.polygonalNumber (k + 1) y)) ↔
     k = 3 ∨ k = 39 ∨ k = 99 := by
   sorry
 
@@ -81,10 +77,10 @@ $p_k(x) + p_m(y)$ prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (k m : ℕ) (hk : k = 3 ∨ k = 4 ∨ k = 6) (hm : k < m)
+theorem conjecture_3 (k m : ℕ) (hk : k = 3 ∨ k = 4 ∨ k = 6) (hm : k < m)
     (hmod : ¬ m ≡ k [MOD 2]) :
     ∀ᶠ (n : ℕ) in Filter.atTop, ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧
-      Nat.Prime (polygonalNumber k x + polygonalNumber m y) := by
+      Nat.Prime (Nat.polygonalNumber k x + Nat.polygonalNumber m y) := by
   sorry
 
 /--
@@ -94,9 +90,9 @@ $p_5(x) + p_m(y)$ prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (m : ℕ) (hm : 5 < m) (hmod : m ≡ 0 [MOD 6] ∨ m ≡ 4 [MOD 6]) :
+theorem conjecture_4 (m : ℕ) (hm : 5 < m) (hmod : m ≡ 0 [MOD 6] ∨ m ≡ 4 [MOD 6]) :
     ∀ᶠ (n : ℕ) in Filter.atTop, ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧
-      Nat.Prime (polygonalNumber 5 x + polygonalNumber m y) := by
+      Nat.Prime (Nat.polygonalNumber 5 x + Nat.polygonalNumber m y) := by
   sorry
 
 /-- The set of pairs $(k, m)$ with $2 < k \le 10$ and $k < m \le 100$ conjectured by Zhi-Wei Sun
@@ -116,9 +112,9 @@ be written as $x + y$ ($x, y > 0$) with $p_k(x) + p_m(y)$ prime, are the $31$ pa
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture5 (k m : ℕ) (hk : 2 < k) (hk10 : k ≤ 10) (hm : k < m) (hm100 : m ≤ 100) :
+theorem conjecture_5 (k m : ℕ) (hk : 2 < k) (hk10 : k ≤ 10) (hm : k < m) (hm100 : m ≤ 100) :
     (∀ n : ℕ, 1 < n → ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧
-      Nat.Prime (polygonalNumber k x + polygonalNumber m y)) ↔
+      Nat.Prime (Nat.polygonalNumber k x + Nat.polygonalNumber m y)) ↔
     (k, m) ∈ sunPolygonalPairs := by
   sorry
 

@@ -34,15 +34,12 @@ namespace OeisA256544
 
 open Nat Finset
 
-/-- The $x$-th triangular number $T(x) = \frac{x(x+1)}{2}$. -/
-def triangular (x : ℕ) : ℕ := x * (x + 1) / 2
-
 /-- The finite set of values $v \in \{\lfloor T(x)/3 \rfloor : x \ge 1\}$ with $v \le n$. -/
 def aElements (n : ℕ) : Finset ℕ :=
   let maxRange : ℕ := 4 * n + 2
-  ((range maxRange).image (fun x : ℕ => triangular x.succ / 3)).filter (fun v => v ≤ n)
+  ((range maxRange).image (fun x : ℕ => Nat.triangular x.succ / 3)).filter (fun v => v ≤ n)
 
-/-- The primary sequence $a(n)$: number of ways to write $n$ as the sum of three unordered
+/-- Number of ways to write $n$ as the sum of three unordered
 elements of $\{\lfloor T(x)/3 \rfloor : x \ge 1\}$. -/
 def a (n : ℕ) : ℕ :=
   let vs := aElements n
@@ -50,26 +47,26 @@ def a (n : ℕ) : ℕ :=
     (vs.filter (fun c => a ≤ b ∧ b ≤ c ∧ a + b + c = n)).card
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by native_decide
+theorem a_0 : a 0 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by native_decide
+theorem a_2 : a 2 = 2 := by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 3 := by native_decide
+theorem a_3 : a 3 = 3 := by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 3 := by native_decide
+theorem a_4 : a 4 = 3 := by decide
 
 /-- Conjecture: For any positive integer $m$, every nonnegative integer $n$ can be written as
 $\lfloor T(x)/m \rfloor + \lfloor T(y)/m \rfloor + \lfloor T(z)/m \rfloor$ with $x, y, z$
 nonnegative integers. -/
 @[category research open, AMS 11]
 theorem conjecture (m : ℕ) (hm : 0 < m) (n : ℕ) :
-    ∃ x y z : ℕ, n = triangular x / m + triangular y / m + triangular z / m := by
+    ∃ x y z : ℕ, n = Nat.triangular x / m + Nat.triangular y / m + Nat.triangular z / m := by
   sorry
 
 end OeisA256544

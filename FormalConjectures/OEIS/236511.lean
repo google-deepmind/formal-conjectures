@@ -38,23 +38,18 @@ def a (n : ℕ) : ℕ :=
     let p := 3 * k.totient + (n - k).totient - 1
     if p.Prime ∧ (p + 2).Prime ∧ (p + 6).Prime ∧ (p + 8).Prime then 1 else 0
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 0 := by decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 0 := by decide
 
-/-- Value of the sequence `a` at 10. -/
 @[category test, AMS 11]
 theorem a_10 : a 10 = 1 := by decide
 

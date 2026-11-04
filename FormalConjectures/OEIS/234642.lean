@@ -20,6 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Smallest $x$ such that $x \bmod \phi(x) = n$, or $0$ if no such $x$ exists
 
+For $n \ge 0$, $a(n)$ is the smallest positive integer $x$ such that $x \bmod \phi(x) = n$, or $0$
+if no such $x$ exists, where $\phi$ is Euler's totient function.
+
 *References:*
 - [A234642](https://oeis.org/A234642)
 -/
@@ -37,40 +40,31 @@ def ModTotientEq (n x : ℕ) : Prop :=
 instance (n x : ℕ) : Decidable (ModTotientEq n x) :=
   inferInstanceAs (Decidable (0 < x.totient ∧ x % x.totient = n))
 
-@[category API, AMS 11]
-lemma isLeast_modTotientEq {n k : ℕ}
-    (hk : ModTotientEq n k)
-    (hmin : ∀ m < k, ¬ ModTotientEq n m) :
-    IsLeast {m | ModTotientEq n m} k :=
-  ⟨hk, fun m hm => not_lt.mp (fun hlt => hmin m hlt hm)⟩
-
-open Classical in
 /--
-The primary defining sequence `a`.
-$a(n)$ is the smallest $x$ such that $x \bmod \phi(x) = n$, or $0$ if no such $x$ exists.
+Smallest $x$ such that $x \bmod \phi(x) = n$, or $0$ if no such $x$ exists.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   sInf {x : ℕ | ModTotientEq n x}
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by
-  exact (isLeast_modTotientEq (by decide) (by decide)).csInf_eq
+theorem a_0 : a 0 = 1 :=
+  IsLeast.csInf_eq (by decide)
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 3 := by
-  exact (isLeast_modTotientEq (by decide) (by decide)).csInf_eq
+theorem a_1 : a 1 = 3 :=
+  IsLeast.csInf_eq (by decide)
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 10 := by
-  exact (isLeast_modTotientEq (by decide) (by decide)).csInf_eq
+theorem a_2 : a 2 = 10 :=
+  IsLeast.csInf_eq (by decide)
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 9 := by
-  exact (isLeast_modTotientEq (by decide) (by decide)).csInf_eq
+theorem a_3 : a 3 = 9 :=
+  IsLeast.csInf_eq (by decide)
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 20 := by
-  exact (isLeast_modTotientEq (by decide) (by decide)).csInf_eq
+theorem a_4 : a 4 = 20 :=
+  IsLeast.csInf_eq (by decide)
 
 /--
 Conjecture: $a(n) > 0$ for all $n$.

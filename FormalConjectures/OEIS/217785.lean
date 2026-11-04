@@ -36,17 +36,13 @@ def polyP (n s : ℕ) : ℕ :=
   ∑ k ∈ Finset.range n, (k + 1) * s ^ k
 
 open scoped Classical in
-/-- `a n` is the smallest integer $s > n$ such that `polyP n s` is prime,
+/-- Smallest integer $s > n$ such that `polyP n s` is prime,
 or `none` if no such $s$ exists. -/
 noncomputable def a (n : ℕ) : Option ℕ :=
   if ∃ s : ℕ, n < s ∧ Nat.Prime (polyP n s) then
     some (sInf {s : ℕ | n < s ∧ Nat.Prime (polyP n s)})
   else
     none
-
-/-- `polyS n` is the polynomial $s_n(x) = \sum_{k=0}^n (k+1) x^k$ over $\mathbb{Z}[x]$. -/
-noncomputable def polyS (n : ℕ) : Polynomial ℤ :=
-  ∑ k ∈ Finset.range (n + 1), Polynomial.C (k + 1 : ℤ) * Polynomial.X ^ k
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = some 3 := by
@@ -93,12 +89,16 @@ theorem a_6 : a 6 = some 21 := by
   have h_ex : ∃ s : ℕ, 6 < s ∧ Nat.Prime (polyP 6 s) := ⟨21, h.1⟩
   rw [a, if_pos h_ex, h.csInf_eq]
 
+/-- The polynomial $s_n(x) = \sum_{k=0}^n (k+1) x^k$ over $\mathbb{Z}[x]$. -/
+noncomputable def polyS (n : ℕ) : Polynomial ℤ :=
+  ∑ k ∈ Finset.range (n + 1), Polynomial.C (k + 1 : ℤ) * Polynomial.X ^ k
+
 /--
 Conjecture: For each $n \ge 2$, there are infinitely many primes of the form
 $1 + 2s + \dots + n s^{n-1}$ where $s$ is a positive integer.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 2 ≤ n) :
+theorem conjecture_1 (n : ℕ) (hn : 2 ≤ n) :
     {s : ℕ | 0 < s ∧ Nat.Prime (polyP n s)}.Infinite := by
   sorry
 
@@ -106,21 +106,28 @@ theorem conjecture1 (n : ℕ) (hn : 2 ≤ n) :
 Conjecture: For each $n \ge 2$, $a(n) < 12 n^2$.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 2 ≤ n) :
+theorem conjecture_2 (n : ℕ) (hn : 2 ≤ n) :
     ∃ m < 12 * n ^ 2, a n = some m := by
   sorry
 
 /--
 Conjecture: The polynomials $s_n(x) = \sum_{k=0}^n (k+1) x^k$ for
-$n \ge 1$ are all irreducible over the field of rational numbers; moreover, $s_n(x)$ is
+$n \ge 1$ are all irreducible over the field of rational numbers.
+-/
+@[category research open, AMS 11 12]
+theorem conjecture_3 (n : ℕ) (hn : 1 ≤ n) :
+    Irreducible (Polynomial.map (Int.castRingHom ℚ) (polyS n)) := by
+  sorry
+
+/--
+Conjecture: For $n \ge 1$, the polynomial $s_n(x) = \sum_{k=0}^n (k+1) x^k$ is
 reducible modulo every prime if and only if $n$ has the form $8k(k+1)$ where $k$ is a
 positive integer.
 -/
 @[category research open, AMS 11 12]
-theorem conjecture3 (n : ℕ) (hn : 1 ≤ n) :
-    Irreducible (Polynomial.map (Int.castRingHom ℚ) (polyS n)) ∧
-      ((∀ p : ℕ, p.Prime → ¬ Irreducible (Polynomial.map (Int.castRingHom (ZMod p)) (polyS n))) ↔
-        ∃ k : ℕ, 0 < k ∧ n = 8 * k * (k + 1)) := by
+theorem conjecture_4 (n : ℕ) (hn : 1 ≤ n) :
+    (∀ p : ℕ, p.Prime → ¬ Irreducible (Polynomial.map (Int.castRingHom (ZMod p)) (polyS n))) ↔
+      ∃ k : ℕ, 0 < k ∧ n = 8 * k * (k + 1) := by
   sorry
 
 end OeisA217785

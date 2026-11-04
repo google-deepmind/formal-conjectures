@@ -62,21 +62,44 @@ Conjecture (i): For any $m \in \{3, 4, 5, 6\}$ and $n \ge 0$, there are nonnegat
 $w, x, y, z$ such that $n = w^2 + x^3 + 2y^3 + mz^3$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (m : ℕ) (hm : m ∈ ({3, 4, 5, 6} : Finset ℕ)) (n : ℕ) :
+theorem conjecture_1 (m : ℕ) (hm : m ∈ ({3, 4, 5, 6} : Finset ℕ)) (n : ℕ) :
     ∃ w x y z : ℕ, n = w ^ 2 + x ^ 3 + 2 * y ^ 3 + m * z ^ 3 := by
   sorry
 
 /--
-Conjecture (ii): For each polynomial $P(w, x, y, z) \in \{w^2 + x^3 + 2y^3 + z^4,
-w^2 + x^3 + 2y^3 + 3z^4, w^2 + x^3 + 2y^3 + 6z^4, 2w^2 + x^3 + 4y^3 + z^4\}$, every
-nonnegative integer $n$ is of the form $P(w, x, y, z)$ for some nonnegative integers $w, x, y, z$.
+Conjecture (ii): Every nonnegative integer $n$ can be written as $w^2 + x^3 + 2y^3 + z^4$
+for some nonnegative integers $w, x, y, z$.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) :
-    (∃ w x y z : ℕ, n = w ^ 2 + x ^ 3 + 2 * y ^ 3 + z ^ 4) ∧
-    (∃ w x y z : ℕ, n = w ^ 2 + x ^ 3 + 2 * y ^ 3 + 3 * z ^ 4) ∧
-    (∃ w x y z : ℕ, n = w ^ 2 + x ^ 3 + 2 * y ^ 3 + 6 * z ^ 4) ∧
-    (∃ w x y z : ℕ, n = 2 * w ^ 2 + x ^ 3 + 4 * y ^ 3 + z ^ 4) := by
+theorem conjecture_2 (n : ℕ) :
+    ∃ w x y z : ℕ, n = w ^ 2 + x ^ 3 + 2 * y ^ 3 + z ^ 4 := by
+  sorry
+
+/--
+Conjecture (ii): Every nonnegative integer $n$ can be written as $w^2 + x^3 + 2y^3 + 3z^4$
+for some nonnegative integers $w, x, y, z$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_3 (n : ℕ) :
+    ∃ w x y z : ℕ, n = w ^ 2 + x ^ 3 + 2 * y ^ 3 + 3 * z ^ 4 := by
+  sorry
+
+/--
+Conjecture (ii): Every nonnegative integer $n$ can be written as $w^2 + x^3 + 2y^3 + 6z^4$
+for some nonnegative integers $w, x, y, z$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_4 (n : ℕ) :
+    ∃ w x y z : ℕ, n = w ^ 2 + x ^ 3 + 2 * y ^ 3 + 6 * z ^ 4 := by
+  sorry
+
+/--
+Conjecture (ii): Every nonnegative integer $n$ can be written as $2w^2 + x^3 + 4y^3 + z^4$
+for some nonnegative integers $w, x, y, z$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_5 (n : ℕ) :
+    ∃ w x y z : ℕ, n = 2 * w ^ 2 + x ^ 3 + 4 * y ^ 3 + z ^ 4 := by
   sorry
 
 end OeisA262824

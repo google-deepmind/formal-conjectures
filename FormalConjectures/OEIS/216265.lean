@@ -31,7 +31,7 @@ given by $\pi(n^3) - \pi(n^3 - n)$.
 
 namespace OeisA216265
 
-/-- `a n` is the number of primes between $n^3 - n$ and $n^3$. -/
+/-- Number of primes between $n^3 - n$ and $n^3$. -/
 def a (n : ℕ) : ℕ :=
   Nat.primeCounting (n ^ 3) - Nat.primeCounting (n ^ 3 - n)
 
@@ -49,6 +49,9 @@ theorem a_4 : a 4 = 1 := by decide +kernel
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 0 := by decide +kernel
+
+@[category test, AMS 11]
+theorem a_10 : a 10 = 2 := by decide +kernel
 
 /--
 Conjecture: For every $n > 13$, $a(n) > 0$.

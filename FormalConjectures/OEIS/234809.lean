@@ -20,6 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Number of integers $0 < k < n$ such that $p = k + \phi(n - k)$ and $2(n - p) + 1$ are both prime
 
+Let $\phi$ denote Euler's totient function. The sequence $a(n)$ counts the integers $0 < k < n$
+such that $p = k + \phi(n - k)$ and $2(n - p) + 1$ are both prime.
+
 *References:*
 - [A234809](https://oeis.org/A234809)
 -/
@@ -29,8 +32,7 @@ public import FormalConjecturesUtil
 namespace OeisA234809
 
 /--
-The primary defining sequence `a`.
-$a(n)$ is the number of integers $0 < k < n$ such that $p = k + \phi(n - k)$
+Number of integers $0 < k < n$ such that $p = k + \phi(n - k)$
 and $2(n - p) + 1$ are both prime, where $\phi$ is Euler's totient function.
 -/
 def a (n : ℕ) : ℕ :=
@@ -57,7 +59,7 @@ theorem a_5 : a 5 = 1 := by decide
 Conjecture: $a(n) > 0$ for all $n > 2$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 2 < n) : 0 < a n := by
+theorem conjecture (n : ℕ) (hn : 2 < n) : 0 < a n := by
   sorry
 
 end OeisA234809

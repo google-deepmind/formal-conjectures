@@ -36,31 +36,24 @@ def a (n : ℕ) : ℕ :=
   ∑ k ∈ Finset.Icc 1 ((n - 1) / 2),
     if IsSquare (k.totient * (n - k).totient) then 1 else 0
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by decide +kernel
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by decide +kernel
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by decide +kernel
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 0 := by decide +kernel
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 0 := by decide +kernel
 
-/-- Value of the sequence `a` at 6. -/
 @[category test, AMS 11]
 theorem a_6 : a 6 = 1 := by decide +kernel
 
-/-- Value of the sequence `a` at 7. -/
 @[category test, AMS 11]
 theorem a_7 : a 7 = 2 := by decide +kernel
 
@@ -68,14 +61,14 @@ theorem a_7 : a 7 = 2 := by decide +kernel
 Conjecture: (i) $a(n) > 0$ for all $n > 8$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 8 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 8 < n) : 0 < a n := by
   sorry
 
 /--
 Conjecture: (ii) If $n > 20$, then $\phi(k)\phi(n-k) + 1$ is a square for some $0 < k < n/2$.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 20 < n) :
+theorem conjecture_2 (n : ℕ) (hn : 20 < n) :
     ∃ k : ℕ, 0 < k ∧ 2 * k < n ∧ IsSquare (k.totient * (n - k).totient + 1) := by
   sorry
 
@@ -84,7 +77,7 @@ Conjecture: (iii) If $n > 1$ is not among $4, 7, 60, 199, 267$, then $k\phi(n-k)
 some $0 < k < n$.
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 1 < n) (h4 : n ≠ 4) (h7 : n ≠ 7) (h60 : n ≠ 60)
+theorem conjecture_3 (n : ℕ) (hn : 1 < n) (h4 : n ≠ 4) (h7 : n ≠ 7) (h60 : n ≠ 60)
     (h199 : n ≠ 199) (h267 : n ≠ 267) :
     ∃ k : ℕ, 0 < k ∧ k < n ∧ IsSquare (k * (n - k).totient) := by
   sorry

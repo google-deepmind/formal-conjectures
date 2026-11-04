@@ -38,7 +38,7 @@ open Nat List
 def isEvil (k : ℕ) : Bool :=
   (Nat.digits 2 k).count 1 % 2 == 0
 
-/-- The primary sequence $a(n)$: smallest $1 \le m \le n$ such that $\binom{n}{m}$ is evil,
+/-- Smallest $1 \le m \le n$ such that $\binom{n}{m}$ is evil,
 or $0$ if no such $m$ exists. -/
 def a (n : ℕ) : ℕ :=
   ((List.range' 1 n).find? fun m => isEvil (n.choose m)).getD 0

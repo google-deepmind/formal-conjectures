@@ -26,8 +26,8 @@ $$a(n) = \frac{\sum_{k=0}^n \binom{6k}{3k}\binom{3k}{k}
 
 *References:*
 - [A189286](https://oeis.org/A189286)
-- [OEIS Open](https://arxiv.org/abs/2608.11941)
-  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
+- T. Adamczewski, "OEIS Open: How many conjectures can language models turn into theorems?",
+  [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) [cs.AI], 2026.
 -/
 
 @[expose] public section
@@ -46,40 +46,38 @@ def a (n : ℕ) : ℚ :=
   (∑ k ∈ Finset.range (n + 1), tTerm k * tTerm (n - k)) /
     (((2 * (n : ℚ)) - 1) * ((3 * n).choose n : ℚ))
 
-/-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-theorem a_0 : a 0 = -1 := by decide +native
+theorem a_0 : a 0 = -1 := by decide +kernel
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 40 := by decide +native
+theorem a_1 : a 1 = 40 := by decide +kernel
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 696 := by decide +native
+theorem a_2 : a 2 = 696 := by decide +kernel
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 23408 := by decide +native
+theorem a_3 : a 3 = 23408 := by decide +kernel
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 969496 := by decide +native
+theorem a_4 : a 4 = 969496 := by decide +kernel
 
 /--
 Conjecture: $a(n)$ is an integer for every $n = 0, 1, 2, \dots$.
 - _Zhi-Wei Sun_, Apr 19 2011
+
+Proved in the OEIS Open project, see T. Adamczewski, OEIS Open: How many conjectures can
+language models turn into theorems?, [arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
 -/
 @[category research solved, AMS 11]
-theorem conjecture1 (n : ℕ) : (a n).den = 1 := by
+theorem conjecture_1 (n : ℕ) : (a n).den = 1 := by
   sorry
 
 /--
 Conjecture (i): $a(n)^{1/n}$ tends to $64$ as $n$ tends to infinity.
 - _Zhi-Wei Sun_, Apr 19 2011
 -/
-@[category research open, AMS 11]
-theorem conjecture2 :
+@[category textbook, AMS 11]
+theorem conjecture_2 :
     Filter.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) Filter.atTop (nhds 64) := by
   sorry
 
@@ -89,7 +87,7 @@ and $a(n)/8$ is odd if and only if $n$ is a power of two.
 - _Zhi-Wei Sun_, Apr 19 2011
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 0 < n) :
+theorem conjecture_3 (n : ℕ) (hn : 0 < n) :
     ∃ m : ℤ, a n = 8 * m ∧ (Odd m ↔ ∃ k : ℕ, n = 2 ^ k) := by
   sorry
 

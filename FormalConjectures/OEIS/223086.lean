@@ -67,6 +67,9 @@ theorem a_5 : a 5 = 324 := by rfl
 @[category test, AMS 11]
 theorem a_8 : a 8 = 547 := by rfl
 
+@[category test, AMS 11]
+theorem a_9 : a 9 = 410 := by rfl
+
 /--
 It is conjectured that this trajectory does not close on itself.
 -/

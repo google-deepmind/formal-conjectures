@@ -37,40 +37,34 @@ def a (n : ℕ) : ℕ :=
   if n < 3 then 0
   else
     let l_n : List ℕ := (List.range n).map (· + 1)
-    let all_perms : List (List ℕ) := l_n.permutations
+    let all_perms : List (List ℕ) := l_n.permutations'
     let good_perms := all_perms.filter fun p =>
       (p.zip (p.rotate (n - 1))).all fun pair => decide ((pair.1 * pair.2 - 1).Prime)
     good_perms.length / (2 * n)
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 0 := by native_decide
+theorem a_1 : a 1 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 0 := by native_decide
+theorem a_2 : a 2 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 0 := by native_decide
+theorem a_3 : a 3 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by native_decide
+theorem a_4 : a 4 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 0 := by native_decide
+theorem a_5 : a 5 = 0 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_6 : a 6 = 2 := by native_decide
-
-@[category test, AMS 11]
-theorem a_7 : a 7 = 1 := by native_decide
-
-@[category test, AMS 11]
-theorem a_8 : a 8 = 2 := by native_decide
+theorem a_6 : a 6 = 2 := by decide +kernel
 
 /--
 Conjecture: $a(n) > 0$ for all $n > 5$ with $n$ not equal to $13$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : n > 5) (hne : n ≠ 13) : a n > 0 := by
+theorem conjecture_1 (n : ℕ) (hn : n > 5) (hne : n ≠ 13) : a n > 0 := by
   sorry
 
 /--
@@ -80,7 +74,7 @@ all prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : n > 1) :
+theorem conjecture_2 (n : ℕ) (hn : n > 1) :
     ∃ π : Equiv.Perm (Fin n), ∀ i : Fin n,
       (2 * ((π i).val + 1) *
         ((π ⟨(i.val + 1) % n, Nat.mod_lt _ (by omega)⟩).val + 1) - 1).Prime := by
@@ -93,7 +87,7 @@ $2\pi(1)\pi(2)+1, \dots, 2\pi(n-1)\pi(n)+1, 2\pi(n)\pi(1)+1$ are all prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : n > 0) (hne : n ≠ 4) :
+theorem conjecture_3 (n : ℕ) (hn : n > 0) (hne : n ≠ 4) :
     ∃ π : Equiv.Perm (Fin n), ∀ i : Fin n,
       (2 * ((π i).val + 1) * ((π ⟨(i.val + 1) % n, Nat.mod_lt _ hn⟩).val + 1) + 1).Prime := by
   sorry
@@ -107,7 +101,7 @@ $F \setminus \{0\}$).
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11 12]
-theorem conjecture4 (F : Type*) [Field F] [Fintype F] (hF : Fintype.card F > 7) :
+theorem conjecture_4 (F : Type*) [Field F] [Fintype F] (hF : Fintype.card F > 7) :
     let m := Fintype.card F - 1
     ∃ a : Fin m ≃ Fˣ,
       ∀ i : Fin m, IsPrimitiveRoot
@@ -122,7 +116,7 @@ of the field $F$ (i.e., generators of the multiplicative group $F \setminus \{0\
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11 12]
-theorem conjecture5 (F : Type*) [Field F] [Fintype F] (hF : Fintype.card F > 7) :
+theorem conjecture_5 (F : Type*) [Field F] [Fintype F] (hF : Fintype.card F > 7) :
     let m := Fintype.card F - 1
     ∃ b : Fin m ≃ Fˣ,
       ∀ i : Fin m, IsPrimitiveRoot

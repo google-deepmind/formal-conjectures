@@ -34,22 +34,14 @@ namespace OeisA251758
 
 open Nat List
 
-/-- The primary sequence $a(n) = \lfloor n^2 / s \rfloor$, where $s$ is the sum of products of
-consecutive divisors of $n$ in increasing order. -/
+/-- $\lfloor n^2 / s \rfloor$, where $s$ is the sum of products of consecutive divisors of $n$ in
+increasing order. -/
 def a (n : ℕ) : ℕ :=
   let divisorsList : List ℕ := (List.range (n + 1)).filter (· ∣ n)
   let sList : List ℕ :=
     (divisorsList.zip divisorsList.tail).map (fun p : ℕ × ℕ => p.fst * p.snd)
   let s : ℕ := sList.sum
   if s = 0 then 0 else n ^ 2 / s
-
-/-- Number of primes strictly less than $n$. -/
-def numPrimesLt (n : ℕ) : ℕ :=
-  ((Finset.range n).filter Nat.Prime).card
-
-/-- Product of the first $k$ primes. -/
-noncomputable def primorial (k : ℕ) : ℕ :=
-  ∏ i ∈ Finset.range k, Nat.nth Nat.Prime i
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 2 := by decide
@@ -67,16 +59,18 @@ theorem a_5 : a 5 = 5 := by decide
 theorem a_6 : a 6 = 1 := by decide
 
 /--
-"Conjecture: Terms $x$, where $a(x)=n$, $x=p\#k/p\#j$, $p\#i$ is the $i$-th primorial, $k>j$ is
-suitable large $k$ and $j$ is the number of primes less than $n$. As an example, $n=9$,
-$x = p\#7/p\#4 = 2431$. For $n=10$, $x = p\#6/p\#4 = 143$ although $121 = 11^2$ is the least $x$
-where $a(x)=10$ (see formula section). For $n=8$, $x = p\#12/p\#4, p\#13/p\#4, p\#14/p\#4,
-p\#15/p\#4, p\#16/p\#4$, etc. But is $p\#12/p\#4$ the least such $x$?"
+Let $p\#_i$ denote the $i$-th primorial (`Nat.kthPrimorial i`). For $n = 8$, the primorial ratios
+$x = p\#_{12}/p\#_4, p\#_{13}/p\#_4, p\#_{14}/p\#_4, p\#_{15}/p\#_4, p\#_{16}/p\#_4, \dots$
+satisfy $a(x) = 8$. Is $p\#_{12}/p\#_4 = 35336848261$ the least $x \ge 2$ such that $a(x) = 8$?
+
+"For $n=8$, $x = p\#12/p\#4, p\#13/p\#4, p\#14/p\#4, p\#15/p\#4, p\#16/p\#4$, etc.
+But is $p\#12/p\#4$ the least such $x$?"
+- _Robert G. Wilson v_, Dec 18 2014
 -/
 @[category research open, question, AMS 11]
 theorem conjecture :
     IsLeast {x : ℕ | 2 ≤ x ∧ a x = 8}
-      (primorial 12 / primorial (numPrimesLt 8)) := by
+      (Nat.kthPrimorial 12 / Nat.kthPrimorial (Nat.primeCounting' 8)) := by
   sorry
 
 end OeisA251758

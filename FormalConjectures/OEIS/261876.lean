@@ -27,8 +27,7 @@ a square, where $x, y, z, w$ are nonnegative integers with $z > 0$.
 - [A261876](https://oeis.org/A261876)
 - [Refining Lagrange's four-square theorem](https://arxiv.org/abs/1604.06723)
   by *Zhi-Wei Sun*, arXiv:1604.06723 (2016)
-- [OEIS Open](https://arxiv.org/abs/2608.11941)
-  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
+- [arXiv:2608.11941](https://arxiv.org/abs/2608.11941)
 -/
 
 @[expose] public section
@@ -54,45 +53,45 @@ def a (n : ℕ) : ℕ :=
           else 0
 
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 3 := by native_decide
+theorem a_2 : a 2 = 3 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 2 := by native_decide
+theorem a_3 : a 3 = 2 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by native_decide
+theorem a_4 : a 4 = 1 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 4 := by native_decide
+theorem a_5 : a 5 = 4 := by decide +kernel
 
 /-- The set of base integers $m$ for which $a(n) = 1$ when $n = 4^k m$. -/
-def SpecialSet : Finset ℕ :=
+def specialSet : Finset ℕ :=
   {1, 7, 23, 647, 863}
 
 /--
 Conjecture (i): $a(n) > 0$ for all $n > 0$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 0 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 0 < n) : 0 < a n := by
   sorry
 
 /--
 Conjecture (i): $a(n) = 1$ only for $n = 4^k m$ ($k = 0, 1, 2, \dots$ and
 $m \in \{1, 7, 23, 647, 863\}$).
 
-Disproved by Adamczewski (2026) at $n = 69383$, where $(x, y, z, w) = (187, 147, 6, 113)$ is the
-unique representation, so $a(69383) = 1$.
+Disproved in [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) at $n = 69383$, where
+$(x, y, z, w) = (187, 147, 6, 113)$ is the unique representation, so $a(69383) = 1$.
 -/
 @[category research solved, AMS 11]
-theorem conjecture2 :
-    ¬ ∀ n : ℕ, (a n = 1 ↔ ∃ k : ℕ, ∃ m ∈ SpecialSet, n = 4 ^ k * m) := by
+theorem conjecture_2 :
+    ¬ ∀ n : ℕ, (a n = 1 ↔ ∃ k : ℕ, ∃ m ∈ specialSet, n = 4 ^ k * m) := by
   sorry
 
 /-- The set of coefficient triples $(c_1, c_2, c_3)$ for part (ii) of the conjecture. -/
-def Triples : Finset (ℕ × ℕ × ℕ) :=
+def triples : Finset (ℕ × ℕ × ℕ) :=
   {(1, 8, 20), (3, 5, 15), (6, 14, 4), (7, 29, 5), (18, 38, 18), (39, 81, 51), (42, 98, 14)}
 
 /--
@@ -102,7 +101,7 @@ $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative integers such that
 $xy(c_1 x^2 + c_2 y^2 + c_3 z^2)$ is a square.
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (t : ℕ × ℕ × ℕ) (ht : t ∈ Triples) (n : ℕ) :
+theorem conjecture_3 (t : ℕ × ℕ × ℕ) (ht : t ∈ triples) (n : ℕ) :
     ∃ x y z w : ℕ, n = x ^ 2 + y ^ 2 + z ^ 2 + w ^ 2 ∧
       IsSquare (x * y * (t.1 * x ^ 2 + t.2.1 * y ^ 2 + t.2.2 * z ^ 2)) := by
   sorry

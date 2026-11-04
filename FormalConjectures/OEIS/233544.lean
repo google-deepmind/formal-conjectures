@@ -20,6 +20,10 @@ public import FormalConjecturesUtil
 /-!
 # Representations $n = k^2 + m$ ($0 < k^2 \le m$) with $\sigma(k^2) + \phi(m)$ prime
 
+Let $\sigma$ denote the sum-of-divisors function and $\phi$ denote Euler's totient function.
+The sequence $a(n)$ counts the representations $n = k^2 + m$ ($0 < k^2 \le m$) such that
+$\sigma(k^2) + \phi(m)$ is prime.
+
 *References:*
 - [A233544](https://oeis.org/A233544)
 -/
@@ -29,16 +33,17 @@ public import FormalConjecturesUtil
 namespace OeisA233544
 
 open ArithmeticFunction
+open scoped ArithmeticFunction.sigma
 
 /--
-$a(n)$ is the number of ways to write $n = k^2 + m$ with $k > 0$ and $m \ge k^2$ such that
+Number of ways to write $n = k^2 + m$ with $k > 0$ and $m \ge k^2$ such that
 $\sigma(k^2) + \phi(m)$ is prime, where $\sigma(k^2)$ is the sum of all positive divisors of $k^2$,
 and $\phi$ is Euler's totient function.
 -/
 def a (n : ℕ) : ℕ :=
   ∑ k ∈ (Finset.Icc 1 n).filter (fun k => 2 * k ^ 2 ≤ n),
     let m := n - k ^ 2
-    if Nat.Prime (sigma 1 (k ^ 2) + m.totient) then 1 else 0
+    if Nat.Prime (σ 1 (k ^ 2) + m.totient) then 1 else 0
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by
@@ -65,7 +70,7 @@ Conjecture (i): $a(n) > 0$ for all $n > 1$.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
   sorry
 
 /--
@@ -74,8 +79,8 @@ such that $\sigma(k)^2 + \phi(m)$ is prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 1 < n) :
-    ∃ k m : ℕ, 0 < k ∧ 0 < m ∧ n = k + m ∧ Nat.Prime (sigma 1 k ^ 2 + m.totient) := by
+theorem conjecture_2 (n : ℕ) (hn : 1 < n) :
+    ∃ k m : ℕ, 0 < k ∧ 0 < m ∧ n = k + m ∧ Nat.Prime (σ 1 k ^ 2 + m.totient) := by
   sorry
 
 /--
@@ -84,8 +89,8 @@ such that $\sigma(k) + \phi(m)^2$ is prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 1 < n) :
-    ∃ k m : ℕ, 0 < k ∧ 0 < m ∧ n = k + m ∧ Nat.Prime (sigma 1 k + m.totient ^ 2) := by
+theorem conjecture_3 (n : ℕ) (hn : 1 < n) :
+    ∃ k m : ℕ, 0 < k ∧ 0 < m ∧ n = k + m ∧ Nat.Prime (σ 1 k + m.totient ^ 2) := by
   sorry
 
 end OeisA233544

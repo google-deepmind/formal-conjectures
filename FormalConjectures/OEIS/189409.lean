@@ -31,60 +31,39 @@ is the $n$-th primorial (A002110).
 
 namespace OeisA189409
 
-/-- The sequence $a(n) = (\prod_{k=0}^{n-1} p_k)^2 + 1$. -/
+/-- The sequence $a(n) = (p_n\#)^2 + 1$. -/
 noncomputable def a (n : ℕ) : ℕ :=
-  (∏ k ∈ Finset.range n, Nat.nth Nat.Prime k) ^ 2 + 1
+  (Nat.kthPrimorial n) ^ 2 + 1
 
-/-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-theorem a_0 : a 0 = 2 := by rfl
+theorem a_0 : a 0 = 2 := by simp [a]
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 5 := by
-  unfold a
-  rw [Finset.prod_range_one, Nat.nth_prime_zero_eq_two]
-  rfl
+theorem a_1 : a 1 = 5 := by simp [a]
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
-theorem a_2 : a 2 = 37 := by
-  unfold a
-  rw [Finset.prod_range_succ, Finset.prod_range_one,
-    Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three]
-  rfl
+theorem a_2 : a 2 = 37 := by simp [a]
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 901 := by
-  unfold a
-  rw [Finset.prod_range_succ, Finset.prod_range_succ, Finset.prod_range_one,
-    Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three, Nat.nth_prime_two_eq_five]
-  rfl
+theorem a_3 : a 3 = 901 := by simp [a]
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 44101 := by
-  unfold a
-  rw [Finset.prod_range_succ, Finset.prod_range_succ, Finset.prod_range_succ,
-    Finset.prod_range_one, Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three,
-    Nat.nth_prime_two_eq_five, Nat.nth_prime_three_eq_seven]
-  rfl
+theorem a_4 : a 4 = 44101 := by simp [a]
 
 /--
 It is unknown whether or not numbers in this sequence are always squarefree.
 - _John M. Campbell_, Apr 21 2011
 -/
-@[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) : Squarefree (a n) := by
+@[category research open, question, AMS 11]
+theorem conjecture_1 : ∀ n : ℕ, Squarefree (a n) := by
   sorry
 
 /--
 It is unknown whether or not there exist infinitely many primes in this sequence.
 - _John M. Campbell_, Apr 21 2011
 -/
-@[category research open, AMS 11]
-theorem conjecture2 : Set.Infinite {n : ℕ | (a n).Prime} := by
+@[category research open, question, AMS 11]
+theorem conjecture_2 : Set.Infinite {n : ℕ | (a n).Prime} := by
   sorry
 
 end OeisA189409

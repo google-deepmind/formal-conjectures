@@ -20,6 +20,10 @@ public import FormalConjecturesUtil
 /-!
 # Integers $0 < k < n$ with $p = k + \mathrm{prime}(n - k)$ and $\mathrm{prime}(p) - p + 1$ prime
 
+Let $\mathrm{prime}(m)$ denote the $m$-th prime number. The sequence $a(n)$ counts the integers
+$0 < k < n$ such that $p = k + \mathrm{prime}(n - k)$ and $\mathrm{prime}(p) - p + 1$ are both
+prime.
+
 *References:*
 - [A234694](https://oeis.org/A234694)
 -/
@@ -29,26 +33,13 @@ public import FormalConjecturesUtil
 namespace OeisA234694
 
 /--
-The primary defining sequence `a`.
-$a(n)$ is the number of integers $0 < k < n$ such that $p = k + \mathrm{prime}(n - k)$
+Number of integers $0 < k < n$ such that $p = k + \mathrm{prime}(n - k)$
 and $\mathrm{prime}(p) - p + 1$ are both prime, where $\mathrm{prime}(m)$ denotes the $m$-th prime.
 -/
 noncomputable def a (n : ℕ) : ℕ :=
   ∑ k ∈ Finset.Ico 1 n,
     let p := k + Nat.nth Nat.Prime (n - k - 1)
     if p.Prime ∧ Nat.Prime (Nat.nth Nat.Prime (p - 1) - p + 1) then 1 else 0
-
-@[category API, AMS 11]
-lemma nth_prime_five : Nat.nth Nat.Prime 5 = 13 :=
-  Nat.nth_count (by decide : (13).Prime)
-
-@[category API, AMS 11]
-lemma nth_prime_six : Nat.nth Nat.Prime 6 = 17 :=
-  Nat.nth_count (by decide : (17).Prime)
-
-@[category API, AMS 11]
-lemma nth_prime_seven : Nat.nth Nat.Prime 7 = 19 :=
-  Nat.nth_count (by decide : (19).Prime)
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by
@@ -75,7 +66,7 @@ theorem a_4 : a 4 = 2 := by
   simp only [a, hIco, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
     OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self, not_false_eq_true, Finset.sum_singleton,
     Nat.reduceSub, Nat.reduceAdd, Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three,
-    Nat.nth_prime_two_eq_five, Nat.nth_prime_four_eq_eleven, nth_prime_five]
+    Nat.nth_prime_two_eq_five, Nat.nth_prime_four_eq_eleven, Nat.nth_prime_five_eq_thirteen]
   decide
 
 @[category test, AMS 11]
@@ -84,36 +75,48 @@ theorem a_5 : a 5 = 1 := by
   simp only [a, hIco, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
     OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self, not_false_eq_true, Finset.sum_singleton,
     Nat.reduceSub, Nat.reduceAdd, Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three,
-    Nat.nth_prime_two_eq_five, Nat.nth_prime_three_eq_seven, nth_prime_five,
-    nth_prime_six, nth_prime_seven]
+    Nat.nth_prime_two_eq_five, Nat.nth_prime_three_eq_seven, Nat.nth_prime_five_eq_thirteen,
+    Nat.nth_prime_six_eq_seventeen, Nat.nth_prime_seven_eq_nineteen]
   decide
 
 /--
-Conjecture (i): $a(n) > 0$ for all $n > 9$. Also, for any integer $n > 51$ there is a positive
-integer $k < n$ such that $p = k + \mathrm{prime}(n - k)$ and $\mathrm{prime}(p) + p + 1$ are
-both prime.
+Conjecture (i): $a(n) > 0$ for all $n > 9$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 :
-    (∀ n : ℕ, 9 < n → 0 < a n) ∧
-    (∀ n : ℕ, 51 < n → ∃ k, 0 < k ∧ k < n ∧
-      let p := k + Nat.nth Nat.Prime (n - k - 1)
-      p.Prime ∧ Nat.Prime (Nat.nth Nat.Prime (p - 1) + p + 1)) := by
+theorem conjecture_1 (n : ℕ) (hn : 9 < n) : 0 < a n := by
   sorry
 
 /--
-Conjecture (ii): If $n > 9$ (or $n > 21$), then there is a positive integer $k < n$ such that
-$m - 1$ and $\mathrm{prime}(m) + m$ (or $\mathrm{prime}(m) - m$, respectively) are both prime,
-where $m = k + \mathrm{prime}(n - k)$.
+Conjecture (i): For any integer $n > 51$ there is a positive integer $k < n$ such that
+$p = k + \mathrm{prime}(n - k)$ and $\mathrm{prime}(p) + p + 1$ are both prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 :
-    (∀ n : ℕ, 9 < n → ∃ k, 0 < k ∧ k < n ∧
+theorem conjecture_2 (n : ℕ) (hn : 51 < n) :
+    ∃ k, 0 < k ∧ k < n ∧
+      let p := k + Nat.nth Nat.Prime (n - k - 1)
+      p.Prime ∧ Nat.Prime (Nat.nth Nat.Prime (p - 1) + p + 1) := by
+  sorry
+
+/--
+Conjecture (ii): If $n > 9$, then there is a positive integer $k < n$ such that
+$m - 1$ and $\mathrm{prime}(m) + m$ are both prime, where $m = k + \mathrm{prime}(n - k)$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_3 (n : ℕ) (hn : 9 < n) :
+    ∃ k, 0 < k ∧ k < n ∧
       let m := k + Nat.nth Nat.Prime (n - k - 1)
-      Nat.Prime (m - 1) ∧ Nat.Prime (Nat.nth Nat.Prime (m - 1) + m)) ∧
-    (∀ n : ℕ, 21 < n → ∃ k, 0 < k ∧ k < n ∧
+      Nat.Prime (m - 1) ∧ Nat.Prime (Nat.nth Nat.Prime (m - 1) + m) := by
+  sorry
+
+/--
+Conjecture (ii): If $n > 21$, then there is a positive integer $k < n$ such that
+$m - 1$ and $\mathrm{prime}(m) - m$ are both prime, where $m = k + \mathrm{prime}(n - k)$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_4 (n : ℕ) (hn : 21 < n) :
+    ∃ k, 0 < k ∧ k < n ∧
       let m := k + Nat.nth Nat.Prime (n - k - 1)
-      Nat.Prime (m - 1) ∧ Nat.Prime (Nat.nth Nat.Prime (m - 1) - m)) := by
+      Nat.Prime (m - 1) ∧ Nat.Prime (Nat.nth Nat.Prime (m - 1) - m) := by
   sorry
 
 /--
@@ -121,7 +124,7 @@ Conjecture (iii): If $n > 483$, then for some $0 < k < n$ both $\mathrm{prime}(m
 and $\mathrm{prime}(m) - m$ are prime, where $m = k + \mathrm{prime}(n - k)$.
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 483 < n) :
+theorem conjecture_5 (n : ℕ) (hn : 483 < n) :
     ∃ k, 0 < k ∧ k < n ∧
       let m := k + Nat.nth Nat.Prime (n - k - 1)
       Nat.Prime (Nat.nth Nat.Prime (m - 1) + m) ∧
@@ -133,7 +136,7 @@ Conjecture (iv): If $n > 3$, then there is a positive integer $k < n$ such that
 $\mathrm{prime}(k + \mathrm{prime}(n - k)) + 2$ is prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (n : ℕ) (hn : 3 < n) :
+theorem conjecture_6 (n : ℕ) (hn : 3 < n) :
     ∃ k, 0 < k ∧ k < n ∧
       let m := k + Nat.nth Nat.Prime (n - k - 1)
       Nat.Prime (Nat.nth Nat.Prime (m - 1) + 2) := by

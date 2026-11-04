@@ -42,27 +42,22 @@ def a (n : ℕ) : ℕ :=
     let m := Nat.primeCounting (Nat.primeCounting (k * n))
     m.sqrt ^ 2 = m).card
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
   decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 2 := by
   decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by
   decide +kernel
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by
   decide +kernel
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 2 := by
   decide +kernel
@@ -71,7 +66,7 @@ theorem a_5 : a 5 = 2 := by
 Conjecture (i): $a(n) > 0$ for all $n > 0$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 0 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 0 < n) : 0 < a n := by
   sorry
 
 /--
@@ -79,9 +74,9 @@ Conjecture (ii): For every $n = 1, 2, 3, \dots$, there exists a positive integer
 $k \le (n + 1) / 2$ such that $\pi(\pi(k n))$ is a triangular number.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 0 < n) :
+theorem conjecture_2 (n : ℕ) (hn : 0 < n) :
     ∃ k : ℕ, 0 < k ∧ k ≤ (n + 1) / 2 ∧
-      ∃ m : ℕ, Nat.primeCounting (Nat.primeCounting (k * n)) = m * (m + 1) / 2 := by
+      (Nat.primeCounting (Nat.primeCounting (k * n))).IsTriangular := by
   sorry
 
 end OeisA238902

@@ -53,7 +53,7 @@ theorem a_5 : a 5 = 2 := by decide
 Conjecture: $a(n) > 0$ if $n$ is different from $1, 6, 16, 24$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : n > 0) (h1 : n ≠ 1) (h6 : n ≠ 6) (h16 : n ≠ 16) (h24 : n ≠ 24) :
+theorem conjecture_1 (n : ℕ) (hn : n > 0) (h1 : n ≠ 1) (h6 : n ≠ 6) (h16 : n ≠ 16) (h24 : n ≠ 24) :
     a n > 0 := by
   sorry
 
@@ -64,7 +64,7 @@ prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (k : ℕ) (hk : 0 < k) :
+theorem conjecture_2 (k : ℕ) (hk : 0 < k) :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
       ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧ Nat.Prime ((x * y) ^ (2 ^ k) + 1) := by
   sorry

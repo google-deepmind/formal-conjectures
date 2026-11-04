@@ -20,10 +20,13 @@ public import FormalConjecturesUtil
 /-!
 # Number of integers $0 < k < n$ such that $(k + 1)^{\phi(n - k)} + k$ is prime
 
+For $n \ge 1$, $a(n)$ counts the integers $0 < k < n$ for which $(k + 1)^{\phi(n - k)} + k$ is
+prime, where $\phi$ is Euler's totient function.
+
 *References:*
 - [A234360](https://oeis.org/A234360)
-- [OEIS Open](https://arxiv.org/abs/2608.11941)
-  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
+- T. Adamczewski, "OEIS Open: How many conjectures can language models turn into theorems?",
+  [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) [cs.AI], 2026.
 -/
 
 @[expose] public section
@@ -31,8 +34,7 @@ public import FormalConjecturesUtil
 namespace OeisA234360
 
 /--
-The primary defining sequence `a`.
-$a(n)$ is the number of integers $0 < k < n$ such that $(k + 1)^{\phi(n - k)} + k$ is prime,
+Number of integers $0 < k < n$ such that $(k + 1)^{\phi(n - k)} + k$ is prime,
 where $\phi$ is Euler's totient function.
 -/
 def a (n : ℕ) : ℕ :=
@@ -59,26 +61,29 @@ theorem a_5 : a 5 = 3 := by decide
 Conjecture (i): $a(n) > 0$ for all $n > 1$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
   sorry
 
 /--
 Conjecture (i): For any $n > 5$ there is a positive integer $k < n$ with
 $(k + 1)^{\phi(n - k) / 2} - k$ prime.
 
-Disproved by Adamczewski (2026) for $n = 1408$.
+Disproved for $n = 1408$ in the OEIS Open project, see T. Adamczewski, OEIS Open: How many
+conjectures can language models turn into theorems?,
+[arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
 -/
 @[category research solved, AMS 11]
-theorem conjecture2 :
+theorem conjecture_2 :
     ¬ ∀ n : ℕ, 5 < n →
-      ∃ k, 0 < k ∧ k < n ∧ Nat.Prime ((k + 1) ^ ((n - k).totient / 2) - k) := by
+      ∃ k, 0 < k ∧ k < n ∧
+        ∃ p : ℕ, p.Prime ∧ (p + k) ^ 2 = (k + 1) ^ (n - k).totient := by
   sorry
 
 /--
 Conjecture (ii): If $n > 1$, then $k(k + 1)^{\phi(n - k)} + 1$ is prime for some $0 < k < n$.
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 1 < n) :
+theorem conjecture_3 (n : ℕ) (hn : 1 < n) :
     ∃ k, 0 < k ∧ k < n ∧ Nat.Prime (k * (k + 1) ^ (n - k).totient + 1) := by
   sorry
 
@@ -86,7 +91,7 @@ theorem conjecture3 (n : ℕ) (hn : 1 < n) :
 Conjecture (ii): If $n > 3$, then $k(k + 1)^{\phi(n - k) / 2} - 1$ is prime for some $0 < k < n$.
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (n : ℕ) (hn : 3 < n) :
+theorem conjecture_4 (n : ℕ) (hn : 3 < n) :
     ∃ k, 0 < k ∧ k < n ∧
       ∃ p : ℕ, p.Prime ∧ (p + 1) ^ 2 = k ^ 2 * (k + 1) ^ (n - k).totient := by
   sorry

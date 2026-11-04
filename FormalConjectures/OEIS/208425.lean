@@ -58,7 +58,7 @@ $(a(pn)-a(n))/(pn)^3$ is always a $p$-adic integer.
 - _Zhi-Wei Sun_, Nov 12 2016
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (p : ℕ) (hp : p.Prime) (hpgt3 : 3 < p) (n : ℕ) (hn : 0 < n) :
+theorem conjecture_1 (p : ℕ) (hp : p.Prime) (hpgt3 : 3 < p) (n : ℕ) (hn : 0 < n) :
     0 ≤ padicValRat p (((a (p * n) : ℚ) - (a n : ℚ)) / ((p * n : ℚ) ^ 3)) := by
   sorry
 
@@ -68,7 +68,7 @@ $\sum_{k=0}^{p-1} a(k) \equiv \binom{2(p-1)/3}{(p-1)/3} \pmod{p^2}$.
 - _Zhi-Wei Sun_, Nov 12 2016
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (p : ℕ) (hp : p.Prime) (hmod : p % 3 = 1) :
+theorem conjecture_2 (p : ℕ) (hp : p.Prime) (hmod : p % 3 = 1) :
     (∑ k ∈ Finset.range p, a k) % (p ^ 2) =
       ((2 * (p - 1) / 3).choose ((p - 1) / 3)) % (p ^ 2) := by
   sorry
@@ -79,7 +79,7 @@ $\sum_{k=0}^{p-1} a(k) \equiv \frac{2p}{\binom{2(p+1)/3}{(p+1)/3}} \pmod{p^2}$.
 - _Zhi-Wei Sun_, Nov 12 2016
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (p : ℕ) (hp : p.Prime) (hmod : p % 3 = 2) :
+theorem conjecture_3 (p : ℕ) (hp : p.Prime) (hmod : p % 3 = 2) :
     ((∑ k ∈ Finset.range p, (a k : ℚ)) -
       (2 * p : ℚ) / ((2 * (p + 1) / 3).choose ((p + 1) / 3) : ℚ)).num % (p ^ 2 : ℤ) = 0 := by
   sorry

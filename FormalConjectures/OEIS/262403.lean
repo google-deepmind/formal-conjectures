@@ -36,7 +36,7 @@ namespace OeisA262403
 
 /-- The number of primes not exceeding the $x$-th triangular number $\frac{x(x+1)}{2}$. -/
 def primeCountTriangular (x : ℕ) : ℕ :=
-  Nat.primeCounting (x * (x + 1) / 2)
+  Nat.primeCounting (Nat.triangular x)
 
 /--
 Number of ways to write $\pi(T(n)) = \pi(T(k)) + \pi(T(m))$ with $1 < k < m < n$.
@@ -62,17 +62,26 @@ theorem a_4 : a 4 = 0 := by decide
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by decide
 
+@[category test, AMS 11]
+theorem a_8 : a 8 = 2 := by decide +kernel
+
 /-- The set of exceptional integers $n > 4$ for which $a(n) = 1$. -/
-def Singletons : Finset ℕ :=
+def singletons : Finset ℕ :=
   {5, 6, 7, 10, 12, 32, 38, 445, 727}
 
 /--
-Conjecture (i): $a(n) > 0$ for all $n > 4$, and $a(n) = 1$ only for
-$n = 5, 6, 7, 10, 12, 32, 38, 445, 727$.
+Conjecture (i): $a(n) > 0$ for all $n > 4$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 4 < n) :
-    0 < a n ∧ (a n = 1 ↔ n ∈ Singletons) := by
+theorem conjecture_1 (n : ℕ) (hn : 4 < n) : 0 < a n := by
+  sorry
+
+/--
+Conjecture (i): $a(n) = 1$ only for $n = 5, 6, 7, 10, 12, 32, 38, 445, 727$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_2 (n : ℕ) (hn : 4 < n) :
+    a n = 1 ↔ n ∈ singletons := by
   sorry
 
 /--
@@ -80,7 +89,7 @@ Conjecture (ii), first assertion: All numbers $\pi(T(n))$ ($n = 1, 2, 3, \dots$)
 distinct.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
+theorem conjecture_3 (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
     (h : primeCountTriangular m = primeCountTriangular n) : m = n := by
   sorry
 
@@ -90,7 +99,7 @@ $\sum_{r=s}^{t} \frac{1}{\pi(T(r))}$ with $1 < j \le k$ and $j \le s \le t$ have
 fractional part but $(j, k) \ne (s, t)$, then $j = 2$, $k = 5$, and $s = t = 4$.
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (j k s t : ℕ) (hj : 1 < j) (hjk : j ≤ k) (hjs : j ≤ s)
+theorem conjecture_4 (j k s t : ℕ) (hj : 1 < j) (hjk : j ≤ k) (hjs : j ≤ s)
     (hst : s ≤ t) (hne : (j, k) ≠ (s, t))
     (h : Int.fract (∑ i ∈ Finset.Icc j k, (primeCountTriangular i : ℚ)⁻¹) =
          Int.fract (∑ r ∈ Finset.Icc s t, (primeCountTriangular r : ℚ)⁻¹)) :

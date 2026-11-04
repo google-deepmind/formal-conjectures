@@ -44,27 +44,21 @@ def a (n : ℕ) : ℕ :=
        Nat.Prime (6 * y - 1) ∧ Nat.Prime (6 * y + 1)
     then 1 else 0
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by decide
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by decide
 
-/-- Value of the sequence `a` at 8. -/
 @[category test, AMS 11]
 theorem a_8 : a 8 = 2 := by decide
 

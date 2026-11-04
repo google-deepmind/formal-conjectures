@@ -59,17 +59,27 @@ theorem a_4 : a 4 = 0 := by decide
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by decide
 
+@[category test, AMS 11]
+theorem a_8 : a 8 = 2 := by decide
+
 /-- The set of exceptional values of $n$ for which $a(n) = 1$. -/
-def Singletons : Finset ℕ :=
+def singletons : Finset ℕ :=
   {5, 7, 10, 11, 12, 19, 22, 30, 34, 44, 46, 72, 142}
 
 /--
-Conjecture: $a(n) > 0$ for all $n > 6$, and $a(n) = 1$ only for
+Conjecture: $a(n) > 0$ for all $n > 6$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_1 (n : ℕ) (hn : 6 < n) : 0 < a n := by
+  sorry
+
+/--
+Conjecture: $a(n) = 1$ only for
 $n = 5, 7, 10, 11, 12, 19, 22, 30, 34, 44, 46, 72, 142$.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) :
-    (6 < n → 0 < a n) ∧ (a n = 1 ↔ n ∈ Singletons) := by
+theorem conjecture_2 (n : ℕ) :
+    a n = 1 ↔ n ∈ singletons := by
   sorry
 
 end OeisA261627

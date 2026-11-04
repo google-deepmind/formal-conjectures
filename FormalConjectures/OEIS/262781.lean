@@ -59,16 +59,23 @@ theorem a_4 : a 4 = 2 := by decide
 theorem a_5 : a 5 = 1 := by decide
 
 /-- The set of exceptional values of $n$ for which $a(n) = 1$. -/
-def Singletons : Finset ℕ :=
+def singletons : Finset ℕ :=
   {3, 5, 9, 10, 17, 20, 24, 25, 31, 36, 45, 73, 80, 101, 136, 145, 388, 649}
 
 /--
-Conjecture (i): $a(n) > 0$ for all $n > 6$, and $a(n) = 1$ only for
+Conjecture (i): $a(n) > 0$ for all $n > 6$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_1 (n : ℕ) (hn : 6 < n) : 0 < a n := by
+  sorry
+
+/--
+Conjecture (i): $a(n) = 1$ only for
 $n = 3, 5, 9, 10, 17, 20, 24, 25, 31, 36, 45, 73, 80, 101, 136, 145, 388, 649$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) :
-    (6 < n → 0 < a n) ∧ (a n = 1 ↔ n ∈ Singletons) := by
+theorem conjecture_2 (n : ℕ) :
+    a n = 1 ↔ n ∈ singletons := by
   sorry
 
 /--
@@ -76,7 +83,7 @@ Conjecture (ii): For any integer $n > 4$, we can write $2n$ as $\phi(p^2) + \phi
 with $p$ prime and $p \le x \le y$.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 4 < n) :
+theorem conjecture_3 (n : ℕ) (hn : 4 < n) :
     ∃ p x y : ℕ, p.Prime ∧ p ≤ x ∧ x ≤ y ∧
       2 * n = Nat.totient (p ^ 2) + Nat.totient (x ^ 2) + Nat.totient (y ^ 2) := by
   sorry

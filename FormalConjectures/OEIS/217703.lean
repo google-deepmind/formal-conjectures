@@ -35,7 +35,7 @@ $S_{n+1}(x) = (x + 2n(n+1)) S_n(x) - n^4 S_{n-1}(x)$ for $n > 0$.
 
 namespace OeisA217703
 
-/-- `a n` is the sequence defined by $a(0)=1$, $a(1)=0$, and
+/-- Sequence defined by $a(0)=1$, $a(1)=0$, and
 $a(n+1) = 2n(n+1)a(n) - n^4 a(n-1)$ for $n > 0$. -/
 def a : ℕ → ℤ
   | 0 => 1
@@ -43,16 +43,6 @@ def a : ℕ → ℤ
   | k + 2 =>
     let m : ℤ := k + 1
     (2 * m * (m + 1)) * a (k + 1) - (m ^ 4) * a k
-
-/-- `polyS n` is the polynomial $S_n(x)$ defined by $S_0(x) = 1$, $S_1(x) = x$, and
-$S_{n+1}(x) = (x + 2n(n+1)) S_n(x) - n^4 S_{n-1}(x)$ for $n > 0$. -/
-noncomputable def polyS : ℕ → Polynomial ℤ
-  | 0 => 1
-  | 1 => Polynomial.X
-  | k + 2 =>
-    let m : ℤ := k + 1
-    (Polynomial.X + Polynomial.C (2 * m * (m + 1))) * polyS (k + 1) -
-      Polynomial.C (m ^ 4) * polyS k
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by rfl
@@ -69,13 +59,23 @@ theorem a_3 : a 3 = -12 := by rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = -207 := by rfl
 
+/-- The polynomial $S_n(x)$ defined by $S_0(x) = 1$, $S_1(x) = x$, and
+$S_{n+1}(x) = (x + 2n(n+1)) S_n(x) - n^4 S_{n-1}(x)$ for $n > 0$. -/
+noncomputable def polyS : ℕ → Polynomial ℤ
+  | 0 => 1
+  | 1 => Polynomial.X
+  | k + 2 =>
+    let m : ℤ := k + 1
+    (Polynomial.X + Polynomial.C (2 * m * (m + 1))) * polyS (k + 1) -
+      Polynomial.C (m ^ 4) * polyS k
+
 /--
 Conjecture, (i): $S_n(x)$ is irreducible over the field of rational numbers
 for every $n = 1, 2, 3, \dots$
 - _Zhi-Wei Sun_, Mar 20 2013
 -/
 @[category research open, AMS 11 12]
-theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) :
+theorem conjecture_1 (n : ℕ) (hn : 1 ≤ n) :
     Irreducible (Polynomial.map (Int.castRingHom ℚ) (polyS n)) := by
   sorry
 
@@ -87,7 +87,7 @@ $1 < n < 58$ or $n > 2177$.
 Disproved by Ansh Mishra and Aryan Senthilkumar: $a(81935) > 0$.
 -/
 @[category research solved, AMS 11]
-theorem conjecture2 :
+theorem conjecture_2 :
     ¬ ∀ n : ℕ, (a n < 0 ↔ (1 < n ∧ n < 58) ∨ 2177 < n) := by
   sorry
 
@@ -101,7 +101,7 @@ Disproved and formalized in Lean 4 by Ansh Mishra and Aryan Senthilkumar (with C
 @[category research solved, AMS 11 26,
   formal_proof using lean4 at
     "https://github.com/anshM123/Sun-Conjectures-ii-iii-/blob/7016c789cbe3b36aff4a5bcaa3ece16ea9331f8e/lean/DMSolutions/OEIS_A217703/Solution.lean#L19-L23"]
-theorem conjecture3 :
+theorem conjecture_3 :
     ¬ Filter.Tendsto (fun n : ℕ => |(a n : ℝ)| ^ (1 / (n : ℝ)) / (n : ℝ) ^ 2)
       Filter.atTop (nhds 0) := by
   sorry

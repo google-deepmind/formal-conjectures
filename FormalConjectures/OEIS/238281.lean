@@ -39,23 +39,18 @@ def a (n : ℕ) : ℕ :=
     if Nat.primeCounting ((k + 1) * n) - Nat.primeCounting (k * n) =
        Nat.primeCounting ((k + 2) * n) - Nat.primeCounting ((k + 1) * n) then 1 else 0
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 2 := by decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by decide
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 2 := by decide
 
@@ -63,7 +58,7 @@ theorem a_5 : a 5 = 2 := by decide
 Conjecture (i): $a(n) > 0$ for all $n > 1$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
   sorry
 
 /--
@@ -77,7 +72,7 @@ $((k-1)n, kn]$ match Sun's Mathematica formula `PrimePi[k*n] - PrimePi[(k-1)*n]`
 $n = 2$.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 1 < n) (h8 : n ≠ 8) :
+theorem conjecture_2 (n : ℕ) (hn : 1 < n) (h8 : n ≠ 8) :
     ∃ k : ℕ, 0 < k ∧ k < n ∧ (2 * k + 1).Prime ∧
       Nat.primeCounting (k * n) - Nat.primeCounting ((k - 1) * n) =
       Nat.primeCounting ((k + 1) * n) - Nat.primeCounting (k * n) := by
@@ -90,7 +85,7 @@ primes, i.e., $\pi(kn)$, $\pi((k+1)n)$, $\pi((k+2)n)$, $\pi((k+3)n)$ form a $4$-
 progression.
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 4 < n) :
+theorem conjecture_3 (n : ℕ) (hn : 4 < n) :
     ∃ k : ℕ, 0 < k ∧ k < Nat.nth Nat.Prime (n - 1) ∧
       Nat.primeCounting ((k + 1) * n) - Nat.primeCounting (k * n) =
       Nat.primeCounting ((k + 2) * n) - Nat.primeCounting ((k + 1) * n) ∧

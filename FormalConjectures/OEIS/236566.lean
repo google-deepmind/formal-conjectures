@@ -37,83 +37,53 @@ noncomputable def a (n : ℕ) : ℕ :=
   ∑ p ∈ Finset.range (2 * n),
     if p.Prime ∧ (2 * n - p).Prime ∧ (Nat.nth Nat.Prime (p + 1) + 2).Prime then 1 else 0
 
-private def nthPrimeSmall : ℕ → ℕ
-  | 0 => 2
-  | 1 => 3
-  | 2 => 5
-  | 3 => 7
-  | 4 => 11
-  | 5 => 13
-  | 6 => 17
-  | 7 => 19
-  | 8 => 23
-  | 9 => 29
-  | 10 => 31
-  | _ => 0
-
-@[category API, AMS 11]
-private lemma nth_prime_eq_small (k : ℕ) (hk : k ≤ 10) :
-    Nat.nth Nat.Prime k = nthPrimeSmall k := by
-  interval_cases k
-  · exact Nat.nth_prime_zero_eq_two
-  · exact Nat.nth_prime_one_eq_three
-  · exact Nat.nth_prime_two_eq_five
-  · exact Nat.nth_prime_three_eq_seven
-  · exact Nat.nth_prime_four_eq_eleven
-  · exact (13).nth_count (by decide : (13).Prime)
-  · exact (17).nth_count (by decide : (17).Prime)
-  · exact (19).nth_count (by decide : (19).Prime)
-  · exact (23).nth_count (by decide : (23).Prime)
-  · exact (29).nth_count (by decide : (29).Prime)
-  · exact (31).nth_count (by decide : (31).Prime)
-
-@[category API, AMS 11]
-private lemma a_eq_small (n : ℕ) (hn : n ≤ 5) :
-    a n = ∑ p ∈ Finset.range (2 * n),
-      if p.Prime ∧ (2 * n - p).Prime ∧ (nthPrimeSmall (p + 1) + 2).Prime then 1 else 0 := by
-  unfold a
-  apply Finset.sum_congr rfl
-  intro p hp
-  have hp1 : p + 1 ≤ 10 := by
-    rw [Finset.mem_range] at hp
-    omega
-  rw [nth_prime_eq_small (p + 1) hp1]
-
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by
-  rw [a_eq_small 1 (by decide)]
+  have h : Finset.range 2 = {0, 1} := by decide
+  simp only [a, Nat.reduceMul, h, Finset.sum_insert, Finset.mem_singleton,
+    zero_ne_one, not_false_eq_true, Finset.sum_singleton]
   decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by
-  rw [a_eq_small 2 (by decide)]
+  have h : Finset.range 4 = {0, 1, 2, 3} := by decide
+  simp only [a, Nat.reduceMul, h, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    zero_ne_one, OfNat.zero_ne_ofNat, OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self,
+    not_false_eq_true, Finset.sum_singleton, Nat.reduceAdd, Nat.nth_prime_three_eq_seven]
   decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by
-  rw [a_eq_small 3 (by decide)]
+  have h : Finset.range 6 = {0, 1, 2, 3, 4, 5} := by decide
+  simp only [a, Nat.reduceMul, h, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    zero_ne_one, OfNat.zero_ne_ofNat, OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self,
+    not_false_eq_true, Finset.sum_singleton, Nat.reduceAdd, Nat.nth_prime_three_eq_seven,
+    Nat.nth_prime_four_eq_eleven]
   decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 2 := by
-  rw [a_eq_small 4 (by decide)]
+  have h : Finset.range 8 = {0, 1, 2, 3, 4, 5, 6, 7} := by decide
+  simp only [a, Nat.reduceMul, h, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    zero_ne_one, OfNat.zero_ne_ofNat, OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self,
+    not_false_eq_true, Finset.sum_singleton, Nat.reduceAdd, Nat.nth_prime_four_eq_eleven,
+    Nat.nth_prime_six_eq_seventeen]
   decide
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 2 := by
-  rw [a_eq_small 5 (by decide)]
+  have h : Finset.range 10 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9} := by decide
+  simp only [a, Nat.reduceMul, h, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    zero_ne_one, OfNat.zero_ne_ofNat, OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self,
+    not_false_eq_true, Finset.sum_singleton, Nat.reduceAdd, Nat.nth_prime_four_eq_eleven,
+    Nat.nth_prime_six_eq_seventeen, Nat.nth_prime_eight_eq_twentyThree]
   decide
 
 /--
 Conjecture: (i) $a(n) > 0$ for all $n > 2$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 2 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 2 < n) : 0 < a n := by
   sorry
 
 /--
@@ -121,7 +91,7 @@ Conjecture: (ii) If $n > 30$, then $2n + 1$ can be written as $2p + q$ with $p$,
 $\operatorname{prime}(p + 2) + 2$ all prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 30 < n) :
+theorem conjecture_2 (n : ℕ) (hn : 30 < n) :
     ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ (Nat.nth Nat.Prime (p + 1) + 2).Prime ∧
       2 * n + 1 = 2 * p + q := by
   sorry

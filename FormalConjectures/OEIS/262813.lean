@@ -31,10 +31,6 @@ and $z > 0$.
 
 namespace OeisA262813
 
-/-- The $z$-th triangular number $\frac{z(z+1)}{2}$. -/
-def triangular (z : ℕ) : ℕ :=
-  z * (z + 1) / 2
-
 /--
 Number of ordered ways to write $n$ as $x^3 + y^2 + \frac{z(z+1)}{2}$ with $x \ge 0$, $y \ge 0$,
 and $z > 0$.
@@ -43,7 +39,7 @@ def a (n : ℕ) : ℕ :=
   ∑ x ∈ Finset.range (n + 1),
     ∑ y ∈ Finset.range (n + 1),
       ∑ z ∈ Finset.Ico 1 (n + 1),
-        if x ^ 3 + y ^ 2 + triangular z == n then 1 else 0
+        if x ^ 3 + y ^ 2 + Nat.triangular z == n then 1 else 0
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by decide
@@ -61,16 +57,22 @@ theorem a_4 : a 4 = 2 := by decide
 theorem a_5 : a 5 = 2 := by decide
 
 /-- The set of exceptional positive integers $n$ for which $a(n) = 1$. -/
-def Singletons : Finset ℕ :=
+def singletons : Finset ℕ :=
   {1, 9, 21, 35, 98, 152, 306}
 
 /--
-Conjecture: $a(n) > 0$ for all $n > 0$, and $a(n) = 1$ only for
-$n = 1, 9, 21, 35, 98, 152, 306$.
+Conjecture: $a(n) > 0$ for all $n > 0$.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 0 < n) :
-    0 < a n ∧ (a n = 1 ↔ n ∈ Singletons) := by
+theorem conjecture_1 (n : ℕ) (hn : 0 < n) : 0 < a n := by
+  sorry
+
+/--
+Conjecture: $a(n) = 1$ only for $n = 1, 9, 21, 35, 98, 152, 306$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_2 (n : ℕ) (hn : 0 < n) :
+    a n = 1 ↔ n ∈ singletons := by
   sorry
 
 end OeisA262813

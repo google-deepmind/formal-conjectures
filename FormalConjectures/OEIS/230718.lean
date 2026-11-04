@@ -32,8 +32,10 @@ powers, or $0$ if none.
 namespace OeisA230718
 
 /-- Smallest $n$-th power equal to a sum of some consecutive, immediately preceding, positive
-$n$-th powers, or $0$ if none. That is, the smallest $(k+m+1)^n$ such that
-$k^n + (k+1)^n + \dots + (k+m)^n = (k+m+1)^n$ with $k > 0$ and $m > 0$, or $0$ if none. -/
+$n$-th powers, or $0$ if none. For $n \ge 1$, this is the smallest $N^n$ ($N \ge 3$) such that
+$\sum_{i=k}^{N-1} i^n = N^n$ for some $1 \le k \le N - 2$ (equivalently,
+$k^n + (k+1)^n + \dots + (k+m)^n = (k+m+1)^n$ with $k \ge 1$ and $m \ge 1$), or $0$ if none
+exists; for $n = 0$, $a(0) = 1^0 = 1$ (taking $k = 1, m = 0$). -/
 noncomputable def a (n : ℕ) : ℕ :=
   if n = 0 then 1 else
   let P (N : ℕ) : Prop :=
@@ -41,31 +43,25 @@ noncomputable def a (n : ℕ) : ℕ :=
   let N_min := sInf { N : ℕ | P N }
   if N_min = 0 then 0 else N_min ^ n
 
-/-- Helper lemma establishing `IsLeast` for a decidable predicate on natural numbers. -/
-@[category API, AMS 11]
-lemma isLeast_of_lt {P : ℕ → Prop} {m : ℕ} (hm : P m) (hlt : ∀ n < m, ¬ P n) :
-    IsLeast { N : ℕ | P N } m :=
-  ⟨hm, fun n hn => not_lt.mp fun h => hlt n h hn⟩
-
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by rfl
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 3 := by
   dsimp [a]
-  rw [IsLeast.csInf_eq (isLeast_of_lt (m := 3) (by decide) (by decide))]
+  rw [IsLeast.csInf_eq (a := 3) (by decide)]
   rfl
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 25 := by
   dsimp [a]
-  rw [IsLeast.csInf_eq (isLeast_of_lt (m := 5) (by decide) (by decide))]
+  rw [IsLeast.csInf_eq (a := 5) (by decide)]
   rfl
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 216 := by
   dsimp [a]
-  rw [IsLeast.csInf_eq (isLeast_of_lt (m := 6) (by decide) (by decide))]
+  rw [IsLeast.csInf_eq (a := 6) (by decide)]
   rfl
 
 /--

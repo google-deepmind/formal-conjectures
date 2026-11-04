@@ -38,74 +38,41 @@ noncomputable def a (n : ℕ) : ℕ :=
     if (Nat.nth Nat.Prime (k - 1) + 4).Prime ∧
        (Nat.nth Nat.Prime (Nat.nth Nat.Prime (n - k - 1) - 1) + 4).Prime then 1 else 0
 
-private def nthPrimeSmall : ℕ → ℕ
-  | 0 => 2
-  | 1 => 3
-  | 2 => 5
-  | 3 => 7
-  | 4 => 11
-  | 5 => 13
-  | 6 => 17
-  | _ => 0
-
-@[category API, AMS 11]
-private lemma nth_prime_eq_small (k : ℕ) (hk : k ≤ 6) :
-    Nat.nth Nat.Prime k = nthPrimeSmall k := by
-  interval_cases k
-  · exact Nat.nth_prime_zero_eq_two
-  · exact Nat.nth_prime_one_eq_three
-  · exact Nat.nth_prime_two_eq_five
-  · exact Nat.nth_prime_three_eq_seven
-  · exact Nat.nth_prime_four_eq_eleven
-  · exact (13).nth_count (by decide : (13).Prime)
-  · exact (17).nth_count (by decide : (17).Prime)
-
-@[category API, AMS 11]
-private lemma a_eq_small (n : ℕ) (hn : n ≤ 5) :
-    a n = ∑ k ∈ Finset.Ico 1 n,
-      if (nthPrimeSmall (k - 1) + 4).Prime ∧
-         (nthPrimeSmall (nthPrimeSmall (n - k - 1) - 1) + 4).Prime then 1 else 0 := by
-  unfold a
-  apply Finset.sum_congr rfl
-  intro k hk
-  rw [Finset.mem_Ico] at hk
-  have hk1 : k - 1 ≤ 6 := by omega
-  have hm1 : n - k - 1 ≤ 6 := by omega
-  have hm_small : nthPrimeSmall (n - k - 1) - 1 ≤ 6 := by
-    have h4 : n - k - 1 ≤ 3 := by omega
-    interval_cases (n - k - 1) <;> decide
-  rw [nth_prime_eq_small (k - 1) hk1, nth_prime_eq_small (n - k - 1) hm1,
-    nth_prime_eq_small (nthPrimeSmall (n - k - 1) - 1) hm_small]
-
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by
-  rw [a_eq_small 1 (by decide)]
-  decide +native
+  simp [a]
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by
-  rw [a_eq_small 2 (by decide)]
-  decide +native
+  have h : Finset.Ico 1 2 = {1} := by decide
+  simp only [a, h, Finset.sum_singleton, Nat.reduceSub, Nat.nth_prime_zero_eq_two]
+  decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by
-  rw [a_eq_small 3 (by decide)]
-  decide +native
+  have h : Finset.Ico 1 3 = {1, 2} := by decide
+  simp only [a, h, Finset.sum_insert, Finset.mem_singleton, OfNat.one_ne_ofNat,
+    not_false_eq_true, Finset.sum_singleton, Nat.reduceSub, Nat.nth_prime_zero_eq_two,
+    Nat.nth_prime_one_eq_three]
+  decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 0 := by
-  rw [a_eq_small 4 (by decide)]
-  decide +native
+  have h : Finset.Ico 1 4 = {1, 2, 3} := by decide
+  simp only [a, h, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self, not_false_eq_true, Finset.sum_singleton,
+    Nat.reduceSub, Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three,
+    Nat.nth_prime_two_eq_five]
+  decide
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by
-  rw [a_eq_small 5 (by decide)]
-  decide +native
+  have h : Finset.Ico 1 5 = {1, 2, 3, 4} := by decide
+  simp only [a, h, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self, not_false_eq_true, Finset.sum_singleton,
+    Nat.reduceSub, Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three,
+    Nat.nth_prime_two_eq_five, Nat.nth_prime_three_eq_seven, Nat.nth_prime_four_eq_eleven]
+  decide
 
 /--
 Conjecture: For each $d = 1, 2, 3, \dots$ there is a positive integer $N(d)$ for which any integer
@@ -113,7 +80,7 @@ $n > N(d)$ can be written as $k + m$ with $k > 0$ and $m > 0$ such that
 $p_k + 2d$ and $p_{p_m} + 2d$ are both prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (d : ℕ) (hd : 1 ≤ d) :
+theorem conjecture_1 (d : ℕ) (hd : 1 ≤ d) :
     ∃ N : ℕ, 0 < N ∧ ∀ n : ℕ, N < n →
       ∃ k m : ℕ, 0 < k ∧ 0 < m ∧ n = k + m ∧
         (Nat.nth Nat.Prime (k - 1) + 2 * d).Prime ∧
@@ -125,7 +92,7 @@ In particular, we may take $(N(1), N(2), \dots, N(10)) = (2, 11, 4, 15, 31, 4, 2
 in the conjecture.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (d : Fin 10) (n : ℕ)
+theorem conjecture_2 (d : Fin 10) (n : ℕ)
     (hn : ![2, 11, 4, 15, 31, 4, 2, 77, 4, 7] d < n) :
     ∃ k m : ℕ, 0 < k ∧ 0 < m ∧ n = k + m ∧
       (Nat.nth Nat.Prime (k - 1) + 2 * (d.val + 1)).Prime ∧

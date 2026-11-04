@@ -58,7 +58,7 @@ theorem a_5 : a 5 = 2 := by decide
 Conjecture (i), first part: $a(n) > 0$ for all $n > 1$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : n > 1) : a n > 0 := by
+theorem conjecture_1 (n : ℕ) (hn : n > 1) : a n > 0 := by
   sorry
 
 /--
@@ -67,7 +67,7 @@ with $x$ and $y$ distinct and greater than $1$ such that $6x - 1$ is a Sophie Ge
 and $\{6y - 1, 6y + 1\}$ is a twin prime pair.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : n > 4) (h13 : n ≠ 13) :
+theorem conjecture_2 (n : ℕ) (hn : n > 4) (h13 : n ≠ 13) :
     ∃ x y : ℕ, 1 < x ∧ 1 < y ∧ x ≠ y ∧ x + y = n ∧
       (6 * x - 1).Prime ∧ (12 * x - 1).Prime ∧
       (6 * y - 1).Prime ∧ (6 * y + 1).Prime := by
@@ -79,7 +79,7 @@ Conjecture (ii), cousin prime variant: Any integer $n > 1$ can be written as $x 
 cousin prime pair.
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : n > 1) :
+theorem conjecture_3 (n : ℕ) (hn : n > 1) :
     ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧
       (6 * x - 1).Prime ∧ (12 * x - 1).Prime ∧
       (6 * y + 1).Prime ∧ (6 * y + 5).Prime := by
@@ -91,7 +91,7 @@ Conjecture (ii), sexy prime variant: Any integer $n > 1$ can be written as $x + 
 sexy prime pair.
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (n : ℕ) (hn : n > 1) :
+theorem conjecture_4 (n : ℕ) (hn : n > 1) :
     ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧
       (6 * x - 1).Prime ∧ (12 * x - 1).Prime ∧
       (6 * y - 1).Prime ∧ (6 * y + 5).Prime := by

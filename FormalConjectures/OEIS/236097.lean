@@ -40,46 +40,50 @@ noncomputable def a (n : ℕ) : ℕ :=
     let pPrime := Nat.nth Nat.Prime (p - 1)
     if p.Prime ∧ (pPrime - p - 1).Prime ∧ (pPrime - p + 1).Prime then 1 else 0
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 0 := by rfl
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by rfl
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 0 := by rfl
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 0 := by
-  unfold a
-  have h : Finset.Ico 1 2 = {1} := by decide
-  rw [h, Finset.sum_singleton]
-  have h2 : Nat.nth Nat.Prime 2 = 5 := Nat.nth_prime_two_eq_five
-  dsimp only
-  change (if (Nat.totient 1 + Nat.totient 3 / 2 + 1).Prime ∧
-      (Nat.nth Nat.Prime (Nat.totient 1 + Nat.totient 3 / 2 + 1 - 1) -
-        (Nat.totient 1 + Nat.totient 3 / 2 + 1) - 1).Prime ∧
-      (Nat.nth Nat.Prime (Nat.totient 1 + Nat.totient 3 / 2 + 1 - 1) -
-        (Nat.totient 1 + Nat.totient 3 / 2 + 1) + 1).Prime then 1 else 0) = 0
-  have ht : Nat.totient 1 + Nat.totient 3 / 2 + 1 = 3 := by decide
-  rw [ht, show (3 - 1 : ℕ) = 2 by rfl, h2]
+  have hIco : Finset.Ico 1 2 = {1} := by decide
+  simp only [a, Nat.reduceSub, hIco, Finset.sum_singleton]
+  have ht1 : Nat.totient 1 + Nat.totient 3 / 2 + 1 = 3 := by decide
+  rw [ht1]
+  simp only [Nat.reduceSub, Nat.nth_prime_two_eq_five]
   decide
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 0 := by
-  unfold a
-  have h : Finset.Ico 1 3 = {1, 2} := by decide
-  rw [h, Finset.sum_pair (by decide)]
-  have h2 : Nat.nth Nat.Prime 2 = 5 := Nat.nth_prime_two_eq_five
-  have ht1 : Nat.totient 1 + Nat.totient (5 - 1) / 2 + 1 = 3 := by decide
-  have ht2 : Nat.totient 2 + Nat.totient (5 - 2) / 2 + 1 = 3 := by decide
-  dsimp only
-  rw [ht1, ht2, show (3 - 1 : ℕ) = 2 by rfl, h2]
+  have hIco : Finset.Ico 1 3 = {1, 2} := by decide
+  simp only [a, Nat.reduceSub, hIco, Finset.sum_pair (by decide : (1 : ℕ) ≠ 2)]
+  have ht1 : Nat.totient 1 + Nat.totient 4 / 2 + 1 = 3 := by decide
+  have ht2 : Nat.totient 2 + Nat.totient 3 / 2 + 1 = 3 := by decide
+  rw [ht1, ht2]
+  simp only [Nat.reduceSub, Nat.nth_prime_two_eq_five]
+  decide
+
+@[category test, AMS 11]
+theorem a_11 : a 11 = 3 := by
+  have hIco : Finset.Ico 1 9 = {1, 2, 3, 4, 5, 6, 7, 8} := by decide
+  simp only [a, Nat.reduceSub, hIco, Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    OfNat.one_ne_ofNat, Nat.reduceEqDiff, or_self, not_false_eq_true, Finset.sum_singleton]
+  have ht1 : Nat.totient 1 + Nat.totient 10 / 2 + 1 = 4 := by decide
+  have ht2 : Nat.totient 2 + Nat.totient 9 / 2 + 1 = 5 := by decide
+  have ht3 : Nat.totient 3 + Nat.totient 8 / 2 + 1 = 5 := by decide
+  have ht4 : Nat.totient 4 + Nat.totient 7 / 2 + 1 = 6 := by decide
+  have ht5 : Nat.totient 5 + Nat.totient 6 / 2 + 1 = 6 := by decide
+  have ht6 : Nat.totient 6 + Nat.totient 5 / 2 + 1 = 5 := by decide
+  have ht7 : Nat.totient 7 + Nat.totient 4 / 2 + 1 = 8 := by decide
+  have ht8 : Nat.totient 8 + Nat.totient 3 / 2 + 1 = 6 := by decide
+  rw [ht1, ht2, ht3, ht4, ht5, ht6, ht7, ht8]
+  simp only [Nat.reduceSub, Nat.nth_prime_three_eq_seven, Nat.nth_prime_four_eq_eleven,
+    Nat.nth_prime_five_eq_thirteen, Nat.nth_prime_seven_eq_nineteen]
   decide
 
 /--

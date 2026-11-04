@@ -31,7 +31,7 @@ $x^4 + y^4$ is prime.
 
 namespace OeisA218656
 
-/-- `a n` is the number of ways to write $2n + 1$ as $x + y$ with $0 < x < y$ and
+/-- Number of ways to write $2n + 1$ as $x + y$ with $0 < x < y$ and
 $x^4 + y^4$ prime. -/
 def a (n : ℕ) : ℕ :=
   ∑ x ∈ Finset.Icc 1 n,
@@ -41,22 +41,24 @@ def a (n : ℕ) : ℕ :=
 theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by native_decide
+theorem a_2 : a 2 = 2 := by decide +kernel
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 3 := by native_decide
+theorem a_3 : a 3 = 3 := by decide +kernel
 
+set_option maxRecDepth 10000 in
 @[category test, AMS 11]
-theorem a_4 : a 4 = 2 := by native_decide
+theorem a_4 : a 4 = 2 := by decide +kernel
 
+set_option maxRecDepth 10000 in
 @[category test, AMS 11]
-theorem a_5 : a 5 = 3 := by native_decide
+theorem a_5 : a 5 = 3 := by decide +kernel
 
 /--
 Conjecture: $a(n) > 0$ for all $n \ge 1$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
   sorry
 
 /--
@@ -65,7 +67,7 @@ replaced by $x^2 + y^2$, then the count is positive for all $n \ge 1$.
 - _Thomas Ordowski_, Nov 03 2012
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 1 ≤ n) :
+theorem conjecture_2 (n : ℕ) (hn : 1 ≤ n) :
     ∃ x : ℕ, 1 ≤ x ∧ x ≤ n ∧ Nat.Prime (x ^ 2 + (2 * n + 1 - x) ^ 2) := by
   sorry
 
@@ -76,7 +78,7 @@ is positive for all $n \ge 1$ except for $2n + 1 \in \{7, 9, 55, 73, 75, 105\}$
 - _Thomas Ordowski_, Nov 03 2012; exceptions noted by _Mauro Fiorentini_, Sep 22 2023
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 1 ≤ n) (h_exc : n ∉ ({3, 4, 27, 36, 37, 52} : Set ℕ)) :
+theorem conjecture_3 (n : ℕ) (hn : 1 ≤ n) (h_exc : n ∉ ({3, 4, 27, 36, 37, 52} : Set ℕ)) :
     ∃ x : ℕ, 1 ≤ x ∧ x ≤ n ∧ Nat.Prime (x ^ 8 + (2 * n + 1 - x) ^ 8) := by
   sorry
 
@@ -86,7 +88,7 @@ count is positive for all $n \ge 1$ except for $2n + 1 \in \{5, 9\}$ (i.e., $n \
 - _Thomas Ordowski_, Nov 03 2012; exceptions noted by _Mauro Fiorentini_, Sep 22 2023
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (n : ℕ) (hn : 1 ≤ n) (h_exc : n ∉ ({2, 4} : Set ℕ)) :
+theorem conjecture_4 (n : ℕ) (hn : 1 ≤ n) (h_exc : n ∉ ({2, 4} : Set ℕ)) :
     ∃ x : ℕ, 1 ≤ x ∧ x ≤ n ∧ Nat.Prime (x ^ 16 + (2 * n + 1 - x) ^ 16) := by
   sorry
 

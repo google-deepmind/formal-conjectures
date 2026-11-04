@@ -25,8 +25,7 @@ $$a(n) = \sum_{k=0}^n \binom{n}{k}^4 (-1)^k.$$
 
 *References:*
 - [A228304](https://oeis.org/A228304)
-- [OEIS Open](https://arxiv.org/abs/2608.11941)
-  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
+- [arXiv:2608.11941](https://arxiv.org/abs/2608.11941)
 -/
 
 @[expose] public section
@@ -39,13 +38,6 @@ open Matrix
 $$a(n) = \sum_{k=0}^n \binom{n}{k}^4 (-1)^k.$$ -/
 def a (n : ℕ) : ℤ :=
   ∑ k ∈ Finset.range (n + 1), (-1 : ℤ) ^ k * (n.choose k : ℤ) ^ 4
-
-/-- Auxiliary sequence:
-$$c(n) = \sum_{k=0}^n (-1)^k \binom{n}{k}^2 \binom{2k}{k} \binom{2(n-k)}{n-k}.$$ -/
-def c (n : ℕ) : ℤ :=
-  ∑ k ∈ Finset.range (n + 1),
-    (-1 : ℤ) ^ k * (n.choose k : ℤ) ^ 2 * ((2 * k).choose k : ℤ) *
-      ((2 * (n - k)).choose (n - k) : ℤ)
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by decide
@@ -62,19 +54,36 @@ theorem a_3 : a 3 = 0 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 786 := by decide
 
+/-- Auxiliary sequence:
+$$c(n) = \sum_{k=0}^n (-1)^k \binom{n}{k}^2 \binom{2k}{k} \binom{2(n-k)}{n-k}.$$ -/
+def c (n : ℕ) : ℤ :=
+  ∑ k ∈ Finset.range (n + 1),
+    (-1 : ℤ) ^ k * (n.choose k : ℤ) ^ 2 * ((2 * k).choose k : ℤ) *
+      ((2 * (n - k)).choose (n - k) : ℤ)
+
 /--
 Conjecture: Let $p$ be any odd prime, and let $A(p)$ be the $p \times p$ determinant with
 $(i,j)$-entry equal to $a(i+j)$ for all $i, j = 0, \dots, p-1$. Then
-$A(p) \equiv (-1)^{(p-1)/2} \pmod p$. Similarly, if $C(p)$ is the $p \times p$ determinant with
-$(i,j)$-entry equal to $c(i+j)$ for all $i, j = 0, \dots, p-1$, then $C(p) \equiv 1 \pmod p$.
+$A(p) \equiv (-1)^{(p-1)/2} \pmod p$.
 
-Proved by Adamczewski (2026).
+Proved in [arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
 -/
 @[category research solved, AMS 11]
-theorem conjecture1 (p : ℕ) (hp : p.Prime) (hodd : p ≠ 2) :
+theorem conjecture_1 (p : ℕ) (hp : p.Prime) (hodd : p ≠ 2) :
     let A : Matrix (Fin p) (Fin p) ℤ := fun i j => a (i.val + j.val)
+    A.det ≡ (-1 : ℤ) ^ ((p - 1) / 2) [ZMOD p] := by
+  sorry
+
+/--
+Conjecture: Let $p$ be any odd prime, and let $C(p)$ be the $p \times p$ determinant with
+$(i,j)$-entry equal to $c(i+j)$ for all $i, j = 0, \dots, p-1$. Then $C(p) \equiv 1 \pmod p$.
+
+Proved in [arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
+-/
+@[category research solved, AMS 11]
+theorem conjecture_2 (p : ℕ) (hp : p.Prime) (hodd : p ≠ 2) :
     let C : Matrix (Fin p) (Fin p) ℤ := fun i j => c (i.val + j.val)
-    A.det ≡ (-1 : ℤ) ^ ((p - 1) / 2) [ZMOD p] ∧ C.det ≡ 1 [ZMOD p] := by
+    C.det ≡ 1 [ZMOD p] := by
   sorry
 
 end OeisA228304

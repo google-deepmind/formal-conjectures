@@ -59,11 +59,14 @@ theorem a_5 : a 5 = 0 := by rfl
 @[category test, AMS 11]
 theorem a_6 : a 6 = 1 := by rfl
 
+@[category test, AMS 11]
+theorem a_10 : a 10 = 2 := by decide
+
 /--
 Conjecture: $a(n) > 0$ for all $n > 5$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : n > 5) : a n > 0 := by
+theorem conjecture_1 (n : ℕ) (hn : n > 5) : a n > 0 := by
   sorry
 
 /--
@@ -71,7 +74,7 @@ Moreover, any integer $n > 6$ can be written as $x + y + z$ with $x$ among $3, 4
 that $2y-1, 2z-1, 2xy-1, 2xz-1, 2yz-1$ are prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : n > 6) :
+theorem conjecture_2 (n : ℕ) (hn : n > 6) :
     ∃ x y z : ℕ, 0 < y ∧ 0 < z ∧ x + y + z = n ∧
       x ∈ ({3, 4, 6, 10, 15} : Finset ℕ) ∧
       (2 * y - 1).Prime ∧ (2 * z - 1).Prime ∧
@@ -84,7 +87,7 @@ $2x-1, 2y-1, 2z-1$ and $2xyz-1$ all prime and $x$ among $2, 3, 4$.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture3a (n : ℕ) (hn : n > 6) :
+theorem conjecture_3a (n : ℕ) (hn : n > 6) :
     ∃ x y z : ℕ, 0 < x ∧ 0 < y ∧ 0 < z ∧ x + y + z = n ∧
       x ∈ ({2, 3, 4} : Finset ℕ) ∧
       (2 * x - 1).Prime ∧ (2 * y - 1).Prime ∧ (2 * z - 1).Prime ∧
@@ -97,7 +100,7 @@ $2x+1, 2y+1, 2z+1$ and $2xyz+1$ all prime and $x$ among $1, 2, 3$.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture3b (n : ℕ) (hn : n > 2) :
+theorem conjecture_3b (n : ℕ) (hn : n > 2) :
     ∃ x y z : ℕ, 0 < x ∧ 0 < y ∧ 0 < z ∧ x + y + z = n ∧
       x ∈ ({1, 2, 3} : Finset ℕ) ∧
       (2 * x + 1).Prime ∧ (2 * y + 1).Prime ∧ (2 * z + 1).Prime ∧
@@ -110,7 +113,7 @@ $2y+1, 2xyz-1$ and $2xyz+1$ are prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (n : ℕ) (hn : n > 4) :
+theorem conjecture_4 (n : ℕ) (hn : n > 4) :
     ∃ x y z : ℕ, 0 < y ∧ 0 < z ∧ x + y + z = n ∧
       (x = 3 ∨ x = 6) ∧
       (2 * y + 1).Prime ∧ (2 * x * y * z - 1).Prime ∧ (2 * x * y * z + 1).Prime := by
@@ -122,7 +125,7 @@ $xy-1, xz-1, yz-1$ all prime and $x$ among $2, 6, 10$.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture5a (n : ℕ) (hn : n > 5) :
+theorem conjecture_5a (n : ℕ) (hn : n > 5) :
     ∃ x y z : ℕ, 0 < x ∧ 0 < y ∧ 0 < z ∧ x + y + z = n ∧
       x ∈ ({2, 6, 10} : Finset ℕ) ∧
       (x * y - 1).Prime ∧ (x * z - 1).Prime ∧ (y * z - 1).Prime := by
@@ -134,7 +137,7 @@ Conjecture (iii), part 2: Any integer $n > 2$ not equal to $16$ can be written a
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture5b (n : ℕ) (hn : n > 2) (hne : n ≠ 16) :
+theorem conjecture_5b (n : ℕ) (hn : n > 2) (hne : n ≠ 16) :
     ∃ x y z : ℕ, 0 < x ∧ 0 < y ∧ 0 < z ∧ x + y + z = n ∧
       x ∈ ({1, 2, 6} : Finset ℕ) ∧
       (x * y + 1).Prime ∧ (x * z + 1).Prime ∧ (y * z + 1).Prime := by

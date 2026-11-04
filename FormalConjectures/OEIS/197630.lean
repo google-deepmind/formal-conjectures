@@ -56,34 +56,35 @@ noncomputable def a (n : ℕ) : ℕ :=
     0
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 0 := by rfl
-
-@[category test, AMS 11]
-theorem a_1 : a 1 = 0 := by rfl
-
-@[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by
-  have h : Nat.nth Nat.Prime 1 = 3 := Nat.nth_prime_one_eq_three
-  simp only [a, show (2 - 1 : ℕ) = 1 by rfl, h]
+  simp only [a, show (2 - 1 : ℕ) = 1 by rfl, Nat.nth_prime_one_eq_three]
   decide
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 13 := by
-  have h : Nat.nth Nat.Prime 2 = 5 := Nat.nth_prime_two_eq_five
-  simp only [a, show (3 - 1 : ℕ) = 2 by rfl, h]
+  simp only [a, show (3 - 1 : ℕ) = 2 by rfl, Nat.nth_prime_two_eq_five]
   decide
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1356 := by
-  have h : Nat.nth Nat.Prime 3 = 7 := Nat.nth_prime_three_eq_seven
-  simp only [a, show (4 - 1 : ℕ) = 3 by rfl, h]
+  simp only [a, show (4 - 1 : ℕ) = 3 by rfl, Nat.nth_prime_three_eq_seven]
   decide
+
+@[category test, AMS 11]
+theorem a_5 : a 5 = 123229034 := by
+  simp only [a, show (5 - 1 : ℕ) = 4 by rfl, Nat.nth_prime_four_eq_eleven]
+  decide
+
+@[category test, AMS 11]
+theorem a_6 : a 6 = 79417031713 := by
+  simp only [a, show (6 - 1 : ℕ) = 5 by rfl, Nat.nth_prime_five_eq_thirteen]
+  decide +kernel
 
 /--
 "Is $13$ the only Lerch quotient that is itself prime?"
 -/
-@[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 1 < n) (hp : (a n).Prime) : a n = 13 := by
+@[category research open, question, AMS 11]
+theorem conjecture : ∀ n : ℕ, 1 < n → (a n).Prime → a n = 13 := by
   sorry
 
 end OeisA197630

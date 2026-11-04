@@ -40,29 +40,24 @@ open Finset
 and a pentagonal number. -/
 def a (n : ℕ) : ℕ :=
   ∑ i ∈ range (n + 2), ∑ j ∈ range (n + 2), ∑ k ∈ range (n + 2),
-    if i * (i + 1) / 2 + j ^ 2 + k * (3 * k - 1) / 2 = n then 1 else 0
+    if Nat.triangular i + j ^ 2 + Nat.polygonalNumber 5 k = n then 1 else 0
 
-/-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by
   decide
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 3 := by
   decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 3 := by
   decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 2 := by
   decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 3 := by
   decide

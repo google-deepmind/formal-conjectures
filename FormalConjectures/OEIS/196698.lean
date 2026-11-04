@@ -44,9 +44,6 @@ def a (n : ℕ) : ℕ :=
   |>.card
 
 @[category test, AMS 11]
-theorem a_0 : a 0 = 0 := by decide
-
-@[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by decide
 
 @[category test, AMS 11]
@@ -58,11 +55,15 @@ theorem a_3 : a 3 = 6 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 8 := by decide
 
+set_option maxRecDepth 2000 in
+@[category test, AMS 11]
+theorem a_5 : a 5 = 7 := by decide
+
 /--
 "Conjecture: all elements of this sequence are greater than $0$."
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
   sorry
 
 /--
@@ -70,7 +71,7 @@ theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : 0 < a n := by
 - _Charles R Greathouse IV_, Nov 21 2011
 -/
 @[category research open, AMS 11]
-theorem conjecture2 : Set.Infinite {n : ℕ | a n = 0} := by
+theorem conjecture_2 : Set.Infinite {n : ℕ | a n = 0} := by
   sorry
 
 end OeisA196698

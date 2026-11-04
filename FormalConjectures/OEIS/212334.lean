@@ -20,9 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Balanced walks on a 4-dimensional cubic lattice with neighbor steps
 
-Number of words, either empty or beginning with the first letter of the $4$-ary alphabet, where
-each letter of the alphabet occurs $n$ times and letters of neighboring word positions are equal or
-neighbors in the alphabet. Equivalently,
+The sequence $a(n)$ counts the words over a $4$-ary alphabet (either empty or starting with the
+first letter) in which each letter occurs $n$ times and adjacent letters are equal or adjacent in
+the alphabet. Equivalently,
 $$a(n) = \sum_{k=0}^{n-1} \binom{n}{k} \binom{n-1}{k} \binom{n+k-1}{k}^2$$
 for $n \ge 1$ and $a(0) = 1$.
 
@@ -63,7 +63,7 @@ theorem a_4 : a 4 = 3593 := by decide
 - _Peter Bala_, Dec 12 2021
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
+theorem conjecture_1 (p : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
     a p % (p ^ 5) = 1 := by
   sorry
 
@@ -73,7 +73,7 @@ $a(p^r) \equiv a(p^{r-1}) \pmod{p^{3r+3}}$."
 - _Peter Bala_, Oct 13 2022
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (p r : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) (hr2 : 2 ≤ r) :
+theorem conjecture_2 (p r : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) (hr2 : 2 ≤ r) :
     a (p ^ r) % (p ^ (3 * r + 3)) = a (p ^ (r - 1)) % (p ^ (3 * r + 3)) := by
   sorry
 

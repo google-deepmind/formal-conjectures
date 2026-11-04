@@ -43,26 +43,18 @@ def a (n : ℕ) : ℕ :=
   let N := n + 1
   (Finset.Icc 1 N).lcm fun k => (((N.choose k : ℚ) * bernoulli (N - k)).den)
 
-/-- The radical $\operatorname{rad}(n)$ is the product of the distinct prime factors of $n$. -/
-def radical (n : ℕ) : ℕ := ∏ p ∈ n.primeFactors, p
-
-/-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by decide +kernel
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by decide +kernel
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 2 := by decide +kernel
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by decide +kernel
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 6 := by decide +kernel
 
@@ -74,7 +66,7 @@ $S = \{3, 5, 8, 9, 11, 27, 29, 35, 59\}$ is the full set of all such solutions.
 -/
 @[category research open, AMS 11]
 theorem conjecture :
-    {n : ℕ | 1 ≤ n ∧ a (n - 1) = radical (n + 1)} =
+    {n : ℕ | 1 ≤ n ∧ a (n - 1) = UniqueFactorizationMonoid.radical (n + 1)} =
       ({3, 5, 8, 9, 11, 27, 29, 35, 59} : Finset ℕ) := by
   sorry
 

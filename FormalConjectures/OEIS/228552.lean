@@ -52,6 +52,11 @@ theorem a_4 : a 4 = 0 := by decide
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by decide +kernel
 
+@[category test, AMS 11]
+theorem a_7 : a 7 = 2 := by
+  rw [a, OeisA69191.a_7]
+  decide +kernel
+
 /--
 We conjecture that $a(n) > 0$ for all $n > 15$.
 -/

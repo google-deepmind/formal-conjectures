@@ -26,8 +26,8 @@ where $p_n$ is the $n$-th prime ($n \ge 2$).
 
 *References:*
 - [A226163](https://oeis.org/A226163)
-- [OEIS Open](https://arxiv.org/abs/2608.11941)
-  by *Tom Adamczewski*, arXiv:2608.11941 (2026)
+- T. Adamczewski, "OEIS Open: How many conjectures can language models turn into theorems?",
+  [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) [cs.AI], 2026.
 -/
 
 @[expose] public section
@@ -49,12 +49,6 @@ def legendreMatrix (p : ℕ) : Matrix (Fin ((p - 1) / 2)) (Fin ((p - 1) / 2)) �
 /-- Determinant of `legendreMatrix` for the $n$-th prime $p_n$. -/
 noncomputable def a (n : ℕ) : ℤ :=
   (legendreMatrix (Nat.nth Nat.Prime (n - 1))).det
-
-@[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by
-  have h : Nat.nth Nat.Prime (1 - 1) = 2 := Nat.nth_prime_zero_eq_two
-  rw [a, h]
-  decide
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by
@@ -82,14 +76,16 @@ theorem a_5 : a 5 = 0 := by
 
 @[category test, AMS 11]
 theorem a_6 : a 6 = -8 := by
-  have h : Nat.nth Nat.Prime (6 - 1) = 13 := Nat.nth_count (show (13).Prime by decide)
+  have h : Nat.nth Nat.Prime (6 - 1) = 13 := Nat.nth_prime_five_eq_thirteen
   rw [a, h]
   decide +kernel
 
 /--
 Conjecture: $a(n) = 0$ if and only if $p_n \equiv 3 \pmod 4$.
+- _Zhi-Wei Sun_, Aug 13 2013
 
-Proved by Adamczewski (2026).
+Proved in the OEIS Open project, see T. Adamczewski, OEIS Open: How many conjectures can
+language models turn into theorems?, [arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
 -/
 @[category research solved, AMS 11]
 theorem conjecture (n : ℕ) (hn : 2 ≤ n) :

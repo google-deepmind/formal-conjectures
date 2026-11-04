@@ -50,36 +50,31 @@ previous term $A005260(k)$ ($1 \le k < n$), or $1$ if no such prime divisor exis
 def a (n : ℕ) : ℕ :=
   primitivePrimeDivisorFranel 4 n
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by
-  native_decide
+  decide +kernel
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 3 := by
-  native_decide
+  decide +kernel
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 41 := by
-  native_decide
+  decide +kernel
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 5 := by
-  native_decide
+  decide +kernel
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 7 := by
-  native_decide
+  decide +kernel
 
 /--
 Conjecture: $a(n)$ is prime for any $n > 0$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 0 < n) : (a n).Prime := by
+theorem conjecture_1 (n : ℕ) (hn : 0 < n) : (a n).Prime := by
   sorry
 
 /--
@@ -87,7 +82,7 @@ theorem conjecture1 (n : ℕ) (hn : 0 < n) : (a n).Prime := by
 has a prime divisor which does not divide any previous terms $f_r(k)$ with $k < n$."
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (r : ℕ) (hr : 2 < r) :
+theorem conjecture_2 (r : ℕ) (hr : 2 < r) :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → primitivePrimeDivisorFranel r n ≠ 1 := by
   sorry
 

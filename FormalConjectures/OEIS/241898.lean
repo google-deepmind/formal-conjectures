@@ -37,7 +37,7 @@ open Finset
 
 /-- Predicate testing whether $k$ is the smallest base in a decomposition of $n$ into a sum
 of at most four squares. -/
-def IsValidBase (n k : ℕ) : Bool :=
+def isValidBase (n k : ℕ) : Bool :=
   let S := 0 :: List.range' k (n - k + 1)
   0 < k && S.any fun b1 => S.any fun b2 => S.any fun b3 =>
     k ^ 2 + b1 ^ 2 + b2 ^ 2 + b3 ^ 2 == n
@@ -45,46 +45,52 @@ def IsValidBase (n k : ℕ) : Bool :=
 /-- Largest integer $k$ such that $n = k^2 + \dots$ is a decomposition of $n$ into a sum
 of at most four nondecreasing squares. -/
 def a (n : ℕ) : ℕ :=
-  ((Icc 1 n).filter (fun k => IsValidBase n k)).max.getD 0
+  ((Icc 1 n).filter (fun k => isValidBase n k)).max.getD 0
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
   decide
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 1 := by
   decide
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 1 := by
   decide
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 2 := by
   decide
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by
   decide
 
 /--
 "From the data that I have, it would seem that $a(n)$ is greater than $7$ for all $n > 599$."
+- _David S. Newman_, May 02 2014
+
+This is false: since every four-square decomposition of a multiple of $8$ uses only even squares,
+$a(4m) = 2a(m)$ for all even $m \ge 2$. From $a(46) = 1$ (via $46 = 1^2 + 3^2 + 6^2$) we obtain
+$a(184) = 2$ and $a(736) = a(16 \cdot 46) = 4 \le 7$.
 -/
-@[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 599 < n) : 7 < a n := by
+@[category research solved, AMS 11]
+theorem conjecture_1 : ¬ ∀ n : ℕ, 599 < n → 7 < a n := by
   sorry
 
 /--
 "By Lagrange's Theorem every number can be written as a sum of four squares. Can the same be
-said of the set of $\{a^2 \mid a \text{ is any integer not equal to } 7\}$?"
+said of the set of $\{a^2 \mid a \text{ is any integer not equal to } 7\}$? If this could be
+proved, it would only remain to check if all the numbers up to $599$ can be written as the sum
+of $4$ squares none of which is $7^2$."
+- _David S. Newman_, May 02 2014
+
+Note that $0 \in \mathbb{N} \setminus \{7\}$ allows representations as a sum of at most four
+positive squares none of which is $7^2$.
 -/
 @[category research open, question, AMS 11]
-theorem conjecture2 :
+theorem conjecture_2 :
     ∀ n : ℕ, ∃ a b c d : ℕ,
       a ≠ 7 ∧ b ≠ 7 ∧ c ≠ 7 ∧ d ≠ 7 ∧ a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n := by
   sorry

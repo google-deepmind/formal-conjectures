@@ -70,14 +70,23 @@ theorem a_7 : a 7 = -4 := by
 /--
 Conjecture: Let $M(n)$ be the $n \times n$ matrix with $(i,j)$-entry equal to $1$ or $0$ according as
 $i + j$ is prime or not. For each $n = 24, 25, \dots$, the characteristic polynomial of $M(n)$ is
-irreducible over the field of rational numbers, and the $n$ eigenvalues can be listed as
+irreducible over the field of rational numbers.
+- _Zhi-Wei Sun_, Aug 25 2013
+-/
+@[category research open, AMS 11]
+theorem conjecture_1 (n : ℕ) (hn : 24 ≤ n) :
+    Irreducible (primeMatrix ℚ n).charpoly := by
+  sorry
+
+/--
+Conjecture: Let $M(n)$ be the $n \times n$ matrix with $(i,j)$-entry equal to $1$ or $0$ according as
+$i + j$ is prime or not. For each $n = 24, 25, \dots$, the $n$ eigenvalues of $M(n)$ can be listed as
 $\lambda(1), \dots, \lambda(n)$ such that
 $\lambda(1) > -\lambda(2) > \lambda(3) > -\lambda(4) > \dots > (-1)^{n-1} \lambda(n) > 0$.
 - _Zhi-Wei Sun_, Aug 25 2013
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 24 ≤ n) :
-    Irreducible (primeMatrix ℚ n).charpoly ∧
+theorem conjecture_2 (n : ℕ) (hn : 24 ≤ n) :
     ∃ ev : Fin n → ℝ,
       (primeMatrix ℝ n).charpoly = ∏ i : Fin n, (Polynomial.X - Polynomial.C (ev i)) ∧
       StrictAnti (fun i : Fin n => (-1 : ℝ) ^ (i : ℕ) * ev i) ∧

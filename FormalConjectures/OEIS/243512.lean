@@ -35,50 +35,36 @@ namespace OeisA243512
 
 open Finset
 
-/-- Value of $A243473(i)$: numerator minus denominator of $\sigma_1(i) / i$ in lowest terms. -/
-def a243473 (i : ℕ) : ℕ :=
+/-- Numerator minus denominator of $\sigma_1(i) / i$ in lowest terms ([A243473](https://oeis.org/A243473)). -/
+def abundancyDiff (i : ℕ) : ℕ :=
   if i = 0 then 0
   else
-    let r : ℚ := (∑ d ∈ i.divisors, d : ℚ) / i
+    let r : ℚ := mkRat (∑ d ∈ i.divisors, d) i
     (r.num - r.den).toNat
 
-/-- Least positive integer $i$ such that $A243473(i) = n$, or $0$ if no such index exists. -/
+/-- Least positive integer $i$ such that `abundancyDiff i = n`, or $0$ if no such index exists. -/
 noncomputable def a (n : ℕ) : ℕ :=
-  sInf {i : ℕ | 0 < i ∧ a243473 i = n}
+  sInf {i : ℕ | 0 < i ∧ abundancyDiff i = n}
 
-/-- Value of the sequence `a` at 0. -/
 @[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by
-  exact IsLeast.csInf_eq ⟨by native_decide, fun x hx => hx.1⟩
+theorem a_0 : a 0 = 1 :=
+  IsLeast.csInf_eq (by decide)
 
-/-- Value of the sequence `a` at 1. -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 2 := by
-  refine IsLeast.csInf_eq ⟨by native_decide, fun x ⟨hx1, hx2⟩ => ?_⟩
-  by_contra! h
-  interval_cases x
-  revert hx2; native_decide
+theorem a_1 : a 1 = 2 :=
+  IsLeast.csInf_eq (by decide)
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
-theorem a_3 : a 3 = 4 := by
-  refine IsLeast.csInf_eq ⟨by native_decide, fun x ⟨hx1, hx2⟩ => ?_⟩
-  by_contra! h
-  interval_cases x <;> revert hx2 <;> native_decide
+theorem a_3 : a 3 = 4 :=
+  IsLeast.csInf_eq (by decide)
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
-theorem a_4 : a 4 = 9 := by
-  refine IsLeast.csInf_eq ⟨by native_decide, fun x ⟨hx1, hx2⟩ => ?_⟩
-  by_contra! h
-  interval_cases x <;> revert hx2 <;> native_decide
+theorem a_4 : a 4 = 9 :=
+  IsLeast.csInf_eq (by decide)
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
-theorem a_5 : a 5 = 14 := by
-  refine IsLeast.csInf_eq ⟨by native_decide, fun x ⟨hx1, hx2⟩ => ?_⟩
-  by_contra! h
-  interval_cases x <;> revert hx2 <;> native_decide
+theorem a_5 : a 5 = 14 :=
+  IsLeast.csInf_eq (by decide)
 
 /--
 Motivated by the observation that some small numbers $(2, 12, 14, 18, \dots)$ occur only very late in

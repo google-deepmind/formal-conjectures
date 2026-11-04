@@ -55,6 +55,9 @@ theorem a_5 : a 5 = 0 := by rfl
 @[category test, AMS 11]
 theorem a_6 : a 6 = 1 := by rfl
 
+@[category test, AMS 11]
+theorem a_8 : a 8 = 2 := by decide
+
 /--
 Conjecture: $a(n) > 0$ for all $n > 5$.
 -/

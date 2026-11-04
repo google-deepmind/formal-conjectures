@@ -20,8 +20,7 @@ public import FormalConjecturesUtil
 /-!
 # Prime values in recurrence $a(n+1) = |a(n) - \gcd(a(n), 7n+6)|$
 
-Let $a(1) = 1$ and $a(n+1) = |a(n) - \gcd(a(n), 7n+6)|$ for $n \ge 1$.
-It is conjectured that whenever $a(n) = 0$ for $n > 2$, the value $7n+6 = a(n+1)$ is prime.
+The sequence is defined by $a(1) = 1$ and $a(n+1) = |a(n) - \gcd(a(n), 7n+6)|$ for $n \ge 1$.
 
 *References:*
 - [A261307](https://oeis.org/A261307)

@@ -32,14 +32,8 @@ $$a(n) = 2n + \lfloor n \sqrt{5/4} \rfloor + \lfloor n/4 \rfloor.$$
 
 namespace OeisA190363
 
-/--
-The sequence $a(n) = 2n + \lfloor n \sqrt{5/4} \rfloor + \lfloor n/4 \rfloor$.
--/
-noncomputable def a (n : ℕ) : ℕ :=
-  2 * n + (Int.floor ((n : ℝ) * Real.sqrt (5 / 4))).toNat + n / 4
-
 @[category API, AMS 11]
-lemma floor_mul_sqrt_five_div_four (n k : ℕ)
+private lemma floor_mul_sqrt_five_div_four (n k : ℕ)
     (h1 : (k : ℝ) ^ 2 ≤ (n : ℝ) ^ 2 * (5 / 4))
     (h2 : (n : ℝ) ^ 2 * (5 / 4) < ((k : ℝ) + 1) ^ 2) :
     Int.floor ((n : ℝ) * Real.sqrt (5 / 4)) = k := by
@@ -56,7 +50,12 @@ lemma floor_mul_sqrt_five_div_four (n k : ℕ)
     rw [← Real.sqrt_sq hk1]
     exact Real.sqrt_lt_sqrt (by positivity) h2
 
-/-- Value of the sequence `a` at 1. -/
+/--
+The sequence $a(n) = 2n + \lfloor n \sqrt{5/4} \rfloor + \lfloor n/4 \rfloor$.
+-/
+noncomputable def a (n : ℕ) : ℕ :=
+  2 * n + (Int.floor ((n : ℝ) * Real.sqrt (5 / 4))).toNat + n / 4
+
 @[category test, AMS 11]
 theorem a_1 : a 1 = 3 := by
   have h := floor_mul_sqrt_five_div_four 1 1 (by norm_num) (by norm_num)
@@ -64,7 +63,6 @@ theorem a_1 : a 1 = 3 := by
   rw [h]
   rfl
 
-/-- Value of the sequence `a` at 2. -/
 @[category test, AMS 11]
 theorem a_2 : a 2 = 6 := by
   have h := floor_mul_sqrt_five_div_four 2 2 (by norm_num) (by norm_num)
@@ -72,7 +70,6 @@ theorem a_2 : a 2 = 6 := by
   rw [h]
   rfl
 
-/-- Value of the sequence `a` at 3. -/
 @[category test, AMS 11]
 theorem a_3 : a 3 = 9 := by
   have h := floor_mul_sqrt_five_div_four 3 3 (by norm_num) (by norm_num)
@@ -80,7 +77,6 @@ theorem a_3 : a 3 = 9 := by
   rw [h]
   rfl
 
-/-- Value of the sequence `a` at 4. -/
 @[category test, AMS 11]
 theorem a_4 : a 4 = 13 := by
   have h := floor_mul_sqrt_five_div_four 4 4 (by norm_num) (by norm_num)
@@ -88,7 +84,6 @@ theorem a_4 : a 4 = 13 := by
   rw [h]
   rfl
 
-/-- Value of the sequence `a` at 5. -/
 @[category test, AMS 11]
 theorem a_5 : a 5 = 16 := by
   have h := floor_mul_sqrt_five_div_four 5 5 (by norm_num) (by norm_num)
@@ -102,7 +97,8 @@ $0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, -1$, i.e.,
 $a(n + 21) = a(n + 17) + a(n + 4) - a(n)$ for $n \ge 1$.
 - _Harvey P. Dale_, Jan 28 2025
 
-The conjecture is false: $a(140) = 471$ is the first counterexample.
+The conjecture is false: the recurrence first fails at $n = 140$, i.e. for the term
+$a(140 + 21) = a(161) = 543 \ne 542 = a(157) + a(144) - a(140)$.
 
 Since
 $\lim_{n\to\infty} \frac{a(n)}{n} = \frac{9}{4} + \frac{\sqrt{5}}{2}$ is irrational,

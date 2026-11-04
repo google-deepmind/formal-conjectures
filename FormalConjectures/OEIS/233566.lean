@@ -20,6 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Number of primes $p < n$ such that $p \phi(n - p) - 1$ is also prime
 
+Let $\phi$ denote Euler's totient function. The sequence $a(n)$ counts the primes $p < n$ such
+that $p \phi(n - p) - 1$ is also prime.
+
 *References:*
 - [A233566](https://oeis.org/A233566)
 -/
@@ -29,8 +32,7 @@ public import FormalConjecturesUtil
 namespace OeisA233566
 
 /--
-The primary defining sequence `a`.
-$a(n)$ is the number of primes $p < n$ such that $p \phi(n - p) - 1$ is also prime,
+Number of primes $p < n$ such that $p \phi(n - p) - 1$ is also prime,
 where $\phi$ is Euler's totient function.
 -/
 def a (n : ℕ) : ℕ :=
@@ -57,14 +59,14 @@ theorem a_5 : a 5 = 2 := by decide
 Conjecture: $a(n) > 0$ for all $n > 3$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 3 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 3 < n) : 0 < a n := by
   sorry
 
 /--
 Conjecture: For any $n > 2$ there is a prime $p < n$ with $p^2 \phi(n - p) - 1$ prime.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 2 < n) :
+theorem conjecture_2 (n : ℕ) (hn : 2 < n) :
     ∃ p < n, p.Prime ∧ Nat.Prime (p ^ 2 * (n - p).totient - 1) := by
   sorry
 

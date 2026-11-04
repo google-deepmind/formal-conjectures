@@ -59,7 +59,7 @@ theorem a_6 : a 6 = 2 := by decide
 Conjecture: $a(n) > 0$ for all $n > 1$.
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : n > 1) : a n > 0 := by
+theorem conjecture_1 (n : ℕ) (hn : n > 1) : a n > 0 := by
   sorry
 
 /--
@@ -67,7 +67,7 @@ The author also guesses that any integer $n > 1157$ can be written as $x + y$ wi
 positive integers, and $(xy)^2 + xy + 1$ and $(xy)^2 + xy - 1$ twin primes.
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : n > 1157) :
+theorem conjecture_2 (n : ℕ) (hn : n > 1157) :
     ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧
       Nat.Prime ((x * y) ^ 2 + x * y - 1) ∧ Nat.Prime ((x * y) ^ 2 + x * y + 1) := by
   sorry
@@ -79,7 +79,7 @@ $\frac{(xy)^p - 1}{xy - 1}$ prime.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (p : ℕ) (hp : p.Prime) :
+theorem conjecture_3 (p : ℕ) (hp : p.Prime) :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
       ∃ x y : ℕ, 0 < x ∧ 0 < y ∧ x + y = n ∧
         Nat.Prime (((x * y) ^ p - 1) / (x * y - 1)) := by

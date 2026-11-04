@@ -31,50 +31,60 @@ prime factors of $k$ counted with multiplicity.
 
 namespace OeisA212496
 
-/-- Total number of prime factors of $k$ counted with multiplicity, $\Omega(k)$. -/
-def bigOmega (k : ℕ) : ℕ :=
-  k.primeFactorsList.length
+open scoped ArithmeticFunction.Omega
 
 /-- $a(n) = \sum_{k=1}^n (-1)^{k - \Omega(k)}$. -/
 def a (n : ℕ) : ℤ :=
-  ∑ k ∈ Finset.Icc 1 n, if (k + bigOmega k) % 2 = 0 then 1 else -1
+  ∑ k ∈ Finset.Icc 1 n, if (k + Ω k) % 2 = 0 then 1 else -1
+
+@[category test, AMS 11]
+theorem a_1 : a 1 = -1 := by
+  simp only [a, ArithmeticFunction.cardFactors_apply]; decide +kernel
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = -2 := by
+  simp only [a, ArithmeticFunction.cardFactors_apply]; decide +kernel
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = -1 := by
+  simp only [a, ArithmeticFunction.cardFactors_apply]; decide +kernel
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 0 := by
+  simp only [a, ArithmeticFunction.cardFactors_apply]; decide +kernel
+
+@[category test, AMS 11]
+theorem a_5 : a 5 = 1 := by
+  simp only [a, ArithmeticFunction.cardFactors_apply]; decide +kernel
 
 /-- Auxiliary sequence $b(n) = \sum_{k=1}^n \frac{(-1)^{k - \Omega(k)}}{k}$. -/
-noncomputable def b (n : ℕ) : ℝ :=
-  ∑ k ∈ Finset.Icc 1 n, (if (k + bigOmega k) % 2 = 0 then (1 : ℝ) else -1) / (k : ℝ)
-
-@[category test, AMS 11]
-theorem a_1 : a 1 = -1 := by native_decide
-
-@[category test, AMS 11]
-theorem a_2 : a 2 = -2 := by native_decide
-
-@[category test, AMS 11]
-theorem a_3 : a 3 = -1 := by native_decide
-
-@[category test, AMS 11]
-theorem a_4 : a 4 = 0 := by native_decide
-
-@[category test, AMS 11]
-theorem a_5 : a 5 = 1 := by native_decide
+def b (n : ℕ) : ℚ :=
+  ∑ k ∈ Finset.Icc 1 n, (if (k + Ω k) % 2 = 0 then (1 : ℚ) else -1) / (k : ℚ)
 
 /--
 "On May 16 2012, Zhi-Wei Sun conjectured that $a(n)$ is positive for each $n > 4$."
 - _Zhi-Wei Sun_, May 19 2012
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) (hn : 4 < n) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) (hn : 4 < n) : 0 < a n := by
   sorry
 
 /--
-"Moreover, he guessed that $a(n) > \sqrt{n}$ for any $n > 324$ (and also
-$a(n) < \sqrt{n}\log(\log(n))$ for $n > 5892$)."
+"Moreover, he guessed that $a(n) > \sqrt{n}$ for any $n > 324$."
 - _Zhi-Wei Sun_, May 19 2012
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) :
-    (324 < n → Real.sqrt (n : ℝ) < (a n : ℝ)) ∧
-    (5892 < n → (a n : ℝ) < Real.sqrt (n : ℝ) * Real.log (Real.log (n : ℝ))) := by
+theorem conjecture_2 (n : ℕ) (hn : 324 < n) :
+    Real.sqrt (n : ℝ) < (a n : ℝ) := by
+  sorry
+
+/--
+"He also guessed that $a(n) < \sqrt{n}\log(\log(n))$ for $n > 5892$."
+- _Zhi-Wei Sun_, May 19 2012
+-/
+@[category research open, AMS 11]
+theorem conjecture_3 (n : ℕ) (hn : 5892 < n) :
+    (a n : ℝ) < Real.sqrt (n : ℝ) * Real.log (Real.log (n : ℝ)) := by
   sorry
 
 /--
@@ -82,18 +92,25 @@ theorem conjecture2 (n : ℕ) :
 - _Zhi-Wei Sun_, May 19 2012
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (n : ℕ) (hn : 0 < n) : b n < 0 := by
+theorem conjecture_4 (n : ℕ) (hn : 0 < n) : b n < 0 := by
   sorry
 
 /--
-"Moreover, he guessed that $b(n) < -1/\sqrt{n}$ for all $n > 1$, and
-$b(n) > -\log(\log(n))/\sqrt{n}$ for $n > 2008$."
+"Moreover, he guessed that $b(n) < -1/\sqrt{n}$ for all $n > 1$."
 - _Zhi-Wei Sun_, May 19 2012
 -/
 @[category research open, AMS 11]
-theorem conjecture4 (n : ℕ) :
-    (1 < n → b n < -1 / Real.sqrt (n : ℝ)) ∧
-    (2008 < n → -Real.log (Real.log (n : ℝ)) / Real.sqrt (n : ℝ) < b n) := by
+theorem conjecture_5 (n : ℕ) (hn : 1 < n) :
+    (b n : ℝ) < -1 / Real.sqrt (n : ℝ) := by
+  sorry
+
+/--
+"He also guessed that $b(n) > -\log(\log(n))/\sqrt{n}$ for $n > 2008$."
+- _Zhi-Wei Sun_, May 19 2012
+-/
+@[category research open, AMS 11]
+theorem conjecture_6 (n : ℕ) (hn : 2008 < n) :
+    -Real.log (Real.log (n : ℝ)) / Real.sqrt (n : ℝ) < (b n : ℝ) := by
   sorry
 
 end OeisA212496

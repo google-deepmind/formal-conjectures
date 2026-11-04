@@ -31,7 +31,7 @@ given by $\pi(\lfloor n^2 + (\log_2 n)^2 \rfloor) - \pi(n^2)$.
 
 namespace OeisA217317
 
-/-- `a n` is the number of primes between $n^2$ and $n^2 + (\log_2 n)^2$ inclusive. -/
+/-- Number of primes between $n^2$ and $n^2 + (\log_2 n)^2$ inclusive. -/
 noncomputable def a (n : ℕ) : ℕ :=
   if n = 0 then 0
   else

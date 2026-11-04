@@ -34,45 +34,36 @@ namespace OeisA255916
 
 open Nat Finset
 
-attribute [-instance] Int.instConditionallyCompleteLinearOrder
-
-/-- The primary sequence $a(n)$: number of ways to write $n$ as the sum of a generalized heptagonal
-number, an octagonal number, and a nonagonal number. -/
+/-- Number of ways to write $n$ as the sum of a generalized heptagonal number, an octagonal
+number, and a nonagonal number. -/
 def a (n : ℕ) : ℕ :=
-  let generalizedHeptagonalNum (k : ℤ) : ℕ := ((5 * k ^ 2 - 3 * k) / 2).toNat
-  let octagonalNum (x : ℕ) : ℕ := x * (3 * x - 2)
-  let nonagonalNum (y : ℕ) : ℕ := y * (7 * y - 5) / 2
   let nBound : ℕ := n + 1
-  let zBoundPos : ℤ := nBound
-  let kSet : Finset ℤ := Finset.Icc (-zBoundPos) zBoundPos
-  let xSet : Finset ℕ := Finset.range nBound
-  let ySet : Finset ℕ := Finset.range nBound
-  ∑ k ∈ kSet, ∑ x ∈ xSet, ∑ y ∈ ySet,
-    if generalizedHeptagonalNum k + octagonalNum x + nonagonalNum y = n then 1 else 0
+  ∑ i ∈ Finset.range (2 * n + 3),
+    let k : ℤ := (i : ℤ) - (n + 1 : ℤ)
+    ∑ x ∈ Finset.range nBound, ∑ y ∈ Finset.range nBound,
+      if Nat.generalizedPolygonalNumber 7 k + Nat.polygonalNumber 8 x + Nat.polygonalNumber 9 y = n
+      then 1 else 0
 
-/-- The $m$-th generalized polygonal number $G_m(k) = \frac{(m-2)k^2 - (m-4)k}{2}$ for
-$k \in \mathbb{Z}$. -/
-def generalizedPolygonalNumOfSides (m : ℕ) (k : ℤ) : ℕ :=
-  if 3 ≤ m then
-    let m' := (m : ℤ)
-    let val := (m' - 2) * k ^ 2 - (m' - 4) * k
-    (val / 2).toNat
-  else 0
+@[category test, AMS 11]
+theorem a_0 : a 0 = 1 := by decide
 
-/-- The $m$-th polygonal number $P_m(x) = \frac{(m-2)x^2 - (m-4)x}{2}$ for $x \in \mathbb{N}$. -/
-def polygonalNumOfSides (m : ℕ) (x : ℕ) : ℕ :=
-  if 3 ≤ m then
-    let m' := (m : ℤ)
-    let x' := (x : ℤ)
-    let val := (m' - 2) * x' ^ 2 - (m' - 4) * x'
-    (val / 2).toNat
-  else 0
+@[category test, AMS 11]
+theorem a_1 : a 1 = 3 := by decide
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 3 := by decide
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 1 := by decide
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 1 := by decide
 
 /-- Predicate asserting that $n$ can be written as the sum of a generalized $m$-gonal number
 and two polygonal numbers $P_j$ and $P_k$. -/
 def IsSumOfGmPjPk (m n j k : ℕ) : Prop :=
   ∃ (z : ℤ) (x y : ℕ),
-    generalizedPolygonalNumOfSides m z + polygonalNumOfSides j x + polygonalNumOfSides k y = n
+    Nat.generalizedPolygonalNumber m z + Nat.polygonalNumber j x + Nat.polygonalNumber k y = n
 
 /-- The set of ordered pairs $(j, k)$ from part (i) of Sun's conjecture. -/
 def sunPolygonalPairsSet1 : Finset (ℕ × ℕ) :=
@@ -95,27 +86,12 @@ def sunPolygonalPairsSet2 : Finset (ℕ × ℕ) :=
   let set6K := kValsJ6.image (fun k => (6, k))
   set3K ∪ set4K ∪ set5K ∪ set6K ∪ {(7, 9), (7, 11), (8, 10), (9, 11)}
 
-@[category test, AMS 11]
-theorem a_0 : a 0 = 1 := by native_decide
-
-@[category test, AMS 11]
-theorem a_1 : a 1 = 3 := by native_decide
-
-@[category test, AMS 11]
-theorem a_2 : a 2 = 3 := by native_decide
-
-@[category test, AMS 11]
-theorem a_3 : a 3 = 1 := by native_decide
-
-@[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by native_decide
-
 /--
 Conjecture: $a(n) > 0$ for all $n$.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture1 (n : ℕ) : 0 < a n := by
+theorem conjecture_1 (n : ℕ) : 0 < a n := by
   sorry
 
 /--
@@ -128,7 +104,7 @@ $(5, 6), (5, 9), (6, 7), (8, 9)$.
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture2 (j k : ℕ) (hjk : 3 ≤ j ∧ j ≤ k) :
+theorem conjecture_2 (j k : ℕ) (hjk : 3 ≤ j ∧ j ≤ k) :
     (∀ n : ℕ, IsSumOfGmPjPk 7 n j k) ↔ (j, k) ∈ sunPolygonalPairsSet1 := by
   sorry
 
@@ -142,7 +118,7 @@ $(5, k)$ ($k = 6..12, 20$), $(6, k)$ ($k = 7..10$), $(7, 9), (7, 11), (8, 10), (
 - _Zhi-Wei Sun_
 -/
 @[category research open, AMS 11]
-theorem conjecture3 (j k : ℕ) (hjk : 3 ≤ j ∧ j ≤ k) :
+theorem conjecture_3 (j k : ℕ) (hjk : 3 ≤ j ∧ j ≤ k) :
     (∀ n : ℕ, IsSumOfGmPjPk 5 n j k) ↔ (j, k) ∈ sunPolygonalPairsSet2 := by
   sorry
 

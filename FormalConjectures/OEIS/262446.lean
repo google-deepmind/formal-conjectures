@@ -35,7 +35,7 @@ namespace OeisA262446
 
 /-- The auxiliary sequence $b(n) = \pi(\frac{n(n+1)}{2} + 1)$ (A262439). -/
 def b (n : ℕ) : ℕ :=
-  Nat.primeCounting (n * (n + 1) / 2 + 1)
+  Nat.primeCounting (Nat.triangular n + 1)
 
 /--
 Number of ways to write $b(n) = b(k) + b(m)$ with $0 < k < m < n$.
@@ -61,16 +61,22 @@ theorem a_4 : a 4 = 1 := by decide
 theorem a_5 : a 5 = 2 := by decide
 
 /-- The set of exceptional integers $n > 3$ for which $a(n) = 1$. -/
-def Singletons : Finset ℕ :=
+def singletons : Finset ℕ :=
   {4, 6, 11, 21, 54, 253, 325}
 
 /--
-Conjecture: $a(n) > 0$ for all $n > 3$, and $a(n) = 1$ only for
-$n = 4, 6, 11, 21, 54, 253, 325$.
+Conjecture: $a(n) > 0$ for all $n > 3$.
 -/
 @[category research open, AMS 11]
-theorem conjecture (n : ℕ) (hn : 3 < n) :
-    0 < a n ∧ (a n = 1 ↔ n ∈ Singletons) := by
+theorem conjecture_1 (n : ℕ) (hn : 3 < n) : 0 < a n := by
+  sorry
+
+/--
+Conjecture: $a(n) = 1$ only for $n = 4, 6, 11, 21, 54, 253, 325$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_2 (n : ℕ) (hn : 3 < n) :
+    a n = 1 ↔ n ∈ singletons := by
   sorry
 
 end OeisA262446
