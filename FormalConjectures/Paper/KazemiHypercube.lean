@@ -44,6 +44,7 @@ def HasTotalDominatorColoring (G : SimpleGraph V) (k : ℕ) : Prop :=
 noncomputable def totalDominatorChromaticNumber (G : SimpleGraph V) : ℕ :=
   sInf {k | HasTotalDominatorColoring G k}
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every natural $n\ge2$, the total dominator chromatic number of the
 hypercube of dimension $2^n+1$ is $2^{2^n-n+1}+2$.
 -/
