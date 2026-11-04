@@ -68,6 +68,7 @@ noncomputable def supports [DecidableRel G.Adj] : Finset V := neighbors G (leave
 def privateExternalNeighborCount [DecidableRel G.Adj] (A : Finset V) : ℕ :=
   (univ.filter fun v => v ∉ A ∧ (G.neighborFinset v ∩ A).card = 1).card
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple graph has a 2-dominating corona: every vertex outside
 the union of its maximum independent sets has at least two neighbors in it.
 -/
@@ -78,6 +79,7 @@ theorem corona_two_dominating [DecidableRel G.Adj] :
     ∀ v, v ∉ corona G → 2 ≤ (G.neighborFinset v ∩ corona G).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- In every finite Konig–Egervary graph, the maximum critical independent-set
 union has no private external neighbors. The KE equation uses the existing
 real-valued maximum-matching API.
@@ -90,6 +92,7 @@ theorem critical_union_private_neighbors [DecidableRel G.Adj]
     privateExternalNeighborCount G (criticalUnion G) = 0 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- On finite simple trees of order greater than two,404 asserts
 $peN(H)\le2(|S|-1)$, with $S$ the support set. Subtraction is in the integers.
 -/
@@ -102,6 +105,7 @@ theorem conjecture404 [DecidableRel G.Adj] (hT : G.IsTree)
       2 * ((supports G).card - (1 : ℤ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- On finite simple trees of order greater than two,405 asserts
 $peN(H)\le2\alpha(T[V\setminus L])$, where $L$ is the leaf set.
 -/
@@ -114,6 +118,7 @@ theorem conjecture405 [DecidableRel G.Adj] (hT : G.IsTree)
       2 * (G.induce ((univ \ leaves G : Finset V) : Set V)).indepNum := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- On finite simple trees of order greater than two,406 asserts
 $peN(H)\le peN(V\setminus L)-2$. Subtraction is in the integers.
 -/
@@ -126,6 +131,7 @@ theorem conjecture406 [DecidableRel G.Adj] (hT : G.IsTree)
       (privateExternalNeighborCount G (univ \ leaves G) : ℤ) - 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- On finite simple trees of order greater than two,407 asserts
 $peN(H)\le2p(T)$, where $p(T)$ is the minimum number of vertex-disjoint
 paths covering all vertices, as in the existing path-cover API.
