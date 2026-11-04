@@ -90,6 +90,7 @@ theorem fan_reciprocal_coefficient_obstruction
   nlinarith [sq_nonneg (a + 1), sq_nonneg (b + 1),
     sq_nonneg (c + 1), sq_nonneg (d + 1)]
 
+set_option linter.style.formal_proof_palomar false in
 /-- The unrestricted graphical cycle polynomial of a finite simple chordal
 graph need not have only real roots. This does not concern the restricted
 $r$-polynomial, stable partitions, or chordless-cycle enumeration. -/
