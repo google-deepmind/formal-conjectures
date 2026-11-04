@@ -55,6 +55,7 @@ def conjecture340Statement : Prop :=
       T.totalDominationNumber ≤ leafSupportComponents T +
         T.smallestDegreeMode * T.dominationNumber
 
+set_option linter.style.formal_proof_palomar false in
 /-- The proposed total-domination bound for all trees of order greater than two is false. -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/RhudeJJJJ/formal-conjectures/blob/c83bae78200bf3277ec9fe8e4a3f61d7ee37da82/Proofs/WOWII340Proof.lean#L176"]
