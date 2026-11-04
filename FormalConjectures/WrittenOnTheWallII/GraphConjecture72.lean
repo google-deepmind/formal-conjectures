@@ -44,6 +44,7 @@ def conjecture72Statement : Prop :=
     let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)
     ⌈averageEccentricity G + (maxL : ℝ) / 3⌉ ≤ (largestInducedTreeSize G : ℝ)
 
+set_option linter.style.formal_proof_palomar false in
 /-- The universal WOWII72 assertion is false. Only the maximum local independence
 number is divided by three; the different reading dividing the whole sum is not used.
 See Gebendorfer, An unbounded deficit in Written on the Wall II Conjecture72 (2026),
