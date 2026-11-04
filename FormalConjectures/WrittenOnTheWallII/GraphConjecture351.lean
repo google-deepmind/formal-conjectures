@@ -54,6 +54,7 @@ def neighbors {V : Type*} [Fintype V] (G : SimpleGraph V)
 def closedNeighbors {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
     [DecidableRel G.Adj] (A : Finset V) : Finset V := A ∪ neighbors G A
 
+set_option linter.style.formal_proof_palomar false in
 /-- The original assertion that every finite simple tree of order greater than
  two satisfies $\gamma_t(T)\ge c(T[S(T)\cup L(T)])+c(T[N[D_2(T)]])$
  is false. Both terms count components of induced subgraphs, including isolates.
