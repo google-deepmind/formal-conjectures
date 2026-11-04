@@ -68,6 +68,7 @@ def quasiComplete (n m : ℕ) : SimpleGraph (Fin n) where
       · exact Or.inr (Or.inl h)⟩
   loopless := ⟨by intro v h; exact h.1 rfl⟩
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple graph of order $n\ge1$ and size $m$ has at least as
 many stable partitions as the quasi-complete graph $Q(n,m)$. -/
 @[category research solved, AMS 5,
@@ -78,6 +79,7 @@ theorem conjecture {V : Type*} [Fintype V] [DecidableEq V]
     bell (quasiComplete (Fintype.card V) G.edgeFinset.card) ≤ bell G := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The written resolution strengthens the Bell bound coordinatewise for every
 number of nonempty independent blocks. -/
 @[category research solved, AMS 5,
