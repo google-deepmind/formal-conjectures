@@ -51,6 +51,7 @@ noncomputable def reciprocalSum (G : SimpleGraph V) : ℚ :=
 noncomputable def bound (G : SimpleGraph V) [DecidableRel G.Adj] : ℚ :=
   ((neighbors G (maximumVertices G)).card : ℚ) / 2 * ⌊2 * reciprocalSum G⌋₊
 
+set_option linter.style.formal_proof_palomar false in
 /-- The explicit upper reading 433-M asserts for every connected finite simple
 graph of order greater than three that
 $i(G)\le\tfrac12|N(M)|\lfloor2\sum_v1/d_{G^2}(v)\rfloor$.
