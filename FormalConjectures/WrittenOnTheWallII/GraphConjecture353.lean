@@ -40,6 +40,7 @@ open SimpleGraph
 noncomputable def largestComponentOrder {V : Type*} [Fintype V] (G : SimpleGraph V) : ℕ :=
   Finset.univ.sup fun v => Nat.card (G.connectedComponentMk v).supp
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII Conjecture 353 proposed that every finite simple tree $T$ of order greater
 than two satisfies
