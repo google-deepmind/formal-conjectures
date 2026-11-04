@@ -39,6 +39,7 @@ namespace WrittenOnTheWallII.GraphConjecture423
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /-- Gebendorfer's stronger cut theorem, valid without connectedness whenever an edge crosses
 from `A` to its complement. The `+ 1` form is equivalent to subtracting one on the right. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
@@ -51,6 +52,7 @@ theorem cut_bound {V : Type*} [Fintype V] [DecidableEq V]
       (G.induce ((Finset.univ \ A : Finset V) : Set V)).indepNum := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- WOWII 423: the product bound involving minimum-degree vertices `A`, maximum-degree
 vertices `M`, and the closed neighborhood `N`. The regular case is included. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
