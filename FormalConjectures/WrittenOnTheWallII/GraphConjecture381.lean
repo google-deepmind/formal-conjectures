@@ -42,6 +42,7 @@ def supports : Finset V := univ.filter fun s => ∃ p, G.degree p = 1 ∧ G.Adj 
 
 def supportDegree : ℕ := (supports G).sup (fun v => G.degree v)
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every finite simple tree $T$ of order greater than two,
 $\gamma_t(T)\ge i(T[N(S)])/(b-1)$, where $S$ is the full support set,
 $N(S)$ is the union of open neighborhoods, $i$ counts isolated vertices,
