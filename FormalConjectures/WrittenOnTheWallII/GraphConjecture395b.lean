@@ -80,6 +80,7 @@ def proposedBound {V : Type*} [Fintype V] [DecidableEq V]
     (G.induce (remaining G : Set V)).minDegree +
     (Finset.univ.filter fun v => G.degree v < 3).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII 395b proposed the upper bound $\gamma_2(G)\leq |M|+\delta(G[V\setminus A])+|V\setminus A_3|$
 for connected finite simple graphs of order greater than two. Here $M$ is the
