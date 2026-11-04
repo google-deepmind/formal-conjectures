@@ -98,6 +98,7 @@ def AntiUnimodal {m : ℕ} (a : Fin m → ℕ) : Prop :=
   ∃ t : Fin m, (∀ i j, i ≤ j → j ≤ t → a j ≤ a i) ∧
     (∀ i j, t ≤ i → i ≤ j → a i ≤ a j)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Open Problem 4.2 of arXiv:2311.18059v1 asks whether every plane rooted tree
 with an anti-unimodal delay function has a unimodal plucking polynomial.
