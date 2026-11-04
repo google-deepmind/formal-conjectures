@@ -71,6 +71,7 @@ noncomputable def largestComponentOrder (A : Finset V) : ℕ :=
 
 noncomputable def independentOn (A : Finset V) : ℕ := (G.induce (A : Set V)).indepNum
 
+set_option linter.style.formal_proof_palomar false in
 /-- The bipartite clause412a is
 $|H|\ge c_L(G[S])+\alpha(G[V\setminus N(S)])$, where $S=N(P)$.
 Here $c_L$ is the order of a largest component and $H$ is the maximum critical
@@ -87,6 +88,7 @@ theorem conjecture412a [DecidableRel G.Adj] (hG : G.Connected)
         (criticalUnion G).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The bipartite clause412b is
 $|H|\ge c_L(G[S])+\alpha(G[A_2])$, with $S=N(P)$ and $A_2$ the degree-two
 set, for connected finite bipartite graphs of order greater than two.
@@ -100,6 +102,7 @@ theorem conjecture412b [DecidableRel G.Adj] (hG : G.Connected)
       (criticalUnion G).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The corona version of412a holds for every connected finite simple graph
 of order greater than two, without a bipartite hypothesis.
 -/
@@ -112,6 +115,7 @@ theorem conjecture412a_corona [DecidableRel G.Adj] (hG : G.Connected)
       independentOn G (univ \ neighbors G (neighbors G (pendants G))) ≤ (corona G).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The corona version of412b holds for every connected finite simple graph
 of order greater than two, without a bipartite hypothesis.
 -/
