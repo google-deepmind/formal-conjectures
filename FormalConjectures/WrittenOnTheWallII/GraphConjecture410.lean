@@ -73,6 +73,7 @@ def edgesOn (G : SimpleGraph V) [DecidableRel G.Adj] (Q : Finset V) : ℕ :=
 def baseBound (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
   (univ \ minimumVertices G).card + (univ \ maximumVertices G).card
 
+set_option linter.style.formal_proof_palomar false in
 /-- WOWII410a: bound the union of maximum-cardinality critical independent sets
 using minimum- and maximum-degree complements and the edges on vertices maximizing
 the number of vertices at even distance. -/
@@ -83,6 +84,7 @@ theorem conjecture410a : ∀ (V : Type) [Fintype V] [DecidableEq V]
     (criticalUnion G).card ≤ baseBound G + edgesOn G (evenMax G) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- WOWII410b: bound the union of maximum-cardinality critical independent sets
 using minimum- and maximum-degree complements and the edges on vertices minimizing
 the number of vertices at even distance. -/
