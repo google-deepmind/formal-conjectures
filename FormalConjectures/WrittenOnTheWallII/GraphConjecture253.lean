@@ -42,6 +42,7 @@ def modalCandidates (G : SimpleGraph V) [DecidableRel G.Adj] : Finset ℕ :=
 noncomputable def modeMin (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
   sInf (modalCandidates G : Set ℕ)
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple connected graph without isolated vertices and with girth
 at least five was conjectured to satisfy
 $\gamma_t(G)\ge1+\operatorname{mode}_{\min}(G)$.
