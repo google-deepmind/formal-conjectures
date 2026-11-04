@@ -32,6 +32,7 @@ namespace WrittenOnTheWallII.GraphConjecture317
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a finite simple connected graph of order greater than one.
 If the order of a largest induced tree is at least the number of edges
