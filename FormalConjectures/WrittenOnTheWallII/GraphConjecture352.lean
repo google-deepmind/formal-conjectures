@@ -43,6 +43,7 @@ noncomputable def averageMaxEccentricity (G : SimpleGraph V) [DecidableRel G.Adj
   (∑ v ∈ maxVertices G, Finset.univ.sup (fun w => G.dist v w) : ℕ) /
     ((maxVertices G).card : ℚ)
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple tree of order greater than two was conjectured to satisfy
 $\gamma_t(T)\ge c(T[N[D_2]])+\lceil\operatorname{ecc}_{\mathrm{avg}}(M)/2\rceil$,
 where $D_2$ is the set of degree-two vertices, $M$ the maximum-degree vertices,
