@@ -48,6 +48,7 @@ def isolatedSupports {V : Type*} [Fintype V] (G : SimpleGraph V)
     [DecidableRel G.Adj] : Finset V :=
   (supports G).filter fun v => ∀ w ∈ supports G, ¬ G.Adj v w
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple tree of order greater than two satisfies
 $\gamma_t(T)\ge iso(T[S(T)])+|E(T[D_2(T)])|/3$.
 Here $S(T)$ is the set of neighbors of leaves and $D_2(T)$ is the set of
@@ -63,6 +64,7 @@ theorem conjecture365 {V : Type*} [Fintype V] [DecidableEq V]
       T.totalDominationNumber := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Gebendorfer's strengthening is
 $\gamma_t(T)\ge iso(T[S(T)])+\lfloor |E(T[D_2(T)])|/3\rfloor+1$.
 It improves the rounded original bound by one when the edge count is divisible
