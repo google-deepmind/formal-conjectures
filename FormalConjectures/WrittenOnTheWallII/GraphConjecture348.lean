@@ -42,6 +42,7 @@ def externalDegreeTwoNeighbors {V : Type} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] : Finset V :=
   Finset.univ.filter fun v => G.degree v ≠ 2 ∧ ∃ w, G.Adj v w ∧ G.degree w = 2
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII 348 asks whether every tree of order greater than two satisfies
 $3\gamma_t(T)\geq2|N_T(D_2(T))\setminus D_2(T)|$.
