@@ -41,6 +41,7 @@ def isolatedSupports {V : Type*} [Fintype V] (G : SimpleGraph V)
     [DecidableRel G.Adj] : Finset V :=
   (supports G).filter fun v => ∀ w ∈ supports G, ¬ G.Adj v w
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every finite simple tree of order greater than two satisfies
 $\gamma_t(T)\ge iso(T[S(T)])+|C(T)|$, where $S(T)$ consists of neighbors
 of leaves and $C(T)$ is the eccentricity/radius center.
@@ -54,6 +55,7 @@ theorem conjecture361 {V : Type*} [Fintype V] [DecidableEq V]
     (isolatedSupports T).card + Nat.card T.center ≤ T.totalDominationNumber := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The same inequality holds on all nontrivial finite simple trees, including
 $K_2$, whose two support vertices are adjacent and are both centers.
 -/
