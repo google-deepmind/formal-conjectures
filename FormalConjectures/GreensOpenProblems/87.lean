@@ -52,8 +52,9 @@ noncomputable def i (n k : ℕ) : ℝ :=
 $p(k)$ in Green's notation. It is the probability that the random multiset with
 $\mathrm{Pois}(1/j)$ parts of size $j$ ($1 \le j \le k$, independent) has a sub-multiset
 of total size $k$. -/
-@[category research solved, AMS 5 60]
-theorem exists_tendsto (k : ℕ) : ∃ L : ℝ, Tendsto (fun n ↦ i n k) atTop (𝓝 L) := by
+@[category research solved, AMS 5 20 60]
+theorem green_87.variants.exists_tendsto (k : ℕ) :
+    ∃ L : ℝ, Tendsto (fun n ↦ i n k) atTop (𝓝 L) := by
   sorry
 
 /-- The Erdős–Ford–Tenenbaum constant $\delta = 1 - \frac{1 + \log \log 2}{\log 2} \approx 0.086$,
@@ -64,18 +65,22 @@ noncomputable def δ : ℝ := 1 - (1 + Real.log (Real.log 2)) / Real.log 2
 $[n]$ preserves some set of size $k$. Is $p(k)$ a decreasing function of $k$?
 
 This is a conjecture of Peter Cameron (2010), see [BW15]. The statement is taken in the strict
-sense, as in [BW15]: they verified $p(k) > p(k + 1)$ for $k < 30$, and this has been extended to
-$k < 121$ in [Ve26]. Note $p(0) = 1$, since the empty set is always fixed, and $p(1) = 1 - 1/e$. -/
-@[category research open, question, AMS 5 60]
-theorem green_87.decreasing (p : ℕ → ℝ) (hp : ∀ k, Tendsto (fun n ↦ i n k) atTop (𝓝 (p k))) :
-    StrictAnti p := by
+sense, as in [BW15]: they verified $p(k) > p(k + 1)$ for $k < 30$, and the values computed
+numerically in [Ve26] satisfy it for $k < 121$. Note $p(0) = 1$, since the empty set is always
+fixed, and $p(1) = 1 - 1/e$. The limit $p$ is quantified inside the statement; it exists and is
+unique by `green_87.variants.exists_tendsto`. -/
+@[category research open, question, AMS 5 20 60]
+theorem green_87.decreasing :
+    ∀ p : ℕ → ℝ, (∀ k, Tendsto (fun n ↦ i n k) atTop (𝓝 (p k))) → StrictAnti p := by
   sorry
 
-/-- $p(k)$ is bounded above and below by constant multiples of $k^{-\delta} (\log k)^{-3/2}$
-[EFG16, Theorem 1.1]. -/
-@[category research solved, AMS 5 60]
-theorem green_87.order (p : ℕ → ℝ) (hp : ∀ k, Tendsto (fun n ↦ i n k) atTop (𝓝 (p k))) :
-    p =Θ[atTop] fun k : ℕ ↦ (k : ℝ) ^ (-δ) * (Real.log k) ^ (-(3 / 2 : ℝ)) := by
+/-- $p(k)$ is bounded above and below by constant multiples of $k^{-\delta} (\log k)^{-3/2}$.
+[EFG16, Theorem 1.1] proves this for $i(n, k)$ uniformly in $1 \le k \le n/2$ (with
+$(1 + \log k)^{-3/2}$); letting $n \to \infty$ gives the statement for $p$. -/
+@[category research solved, AMS 5 20 60]
+theorem green_87.variants.order :
+    ∀ p : ℕ → ℝ, (∀ k, Tendsto (fun n ↦ i n k) atTop (𝓝 (p k))) →
+      p =Θ[atTop] fun k : ℕ ↦ (k : ℝ) ^ (-δ) * (Real.log k) ^ (-(3 / 2 : ℝ)) := by
   sorry
 
 /-- Is $p(k) = (C + o(1)) k^{-\delta} (\log k)^{-3/2}$ for some absolute constant $C$?
@@ -85,10 +90,11 @@ for an explicit smooth, positive $f$ on $\mathbb{R} / \mathbb{Z}$ with
 $\max f / \min f < 1 + 2 \cdot 10^{-7}$. The question is therefore equivalent to whether $f$ is
 constant; they conjecture that it is not, so the expected answer is no, but this has not been
 proved. -/
-@[category research open, question, AMS 5 60]
-theorem green_87.asymptotic (p : ℕ → ℝ)
-    (hp : ∀ k, Tendsto (fun n ↦ i n k) atTop (𝓝 (p k))) :
-    ∃ C : ℝ, 0 < C ∧ p ~[atTop] fun k : ℕ ↦ C * (k : ℝ) ^ (-δ) * (Real.log k) ^ (-(3 / 2 : ℝ)) := by
+@[category research open, question, AMS 5 20 60]
+theorem green_87.asymptotic :
+    ∀ p : ℕ → ℝ, (∀ k, Tendsto (fun n ↦ i n k) atTop (𝓝 (p k))) →
+      ∃ C : ℝ, 0 < C ∧
+        p ~[atTop] fun k : ℕ ↦ C * (k : ℝ) ^ (-δ) * (Real.log k) ^ (-(3 / 2 : ℝ)) := by
   sorry
 
 end Green87
