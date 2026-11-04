@@ -49,6 +49,7 @@ noncomputable def inducedMaxDegree (G : SimpleGraph V) (S : Finset V) : ℕ := b
 noncomputable def boundOn (G : SimpleGraph V) (S : Finset V) : ℕ :=
   G.maxLocalIndependence * squareResidue G + inducedMaxDegree G S
 
+set_option linter.style.formal_proof_palomar false in
 /-- The explicit upper/M reading asserts that every connected finite simple
  graph of order greater than three satisfies
  $i(G)\le\lambda_{\max}(G)\,res(G^2)+\Delta(G[S])$,
@@ -65,6 +66,7 @@ theorem conjecture430c_upper_M : ¬ ∀ (W : Type) [Fintype W] [DecidableEq W]
       G.indepDominationNumber ≤ boundOn G (maximumVertices G) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The explicit upper/center reading asserts that every connected finite simple
  graph of order greater than three satisfies
  $i(G)\le\lambda_{\max}(G)\,res(G^2)+\Delta(G[S])$,
