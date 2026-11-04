@@ -64,6 +64,7 @@ noncomputable def bound420b (G : SimpleGraph V) [DecidableRel G.Adj] : ℤ :=
 noncomputable def bound420c (G : SimpleGraph V) [DecidableRel G.Adj] : ℤ :=
   (G.induce (residual G : Set V)).indepNum + 4 * (((sourceMinTriangles G).card : ℤ) - 1)
 
+set_option linter.style.formal_proof_palomar false in
 /-- WOWII420b, under the source-note-determined upper-bound reconstruction:
 independent domination is bounded by the independence number outside the supports'
 neighborhood plus four times one less than the edge count in the closed minimum-degree neighborhood. W8 refutes this. -/
@@ -74,6 +75,7 @@ theorem conjecture420b : ¬ ∀ (V : Type) [Fintype V] [DecidableEq V]
       (G.indepDominationNumber : ℤ) ≤ bound420b G := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- WOWII420c, under the source-note-determined upper-bound reconstruction:
 independent domination is bounded by the independence number outside the supports'
 neighborhood plus four times one less than the number of minimum-triangle vertices. W8 refutes this. -/
