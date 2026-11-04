@@ -61,6 +61,7 @@ noncomputable def corona (G : SimpleGraph V) : Finset V := by
   classical
   exact univ.filter fun v => ∃ I : Finset V, IsMaximumIndependent G I ∧ v ∈ I
 
+set_option linter.style.formal_proof_palomar false in
 /-- The stronger written result holds without connectedness or an order
 cutoff: in every finite bipartite graph without isolates,
 $\gamma_t(G)\le|corona(G)|=|H|$. The bipartite identification of the two unions
@@ -85,6 +86,7 @@ lemma connected_has_neighbor (hG : G.Connected)
   obtain ⟨u, hu⟩ := (hG v w).nonempty_neighborSet_left hw.symm
   exact ⟨u, hu⟩
 
+set_option linter.style.formal_proof_palomar false in
 /-- The original connected formulation is a direct corollary of the
 isolate-free strengthened theorem, with no independent proof gap. -/
 @[category research solved, AMS 5,
