@@ -65,6 +65,7 @@ noncomputable def isolatesOn (G : SimpleGraph V) (Q : Finset V) : Finset V := by
   classical
   exact Q.filter fun v => ∀ w ∈ Q, ¬G.Adj v w
 
+set_option linter.style.formal_proof_palomar false in
 /-- WOWII416: for diameter at most two, the union of maximum-cardinality critical
 independent sets bounds the isolates in the induced double neighborhood of the leaves,
 up to the printed subtractive constant two. -/
@@ -76,6 +77,7 @@ theorem conjecture416 : ∀ (V : Type) [Fintype V] [DecidableEq V]
     ((isolatesOn G (doubleNeighborhood G)).card : ℤ) - 2 ≤ (criticalUnion G).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The stronger bound removes the subtractive constant. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
 "https://github.com/RhudeJJJJ/formal-conjectures/blob/86479d604b592946dc77246190b0f845517b6205/Proofs/WOWII416Proof.lean"]
