@@ -44,6 +44,7 @@ noncomputable def bound (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
   (G.induce ((univ \ containingVertices G : Finset V) : Set V)).indepNum +
     (edgesOn G (containingVertices G) + 1) / 3
 
+set_option linter.style.formal_proof_palomar false in
 /-- Under the explicitly reconstructed upper reading 422d-U, every connected
 finite simple graph of order greater than three should satisfy
 $i(G)\le\alpha(G[V\setminus D])+\lfloor(|E(G[D])|+1)/3\rfloor$,
