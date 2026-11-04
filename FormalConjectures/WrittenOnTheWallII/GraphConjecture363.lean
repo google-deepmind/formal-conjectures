@@ -56,6 +56,7 @@ def isolatedSupports {V : Type*} [Fintype V] (G : SimpleGraph V)
     [DecidableRel G.Adj] : Finset V :=
   (supports G).filter fun v => ∀ w ∈ supports G, ¬ G.Adj v w
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every finite simple tree of order greater than two, the proposed bound is
 $\gamma_t(T)\ge i(T[S])+\tfrac12\operatorname{dist}_{\mathrm{avg}}(B,V)$,
 where $S$ is the full support set and $B$ is the set of vertices of maximum
