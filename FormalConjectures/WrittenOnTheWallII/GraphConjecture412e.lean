@@ -62,6 +62,7 @@ noncomputable def inducedMaxDegree (A : Finset V) : ℕ := by
   classical
   exact (G.induce (A : Set V)).maxDegree
 
+set_option linter.style.formal_proof_palomar false in
 /-- For a connected finite bipartite graph of order greater than two, let $P$
 be its pendant set and $H$ the union of all maximum critical independent sets.
 Then $|H|\ge1+\Delta(G[N(N(P))])$ under the source's literal union of
@@ -76,6 +77,7 @@ theorem conjecture412e [DecidableRel G.Adj] (hG : G.Connected)
       (criticalUnion G).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Under the external-neighborhood convention, the stronger bound is
 $|H|\ge\alpha(G)\ge\Delta(G[N^\circ(N^\circ(P))])+\max\{2,|P|\}$.
 Critical differences use integer subtraction; the two neighborhood conventions
