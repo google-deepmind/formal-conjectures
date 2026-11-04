@@ -53,6 +53,7 @@ noncomputable def openPackingNumber {V : Type*} [Fintype V] [DecidableEq V]
   exact (univ.powerset.filter fun P : Finset V =>
     (P : Set V).Pairwise fun u v => Disjoint (G.neighborSet u) (G.neighborSet v)).sup card
 
+set_option linter.style.formal_proof_palomar false in
 /-- Every nontrivial finite simple tree $T$ and every set $A$ of vertices of
  degree at least two satisfy $2c(T[N[A]])\le\rho^o(T)\le\gamma_t(T)$.
  An open packing has pairwise disjoint open neighborhoods; adjacent packed
@@ -69,6 +70,7 @@ theorem closed_neighborhood_bound {V : Type*} [Fintype V] [DecidableEq V]
       openPackingNumber T ≤ T.totalDominationNumber := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The degree-two specialization gives
 $2c(T[N[D_2(T)]])\le\gamma_t(T)$ for every nontrivial finite simple tree.
 -/
@@ -81,6 +83,7 @@ theorem degree_two_bound {V : Type*} [Fintype V] [DecidableEq V]
     2 * componentsOn T (closedNeighbors T (degreeTwo T)) ≤ T.totalDominationNumber := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The explicit closed-neighborhood variant associated with354 asserts
 $|C(T)|c(T[N[D_2(T)]])\le\gamma_t(T)$ for every finite simple tree of order
  greater than two, where $C(T)$ is its eccentricity/radius center.
