@@ -51,6 +51,7 @@ def IsUnimodal (p : Polynomial ℤ) : Prop :=
   ∃ t : ℕ, (∀ i j : ℕ, i ≤ j → j ≤ t → p.coeff i ≤ p.coeff j) ∧
     (∀ i j : ℕ, t ≤ i → i ≤ j → p.coeff j ≤ p.coeff i)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 4.1 of arXiv:2311.18059v1: every plane rooted star whose initial
 leaf delays are one or two has a unimodal plucking polynomial, for every
