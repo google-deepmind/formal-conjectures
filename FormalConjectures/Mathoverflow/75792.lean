@@ -209,7 +209,7 @@ theorem complexity_five_pow : ¬ ∀ n : ℕ, 0 < n → complexity (5 ^ n) = 5 *
 
 Reference: https://arxiv.org/abs/1207.4841
 -/
-@[category research solved, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/de04e5150a5bddb5fb73497af753ef7f81442695/Solution.lean#L73"]
 theorem complexity_three_pow : ∀ n : ℕ, 0 < n → complexity (3 ^ n) = 3 * n := by
   sorry
 

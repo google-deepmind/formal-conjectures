@@ -73,7 +73,7 @@ Danilov proved that one cannot replace the exponent $1/2$ with larger number.
 In other words, for any $\delta > 0$, there is no positive constant $C$ such that
 $|y^2 - x^3| > C |x| ^ {1/2 + \delta}$ for all integers $x, y$ with $y^2 \ne x^3$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/f58f69bace20b89f6c0fc3d47944089a2e8b63f5/Solution.lean#L27"]
 theorem danilov (δ : ℝ) (h : δ > 0) : ¬ HallConjectureExp (2⁻¹ + δ) := by sorry
 
 /--

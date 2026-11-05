@@ -61,7 +61,7 @@ up to a factor of $2$.
 
 *Reference:* [ClSu00].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/565b675e3a475ce94deb16aead85f0f1badb3fdf/Solution.lean#L21"]
 theorem vizing_conjecture.variants.clark_suen
     {α β : Type} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β]
     (G : SimpleGraph α) (H : SimpleGraph β) :
@@ -77,7 +77,7 @@ $\gamma(G \,\square\, H) \ge \tfrac12\,\gamma(G)\,\gamma(H) +
 
 *Reference:* [SuTa12].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/321eed0b7375be8d96918bfe3bd992b73eb4db2f/Solution.lean#L193"]
 theorem vizing_conjecture.variants.suen_tarr
     {α β : Type} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β]
     (G : SimpleGraph α) (H : SimpleGraph β) :

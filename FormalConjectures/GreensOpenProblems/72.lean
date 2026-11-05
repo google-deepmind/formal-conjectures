@@ -117,7 +117,7 @@ theorem green_72.variants.eventually : ∀ᶠ N in Filter.atTop, NoKInLineFor 3 
   sorry
 
 /-- For $N \leq 60$, this has been verified with computers. -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/01e7966ed0306ae0e5a7bd83a48ffb15f00101b2/Solution.lean#L331"]
 theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
     NoKInLineFor 3 N := by
   sorry

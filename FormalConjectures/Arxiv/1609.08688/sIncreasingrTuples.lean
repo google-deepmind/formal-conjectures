@@ -213,7 +213,7 @@ theorem maximalLength_le (n : ℕ) : F n ≤ n ^ 2 := by
         exact (hn (Nat.succ_le_succ (Nat.succ_le_succ (Nat.zero_le _)))).elim
 
 /-- Moreover, whenever $n$ is a perfect square we have $F(n) \geq n^{3/2}$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/3c85c7da2cf51edc3b6b9ba13adcf395e7f1a3f5/Solution.lean#L96"]
 theorem maximalLength_ge_of_isSquare {n : ℕ} (h : IsSquare n) :
     n.sqrt ^ 3 ≤ F n := by
   sorry
@@ -275,7 +275,7 @@ theorem isIncreasing₂_sequenceProduct_example :
 
 /-- Suppose that for some $n$ we have $F(n) = n ^ {\alpha}$. Then there are arbitrarily
 large $m$ such that $F(m) \geq m^{\alpha}$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/cdf6b7b7f7ae4633771f21ffdcbc2385eb724aba/Solution.lean#L136"]
 theorem maximalLength_pow {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n = (n : ℝ) ^ e) :
     ∃ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ e ≤ F m := by
   sorry
