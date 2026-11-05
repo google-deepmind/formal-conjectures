@@ -53,32 +53,55 @@ noncomputable def a (n : ℕ) : ℤ :=
 @[category test, AMS 11]
 theorem a_2 : a 2 = 0 := by
   have h : Nat.nth Nat.Prime (2 - 1) = 3 := Nat.nth_prime_one_eq_three
-  rw [a, h]
-  decide +kernel
+  rw [a, h, det_fin_one]
+  norm_num [legendreMatrix]
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = -1 := by
   have h : Nat.nth Nat.Prime (3 - 1) = 5 := Nat.nth_prime_two_eq_five
-  rw [a, h]
-  decide +kernel
+  rw [a, h, det_fin_two]
+  norm_num [legendreMatrix]
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 0 := by
   have h : Nat.nth Nat.Prime (4 - 1) = 7 := Nat.nth_prime_three_eq_seven
-  rw [a, h]
-  decide +kernel
+  have hM : legendreMatrix 7 =
+      !![1, -1, 1;
+         -1, -1, 0;
+         -1, 1, -1] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [legendreMatrix] <;> norm_num
+  rw [a, h, hM]
+  eval_det
 
 @[category test, AMS 11]
 theorem a_5 : a 5 = 0 := by
   have h : Nat.nth Nat.Prime (5 - 1) = 11 := Nat.nth_prime_four_eq_eleven
-  rw [a, h]
-  decide +kernel
+  have hM : legendreMatrix 11 =
+      !![-1, 1, 1, 1, -1;
+         1, -1, -1, -1, 1;
+         -1, 0, 1, -1, 1;
+         -1, -1, -1, 1, -1;
+         1, 1, -1, -1, -1] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [legendreMatrix] <;> norm_num
+  rw [a, h, hM]
+  eval_det
 
 @[category test, AMS 11]
 theorem a_6 : a 6 = -8 := by
   have h : Nat.nth Nat.Prime (6 - 1) = 13 := Nat.nth_prime_five_eq_thirteen
-  rw [a, h]
-  decide +kernel
+  have hM : legendreMatrix 13 =
+      !![1, 1, 1, -1, -1, 1;
+         1, -1, -1, 1, -1, 0;
+         1, 1, -1, -1, 1, -1;
+         -1, -1, 1, 1, 1, 1;
+         -1, -1, 1, -1, 0, -1;
+         -1, 0, -1, 1, -1, -1] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [legendreMatrix] <;> norm_num
+  rw [a, h, hM]
+  eval_det
 
 /--
 Conjecture: $a(n) = 0$ if and only if $p_n \equiv 3 \pmod 4$.

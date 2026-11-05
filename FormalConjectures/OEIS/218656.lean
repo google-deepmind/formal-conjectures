@@ -41,18 +41,70 @@ def a (n : ℕ) : ℕ :=
 theorem a_1 : a 1 = 1 := by decide
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 2 := by decide +kernel
+theorem a_2 : a 2 = 2 := by
+  have h1 : Nat.Prime 257 := by norm_num
+  have h2 : Nat.Prime 97 := by norm_num
+  have hIcc : Finset.Icc 1 2 = ({1, 2} : Finset ℕ) := by decide
+  rw [a, hIcc]
+  have hcongr :
+      (∑ x ∈ ({1, 2} : Finset ℕ),
+        if Nat.Prime (x ^ 4 + (2 * 2 + 1 - x) ^ 4) then 1 else 0) =
+      ∑ x ∈ ({1, 2} : Finset ℕ), 1 := by
+    refine Finset.sum_congr rfl fun x hx => ?_
+    fin_cases hx <;> simp [h1, h2]
+  rw [hcongr]
+  decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 3 := by decide +kernel
+theorem a_3 : a 3 = 3 := by
+  have h1 : Nat.Prime 1297 := by norm_num
+  have h2 : Nat.Prime 641 := by norm_num
+  have h3 : Nat.Prime 337 := by norm_num
+  have hIcc : Finset.Icc 1 3 = ({1, 2, 3} : Finset ℕ) := by decide
+  rw [a, hIcc]
+  have hcongr :
+      (∑ x ∈ ({1, 2, 3} : Finset ℕ),
+        if Nat.Prime (x ^ 4 + (2 * 3 + 1 - x) ^ 4) then 1 else 0) =
+      ∑ x ∈ ({1, 2, 3} : Finset ℕ), 1 := by
+    refine Finset.sum_congr rfl fun x hx => ?_
+    fin_cases hx <;> simp [h1, h2, h3]
+  rw [hcongr]
+  decide
 
-set_option maxRecDepth 10000 in
 @[category test, AMS 11]
-theorem a_4 : a 4 = 2 := by decide +kernel
+theorem a_4 : a 4 = 2 := by
+  have h1 : ¬ Nat.Prime 4097 := by norm_num
+  have h2 : Nat.Prime 2417 := by norm_num
+  have h3 : ¬ Nat.Prime 1377 := by norm_num
+  have h4 : Nat.Prime 881 := by norm_num
+  have hIcc : Finset.Icc 1 4 = ({1, 2, 3, 4} : Finset ℕ) := by decide
+  rw [a, hIcc]
+  have hcongr :
+      (∑ x ∈ ({1, 2, 3, 4} : Finset ℕ),
+        if Nat.Prime (x ^ 4 + (2 * 4 + 1 - x) ^ 4) then 1 else 0) =
+      ∑ x ∈ ({1, 2, 3, 4} : Finset ℕ), if x = 2 ∨ x = 4 then 1 else 0 := by
+    refine Finset.sum_congr rfl fun x hx => ?_
+    fin_cases hx <;> simp <;> first | exact h1 | exact h2 | exact h3 | exact h4
+  rw [hcongr]
+  decide
 
-set_option maxRecDepth 10000 in
 @[category test, AMS 11]
-theorem a_5 : a 5 = 3 := by decide +kernel
+theorem a_5 : a 5 = 3 := by
+  have h1 : ¬ Nat.Prime 10001 := by norm_num
+  have h2 : Nat.Prime 6577 := by norm_num
+  have h3 : Nat.Prime 4177 := by norm_num
+  have h4 : Nat.Prime 2657 := by norm_num
+  have h5 : ¬ Nat.Prime 1921 := by norm_num
+  have hIcc : Finset.Icc 1 5 = ({1, 2, 3, 4, 5} : Finset ℕ) := by decide
+  rw [a, hIcc]
+  have hcongr :
+      (∑ x ∈ ({1, 2, 3, 4, 5} : Finset ℕ),
+        if Nat.Prime (x ^ 4 + (2 * 5 + 1 - x) ^ 4) then 1 else 0) =
+      ∑ x ∈ ({1, 2, 3, 4, 5} : Finset ℕ), if x = 2 ∨ x = 3 ∨ x = 4 then 1 else 0 := by
+    refine Finset.sum_congr rfl fun x hx => ?_
+    fin_cases hx <;> simp <;> first | exact h1 | exact h2 | exact h3 | exact h4 | exact h5
+  rw [hcongr]
+  decide
 
 /--
 Conjecture: $a(n) > 0$ for all $n \ge 1$.

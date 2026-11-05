@@ -79,9 +79,34 @@ theorem a_16 : a 16 = 4 := by
       Real.logb_self_eq_one (by norm_num)]
     norm_num
   have h2 : Int.toNat ⌊(16 : ℝ) ^ 2 + (4 : ℝ) ^ 2⌋ = 272 := by norm_num; rfl
+  have hp : ∀ {k : ℕ}, (k + 1).Prime →
+      Nat.primeCounting (k + 1) = Nat.primeCounting k + 1 := fun {k} hk => by
+    rw [← Nat.primesLE_card_eq_primeCounting, ← Nat.primesLE_card_eq_primeCounting,
+      Nat.primesLE_succ, if_pos hk, Finset.card_insert_of_notMem (Nat.notMem_primesLE k)]
+  have hn : ∀ {k : ℕ}, ¬ (k + 1).Prime →
+      Nat.primeCounting (k + 1) = Nat.primeCounting k := fun {k} hk => by
+    rw [← Nat.primesLE_card_eq_primeCounting, ← Nat.primesLE_card_eq_primeCounting,
+      Nat.primesLE_succ, if_neg hk]
   unfold a
   simp only [OfNat.ofNat_ne_zero, ↓reduceIte, Nat.cast_ofNat, h, h2]
-  decide +kernel
+  rw [show (16 ^ 2 : ℕ) = 256 by norm_num, show (272 : ℕ) = 271 + 1 from rfl]
+  rw [hn (by norm_num : ¬ (271 + 1).Prime)]
+  rw [show (271 : ℕ) = 270 + 1 from rfl, hp (by norm_num)]
+  rw [show (270 : ℕ) = 269 + 1 from rfl, hn (by norm_num)]
+  rw [show (269 : ℕ) = 268 + 1 from rfl, hp (by norm_num)]
+  rw [show (268 : ℕ) = 267 + 1 from rfl, hn (by norm_num)]
+  rw [show (267 : ℕ) = 266 + 1 from rfl, hn (by norm_num)]
+  rw [show (266 : ℕ) = 265 + 1 from rfl, hn (by norm_num)]
+  rw [show (265 : ℕ) = 264 + 1 from rfl, hn (by norm_num)]
+  rw [show (264 : ℕ) = 263 + 1 from rfl, hn (by norm_num)]
+  rw [show (263 : ℕ) = 262 + 1 from rfl, hp (by norm_num)]
+  rw [show (262 : ℕ) = 261 + 1 from rfl, hn (by norm_num)]
+  rw [show (261 : ℕ) = 260 + 1 from rfl, hn (by norm_num)]
+  rw [show (260 : ℕ) = 259 + 1 from rfl, hn (by norm_num)]
+  rw [show (259 : ℕ) = 258 + 1 from rfl, hn (by norm_num)]
+  rw [show (258 : ℕ) = 257 + 1 from rfl, hn (by norm_num)]
+  rw [show (257 : ℕ) = 256 + 1 from rfl, hp (by norm_num)]
+  omega
 
 /--
 Conjecture: For every $n > 4765516$, $a(n) > 0$.

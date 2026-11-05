@@ -115,26 +115,38 @@ theorem a_4 : a 4 = 1 := by
 theorem a_5 : a 5 = 1 := by
   dsimp [a]
   rw [Nat.nth_prime_four_eq_eleven]
-  exact IsLeast.csInf_eq (by decide +kernel)
+  have hlen : (Nat.digits 10 11).length = 2 := by decide
+  exact IsLeast.csInf_eq ⟨⟨by decide, by simp only [concatThrees, hlen]; norm_num⟩,
+    fun _ h => h.1⟩
 
 @[category test, AMS 11]
 theorem a_6 : a 6 = 1 := by
   dsimp [a]
   rw [Nat.nth_prime_five_eq_thirteen]
-  exact IsLeast.csInf_eq (by decide +kernel)
+  have hlen : (Nat.digits 10 13).length = 2 := by decide
+  exact IsLeast.csInf_eq ⟨⟨by decide, by simp only [concatThrees, hlen]; norm_num⟩,
+    fun _ h => h.1⟩
 
 @[category test, AMS 11]
 theorem a_7 : a 7 = 1 := by
   dsimp [a]
   rw [Nat.nth_prime_six_eq_seventeen]
-  exact IsLeast.csInf_eq (by decide +kernel)
+  have hlen : (Nat.digits 10 17).length = 2 := by decide
+  exact IsLeast.csInf_eq ⟨⟨by decide, by simp only [concatThrees, hlen]; norm_num⟩,
+    fun _ h => h.1⟩
 
-set_option maxRecDepth 10000 in
 @[category test, AMS 11]
 theorem a_8 : a 8 = 2 := by
   dsimp [a]
   rw [Nat.nth_prime_seven_eq_nineteen]
-  exact IsLeast.csInf_eq (by decide +kernel)
+  have hlen : (Nat.digits 10 19).length = 2 := by decide
+  refine IsLeast.csInf_eq ⟨⟨by decide, ?_⟩, fun k ⟨hk, hp⟩ => ?_⟩
+  · simp only [concatThrees, hlen]; norm_num
+  · by_contra! hlt
+    have hk1 : k = 1 := by omega
+    subst hk1
+    simp only [concatThrees, hlen] at hp
+    exact absurd hp (by norm_num)
 
 /--
 Conjecture: For $n \ge 4$, $a(n) > 0$.

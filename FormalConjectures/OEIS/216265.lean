@@ -45,13 +45,58 @@ theorem a_2 : a 2 = 1 := by decide
 theorem a_3 : a 3 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by decide +kernel
+theorem a_4 : a 4 = 1 := by
+  have hp : ∀ {k : ℕ}, (k + 1).Prime →
+      Nat.primeCounting (k + 1) = Nat.primeCounting k + 1 := fun {k} h => by
+    rw [← Nat.primesLE_card_eq_primeCounting, ← Nat.primesLE_card_eq_primeCounting,
+      Nat.primesLE_succ, if_pos h, Finset.card_insert_of_notMem (Nat.notMem_primesLE k)]
+  have hn : ∀ {k : ℕ}, ¬ (k + 1).Prime →
+      Nat.primeCounting (k + 1) = Nat.primeCounting k := fun {k} h => by
+    rw [← Nat.primesLE_card_eq_primeCounting, ← Nat.primesLE_card_eq_primeCounting,
+      Nat.primesLE_succ, if_neg h]
+  rw [a, show 4 ^ 3 - 4 = 60 by norm_num, show 4 ^ 3 = 63 + 1 by norm_num]
+  rw [hn (by norm_num : ¬ (63 + 1).Prime)]
+  rw [show (63 : ℕ) = 62 + 1 from rfl, hn (by norm_num)]
+  rw [show (62 : ℕ) = 61 + 1 from rfl, hn (by norm_num)]
+  rw [show (61 : ℕ) = 60 + 1 from rfl, hp (by norm_num)]
+  omega
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 0 := by decide +kernel
+theorem a_5 : a 5 = 0 := by
+  have hn : ∀ {k : ℕ}, ¬ (k + 1).Prime →
+      Nat.primeCounting (k + 1) = Nat.primeCounting k := fun {k} h => by
+    rw [← Nat.primesLE_card_eq_primeCounting, ← Nat.primesLE_card_eq_primeCounting,
+      Nat.primesLE_succ, if_neg h]
+  rw [a, show 5 ^ 3 - 5 = 120 by norm_num, show 5 ^ 3 = 124 + 1 by norm_num]
+  rw [hn (by norm_num : ¬ (124 + 1).Prime)]
+  rw [show (124 : ℕ) = 123 + 1 from rfl, hn (by norm_num)]
+  rw [show (123 : ℕ) = 122 + 1 from rfl, hn (by norm_num)]
+  rw [show (122 : ℕ) = 121 + 1 from rfl, hn (by norm_num)]
+  rw [show (121 : ℕ) = 120 + 1 from rfl, hn (by norm_num)]
+  omega
 
 @[category test, AMS 11]
-theorem a_10 : a 10 = 2 := by decide +kernel
+theorem a_10 : a 10 = 2 := by
+  have hp : ∀ {k : ℕ}, (k + 1).Prime →
+      Nat.primeCounting (k + 1) = Nat.primeCounting k + 1 := fun {k} h => by
+    rw [← Nat.primesLE_card_eq_primeCounting, ← Nat.primesLE_card_eq_primeCounting,
+      Nat.primesLE_succ, if_pos h, Finset.card_insert_of_notMem (Nat.notMem_primesLE k)]
+  have hn : ∀ {k : ℕ}, ¬ (k + 1).Prime →
+      Nat.primeCounting (k + 1) = Nat.primeCounting k := fun {k} h => by
+    rw [← Nat.primesLE_card_eq_primeCounting, ← Nat.primesLE_card_eq_primeCounting,
+      Nat.primesLE_succ, if_neg h]
+  rw [a, show 10 ^ 3 - 10 = 990 by norm_num, show 10 ^ 3 = 999 + 1 by norm_num]
+  rw [hn (by norm_num : ¬ (999 + 1).Prime)]
+  rw [show (999 : ℕ) = 998 + 1 from rfl, hn (by norm_num)]
+  rw [show (998 : ℕ) = 997 + 1 from rfl, hn (by norm_num)]
+  rw [show (997 : ℕ) = 996 + 1 from rfl, hp (by norm_num)]
+  rw [show (996 : ℕ) = 995 + 1 from rfl, hn (by norm_num)]
+  rw [show (995 : ℕ) = 994 + 1 from rfl, hn (by norm_num)]
+  rw [show (994 : ℕ) = 993 + 1 from rfl, hn (by norm_num)]
+  rw [show (993 : ℕ) = 992 + 1 from rfl, hn (by norm_num)]
+  rw [show (992 : ℕ) = 991 + 1 from rfl, hn (by norm_num)]
+  rw [show (991 : ℕ) = 990 + 1 from rfl, hp (by norm_num)]
+  omega
 
 /--
 Conjecture: For every $n > 13$, $a(n) > 0$.

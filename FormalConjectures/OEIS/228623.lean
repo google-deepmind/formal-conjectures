@@ -55,10 +55,33 @@ theorem a_3 : a 3 = 1 := by decide
 theorem a_4 : a 4 = 1 := by rfl
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 0 := by decide +kernel
+theorem a_5 : a 5 = 0 := by
+  have hM : (fun i j : Fin 5 =>
+      if (5 + i.val - j.val).Prime ∧ (5 + j.val - i.val).Prime then (1 : ℤ) else 0) =
+      !![1, 0, 1, 0, 0;
+         0, 1, 0, 1, 0;
+         1, 0, 1, 0, 1;
+         0, 1, 0, 1, 0;
+         0, 0, 1, 0, 1] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp <;> try norm_num
+  rw [a, hM]
+  eval_det
 
 @[category test, AMS 11]
-theorem a_6 : a 6 = -1 := by decide +kernel
+theorem a_6 : a 6 = -1 := by
+  have hM : (fun i j : Fin 6 =>
+      if (6 + i.val - j.val).Prime ∧ (6 + j.val - i.val).Prime then (1 : ℤ) else 0) =
+      !![0, 1, 0, 0, 0, 0;
+         1, 0, 1, 0, 0, 0;
+         0, 1, 0, 1, 0, 0;
+         0, 0, 1, 0, 1, 0;
+         0, 0, 0, 1, 0, 1;
+         0, 0, 0, 0, 1, 0] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp <;> try norm_num
+  rw [a, hM]
+  eval_det
 
 /--
 Conjecture: $a(n)$ is nonzero if $n$ is odd and greater than $120$.

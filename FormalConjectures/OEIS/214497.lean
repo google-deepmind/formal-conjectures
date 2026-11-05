@@ -44,14 +44,31 @@ theorem a_1 : a 1 = some 0 := by decide
 theorem a_2 : a 2 = some 6 := by decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = some 3 := by decide +kernel
+theorem a_3 : a 3 = some 3 := by
+  rw [a, List.find?_eq_some_iff_getElem]
+  refine ⟨?_, 3, by simp, rfl, fun j hj => ?_⟩
+  · simp only [Bool.and_eq_true, decide_eq_true_eq]
+    norm_num
+  · simp only [List.getElem_range]
+    interval_cases j <;> norm_num
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = some 9 := by decide +kernel
+theorem a_4 : a 4 = some 9 := by
+  rw [a, List.find?_eq_some_iff_getElem]
+  refine ⟨?_, 9, by simp, rfl, fun j hj => ?_⟩
+  · simp only [Bool.and_eq_true, decide_eq_true_eq]
+    norm_num
+  · simp only [List.getElem_range]
+    interval_cases j <;> norm_num
 
-set_option maxRecDepth 10000 in
 @[category test, AMS 11]
-theorem a_5 : a 5 = some 9 := by decide +kernel
+theorem a_5 : a 5 = some 9 := by
+  rw [a, List.find?_eq_some_iff_getElem]
+  refine ⟨?_, 9, by simp, rfl, fun j hj => ?_⟩
+  · simp only [Bool.and_eq_true, decide_eq_true_eq]
+    norm_num
+  · simp only [List.getElem_range]
+    interval_cases j <;> norm_num
 
 /--
 Conjecture: There is always one such $k$ for each $n > 0$ such that

@@ -58,12 +58,20 @@ theorem a_4 : a 4 = 0 := by decide
 
 @[category test, AMS 11]
 theorem a_7 : a 7 = -1 := by
-  change (Matrix.of fun i j : Fin 7 =>
-    let k := i.val + j.val + 2
-    if k = 2 ∨ (k % 2 = 1 ∧ ¬ k.Prime) then (1 : ℤ) else 0).det = -1
-  rw [det_succ_row_zero, Fin.sum_univ_seven]
-  norm_num
-  decide +kernel
+  have hM : (fun i j : Fin 7 =>
+      let k := i.val + j.val + 2
+      if k = 2 ∨ (k % 2 = 1 ∧ ¬ k.Prime) then (1 : ℤ) else 0) =
+      !![1, 0, 0, 0, 0, 0, 0;
+         0, 0, 0, 0, 0, 0, 1;
+         0, 0, 0, 0, 0, 1, 0;
+         0, 0, 0, 0, 1, 0, 0;
+         0, 0, 0, 1, 0, 0, 0;
+         0, 0, 1, 0, 0, 0, 0;
+         0, 1, 0, 0, 0, 0, 0] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp <;> try norm_num
+  rw [a, hM]
+  eval_det
 
 /--
 Conjecture: $a(n) = 0$ for no $n > 15$.

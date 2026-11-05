@@ -56,16 +56,46 @@ theorem a_3 : a 3 = -1 := by decide
 theorem a_4 : a 4 = 0 := by decide
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 1 := by decide +kernel
+theorem a_5 : a 5 = 1 := by
+  have hM : primeMatrix ℤ 5 =
+      !![1, 1, 0, 1, 0;
+         1, 0, 1, 0, 1;
+         0, 1, 0, 1, 0;
+         1, 0, 1, 0, 0;
+         0, 1, 0, 0, 0] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [primeMatrix] <;> norm_num
+  rw [a, hM]
+  eval_det
 
 @[category test, AMS 11]
-theorem a_6 : a 6 = -1 := by decide +kernel
+theorem a_6 : a 6 = -1 := by
+  have hM : primeMatrix ℤ 6 =
+      !![1, 1, 0, 1, 0, 1;
+         1, 0, 1, 0, 1, 0;
+         0, 1, 0, 1, 0, 0;
+         1, 0, 1, 0, 0, 0;
+         0, 1, 0, 0, 0, 1;
+         1, 0, 0, 0, 1, 0] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [primeMatrix] <;> norm_num
+  rw [a, hM]
+  eval_det
 
 @[category test, AMS 11]
 theorem a_7 : a 7 = -4 := by
-  rw [a, det_succ_row_zero, Fin.sum_univ_seven]
-  norm_num [primeMatrix]
-  decide +kernel
+  have hM : primeMatrix ℤ 7 =
+      !![1, 1, 0, 1, 0, 1, 0;
+         1, 0, 1, 0, 1, 0, 0;
+         0, 1, 0, 1, 0, 0, 0;
+         1, 0, 1, 0, 0, 0, 1;
+         0, 1, 0, 0, 0, 1, 0;
+         1, 0, 0, 0, 1, 0, 1;
+         0, 0, 0, 1, 0, 1, 0] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [primeMatrix] <;> norm_num
+  rw [a, hM]
+  eval_det
 
 /--
 Conjecture: Let $M(n)$ be the $n \times n$ matrix with $(i,j)$-entry equal to $1$ or $0$ according as
