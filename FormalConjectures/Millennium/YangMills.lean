@@ -392,16 +392,59 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   beta_b0_eq : beta_b0 = (11 * (casimir_adjoint : ℝ)) / (48 * Real.pi ^ 2)
   beta_b0_pos : 0 < beta_b0
 
-  /-- Space of $\mathfrak{g}$-valued classical differential forms / polynomials -/
+  /-- Universal commutative differential polynomial algebra $\mathcal{P}_{\mathrm{coord}} = \mathbb{C}[\partial^\alpha A_\mu^a]$
+      in the classical connection jet coordinates -/
+  CoordPoly : Type
+  [commRingCoord : CommRing CoordPoly]
+  [algebraCoord : Algebra ℂ CoordPoly]
+
+  /-- Formal spacetime partial derivatives $\partial_\mu$ on coordinate differential polynomials -/
+  coordDeriv : Fin 4 → CoordPoly →ₗ[ℂ] CoordPoly
+  coordDeriv_comm : ∀ (μ ν : Fin 4) (f : CoordPoly),
+    coordDeriv μ (coordDeriv ν f) = coordDeriv ν (coordDeriv μ f)
+  coordDeriv_leibniz : ∀ (μ : Fin 4) (f g : CoordPoly),
+    coordDeriv μ (f * g) = coordDeriv μ f * g + f * coordDeriv μ g
+
+  /-- Classical gauge potential coordinate generators $A_\mu(X) = \langle X, A_\mu \rangle_{\mathfrak{g}} \in \mathcal{P}_{\mathrm{coord}}$ -/
+  A_coord : Fin 4 → Lie →ₗ[ℝ] CoordPoly
+
+  /-- Universal free differential-polynomial property of `CoordPoly`: any symmetric jet assignment
+      $(\partial^\alpha A_\nu(X)) \mapsto \mathrm{jet}(\alpha, \nu, X) \in \mathbb{C}$ extends to a $\mathbb{C}$-algebra homomorphism -/
+  coord_jet_universal : ∀ (jet : List (Fin 4) → Fin 4 → (Lie →ₗ[ℝ] ℂ)),
+    (∀ (α β : List (Fin 4)), α.Perm β → jet α = jet β) →
+    ∃ (ev : CoordPoly →+* ℂ),
+      (∀ c : ℂ, ev (algebraMap ℂ CoordPoly c) = c) ∧
+      (∀ (α : List (Fin 4)) (ν : Fin 4) (X : Lie),
+        ev (α.foldr (fun μ P => coordDeriv μ P) (A_coord ν X)) = jet α ν X)
+
+  /-- `CoordPoly` is generated as a differential $\mathbb{C}$-algebra by the connection components `A_coord` and `coordDeriv` -/
+  CoordPoly_generated : ∀ (S : Subalgebra ℂ CoordPoly),
+    (∀ (μ : Fin 4) (X : Lie), A_coord μ X ∈ S) →
+    (∀ (μ : Fin 4) (f : CoordPoly), f ∈ S → coordDeriv μ f ∈ S) →
+    S = ⊤
+
+  /-- Faithful $\mathbb{C}$-algebra embedding of the gauge-invariant observable algebra `Poly` into `CoordPoly` -/
+  poly_to_coord : Poly →+* CoordPoly
+  poly_to_coord_injective : Function.Injective poly_to_coord
+  poly_to_coord_algebraMap : ∀ c : ℂ,
+    poly_to_coord (algebraMap ℂ Poly c) = algebraMap ℂ CoordPoly c
+
+  /-- Space of $\mathfrak{g}$-valued classical covariant curvature differential polynomials -/
   LiePoly : Type
   [addCommGroupLie : AddCommGroup LiePoly]
   [moduleLie : Module ℂ LiePoly]
   [bracketLiePoly : Bracket LiePoly LiePoly]
 
+  /-- Faithful coordinate component evaluation $\Phi \mapsto (X \mapsto \langle X, \Phi \rangle_{\mathfrak{g}} \in \mathcal{P}_{\mathrm{coord}})$
+      identifying `LiePoly` with a differential Lie subalgebra of $\mathcal{P}_{\mathrm{coord}} \otimes_{\mathbb{R}} \mathfrak{g}$ -/
+  lie_comp : LiePoly →ₗ[ℂ] (Lie →ₗ[ℝ] CoordPoly)
+  lie_comp_injective : Function.Injective lie_comp
+
   /-- Classical adjoint gauge action of $G$ on Lie-algebra-valued polynomials -/
   gauge_action : G → LiePoly →ₗ[ℂ] LiePoly
   gauge_action_one : ∀ X : LiePoly, gauge_action 1 X = X
-  gauge_action_mul : ∀ (g h : G) (X : LiePoly), gauge_action (g * h) X = gauge_action g (gauge_action h X)
+  gauge_action_mul : ∀ (g h : G) (X : LiePoly),
+    gauge_action (g * h) X = gauge_action g (gauge_action h X)
 
   /-- Ascending $\mathbb{N}$-filtration $\mathcal{F}_d \mathcal{L}$ on `LiePoly` -/
   lieFiltration : ℕ → Submodule ℂ LiePoly
@@ -411,29 +454,28 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   classicalDimLie : LiePoly → ℕ
   dimLie_zero : classicalDimLie 0 = 0
   classicalDimLie_smul : ∀ (c : ℂ) (A : LiePoly), c ≠ 0 → classicalDimLie (c • A) = classicalDimLie A
-  classicalDimLie_add_le : ∀ A B : LiePoly, classicalDimLie (A + B) ≤ max (classicalDimLie A) (classicalDimLie B)
+  classicalDimLie_add_le : ∀ A B : LiePoly,
+    classicalDimLie (A + B) ≤ max (classicalDimLie A) (classicalDimLie B)
 
   /-- Exact bidirectional bridge linking `lieFiltration` and `classicalDimLie` -/
   mem_lieFiltration_iff_dim_le : ∀ (d : ℕ) (A : LiePoly), A ∈ lieFiltration d ↔ classicalDimLie A ≤ d
-
-  /-- Canonical $\mathfrak{g}$-valued curvature component embedding identifying curvature generators with $\mathfrak{g} = \mathrm{Lie}(G)$ -/
-  F_comp : Fin 4 → Fin 4 → Lie →ₗ[ℝ] LiePoly
-  F_comp_antisymm : ∀ (μ ν : Fin 4) (X : Lie), F_comp μ ν X = - F_comp ν μ X
-  F_comp_gauge_equivariant : ∀ (g : G) (μ ν : Fin 4) (X : Lie),
-    gauge_action g (F_comp μ ν X) = F_comp μ ν (adjoint_action g X)
-  F_comp_injective : ∀ (μ ν : Fin 4), μ ≠ ν → Function.Injective (F_comp μ ν)
-  F_comp_dim : ∀ (μ ν : Fin 4) (X : Lie), μ ≠ ν → X ≠ 0 → classicalDimLie (F_comp μ ν X) = 2
-
   /-- Sub-additivity of classical scaling dimension under the Lie bracket on `LiePoly` -/
   classicalDimLie_bracket_le : ∀ A B : LiePoly,
     classicalDimLie ⁅A, B⁆ ≤ classicalDimLie A + classicalDimLie B
 
-  /-- Classical Yang–Mills curvature two-form generators $F_{\mu\nu} \in \mathfrak{g}$ of dimension $2$ -/
+  /-- Classical Yang–Mills curvature two-form generators $F_{\mu\nu} \in \mathrm{LiePoly}$ of dimension $2$ -/
   F : Fin 4 → Fin 4 → LiePoly
   F_antisymm : ∀ μ ν : Fin 4, F μ ν = - F ν μ
   F_dim : ∀ μ ν : Fin 4, μ ≠ ν → classicalDimLie (F μ ν) = 2
+
   /-- Non-degeneracy: non-zero curvature for distinct spacetime indices -/
   F_nonzero : ∀ μ ν : Fin 4, μ ≠ ν → F μ ν ≠ 0
+
+  /-- Canonical scalar curvature component $F_{\mu\nu}(X) = \langle X, F_{\mu\nu} \rangle_{\mathfrak{g}} \in \mathcal{P}_{\mathrm{coord}}$ -/
+  F_comp : Fin 4 → Fin 4 → Lie →ₗ[ℝ] CoordPoly
+  F_comp_def : ∀ (μ ν : Fin 4) (X : Lie), F_comp μ ν X = lie_comp (F μ ν) X
+  F_comp_antisymm : ∀ (μ ν : Fin 4) (X : Lie), F_comp μ ν X = - F_comp ν μ X
+  F_comp_injective : ∀ (μ ν : Fin 4), μ ≠ ν → Function.Injective (F_comp μ ν)
 
   /-- Classical spacetime covariant derivative generators $D_\alpha$ of dimension $1$ -/
   covDeriv : Fin 4 → LiePoly →ₗ[ℂ] LiePoly
@@ -445,15 +487,15 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   covDeriv_lie_leibniz : ∀ (μ : Fin 4) (A B : LiePoly),
     covDeriv μ ⁅A, B⁆ = ⁅covDeriv μ A, B⁆ + ⁅A, covDeriv μ B⁆
   bianchi_identity_comp : ∀ (l μ ν : Fin 4) (X : Lie),
-    covDeriv l (F_comp μ ν X) + covDeriv μ (F_comp ν l X) + covDeriv ν (F_comp l μ X) = 0
+    lie_comp (covDeriv l (F μ ν) + covDeriv μ (F ν l) + covDeriv ν (F l μ)) X = 0
   bianchi_identity : ∀ (l μ ν : Fin 4),
     covDeriv l (F μ ν) + covDeriv μ (F ν l) + covDeriv ν (F l μ) = 0
   ricci_commutator : ∀ (μ ν : Fin 4) (A : LiePoly),
     covDeriv μ (covDeriv ν A) - covDeriv ν (covDeriv μ A) = ⁅F μ ν, A⁆
 
-  /-- `LiePoly` is generated as a differential Lie algebra over `ℂ` by the `Lie(G)` curvature components `F_comp` and `covDeriv` -/
+  /-- `LiePoly` is generated as a differential Lie algebra over `ℂ` by the curvature `F` and `covDeriv` -/
   LiePoly_generated : ∀ (S : Submodule ℂ LiePoly),
-    (∀ (μ ν : Fin 4) (X : Lie), F_comp μ ν X ∈ S) →
+    (∀ (μ ν : Fin 4), F μ ν ∈ S) →
     (∀ (μ : Fin 4) (A : LiePoly), A ∈ S → covDeriv μ A ∈ S) →
     (∀ A B : LiePoly, A ∈ S → B ∈ S → ⁅A, B⁆ ∈ S) →
     S = ⊤
@@ -465,22 +507,38 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   trace_pair_symm : ∀ X Y : LiePoly, trace_pair X Y = trace_pair Y X
   trace_pair_gauge_invariant : ∀ (g : G) (X Y : LiePoly),
     trace_pair (gauge_action g X) (gauge_action g Y) = trace_pair X Y
+  trace_pair_ad_invariant : ∀ A X Y : LiePoly,
+    trace_pair ⁅A, X⁆ Y + trace_pair X ⁅A, Y⁆ = 0
 
-  /-- Exact identification of `F`, `F_comp`, and `trace_pair` with the Lie algebra `Lie(G)` and its inner product `lie_inner`
-      (Jaffe–Witten §4, p. 6): There exists a finite orthonormal basis `B` of `Lie` with respect to `lie_inner` such that
-      `F μ ν` is the sum of the basis curvature components `F_comp μ ν (B i)`, and the invariant trace pairing on `F_comp`
-      is strictly proportional to `lie_inner`. -/
+  /-- Exact classical identification of `F`, `covDeriv`, `⁅·, ·⁆`, and `trace_pair` with the connection
+      differential-polynomial algebra `CoordPoly` and $(\mathrm{Lie}(G), \mathrm{lie\_inner})$
+      (Jaffe–Witten §4, p. 6): There exists a finite `lie_inner`-orthonormal basis `B` of `Lie` such that:
+      1. `F μ ν` has coordinate components $\partial_\mu A_\nu - \partial_\nu A_\mu + [A_\mu, A_\nu]$,
+      2. `covDeriv μ Φ` has coordinate components $\partial_\mu \Phi + [A_\mu, \Phi]$,
+      3. `⁅Φ, Ψ⁆` has coordinate components given by the Lie bracket on `Lie`, and
+      4. `trace_pair Φ Ψ` is the metric contraction $\sum_{i,j} \langle B_i, B_j \rangle_{\mathfrak{g}} \Phi^{B_i} \Psi^{B_j} = \sum_i \Phi^{B_i} \Psi^{B_i}$. -/
   F_and_trace_from_Lie : ∃ (d : ℕ) (B : Fin d → Lie),
     0 < d ∧
     (∀ i j : Fin d, lie_inner (B i) (B j) = if i = j then 1 else 0) ∧
     (∀ X : Lie, X = ∑ i : Fin d, lie_inner X (B i) • B i) ∧
-    (∀ μ ν : Fin 4, F μ ν = ∑ i : Fin d, F_comp μ ν (B i)) ∧
-    (∀ (μ ν : Fin 4) (X Y : Lie),
-      (d : ℂ) • trace_pair (F_comp μ ν X) (F_comp μ ν Y) =
-      ((lie_inner X Y : ℝ) : ℂ) • trace_pair (F μ ν) (F μ ν))
-
-  trace_pair_lie_inner_compat : ∀ (μ ν : Fin 4) (X Y : Lie),
-    μ ≠ ν → (trace_pair (F_comp μ ν X) (F_comp μ ν Y) = 0 ↔ lie_inner X Y = 0)
+    (∀ (μ ν : Fin 4) (X : Lie),
+      F_comp μ ν X =
+        coordDeriv μ (A_coord ν X) - coordDeriv ν (A_coord μ X) +
+        ∑ i : Fin d, ∑ j : Fin d,
+          ((lie_inner X ⁅B i, B j⁆ : ℝ) : ℂ) • (A_coord μ (B i) * A_coord ν (B j))) ∧
+    (∀ (μ : Fin 4) (Φ : LiePoly) (X : Lie),
+      lie_comp (covDeriv μ Φ) X =
+        coordDeriv μ (lie_comp Φ X) +
+        ∑ i : Fin d, ∑ j : Fin d,
+          ((lie_inner X ⁅B i, B j⁆ : ℝ) : ℂ) • (A_coord μ (B i) * lie_comp Φ (B j))) ∧
+    (∀ (Φ Ψ : LiePoly) (X : Lie),
+      lie_comp ⁅Φ, Ψ⁆ X =
+        ∑ i : Fin d, ∑ j : Fin d,
+          ((lie_inner X ⁅B i, B j⁆ : ℝ) : ℂ) • (lie_comp Φ (B i) * lie_comp Ψ (B j))) ∧
+    (∀ (Φ Ψ : LiePoly),
+      poly_to_coord (trace_pair Φ Ψ) =
+        ∑ i : Fin d, ∑ j : Fin d,
+          ((lie_inner (B i) (B j) : ℝ) : ℂ) • (lie_comp Φ (B i) * lie_comp Ψ (B j)))
   trace_pair_dim_le : ∀ X Y : LiePoly,
     classicalDim (trace_pair X Y) ≤ classicalDimLie X + classicalDimLie Y
   trace_pair_dim : ∀ X Y : LiePoly,
@@ -488,7 +546,6 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
     classicalDim (trace_pair X Y) = classicalDimLie X + classicalDimLie Y
   trace_pair_F_dim : ∀ μ ν : Fin 4, μ ≠ ν →
     classicalDim (trace_pair (F μ ν) (F μ ν)) = 4
-
   /-- The invariant observable algebra `Poly` is generated as a `ℂ`-algebra by the gauge-invariant trace pairings `trace_pair` -/
   Poly_generated_by_trace_pair : ∀ (S : Submodule ℂ Poly),
     (1 ∈ S) →
