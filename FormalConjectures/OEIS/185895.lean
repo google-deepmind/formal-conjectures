@@ -126,7 +126,7 @@ $0.18 \cdot n! L_m(n)$, which is less than $2|a(n)|$.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/kei825/oeis-a185895-conjecture_2/blob/8ddd5a7d2bde415940f944440921fd760283f79d/OeisA185895Conjecture2.lean#L4959-L4961"]
+    "https://github.com/kei825/oeis-a185895-conjecture2/blob/8ddd5a7d2bde415940f944440921fd760283f79d/OeisA185895Conjecture2.lean#L4959-L4961"]
 theorem conjecture_2 (n : ℕ) (hn : 0 < n) :
     c n * c (n - 1) < 0 ↔ n.IsTriangular := by
   sorry
@@ -139,7 +139,7 @@ for all primes $p$ and positive integers $n$ and $k$.
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/KitaKen1/oeis-a185895-conjecture_3/blob/e40e3db2b47beeef22b00a481fc3a41b518168d9/lean/OeisA185895Conjecture3FC.lean#L579-L589"]
+    "https://github.com/KitaKen1/oeis-a185895-conjecture3/blob/e40e3db2b47beeef22b00a481fc3a41b518168d9/lean/OeisA185895Conjecture3FC.lean#L579-L589"]
 theorem conjecture_3 (p : ℕ) (hp : p.Prime) (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
     a (n * p ^ k) ≡ a (n * p ^ (k - 1)) [ZMOD (p : ℤ) ^ k] := by
   sorry
