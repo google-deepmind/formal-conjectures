@@ -47,6 +47,9 @@ public import FormalConjecturesUtil
 - [RaVa15] Rack, H.-J. and Vajda, R., *Optimal cubic Lagrange interpolation: Extremal node
   systems with minimal Lebesgue constant*. Stud. Univ. Babeş-Bolyai Math. 60 (2015), 151-171.
   [Link](https://studia.reviste.ubbcluj.ro/index.php/subbmathematica/article/view/5710)
+- [Ren26] Ren, C. Y., *Erdős 1129: all optimal free interpolation nodes*, Lean formalisation
+  (2026), building on randyxian08's Lean formalisation of the canonical case.
+  [GitHub](https://github.com/CollinYuanjieRen/awards/blob/791bf61df4366b60b6b47b9e062661ee65b3143b/submissions/jsp-000936-cyr/README.md)
 
 See also [erdosproblems.com/1130](https://www.erdosproblems.com/1130), which uses the
 definitions of this file.
@@ -118,10 +121,12 @@ $T_n$ has $n$ simple zeros in $(-1,1)$, so there is exactly one such `x`. -/
 def IsChebyshevNodes {n : ℕ} (x : Fin n → ℝ) : Prop :=
   IsNodeSet x ∧ ∀ j, (Polynomial.Chebyshev.T ℝ (n : ℤ)).eval (x j) = 0
 
-/-- The answer: the canonical node sets whose local maxima between consecutive nodes are all
-equal. -/
+/-- The answer: the node sets whose local maxima $\lambda_1,\ldots,\lambda_{n-1}$ between
+consecutive nodes are all equal, and whose Lebesgue function at each endpoint $\pm 1$ is at most
+$\lambda_1$, the common value (for $n\le 1$ the conditions hold for every node set). -/
 def erdos_1129.answer (n : ℕ) : Set (Fin n → ℝ) :=
-  {x | IsCanonical x ∧ Equioscillates x}
+  {x | IsNodeSet x ∧ Equioscillates x ∧
+    lebesgueFunction x (-1) ≤ gapMax x 1 ∧ lebesgueFunction x 1 ≤ gapMax x 1}
 
 /--
 For $x_1,\ldots,x_n\in [-1,1]$ let
@@ -133,20 +138,35 @@ $$\Lambda(x_1,\ldots,x_n)=\max_{x\in [-1,1]} \sum_k \lvert l_k(x)\rvert.$$
 
 A problem of Bernstein [Be31] and Erdős [Er47, p. 1171], [Er67, p. 66]. They conjectured that
 the minimisers are characterised by equioscillation of the Lebesgue function. This was proved by
-Kilgore [Ki77], [Ki78] and by de Boor and Pinkus [dBPi78] (see [Ib16, Section 3.7] and
-[RaVa15, Proposition 2.8]).
+Kilgore [Ki77], [Ki78] and by de Boor and Pinkus [dBPi78] for canonical node sets, that is, node
+sets with $x_1=-1$ and $x_n=1$ (see [Ib16, Section 3.7] and [RaVa15, Proposition 2.8]); this is
+`erdos_1129.variants.canonical`.
 
-We read "describe" as a characterisation of the set of minimisers among canonical node sets
-($x_1=-1$, $x_n=1$), as in [Ib16, Section 3.7] and [RaVa15, Definition 2.7]: they are exactly the
-node sets whose local maxima
-$\lambda_i=\max_{[x_i,x_{i+1}]}\sum_k\lvert l_k\rvert$ between consecutive nodes are all equal.
-The two outer gaps $[-1,x_1]$ and $[x_n,1]$ are single points for canonical nodes and are not
-used. For arbitrary nodes in $[-1,1]$ the minimiser is not unique (see
-`erdos_1129.variants.free_nodes_not_unique`), so the canonical hypothesis is needed.
+Here the minimisers range over all node sets in $[-1,1]$, as in the question. For $n\ge 3$ there
+are uncountably many of them [RaVa15, Theorem 2.5] (`erdos_1129.variants.free_nodes_not_unique`):
+suitable affine images of the canonical minimiser inside $[-1,1]$ are minimisers too. All of them
+are described in the Lean formalisation [Ren26], which erdosproblems.com lists for this problem:
+for $n\ge 2$ a node set minimises $\Lambda$ if and only if its local maxima between consecutive
+nodes are all equal and both $\sum_k\lvert l_k(-1)\rvert$ and $\sum_k\lvert l_k(1)\rvert$ are at
+most that common value, and for $n=1$ every node set minimises $\Lambda$. For $n=4$ all minimisers
+are also given in [RaVa15, Theorem 5.2].
 -/
 @[category research solved, question value, AMS 41]
 theorem erdos_1129 (n : ℕ) :
-    {x : Fin n → ℝ | IsCanonical x ∧ IsMinimiser x} = erdos_1129.answer n := by
+    {x : Fin n → ℝ | IsMinimiser x} = erdos_1129.answer n := by
+  sorry
+
+/--
+The theorem of Kilgore [Ki77], [Ki78] and de Boor and Pinkus [dBPi78] for canonical node sets
+($x_1=-1$, $x_n=1$), as in [Ib16, Section 3.7] and [RaVa15, Definition 2.7 and Proposition 2.8]:
+the canonical node sets that minimise $\Lambda$ among all node sets are exactly the canonical node
+sets whose local maxima $\lambda_i=\max_{[x_i,x_{i+1}]}\sum_k\lvert l_k\rvert$ between consecutive
+nodes are all equal. The two outer gaps $[-1,x_1]$ and $[x_n,1]$ are single points for canonical
+nodes and are not used.
+-/
+@[category research solved, AMS 41]
+theorem erdos_1129.variants.canonical (n : ℕ) :
+    {x : Fin n → ℝ | IsCanonical x ∧ IsMinimiser x} = {x | IsCanonical x ∧ Equioscillates x} := by
   sorry
 
 /--
@@ -154,12 +174,11 @@ Kilgore [Ki78] and de Boor and Pinkus [dBPi78] proved that for $n\ge 2$ there is
 canonical node set whose local maxima $\lambda_1,\ldots,\lambda_{n-1}$ are all equal, and that it
 is symmetric about $0$ ([Ib16, Section 3.7], [RaVa15, Proposition 2.8]). A canonical minimiser
 exists ([RaVa15, Section 2]) and must equioscillate ([Ki77], [Ib16, Section 3.7]), so there is
-exactly one such node
-set, and hence a unique canonical minimiser of $\Lambda$.
+exactly one such node set, and hence a unique canonical minimiser of $\Lambda$.
 -/
 @[category research solved, AMS 41]
 theorem erdos_1129.variants.unique (n : ℕ) (hn : 2 ≤ n) :
-    ∃! x : Fin n → ℝ, x ∈ erdos_1129.answer n := by
+    ∃! x : Fin n → ℝ, IsCanonical x ∧ Equioscillates x := by
   sorry
 
 /--

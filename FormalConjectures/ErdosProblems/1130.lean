@@ -89,10 +89,10 @@ theorem erdos_1130.parts.i :
       upsilon x ≤ C * Real.log n := by
   sorry
 
-/-- The answer: the same node sets as in `Erdos1129.erdos_1129`, the canonical node sets whose
-local maxima between consecutive nodes are all equal. -/
-def erdos_1130.parts.ii.answer (n : ℕ) : Set (Fin n → ℝ) :=
-  erdos_1129.answer n
+/-- The set of all node sets that maximise $\Upsilon$. The cited sources describe the maximisers
+only among canonical node sets, with $\Upsilon$ replaced (`erdos_1130.variants.canonical`), so it
+is left as `sorry`. -/
+def erdos_1130.parts.ii.answer (n : ℕ) : Set (Fin n → ℝ) := sorry
 
 /--
 For $x_1,\ldots,x_n\in [-1,1]$ let
@@ -107,21 +107,36 @@ Describe which choice of $x_i$ maximise $\Upsilon(x_1,\ldots,x_n)$.
 This is the second part. Erdős [Er47, p. 1172], [Er67, p. 66] conjectured that the maximisers are
 the node sets of [erdosproblems.com/1129](https://www.erdosproblems.com/1129), characterised by
 equal local maxima. This was proved by Kilgore [Ki77], [Ki78] and by de Boor and Pinkus [dBPi78]
-(see [Ib16, Section 3.7]).
+for canonical node sets, with the smallest local maximum between consecutive nodes in place of
+$\Upsilon$ (see [Ib16, Section 3.7]); this is `erdos_1130.variants.canonical`.
 
-We read this part for canonical node sets ($x_1=-1$, $x_n=1$), as in [Ib16, Section 3.7], with
-$\Upsilon$ replaced by the smallest of the $n-1$ local maxima between consecutive nodes: for
-canonical nodes the two outer gaps are single points, and the literal $\Upsilon$ is $1$. For
-arbitrary nodes the maximiser is not unique and need not have all $n+1$ local maxima
-$\lambda_0,\ldots,\lambda_n$ equal: for $n=3$ the nodes $-s,0,s$ with $0<s\le\frac{2\sqrt2}{3}$
-all give $\Upsilon=\frac54$, the largest possible value, and for $s=\frac12$ the four local maxima
-are $7,\frac54,\frac54,7$.
+Here, as in the question, $\Upsilon$ includes the two outer gaps and the maximisers range over
+all node sets in $[-1,1]$. A maximiser is then not unique in general, and it need not have all
+$n+1$ local maxima $\lambda_0,\ldots,\lambda_n$ equal: for $n=3$ the nodes $-s,0,s$ with
+$0<s\le\frac{2\sqrt2}{3}$ all give $\Upsilon=\frac54$, the largest possible value, and for
+$s=\frac12$ the four local maxima are $7,\frac54,\frac54,7$. The cited sources do not describe the
+whole set of maximisers, so `erdos_1130.parts.ii.answer` is left as `sorry`.
 -/
 @[category research solved, question value, AMS 41]
 theorem erdos_1130.parts.ii (n : ℕ) :
+    {x : Fin n → ℝ | IsNodeSet x ∧ ∀ y : Fin n → ℝ, IsNodeSet y → upsilon y ≤ upsilon x} =
+      erdos_1130.parts.ii.answer n := by
+  sorry
+
+/--
+The theorem of Kilgore [Ki77], [Ki78] and de Boor and Pinkus [dBPi78] in the form of
+[Ib16, Section 3.7]: among canonical node sets ($x_1=-1$, $x_n=1$), the ones at which the smallest
+of the $n-1$ local maxima between consecutive nodes is largest are exactly the canonical node sets
+whose local maxima between consecutive nodes are all equal, that is, the canonical minimisers of
+$\Lambda$ (`Erdos1129.erdos_1129.variants.canonical`). For canonical nodes the two outer gaps are
+single points and the literal $\Upsilon$ is $1$, which is why $\Upsilon$ is replaced by
+`minInteriorGapMax` here.
+-/
+@[category research solved, AMS 41]
+theorem erdos_1130.variants.canonical (n : ℕ) :
     {x : Fin n → ℝ | IsCanonical x ∧
       ∀ y : Fin n → ℝ, IsCanonical y → minInteriorGapMax y ≤ minInteriorGapMax x} =
-        erdos_1130.parts.ii.answer n := by
+        {x | IsCanonical x ∧ Equioscillates x} := by
   sorry
 
 /--
