@@ -807,6 +807,14 @@ structure WightmanQuantumYangMills (G : Type*) (ℋ : Type*)
       Filter.Tendsto (fun k => (smeared_field (Curv.stress_energy 0 0) (seq k) ψ : ℋ))
         Filter.atTop (nhds (Hamiltonian ψ))
 
+  /-- Stress-Energy Momentum Generator Property (Jaffe–Witten §4, p. 6):
+      The mixed time-space stress-energy components $T_{0, i+1}(f)$ generate the spatial
+      momentum operators $P^i$ under spatial slice integration with flat cutoff sequences on the dense domain $\mathcal{D}$. -/
+  stress_tensor_generates_momentum : ∀ (i : Fin 3) (ψ : domain),
+    ∃ (seq : ℕ → SchwartzMap MinkowskiSpace ℂ),
+      Filter.Tendsto (fun k => (smeared_field (Curv.stress_energy 0 (Fin.succ i)) (seq k) ψ : ℋ))
+        Filter.atTop (nhds (Momentum i ψ))
+
   /-- Pointwise field matrix element (sesquilinear form on `domain × domain`), NOT an
       operator into `ℋ`. By translation covariance on smooth vectors in `domain`, the matrix
       element $x \mapsto \langle \phi, \mathcal{O}_P(x)\psi \rangle$ is a smooth function even though
@@ -820,6 +828,13 @@ structure WightmanQuantumYangMills (G : Type*) (ℋ : Type*)
     local_field_form P x φ (c • ψ) = c * local_field_form P x φ ψ
   local_field_form_add_right : ∀ P x (φ ψ1 ψ2 : domain),
     local_field_form P x φ (ψ1 + ψ2) = local_field_form P x φ ψ1 + local_field_form P x φ ψ2
+
+  /-- Streater–Wightman Axiom 2 (Field Hermiticity Involution, Streater & Wightman 1964):
+      Hermitian conjugation of classical curvature polynomials $P \mapsto P^*$
+      corresponds to operator adjoint on the dense invariant domain $\mathcal{D}$:
+      $\langle \phi, \mathcal{O}_P(x)\psi \rangle = \overline{\langle \psi, \mathcal{O}_{P^*}(x)\phi \rangle}$. -/
+  local_field_form_conj : ∀ (P : Curv.Poly) (x : MinkowskiSpace) (φ ψ : domain),
+    local_field_form (Curv.conj P) x φ ψ = starRingEnd ℂ (local_field_form P x ψ φ)
 
   /-- Compatibility between the smeared operator-valued distribution and the pointwise
       sesquilinear form on `domain`: the matrix element of the smeared operator equals the
@@ -946,16 +961,20 @@ structure WightmanQuantumYangMills (G : Type*) (ℋ : Type*)
 /- ### 4. The Mass Gap -/
 
 /-- A Wightman Quantum Yang–Mills theory has a strictly positive mass gap $\Delta > 0$
-if every state $\psi \in \mathcal{D}$ orthogonal to the vacuum has energy bounded below by $\Delta \|\psi\|$. -/
+if every state $\psi \in \mathcal{D}$ orthogonal to the vacuum has energy bounded below by $\Delta \|\psi\|$,
+and the mass spectrum is finite $m < \infty$ with physical excitation states (Jaffe–Witten 2000, Section 4, p. 6). -/
 def HasMassGap (G : Type*) (ℋ : Type*)
     [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G]
     [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [CompleteSpace ℋ] [SeparableSpace ℋ]
     {Curv : CurvaturePolynomialAlgebra G}
     (theory : WightmanQuantumYangMills G ℋ Curv) : Prop :=
   ∃ Δ : ℝ, 0 < Δ ∧
-    ∀ ψ : theory.domain,
+    (∀ ψ : theory.domain,
       inner ℂ theory.vacuum (ψ : ℋ) = (0 : ℂ) →
-      Δ * ‖(ψ : ℋ)‖ ≤ ‖theory.Hamiltonian ψ‖
+      Δ * ‖(ψ : ℋ)‖ ≤ ‖theory.Hamiltonian ψ‖) ∧
+    (∃ (M : ℝ) (ψ : theory.domain),
+      0 < M ∧ inner ℂ theory.vacuum (ψ : ℋ) = (0 : ℂ) ∧ (ψ : ℋ) ≠ 0 ∧
+      ‖theory.Hamiltonian ψ‖ ≤ M * ‖(ψ : ℋ)‖)
 
 /- ### 5. Osterwalder–Schrader Euclidean Framework (OS I pp. 88–89; OS II pp. 282, 287) -/
 
