@@ -16,23 +16,42 @@ limitations under the License.
 module
 
 public import Mathlib.Topology.Defs.Induced
-public import Mathlib.Topology.Separation.Regular
+public import Mathlib.Topology.Metrizable.Basic
 public import Mathlib.Topology.ContinuousOn
 
 @[expose] public section
 
+open TopologicalSpace
+
 universe u
 
-/--
-A topological space `X` is an *absolute neighborhood retract* (ANR) if, whenever it is
-embedded as a closed subspace of a normal space `Y`, there exists a continuous retraction
-from some open neighborhood of `X` in `Y` onto `X`.
+/-- A metrizable space `X` is an absolute neighborhood retract if every
+closed embedding into a metrizable space admits a continuous retraction from an open
+neighborhood of its image. -/
+class IsAbsoluteNeighborhoodRetract (X : Type u) [TopologicalSpace X] [MetrizableSpace X] :
+    Prop where
+  exists_neighborhood_retract (Y : Type u) [TopologicalSpace Y] [MetrizableSpace Y] (e : X → Y) :
+    Topology.IsClosedEmbedding e → ∃ (U : Set Y), IsOpen U ∧
+      ∃ (hU : Set.range e ⊆ U) (r : U → X),
+        Continuous r ∧ ∀ x : X, r ⟨e x, hU ⟨x, rfl⟩⟩ = x
 
-More precisely, for every closed embedding `e : X → Y` into a normal space `Y`, there
-exist an open set `U ⊆ Y` containing the image of `e` and a continuous map `r : Y → X`
-defined on `U` such that `r ∘ e = id`.
--/
-class IsAbsoluteNeighborhoodRetract (X : Type u) [TopologicalSpace X] : Prop where
-  exists_neighborhood_retract (Y : Type u) [TopologicalSpace Y] [NormalSpace Y] (e : X → Y) :
-    Topology.IsClosedEmbedding e → ∃ (U : Set Y) (r : Y → X),
-      IsOpen U ∧ Set.range e ⊆ U ∧ ContinuousOn r U ∧ ∀ x : X, r (e x) = x
+/-- The empty space is an absolute neighborhood retract. -/
+theorem IsAbsoluteNeighborhoodRetract.of_isEmpty (X : Type u) [TopologicalSpace X]
+    [MetrizableSpace X] [IsEmpty X] : IsAbsoluteNeighborhoodRetract X := by
+  constructor
+  intro Y _ _ e _
+  refine ⟨∅, isOpen_empty, ?_, fun y => False.elim y.property, ?_, ?_⟩
+  · rintro _ ⟨x, _⟩
+    exact isEmptyElim x
+  · exact continuous_of_discreteTopology
+  · intro x
+    exact isEmptyElim x
+
+/-- A nonempty subsingleton space is an absolute neighborhood retract. -/
+theorem IsAbsoluteNeighborhoodRetract.of_subsingleton (X : Type u) [TopologicalSpace X]
+    [MetrizableSpace X] [Subsingleton X] [Nonempty X] : IsAbsoluteNeighborhoodRetract X := by
+  classical
+  constructor
+  intro Y _ _ e _
+  exact ⟨Set.univ, isOpen_univ, Set.subset_univ _, fun _ => Classical.arbitrary X,
+    continuous_const, fun _ => Subsingleton.elim _ _⟩
