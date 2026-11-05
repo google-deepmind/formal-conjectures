@@ -1,0 +1,8 @@
+# Compile the exporter as a normal dependency of the FC Lean environment.
+# Elan discovers the parent repository's lean-toolchain; upstream stays unchanged.
+name = "fc_verifier_tools"
+
+[[require]]
+name = "lean4export"
+git = "https://github.com/leanprover/lean4export"
+rev = "15f6055e299ad5b89345e533cc2192f4cc00f659"
