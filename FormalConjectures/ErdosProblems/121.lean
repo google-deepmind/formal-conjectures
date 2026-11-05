@@ -47,6 +47,7 @@ noncomputable def F (k N : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ A : Finset ℕ, A ⊆ Finset.Icc 1 N ∧
     (∀ S ⊆ A, S.card = k → ¬ IsSquare (∏ n ∈ S, n)) ∧ A.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $F_{k}(N)$ be the size of the largest $A\subseteq \{1,\ldots,N\}$ such that the product of no
 $k$ many distinct elements of $A$ is a square. Is $F_5(N)=(1-o(1))N$?
@@ -63,19 +64,21 @@ is some constant $c_k>0$ such that $F_k(N) \leq (1-c_k+o(1))N$.
 
 See also [888](https://www.erdosproblems.com/888).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos121.lean#L87"]
-theorem erdos_121 : answer(False) ↔ (fun N : ℕ => (F 5 N : ℝ)) ~[atTop] fun N : ℕ => (N : ℝ) := by
+theorem erdos_121 : ¬ (fun N : ℕ => (F 5 N : ℝ)) ~[atTop] fun N : ℕ => (N : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- More generally, is $F_{2k+1}(N)=(1-o(1))N$? This is false for all $k \geq 2$ by Tao's
 theorem [Ta24]. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos121.lean#L87"]
-theorem erdos_121.variants.odd : answer(False) ↔ ∀ k : ℕ, 1 ≤ k →
+theorem erdos_121.variants.odd : ¬ ∀ k : ℕ, 1 ≤ k →
     (fun N : ℕ => (F (2 * k + 1) N : ℝ)) ~[atTop] fun N : ℕ => (N : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Tao [Ta24] proved that for any $k\geq 4$ there is some constant $c_k>0$ such that
 $F_k(N) \leq (1-c_k+o(1))N$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at

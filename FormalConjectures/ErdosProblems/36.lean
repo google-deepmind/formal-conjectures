@@ -264,29 +264,34 @@ A lower bound of $\frac 1 4$.
 See [Some remarks on number theory (in Hebrew)](https://users.renyi.hu/~p_erdos/1955-13.pdf)
 by *Paul Erdős*, Riveon Lematematika 9, p.45-48,1955
 -/
-@[category textbook, AMS 5 11]
+@[category textbook, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/22db103d7b6109baca46f2623a7287b965a56936/erdos-36/Solution.lean#L52"]
 theorem minimum_overlap.variants.lower.erdos_1955 :
     (1 : ℝ) / 4 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A lower bound of $1 - frac{1}{\sqrt 2}$.
 Scherk (written communication), see
 [On the minimal overlap problem of Erdös](https://eudml.org/doc/206397)
 by *Leo Moser*, Аста Аrithmetica V, p. 117-119, 1959
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/22db103d7b6109baca46f2623a7287b965a56936/erdos-36/Solution.lean#L56"]
 theorem minimum_overlap.variants.lower.scherk_1955 :
     1 - (√2)⁻¹ < atTop.liminf MinOverlapQuotient := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A lower bound of $\frac{4 - \sqrt{6}}{5}$.
 See [On the intersection of a linear set with the translation of its complement](https://bibliotekanauki.pl/articles/969027)
 by *Stanisław Świerczkowski1*, Colloquium Mathematicum 5(2), p. 185-197, 1958
 
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/22db103d7b6109baca46f2623a7287b965a56936/erdos-36/Solution.lean#L60"]
 theorem minimum_overlap.variants.lower.swierczkowski_1958 :
     (4 - 6 ^ ((1 : ℝ) / 2)) / 5 < atTop.liminf MinOverlapQuotient := by
   sorry
@@ -309,11 +314,13 @@ theorem minimum_overlap.variants.lower.white_2022 :
     0.379005 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The example (with $N$ even), $A = \{\frac N 2 + 1, \dots, \frac{3N}{2}\}$
 shows an upper bound of $\frac 1 2$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/22db103d7b6109baca46f2623a7287b965a56936/erdos-36/Solution.lean#L68"]
 theorem minimum_overlap.variants.upper.erdos_1955 :
     atTop.limsup MinOverlapQuotient ≤ (1 : ℝ) / 2 := by
   sorry
@@ -348,20 +355,26 @@ by *Jan Kristian Haugland*
 theorem minimum_overlap.variants.upper.haugland_2022 :
     atTop.limsup MinOverlapQuotient ≤ 0.3809268534330870 := by sorry
 
+def erdos_36.variants.lower.answer : ℝ := sorry
+
 /--
 Find a better lower bound!
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem erdos_36.variants.lower:
-    ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c = answer(sorry) := by
+    ∃ (c : ℝ), 0.379005 < c ∧ c ≤ atTop.liminf MinOverlapQuotient ∧ c =
+      erdos_36.variants.lower.answer := by
   sorry
+
+def erdos_36.variants.upper.answer : ℝ := sorry
 
 /--
 Find a better upper bound!
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem erdos_36.variants.upper :
-    ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c = answer(sorry) := by
+    ∃ (c : ℝ), c < 0.380926853433087 ∧ atTop.limsup MinOverlapQuotient ≤ c ∧ c =
+      erdos_36.variants.upper.answer := by
   sorry
 
 /--
@@ -371,11 +384,13 @@ The limit of `MinOverlapQuotient` exists and it is less than $0.385694$.
 theorem erdos_36.variants.exists : ∃ c, atTop.Tendsto MinOverlapQuotient (𝓝 c) ∧ c < 0.385694 := by
   sorry
 
+def erdos_36.answer : ℝ := sorry
+
 /--
 Find the value of the limit of `MinOverlapQuotient`!
 -/
-@[category research open, AMS 5 11]
-theorem erdos_36 : atTop.Tendsto MinOverlapQuotient (𝓝 answer(sorry)) := by
+@[category research open, question value, AMS 5 11]
+theorem erdos_36 : atTop.Tendsto MinOverlapQuotient (𝓝 erdos_36.answer) := by
   sorry
 
 end Erdos36

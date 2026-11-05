@@ -29,6 +29,7 @@ open scoped ArithmeticFunction.Moebius
 
 namespace Erdos259
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is $\sum_{n} \mu(n)^2\frac{n}{2^n}$ irrational?
 

@@ -59,18 +59,18 @@ instance DiscreteTopology.toHomogeneousSpace (X : Type*) [TopologicalSpace X] [D
 /-- Problem 13 in [Ar2013]:
 Is it true that every infinite homogeneous compact hausdorff
 space contains a non-trivial convergent sequence? -/
-@[category research open, AMS 54]
+@[category research open, question, AMS 54]
 theorem homogeneousSpace_exists_inj_tendsto :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), ¬ Finite X → T2Space X → CompactSpace X →
+    ∀ (X : Type) (_ : TopologicalSpace X), ¬ Finite X → T2Space X → CompactSpace X →
       HomogeneousSpace X → ∃ s : ℕ → X, s.Injective ∧ ∃ a : X, Tendsto s atTop (nhds a) := by
   sorry
 
 /-- Problem 14 in [Ar2013]:
 Is it possible to represent an arbitrary compact hausdorff space as an image
 of a homogeneous compact space under a continuous mapping? -/
-@[category research open, AMS 54]
+@[category research open, question, AMS 54]
 theorem homogeneousSpace_exists_surjective :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
+    ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
       ∃ (Y : Type) (_ : TopologicalSpace Y), T2Space Y ∧ CompactSpace Y ∧ HomogeneousSpace Y ∧
         ∃ f : Y → X, Continuous f ∧ f.Surjective := by
   sorry
@@ -90,17 +90,17 @@ instance MetrizableSpace.countablyMonolithicSpace
 
 /-- Problem 15 in [Ar2013]:
 Is every homogeneous ω-monolithic compact hausdorff space first countable? -/
-@[category research open, AMS 54]
+@[category research open, question, AMS 54]
 theorem firstCountableTopology_of_countablyMonolithicSpace :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
+    ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
       HomogeneousSpace X → CountablyMonolithicSpace X → FirstCountableTopology X := by
   sorry
 
 /-- Problem 16 in [Ar2013]:
 Is the cardinality of every homogeneous ω-monolithic compact hausdorff space not greater than 𝔠? -/
-@[category research open, AMS 54]
+@[category research open, question, AMS 54]
 theorem countablyMonolithicSpace_card_lt :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
+    ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
       HomogeneousSpace X → CountablyMonolithicSpace X → #X ≤ 𝔠 := by
   sorry
 
@@ -148,9 +148,9 @@ first countable neighborhood basis?
 
 Note: `Nonempty X` is required since the conclusion asserts the existence of a point.
 -/
-@[category research open, AMS 54]
+@[category research open, question, AMS 54]
 theorem monolithicSpace_exists_nhds_generated_countable :
-    answer(sorry) ↔ ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
+    ∀ (X : Type) (_ : TopologicalSpace X), T2Space X → CompactSpace X →
       Nonempty X → MonolithicSpace X → ∃ x : X, (𝓝 x).IsCountablyGenerated := by
   sorry
 

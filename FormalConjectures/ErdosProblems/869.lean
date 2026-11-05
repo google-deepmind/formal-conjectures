@@ -35,6 +35,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos869
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A_1, A_2$ are disjoint additive bases of order $2$ (i.e. $A_i + A_i$ contains all large
 integers) then must $A = A_1 \cup A_2$ contain a minimal additive basis of order $2$ (one such that
@@ -44,10 +45,10 @@ A question of Erdős and Nathanson [ErNa88, Er92c]. The answer is no: Larsen [La
 disjoint bases $A_1, A_2$ of order $2$ such that $A_1 \cup A_2$ contains no minimal basis of
 order $2$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos869.lean#L3490"]
-theorem erdos_869 : answer(False) ↔
-    ∀ (A₁ A₂ : Set ℕ), Disjoint A₁ A₂ →
+theorem erdos_869 :
+    ¬ ∀ (A₁ A₂ : Set ℕ), Disjoint A₁ A₂ →
       A₁.IsAsymptoticAddBasisOfOrder 2 → A₂.IsAsymptoticAddBasisOfOrder 2 →
       ∃ D ⊆ A₁ ∪ A₂, D.IsAsymptoticAddBasisOfOrder 2 ∧
         ∀ d ∈ D, ¬ (D \ {d}).IsAsymptoticAddBasisOfOrder 2 := by

@@ -51,6 +51,8 @@ $\frac{1}{a} = \frac{1}{b} + \frac{1}{c}$ with distinct $a, b, c ∈ A$.
 def IsMaxNoTripleCard (N m : ℕ) : Prop :=
   IsGreatest {k | ∃ A ⊆ Finset.Icc 1 N, NoUnitFractionTriple A ∧ A.card = k} m
 
+def erdos_302.parts.i.answer : ℝ := sorry
+
 /--
 Let $f(N)$ be the size of the largest $A\subseteq \{1,\ldots,N\}$ such that there are no
 solutions to
@@ -59,9 +61,9 @@ with distinct $a,b,c\in A$? Estimate $f(N)$.
 
 The colouring version of this is [303], which was solved by Brown and Rödl [BrRo91].
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_302.parts.i (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTripleCard N (f N)) :
-    Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 answer(sorry)) := by
+    Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 erdos_302.parts.i.answer) := by
   sorry
 
 /--
@@ -137,6 +139,7 @@ theorem erdos_302.variants.upper_nine_tenths (f : ℕ → ℕ) (hf : ∀ N, IsMa
     ∀ᶠ N : ℕ in atTop, (f N : ℝ) ≤ ((9 : ℝ) / 10 + ε) * N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Kenta Kitamura (KitaKen1 on GitHub) has given a Lean proof
 ([erdos-302-upper-bound](https://github.com/KitaKen1/erdos-302-upper-bound)) that

@@ -41,9 +41,9 @@ noncomputable def F (n : ℕ) : ℝ :=
 /--
 Prove that $F(n)\to \infty$ as $n\to \infty$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1203 :
-    answer(sorry) ↔ Tendsto F atTop atTop := by
+    Tendsto F atTop atTop := by
   sorry
 
 /--

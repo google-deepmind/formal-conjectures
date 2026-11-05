@@ -29,14 +29,16 @@ namespace Erdos503
 
 open scoped EuclideanGeometry
 
+def erdos_503.answer : ℕ := sorry
+
 /--
 What is the size of the largest $A \subseteq \mathbb{R}^n$ such that every three points from $A$
 determine an isosceles triangle? That is, for any three points $x$, $y$, $z$ from $A$, at least two
 of the distances $|x - y|$, $|y - z|$, $|x - z|$ are equal.
 -/
-@[category research open, AMS 51]
+@[category research open, question value, AMS 51]
 theorem erdos_503 (n : ℕ) :
-    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} answer(sorry) := by
+    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} erdos_503.answer := by
   sorry
 
 /--
@@ -78,10 +80,14 @@ Alweiss has observed a lower bound of $\binom{n + 1}{2}$ follows from considerin
 $\mathbb{R}^{n + 1}$ formed of all vectors $e_i + e_j$ where $e_i$, $e_j$ are distinct coordinate
 vectors. This set can be viewed as a subset of some $\mathbb{R}^n$, and is easily checked to have
 the required property.
+
+The bound is stated as the existence of such a set and not as a bound on the `sSup` of the sizes:
+in `ℕ` the `sSup` of an unbounded set is `0`, so the latter would also assert that the sizes are
+bounded, which is the content of `erdos_503.variants.upper_bound`.
 -/
 @[category research solved, AMS 51]
 theorem erdos_503.variants.lower_bound (n : ℕ) :
-    (n + 1).choose 2 ≤ sSup {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} := by
+    ∃ m ∈ {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)}, (n + 1).choose 2 ≤ m := by
   sorry
 
 end Erdos503

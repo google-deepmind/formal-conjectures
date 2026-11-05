@@ -84,14 +84,13 @@ theorem conjecture_1_3 {p q : ℕ} (hp : 2 <= p) (hq : 2 <= q) (hpq : Multiplica
 $\mathbb{T}$, then $T_{q^n}\mu$ converges weak-star to Lebesgue measure.
 This paper disproves the conjecture.
 -/
-@[category research solved, AMS 37]
+@[category research solved, question, AMS 37]
 theorem conjecture_1_4 :
-    answer(False) ↔
-      ∀ p q : ℕ, 2 <= p → 2 <= q → MultiplicativelyIndependent p q →
-        ∀ μ : ProbabilityMeasure 𝕋,
-          MeasureTheory.IsAtomLess μ.1 → MeasurePreserving (Tn p) μ μ →
-          Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
-            (𝓝 UnitAddCircle.ProbabilityMeasure) := by
+    ¬ ∀ p q : ℕ, 2 <= p → 2 <= q → MultiplicativelyIndependent p q →
+      ∀ μ : ProbabilityMeasure 𝕋,
+        MeasureTheory.IsAtomLess μ.1 → MeasurePreserving (Tn p) μ μ →
+        Tendsto (fun n : ℕ => μ.map (Tn_continuous (q ^ n)).aemeasurable) atTop
+          (𝓝 UnitAddCircle.ProbabilityMeasure) := by
   sorry
 
 end Arxiv.id2303_01089

@@ -45,25 +45,29 @@ $(n^{1/2},n^{1/2}+n^{1/2-\epsilon})$ is $O_\epsilon(1)$?
 
 Erdős attributes this conjecture to Ruzsa.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_886 :
-    answer(sorry) ↔ ∀ ε > 0, ∃ K : ℕ, ∀ᶠ n in atTop, (Erdos886Divisors n ε 1).card ≤ K := by
+    ∀ ε > 0, ∃ K : ℕ, ∀ᶠ n in atTop, (Erdos886Divisors n ε 1).card ≤ K := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Rosenfeld [ErRo97] proved that there are infinitely many $n$ such that there are
 four divisors of $n$ in $(n^{1/2},n^{1/2}+16n^{1/4})$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/4a1f92f2aca5f32edb0c681f1e8fdca88b5d9494/erdos-886/Solution.lean#L38"]
 theorem erdos_886.variants.rosenfeld_infinite :
     Set.Infinite {n | 4 ≤ (Erdos886Divisors n (1/4) 16).card} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Rosenfeld [ErRo97] proved that, for any constant $C>0$, all large $n$ have at most
 $1+C^2$ many divisors in $[n^{1/2}, n^{1/2}+Cn^{1/4}]$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/4a1f92f2aca5f32edb0c681f1e8fdca88b5d9494/erdos-886/Solution.lean#L45"]
 theorem erdos_886.variants.rosenfeld_bound :
     ∀ C > 0, ∀ᶠ (n : ℕ) in atTop,
     ((divisors n).filter (fun (d : ℕ) =>

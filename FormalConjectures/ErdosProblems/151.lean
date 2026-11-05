@@ -34,21 +34,6 @@ namespace Erdos151
 
 open SimpleGraph
 
-variable {V : Type*}
-
-/-- `s` is a maximal clique of `G` with at least two vertices. -/
-def IsBigMaximalClique (G : SimpleGraph V) (s : Finset V) : Prop :=
-  Maximal (fun t : Finset V ↦ G.IsClique (t : Set V)) s ∧ 2 ≤ s.card
-
-/-- `T` meets every maximal clique of `G` with at least two vertices. -/
-def IsCliqueTransversal (G : SimpleGraph V) (T : Finset V) : Prop :=
-  ∀ s, IsBigMaximalClique G s → ∃ v ∈ s, v ∈ T
-
-/-- The clique transversal number $\tau(G)$: the minimal number of vertices that meet every
-maximal clique of `G` with at least two vertices. -/
-noncomputable def cliqueTransversalNumber (G : SimpleGraph V) : ℕ :=
-  sInf {k | ∃ T : Finset V, IsCliqueTransversal G T ∧ T.card = k}
-
 /-- $H(n)$: the largest `k` such that every triangle-free graph on `n` vertices contains an
 independent set on `k` vertices. -/
 noncomputable def H (n : ℕ) : ℕ :=
@@ -63,16 +48,16 @@ If $G$ is a graph on $n$ vertices, is $\tau(G)\leq n-H(n)$?
 
 Erdős remarked that this is perhaps completely wrongheaded [Er88].
 -/
-@[category research open, AMS 5]
-theorem erdos_151 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_151 :
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)), cliqueTransversalNumber G ≤ n - H n := by
   sorry
 
 /--
 Erdős and Gallai made no progress on the question even when $G$ is $K_4$-free [Er88].
 -/
-@[category research open, AMS 5]
-theorem erdos_151.variants.cliqueFree_four : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_151.variants.cliqueFree_four :
     ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.CliqueFree 4 →
       cliqueTransversalNumber G ≤ n - H n := by
   sorry

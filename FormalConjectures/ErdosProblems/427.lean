@@ -65,6 +65,7 @@ theorem erdos_427.variants.shiu : ShiuTheorem := by
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 427**: is it true that, for every $n$ and $d$, there exists $k$ such that
 $$
@@ -72,10 +73,10 @@ $$
 $$
 where $p_r$ denotes the $r$th prime?
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/Jayyhk/erdos-lean/blob/main/problems/427/Erdos427.lean"]
-theorem erdos_427 : answer(True) ↔ erdos427 := by
+theorem erdos_427 : erdos427 := by
   sorry
 
 

@@ -61,8 +61,8 @@ The condition on $A$ is `HasAtMostOneRepeatedSum`. We state the question as foll
 $\varepsilon > 0$ and all large $N$, every such set $A$ satisfies
 $|A| \leq (1+\varepsilon)\frac{2}{\sqrt{3}} N^{1/2}$.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_864 : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem erdos_864 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ N : ℕ in atTop, ∀ A ⊆ Finset.Icc 1 N,
       HasAtMostOneRepeatedSum A →
         (#A : ℝ) ≤ (1 + ε) * (2 / Real.sqrt 3) * Real.sqrt (N : ℝ) := by

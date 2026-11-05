@@ -135,12 +135,14 @@ theorem coil_small_dimensions :
     map LongestCoilInTheBox (range 9) = [0, 0, 4, 6, 8, 14, 26, 48, 96] := by
   sorry
 
+def snake_dim_nine.answer : ℕ := sorry
+
 /--
 For dimension $9$, the length of the longest snake in the box is not known.
 This is currently the smallest dimension where this question is open.
 -/
-@[category research open, AMS 5]
-theorem snake_dim_nine : LongestSnakeInTheBox 9 = answer(sorry) := by
+@[category research open, question value, AMS 5]
+theorem snake_dim_nine : LongestSnakeInTheBox 9 = snake_dim_nine.answer := by
   sorry
 
 /--

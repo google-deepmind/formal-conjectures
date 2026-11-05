@@ -48,6 +48,7 @@ open Filter SimpleGraph
 namespace Erdos22
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon > 0$ and let $n$ be sufficiently large depending on $\epsilon$. Is there a graph
 on $n$ vertices with at least $n^2/8$ many edges which contains no $K_4$, such that the largest
@@ -55,9 +56,9 @@ independent set has size at most $\epsilon n$?
 
 This is true, as proved by Fox, Loh, and Zhao [FLZ15].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos22.lean#L880"]
-theorem erdos_22 : answer(True) ↔
+theorem erdos_22 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ (n : ℕ) in atTop,
       ∃ G : SimpleGraph (Fin n), G.CliqueFree 4 ∧
         (G.indepNum : ℝ) ≤ ε * n ∧ (n : ℝ) ^ 2 / 8 ≤ G.edgeFinset.card := by
