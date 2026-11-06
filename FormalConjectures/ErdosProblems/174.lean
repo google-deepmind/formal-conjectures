@@ -33,6 +33,8 @@ public import FormalConjecturesUtil
 - [LRW12] Leader, Imre and Russell, Paul A. and Walters, Mark, *Transitive sets in Euclidean
   Ramsey theory*. J. Combin. Theory Ser. A (2012), 382-396.
   [arXiv:1012.1350](https://arxiv.org/abs/1012.1350)
+- [Pa26] Pálvölgyi, Dömötör, *A cyclic non-Ramsey heptagon* (2026).
+  [arXiv:2609.23327](https://arxiv.org/html/2609.23327)
 -/
 
 @[expose] public section
@@ -92,10 +94,15 @@ theorem erdos_174.variants.spherical {n : ℕ} (A : Set (EuclideanSpace ℝ (Fin
 
 /--
 Graham has conjectured that every spherical set is Ramsey.
+
+Pálvölgyi [Pa26, Theorem 1] disproved this conjecture: for any transcendental $r>2$, the
+seven-point set $\{(0,0)\}\cup\{(j,\pm\sqrt{j(2r-j)}):j\in\{1,3,4\}\}$ lies on the circle
+$(x-r)^2+y^2=r^2$ and is not Ramsey.
 -/
-@[category research open, AMS 5 52]
-theorem erdos_174.variants.graham {n : ℕ} (A : Set (EuclideanSpace ℝ (Fin n)))
-    (hA : A.Finite) (hs : EuclideanGeometry.Cospherical A) : IsRamsey A := by
+@[category research solved, AMS 5 52]
+theorem erdos_174.variants.graham :
+    ¬ (∀ {n : ℕ} (A : Set (EuclideanSpace ℝ (Fin n))),
+      A.Finite → EuclideanGeometry.Cospherical A → IsRamsey A) := by
   sorry
 
 /--
