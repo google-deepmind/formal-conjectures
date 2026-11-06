@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.LinearAlgebra.QuadraticForm.UInvariant
 
 /-!
 # Kaplansky's problem on the values of the $u$-invariant

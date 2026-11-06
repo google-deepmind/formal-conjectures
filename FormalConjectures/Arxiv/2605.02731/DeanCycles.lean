@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
 
 /-!
 # Dean's conjecture on cycles of length divisible by `k`

@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 
 /-!
 # Latin Tableau Conjecture

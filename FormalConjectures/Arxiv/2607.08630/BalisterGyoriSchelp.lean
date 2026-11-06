@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.ZMod.Fp
 
 /-!
 # The Balister–Győri–Schelp conjecture

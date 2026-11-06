@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Temperature
 
 /-!
 # Written on the Wall II - Conjecture 3

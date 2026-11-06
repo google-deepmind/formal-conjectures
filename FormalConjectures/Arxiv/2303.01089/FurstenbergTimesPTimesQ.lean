@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.NumberTheory.MultiplicativelyIndependent
 
 /-!
 # Furstenberg's `times p, times q` conjectures

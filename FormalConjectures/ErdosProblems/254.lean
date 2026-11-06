@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Real.NearestInt
+public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Real
 
 /-!
 # Erdős Problem 254

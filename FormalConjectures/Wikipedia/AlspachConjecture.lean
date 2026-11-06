@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cycle
 
 /-!
 # Alspach's conjecture on cycle decompositions of complete graphs (1981; proved 2014)

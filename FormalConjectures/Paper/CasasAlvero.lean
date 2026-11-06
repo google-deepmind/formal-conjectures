@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Algebra.Polynomial.HasseDeriv
 
 /-!
 # Casas-Alvero Conjecture

@@ -81,16 +81,22 @@ Note: This linter can be disabled with `set_option linter.style.imports false`
 #guard_msgs in
 #check_imports "module\npublic import FormalConjectures.ErdosProblems.«508»"
 
+-- A `FormalConjecturesForMathlib` module that the file uses is imported publicly
+#guard_msgs in
+#check_imports "module\npublic import FormalConjecturesUtil\npublic import FormalConjecturesForMathlib.Combinatorics.Basic"
+
+-- A private import of it cannot be used in public statements
 /--
-warning: Direct imports from 'FormalConjecturesForMathlib' (such as 'FormalConjecturesForMathlib.Combinatorics.Basic') are disallowed in 'FormalConjectures'. Use 'import FormalConjecturesUtil' instead.
+warning: Use 'public import FormalConjecturesForMathlib.Combinatorics.Basic'. In a module, a plain 'import' is private, so the statements of public declarations cannot use it.
 
 Note: This linter can be disabled with `set_option linter.style.imports false`
 -/
 #guard_msgs in
-#check_imports "module\npublic import FormalConjecturesUtil\npublic import FormalConjecturesForMathlib.Combinatorics.Basic"
+#check_imports "module\npublic import FormalConjecturesUtil\nimport FormalConjecturesForMathlib.Combinatorics.Basic"
 
+-- The aggregate module is disallowed
 /--
-warning: Direct imports from 'FormalConjecturesForMathlib' (such as 'FormalConjecturesForMathlib') are disallowed in 'FormalConjectures'. Use 'import FormalConjecturesUtil' instead.
+warning: Importing the whole of 'FormalConjecturesForMathlib' is disallowed in 'FormalConjectures'. Instead, 'public import' only the 'FormalConjecturesForMathlib' modules that the file uses.
 
 Note: This linter can be disabled with `set_option linter.style.imports false`
 -/

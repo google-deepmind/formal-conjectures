@@ -98,7 +98,8 @@ This project follows
    subdirectory.
 5. Definitions and results which are needed to formulate the conjecture should
    be added in a separate file in `FormalConjecturesForMathlib` in the
-   appropriate subdirectory.
+   appropriate subdirectory, and imported in the problem file with
+   `public import FormalConjecturesForMathlib.<Path>`.
 6. Add this file to the index in `FormalConjecturesForMathlib.lean`.
 7. Verify that the embedded links are not broken.
 8. Ensure the project builds: `lake build`.
@@ -211,6 +212,13 @@ of authors in the `AUTHORS` file.
 
 Problem files are modules. Without `@[expose] public section`, all declarations
 of a module are private.
+
+`FormalConjecturesUtil` provides Mathlib, the attributes and the linters. A
+problem file that uses a definition from `FormalConjecturesForMathlib` imports
+the module that defines it, for example
+`public import FormalConjecturesForMathlib.Data.Set.Density`, directly after
+`public import FormalConjecturesUtil`. Importing the aggregate
+`FormalConjecturesForMathlib` or a Mathlib module directly is not allowed.
 
 ## The `@[category]` attribute
 

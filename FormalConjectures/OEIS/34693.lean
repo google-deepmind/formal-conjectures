@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
+public import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 
 /-!
 # Smallest number $k$ such that $kn + 1$ is prime

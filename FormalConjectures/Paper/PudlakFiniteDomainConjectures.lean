@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Computability.Complexity
 
 /-!
 # Pudlák's conjectures on incompleteness in the finite domain

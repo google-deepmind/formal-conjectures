@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Finite
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.List
 
 /-!
 # Erdős Problem 629

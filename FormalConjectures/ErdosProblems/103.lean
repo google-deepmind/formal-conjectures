@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Geometry.«2d»
+public import FormalConjecturesForMathlib.Topology.MetricSpace.MetricSeparated
 
 /-!
 # Erdős Problem 103

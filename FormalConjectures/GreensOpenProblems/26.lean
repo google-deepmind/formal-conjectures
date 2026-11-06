@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.ZMod.Fp
 
 /-!
 # Green's Open Problem 26

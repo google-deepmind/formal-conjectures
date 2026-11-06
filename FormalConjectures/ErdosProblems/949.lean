@@ -16,6 +16,10 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
+public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.ModelTheory.Real
+public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic
 
 /-!
 # Erdős Problem 949

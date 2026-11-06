@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.InformationTheory.FiniteEntropy
 
 /-!
 # The Courtade–Kumar (most informative Boolean function) conjecture

@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.Full
+public import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
 
 /-!
 # Erdős Problem 939

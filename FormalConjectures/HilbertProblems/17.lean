@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 
 /-!
 # Hilbert's 17th problem
