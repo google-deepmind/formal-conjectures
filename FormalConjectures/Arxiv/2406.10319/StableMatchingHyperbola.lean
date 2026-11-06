@@ -53,11 +53,12 @@ def hyperbolaEvent (n : ℕ) (p : unitInterval) (ε : ℝ) : Set (Profile n × A
 /-- Pittel conjectures a threshold $p_*(n)$ for the rank pairs across stable matchings to trace
 out a hyperbola. For all sufficiently large $n$, it lies between $\frac{9}{4}(\log n)^2/n$ and $1$.
 
-This formulation uses the fixed arc with $t \in [2/3,3/2]$ in `hyperbolaEvent` and the
-relative margin $\delta\min(p_*(n),1-p_*(n))$ for each fixed $0<\delta<1$. Above the threshold by
-at least this margin, the event holds with high probability uniformly for every positive tolerance.
-Below the threshold by at least this margin, it fails with high probability uniformly at a positive
-tolerance that may depend on $\delta$. -/
+The fixed reciprocal arc $(t,t^{-1})$ for $t \in [2/3,3/2]$ specifies the curve to cover in this
+formulation. For each fixed $0<\delta<1$, compare probabilities at distance at least
+$\delta\min(p_*(n),1-p_*(n))$ from the threshold. The relative margin keeps both comparison
+ranges nonempty. On the upper range, the event holds with high probability uniformly at every
+positive tolerance. On the lower range, it fails with high probability uniformly at one positive
+tolerance for each $\delta$. -/
 @[category research open, AMS 5 60]
 theorem pittel_hyperbola_threshold :
     ∃ pStar : ℕ → Set.Ioo (0 : ℝ) 1,
