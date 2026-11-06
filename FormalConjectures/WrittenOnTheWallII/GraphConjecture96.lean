@@ -52,7 +52,8 @@ We record the nontrivial-graph version: the literal source inequality fails on $
 where the independence number and even-distance count are both one, but the maximum
 local independence number is zero, giving $1 ≤ 0$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-30-000006&version=1"]
 theorem conjecture96 (G : SimpleGraph α) (h : G.Connected) :
     let minDistEven := (Finset.univ.image (distEven G)).min' (by simp)
     let maxL := (Finset.univ.image (fun v => indepNeighborsCard G v)).max' (by simp)
