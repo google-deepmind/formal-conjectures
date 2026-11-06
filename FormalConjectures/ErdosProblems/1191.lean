@@ -31,8 +31,6 @@ public import FormalConjecturesUtil
   (1980), 89-115.
 -/
 
--- Contributor note: Google CLA re-signed by the author (2026-11-05).
-
 @[expose] public section
 
 open Filter Real
