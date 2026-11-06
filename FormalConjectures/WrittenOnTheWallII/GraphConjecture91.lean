@@ -36,6 +36,12 @@ reads `8 ≤ 1 + 6·⌈2⌉/2 = 7`.
 *References:*
 - [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 - [Counterexample certificate for WOWII 91 (Max Talwar)](https://github.com/maxtalwar/wowii91-counterexample/releases/tag/v1.0.0)
+- [J. J. Gebendorfer, The Bipartite–Forest Gap Is Unbounded in Claw-Free Graphs,
+  25 July 2026; written line-graph family and intake](https://github.com/user-attachments/files/33372239/Gebendorfer_WOWII_91_Intake_2026-10-13.zip)
+
+Gebendorfer's separate line-graph construction gives a 14-vertex counterexample.
+The linked Lean certificate verifies this finite witness; it does not formalize
+the whole unbounded family or establish first-disproof priority.
 -/
 
 @[expose] public section
@@ -46,6 +52,7 @@ open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 91](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 (disproved, 2026):
@@ -59,8 +66,13 @@ where `b(G)` is the largest induced bipartite subgraph size,
 Disproved by an 11-vertex counterexample (Max Talwar, 2026; graph6
 `JBza_CB?wF_`) with `b(G) = 8`, `f(G) = 6` and `l G = 2`, violating
 `8 ≤ 1 + 6·⌈2⌉/2 = 7`.
+
+The linked Lean certificate uses Gebendorfer's 14-vertex line-graph witness,
+with `b(G) ≥ 12`, `f(G) ≤ 10` and `l G ≤ 2`, so the proposed upper bound is at most 11.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/RhudeJJJJ/formal-conjectures/blob/90d12d635fe42fdb0bc0d021a0180f8565c764c9/Proofs/WOWII91Proof.lean#L365"]
 theorem conjecture91 :
     ¬ ∀ {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α],
       ∀ (G : SimpleGraph α) (_ : G.Connected),
