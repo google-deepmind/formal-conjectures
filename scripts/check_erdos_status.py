@@ -45,6 +45,9 @@ FORMAL_PROOF_ATTR = re.compile(
     re.MULTILINE,
 )
 
+# Matches answer(sorry) in formalised questions.
+ANSWER_SORRY_RE = re.compile(r"\banswer\s*\(\s*sorry\s*\)")
+
 # `informal_status.state` is the mathematical status, and these two sets are the whole of its
 # vocabulary. `formal_status.state` separately says whether a machine-checked proof exists.
 # Upstream also publishes the two joined into `status.state` ("proved (Lean)"), but that is a
@@ -149,7 +152,7 @@ def scan_lean_files():
         if not file_number.isdigit():
             continue
         filepath = os.path.join(ERDOS_DIR, fname)
-        with open(filepath) as f:
+        with open(filepath, encoding="utf-8") as f:
             content = f.read()
 
         # Check if file has any formal_proof attribute
@@ -345,17 +348,118 @@ def close_resolved_issues(mismatches):
             "no mismatch left to act on. Closed automatically; reopen if that is wrong.",
         ])
 
+def fix_problem_content(num, lean_st, yaml_st, content):
+    """Attempt to update @[category research ...] for problem `num`.
+
+    Returns (new_content, status_message).
+    If auto-fix is not applicable or skipped, returns (content, skip_reason).
+    If successfully fixed, returns (new_content, "ok").
+    """
+    target_cat = "solved" if yaml_st in ("solved", "formally solved") else "open"
+    current_cat = "solved" if lean_st in ("solved", "formally solved") else "open"
+
+    if target_cat == current_cat:
+        return content, f"requires manual formal_proof link update (lean={lean_st}, yaml={yaml_st})"
+
+    if target_cat == "open" and lean_st == "formally solved":
+        return content, "cannot safely downgrade formally solved to open without losing proof link"
+
+    # Check whether an exact main theorem exists (erdos_{num} with no suffix or trailing colon)
+    has_exact_main = False
+    for m in CATEGORY_THEN_THEOREM.finditer(content):
+        if m.group(2) == str(num):
+            suffix = m.group(3)
+            if suffix == "" or suffix == ":":
+                has_exact_main = True
+                break
+
+    if not has_exact_main:
+        return content, "multipart problem requires manual status decision"
+
+    if target_cat == "solved" and ANSWER_SORRY_RE.search(content):
+        return content, "unresolved answer(sorry) requires manual answer update"
+
+    def repl(match):
+        cat = match.group(1)
+        n = match.group(2)
+        suffix = match.group(3)
+
+        if n == str(num) and (suffix == "" or suffix == ":"):
+            full_text = match.group(0)
+            return full_text.replace(
+                f"@[category research {cat}",
+                f"@[category research {target_cat}",
+                1,
+            )
+        return match.group(0)
+
+    new_content = CATEGORY_THEN_THEOREM.sub(repl, content)
+    if new_content == content:
+        return content, "could not find a matching main theorem to replace"
+
+    return new_content, "ok"
+
+
+def apply_fixes(mismatches, erdos_dir=None):
+    """Automatically update @[category research ...] attributes where possible.
+
+    Skips cases where:
+    - The only difference is the presence/absence of a formal_proof attribute.
+    - A problem would be downgraded from formally solved to open.
+    - The problem is multipart (no exact main theorem erdos_N).
+    - The problem has an unresolved answer(sorry) and would be marked solved.
+    """
+    if erdos_dir is None:
+        erdos_dir = ERDOS_DIR
+
+    fixed_count = 0
+    for m in mismatches:
+        num = str(m["number"])
+        lean_st = m["lean_status"]
+        yaml_st = m["yaml_status"]
+
+        filepath = os.path.join(erdos_dir, f"{num}.lean")
+        if not os.path.exists(filepath):
+            print(f"Cannot auto-fix {num}: file {filepath} not found", file=sys.stderr)
+            continue
+
+        with open(filepath, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        new_content, status = fix_problem_content(num, lean_st, yaml_st, content)
+        if status == "ok":
+            with open(filepath, "w", encoding="utf-8") as f:
+                f.write(new_content)
+            target_cat = "solved" if yaml_st in ("solved", "formally solved") else "open"
+            print(f"Auto-fixed {num}: changed base category to {target_cat}", file=sys.stderr)
+            fixed_count += 1
+        else:
+            print(f"Skipping auto-fix for {num}: {status}", file=sys.stderr)
+
+    print(f"\nSuccessfully auto-fixed {fixed_count} file(s).", file=sys.stderr)
+    return fixed_count
+
 
 def main():
     mismatches = find_mismatches()
+
+    # We still print the JSON to stdout as before, for script composition
     json.dump(mismatches, sys.stdout, indent=2)
     print()  # trailing newline
 
+    if "--auto-fix" in sys.argv and mismatches:
+        apply_fixes(mismatches)
+        # Note: after auto-fixing, some mismatches (like missing formal_proof links) may still remain
     if "--create-issues" in sys.argv:
         if mismatches:
             create_issues(mismatches)
         # Runs even when nothing mismatches, which is exactly when there is most to close.
         close_resolved_issues(mismatches)
+
+    if "--auto-fix" in sys.argv:
+        # Return 0 on successful auto-fix execution so downstream CI steps (like Create Pull Request)
+        # can run, including when some mismatches need manual handling.
+        return 0
 
     return 1 if mismatches else 0
 
