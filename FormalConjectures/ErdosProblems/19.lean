@@ -29,14 +29,20 @@ edge-disjoint exactly when their vertex sets share at most one vertex.
 
 *References:*
 * [erdosproblems.com/19](https://www.erdosproblems.com/19)
+* [Er81] Erdős, P., *On the combinatorial problems which I would most like to see solved*.
+  Combinatorica 1 (1981), 25-42.
 * [Hi81] Hindman, N., *On a conjecture of Erdős, Faber, and Lovász about $n$-colorings*.
   Canad. J. Math. (1981).
 * [Ka92] Kahn, J., *Coloring nearly-disjoint hypergraphs with $n + o(n)$ colors*.
   J. Combin. Theory Ser. A (1992).
+* [RoAl14] Romero, D. and Alonso-Pecina, F., *The Erdős–Faber–Lovász conjecture is true for
+  $n \le 12$*. Discrete Math. Algorithms Appl. 6 (2014), 1450039.
 * [KKKMO21] Kang, D. Y., Kelly, T., Kühn, D., Methuku, A. and Osthus, D., *A proof of the
   Erdős–Faber–Lovász conjecture*. Ann. of Math. (2023).
   [arXiv:2101.04698](https://arxiv.org/abs/2101.04698)
 -/
+
+-- Contributor note: Google CLA re-signed by the author (2026-11-05).
 
 @[expose] public section
 
@@ -190,6 +196,9 @@ open EFLConfig
 
 /--
 If $G$ is an edge-disjoint union of $n$ copies of $K_n$, then is $\chi(G) = n$?
+
+Resolved in the affirmative for all sufficiently large $n$ by Kang, Kelly, Kühn, Methuku, and
+Osthus [KKKMO21].
 -/
 @[category research open, question, AMS 5]
 theorem erdos_19 :
@@ -232,6 +241,34 @@ theorem erdos_19.variants.lt_ten :
   sorry
 
 /--
+An affirmative answer to `erdos_19` immediately implies `erdos_19.variants.lt_ten`.
+-/
+@[category API, AMS 5]
+theorem erdos_19.variants.erdos_19_implies_lt_ten
+    (h : ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), C.graph.chromaticNumber = n) :
+    ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), n < 10 → C.graph.chromaticNumber = n := by
+  intro V n C _
+  exact h V n C
+
+/--
+Romero and Alonso-Pecina [RoAl14] proved the Erdős–Faber–Lovász conjecture for $n \le 12$.
+-/
+@[category research solved, AMS 5]
+theorem erdos_19.variants.le_twelve :
+    ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), n ≤ 12 → C.graph.chromaticNumber = n := by
+  sorry
+
+/--
+An affirmative answer to `erdos_19` immediately implies `erdos_19.variants.le_twelve`.
+-/
+@[category API, AMS 5]
+theorem erdos_19.variants.erdos_19_implies_le_twelve
+    (h : ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), C.graph.chromaticNumber = n) :
+    ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), n ≤ 12 → C.graph.chromaticNumber = n := by
+  intro V n C _
+  exact h V n C
+
+/--
 Kahn [Ka92] proved that $\chi(G) \le (1 + o(1))n$.
 -/
 @[category research solved, AMS 5]
@@ -248,5 +285,14 @@ all sufficiently large $n$.
 theorem erdos_19.variants.large_n :
     ∀ᶠ n in atTop, ∀ (V : Type) (C : EFLConfig V n), C.graph.chromaticNumber = n := by
   sorry
+
+/--
+An affirmative answer to `erdos_19` immediately implies `erdos_19.variants.large_n`.
+-/
+@[category API, AMS 5]
+theorem erdos_19.variants.erdos_19_implies_large_n
+    (h : ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), C.graph.chromaticNumber = n) :
+    ∀ᶠ n in atTop, ∀ (V : Type) (C : EFLConfig V n), C.graph.chromaticNumber = n := by
+  exact Filter.Eventually.of_forall (fun n V C => h V n C)
 
 end Erdos19
