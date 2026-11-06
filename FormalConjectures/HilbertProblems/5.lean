@@ -30,6 +30,10 @@ connected finite-dimensional topological manifold.
 
 - `hilbert_smith_conjecture`: the Hilbert–Smith conjecture.
 - `hilbert_smith_padic_formulation`: the equivalent formulation for `ℤ_[p]`.
+- `hilbert_smith_conjecture.variants.second_countable_smooth`: the case of second-countable `X`
+  and `G`, with a `C^∞` Lie group structure on `G` as conclusion.
+- `hilbert_smith_padic_formulation.variants.second_countable`: the p-adic formulation for
+  second-countable `X`.
 - `hilbert_smith_conjecture.variants.dimension_three`: Pardon's theorem for 3-manifolds.
 - `hilbert_smith_conjecture.variants.riemannian`: the case of isometric actions on Riemannian
   manifolds.
@@ -60,6 +64,8 @@ so it would be dropped silently from a statement that mentions only `X`.
   [arXiv:1112.2324](https://arxiv.org/abs/1112.2324)
 - [Myers–Steenrod 1939] S. B. Myers, N. E. Steenrod, *The group of isometries of a Riemannian
   manifold*, Ann. of Math. 40 (1939), 400–416. https://doi.org/10.2307/1968928
+- Lean 4 proof of the second-countable variants:
+  https://github.com/adbrw/HS_proof/tree/c51a2d5da2d2264372908b1284bb6b655948a38f
 - [van den Dries–Goldbring 2015] L. van den Dries, I. Goldbring, *Hilbert's 5th problem*,
   Enseign. Math. 61 (2015), 3–43. https://doi.org/10.4171/LEM/61-1/2-2
 -/
@@ -92,6 +98,20 @@ theorem hilbert_smith_conjecture {X : Type*}
     [IsTopologicalGroup G] [LocallyCompactSpace G]
     [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X] :
     AdmitsLieGroupStructure G := by
+  sorry
+
+/-- The Hilbert–Smith conjecture for second-countable `X` and `G`, with a `C^∞` Lie group
+structure on `G` for its given topology. -/
+@[category research solved, AMS 22 57 58,
+  formal_proof using lean4 at
+    "https://github.com/adbrw/HS_proof/blob/c51a2d5da2d2264372908b1284bb6b655948a38f/FCSolution.lean#L28"]
+theorem hilbert_smith_conjecture.variants.second_countable_smooth {X : Type*}
+    [TopologicalSpace X] [T2Space X] [SecondCountableTopology X] [ConnectedSpace X]
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
+    [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [SecondCountableTopology G]
+    [MulAction G X] [ContinuousSMul G X] [FaithfulSMul G X] :
+    ∃ (d : ℕ) (_ : ChartedSpace (EuclideanSpace ℝ (Fin d)) G),
+      LieGroup 𝓘(ℝ, EuclideanSpace ℝ (Fin d)) ∞ G := by
   sorry
 
 /-- The Hilbert–Smith conjecture holds for actions by isometries of a connected smooth Riemannian
@@ -131,6 +151,18 @@ periodic transformations of manifolds. -/
 @[category research open, AMS 22 57 58]
 theorem hilbert_smith_padic_formulation {X : Type*}
     [TopologicalSpace X] [T2Space X] [ConnectedSpace X]
+    [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
+    (p : ℕ) [Fact p.Prime] [AddAction ℤ_[p] X] [ContinuousVAdd ℤ_[p] X] :
+    ¬ FaithfulVAdd ℤ_[p] X := by
+  sorry
+
+/-- The p-adic formulation for a second-countable manifold `X`: the p-adic integers `ℤ_[p]`
+cannot act continuously and faithfully on `X`. -/
+@[category research solved, AMS 22 57 58,
+  formal_proof using lean4 at
+    "https://github.com/adbrw/HS_proof/blob/c51a2d5da2d2264372908b1284bb6b655948a38f/FCSolution.lean#L39"]
+theorem hilbert_smith_padic_formulation.variants.second_countable {X : Type*}
+    [TopologicalSpace X] [T2Space X] [SecondCountableTopology X] [ConnectedSpace X]
     [ChartedSpace (EuclideanSpace ℝ (Fin n)) X]
     (p : ℕ) [Fact p.Prime] [AddAction ℤ_[p] X] [ContinuousVAdd ℤ_[p] X] :
     ¬ FaithfulVAdd ℤ_[p] X := by
