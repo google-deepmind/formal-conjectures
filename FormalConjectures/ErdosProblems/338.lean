@@ -150,12 +150,270 @@ theorem erdos_338.variants.bateman (h : ℕ) (hh : 3 ≤ h) :
       ¬ ∃ t, HasRestrictedOrder (insert 1 {x : ℕ | 0 < x ∧ h ∣ x}) t := by
   sorry
 
+section Kelly
+
+/-!
+### Kelly's theorem
+
+The proof below is by contradiction. Suppose that infinitely many `n` are not sums of at most four
+distinct elements of `A`, and compare a number `c` with `n - c` for such an `n` much larger than
+`c`. This shows the following.
+* A large odd element of `A` is not also a sum of two distinct elements of `A`
+  (`KellySetup.unique`).
+* If `o, e ∈ A` are odd and even with `o + e` large, then `o + e / 2 ∈ A` (`KellySetup.half`).
+* Large odd elements of `A` are far apart (`KellySetup.lacunary`).
+
+Applying `KellySetup.half` twice shows that large even elements of `A` are `2` modulo `4`
+(`KellySetup.mod_four`). Then all odd elements of `A` are congruent modulo `4`, so one class of
+odd numbers modulo `4` can only be reached with small even elements, which is impossible
+(`KellySetup.end_`).
+-/
+
+/-- `m` is a sum of at most `k` distinct elements of `A`. -/
+private def IsRSum (A : Set ℕ) (k m : ℕ) : Prop :=
+  ∃ S : Finset ℕ, (∀ x ∈ S, x ∈ A) ∧ S.card ≤ k ∧ ∑ x ∈ S, x = m
+
+@[category API, AMS 11]
+private lemma IsRSum.le_four {A : Set ℕ} {k m n : ℕ} (h : IsRSum A k m) (hk : k ≤ 4)
+    (hmn : m = n) : IsRSum A 4 n := by
+  obtain ⟨S, hSA, hS, hSm⟩ := h
+  exact ⟨S, hSA, hS.trans hk, hSm.trans hmn⟩
+
+/-- Adding an element larger than `m` to a sum for `m`. -/
+@[category API, AMS 11]
+private lemma IsRSum.add {A : Set ℕ} {k m x : ℕ} (h : IsRSum A k m) (hx : x ∈ A) (hmx : m < x) :
+    IsRSum A (k + 1) (m + x) := by
+  obtain ⟨S, hSA, hS, rfl⟩ := h
+  have hxS : x ∉ S := fun hxS ↦ by
+    have := Finset.single_le_sum (f := fun i ↦ i) (fun i _ ↦ Nat.zero_le i) hxS
+    omega
+  refine ⟨insert x S, fun y hy ↦ ?_, ?_, ?_⟩
+  · rcases Finset.mem_insert.1 hy with rfl | hy
+    · exact hx
+    · exact hSA y hy
+  · rw [Finset.card_insert_of_notMem hxS]
+    omega
+  · rw [Finset.sum_insert hxS, add_comm]
+
+@[category API, AMS 11]
+private lemma isRSum_one {A : Set ℕ} {a : ℕ} (ha : a ∈ A) : IsRSum A 1 a :=
+  ⟨{a}, by simpa using ha, by simp, by simp⟩
+
+@[category API, AMS 11]
+private lemma isRSum_two {A : Set ℕ} {a b : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hab : a ≠ b) :
+    IsRSum A 2 (a + b) := by
+  refine ⟨{a, b}, ?_, Finset.card_le_two, Finset.sum_pair hab⟩
+  simp only [Finset.mem_insert, Finset.mem_singleton]
+  rintro x (rfl | rfl) <;> assumption
+
+@[category API, AMS 11]
+private lemma isRSum_three {A : Set ℕ} {a b c : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A)
+    (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) : IsRSum A 3 (a + b + c) := by
+  refine ⟨{a, b, c}, ?_, Finset.card_le_three, ?_⟩
+  · simp only [Finset.mem_insert, Finset.mem_singleton]
+    rintro x (rfl | rfl | rfl) <;> assumption
+  · rw [Finset.sum_insert (by simp [hab, hac]), Finset.sum_pair hbc, add_assoc]
+
+@[category API, AMS 11]
+private lemma isRSum_four {A : Set ℕ} {a b c d : ℕ} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A)
+    (hd : d ∈ A) (hab : a ≠ b) (hac : a ≠ c) (had : a ≠ d) (hbc : b ≠ c) (hbd : b ≠ d)
+    (hcd : c ≠ d) : IsRSum A 4 (a + b + c + d) := by
+  refine ⟨{a, b, c, d}, ?_, Finset.card_le_four, ?_⟩
+  · simp only [Finset.mem_insert, Finset.mem_singleton]
+    rintro x (rfl | rfl | rfl | rfl) <;> assumption
+  · rw [Finset.sum_insert (by simp [hab, hac, had]), Finset.sum_insert (by simp [hbc, hbd]),
+      Finset.sum_pair hcd]
+    ring
+
+/-- The setting of Kelly's argument: `0 ∉ A`, every `m ≥ N` is in `A`, a sum of two distinct
+elements of `A` or twice an element of `A`, and infinitely many `n` are not sums of at most four
+distinct elements of `A`. -/
+private structure KellySetup (A : Set ℕ) (N : ℕ) : Prop where
+  zero : 0 ∉ A
+  cover : ∀ m, N ≤ m → m ∈ A ∨ (∃ x ∈ A, ∃ y ∈ A, x ≠ y ∧ x + y = m) ∨ ∃ x ∈ A, x + x = m
+  bad : ∀ M, ∃ n, M ≤ n ∧ ¬ IsRSum A 4 n
+
+namespace KellySetup
+
+variable {A : Set ℕ} {N : ℕ}
+
+/-- An odd `m ≥ N` is in `A` or the sum of an odd and an even element of `A`. -/
+@[category API, AMS 11]
+private lemma cover_odd (H : KellySetup A N) {m : ℕ} (hm : N ≤ m) (hm2 : m % 2 = 1) :
+    m ∈ A ∨ ∃ x ∈ A, ∃ y ∈ A, x % 2 = 1 ∧ y % 2 = 0 ∧ x + y = m := by
+  rcases H.cover m hm with h | ⟨x, hx, y, hy, -, hxy⟩ | ⟨x, -, hxx⟩
+  · exact .inl h
+  · rcases Nat.mod_two_eq_zero_or_one x with h | h
+    · exact .inr ⟨y, hy, x, hx, by omega, h, by omega⟩
+    · exact .inr ⟨x, hx, y, hy, h, by omega, hxy⟩
+  · omega
+
+@[category API, AMS 11]
+private lemma isRSum_odd (H : KellySetup A N) {m : ℕ} (hm : N ≤ m) (hm2 : m % 2 = 1) :
+    IsRSum A 2 m := by
+  rcases H.cover_odd hm hm2 with h | ⟨x, hx, y, hy, hx2, hy2, rfl⟩
+  · obtain ⟨S, hSA, hS, hSm⟩ := isRSum_one h
+    exact ⟨S, hSA, hS.trans (by norm_num), hSm⟩
+  · exact isRSum_two hx hy (by omega)
+
+/-- Arbitrarily large `n` that are not sums of at most four distinct elements of `A`. They are
+even, since an odd `n ≥ N` is a sum of at most two distinct elements. -/
+@[category API, AMS 11]
+private lemma bad' (H : KellySetup A N) (M : ℕ) : ∃ n, M ≤ n ∧ n % 2 = 0 ∧ ¬ IsRSum A 4 n := by
+  obtain ⟨n, hn, hbad⟩ := H.bad (M + N)
+  refine ⟨n, by omega, ?_, hbad⟩
+  by_contra h
+  exact hbad ((H.isRSum_odd (m := n) (by omega) (by omega)).le_four (by norm_num) rfl)
+
+/-- An odd `c ≥ N` in `A` is not also a sum of two distinct elements of `A`. -/
+@[category API, AMS 11]
+private lemma unique (H : KellySetup A N) {c x y : ℕ} (hc : c ∈ A) (hcN : N ≤ c)
+    (hc2 : c % 2 = 1) (hx : x ∈ A) (hy : y ∈ A) (hxy : x ≠ y) (hsum : x + y = c) : False := by
+  obtain ⟨n, hn, hn2, hbad⟩ := H.bad' (3 * c + N + 1)
+  have hx0 : x ≠ 0 := fun h ↦ H.zero (h ▸ hx)
+  have hy0 : y ≠ 0 := fun h ↦ H.zero (h ▸ hy)
+  rcases H.cover_odd (m := n - c) (by omega) (by omega) with h | ⟨p, hp, q, hq, hp2, hq2, hpq⟩
+  · exact hbad (((isRSum_one hc).add h (by omega)).le_four (by norm_num) (by omega))
+  · by_cases hpc : p = c
+    -- `n = x + y + c + q` with `x, y < c < q`.
+    · exact hbad ((isRSum_four hx hy hc hq hxy (by omega) (by omega) (by omega) (by omega)
+        (by omega)).le_four le_rfl (by omega))
+    · exact hbad ((isRSum_three hc hp hq (Ne.symm hpc) (by omega) (by omega)).le_four
+        (by norm_num) (by omega))
+
+/-- If `o, e ∈ A` are odd and even with `o + e ≥ N`, then `o + e / 2 ∈ A`. -/
+@[category API, AMS 11]
+private lemma half (H : KellySetup A N) {o e : ℕ} (ho : o ∈ A) (he : e ∈ A) (ho2 : o % 2 = 1)
+    (he2 : e % 2 = 0) (hN : N ≤ o + e) : o + e / 2 ∈ A := by
+  obtain ⟨n, hn, hn2, hbad⟩ := H.bad' (4 * (o + e) + N + 1)
+  rcases H.cover_odd (m := n - (o + e)) (by omega) (by omega) with
+    h | ⟨p, hp, q, hq, hp2, hq2, hpq⟩
+  · exact (hbad ((isRSum_three ho he h (by omega) (by omega) (by omega)).le_four (by norm_num)
+      (by omega))).elim
+  · by_cases hpo : p = o
+    -- `n = (2 * o + e) + q` with `q > 2 * o + e`, so `2 * o + e` is twice an element.
+    · rcases H.cover (2 * o + e) (by omega) with h | ⟨x, hx, y, hy, hxy, hsum⟩ | ⟨x, hx, hxx⟩
+      · exact (hbad (((isRSum_one h).add hq (by omega)).le_four (by norm_num)
+          (by omega))).elim
+      · exact (hbad (((isRSum_two hx hy hxy).add hq (by omega)).le_four (by norm_num)
+          (by omega))).elim
+      · convert hx using 1
+        omega
+    · by_cases hqe : q = e
+      -- `n = (o + 2 * e) + p` with `p > o + 2 * e`.
+      · exact (hbad (((H.isRSum_odd (m := o + 2 * e) (by omega) (by omega)).add hp
+          (by omega)).le_four (by norm_num) (by omega))).elim
+      · exact (hbad ((isRSum_four ho he hp hq (by omega) (Ne.symm hpo) (by omega) (by omega)
+          (Ne.symm hqe) (by omega)).le_four le_rfl (by omega))).elim
+
+/-- There are no odd `z < w` in `A` with `w + N ≤ 2 * z`. -/
+@[category API, AMS 11]
+private lemma lacunary (H : KellySetup A N) {z w : ℕ} (hz : z ∈ A) (hw : w ∈ A)
+    (hz2 : z % 2 = 1) (hw2 : w % 2 = 1) (hzw : z < w) (hwz : w + N ≤ 2 * z) :
+    False := by
+  obtain ⟨n, hn, hn2, hbad⟩ := H.bad' (4 * z + N + 1)
+  rcases H.cover_odd (m := n - z) (by omega) (by omega) with h | ⟨p, hp, q, hq, hp2, hq2, hpq⟩
+  · exact hbad (((isRSum_one hz).add h (by omega)).le_four (by norm_num) (by omega))
+  · by_cases hpz : p = z
+    -- `n = (2 * z - w) + w + q` with `2 * z - w < w < q`.
+    · have h := (H.isRSum_odd (m := 2 * z - w) (by omega) (by omega)).add hw (by omega)
+      exact hbad ((h.add hq (by omega)).le_four le_rfl (by omega))
+    · exact hbad ((isRSum_three hz hp hq (Ne.symm hpz) (by omega) (by omega)).le_four
+        (by norm_num) (by omega))
+
+/-- An even `e ∈ A` with `o + e ≥ N` for an odd `o ∈ A` is not divisible by `4`. -/
+@[category API, AMS 11]
+private lemma mod_four (H : KellySetup A N) {o e : ℕ} (ho : o ∈ A) (he : e ∈ A)
+    (ho2 : o % 2 = 1) (he4 : e % 4 = 0) (hN : N ≤ o + e) : False := by
+  have hz := H.half ho he ho2 (by omega) hN
+  have hz' := H.half hz he (by omega) (by omega) (by omega)
+  exact H.unique (c := o + e) (by convert hz' using 1; omega) hN (by omega) ho he (by omega) rfl
+
+/-- The large odd numbers `≡ r (mod 4)` cannot all be sums `o + e` with an even `e < B`. -/
+@[category API, AMS 11]
+private lemma end_ (H : KellySetup A N) {B r : ℕ} (hr : r % 2 = 1) (hr4 : r < 4)
+    (hB : ∀ o ∈ A, ∀ e ∈ A, o % 2 = 1 → e % 2 = 0 → (o + e) % 4 = r → e < B) : False := by
+  by_cases hz : ∃ z ∈ A, z % 2 = 1 ∧ N + B + 4 ≤ z
+  -- An odd `m ≡ r` just above `z + B` is too close to `z`.
+  · obtain ⟨z, hz, hz2, hzN⟩ := hz
+    obtain ⟨m, hm4, hm1, hm2⟩ : ∃ m, m % 4 = r ∧ z + B < m ∧ m ≤ z + B + 4 :=
+      ⟨z + B + 1 + (r + 4 - (z + B + 1) % 4) % 4, by omega, by omega, by omega⟩
+    rcases H.cover_odd (m := m) (by omega) (by omega) with h | ⟨x, hx, y, hy, hx2, hy2, hxy⟩
+    · exact H.lacunary hz h hz2 (by omega) (by omega) (by omega)
+    · have := hB x hx y hy hx2 hy2 (by omega)
+      exact H.lacunary hz hx hz2 hx2 (by omega) (by omega)
+  -- All odd elements are small, so a large odd `m ≡ r` is not reached.
+  · push Not at hz
+    rcases H.cover_odd (m := 4 * (N + B + 4) + r) (by omega) (by omega) with
+      h | ⟨x, hx, y, hy, hx2, hy2, hxy⟩
+    · have := hz _ h (by omega)
+      omega
+    · have := hB x hx y hy hx2 hy2 (by omega)
+      have := hz x hx hx2
+      omega
+
+@[category API, AMS 11]
+private lemma false (H : KellySetup A N) : False := by
+  obtain ⟨o₀, ho₀, ho₀2⟩ : ∃ o ∈ A, o % 2 = 1 := by
+    rcases H.cover_odd (m := 2 * N + 1) (by omega) (by omega) with h | ⟨x, hx, -, -, hx2, -, -⟩
+    · exact ⟨_, h, by omega⟩
+    · exact ⟨x, hx, hx2⟩
+  by_cases hE : ∃ e ∈ A, e % 2 = 0 ∧ 2 * N ≤ e
+  · obtain ⟨e, he, he2, heN⟩ := hE
+    -- Every odd `o ∈ A` has `o + e / 2 ≡ 2 (mod 4)`, so all odd elements are congruent mod `4`.
+    have key : ∀ o ∈ A, o % 2 = 1 → (o + e / 2) % 4 = 2 := by
+      intro o ho ho2
+      have he4 : e % 4 = 2 := by
+        by_contra h
+        exact H.mod_four ho he ho2 (by omega) (by omega)
+      have hw := H.half ho he ho2 he2 (by omega)
+      by_contra h
+      exact H.mod_four ho hw ho2 (by omega) (by omega)
+    refine H.end_ (B := N) (r := o₀ % 4) (by omega) (by omega) fun o ho f hf ho2 hf2 hr ↦ ?_
+    by_contra hfN
+    have h1 := key o ho ho2
+    have h2 := key o₀ ho₀ ho₀2
+    exact H.mod_four ho hf ho2 (by omega) (by omega)
+  · push Not at hE
+    exact H.end_ (B := 2 * N) (r := 1) (by omega) (by omega) fun _ _ f hf _ hf2 _ ↦ hE f hf hf2
+
+end KellySetup
+
+end Kelly
+
 /--
 Kelly [Ke57] showed that any basis of order $2$ has restricted order at most $4$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_338.variants.kelly (A : Set ℕ) (hA : HasOrder A 2) : HasRestrictedOrder A 4 := by
-  sorry
+  by_contra hR
+  unfold HasRestrictedOrder at hR
+  obtain ⟨N, hN⟩ := eventually_atTop.1 hA
+  -- Work with the positive elements of `A`; a summand `0` is never needed.
+  refine KellySetup.false (A := {x | x ∈ A ∧ x ≠ 0}) (N := N + 1) ⟨fun h ↦ h.2 rfl, ?_, ?_⟩
+  · intro m hm
+    obtain ⟨S, hSA, hS2, rfl⟩ := hN m (by omega)
+    simp only [Set.mem_ofPred_eq]
+    obtain h | h | h : Multiset.card S = 0 ∨ Multiset.card S = 1 ∨ Multiset.card S = 2 := by
+      omega
+    · simp [Multiset.card_eq_zero.1 h] at hm
+    · obtain ⟨a, rfl⟩ := Multiset.card_eq_one.1 h
+      simp only [Multiset.sum_singleton] at hm ⊢
+      exact .inl ⟨hSA a (by simp), by omega⟩
+    · obtain ⟨x, y, rfl⟩ := Multiset.card_eq_two.1 h
+      have hx : x ∈ A := hSA x (by simp)
+      have hy : y ∈ A := hSA y (by simp)
+      simp only [Multiset.insert_eq_cons, Multiset.sum_cons, Multiset.sum_singleton] at hm ⊢
+      rcases Nat.eq_zero_or_pos x with rfl | hx0
+      · exact .inl ⟨by simpa using hy, by omega⟩
+      rcases Nat.eq_zero_or_pos y with rfl | hy0
+      · exact .inl ⟨by simpa using hx, by omega⟩
+      by_cases hxy : x = y
+      · exact .inr (.inr ⟨x, ⟨hx, by omega⟩, by omega⟩)
+      · exact .inr (.inl ⟨x, ⟨hx, by omega⟩, y, ⟨hy, by omega⟩, hxy, rfl⟩)
+  · intro M
+    obtain ⟨n, hn, hbad⟩ := frequently_atTop.1 (not_eventually.1 hR) M
+    exact ⟨n, hn, fun ⟨S, hSB, hS⟩ ↦ hbad ⟨S, fun x hx ↦ (hSB x hx : x ∈ A ∧ x ≠ 0).1, hS⟩⟩
 
 /--
 Kelly [Ke57] showed that any basis of order $2$ with positive lower density has restricted order
