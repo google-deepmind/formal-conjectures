@@ -31,27 +31,10 @@ the firms' average partner rank.
 
 @[expose] public section
 
-open Filter MeasureTheory ProbabilityTheory
+open Filter MeasureTheory SwitchingCostMatching
 open scoped Topology
 
 namespace SwitchingCostHyperbola
-
-/-- The two utilities for each firm-worker pair. `false` indexes the firm and `true` the worker. -/
-abbrev Profile (n : ℕ) := (Bool × Fin n × Fin (n + 1)) → ℝ
-
-/-- A matching assigns every firm a distinct worker. -/
-abbrev Matching (n : ℕ) := Fin n ↪ Fin (n + 1)
-
-/-- A pair blocks if the firm gains more than the switching cost and the worker either has no
-partner or gains more than the switching cost. -/
-def IsBlockingPair {n : ℕ} (p : Profile n) (ε : ℝ) (m : Matching n) (i : Fin n)
-    (j : Fin (n + 1)) : Prop :=
-  j ≠ m i ∧ p (false, i, m i) + ε < p (false, i, j) ∧
-    ∀ k, m k = j → p (true, k, j) + ε < p (true, i, j)
-
-/-- A matching is stable at cost $\varepsilon$ if no pair blocks at that cost. -/
-def IsStable {n : ℕ} (p : Profile n) (ε : ℝ) (m : Matching n) : Prop :=
-  ∀ i j, ¬ IsBlockingPair p ε m i j
 
 open scoped Classical in
 /-- The sum of the firms' partner ranks. Each rank counts all workers at least as good as the
@@ -78,10 +61,6 @@ theorem exists_isOptimal {n : ℕ} {p : Profile n} {ε : ℝ} (h : ∃ m, IsStab
   obtain ⟨m, hm, hmin⟩ := Set.exists_min_image {m | IsStable p ε m}
     (fun m ↦ toLex (workerRankSum p m, firmRankSum p m)) (Set.toFinite _) h
   exact ⟨m, hm, fun m' hm' ↦ Prod.Lex.le_iff.mp (hmin m' hm')⟩
-
-/-- The law of independent rate-one exponential utilities. -/
-noncomputable def profileMeasure (n : ℕ) : Measure (Profile n) :=
-  Measure.pi fun _ ↦ expMeasure 1
 
 /-- Profiles for which a rank-minimizing stable matching has normalized rank product within
 $\delta$ of $1$, at the switching cost used in Figure 5. -/
