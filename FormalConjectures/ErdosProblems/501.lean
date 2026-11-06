@@ -84,7 +84,8 @@ For every `n : ℕ` and every family `A : ℝ → Set ℝ` of bounded sets with 
 outer measure `< 1`, there exists a finite independent set of size at least `n`.
 
 This was proved by Erdős and Hajnal [ErHa60]. -/
-@[category research solved, question, AMS 5 28]
+@[category research solved, question, AMS 5 28, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/03742e1cb34aac6f167c6a02aa0719b4cfcc1c5c/erdos-501/Solution.lean#L29"]
 theorem erdos_501.variants.erdosHajnal_finite :
     ∀ (n : ℕ) (A : ℝ → Set ℝ),
       (∀ x, Bornology.IsBounded (A x)) →
