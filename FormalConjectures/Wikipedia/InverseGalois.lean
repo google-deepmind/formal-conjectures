@@ -57,7 +57,7 @@ theorem inverse_galois_problem {G : Type*} [Fintype G] [Group G] :
 /--
 Every finite cyclic group is realizable.
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_InverseGalois_inverse_galois_problem_variants_cyclic.lean#L156"]
 theorem inverse_galois_problem.variants.cyclic
     {G : Type*} [Fintype G] [Group G] [IsCyclic G] :
     IsRealizable ℚ G := by
@@ -66,7 +66,7 @@ theorem inverse_galois_problem.variants.cyclic
 /--
 Every finite abelian group is realizable.
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_InverseGalois_inverse_galois_problem_variants_abelian.lean#L161"]
 theorem inverse_galois_problem.variants.abelian
     {G : Type*} [Fintype G] [CommGroup G] :
     IsRealizable ℚ G := by
