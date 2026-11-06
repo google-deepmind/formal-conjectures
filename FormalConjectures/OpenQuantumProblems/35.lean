@@ -743,7 +743,8 @@ theorem ame_4_2_not_exists : ¬ ExistsAME 4 2 := by
   sorry
 
 /-- Source-backed benchmark statement: no $\mathrm{AME}(7,2)$ state exists; see Huber--Gühne--Siewert (2017) and the OQP page. -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-02-000010"]
 theorem ame_7_2_not_exists : ¬ ExistsAME 7 2 := by
   sorry
 
