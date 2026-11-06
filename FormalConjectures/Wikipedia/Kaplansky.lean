@@ -22,6 +22,11 @@ public import FormalConjecturesUtil
 
 *References:*
 * [Wikipedia](https://en.wikipedia.org/wiki/Kaplansky%27s_conjectures)
+* [Ka69] I. Kaplansky, *Fields and Rings*, Chicago Lectures in Mathematics, University of
+  Chicago Press, 1969.
+* [OAI26c] OpenAI, *A Counterexample to Kaplansky's Direct-Finiteness Conjecture in
+  Characteristic Two*. OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/paper.pdf
 * [OAI26a] OpenAI, *A Torsion-Free Group Algebra with Zero Divisors*. OpenAI Math Release
   preprint (2026).
   https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-Torsion-Free-Group-Algebra-with-Zero-Divisors-September-23-2026/paper.pdf
@@ -49,7 +54,7 @@ If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero di
 This is false. It was disproved by an internal OpenAI model in September 2026 [OAI26a], which
 constructed a finitely presented torsion-free group $G$ and non-zero
 $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$; see
-`counter_zero_divisor_conjecture` and the linked Lean proof.
+`counter_zero_divisor_conjecture` and OpenAI's Lean proof.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
@@ -145,12 +150,57 @@ theorem counter_unit_conjecture_weak (p : ℕ) (hp : p = 0 ∨ p.Prime) :
   have ⟨G, _, _, hG⟩ := counter_unit_conjecture
   ⟨G, _, ‹_›, hG p hp⟩
 
+/-! ## Direct finiteness -/
+
+/--
+**Kaplansky's direct finiteness conjecture** asserts that for every field $K$ and every group
+$G$, the group algebra $K[G]$ is directly finite: $ab = 1$ implies $ba = 1$.
+
+It is false. An internal OpenAI model found a finite field $K$ of characteristic two, a finitely
+generated group $G$ and $a, b \in K[G]$ with $ab = 1$ and $ba \neq 1$ in September 2026
+[OAI26c]; see `direct_finiteness_conjecture.variants.char_two` and OpenAI's Lean proof.
+-/
+@[category research solved, AMS 16 20]
+theorem direct_finiteness_conjecture :
+    ¬ ∀ (K : Type) [Field K] (G : Type) [Group G],
+      IsDedekindFiniteMonoid (MonoidAlgebra K G) := by
+  sorry
+
+/--
+The counterexample of [OAI26c], as stated in OpenAI's Lean proof: a finite field $K$ of
+characteristic two, a finitely generated group $G$ and $a, b \in K[G]$ with $ab = 1$ and
+$ba \neq 1$.
+-/
+@[category research solved, AMS 16 20]
+theorem direct_finiteness_conjecture.variants.char_two :
+    ∃ (K : Type) (_ : Field K) (_ : Fintype K) (_ : CharP K 2),
+      ∃ (G : Type) (_ : Group G) (_ : Group.FG G),
+        ∃ a b : MonoidAlgebra K G, a * b = 1 ∧ b * a ≠ 1 := by
+  sorry
+
+/--
+Kaplansky proved the conjecture for fields of characteristic zero [Ka69].
+-/
+@[category research solved, AMS 16 20]
+theorem direct_finiteness_conjecture.variants.char_zero (K : Type*) [Field K] [CharZero K]
+    (G : Type*) [Group G] : IsDedekindFiniteMonoid (MonoidAlgebra K G) := by
+  sorry
+
+/-- The counterexample of [OAI26c] refutes `direct_finiteness_conjecture`. -/
+@[category test, AMS 16 20]
+theorem direct_finiteness_conjecture_of_char_two
+    (h : type_of% direct_finiteness_conjecture.variants.char_two) :
+    type_of% direct_finiteness_conjecture := by
+  intro hall
+  obtain ⟨K, _, _, _, G, _, _, a, b, hab, hba⟩ := h
+  exact hba ((isDedekindFiniteMonoid_iff _).mp (hall K G) hab)
+
 set_option linter.style.formal_proof_palomar false in
 /--
 The **Zero-divisor Conjecture** is false: there is a finitely presented torsion-free group $G$
 and non-zero $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see OpenAI's Lean
 proof.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
