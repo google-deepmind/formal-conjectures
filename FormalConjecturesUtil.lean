@@ -19,6 +19,7 @@ public import Mathlib
 public import FormalConjecturesForMathlib
 public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
 public meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
+public import FormalConjecturesUtil.EnvLinters
 public import FormalConjecturesUtil.Linters.AMSLinter
 public import FormalConjecturesUtil.Linters.CategoryDocstringLinter
 public import FormalConjecturesUtil.Linters.CategoryLinter
