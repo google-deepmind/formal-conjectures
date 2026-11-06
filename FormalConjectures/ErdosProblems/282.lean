@@ -82,16 +82,21 @@ theorem erdos_282.variants.fibonacci {x : ℚ} (hx : x ∈ Set.Ioo 0 1) :
     greedyUnitFractionRem .univ x =ᶠ[atTop] 0 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Graham has shown that $\frac{m}{n}$ is the sum of distinct unit fractions
 with denominators $\equiv a\pmod{d}$ if and only if
 $$\left(\frac{n}{(n,a,d)},\frac{d}{(a,d)}\right)=1.$$
 Does the greedy algorithm always
 terminate in such cases?
+
+This was disproved by Ilia Pauzner using Gemini.
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5,
+  formal_proof using formal_conjectures at
+    "https://github.com/ilpauzner/formal-conjectures/blob/22f18462621b740da48c10482592d3cfac173a66/FormalConjectures/ErdosProblems/282.lean#L180"]
 theorem erdos_282.variants.graham :
-    ∀ x : ℚ, x ∈ Set.Ioo 0 1 → ∀ a d : ℕ, 1 < d →
+    ¬ ∀ x : ℚ, x ∈ Set.Ioo 0 1 → ∀ a d : ℕ, 1 < d →
       (x.den / x.den.gcd (a.gcd d)).gcd (d / a.gcd d) = 1 →
       greedyUnitFractionRem { n | n ≡ a [MOD d] } x =ᶠ[atTop] 0 := by
   sorry
