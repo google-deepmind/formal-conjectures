@@ -42,8 +42,6 @@ edge-disjoint exactly when their vertex sets share at most one vertex.
   [arXiv:2101.04698](https://arxiv.org/abs/2101.04698)
 -/
 
--- Contributor note: Google CLA re-signed by the author (2026-11-05).
-
 @[expose] public section
 
 open Filter
