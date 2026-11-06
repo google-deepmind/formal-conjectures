@@ -125,7 +125,7 @@ remain open. The values below are collected in the dynamic survey [Rad] (see als
 for $3 \le k \le 9$, and $R(4,5) = 25$. -/
 
 /-- $R(3,3) = 6$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using formal_conjectures at "https://github.com/Stayfoool/formal-conjectures/blob/e5fc635bf4d7cc7edad15a6c6527a6fd7be7ea07/FormalConjectures/Wikipedia/RamseyNumbers.lean#L266"]
 theorem ramsey_number_three_three : R(3, 3) = 6 := by
   sorry
 
