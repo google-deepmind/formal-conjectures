@@ -49,6 +49,8 @@ The intersection multiplicity is `Module.intersectionMultiplicity`, defined in
   Invent. Math. 90 (1987), 243–277.
 - [Ro98] P. Roberts, *Recent developments on Serre's multiplicity conjectures: Gabber's proof of
   the nonnegativity conjecture*, Enseign. Math. 44 (1998), 305–324.
+- [OAI26] OpenAI, *Positivity of Serre's Intersection Multiplicity*, manuscript, September 23,
+  2026. [repository, pinned commit](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb)
 - [Sk19] C. Skalit, *Positivity of intersection multiplicity over a two-dimensional base*,
   J. Pure Appl. Algebra 223 (2019), 1801–1816.
   [arXiv:1510.05146](https://arxiv.org/abs/1510.05146)
@@ -105,6 +107,10 @@ $\dim M + \dim N = \dim R$, then $\chi(M, N) > 0$.
 
 The hypothesis on dimensions forces $M$ and $N$ to be nonzero, since the dimension of the zero
 module is $\bot$.
+
+A September 2026 manuscript [OAI26, Theorem 1.1] (openai/math repository, pinned commit linked in
+the references) claims a proof in general, including ramified mixed characteristic. It is
+unrefereed; status unchanged.
 -/
 @[category research open, AMS 13 14]
 theorem intersectionMultiplicity_pos (h : IsFiniteLength R (M ⊗[R] N))
