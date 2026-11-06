@@ -19,3 +19,7 @@ FormalConjectures/All.lean
 
 # Python bytecode from the scripts in `scripts/`.
 __pycache__/
+
+# Generated review bundles and model-evaluation runs; benchmark inputs stay tracked.
+/review-artifacts/
+/.agents/skills/formal-conjectures-review/evals/results/

@@ -1,0 +1,26 @@
+Source: https://www.erdosproblems.com/latex/996
+Retrieved: 2026-09-08
+Original response SHA256: 5fd022a2518aca7b2600be60e81be2a80a9f3cdcc8fec841de7545b1d5615cfe
+Extraction: complete problem box, no FC reviews.
+
+Let $n_1<n_2<\cdots$ be a lacunary sequence of integers, and let $f\in L^2([0,1])$. Let $f_n$ be the $n$th partial sum of the Fourier series of $f(x)$. Is there an absolute constant $C>0$ such that, if\[\| f-f_n\|_2 \ll \frac{1}{(\log\log\log n)^{C}}\]then\[\lim_{N\to\infty}\frac{1}{N}\sum_{k\leq N}f(\{\alpha n_k\})=\int_0^1 f(x)\mathrm{d}x\]for almost every $\alpha$?
+Raikov proved the conclusion always holds (for every $f\in L^2([0,1])$, with no assumption on $\| f-f_n\|_2$) if $n_k=a^k$ for some integer $a\geq 2$. Erd\H{o}s \cite{Er64b} also asked whether this is true for $n_k=\lfloor a^k\rfloor$ for some $a>1$.
+Kac, Salem, and Zygmund \cite{KSZ48} proved that the conclusion holds if\[\| f-f_n\|_2 \ll \frac{1}{(\log n)^{c}}\]for some constant $c>1$. Erd\H{o}s \cite{Er49d} proved that the conclusion holds if\[\| f-f_n\|_2 \ll \frac{1}{(\log\log n)^{c}}\]for some constant $c>1$. Matsuyama \cite{Ma66} improved this to $c>1/2$.
+In \cite{Er64b} Erd\H{o}s asked whether the conclusion holds for all bounded functions $f$ and lacunary sequences $n_k$.
+References
+[Er49d] Erd\H{o}s, P.,
+On the strong law of large numbers
+. Trans. Amer. Math. Soc. (1949), 51--56.
+  
+  [Er64b] Erd\H{o}s, P.,
+Problems and results on diophantine approximations
+. Compositio Math. (1964), 52-65.
+  
+  [KSZ48] Kac, M. and Salem, R. and Zygmund, A.,
+A gap theorem
+. Trans. Amer. Math. Soc. (1948), 235--243.
+  
+  [Ma66] Matsuyama, Noboru,
+On the strong law of large numbers
+. Tohoku Math. J. (2) (1966), 259--269.
+Back to the problem

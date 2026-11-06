@@ -1,0 +1,45 @@
+# Greetings from The On-Line Encyclopedia of Integer Sequences! http://oeis.org/
+
+Search: id:a005156
+Showing 1-1 of 1
+
+%I A005156 M3115 #67 May 30 2026 16:39:47
+%S A005156 1,1,3,26,646,45885,9304650,5382618660,8878734657276,
+%T A005156 41748486581283118,559463042542694360707,21363742267675013243931852,
+%U A005156 2324392978926652820310084179576,720494439459132215692530771292602232,636225819409712640497085074811372777428304
+%N A005156 Number of alternating sign 2n+1 X 2n+1 matrices symmetric about the vertical axis (VSASM's); also 2n X 2n off-diagonally symmetric alternating sign matrices (OSASM's).
+%C A005156 a(n+1) is the Hankel transform of A006013. - _Paul Barry_, Jan 20 2007
+%C A005156 a(n+1) is the Hankel transform of A025174(n+1). - _Paul Barry_, Apr 14 2008
+%C A005156 a(n) is the number of descending plane partitions (DPPs) of order 2*n+1 which are self-dual (with respect to the unique antiautomorphism of the lattice of DPPs, cf. MRR83). If n is even, no DPP of order n is self-dual. - _Ludovic Schwob_, Oct 29 2025
+%D A005156 D. M. Bressoud, Proofs and Confirmations, Camb. Univ. Press, 1999; p. 201, VS(2n+1).
+%D A005156 N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).
+%H A005156 Gheorghe Coserea, <a href="/A005156/b005156.txt">Table of n, a(n) for n = 0..66</a>
+%H A005156 Paul Barry, <a href="https://cs.uwaterloo.ca/journals/JIS/VOL19/Barry/barry321.html">Jacobsthal Decompositions of Pascal's Triangle, Ternary Trees, and Alternating Sign Matrices</a>, Journal of Integer Sequences, 19, 2016, #16.3.5.
+%H A005156 Paul Barry, <a href="https://arxiv.org/abs/1912.11845">Chebyshev moments and Riordan involutions</a>, arXiv:1912.11845 [math.CO], 2019.
+%H A005156 Paul Barry, <a href="https://arxiv.org/abs/2104.01644">Centered polygon numbers, heptagons and nonagons, and the Robbins numbers</a>, arXiv:2104.01644 [math.CO], 2021.
+%H A005156 Paul Barry, <a href="https://doi.org/10.3390/math13020242">Extensions of Riordan Arrays and Their Applications</a>, Mathematics (2025) Vol. 13, No. 2, 242. See p. 23.
+%H A005156 M. T. Batchelor, J. de Gier and B. Nienhuis, <a href="http://arXiv.org/abs/cond-mat/0101385">The quantum symmetric XXZ chain at Delta=-1/2, alternating sign matrices and plane partitions</a>, arXiv:cond-mat/0101385 [cond-mat.stat-mech], 2001, (see A_V(2n+1)).
+%H A005156 N. T. Cameron, <a href="https://www.math.hmc.edu/~cameron/dissertation.pdf">Random walks, trees and extensions of Riordan group techniques</a>, Dissertation, Howard University, 2002.
+%H A005156 J. de Gier, <a href="https://arxiv.org/abs/math/0211285">Loops, matchings and alternating-sign matrices</a>, arXiv:math/0211285 [math.CO], 2002-2003.
+%H A005156 I. Fischer, <a href="https://arxiv.org/abs/math/0501102">The number of monotone triangles with prescribed bottom row</a>, arXiv:math/0501102 [math.CO], 2005.
+%H A005156 I. Gessel and G. Xin, <a href="https://arxiv.org/abs/math/0505217">The generating function of ternary trees and continued fractions</a>, arXiv:math/0505217 [math.CO], 2005.
+%H A005156 W. Hebsich and M. Rubey, <a href="https://arxiv.org/abs/math/0702086">Extended Rate, More Gfun</a>, arXiv:math/0702086 [math.CO], 2007. [See p. 23.]
+%H A005156 G. Kuperberg, <a href="https://arxiv.org/abs/math/0008184">Symmetry classes of alternating-sign matrices under one roof</a>, arXiv:math/0008184 [math.CO], 2000-2001, (see A_V(2n+1)).
+%H A005156 W. H. Mills, David P Robbins, and Howard Rumsey Jr., <a href="https://doi.org/10.1016/0097-3165(83)90068-7">Alternating sign matrices and descending plane partitions</a> J. Combin. Theory Ser. A 34 (1983), no. 3, 340--359. MR0700040 (85b:05013).
+%H A005156 A. V. Razumov and Yu. G. Stroganov, <a href="http://arXiv.org/abs/math-ph/0312071">On refined enumerations of some symmetry classes of alternating sign matrices</a>, arXiv:math-ph/0312071, 2003.
+%H A005156 D. P. Robbins, <a href="https://arxiv.org/abs/math/0008045">Symmetry classes of alternating sign matrices</a>, arXiv:math/0008045 [math.CO], 2000.
+%H A005156 R. P. Stanley, <a href="https://doi.org/10.1007/BFb0072521">A baker's dozen of conjectures concerning plane partitions</a>, pp. 285-293 of "Combinatoire Enumerative (Montreal 1985)", Lect. Notes Math. 1234, 1986.
+%H A005156 R. P. Stanley, <a href="/A005130/a005130.pdf">A baker's dozen of conjectures concerning plane partitions</a>, pp. 285-293 of "Combinatoire Enumerative (Montreal 1985)", Lect. Notes Math. 1234, 1986. Preprint. [Annotated scanned copy]
+%F A005156 The formula for a(n) (see the Maple code) was conjectured by Robbins and proved by Kuperberg.
+%F A005156 a(n) = (1/2^n) * Product_{k=1..n} ((6k-2)!(2k-1)!)/((4k-1)!(4k-2)!) (Razumov/Stroganov).
+%F A005156 a(n) ~ exp(1/72) * Pi^(1/6) * 3^(3*n^2 + 3*n/2 + 11/72) / (A^(1/6) * Gamma(1/3)^(1/3) * n^(5/72) * 2^(4*n^2 + 3*n + 1/9)), where A = A074962 = 1.2824271291... is the Glaisher-Kinkelin constant. - _Vaclav Kotesovec_, Mar 01 2015
+%p A005156 A005156 := proc(n) local i,j,t1; (-3)^(n^2)*mul( mul( (6*j-3*i+1)/(2*j-i+2*n+1), j=1..n ),i=1..2*n+1); end;
+%t A005156 Table[1/2^n Product[((6k-2)!(2k-1)!)/((4k-1)!(4k-2)!),{k,n}],{n,0,20}] (* _Harvey P. Dale_, Jul 07 2011 *)
+%o A005156 (PARI) a(n) = prod(k = 0, n-1, (3*k+2)*(6*k+3)!*(2*k+1)!/((4*k+2)!*(4*k+3)!));
+%o A005156 vector(15, n, a(n-1))  \\ _Gheorghe Coserea_, May 30 2016
+%Y A005156 Cf. A109074, A134357.
+%K A005156 nonn,nice,easy
+%O A005156 0,3
+%A A005156 _N. J. A. Sloane_
+
+# Content is available under The OEIS End-User License Agreement: http://oeis.org/LICENSE
