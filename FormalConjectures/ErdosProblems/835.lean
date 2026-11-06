@@ -98,7 +98,8 @@ def johnsonBound : ℕ → ℕ → ℕ → ℕ
   | n + 1, d, w + 1 => if 2 * (w + 1) < d then 1 else (n + 1) * johnsonBound n d w / (w + 1)
 
 /-- Johnson's bound for the independence number of the Johnson graph. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-06-000013"]
 lemma indepNum_johnson_le_johnsonBound : α(J(n, k)) ≤ johnsonBound n 4 k := sorry
 
 /-- Johnson's bound for the chromatic number of the Johnson graph. -/
