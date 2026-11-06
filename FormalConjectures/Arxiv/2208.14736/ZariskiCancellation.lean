@@ -51,7 +51,8 @@ The **Zariski Cancellation Problem**: is every polynomial ring over a field `k` 
 
 The answer is no: the polynomial ring in four variables over $\mathbb{C}$ is not cancellative.
 This was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
-proof and `zariski_cancellation_problem.variants.false_complex_four`.
+proof and `zariski_cancellation_problem.variants.false_complex_four`. The linked statement is
+`zariski_cancellation_problem.variants.explicit`; see `zariski_cancellation_problem_of_explicit`.
 -/
 @[category research solved, AMS 13 14, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/AffineCancellation/Main.lean#L32"]
@@ -72,6 +73,73 @@ This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the 
 theorem zariski_cancellation_problem.variants.false_complex_four :
     ¬ IsCancellative ℂ (MvPolynomial (Fin 4) ℂ) := by
   sorry
+
+/- The definitions in `ComplexCancellation` are copied from the Lean statement linked at
+`zariski_cancellation_problem`. -/
+
+namespace ComplexCancellation
+
+noncomputable section
+
+/-- The ambient polynomial ring $\mathbb{C}[p, s, u, F, J]$. -/
+abbrev P := MvPolynomial (Fin 5) ℂ
+
+/-- The variable `p`. -/
+def p : P := MvPolynomial.X 0
+/-- The variable `s`. -/
+def s : P := MvPolynomial.X 1
+/-- The variable `u`. -/
+def u : P := MvPolynomial.X 2
+/-- The variable `F`. -/
+def F : P := MvPolynomial.X 3
+/-- The variable `J`. -/
+def J : P := MvPolynomial.X 4
+/-- The polynomial $x = s^2 + u^3 + p^2 F$. -/
+def x : P := s ^ 2 + u ^ 3 + p ^ 2 * F
+/-- The polynomial $H = x^2 F - (1 + 2 s x) J - p^2 J^2 - p u$ that cuts out the
+counterexample. -/
+def H : P := x ^ 2 * F - (1 + 2 * s * x) * J - p ^ 2 * J ^ 2 - p * u
+/-- The counterexample of [OAI26a]: the hypersurface algebra $\mathbb{C}[p, s, u, F, J]/(H)$. -/
+abbrev A := P ⧸ Ideal.span {H}
+
+end
+
+end ComplexCancellation
+
+open ComplexCancellation in
+/--
+The counterexample of [OAI26a], stated as in the linked Lean proof: the hypersurface algebra
+`ComplexCancellation.A` is a finitely generated $\mathbb{C}$-domain of Krull dimension $4$ with
+$A[w] \cong \mathbb{C}[x_1, \dots, x_5]$, but $A \not\cong \mathbb{C}[x_1, \dots, x_4]$.
+-/
+@[category research solved, AMS 13 14]
+theorem zariski_cancellation_problem.variants.explicit :
+    Algebra.FiniteType ℂ A ∧ IsDomain A ∧ ringKrullDim A = 4 ∧
+      Nonempty (Polynomial A ≃ₐ[ℂ] MvPolynomial (Fin 5) ℂ) ∧
+      ¬ Nonempty (A ≃ₐ[ℂ] MvPolynomial (Fin 4) ℂ) := by
+  sorry
+
+/-- The counterexample of [OAI26a] shows that $\mathbb{C}[x_1, \dots, x_4]$ is not cancellative.
+The test algebra `B` of `IsCancellative` may live in any universe, so `A` is lifted with `ULift`,
+and $\mathbb{C}[x_1, \dots, x_4][w] \cong \mathbb{C}[x_1, \dots, x_5]$ is
+`MvPolynomial.finSuccEquiv`. -/
+@[category test, AMS 13 14]
+theorem false_complex_four_of_explicit
+    (h : type_of% zariski_cancellation_problem.variants.explicit) :
+    type_of% zariski_cancellation_problem.variants.false_complex_four := by
+  obtain ⟨hfin, -, -, ⟨e⟩, hnot⟩ := h
+  intro hC
+  have : Algebra.FiniteType ℂ (ULift ComplexCancellation.A) := hfin.equiv ULift.algEquiv.symm
+  obtain ⟨f⟩ := hC ⟨(MvPolynomial.finSuccEquiv ℂ 4).symm.trans
+    (e.symm.trans (Polynomial.mapAlgEquiv ULift.algEquiv.symm))⟩
+  exact hnot ⟨(f.trans ULift.algEquiv).symm⟩
+
+/-- The counterexample of [OAI26a] answers `zariski_cancellation_problem`. -/
+@[category test, AMS 13 14]
+theorem zariski_cancellation_problem_of_explicit
+    (h : type_of% zariski_cancellation_problem.variants.explicit) :
+    type_of% zariski_cancellation_problem :=
+  fun hall => false_complex_four_of_explicit h hall
 
 /--
 The single variable polynomial ring `k[X]` is cancellative in any characteristic
