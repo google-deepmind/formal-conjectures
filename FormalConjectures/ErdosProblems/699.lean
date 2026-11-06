@@ -20,7 +20,14 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 699
 
-*Reference:* [erdosproblems.com/699](https://www.erdosproblems.com/699)
+*References:*
+ * [erdosproblems.com/699](https://www.erdosproblems.com/699)
+ * [ErSz78] Erdős, P. and Szekeres, G., _Some number theoretic problems on binomial
+   coefficients_. Austral. Math. Soc. Gaz. **5** (1978), 97-99.
+ * [Le26] Lee, P., _Erdős Problem 699 in Lean: every counterexample has
+   $n \le j^2$_ (2026).
+   [github.com/Paulee314/erdos699-lean](https://github.com/Paulee314/erdos699-lean)
+ * [PALOMAR-2026-10-27-000020](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-27-000020&version=1)
 -/
 
 @[expose] public section
@@ -44,6 +51,27 @@ theorem erdos_699 :
       1 ≤ i →
       i < j →
       j ≤ n / 2 →
+      ∃ p : ℕ, p.Prime ∧ i ≤ p ∧ p ∣ Nat.gcd (Nat.choose n i) (Nat.choose n j) := by
+  sorry
+
+/--
+Erdős Problem 699 holds when $j^2 < n$; equivalently, every counterexample has $n \le j^2$.
+
+Erdős and Szekeres [ErSz78] showed that
+$\gcd\big(\binom{n}{i}, \binom{n}{j}\big) \ge \binom{n}{i} / \binom{j}{i} \ge (n/j)^i$.
+If every prime factor of the gcd were below $i$, then the gcd would be at most $n^{i/2}$, since
+$p^{v_p \binom{n}{i}} \le n$ for every prime $p$ (Kummer) and there are at most $i/2$ primes
+below $i$. Together these give $n \le j^2$. See [Le26].
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Paulee314/erdos699-lean/blob/814f545f5f6475786aa5a04e4e795a25cda3670c/Solution.lean#L40"]
+theorem erdos_699.variants.of_sq_lt :
+    ∀ n i j : ℕ,
+      1 ≤ i →
+      i < j →
+      j ≤ n / 2 →
+      j ^ 2 < n →
       ∃ p : ℕ, p.Prime ∧ i ≤ p ∧ p ∣ Nat.gcd (Nat.choose n i) (Nat.choose n j) := by
   sorry
 
