@@ -21,8 +21,9 @@ public import Mathlib.Probability.Distributions.Exponential
 /-!
 # Matchings with switching costs
 
-The market with one extra worker from Pittel and Rudov's
+The market model from Pittel and Rudov's
 [Stable matchings under relaxed random preferences](https://doi.org/10.1007/s00182-026-01016-x).
+The worker count defaults to one more than the firm count.
 -/
 
 @[expose] public section
@@ -32,36 +33,40 @@ open MeasureTheory ProbabilityTheory
 namespace SwitchingCostMatching
 
 /-- The two utilities for each firm-worker pair. `false` indexes the firm and `true` the worker. -/
-abbrev Profile (n : ℕ) := (Bool × Fin n × Fin (n + 1)) → ℝ
+abbrev Profile (n : ℕ) (w : ℕ := n + 1) := (Bool × Fin n × Fin w) → ℝ
 
 /-- A matching assigns every firm a distinct worker. -/
-abbrev Matching (n : ℕ) := Fin n ↪ Fin (n + 1)
+abbrev Matching (n : ℕ) (w : ℕ := n + 1) := Fin n ↪ Fin w
 
 /-- A pair blocks if the firm gains more than the switching cost and the worker either has no
 partner or gains more than the switching cost. -/
-def IsBlockingPair {n : ℕ} (p : Profile n) (ε : ℝ) (m : Matching n) (i : Fin n)
-    (j : Fin (n + 1)) : Prop :=
+def IsBlockingPair {n w : ℕ} (p : Profile n w) (ε : ℝ) (m : Matching n w) (i : Fin n)
+    (j : Fin w) : Prop :=
   j ≠ m i ∧ p (false, i, m i) + ε < p (false, i, j) ∧
     ∀ k, m k = j → p (true, k, j) + ε < p (true, i, j)
 
 /-- A matching is stable at cost $\varepsilon$ if no pair blocks at that cost. -/
-def IsStable {n : ℕ} (p : Profile n) (ε : ℝ) (m : Matching n) : Prop :=
+def IsStable {n w : ℕ} (p : Profile n w) (ε : ℝ) (m : Matching n w) : Prop :=
   ∀ i j, ¬ IsBlockingPair p ε m i j
 
 /-- A stable matching remains stable when the switching cost increases. -/
-theorem IsStable.mono {n : ℕ} {p : Profile n} {ε ε' : ℝ} {m : Matching n}
+theorem IsStable.mono {n w : ℕ} {p : Profile n w} {ε ε' : ℝ} {m : Matching n w}
     (h : IsStable p ε m) (hle : ε ≤ ε') : IsStable p ε' m := by
   intro i j hblock
   exact h i j ⟨hblock.1, (add_le_add_right hle _).trans_lt hblock.2.1, fun k hk ↦
     (add_le_add_right hle _).trans_lt (hblock.2.2 k hk)⟩
 
 /-- The law of independent rate-one exponential utilities. -/
-noncomputable def profileMeasure (n : ℕ) : Measure (Profile n) :=
+noncomputable def profileMeasureWithWorkers (n w : ℕ) : Measure (Profile n w) :=
   Measure.pi fun _ ↦ expMeasure 1
 
-instance (n : ℕ) : IsProbabilityMeasure (profileMeasure n) := by
+instance (n w : ℕ) : IsProbabilityMeasure (profileMeasureWithWorkers n w) := by
   let := isProbabilityMeasure_expMeasure (r := 1) zero_lt_one
-  unfold profileMeasure
+  unfold profileMeasureWithWorkers
   infer_instance
+
+/-- The law of independent rate-one exponential utilities in a market with one extra worker. -/
+noncomputable abbrev profileMeasure (n : ℕ) : Measure (Profile n) :=
+  profileMeasureWithWorkers n (n + 1)
 
 end SwitchingCostMatching
