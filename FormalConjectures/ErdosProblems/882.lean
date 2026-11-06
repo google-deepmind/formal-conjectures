@@ -134,12 +134,13 @@ theorem erdos_882.variants.lower_bound_explicit (n : ℕ) (hn : 0 < n) :
     Real.logb 2 n - 1 < (maxAntichainCard n : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Sándor's construction (reported without reference in [Er98]) is claimed to achieve
 $\lvert A\rvert = (1-o(1))\log_2 n$ with $A = \{2^i + m 2^m : 0 \leq i < m\}$ and
 $n = 2^{m-1} + m 2^m$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using other_system at "https://github.com/karlesmarin/formalizations/blob/1aa7ad1ccadb6c7ba2378e3ee595fdd798f0f1b4/Isabelle/AFP/Sandor_Subset_Sum_Antichain/Sandor_Antichain.thy#L250"]
 theorem erdos_882.variants.sandor (m : ℕ) (hm : 1 ≤ m) :
     IsSubsetSumAntichain ((Finset.range m).image (fun i => 2 ^ i + m * 2 ^ m)) := by
   sorry
