@@ -141,6 +141,23 @@ theorem erdos_338.variants.same_order_after_finite_removal :
   sorry
 
 /--
+If $A \setminus F$ is a basis for every finite set $F$ and $A$ has positive lower density, then
+$A$ has a restricted order. So `Erdos338.erdos_338.variants.basis_after_finite_removal` has a
+positive answer for sets of positive lower density.
+
+This was shown by Daniel Veljjanoski on the
+[forum](https://www.erdosproblems.com/forum/thread/338#post-9251) (1 October 2026), with the
+bound $3\lceil 8/\delta^2\rceil - 2$ on the restricted order, where $\delta$ is the lower density
+of $A$. The linked formalisation proves the existence of a restricted order, not this bound.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-03-000016"]
+theorem erdos_338.variants.lowerDensity_pos :
+    ∀ A : Set ℕ, (∀ F : Set ℕ, F.Finite → ∃ h, HasOrder (A \ F) h) → 0 < A.lowerDensity →
+      ∃ t, HasRestrictedOrder A t := by
+  sorry
+
+/--
 Bateman observed that for $h \geq 3$ the set $A = \{1\} \cup \{x > 0 : h \mid x\}$ is a basis of
 order $h$ with no restricted order.
 -/
