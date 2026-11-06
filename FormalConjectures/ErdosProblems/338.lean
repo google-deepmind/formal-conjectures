@@ -209,7 +209,8 @@ finite restricted order, equal to $2^{k-2}+k-1$. The finiteness matters: without
 example `Erdos338.erdos_338.variants.bateman` would already give the bound. For $k = 2$ the bound
 is $2$, and $A = \{1\} \cup \{x : 2 \mid x\}$ works.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/03742e1cb34aac6f167c6a02aa0719b4cfcc1c5c/erdos-338/Solution.lean#L30"]
 theorem erdos_338.variants.hegyvari_hennecart_plagne :
     ∀ k : ℕ, 2 ≤ k → ∃ A : Set ℕ,
       basisOrder A = k ∧ restrictedOrder A = (2 ^ (k - 2) + k - 1 : ℕ) := by
