@@ -36,11 +36,10 @@ open scoped Topology
 
 namespace SwitchingCostHyperbola
 
-open scoped Classical in
 /-- The sum of the firms' partner ranks. Each rank counts all workers at least as good as the
 assigned worker, including that worker. -/
 noncomputable def firmRankSum {n : ℕ} (p : Profile n) (m : Matching n) : ℕ :=
-  ∑ i : Fin n, ∑ j : Fin (n + 1), if p (false, i, m i) ≤ p (false, i, j) then 1 else 0
+  ∑ i : Fin n, firmRank p i (m i)
 
 open scoped Classical in
 /-- The sum of the matched workers' partner ranks. Each rank counts all firms at least as good as
@@ -74,9 +73,7 @@ theorem measurableSet_goodProfiles (n : ℕ) (δ : ℝ) : MeasurableSet (goodPro
   classical
   have hf (m : Matching n) : Measurable fun p ↦ firmRankSum p m := by
     unfold firmRankSum
-    exact Finset.measurable_fun_sum _ fun i _ ↦ Finset.measurable_fun_sum _ fun j _ ↦
-      Measurable.ite (measurableSet_le (measurable_pi_apply _) (measurable_pi_apply _))
-        measurable_const measurable_const
+    exact Finset.measurable_fun_sum _ fun i _ ↦ measurable_firmRank i (m i)
   have hw (m : Matching n) : Measurable fun p ↦ workerRankSum p m := by
     unfold workerRankSum
     exact Finset.measurable_fun_sum _ fun i _ ↦ Finset.measurable_fun_sum _ fun k _ ↦

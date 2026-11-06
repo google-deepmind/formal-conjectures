@@ -37,6 +37,28 @@ abbrev Profile (n : ℕ) := (Bool × Fin n × Fin (n + 1)) → ℝ
 /-- A matching assigns every firm a distinct worker. -/
 abbrev Matching (n : ℕ) := Fin n ↪ Fin (n + 1)
 
+open scoped Classical in
+/-- A firm's rank for a worker counts all workers it values at least as much, including that
+worker. -/
+noncomputable def firmRank {n : ℕ} (p : Profile n) (i : Fin n) (j : Fin (n + 1)) : ℕ :=
+  ∑ k : Fin (n + 1), if p (false, i, j) ≤ p (false, i, k) then 1 else 0
+
+/-- For a fixed firm and worker, the rank is measurable as a function of the utility profile. -/
+theorem measurable_firmRank {n : ℕ} (i : Fin n) (j : Fin (n + 1)) :
+    Measurable fun p ↦ firmRank p i j := by
+  unfold firmRank
+  exact Finset.measurable_fun_sum _ fun k _ ↦
+    Measurable.ite (measurableSet_le (measurable_pi_apply _) (measurable_pi_apply _))
+      measurable_const measurable_const
+
+/-- A firm's rank for a worker is at most the number of workers. -/
+theorem firmRank_le {n : ℕ} (p : Profile n) (i : Fin n) (j : Fin (n + 1)) :
+    firmRank p i j ≤ n + 1 := by
+  unfold firmRank
+  calc
+    _ ≤ ∑ _ : Fin (n + 1), (1 : ℕ) := Finset.sum_le_sum fun _ _ ↦ by split <;> decide
+    _ = n + 1 := by simp
+
 /-- A pair blocks if the firm gains more than the switching cost and the worker either has no
 partner or gains more than the switching cost. -/
 def IsBlockingPair {n : ℕ} (p : Profile n) (ε : ℝ) (m : Matching n) (i : Fin n)
