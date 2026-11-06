@@ -35,4 +35,12 @@ def IsPathCover (G : SimpleGraph α) (P : Finset (Finset α)) : Prop :=
 noncomputable def pathCoverNumber (G : SimpleGraph α) : ℕ :=
   sInf { k | ∃ P : Finset (Finset α), P.card = k ∧ IsPathCover G P }
 
+variable {V : Type*}
+
+/-- The vertices of `G` can be covered by at most `k` paths of `G`. The paths are not required to
+be vertex-disjoint, and a single vertex counts as a path. -/
+def HasPathCover (G : SimpleGraph V) (k : ℕ) : Prop :=
+  ∃ (m : ℕ) (P : Fin m → (u : V) × (v : V) × G.Walk u v), m ≤ k ∧
+    (∀ i, (P i).2.2.IsPath) ∧ ∀ x : V, ∃ i, x ∈ (P i).2.2.support
+
 end SimpleGraph

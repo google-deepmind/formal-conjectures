@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
-public import FormalConjectures.ErdosProblems.«183»
 
 /-!
 # Erdős Problem 554
@@ -49,13 +48,12 @@ open scoped Topology
 
 namespace Erdos554
 
-/-- $R_k(K_3)$ agrees with `Erdos183.multicolourTriangleRamsey`: a colouring has a monochromatic
-triangle exactly when it is not $3$-clique-free. -/
+/-- $R_k(K_3)$ agrees with the shared clique Ramsey number with constant target three. -/
 @[category test, AMS 5]
 theorem multicolourGraphRamsey_completeGraph_three (k : ℕ) :
-    multicolourGraphRamsey k (completeGraph (Fin 3)) = Erdos183.multicolourTriangleRamsey k := by
-  simp only [multicolourGraphRamsey, Erdos183.multicolourTriangleRamsey,
-    Erdos183.ForcesMonochromaticTriangle, TopEdgeLabeling.CliqueFree, not_forall,
+    multicolourGraphRamsey k (completeGraph (Fin 3)) =
+      cliqueRamseyNumber (fun _ : Fin k ↦ 3) := by
+  simp only [multicolourGraphRamsey, cliqueRamseyNumber,
     not_cliqueFree_iff_top_isContained]
 
 /-- The cycle $C_3$ is the triangle $K_3$, so $R_k(C_3) = R_k(K_3)$. -/

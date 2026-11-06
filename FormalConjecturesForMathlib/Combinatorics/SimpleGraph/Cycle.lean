@@ -51,4 +51,12 @@ theorem edgeFinset_eq_empty_of_isBridgeless_of_isAcyclic [Fintype V] (G : Simple
   intro hadj
   exact hbr s(u, v) hadj (G.isAcyclic_iff_forall_isBridge.mp hacyc hadj)
 
+/-- The edges of `G` which are contained in a cycle of length `k`. -/
+def edgesInCycle {V : Type*} (G : SimpleGraph V) (k : ℕ) : Set (Sym2 V) :=
+  {e ∈ G.edgeSet | ∃ (v : V) (c : G.Walk v v), c.IsCycle ∧ c.length = k ∧ e ∈ c.edges}
+
+/-- Every edge lying on a cycle is an edge of the ambient graph. -/
+theorem edgesInCycle_subset_edgeSet {V : Type*} (G : SimpleGraph V) (k : ℕ) :
+    G.edgesInCycle k ⊆ G.edgeSet := fun _ h ↦ h.1
+
 end SimpleGraph
