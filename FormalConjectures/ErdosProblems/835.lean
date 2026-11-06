@@ -97,10 +97,9 @@ def johnsonBound : ℕ → ℕ → ℕ → ℕ
   | _n, _d, 0 => 1
   | n + 1, d, w + 1 => if 2 * (w + 1) < d then 1 else (n + 1) * johnsonBound n d w / (w + 1)
 
-set_option linter.style.formal_proof_palomar false in
 /-- Johnson's bound for the independence number of the Johnson graph. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/karlesmarin/formalizations/blob/c79eefc379593fb4c01869e3956929df5eef4457/Formalizations/Combinatorics/SimpleGraph/JohnsonBound.lean#L193"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-06-000013"]
 lemma indepNum_johnson_le_johnsonBound : α(J(n, k)) ≤ johnsonBound n 4 k := sorry
 
 /-- Johnson's bound for the chromatic number of the Johnson graph. -/
