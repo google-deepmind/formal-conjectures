@@ -126,7 +126,9 @@ It is easy to check that $f(1)=3$ and $f(2)=7$.
 
 This is the statement for $f(2)$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+  "https://github.com/stokes/erdos-proofs/blob/2a9eb1a1bdd869f09f9fad2c654db8508c6ad7fc/ErdosProofs/Erdos902.lean"]
 theorem erdos_902.variants.f_two : f 2 = 7 := by
   sorry
 
