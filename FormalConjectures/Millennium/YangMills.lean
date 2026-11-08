@@ -172,7 +172,7 @@ def translateConfig {m : ℕ} (a : EuclideanSpace4) (Y : Fin m → EuclideanSpac
 def minkowskiMetric : Matrix (Fin 4) (Fin 4) ℝ :=
   Matrix.diagonal (toCoords (vec4 1 (-1) (-1) (-1)))
 
-/-- Minkowski inner ℂ product $\eta(x, y) = x^0 y^0 - \mathbf{x} \cdot \mathbf{y}$. -/
+/-- Minkowski inner product $\eta(x, y) = x^0 y^0 - \mathbf{x} \cdot \mathbf{y}$. -/
 def minkowskiInner (x y : MinkowskiSpace) : ℝ :=
   let cx := toCoords x
   let cy := toCoords y
@@ -262,7 +262,7 @@ Includes:
 - Space of $\mathfrak{g}$-valued differential generators `LiePoly` with adjoint action of $G$,
 - Antisymmetric curvature 2-form $F_{\mu\nu} = -F_{\nu\mu}$ of scaling dimension $2$,
 - Covariant derivative generators $D_\alpha$ of scaling dimension $1$ commuting with gauge transformations,
-- Gauge-invariant trace pairing mapping Lie polynomials to gauge-invariant polynomials in `Poly`,
+- Gauge-invariant trace pairing and higher $\mathrm{Ad}(G)$-invariant multilinear contractions mapping Lie polynomials to gauge-invariant polynomials in `Poly`,
 - Distinguished scalar Lagrangian density $\operatorname{Tr}(F_{\mu\nu}F^{\mu\nu})$ of scaling dimension $4$,
 - Distinguished symmetric classical stress-energy tensor $T_{\mu\nu}$ of scaling dimension $4$,
 - Perturbative short-distance renormalization group data strictly governed by the 1-loop asymptotic
@@ -510,13 +510,37 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   trace_pair_ad_invariant : ∀ A X Y : LiePoly,
     trace_pair ⁅A, X⁆ Y + trace_pair X ⁅A, Y⁆ = 0
 
-  /-- Exact classical identification of `F`, `covDeriv`, `⁅·, ·⁆`, and `trace_pair` with the connection
-      differential-polynomial algebra `CoordPoly` and $(\mathrm{Lie}(G), \mathrm{lie\_inner})$
+  /-- Higher-degree gauge-invariant multilinear contraction: contracts any $\mathrm{Ad}(G)$-invariant
+      $m$-multilinear form $T : \mathfrak{g}^m \to \mathbb{R}$ (such as the quadratic inner form,
+      the symmetric cubic tensor $d_{abc} \propto \operatorname{Im}\operatorname{Tr}(X_a \{X_b, X_c\})$
+      producing $\operatorname{Tr}(F_{01}^3)$ in $\mathrm{SU}(N)$ for $N \ge 3$, or higher Casimir/Chevalley
+      invariant tensors of $G$) with an $m$-tuple of Lie-algebra-valued curvature polynomials
+      $\Phi : \mathrm{Fin}\, m \to \mathrm{LiePoly}$ to produce a gauge-invariant classical observable
+      in `Poly` (Jaffe–Witten §4, p. 6). -/
+  inv_contract :
+    ∀ (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ),
+      (∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v) →
+      MultilinearMap ℂ (fun _ : Fin m => LiePoly) Poly
+  inv_contract_gauge_invariant :
+    ∀ (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ)
+      (hT : ∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v)
+      (g : G) (Φ : Fin m → LiePoly),
+      inv_contract m T hT (fun k => gauge_action g (Φ k)) = inv_contract m T hT Φ
+  inv_contract_ad_invariant :
+    ∀ (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ)
+      (hT : ∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v)
+      (A : LiePoly) (Φ : Fin m → LiePoly),
+      ∑ k : Fin m, inv_contract m T hT (Function.update Φ k ⁅A, Φ k⁆) = 0
+
+  /-- Exact classical identification of `F`, `covDeriv`, `⁅·, ·⁆`, `trace_pair`, and `inv_contract`
+      with the connection differential-polynomial algebra `CoordPoly` and $(\mathrm{Lie}(G), \mathrm{lie\_inner})$
       (Jaffe–Witten §4, p. 6): There exists a finite `lie_inner`-orthonormal basis `B` of `Lie` such that:
       1. `F μ ν` has coordinate components $\partial_\mu A_\nu - \partial_\nu A_\mu + [A_\mu, A_\nu]$,
       2. `covDeriv μ Φ` has coordinate components $\partial_\mu \Phi + [A_\mu, \Phi]$,
-      3. `⁅Φ, Ψ⁆` has coordinate components given by the Lie bracket on `Lie`, and
-      4. `trace_pair Φ Ψ` is the metric contraction $\sum_{i,j} \langle B_i, B_j \rangle_{\mathfrak{g}} \Phi^{B_i} \Psi^{B_j} = \sum_i \Phi^{B_i} \Psi^{B_i}$. -/
+      3. `⁅Φ, Ψ⁆` has coordinate components given by the Lie bracket on `Lie`,
+      4. `trace_pair Φ Ψ` is the metric contraction $\sum_{i,j} \langle B_i, B_j \rangle_{\mathfrak{g}} \Phi^{B_i} \Psi^{B_j} = \sum_i \Phi^{B_i} \Psi^{B_i}$, and
+      5. `inv_contract m T hT Φ` is the multilinear invariant tensor contraction
+         $\sum_{i_1, \dots, i_m} T(B_{i_1}, \dots, B_{i_m}) \prod_{k=1}^m \Phi_k^{B_{i_k}}$. -/
   F_and_trace_from_Lie : ∃ (d : ℕ) (B : Fin d → Lie),
     0 < d ∧
     (∀ i j : Fin d, lie_inner (B i) (B j) = if i = j then 1 else 0) ∧
@@ -538,25 +562,85 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
     (∀ (Φ Ψ : LiePoly),
       poly_to_coord (trace_pair Φ Ψ) =
         ∑ i : Fin d, ∑ j : Fin d,
-          ((lie_inner (B i) (B j) : ℝ) : ℂ) • (lie_comp Φ (B i) * lie_comp Ψ (B j)))
+          ((lie_inner (B i) (B j) : ℝ) : ℂ) • (lie_comp Φ (B i) * lie_comp Ψ (B j))) ∧
+    (∀ (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ)
+       (hT : ∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v)
+       (Φ : Fin m → LiePoly),
+      poly_to_coord (inv_contract m T hT Φ) =
+        ∑ idx : Fin m → Fin d,
+          ((T (fun k => B (idx k)) : ℝ) : ℂ) • ∏ k : Fin m, lie_comp (Φ k) (B (idx k)))
   trace_pair_dim_le : ∀ X Y : LiePoly,
     classicalDim (trace_pair X Y) ≤ classicalDimLie X + classicalDimLie Y
-  trace_pair_dim : ∀ X Y : LiePoly,
-    X ≠ 0 → Y ≠ 0 → trace_pair X Y ≠ 0 →
-    classicalDim (trace_pair X Y) = classicalDimLie X + classicalDimLie Y
   trace_pair_F_dim : ∀ μ ν : Fin 4, μ ≠ ν →
     classicalDim (trace_pair (F μ ν) (F μ ν)) = 4
-  /-- The invariant observable algebra `Poly` is generated as a `ℂ`-algebra by the gauge-invariant trace pairings `trace_pair` -/
-  Poly_generated_by_trace_pair : ∀ (S : Submodule ℂ Poly),
+  inv_contract_dim_le :
+    ∀ (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ)
+      (hT : ∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v)
+      (Φ : Fin m → LiePoly),
+      classicalDim (inv_contract m T hT Φ) ≤ ∑ k : Fin m, classicalDimLie (Φ k)
+  inv_contract_F_dim :
+    ∀ (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ)
+      (hT : ∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v)
+      (μ ν : Fin m → Fin 4),
+      (∀ k : Fin m, μ k ≠ ν k) →
+      inv_contract m T hT (fun k => F (μ k) (ν k)) ≠ 0 →
+      classicalDim (inv_contract m T hT (fun k => F (μ k) (ν k))) = 2 * m
+  /-- The invariant observable algebra `Poly` is generated as a `ℂ`-algebra by the quadratic
+      trace pairings `trace_pair` and the higher $\mathrm{Ad}(G)$-invariant multilinear
+      contractions `inv_contract` -/
+  Poly_generated_by_inv_contract : ∀ (S : Submodule ℂ Poly),
     (1 ∈ S) →
     (∀ X Y : LiePoly, trace_pair X Y ∈ S) →
+    (∀ (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ)
+       (hT : ∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v)
+       (Φ : Fin m → LiePoly),
+       inv_contract m T hT Φ ∈ S) →
     (∀ P Q : Poly, P ∈ S → Q ∈ S → P * Q ∈ S) →
     S = ⊤
 
+  /-- Tensorial representation action of spacetime transformations on `LiePoly` -/
+  transformLie : Matrix (Fin 4) (Fin 4) ℝ → LiePoly →ₗ[ℂ] LiePoly
+  transformLie_id : transformLie 1 = LinearMap.id
+  transformLie_mul : ∀ (R1 R2 : Matrix (Fin 4) (Fin 4) ℝ),
+    R1.transpose * minkowskiMetric * R1 = minkowskiMetric →
+    R2.transpose * minkowskiMetric * R2 = minkowskiMetric →
+    transformLie (R1 * R2) = (transformLie R1).comp (transformLie R2)
+  transformLie_F : ∀ (R : Matrix (Fin 4) (Fin 4) ℝ) (μ ν : Fin 4),
+    R.transpose * minkowskiMetric * R = minkowskiMetric →
+    transformLie R (F μ ν) =
+      ∑ μ' : Fin 4, ∑ ν' : Fin 4, ((R μ' μ * R ν' ν : ℝ) : ℂ) • F μ' ν'
+  transformLie_covDeriv : ∀ (R : Matrix (Fin 4) (Fin 4) ℝ) (μ : Fin 4) (Φ : LiePoly),
+    R.transpose * minkowskiMetric * R = minkowskiMetric →
+    transformLie R (covDeriv μ Φ) =
+      ∑ μ' : Fin 4, ((R μ' μ : ℝ) : ℂ) • covDeriv μ' (transformLie R Φ)
+  transformLie_bracket : ∀ (R : Matrix (Fin 4) (Fin 4) ℝ) (Φ Ψ : LiePoly),
+    transformLie R ⁅Φ, Ψ⁆ = ⁅transformLie R Φ, transformLie R Ψ⁆
+
   /-- Lorentz representation action of $\mathrm{SO}^+(1,3)$ (and Euclidean $\mathrm{SO}(4)$) on local polynomials -/
   transform : Matrix (Fin 4) (Fin 4) ℝ → Poly →ₗ[ℂ] Poly
+  transform_id : transform 1 = LinearMap.id
+  transform_mul : ∀ (R1 R2 : Matrix (Fin 4) (Fin 4) ℝ),
+    R1.transpose * minkowskiMetric * R1 = minkowskiMetric →
+    R2.transpose * minkowskiMetric * R2 = minkowskiMetric →
+    transform (R1 * R2) = (transform R1).comp (transform R2)
+  transform_one : ∀ (R : Matrix (Fin 4) (Fin 4) ℝ), transform R 1 = 1
+  transform_prod : ∀ (R : Matrix (Fin 4) (Fin 4) ℝ) (P Q : Poly),
+    transform R (P * Q) = transform R P * transform R Q
+  transform_trace_pair : ∀ (R : Matrix (Fin 4) (Fin 4) ℝ) (Φ Ψ : LiePoly),
+    transform R (trace_pair Φ Ψ) = trace_pair (transformLie R Φ) (transformLie R Ψ)
+  transform_inv_contract :
+    ∀ (R : Matrix (Fin 4) (Fin 4) ℝ) (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ)
+      (hT : ∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v)
+      (Φ : Fin m → LiePoly),
+      transform R (inv_contract m T hT Φ) = inv_contract m T hT (fun k => transformLie R (Φ k))
   transform_dim : ∀ (R : Matrix (Fin 4) (Fin 4) ℝ) (P : Poly),
     classicalDim (transform R P) ≤ classicalDim P
+  conj_inv_contract_F :
+    ∀ (m : ℕ) (T : MultilinearMap ℝ (fun _ : Fin m => Lie) ℝ)
+      (hT : ∀ (g : G) (v : Fin m → Lie), T (fun k => adjoint_action g (v k)) = T v)
+      (μ ν : Fin m → Fin 4),
+      conj (inv_contract m T hT (fun k => F (μ k) (ν k))) =
+        inv_contract m T hT (fun k => F (μ k) (ν k))
 
   /-- Distinguished scalar Lagrangian density $\operatorname{Tr}(F_{\mu\nu} F^{\mu\nu})$ of scaling dimension $4$ -/
   tr_F_sq : Poly
@@ -572,6 +656,11 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   stress_energy_symm : ∀ μ ν : Fin 4, stress_energy μ ν = stress_energy ν μ
   stress_energy_dim : ∀ μ ν : Fin 4, classicalDim (stress_energy μ ν) = 4
   stress_energy_00_nonzero : stress_energy 0 0 ≠ 0
+  stress_energy_self_conj : ∀ μ ν : Fin 4, conj (stress_energy μ ν) = stress_energy μ ν
+  stress_energy_def : ∀ μ ν : Fin 4,
+    stress_energy μ ν =
+      ∑ α : Fin 4, ((-minkowskiMetric α α : ℝ) : ℂ) • trace_pair (F μ α) (F ν α) +
+        ((minkowskiMetric μ ν / 4 : ℝ) : ℂ) • tr_F_sq
 
   /-- Number of gluon degrees of freedom $\dim_{\mathbb{R}}(\mathfrak{g})$ -/
   dim_gauge : ℕ := Module.finrank ℝ Lie
@@ -844,6 +933,20 @@ structure WightmanQuantumYangMills (G : Type*) (ℋ : Type*)
     inner ℂ (φ : ℋ) (smeared_field P f ψ : ℋ) =
       ∫ x : MinkowskiSpace, (f x) * (local_field_form P x φ ψ)
 
+  /-- Local Conservation of the Stress-Energy Tensor $\partial^\mu T_{\mu\nu}(x) = 0$ (Jaffe–Witten §4, p. 6):
+      For every state pair $\varphi, \psi \in \mathcal{D}$, spacetime point $x \in \mathbb{R}^{1,3}$,
+      and index $\nu \in \mathrm{Fin}\, 4$, the matrix elements of $T_{\mu\nu}$ are differentiable along
+      each coordinate axis and satisfy $\sum_{\mu} \eta^{\mu\mu} \partial_\mu \langle \varphi, T_{\mu\nu}(x)\psi \rangle = 0$. -/
+  stress_tensor_conserved : ∀ (ν : Fin 4) (x : MinkowskiSpace) (φ ψ : domain),
+    ∃ (dT : Fin 4 → ℂ),
+      (∀ μ : Fin 4,
+        HasDerivAt
+          (fun s : ℝ =>
+            local_field_form (Curv.stress_energy μ ν)
+              (ofCoords (fun α => toCoords x α + (if α = μ then s else 0))) φ ψ)
+          (dT μ) 0) ∧
+      ∑ μ : Fin 4, ((minkowskiMetric μ μ : ℝ) : ℂ) * dT μ = 0
+
   /-- The vacuum Wightman two-point correlation function $\mathcal{W}_2(P, Q)(x)$ at non-coincident
       points $x \neq 0$ (smooth on $\mathbb{R}^{1,3} \setminus \{0\}$ by the Bargmann–Hall–Wightman theorem). -/
   wightman_two_point : Curv.Poly → Curv.Poly → { x : MinkowskiSpace // x ≠ 0 } → ℂ
@@ -887,32 +990,38 @@ structure WightmanQuantumYangMills (G : Type*) (ℋ : Type*)
 
   /-- Short-Distance Asymptotic Freedom of Local Curvature Correlators (Jaffe–Witten §4, p. 6):
       For any non-zero local curvature polynomial $P$ of classical scaling dimension $d = \dim(P) \ge 4$,
-      the connected two-point Wightman function at non-coincident spacelike separation scales as
-      $\lambda \to 0^+$ with power $\lambda^{-2d} (-\log \lambda)^{-\gamma_P}$:
-      $$\lim_{\lambda \to 0^+} \lambda^{2d} (-\log \lambda)^{\gamma_P} \operatorname{Re} \mathcal{W}_{2, c}(P^*, P)(\lambda x) = \frac{c_P}{\|x\|^{2d}}$$ -/
+      the connected two-point Wightman function at non-coincident spacelike separation ($\eta(x, x) < 0$)
+      scales as $\lambda \to 0^+$ with Lorentz-invariant power $\lambda^{-2d} (-\log \lambda)^{-\gamma_P}$:
+      $$\lim_{\lambda \to 0^+} \lambda^{2d} (-\log \lambda)^{\gamma_P} \operatorname{Re} \mathcal{W}_{2, c}(P^*, P)(\lambda x) = \frac{c_P}{(-\eta(x, x))^d}$$ -/
   short_distance_asymptotic_freedom :
     ∀ (P : Curv.Poly) (x : MinkowskiSpace) (hx : x ≠ 0),
+      SpacelikeSeparated x 0 →
       P ≠ 0 → 4 ≤ Curv.classicalDim P →
       let d := Curv.classicalDim P
       let γ := Curv.anomalous_exponent P
       let c_P := Curv.uv_two_point_coeff P
+      let vac : domain := ⟨vacuum, vacuum_in_domain⟩
       Filter.Tendsto
         (fun (scale : ℝ) =>
           if h_scale : scale ≠ 0 then
             have h_scaled : scale • x ≠ 0 := smul_ne_zero h_scale hx
             (scale ^ (2 * d)) * ((-Real.log scale) ^ γ) *
-            (wightman_two_point (Curv.conj P) P ⟨scale • x, h_scaled⟩).re
+            (wightman_two_point (Curv.conj P) P ⟨scale • x, h_scaled⟩ -
+              local_field_form (Curv.conj P) (scale • x) vac vac *
+                local_field_form P 0 vac vac).re
           else 0)
         (nhdsWithin 0 (Set.Ioi 0))
-        (nhds (c_P / (‖x‖ ^ (2 * d))))
+        (nhds (c_P / ((-minkowskiInner x x) ^ d)))
 
   /-- Short-Distance Operator Product Expansion (OPE) (Jaffe–Witten §4, p. 6):
       For any local curvature polynomials $P, Q$ and truncation dimension $D \in \mathbb{N}$,
       there exists a finite set of basis polynomials $\{R_k\}$ of dimension $\le D$ and non-coincident
-      vacuum expectations $v_R$ such that as $\lambda \to 0^+$ ($x \neq 0$), the Wightman function
-      $\mathcal{W}_2(P, Q)(\lambda x)$ agrees with the asymptotic freedom OPE expansion to order $\lambda^{D - \dim P - \dim Q}$. -/
+      vacuum expectations $v_R$ such that as $\lambda \to 0^+$ at spacelike separation ($x \neq 0$, $\eta(x, x) < 0$),
+      the Wightman function $\mathcal{W}_2(P, Q)(\lambda x)$ agrees with the asymptotic freedom OPE expansion
+      to order $\lambda^{D - \dim P - \dim Q}$. -/
   operator_product_expansion :
     ∀ (P Q : Curv.Poly) (D : ℕ) (x : MinkowskiSpace) (hx : x ≠ 0),
+      SpacelikeSeparated x 0 →
       Curv.classicalDim P + Curv.classicalDim Q ≤ D →
       ∃ (basis : Finset Curv.Poly) (vev : Curv.Poly → ℂ),
         (∀ R ∈ basis, Curv.classicalDim R ≤ D) ∧
@@ -1216,7 +1325,7 @@ uniform linear growth condition ($\text{E}0'$), multilinearity, Euclidean invari
 positivity (E2), permutation symmetry (E3), full exponential clustering (E4) with rate `os.mass_rate`,
 and short-distance asymptotic freedom reconstructs a relativistic `WightmanQuantumYangMills G ℋ Curv`
 equipped with a self-adjoint Euclidean contraction semigroup `euclidean_contraction` ($e^{-tH}$) and
-a positive-time embedding `os_embed` satisfying the five canonical OS II conditions:
+a positive-time embedding `os_embed` satisfying the six canonical OS II conditions:
 1. OS Gram identity on strictly time-ordered positive configurations:
    $\langle \operatorname{embed}(X), \operatorname{embed}(Y) \rangle = S_{n+m}(\Theta X^\star, Y)$,
 2. Vacuum identification: $\operatorname{embed}(0, \text{ops}_0, X_0) = \Omega$,
