@@ -70,6 +70,7 @@ public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon
 public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Tournamenton
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey.Diagonal
+public import FormalConjecturesForMathlib.Combinatorics.SchoolChoice
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.PropertyB
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.Sunflower
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.UnionFree
