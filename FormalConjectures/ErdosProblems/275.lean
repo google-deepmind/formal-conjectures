@@ -32,6 +32,7 @@ open Set
 
 namespace Erdos275
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If a finite system of $r$ congruences $\{ a_i\pmod{n_i} : 1\leq i\leq r\}$ (the $n_i$ are not
 necessarily distinct) covers $2^r$ consecutive integers then it covers all integers.

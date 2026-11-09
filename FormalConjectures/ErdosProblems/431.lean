@@ -35,6 +35,7 @@ open scoped Pointwise
 
 open scoped symmDiff
 
+set_option linter.style.formal_proof_palomar false in
 /-- Are there two infinite sets $A$ and $B$ such that $A+B$ agrees with the primes up to finitely
 many exceptions?
 
@@ -47,6 +48,7 @@ theorem erdos_431 :
       (A + B : Set ℕ) =ᶠ[Filter.cofinite] {n | n.Prime} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Ostmann's inverse Goldbach conjecture: if $A$ and $B$ each have at least two elements, then
 $A+B$ differs from the primes in infinitely many elements.
 

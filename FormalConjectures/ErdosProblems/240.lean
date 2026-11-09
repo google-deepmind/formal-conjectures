@@ -47,6 +47,7 @@ and `a P i = 0` for `i ≥ 1` (the junk value of `Nat.nth`); the statements belo
 noncomputable def a (P : Set ℕ) (i : ℕ) : ℕ :=
   Nat.nth (· ∈ Erdos675.composedOf P) i
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there an infinite set of primes $P$ such that if $\{a_1<a_2<\cdots\}$ is the set of integers
 divisible only by primes in $P$ then $\lim a_{i+1}-a_i=\infty$?

@@ -97,6 +97,7 @@ theorem containsAbelianSquare_of_length_eight (f : Fin 8 → Fin 3) :
   revert f
   decide +kernel
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $S$ be a string of length $2^k-1$ formed from an alphabet of $k$ characters. Must $S$ contain
 an abelian square: two consecutive blocks $x$ and $y$ such that $y$ is a permutation of $x$?

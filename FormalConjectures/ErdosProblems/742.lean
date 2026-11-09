@@ -113,6 +113,7 @@ theorem fan_bound (G : SimpleGraph V) [DecidableRel G.Adj]
     G.edgeFinset.card ≤ (Fintype.card V) ^ 2 / 4 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Füredi [Fü92] proved the Murty-Simon conjecture for all sufficiently large $n$, that is, there
 exists $n_0$ such that every diameter-$2$-critical graph on $n \geq n_0$ vertices has at most

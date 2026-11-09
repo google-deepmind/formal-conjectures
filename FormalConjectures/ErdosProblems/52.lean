@@ -38,6 +38,16 @@ theorem erdos_52 : ∀ (ε : ℝ), 0 < ε → ε < 1 → ∃ (C : ℝ), 0 < C �
     (max (A + A).card (A * A).card : ℝ) ≥ C * (A.card : ℝ) ^ (2 - ε) := by
   sorry
 
+open scoped Classical in
+/-- The **sum-product exponent for the reals**: the largest `s` such that
+`max |A + A| |A * A| ≫_ε |A| ^ (s - ε)` for every `ε > 0` and every finite nonempty `A ⊆ ℝ`.
+
+This is the real analogue of `erdos_52`, which concerns finite sets of integers. -/
+@[optimization_constant "84b"]
+noncomputable def sumProductExponentReal : ℝ :=
+  sSup {s : ℝ | ∀ ε > 0, ∃ C > 0, ∀ A : Finset ℝ, A.Nonempty →
+    (max (A + A).card (A * A).card : ℝ) ≥ C * (A.card : ℝ) ^ (s - ε)}
+
 -- TODO(firsching): Add additional material.
 
 end Erdos52

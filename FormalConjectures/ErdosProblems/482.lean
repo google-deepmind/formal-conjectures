@@ -53,6 +53,7 @@ noncomputable def generalRecurrence (g : ℕ) (a b ε : ℝ) : ℕ → ℤ
       if Even n then ⌊a * ((generalRecurrence g a b ε n : ℝ) + ε)⌋
       else ⌊b * ((generalRecurrence g a b ε n : ℝ) + 1 / ((g : ℝ) - 1))⌋
 
+set_option linter.style.formal_proof_palomar false in
 /-- Define a sequence by $a_1=1$ and $$a_{n+1}=\lfloor\sqrt{2}(a_n+1/2)\rfloor$$ for $n\geq 1$.
 The difference $a_{2n+1}-2a_{2n-1}$ is the $n$th digit in the binary expansion of $\sqrt{2}$.
 
@@ -75,6 +76,7 @@ theorem erdos_482 :
       Real.ofDigits (Real.digits (√2 / 2) 2) = √2 / 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Stoll's general answer to the open-ended part [St05]: for every real $w > 0$ and every base
 $g \ge 2$, there are parameters $a$, $b$, and $\varepsilon$, with $ab = g$, such that the
 corresponding Graham–Pollak-type recurrence reads the base-$g$ digits of $w$.
@@ -112,6 +114,7 @@ noncomputable def binaryDigit (t : ℝ) : ℕ → Fin 2
   | 1 => 1
   | k + 2 => Real.digits (t - 1) 2 k
 
+set_option linter.style.formal_proof_palomar false in
 /-- The explicit binary answer to the open-ended part [RaGi91], [St05]: for every normalized real
 $t \in [1, 2)$, the recurrence with coefficients $\alpha(t) = 2(t+1)/(t+2)$ and
 $\beta(t) = (t+2)/(t+1)$ reads off the binary digits of $t$, and those digits reconstruct $t$.

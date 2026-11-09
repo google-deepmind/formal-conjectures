@@ -150,6 +150,7 @@ theorem conjecture : ∃ n > 2, (a n).Prime := by
 def next_semiprime.answer : ℕ :=
   3852669607062814427999374038085094563026983841699038416757537720951140990693348082633155462564082456461927363575765861495986901576629
 
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the next semiprime in the sequence after $a(11)$?
 -/

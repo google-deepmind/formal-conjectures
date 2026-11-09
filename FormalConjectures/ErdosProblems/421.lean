@@ -31,6 +31,7 @@ open Set
 
 namespace Erdos421
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There exists a sequence $1 \le d_1 < d_2 < \dots$ with density 1 such that all products
 $\prod_{u \le i \le v} d_i$ are distinct. This was solved affirmatively; see [Pratt26]. -/

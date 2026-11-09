@@ -181,6 +181,7 @@ def A001953 : Set ℕ :=
 def A001954 : Set ℕ :=
   {n | ∃ k : ℕ, n = (Int.floor (((k : ℝ) + 1 / 2) * (2 + Real.sqrt 2))).toNat}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $s(n) = \zeta(3) - \sum_{k=1}^n \frac{1}{k^3}$.
 Conjecture: for $n \ge 1$, $s(a(n)) < \frac{1}{n^2} < s(a(n)-1)$, and the difference sequence of

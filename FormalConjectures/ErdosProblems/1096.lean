@@ -35,6 +35,7 @@ open scoped Topology
 
 namespace Erdos1096
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $1<q<1+\epsilon$ and consider the set of numbers of the shape
 $\sum_{i\in S}q^i$ (for all finite $S$), ordered by size as

@@ -78,6 +78,7 @@ theorem a_3 : a 3 = 8 := by
     rw [IsLeast.csInf_eq (by use ⟨by constructor, by norm_num⟩, fun and' => And.left)])
     (by constructor))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For statistical reasons it is conjectured that the sequence is finite.
 Finite means here that for some $n$, no power $b^n$ with base $b > 1$ has a zeroless decimal

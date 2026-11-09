@@ -77,6 +77,7 @@ theorem totient_N_pos (k : ℕ) : 0 < (N k).totient := by
   rw [Nat.totient_pos]
   exact primorial_pos (Nat.nth Nat.Prime k)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $N_k=2\cdot 3\cdots p_k$ and $\{a_1<a_2<\cdots <a_{\phi(N_k)}\}$ be the integers $<N_k$ which
 are relatively prime to $N_k$. Then, for any $c\geq 0$, the limit
@@ -98,6 +99,7 @@ theorem erdos_235 :
       ∀ c, 0 ≤ c → Tendsto (fun k ↦ proportion k c) atTop (𝓝 (f c)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Hooley [Ho65] proved that the limit in `erdos_235` is $1-e^{-c}$.
 For each fixed $c\geq 0$,

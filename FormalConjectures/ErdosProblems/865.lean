@@ -35,6 +35,7 @@ open scoped Asymptotics
 
 namespace Erdos865
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There exists a constant $C>0$ such that, for all large $N$, if $A\subseteq \{1,\ldots,N\}$ has
 size at least $\frac{5}{8}N+C$ then there are distinct $a,b,c\in A$ such that $a+b,a+c,b+c\in A$.

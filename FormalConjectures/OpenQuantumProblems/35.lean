@@ -721,18 +721,21 @@ theorem ame_2_2_exists : ExistsAME 2 2 := by
 theorem ame_3_2_exists : ExistsAME 3 2 := by
   simpa using ame_3_exists (d := 2) (by decide)
 
+set_option linter.style.formal_proof_palomar false in
 /-- Source-backed benchmark statement: an $\mathrm{AME}(5,2)$ state exists. This is one of the four qubit cases $n=2,3,5,6$; see the OQP page and Scott (2004). -/
 @[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
 "https://github.com/zblore/fc-ame-5-2/blob/f0720e63065eb40c58a40f7b7af3d21f94d06453/AME52/FormalTarget.lean#L25-L26"]
 theorem ame_5_2_exists : ExistsAME 5 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Source-backed benchmark statement: an $\mathrm{AME}(6,2)$ state exists. This is one of the four qubit cases $n=2,3,5,6$; see the OQP page and Scott (2004). -/
 @[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
 "https://github.com/zblore/fc-ame-6-2/blob/2a69b05aa65fec335b7e981deab2848865e9a688/AME62/FormalTarget.lean#L25-L26"]
 theorem ame_6_2_exists : ExistsAME 6 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Source-backed benchmark statement: no $\mathrm{AME}(4,2)$ state exists; see Higuchi--Sudbery (2000) and the OQP page. -/
 @[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
 "https://github.com/zblore/fc-ame-4-2/blob/201550986844ea1e7fff36dc48681ca8b3c1600b/AME42/FormalTarget.lean#L26-L33"]
@@ -740,7 +743,8 @@ theorem ame_4_2_not_exists : ¬ ExistsAME 4 2 := by
   sorry
 
 /-- Source-backed benchmark statement: no $\mathrm{AME}(7,2)$ state exists; see Huber--Gühne--Siewert (2017) and the OQP page. -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-02-000010"]
 theorem ame_7_2_not_exists : ¬ ExistsAME 7 2 := by
   sorry
 
@@ -750,16 +754,19 @@ computational-basis state is AME under the definitions of this file.
 Shi--Zhang--Zhao--Li (2026) construct cyclic quadratic-phase states in every odd dimension and
 a coupled binary--odd-dimensional state in every dimension congruent to `2` modulo `4`; together
 with power-of-two constructions and the product property, this covers every `d ≥ 3`. -/
-@[category research solved, AMS 5 15 81 94]
+@[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-02-000010"]
 theorem ame_7_exists_iff (d : ℕ) (hd : 2 ≤ d) : ExistsAME 7 d ↔ 3 ≤ d := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Source-backed benchmark statement: an $\mathrm{AME}(4,3)$ state exists; see Helwig et al. (2012) and Goyeneche et al. (2015). -/
 @[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
 "https://github.com/AllenGrahamHart/FormalConjectures-Bench/blob/8fb9479e9cbfde68d6990ed008b24c883cbd2750/formalizations/openquantum35_ame43/OpenQuantum35AME43Formalization.lean#L333"]
 theorem ame_4_3_exists : ExistsAME 4 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Source-backed benchmark statement: an $\mathrm{AME}(4,6)$ state exists; see Rather et al. (2022). -/
 @[category research solved, AMS 5 15 81 94, formal_proof using lean4 at
 "https://github.com/zblore/fc-ame-4-6/blob/d42273127096f5cbdc2c05f6d727f2dc75d5ea81/AME46/FormalTarget.lean#L23-L24"]
@@ -800,6 +807,7 @@ theorem ame_8_10_open :
     ExistsAME 8 10 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Open benchmark statement: does an $\mathrm{AME}(9,6)$ state exist?
 
 Answer: Yes. A witness found by Kenta Kitamura (KitaKen1 on GitHub)
@@ -812,6 +820,7 @@ theorem ame_9_6_open :
     ExistsAME 9 6 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Open benchmark statement: does an $\mathrm{AME}(9,10)$ state exist?
 
@@ -844,6 +853,7 @@ theorem ame_11_3_open :
     ExistsAME 11 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Open benchmark statement: does an $\mathrm{AME}(11,4)$ state exist?
 
 Answer: `AME(11, 4)` exists. The graph state defined by the circulant matrix Gamma
@@ -861,6 +871,7 @@ theorem ame_11_4_open :
     ExistsAME 11 4 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Open benchmark statement: does an $\mathrm{AME}(11,5)$ state exist?
 
 The DeepMind prover agent has shown that such a state exists.
@@ -877,6 +888,7 @@ theorem ame_11_6_open :
     ExistsAME 11 6 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Open benchmark statement: does an $\mathrm{AME}(11,10)$ state exist?
 
 Answer: Yes. A witness found by Kenta Kitamura (KitaKen1 on GitHub)
