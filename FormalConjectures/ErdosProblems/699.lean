@@ -64,7 +64,7 @@ below $i$. Together these give $n \le j^2$. See [Le26].
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
-    "https://github.com/Paulee314/erdos699-lean/blob/814f545f5f6475786aa5a04e4e795a25cda3670c/Solution.lean#L40"]
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-27-000020"]
 theorem erdos_699.variants.of_sq_lt :
     ∀ n i j : ℕ,
       1 ≤ i →
