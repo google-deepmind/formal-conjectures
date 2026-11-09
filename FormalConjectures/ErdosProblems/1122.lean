@@ -62,7 +62,8 @@ theorem erdos_1122 : ∀ f : ℕ → ℝ,
 Erdős [Er46] proved that $f(n)=c\log n$ for some $c\in\mathbb{R}$ if $A$ is empty, that is, if
 $f(n) \leq f(n+1)$ for all $n \geq 1$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/410fa9071d430791d9342617e35eeb94da78bbc8/erdos-1122/Solution.lean#L38"]
 theorem erdos_1122.variants.monotone (f : ℕ → ℝ)
     (hf : ∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b)
     (hmono : ∀ n ≥ 1, f n ≤ f (n + 1)) :
@@ -72,7 +73,8 @@ theorem erdos_1122.variants.monotone (f : ℕ → ℝ)
 /--
 Erdős [Er46] proved that $f(n)=c\log n$ for some $c\in\mathbb{R}$ if $f(n+1)-f(n)=o(1)$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/410fa9071d430791d9342617e35eeb94da78bbc8/erdos-1122/Solution.lean#L51"]
 theorem erdos_1122.variants.sub_tendsto_zero (f : ℕ → ℝ)
     (hf : ∀ᵉ (a > 0) (b > 0), a.Coprime b → f (a * b) = f a + f b)
     (hdiff : Tendsto (fun n ↦ f (n + 1) - f n) atTop (𝓝 0)) :
