@@ -137,9 +137,9 @@ theorem infinitely_many_mersenne_primes :
   Set.Infinite { p : ℕ | (mersenne p).Prime } := by
     sorry
 
-/-- `mersenneExponentCount y` counts the exponents $p \le y$ such that $2^p - 1$ is a
+/-- `mersenneExponentCount y` counts the exponents $p < y$ such that $2^p - 1$ is a
 Mersenne prime. -/
-def mersenneExponentCount (y : ℕ) : ℕ := Nat.count (fun p => (mersenne p).Prime) (y + 1)
+def mersenneExponentCount (y : ℕ) : ℕ := Nat.count (fun p => (mersenne p).Prime) y
 
 open Filter Asymptotics in
 /-- The *Lenstra–Pomerance–Wagstaff conjecture* states that the number of exponents $p \le y$
