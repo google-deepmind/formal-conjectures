@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 Permutation*, manuscript submitted to *Integers* (2026).
 
 [Formalization and proof repository](https://github.com/gsidoine/coprime-adjacencies-lean).
+[Palomar proof registration](https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-09-000001).
 
 For a permutation $a=(a_1,\ldots,a_n)$ of $\{1,\ldots,n\}$, let $c(a)$ be
 the number of indices $i<n$ for which $\gcd(a_i,a_{i+1})=1$.
@@ -71,7 +72,8 @@ $$
 $$
 The prime-counting function is evaluated at real thresholds, so natural-number
 floor division gives the same values. -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-09-000001"]
 theorem exact_minimum (n : ℕ) (hn : 4 ≤ n) :
     h n = target n := by
   sorry
