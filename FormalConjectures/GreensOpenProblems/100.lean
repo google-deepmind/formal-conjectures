@@ -35,6 +35,8 @@ public import FormalConjecturesUtil
   [arXiv:2608.06222](https://arxiv.org/abs/2608.06222)
 - [Ec26] Eckhardt, C., *Non-MF groups and non-finite full group C\*-algebras* (2026).
   [arXiv:2608.28772](https://arxiv.org/abs/2608.28772)
+- [Li26] Liu, J., *Nonhyperlinear groups exist* (2026).
+  https://jihaoliu.org/ai-results/nonhyperlinear-groups-exist-2026-09-20.pdf
 -/
 
 @[expose] public section
@@ -143,9 +145,12 @@ We use the characterisation of hyperlinearity in [Pe08, Theorem 3.6], see `IsHyp
 the normalised Hilbert–Schmidt norm. [Gr24] gives a precise form of this question with the
 operator norm instead, see `green_100.variants.operator_norm`. As for `green_100.parts.i`, it is
 enough to quantify over groups in `Type`.
+
+[Gr24] lists this as open. The answer is no: Liu [Li26, Theorem 1.1] constructs a countable group,
+a wreath product, that is not hyperlinear. This is a 2026 preprint.
 -/
-@[category research open, question, AMS 20 46]
-theorem green_100.parts.ii : ∀ (G : Type) [Group G], IsHyperlinear G := by
+@[category research solved, question, AMS 20 46]
+theorem green_100.parts.ii : ¬ ∀ (G : Type) [Group G], IsHyperlinear G := by
   sorry
 
 /--
