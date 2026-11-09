@@ -57,6 +57,7 @@ theorem erdos_881 :
           (A \ B).IsAsymptoticAddBasisOfOrder (k + 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The case `k = 2` has a positive answer.
 -/
@@ -67,6 +68,7 @@ theorem erdos_881.variants.two :
       ∃ B : Set ℕ, B ⊆ A ∧ B.Infinite ∧ (A \ B).IsAsymptoticAddBasisOfOrder 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The case `k = 2` holds without minimality: every asymptotic additive basis of order `2` contains
 an infinite set whose removal leaves an asymptotic additive basis of order `3`.
