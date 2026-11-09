@@ -108,7 +108,8 @@ theorem erdos_787.variants.integers (n : ℕ) : g ℤ n = g ℝ n := by
 /--
 Klarner proved $g(n) \gg \log n$ (indeed, a greedy construction suffices).
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/410fa9071d430791d9342617e35eeb94da78bbc8/erdos-787/Solution.lean#L29"]
 theorem erdos_787.variants.klarner :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, c * Real.log n ≤ (g ℝ n : ℝ) := by
   sorry
