@@ -37,6 +37,7 @@ predicate `IsLacunary` ($\exists c > 1$ with $c \cdot n_k < n_{k+1}$ for all suf
 $k$); for a strictly increasing sequence of positive integers this is equivalent to the problem's
 condition $n_{k+1} \geq (1+\epsilon) n_k$ for all $k$. -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{n_1<n_2<\cdots\}\subset \mathbb{N}$ be a lacunary sequence (so there exists some
 $\epsilon>0$ with $n_{k+1}\geq (1+\epsilon)n_k$ for all $k$). Is it true that there must exist a

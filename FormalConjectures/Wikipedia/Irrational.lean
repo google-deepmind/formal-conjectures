@@ -99,6 +99,7 @@ theorem irrational_eulerMascheroniConstant :
     Irrational eulerMascheroniConstant := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is the Catalan constant $$G = \sum_{n=0}^∞ (-1)^n / (2n + 1)^2 \approx 0.91596$$ irrational?
 

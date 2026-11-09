@@ -95,6 +95,7 @@ noncomputable def numRootsInUnitDisk [PseudoMetricSpace k] (c : KacCoefficients 
 
 end KacCoefficients
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(z)=\sum_{0\leq k\leq n} \epsilon_k z^k$ be a random polynomial, where
 $\epsilon_k\in \{-1,1\}$ independently uniformly at random for $0\leq k\leq n$.
@@ -129,6 +130,7 @@ theorem erdos_522 :
       ℙ {ω | atTop.Tendsto (fun n : ℕ ↦ (2 * c.numRootsInUnitDisk n ω : ℝ) / n) (𝓝 1)} = 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(z)=\sum_{0\leq k\leq n} \epsilon_k z^k$ be a random polynomial, where
 $\epsilon_k\in \{0,1\}$ independently uniformly at random for $0\leq k\leq n$.

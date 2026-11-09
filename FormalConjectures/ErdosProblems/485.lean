@@ -47,6 +47,7 @@ terms, where the number of terms of `P` is `P.support.card`. -/
 noncomputable def f (k : ℕ) : ℕ :=
   sInf {m | ∃ P : ℚ[X], P.support.card = k ∧ (P ^ 2).support.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(k)$ be the minimum number of terms in $P(x)^2$, where $P \in \mathbb{Q}[x]$ ranges over all
 polynomials with exactly $k$ non-zero terms. Is it true that $f(k) \to \infty$ as $k \to \infty$?

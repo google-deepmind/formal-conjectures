@@ -70,6 +70,7 @@ def Claim : Prop :=
     Tendsto (fun n : ℕ ↦ (realRootCount ω n : ℝ) / Real.log (n : ℝ))
       atTop (𝓝 ((2 : ℝ) / Real.pi))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $(\epsilon_k)_{k\geq 0}$ be independently uniformly chosen at random from
 $\{-1,1\}$. If $R_n$ counts the number of real roots of

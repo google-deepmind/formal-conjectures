@@ -41,6 +41,7 @@ open Filter SimpleGraph
 namespace Erdos533
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\delta > 0$. If $n$ is sufficiently large and $G$ is a graph on $n$ vertices with no
 $K_5$ and at least $\delta n^2$ edges, must $G$ contain a set of $\gg_\delta n$ vertices

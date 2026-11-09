@@ -109,6 +109,7 @@ def countingFn (m : ℕ → ℕ) (N : ℕ) : ℕ :=
 
 /- ## Growth and sparsity alone are not a restriction -/
 
+set_option linter.style.formal_proof_palomar false in
 /-- **A lower bound on the size of the terms cannot make Problem 10.6 nontrivial.** For every
 growth demand `f` there is a strictly increasing sequence dominating `f` at every index which
 is dense modulo one for every irrational $\xi$.
@@ -125,6 +126,7 @@ theorem exists_dense_of_growth (f : ℕ → ℕ) :
         Dense (Set.range fun n => (↑(ξ * m n) : AddCircle (1 : ℝ))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Neither can an upper bound on the counting function, even together with the growth
 demand.** The same sequence dominates an arbitrary `f` *and* has counting function below
 $(\log\log N)^2$ — an exponential below the $\log N$ floor that every sublacunary sequence

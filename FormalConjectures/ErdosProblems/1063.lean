@@ -64,6 +64,7 @@ theorem erdos_1063.better_upper :
       (k : ℝ) * (((Finset.Icc 1 (k - 1)).lcm id : ℕ) : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 An improved upper bound
 $n_k \ll \exp\left(\frac{k}{\log k}(\log \log k + \log \log \log k + \log 2)\right)$,
@@ -83,6 +84,7 @@ theorem erdos_1063.variants.subexponential_upper_bound :
       (k : ℝ) * (((Finset.Icc 1 (k - 1)).lcm id : ℕ) : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Selfridge noted that, for $n \ge 2k$ with $k \ge 2$, at least one of the numbers
 $n - i$ for $0 \le i < k$ fails to divide $\binom{n}{k}$ ([ErSe83]).
@@ -133,6 +135,7 @@ theorem erdos_1063.variants.small_values :
       · exact absurd hb (by decide)
       · exact absurd hb (by decide)
 
+set_option linter.style.formal_proof_palomar false in
 /-- Monier observed that $n_k \le k!$ for $k \ge 3$ ([Mo85]), since $\binom{k!}{k}$ is divisible
 by $k! - i$ for $1 \le i < k$.
 
@@ -144,6 +147,7 @@ theorem erdos_1063.variants.monier_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k ! := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- [Cambie observed](https://www.erdosproblems.com/1063) the improved bound
 $n_k \le k \cdot \operatorname{lcm}(1, \dotsc, k - 1)$.
 
@@ -159,6 +163,7 @@ theorem erdos_1063.variants.cambie_upper_bound {k : ℕ} (hk : 3 ≤ k) :
     n k ≤ k * (Finset.Icc 1 (k - 1)).lcm id := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The least common multiple bound implies $n_k \le \exp((1 + o(1))k)$. -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at

@@ -74,6 +74,7 @@ theorem isNatPartition_compl (A : Set ℕ) : IsNatPartition A Aᶜ :=
 /-- The answer, $\frac{2+\sqrt{3}}{4}$. -/
 noncomputable def erdos_1211.answer : ℝ := (2 + √3) / 4
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\mathbb{N}=A\cup B$ where $A$ and $B$ are disjoint. Let $S(A)$ be those integers which are the
 sum of finitely many distinct elements of $A$, and similarly for $S(B)$.

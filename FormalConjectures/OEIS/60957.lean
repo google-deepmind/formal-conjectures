@@ -148,6 +148,7 @@ irreducible_def circuitPositive : Finset ℕ :=
 
 end Counterexample
 
+set_option linter.style.formal_proof_palomar false in
 /--
 An explicit counterexample from [Li26]: both endpoint products occur, but the intermediate
 product with exponent $5$ does not. The definitions above specify every parameter, including
@@ -165,6 +166,7 @@ theorem counterexample :
       productsOfSubsets Counterexample.circuitN := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: let $p \le n$ be prime. If $m$ and $p^a m$ are two such products, then so is $p^k m$
 for all $0 < k < a$.

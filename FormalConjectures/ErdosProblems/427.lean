@@ -65,6 +65,7 @@ theorem erdos_427.variants.shiu : ShiuTheorem := by
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 427**: is it true that, for every $n$ and $d$, there exists $k$ such that
 $$

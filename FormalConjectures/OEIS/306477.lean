@@ -70,6 +70,7 @@ theorem a_5 : A 5 :=
 theorem a_6 : A 6 :=
   ⟨2, 0, 0, 0, by decide⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Zhi-Wei Sun's 2-4-6-8 Conjecture (A306477)**: Any integer $n > 0$ can be written as
 $\binom{w+2}{2} + \binom{x+3}{4} + \binom{y+5}{6} + \binom{z+7}{8}$ for nonnegative integers $w, x, y, z$.
