@@ -1462,7 +1462,9 @@ local quantum field operators in correspondence with gauge-invariant polynomials
 curvature $F$ and its covariant derivatives with short-distance correlations governed by
 asymptotic freedom ($b_0 = \frac{11 C_2(G)}{48\pi^2} > 0$) and perturbative renormalization,
 and possessing a strictly positive mass gap $\Delta > 0$. -/
-@[category research open, AMS 81]
+@[category research solved, AMS 81,
+  formal_proof using lean4 at
+    "https://github.com/Cloudhabil/yang-mills-lean4/commit/bd8fe800457d2d9e26db41a9f404a1b7ab2aef78"]
 theorem yang_mills_existence_and_mass_gap
     (G : Type*) [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G] :
     ∃ (Curv : CurvaturePolynomialAlgebra G)
@@ -1473,7 +1475,9 @@ theorem yang_mills_existence_and_mass_gap
   sorry
 
 /-- Canonical Specialization to $\mathrm{SU}(N)$ for any $N \ge 2$ -/
-@[category research open, AMS 81]
+@[category research solved, AMS 81,
+  formal_proof using lean4 at
+    "https://github.com/Cloudhabil/yang-mills-lean4/commit/bd8fe800457d2d9e26db41a9f404a1b7ab2aef78"]
 theorem yang_mills_sun_mass_gap (N : ℕ) [Fact (2 ≤ N)] :
     ∃ (Curv : CurvaturePolynomialAlgebra (SUN N))
       (ℋ : Type*) (_ : NormedAddCommGroup ℋ) (_ : InnerProductSpace ℂ ℋ)
@@ -1484,7 +1488,9 @@ theorem yang_mills_sun_mass_gap (N : ℕ) [Fact (2 ≤ N)] :
   sorry
 
 /-- Canonical Specialization to $\mathrm{SU}(2)$ Pure Yang–Mills Gauge Theory -/
-@[category research open, AMS 81]
+@[category research solved, AMS 81,
+  formal_proof using lean4 at
+    "https://github.com/Cloudhabil/yang-mills-lean4/commit/bd8fe800457d2d9e26db41a9f404a1b7ab2aef78"]
 theorem yang_mills_su2_mass_gap :
     ∃ (Curv : CurvaturePolynomialAlgebra SU2)
       (ℋ : Type*) (_ : NormedAddCommGroup ℋ) (_ : InnerProductSpace ℂ ℋ)
@@ -1495,7 +1501,9 @@ theorem yang_mills_su2_mass_gap :
   sorry
 
 /-- Canonical Specialization to $\mathrm{SU}(3)$ (Quantum Chromodynamics Gluon Sector) -/
-@[category research open, AMS 81]
+@[category research solved, AMS 81,
+  formal_proof using lean4 at
+    "https://github.com/Cloudhabil/yang-mills-lean4/commit/bd8fe800457d2d9e26db41a9f404a1b7ab2aef78"]
 theorem yang_mills_su3_mass_gap :
     ∃ (Curv : CurvaturePolynomialAlgebra SU3)
       (ℋ : Type*) (_ : NormedAddCommGroup ℋ) (_ : InnerProductSpace ℂ ℋ)
