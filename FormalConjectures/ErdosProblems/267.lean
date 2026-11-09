@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos267
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $F_1=F_2=1$ and $F_{n+1} = F_n + F_{n-1}$ be the Fibonacci sequence.
 Let $n_1 < n_2 < \dots$ be an infinite sequence with $\frac{n_{k+1}}{n_k} \ge c > 1$. Must
@@ -48,6 +49,7 @@ theorem erdos_267.variants.generalisation_ratio_limit_to_infinity : ∀ (n : ℕ
     Irrational (∑' k, 1 / (Nat.fib <| n k)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Good [Go74] and Bicknell and Hoggatt [BiHo76] have shown that $\sum_n \frac 1 {F_{2^n}}$ is irrational.
 

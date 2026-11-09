@@ -107,6 +107,7 @@ theorem erdos_501.variants.hechler_CH :
       ¬ ∃ X : Set ℝ, X.Infinite ∧ X.Pairwise (fun x y => x ∉ A y) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Closed sets case: existence of an independent set of size 3.**
 
@@ -124,6 +125,7 @@ theorem erdos_501.variants.closed_size3 :
       ∃ X : Set ℝ, 3 ≤ X.ncard ∧ X.Pairwise (fun x y => x ∉ A y) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Newelski–Pawlikowski–Seredyński (1987) [NPS87]: infinite independent set in the closed case.**
 

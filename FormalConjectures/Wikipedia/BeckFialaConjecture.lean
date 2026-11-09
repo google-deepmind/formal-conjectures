@@ -52,6 +52,7 @@ produces vectors of Euclidean norm at most $1$.
 
 namespace BeckFiala
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **The Beck–Fiala theorem**
 

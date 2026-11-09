@@ -40,6 +40,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos83
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Suppose that we have a family $\mathcal{F}$ of subsets of $[4n]$ such that $\lvert A\rvert=2n$
 for all $A\in\mathcal{F}$ and for every $A,B\in \mathcal{F}$ we have

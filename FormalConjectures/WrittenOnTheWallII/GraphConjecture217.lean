@@ -46,6 +46,7 @@ $\chi_{\mathrm{residue}=2}(G)$ indicator appearing in Conjecture 217. -/
 noncomputable def residueEqTwoIndicator (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   if residue G = 2 then 1 else 0
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 217](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj217):
 

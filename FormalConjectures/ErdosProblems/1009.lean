@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos1009
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $c>0$, there exists $f(c)$ such that every graph on $n$ vertices with
 at least $\lfloor n^2/4\rfloor+k$ edges, where $k<c n$, contains at least $k-f(c)$ many edge

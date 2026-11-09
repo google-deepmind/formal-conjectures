@@ -51,6 +51,7 @@ def Adj (p q : ℕ × ℕ) : Prop :=
   (p.1 = q.1 ∧ (p.2 = q.2 + 1 ∨ q.2 = p.2 + 1)) ∨
   (p.2 = q.2 ∧ (p.1 = q.1 + 1 ∨ q.1 = p.1 + 1))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be the graph with vertex set those pairs $(x,y)\in \mathbb{N}^2$ with
 $\mathrm{gcd}(x,y)=1$, in which we join two vertices if the differ in only one coordinate, and
@@ -68,7 +69,7 @@ The strengthened problem was solved by Alex Chengyu Li; see
 and the accompanying
 [Lean formalization](https://github.com/crabsatellite/erdos-1212-visible-lattice-path).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/blob/400001f0847afe36a26c588d34445210dbdc116e/kernel/Erdos1212Kernel/AlgebraicCorridorKernelAudit.lean"]
 theorem erdos_1212 :
     ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧

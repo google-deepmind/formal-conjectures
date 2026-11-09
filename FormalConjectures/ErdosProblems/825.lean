@@ -29,6 +29,7 @@ open scoped ArithmeticFunction.sigma
 
 namespace Erdos825
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there an absolute constant $C > 0$ such that every integer $n$ with
 $\sigma(n) > Cn$ is the distinct sum of proper divisors of $n$?

@@ -44,6 +44,7 @@ open scoped Classical in
 def goodSets (F : Finset (Finset α)) : Finset (Finset α) :=
   (groundSet F).powerset.filter fun B ↦ ∀ A ∈ F, (A ∩ B).Nonempty ∧ ¬ A ⊆ B
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $c>0$, and let $n$ be sufficiently large depending on $c$. Suppose that $\mathcal{F}$ is a
 family of at most $c2^n$ many finite sets of size $n$. Let $X=\cup_{A\in \mathcal{F}}A$.

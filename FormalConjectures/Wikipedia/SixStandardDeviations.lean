@@ -66,6 +66,7 @@ theorem six_standard_deviations :
         ∀ i, |∑ j ∈ S i, χ j| ≤ 6 * Real.sqrt n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **The random colouring bound**
 
@@ -87,6 +88,7 @@ theorem six_standard_deviations.variants.random_bound :
         ∀ i, |∑ j ∈ S i, χ j| ≤ K * Real.sqrt (n * Real.log (n + 2)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **A universal discrepancy bound**
 

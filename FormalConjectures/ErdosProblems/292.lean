@@ -38,6 +38,7 @@ $\sum\tfrac{1}{m_i}=1$. -/
 def A : Set ℕ :=
   {n | ∃ S : Finset ℕ, S ⊆ Finset.Icc 1 n ∧ n ∈ S ∧ ∑ m ∈ S, (1 : ℚ) / m = 1}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be the set of $n\in \mathbb{N}$ such that there exist $1\leq m_1<\cdots <m_k=n$ with
 $\sum\tfrac{1}{m_i}=1$. Explore $A$. In particular, does $A$ have density $1$?

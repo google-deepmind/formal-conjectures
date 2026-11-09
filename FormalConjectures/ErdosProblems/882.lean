@@ -95,6 +95,7 @@ theorem card_A (m : ℕ) : (A m).card = m := by
   have h' : 2 ^ i = 2 ^ j := by omega
   exact Nat.pow_right_injective le_rfl h'
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős, Lev, Rauzy, Sándor and Sárközy [ELRSS99] proved that
 $\lvert A\rvert > \log_2 n - 1$ is achievable, taking
@@ -113,6 +114,7 @@ $S_1, S_2$; it transfers to subsets of `A m` via the injectivity of $i \mapsto 2
 theorem erdos_882.variants.lower_bound (m : ℕ) : IsSubsetSumAntichain (A m) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The lower bound of [ELRSS99] in quantitative form: for every $n \geq 1$ there is a subset-sum
 antichain $A \subseteq \{1, \ldots, n\}$ with $\lvert A\rvert > \log_2 n - 1$, namely $A_m$

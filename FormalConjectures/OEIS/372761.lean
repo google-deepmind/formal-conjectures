@@ -83,6 +83,7 @@ lemma a_7 : a 7 = 31 := by
   delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: Except for 3 and 5, all odd primes appear in the sequence once. - _Thomas Scheuerle_, May 11 2024
 

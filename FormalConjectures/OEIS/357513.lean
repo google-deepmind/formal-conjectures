@@ -69,6 +69,7 @@ theorem a_5 : a 5 = 1335793103 := by
   unfold a
   norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 We have  $a(p-1) \equiv 0 \pmod{p^4}$ for all primes $p \ge 3$ except $p=7$.
 

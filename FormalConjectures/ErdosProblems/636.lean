@@ -49,6 +49,7 @@ def HasManyDistinctInducedSubgraphs {V : Type*} (G : SimpleGraph V) (k : ℝ) : 
       (G.induce s).edgeSet.ncard ≠ (G.induce t).edgeSet.ncard) ∧
     k ≤ (𝒮.ncard : ℝ)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Suppose $G$ is a graph on $n$ vertices which contains no complete graph or independent set on
 $\gg \log n$ many vertices. Must $G$ contain $\gg n^{5/2}$ induced subgraphs which pairwise differ
