@@ -45,6 +45,24 @@ def A (n : ℕ) : ℤ := (gaussProd n).re
 /-- $B_n = \operatorname{Im} Z_n$. -/
 def B (n : ℕ) : ℤ := (gaussProd n).im
 
+/-- Appending the final Gaussian factor gives the product recurrence. -/
+@[category API, AMS 11]
+theorem gaussProd_succ (n : ℕ) :
+    gaussProd (n + 1) = gaussProd n * (⟨1, ((n + 1 : ℕ) : ℤ)⟩ : GaussianInt) := by
+  exact Finset.prod_Icc_succ_top (by omega) _
+
+/-- The real-part recurrence for the Gaussian product. -/
+@[category API, AMS 11]
+theorem A_succ (n : ℕ) : A (n + 1) = A n - (n + 1) * B n := by
+  simp [A, B, gaussProd_succ, Zsqrtd.re_mul]
+  ring
+
+/-- The imaginary-part recurrence for the Gaussian product. -/
+@[category API, AMS 11]
+theorem B_succ (n : ℕ) : B (n + 1) = B n + (n + 1) * A n := by
+  simp [A, B, gaussProd_succ, Zsqrtd.im_mul]
+  ring
+
 /-- $x_n = \tan\left(\sum_{k=1}^n \arctan k\right) = B_n / A_n$. -/
 noncomputable def x (n : ℕ) : ℚ := (B n : ℚ) / (A n : ℚ)
 
@@ -57,6 +75,24 @@ which holds for every $n \leq 3000$. -/
 def IsIntegerValue (n : ℕ) : Prop := A n ∣ B n
 
 instance (n : ℕ) : Decidable (IsIntegerValue n) := by unfold IsIntegerValue; infer_instance
+
+/-- Away from a pole, the divisibility definition agrees with a rational integer value. -/
+@[category API, AMS 11]
+theorem isIntegerValue_iff_exists_intCast {n : ℕ} (hA : A n ≠ 0) :
+    IsIntegerValue n ↔ ∃ m : ℤ, x n = (m : ℚ) := by
+  have hAq : (A n : ℚ) ≠ 0 := by exact_mod_cast hA
+  unfold IsIntegerValue x
+  constructor
+  · rintro ⟨m, hm⟩
+    refine ⟨m, (div_eq_iff hAq).mpr ?_⟩
+    rw [hm]
+    push_cast
+    ring
+  · rintro ⟨m, hm⟩
+    refine ⟨m, ?_⟩
+    have h := (div_eq_iff hAq).mp hm
+    have h' : (B n : ℚ) = (A n : ℚ) * (m : ℚ) := by simpa [mul_comm] using h
+    exact_mod_cast h'
 
 /--
 **Conjecture (Amdeberhan-Medina-Moll, 2008).** For every integer $n \geq 5$, the value
