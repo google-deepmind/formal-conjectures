@@ -142,7 +142,7 @@ Mersenne prime. -/
 def mersenneExponentCount (y : ℕ) : ℕ := Nat.count (fun p => (mersenne p).Prime) y
 
 open Filter Asymptotics in
-/-- The *Lenstra–Pomerance–Wagstaff conjecture* states that the number of exponents $p \le y$
+/-- The *Lenstra–Pomerance–Wagstaff conjecture* states that the number of exponents $p < y$
 such that $2^p - 1$ is a Mersenne prime is asymptotic to $e^\gamma \log_2 y$ as $y \to \infty$,
 where $\gamma$ is the Euler–Mascheroni constant. -/
 @[category research open, AMS 11]
