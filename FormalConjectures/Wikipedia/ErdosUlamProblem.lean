@@ -78,7 +78,8 @@ distances must be contained in a line.
 
 *Reference:* [AE45].
 -/
-@[category research solved, AMS 51 52]
+@[category research solved, AMS 51 52, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-09-000002"]
 theorem erdos_ulam_problem.variants.anning_erdos
     (S : Set (EuclideanSpace ℝ (Fin 2))) (hinf : S.Infinite)
     (hd : ∀ p ∈ S, ∀ q ∈ S, ∃ n : ℤ, dist p q = (n : ℝ)) :
