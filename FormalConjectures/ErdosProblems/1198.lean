@@ -60,7 +60,8 @@ The case where every $S_j$ is a singleton (Hindman's theorem [Hi74]): for every 
 $\mathbb{N}$ there is an infinite set all of whose finite sums of distinct elements have the same
 colour.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/410fa9071d430791d9342617e35eeb94da78bbc8/erdos-1198/Proofs/HindmanBlockConstruction1198.lean#L177"]
 theorem erdos_1198.variants.hindman :
     ∀ c : ℕ → Fin 2, ∃ a : ℕ → ℕ, StrictMono a ∧ 0 < a 0 ∧ ∃ col : Fin 2,
       ∀ T : Finset ℕ, T.Nonempty → c (∑ i ∈ T, a i) = col := by
