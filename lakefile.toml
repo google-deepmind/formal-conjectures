@@ -70,3 +70,10 @@ srcDir = "scripts"
 root = "extract_names"
 exeName = "extract_names"
 supportInterpreter = true
+
+[[lean_exe]]
+name = "lint_env"
+srcDir = "scripts"
+root = "lint_env"
+exeName = "lint_env"
+supportInterpreter = true
