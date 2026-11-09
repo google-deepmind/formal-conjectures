@@ -288,6 +288,17 @@ theorem maximalLength_pow_eventually {n : ℕ} {e : ℝ} (hn : 1 < n) (h : F n =
     ∀ᶠ m : ℕ in Filter.atTop, (m : ℝ) ^ b ≤ F m := by
   sorry
 
+/-- The strong upper bound in Conjecture 1.8 is equivalent to a natural-number inequality. -/
+@[category API, AMS 5]
+theorem maximalLength_le_sqrt_cube_iff (n : ℕ) :
+    (F n : ℝ) ≤ Real.sqrt n ^ 3 ↔ F n ^ 2 ≤ n ^ 3 := by
+  have hsq : (Real.sqrt n ^ 3)^2 = (n : ℝ)^3 := by
+    rw [← pow_mul, Nat.mul_comm 3 2, pow_mul, Real.sq_sqrt (Nat.cast_nonneg n)]
+  calc
+    (F n : ℝ) ≤ Real.sqrt n ^ 3 ↔ (F n : ℝ)^2 ≤ (Real.sqrt n ^ 3)^2 :=
+      (sq_le_sq₀ (Nat.cast_nonneg (F n)) (pow_nonneg (Real.sqrt_nonneg _) _)).symm
+    _ ↔ F n ^ 2 ≤ n ^ 3 := by rw [hsq]; exact_mod_cast Iff.rfl
+
 /-- $F(n) \leq n^{3/2}$. -/
 @[category research open, AMS 5]
 theorem maximalLength_le_strong (n : ℕ) : F n ≤ Real.sqrt n ^ 3 := by
