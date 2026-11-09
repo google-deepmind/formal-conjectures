@@ -106,11 +106,13 @@ this statement.
 theorem erdos_963.parts.ii : ∀ n : ℕ, 1 ≤ n → Nat.log 2 n ≤ f n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős noted that the greedy algorithm showed $f(n)\geq \lfloor \log_3 n\rfloor$
 [Er65, p. 188].
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/karlesmarin/formalizations/blob/4cc9c45f6cd13daa15964715de58db3aad17d4e2/Formalizations/Combinatorics/Additive/DissociatedGreedy.lean#L181"]
 theorem erdos_963.variants.greedy (n : ℕ) : Nat.log 3 n ≤ f n := by
   sorry
 
