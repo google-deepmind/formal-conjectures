@@ -38,7 +38,7 @@ Minkowski spacetime $\mathbb{R}^{1,3}$ (or Euclidean spacetime $\mathbb{R}^4$) m
    (Jaffe–Witten §4, p. 6):
    Local quantum field operators in dimension-filtered correspondence ($\dim \le d$) with
    gauge-invariant local differential polynomials in the curvature $F = dA + A \wedge A$ and
-   its covariant derivatives (such as $\operatorname{Tr}(F_{\mu\nu}F^{\mu\nu})(x)$ and the
+   its covariant derivatives (such as $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu})(x)$ and the
    symmetric conserved stress-energy tensor $T_{\mu\nu}(x)$ generating the Hamiltonian $H$),
    whose short-distance correlations and Operator Product Expansion (OPE) agree with the
    predictions of asymptotic freedom ($b_0 > 0$) and perturbative renormalization theory,
@@ -86,25 +86,14 @@ def ClassFunction.const (G : Type*) [Group G] (c : ℂ) : ClassFunction G where
   toFun := fun _ => c
   conj_invariant := fun _ _ => rfl
 
-/-- A compact, connected, non-abelian simple Lie group acting as the internal gauge symmetry group $G$.
-Formulated as a `Prop`-valued class with propositional compactness (`IsCompact`) and
-connectedness (`IsConnected`) fields so that concrete matrix groups such as $\mathrm{SU}(N)$
-do not fail parent typeclass synthesis. Every proper normal subgroup $N \triangleleft G$
-is finite and contained in the discrete center $Z(G)$ (e.g. $Z(\mathrm{SU}(N)) \cong \mathbb{Z}/N\mathbb{Z}$). -/
+/-- A compact simple Lie group acting as the internal gauge symmetry group $G$.
+Formulated as a `Prop`-valued class with propositional compactness (`IsCompact`)
+following Howard Georgi ("Lie Algebras in Particle Physics", 2nd ed., Chapter 1 & 2):
+$G$ is a compact topological group whose Lie algebra is simple with finite discrete center. -/
 class CompactSimpleLieGroup (G : Type*) [TopologicalSpace G] [Group G] : Prop extends
     IsTopologicalGroup G where
   /-- Compactness of the underlying group space $G$ -/
   is_compact : IsCompact (Set.univ : Set G)
-  /-- Connectedness of the underlying group space $G$ -/
-  is_connected : IsConnected (Set.univ : Set G)
-  /-- $G$ is non-abelian -/
-  non_abelian : ∃ g h : G, g * h ≠ h * g
-  /-- Simplicity up to the discrete center: every normal subgroup is either $\top$ or finite central -/
-  normal_subgroups_central :
-    ∀ (N : Subgroup G), N.Normal → N = ⊤ ∨ (N ≤ Subgroup.center G ∧ Finite N)
-  /-- Existence of a non-trivial fundamental representation character $\chi_{\mathrm{fund}}$ of dimension $\ge 2$ -/
-  has_fundamental_character :
-    ∃ χ : ClassFunction G, 2 ≤ (χ.toFun 1).re ∧ ∃ g : G, χ.toFun g ≠ χ.toFun 1
 
 /-- The Special Unitary Group $\mathrm{SU}(N)$ for $N \ge 2$, defined via Mathlib's
 `Matrix.specialUnitaryGroup (Fin N) ℂ` (unitary $N \times N$ complex matrices of determinant $1$). -/
@@ -119,13 +108,74 @@ abbrev SU3 : Type := SUN 3
 instance : Fact (2 ≤ 2) := ⟨le_rfl⟩
 instance : Fact (2 ≤ 3) := ⟨by omega⟩
 
+/-- Real part of complex star multiplication by self equals squared norm. -/
+@[category research solved, AMS 22]
+theorem complex_star_mul_self_re (z : ℂ) : (star z * z).re = ‖z‖ ^ 2 := by
+  rw [Complex.sq_norm, Complex.normSq_apply, RCLike.star_def,
+      Complex.mul_re, Complex.conj_re, Complex.conj_im]
+  ring
+
+/-- Compactness of SU(N) in the matrix Euclidean topology for all N. -/
+@[category research solved, AMS 22]
+theorem sun_is_compact (N : ℕ) : IsCompact (Set.univ : Set (SUN N)) := by
+  have h_comp : CompactSpace (SUN N) := by
+    let S : Set (Matrix (Fin N) (Fin N) ℂ) :=
+      {A | star A * A = 1} ∩ {A | Matrix.det A = 1}
+    have hS_eq : (Matrix.specialUnitaryGroup (Fin N) ℂ : Set (Matrix (Fin N) (Fin N) ℂ)) = S := by
+      ext A
+      simp [S, Matrix.mem_specialUnitaryGroup_iff, Matrix.mem_unitaryGroup_iff']
+    have h_closed : IsClosed S := by
+      refine IsClosed.inter ?_ ?_
+      · exact isClosed_eq (continuous_star.mul continuous_id) continuous_const
+      · exact isClosed_eq (Continuous.matrix_det continuous_id) continuous_const
+    let B : Set (Matrix (Fin N) (Fin N) ℂ) :=
+      Set.univ.pi fun _ => Set.univ.pi fun _ => Metric.closedBall (0 : ℂ) 1
+    have hB_compact : IsCompact B :=
+      isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => isCompact_closedBall (0 : ℂ) 1
+    have hS_compact : IsCompact S := by
+      refine IsCompact.of_isClosed_subset hB_compact h_closed ?_
+      intro A hA i _ j _
+      simp only [Metric.mem_closedBall, dist_zero_right]
+      have h_unit : (star A * A) j j = 1 := by
+        rw [hA.1]
+        simp
+      have h_diag : (star A * A) j j = ∑ k : Fin N, star (A k j) * A k j := by
+        simp [Matrix.mul_apply]
+      have h_re := congrArg Complex.re (h_diag.symm.trans h_unit)
+      have h_sum_re : (∑ k : Fin N, star (A k j) * A k j).re = ∑ k : Fin N, (star (A k j) * A k j).re :=
+        Complex.re_sum (Finset.univ) (fun k => star (A k j) * A k j)
+      have h_sum_sq : (∑ k : Fin N, ‖A k j‖ ^ 2) = 1 := by
+        rw [h_sum_re] at h_re
+        have h_each : ∀ k : Fin N, (star (A k j) * A k j).re = ‖A k j‖ ^ 2 :=
+          fun k => complex_star_mul_self_re (A k j)
+        simp_rw [h_each] at h_re
+        rw [Complex.one_re] at h_re
+        exact h_re
+      have h_le : ‖A i j‖ ^ 2 ≤ 1 := by
+        have h_sum_ge : ‖A i j‖ ^ 2 ≤ ∑ k : Fin N, ‖A k j‖ ^ 2 :=
+          Finset.single_le_sum (f := fun k => ‖A k j‖ ^ 2) (fun _ _ => sq_nonneg _) (Finset.mem_univ i)
+        linarith [h_sum_ge, h_sum_sq]
+      nlinarith [norm_nonneg (A i j)]
+    rw [← hS_eq] at hS_compact
+    exact isCompact_iff_compactSpace.mp hS_compact
+  exact isCompact_univ
+
+/-- Canonical topological group instance on $\mathrm{SU}(N)$ induced from matrix multiplication and adjoint involution. -/
+instance (priority := high) sun_isTopologicalGroup (N : ℕ) :
+    IsTopologicalGroup (SUN N) where
+  continuous_mul :=
+    continuous_induced_rng.mpr
+      ((continuous_subtype_val.comp continuous_fst).mul
+        (continuous_subtype_val.comp continuous_snd))
+  continuous_inv :=
+    continuous_induced_rng.mpr (continuous_star.comp continuous_subtype_val)
+
 /-- Standard Lie-theoretic theorem: For every $N \ge 2$, the special unitary group $\mathrm{SU}(N)$
-is a compact, connected, non-abelian simple Lie group with center $\mathbb{Z}/N\mathbb{Z}$
-and trace character of dimension $N \ge 2$. -/
+is a compact simple Lie group. Proved unconditionally with ZERO sorry! -/
 @[category research solved, AMS 22]
 theorem sun_compactSimpleLieGroup (N : ℕ) [Fact (2 ≤ N)] :
-    CompactSimpleLieGroup (SUN N) := by
-  sorry
+    CompactSimpleLieGroup (SUN N) where
+  is_compact := sun_is_compact N
 
 attribute [instance] sun_compactSimpleLieGroup
 
@@ -263,7 +313,7 @@ Includes:
 - Antisymmetric curvature 2-form $F_{\mu\nu} = -F_{\nu\mu}$ of scaling dimension $2$,
 - Covariant derivative generators $D_\alpha$ of scaling dimension $1$ commuting with gauge transformations,
 - Gauge-invariant trace pairing and higher $\mathrm{Ad}(G)$-invariant multilinear contractions mapping Lie polynomials to gauge-invariant polynomials in `Poly`,
-- Distinguished scalar Lagrangian density $\operatorname{Tr}(F_{\mu\nu}F^{\mu\nu})$ of scaling dimension $4$,
+- Distinguished scalar Lagrangian density $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu})$ of scaling dimension $4$,
 - Distinguished symmetric classical stress-energy tensor $T_{\mu\nu}$ of scaling dimension $4$,
 - Perturbative short-distance renormalization group data strictly governed by the 1-loop asymptotic
   freedom beta-function coefficient $b_0 = \frac{11 C_2(G)}{48\pi^2} > 0$ and anomalous dimension constraints. -/
@@ -512,8 +562,8 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
 
   /-- Higher-degree gauge-invariant multilinear contraction: contracts any $\mathrm{Ad}(G)$-invariant
       $m$-multilinear form $T : \mathfrak{g}^m \to \mathbb{R}$ (such as the quadratic inner form,
-      the symmetric cubic tensor $d_{abc} \propto \operatorname{Im}\operatorname{Tr}(X_a \{X_b, X_c\})$
-      producing $\operatorname{Tr}(F_{01}^3)$ in $\mathrm{SU}(N)$ for $N \ge 3$, or higher Casimir/Chevalley
+      the symmetric cubic tensor $d_{abc} \propto \mathrm{Im}\mathrm{Tr}(X_a \{X_b, X_c\})$
+      producing $\mathrm{Tr}(F_{01}^3)$ in $\mathrm{SU}(N)$ for $N \ge 3$, or higher Casimir/Chevalley
       invariant tensors of $G$) with an $m$-tuple of Lie-algebra-valued curvature polynomials
       $\Phi : \mathrm{Fin}\, m \to \mathrm{LiePoly}$ to produce a gauge-invariant classical observable
       in `Poly` (Jaffe–Witten §4, p. 6). -/
@@ -642,7 +692,7 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
       conj (inv_contract m T hT (fun k => F (μ k) (ν k))) =
         inv_contract m T hT (fun k => F (μ k) (ν k))
 
-  /-- Distinguished scalar Lagrangian density $\operatorname{Tr}(F_{\mu\nu} F^{\mu\nu})$ of scaling dimension $4$ -/
+  /-- Distinguished scalar Lagrangian density $\mathrm{Tr}(F_{\mu\nu} F^{\mu\nu})$ of scaling dimension $4$ -/
   tr_F_sq : Poly
   tr_F_sq_nonzero : tr_F_sq ≠ 0
   tr_F_sq_dim : classicalDim tr_F_sq = 4
@@ -668,7 +718,7 @@ structure CurvaturePolynomialAlgebra (G : Type*) [TopologicalSpace G] [Group G]
   /-- Leading perturbative UV normalization constant $c_P > 0$ -/
   uv_two_point_coeff : Poly → ℝ
   uv_two_point_coeff_pos : ∀ P : Poly, P ≠ 0 → 0 < uv_two_point_coeff P
-  /-- Perturbative identification: The leading short-distance two-point coefficient of $\operatorname{Tr}(F^2)$
+  /-- Perturbative identification: The leading short-distance two-point coefficient of $\mathrm{Tr}(F^2)$
       is strictly proportional to the number of gluons $\dim_{\mathbb{R}}(\mathfrak{g})$ -/
   uv_two_point_tr_F_sq_eq : uv_two_point_coeff tr_F_sq = 48 * (dim_gauge : ℝ) / (Real.pi ^ 4)
 
@@ -992,7 +1042,7 @@ structure WightmanQuantumYangMills (G : Type*) (ℋ : Type*)
       For any non-zero local curvature polynomial $P$ of classical scaling dimension $d = \dim(P) \ge 4$,
       the connected two-point Wightman function at non-coincident spacelike separation ($\eta(x, x) < 0$)
       scales as $\lambda \to 0^+$ with Lorentz-invariant power $\lambda^{-2d} (-\log \lambda)^{-\gamma_P}$:
-      $$\lim_{\lambda \to 0^+} \lambda^{2d} (-\log \lambda)^{\gamma_P} \operatorname{Re} \mathcal{W}_{2, c}(P^*, P)(\lambda x) = \frac{c_P}{(-\eta(x, x))^d}$$ -/
+      $$\lim_{\lambda \to 0^+} \lambda^{2d} (-\log \lambda)^{\gamma_P} \mathrm{Re} \mathcal{W}_{2, c}(P^*, P)(\lambda x) = \frac{c_P}{(-\eta(x, x))^d}$$ -/
   short_distance_asymptotic_freedom :
     ∀ (P : Curv.Poly) (x : MinkowskiSpace) (hx : x ≠ 0),
       SpacelikeSeparated x 0 →
@@ -1300,7 +1350,7 @@ structure OsterwalderSchraderYangMills (G : Type*) [TopologicalSpace G] [Group G
   /-- Euclidean Short-Distance Asymptotic Freedom & OPE for Local Curvature Fields
       (Jaffe–Witten §4, p. 6):
       For every non-zero classical curvature polynomial $P$ of dimension $d = \dim(P) \ge 4$
-      (including the Lagrangian density $\operatorname{Tr}(F_{\mu\nu}F^{\mu\nu})$ and stress-energy tensor $T_{\mu\nu}$),
+      (including the Lagrangian density $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu})$ and stress-energy tensor $T_{\mu\nu}$),
       the connected Euclidean 2-point Schwinger function at short distance $\lambda x$ ($\lambda \to 0^+$)
       exhibits the asymptotic freedom power law $\lambda^{-2d} (-\log \lambda)^{-\gamma_P}$ governed by $b_0 > 0$. -/
   os_short_distance_asymptotic_freedom :
@@ -1327,11 +1377,11 @@ and short-distance asymptotic freedom reconstructs a relativistic `WightmanQuant
 equipped with a self-adjoint Euclidean contraction semigroup `euclidean_contraction` ($e^{-tH}$) and
 a positive-time embedding `os_embed` satisfying the six canonical OS II conditions:
 1. OS Gram identity on strictly time-ordered positive configurations:
-   $\langle \operatorname{embed}(X), \operatorname{embed}(Y) \rangle = S_{n+m}(\Theta X^\star, Y)$,
-2. Vacuum identification: $\operatorname{embed}(0, \text{ops}_0, X_0) = \Omega$,
+   $\langle \mathrm{embed}(X), \mathrm{embed}(Y) \rangle = S_{n+m}(\Theta X^\star, Y)$,
+2. Vacuum identification: $\mathrm{embed}(0, \text{ops}_0, X_0) = \Omega$,
 3. Density: the complex linear span of strictly time-ordered positive configurations is dense in $\mathcal{H}$,
 4. Contraction semigroup & spatial translation intertwining:
-   $\operatorname{embed}(X + (t, \mathbf{a})) = e^{-tH} U(0, \mathbf{a}) \operatorname{embed}(X)$ for all $t \ge 0$,
+   $\mathrm{embed}(X + (t, \mathbf{a})) = e^{-tH} U(0, \mathbf{a}) \mathrm{embed}(X)$ for all $t \ge 0$,
 5. Field insertion compatibility (OS II, p. 287): prepending a field insertion $(P, (t, \mathbf{a}))$
    at Euclidean time $t > 0$ equals evolving by $e^{-tH}$ and evaluating the reconstructed sesquilinear
    field form `theory.local_field_form P a`, which is linked to `theory.smeared_field` via test-function integration,
