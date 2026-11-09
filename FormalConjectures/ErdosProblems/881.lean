@@ -57,24 +57,22 @@ theorem erdos_881 :
           (A \ B).IsAsymptoticAddBasisOfOrder (k + 1) := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The case `k = 2` has a positive answer.
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
-  "https://github.com/BruceLoveLee000/erdos-lean-proofs/blob/10a88193254999351c81476a304e673291ce1e76/ErdosProofs/Erdos881/K2.lean#L711"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-09-000017"]
 theorem erdos_881.variants.two :
     ∀ A : Set ℕ, IsMinimalAsymptoticAddBasisOfOrder 2 A →
       ∃ B : Set ℕ, B ⊆ A ∧ B.Infinite ∧ (A \ B).IsAsymptoticAddBasisOfOrder 3 := by
   sorry
 
-set_option linter.style.formal_proof_palomar false in
 /--
 The case `k = 2` holds without minimality: every asymptotic additive basis of order `2` contains
 an infinite set whose removal leaves an asymptotic additive basis of order `3`.
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
-  "https://github.com/BruceLoveLee000/erdos-lean-proofs/blob/10a88193254999351c81476a304e673291ce1e76/ErdosProofs/Erdos881/K2.lean#L691"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-09-000017"]
 theorem erdos_881.variants.two_of_basis :
     ∀ A : Set ℕ, A.IsAsymptoticAddBasisOfOrder 2 →
       ∃ B : Set ℕ, B ⊆ A ∧ B.Infinite ∧ (A \ B).IsAsymptoticAddBasisOfOrder 3 := by
