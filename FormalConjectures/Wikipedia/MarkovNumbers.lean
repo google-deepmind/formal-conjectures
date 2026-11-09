@@ -50,9 +50,10 @@ $x \leq y \leq z$ and we have the Markov equality $x^2 + y^2 + z^2 = 3xyz$. -/
 def IsMarkovTriple (x y z : ℕ) : Prop :=
   0 < x ∧ x ≤ y ∧ y ≤ z ∧ x ^ 2 + y ^ 2 + z ^ 2 = 3 * x * y * z
 
-/-- A positive natural number $c$ is a *Markov number* if it appears in some Markov triple. -/
-def IsMarkovNumber (c : ℕ) : Prop :=
-  ∃ a b : ℕ, IsMarkovTriple a b c ∨ IsMarkovTriple a c b ∨ IsMarkovTriple c a b
+/-- A natural number $n$ is a *Markov number* if it is the smallest entry of some Markov triple.
+This is equivalent to $n$ appearing anywhere in some Markov triple. -/
+def IsMarkovNumber (n : ℕ) : Prop :=
+  ∃ a b : ℕ, IsMarkovTriple n a b
 
 @[category test, AMS 11]
 theorem isMarkovTriple_one_two_five : IsMarkovTriple 1 2 5 := by
