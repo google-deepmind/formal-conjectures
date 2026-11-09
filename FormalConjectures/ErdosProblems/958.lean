@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/958](https://www.erdosproblems.com/958)
 - [CDL25] Clemen, F., Dumitrescu, A. and Liu, D., *On multiplicities of interpoint distances*.
   arXiv:2505.04283 (2025).
+- [PALOMAR-2026-10-05-000004](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000004&version=1)
 -/
 
 @[expose] public section
@@ -45,6 +46,7 @@ def IsEquidistantOnCircle (A : Finset ℝ²) : Prop :=
     {x | ∃ i : ℕ, i < #A ∧
       x = c + r • (!₂[Real.cos (θ + (i : ℝ) * α), Real.sin (θ + (i : ℝ) * α)])}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subset \mathbb{R}^2$ be a finite set of size $n$, and let $\{d_1,\ldots,d_k\}$ be the set of
 distances determined by $A$. Let $f(d)$ be the multiplicity of $d$, that is, the number of
@@ -62,9 +64,9 @@ The classification is asked for all sufficiently large $n$. Small exceptions suc
 $\{(0,0), (1,0), (0,1), (0,-1)\}$ exist, so the negative answer asserts
 counterexamples of arbitrarily large size, as in [CDL25].
 -/
-@[category research solved, AMS 5 52]
-theorem erdos_958 : answer(False) ↔
-    ∃ N : ℕ, ∀ n ≥ N, ∀ A : Finset ℝ², #A = n →
+@[category research solved, question, AMS 5 52, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/08152671ab394392fd941b18654daba734c26518/erdos-958/Solution.lean#L60"]
+theorem erdos_958 :
+    ¬ ∃ N : ℕ, ∀ n ≥ N, ∀ A : Finset ℝ², #A = n →
       ((#(distanceSet A) = n - 1 ∧
             (distanceSet A).image (distanceMultiplicity A) = Finset.Icc 1 (n - 1)) →
         (IsEquidistantOnLine A ∨ IsEquidistantOnCircle A)) := by

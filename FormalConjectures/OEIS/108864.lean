@@ -101,9 +101,9 @@ theorem a_4 : a 4 = 5 := by
 Is $1155$ the last odd number in this sequence?
 ($1155$ is the $59$th term starting from $1$, corresponding to $a(58) = 1155$).
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∀ n > 58, Even (a n) := by
+    ∀ n > 58, Even (a n) := by
   sorry
 
 end OeisA108864

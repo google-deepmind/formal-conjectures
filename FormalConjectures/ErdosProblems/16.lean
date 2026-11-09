@@ -48,6 +48,7 @@ def density_zero (S : Set ℕ) : Prop :=
   open scoped Classical in
   Tendsto (fun x : ℕ ↦ (count (· ∈ S) x : ℝ) / (x : ℝ)) atTop (𝓝 0)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is the set of odd integers not of the form $2^k+p$ the union of an infinite arithmetic progression
 and a set of density $0$?
@@ -58,12 +59,11 @@ Chen [Ch23] has proved the answer is no.
 
 This was formalized in Lean by Chin using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielchin/proofs/blob/main/Proofs/ErdosProblems/Erdos16.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/danielchin/proofs/blob/main/Proofs/ErdosProblems/Erdos16.lean"]
 theorem erdos_16 :
-    answer(False) ↔
-      ∃ A B : Set ℕ, Erdos16Set = A ∪ B ∧
-        (∃ a d : ℕ, d > 0 ∧ A = { x | ∃ m : ℕ, x = a + m * d }) ∧
-        density_zero B := by
+    ¬ ∃ A B : Set ℕ, Erdos16Set = A ∪ B ∧
+      (∃ a d : ℕ, d > 0 ∧ A = { x | ∃ m : ℕ, x = a + m * d }) ∧
+      density_zero B := by
   sorry
 
 /--
@@ -82,11 +82,12 @@ theorem erdos_16.variant.romanoff :
     positive_lower_density S := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Using covering congruences Erdős [Er50] proved that the set of odd integers which are not of this
 form contains an infinite arithmetic progression.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos16_erdos_16_variant_erdos.lean#L103"]
 theorem erdos_16.variant.erdos :
     ∃ a d : ℕ, d > 0 ∧ { x | ∃ m : ℕ, x = a + m * d } ⊆ Erdos16Set := by
   sorry

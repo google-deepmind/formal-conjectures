@@ -38,11 +38,10 @@ namespace Erdos891
 Let $2=p_1 < p_2 < \cdots$ be the primes and $k\geq 2$. Is it true that, for all sufficiently large
 $n$, there must exist an integer in $[n,n+p_1\cdots p_k)$ with $>k$ many prime factors?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_891 :
-    answer(sorry) ↔
-      ∀ k ≥ 2, ∀ᶠ n in atTop,
-      ∃ m ∈ Ico n (n + ∏ i ∈ range k, i.nth Nat.Prime), k < ω m := by
+    ∀ k ≥ 2, ∀ᶠ n in atTop,
+    ∃ m ∈ Ico n (n + ∏ i ∈ range k, i.nth Nat.Prime), k < ω m := by
   sorry
 
 /--
@@ -60,9 +59,9 @@ theorem erdos_891.variants.schinzel :
 This is unknown even for $k=2$ - that is, is it true that in every interval of $6$
 (sufficiently large) consecutive integers there must exist one with at least $3$ prime factors?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_891.variants.case_k_2 :
-    answer(sorry) ↔ ∀ᶠ n in atTop,
+    ∀ᶠ n in atTop,
       ∃ m ∈ Ico n (n + 6), 3 ≤ ω m := by
   sorry
 

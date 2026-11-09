@@ -48,6 +48,7 @@ def IsLcmFree (n : ℕ) (A : Finset ℕ) : Prop :=
 def uncovered (n : ℕ) (A : Finset ℕ) : Finset ℕ :=
   (Finset.Icc 1 n).filter fun m ↦ ∀ a ∈ A, ¬ a ∣ m
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $A\subseteq\{1,\ldots,n\}$ is a set such that $[a,b]>n$ for all $a\neq b$,
 where $[a,b]$ is the least common multiple, then
@@ -56,12 +57,13 @@ $$\sum_{a\in A}\frac{1}{a}\leq \frac{31}{30}?$$
 The answer is yes, proved by Schinzel and Szekeres [ScSz59]. The bound is best possible as
 $A=\{2,3,5\}$ demonstrates.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
-theorem erdos_542.parts.i : answer(True) ↔
+theorem erdos_542.parts.i :
     ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → ∑ a ∈ A, (1 : ℝ) / a ≤ 31 / 30 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The bound $31/30$ is attained by $A=\{2,3,5\}$ (with $n=5$). -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
@@ -69,6 +71,7 @@ theorem erdos_542.variants.sharp :
     IsLcmFree 5 {2, 3, 5} ∧ ∑ a ∈ ({2, 3, 5} : Finset ℕ), (1 : ℝ) / a = 31 / 30 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $A\subseteq\{2,\ldots,n\}$ is a set such that $[a,b]>n$ for all $a\neq b$,
 then there must be $\gg n$ many $m\leq n$ which are not divisible by any $a\in A$?
@@ -78,13 +81,14 @@ The answer is no, proved by Schinzel and Szekeres [ScSz59].
 The element $1$ is excluded: $A=\{1\}$ satisfies the hypothesis and leaves no such $m$, so
 without this restriction the answer would be negative for a trivial reason.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
-theorem erdos_542.parts.ii : answer(False) ↔
-    ∃ c > 0, ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → 1 ∉ A →
+theorem erdos_542.parts.ii :
+    ¬ ∃ c > 0, ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → 1 ∉ A →
       c * n ≤ ((uncovered n A).card : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Schinzel and Szekeres [ScSz59] proved that, for any $\epsilon>0$, there are sets
 $A\subseteq\{2,\ldots,n\}$ as in the problem with $o(n)$ many uncovered $m\leq n$ and for which
@@ -120,8 +124,8 @@ In [Er73] Erdős further speculates that in fact
 $$\sum_{a\in A}\frac{1}{a}\leq 1+o(1),$$
 where the $o(1)$ term $\to 0$ as $n\to \infty$.
 -/
-@[category research open, AMS 11]
-theorem erdos_542.variants.one_add_little_o : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_542.variants.one_add_little_o :
     ∃ o : ℕ → ℝ, Tendsto o atTop (nhds 0) ∧
       ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → ∑ a ∈ A, (1 : ℝ) / a ≤ 1 + o n := by
   sorry
@@ -130,8 +134,8 @@ theorem erdos_542.variants.one_add_little_o : answer(sorry) ↔
 In [Er98] Erdős mentions that he, Schinzel, and Szekeres conjectured that $2,3,5$ and
 $3,4,5,7,11$ are the only two sequences for which the sum is $>1$.
 -/
-@[category research open, AMS 11]
-theorem erdos_542.variants.only_two : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_542.variants.only_two :
     ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → 1 < ∑ a ∈ A, (1 : ℝ) / a →
       A = {2, 3, 5} ∨ A = {3, 4, 5, 7, 11} := by
   sorry

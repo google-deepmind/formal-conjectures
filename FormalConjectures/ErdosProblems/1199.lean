@@ -39,13 +39,13 @@ such that all elements of $A+A$ are the same colour?
 
 A conjecture of Owings [Ow74].
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1199 :
-    answer(sorry) ↔
     ∀ (color : ℕ → Fin 2), ∃ (A : Set ℕ),
     A.Infinite ∧ ∀ n ∈ (A+A), ∀ m ∈ (A+A), color n = color m := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Hindman [Hi79] has shown that this is false for 3-colourings.
 -/

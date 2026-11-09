@@ -39,6 +39,7 @@ $\lvert \epsilon_1z_1+\cdots+\epsilon_nz_n\rvert \leq r$. -/
 noncomputable def signedSumCount {n : ℕ} (z : Fin n → ℂ) (r : ℝ) : ℕ :=
   {ε : Fin n → ℤ | (∀ i, ε i = -1 ∨ ε i = 1) ∧ ‖∑ i, (ε i : ℂ) * z i‖ ≤ r}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $z_1,\ldots,z_n\in \mathbb{C}$ with $\lvert z_i\rvert=1$ then is it true that the probability
 that
@@ -54,9 +55,9 @@ is the best possible, as shown by taking $z_k=1$ for $1\leq k\leq n/2$ and $z_k=
 
 See also [498](https://www.erdosproblems.com/498).
 -/
-@[category research solved, AMS 5 60, formal_proof using lean4 at
+@[category research solved, question, AMS 5 60, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos395.lean#L4058"]
-theorem erdos_395 : answer(True) ↔ ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 0 < n → ∀ z : Fin n → ℂ,
+theorem erdos_395 : ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 0 < n → ∀ z : Fin n → ℂ,
     (∀ i, ‖z i‖ = 1) → c / n ≤ (signedSumCount z √2 : ℝ) / 2 ^ n := by
   sorry
 
@@ -65,8 +66,8 @@ Erdős originally asked [erdős_395](https://www.erdosproblems.com/395) with $\s
 $1$, but Carnielli and Carolino [CaCa11] observed that this is false, choosing $z_1=1$ and $z_k=i$
 for $2\leq k\leq n$, where $n$ is even, since then the sum is at least $\sqrt{2}$ always.
 -/
-@[category research solved, AMS 5 60]
-theorem erdos_395.variants.one : answer(False) ↔ ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 0 < n →
+@[category research solved, question, AMS 5 60]
+theorem erdos_395.variants.one : ¬ ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 0 < n →
     ∀ z : Fin n → ℂ, (∀ i, ‖z i‖ = 1) → c / n ≤ (signedSumCount z 1 : ℝ) / 2 ^ n := by
   sorry
 

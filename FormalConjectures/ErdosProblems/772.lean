@@ -45,6 +45,7 @@ noncomputable def H (k n : ℕ) : ℕ :=
   sSup {r | r ≤ n ∧ ∀ A : Finset ℕ, A.card = n → (∀ m, sumRep A m ≤ k) →
     ∃ S ⊆ A, IsSidon (S : Set ℕ) ∧ r ≤ S.card}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 1$ and $H_k(n)$ be the maximal $r$ such that if $A\subset\mathbb{N}$ has
 $\lvert A\rvert=n$ and $\| 1_A\ast 1_A\|_\infty \leq k$ then $A$ contains a Sidon set of size at
@@ -54,20 +55,21 @@ Is it true that $H_k(n)/n^{1/2}\to \infty$?
 
 The answer is yes, and in fact $H_k(n) \gg_k n^{2/3}$, proved by Alon and Erdős [AlEr85].
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos772.lean#L1040"]
-theorem erdos_772.parts.i : answer(True) ↔
+theorem erdos_772.parts.i :
     ∀ k ≥ 1, Tendsto (fun n : ℕ ↦ (H k n : ℝ) / √n) atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $H_k(n) > n^{1/2+c}$ for some constant $c>0$?
 
 The answer is yes, and in fact $H_k(n) \gg_k n^{2/3}$, proved by Alon and Erdős [AlEr85].
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos772.lean#L1040"]
-theorem erdos_772.parts.ii : answer(True) ↔
+theorem erdos_772.parts.ii :
     ∀ k ≥ 1, ∃ c > 0, ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ (1 / 2 + c : ℝ) < H k n := by
   sorry
 

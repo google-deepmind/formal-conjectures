@@ -31,6 +31,9 @@ public import FormalConjecturesUtil
 * [ArXiv2605] [arXiv:2605.14138](https://arxiv.org/abs/2605.14138)
 * [BR65] Blakley, G. R. and Roy, P. (1965). "A Hölder type inequality for symmetric matrices
   with nonnegative entries." *Proc. Amer. Math. Soc.* 16, pp. 1244--1245.
+* [OAI26a] OpenAI, *A counterexample to Sidorenko's conjecture*. OpenAI Math Release preprint
+  (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-counterexample-to-Sidorenkos-conjecture-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -52,16 +55,22 @@ variable {V W : Type*}
 
 /- ## The conjecture -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Sidorenko's conjecture (1993).**
 
 For every finite bipartite simple graph $H$ and every finite simple graph $G$:
 $t(H, G) \ge t(K_2, G)^{e(H)}$, where $K_2$ denotes the single-edge graph on 2 vertices
 (i.e. `completeGraph (Fin 2)`).
+
+This is false. It was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the
+linked Lean proof, which gives a bipartite $H$ with $35$ vertices and $66$ edges and a finite
+host $G$ with $t(H, G) < t(K_2, G)^{66}$.
 -/
-@[category research open, AMS 5]
-theorem sidorenko_conjecture : answer(sorry) ↔
-    ∀ {V W : Type} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W] [Nonempty W]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sidorenko/RandomHost.lean#L319"]
+theorem sidorenko_conjecture :
+    ¬ ∀ {V W : Type} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W] [Nonempty W]
       (H : SimpleGraph V) (G : SimpleGraph W)
       [DecidableRel H.Adj] [DecidableRel G.Adj],
       H.IsBipartite →
@@ -74,10 +83,15 @@ theorem sidorenko_conjecture : answer(sorry) ↔
 For every finite bipartite simple graph $H$ and every graphon $W$ on $[0, 1]$ with Lebesgue measure:
 $t(H, W) \ge t(K_2, W)^{e(H)}$, where $t(K_2, W) = p(W)$ is the edge density of $W$,
 and $t(H, W)$ is the graphon homomorphism density of $H$ in $W$.
+
+This is false. The finite counterexample of [OAI26a] (see `sidorenko_conjecture`) also refutes
+the graphon form: the step graphon of the finite host graph has the same homomorphism
+densities and the same edge density as the host. This reduction is not part of the linked Lean
+proof of the finite form.
 -/
-@[category research open, AMS 5]
-theorem sidorenko_conjecture_graphon : answer(sorry) ↔
-    ∀ {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj],
+@[category research solved, question, AMS 5]
+theorem sidorenko_conjecture_graphon :
+    ¬ ∀ {V : Type*} [Fintype V] [DecidableEq V] (H : SimpleGraph V) [DecidableRel H.Adj],
       H.IsBipartite →
       ∀ (W : Graphon),
         (graphonEdgeDensity W) ^ H.edgeFinset.card ≤ graphonHomDensity H W := by
@@ -133,8 +147,8 @@ for any finite tournament $G$, the homomorphism density satisfies:
 $$ t_{\vec{T}}(G) \le 2^{-e(T)} $$
 where $e(T)$ is the total number of edges in $T$.
 -/
-@[category research open, AMS 5]
-theorem tournament_anti_sidorenko_trees_conjecture : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem tournament_anti_sidorenko_trees_conjecture :
     ∀ {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj],
       T.IsTree →
       ∃ (D : Digraph V),
@@ -154,8 +168,8 @@ for every tournamenton $W : [0, 1]^2 \to [0, 1]$, the homomorphism density satis
 $$ t_{\vec{T}}(W) \le 2^{-e(T)} $$
 where $e(T)$ is the total number of edges in $T$.
 -/
-@[category research open, AMS 5]
-theorem tournament_anti_sidorenko_trees_conjecture_tournamenton : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem tournament_anti_sidorenko_trees_conjecture_tournamenton :
     ∀ {V : Type*} [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj],
       T.IsTree →
       ∃ (D : Digraph V),

@@ -39,9 +39,9 @@ and all rows, columns, and diagonals add up to the same value?
 0 is excluded, as a Magic Square of Squares with 0 and 8 distinct squares is know is knownn.
 See [Magic Square of Squares](https://static.nsta.org/pdfs/QuantumV6N3.pdf)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem exists_magic_square_squares :
-    answer(sorry) ↔ ∃ m : Fin 3 → Fin 3 → ℕ, ∃ t : ℕ,
+    ∃ m : Fin 3 → Fin 3 → ℕ, ∃ t : ℕ,
        m.Injective2 ∧
        (∀ i j, 0 < (m i j) ∧ IsSquare (m i j)) ∧
        (∀ i, ∑ j, m i j = t) ∧
@@ -61,9 +61,9 @@ and all row sums and column sums are equal.
 *Reference:*
 [Semi-Magic Square of Cubes](https://unsolvedproblems.org/index_files/SquareofCubes.htm)
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem exists_semi_magic_square_cubes :
-    answer(sorry) ↔ ∃ m : Fin 3 → Fin 3 → ℕ, ∃ t : ℕ,
+    ∃ m : Fin 3 → Fin 3 → ℕ, ∃ t : ℕ,
        m.Injective2 ∧
        (∀ i j, ∃ n : ℕ, 0 < n ∧ m i j = n ^ 3) ∧
        (∀ i, ∑ j, m i j = t) ∧

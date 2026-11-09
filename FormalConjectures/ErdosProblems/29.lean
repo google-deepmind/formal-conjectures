@@ -42,6 +42,7 @@ open scoped Pointwise
 
 namespace Erdos29
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there an explicit construction of a set $A\subseteq \mathbb{N}$ such that $A+A=\mathbb{N}$ but
 $1_A\ast 1_A(n)=o(n^\epsilon)$ for every $\epsilon>0$?
@@ -53,9 +54,9 @@ solution. An explicit construction was given by Jain, Pham, Sawhney, and Zakharo
 The formal statement records the existence of such a set; the linked formal proof exhibits an
 explicit construction.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos29.lean#L104"]
-theorem erdos_29 : answer(True) ↔ ∃ A : Set ℕ, A + A = Set.univ ∧ ∀ ε : ℝ, 0 < ε →
+theorem erdos_29 : ∃ A : Set ℕ, A + A = Set.univ ∧ ∀ ε : ℝ, 0 < ε →
     (fun n : ℕ => (sumRep A n : ℝ)) =o[atTop] fun n : ℕ => (n : ℝ) ^ ε := by
   sorry
 

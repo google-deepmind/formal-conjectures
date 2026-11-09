@@ -41,6 +41,7 @@ noncomputable def regularNGon (n : ℕ) : Finset ℝ² :=
   (Finset.range n).image fun k : ℕ =>
     !₂[Real.cos (2 * Real.pi * k / n), Real.sin (2 * Real.pi * k / n)]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Suppose $n$ points in $\mathbb{R}^2$ determine a convex polygon and the set of distances between
 them is $\{u_1,\ldots,u_t\}$. Suppose $u_i$ appears as the distance between $f(u_i)$ many pairs of

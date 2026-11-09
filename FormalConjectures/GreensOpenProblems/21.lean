@@ -74,8 +74,8 @@ terms of $k$ only?
 This problem, which is known as Rado's boundedness conjecture, dates back to 1933 [Ra33]. It is
 open for all $k \geq 4$.
 -/
-@[category research open, AMS 5 11]
-theorem green_21 : answer(sorry) ↔ ∃ B : ℕ → ℕ, ∀ (k : ℕ) (a : Fin k → ℤ),
+@[category research open, question, AMS 5 11]
+theorem green_21 : ∃ B : ℕ → ℕ, ∀ (k : ℕ) (a : Fin k → ℤ),
     ¬ RadoCondition a → minColours a ≤ B k := by
   sorry
 
@@ -88,6 +88,8 @@ theorem green_21.variants.fox_kleitman (a : Fin 3 → ℤ) (ha : ¬ RadoConditio
     minColours a ≤ 24 := by
   sorry
 
+def green_21.variants.fox_kleitman_sharp.answer : ℕ := sorry
+
 /--
 Green [Gr24] is not sure that the constant $24$ of [FoKl06] is sharp, and remarks that it might
 be interesting to determine the sharp constant.
@@ -95,9 +97,10 @@ be interesting to determine the sharp constant.
 The largest value of $c(a_1, a_2, a_3)$ is attained, since by `green_21.variants.fox_kleitman`
 the values form a non-empty set of naturals bounded above by $24$.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_21.variants.fox_kleitman_sharp :
-    IsGreatest {c | ∃ a : Fin 3 → ℤ, ¬ RadoCondition a ∧ minColours a = c} answer(sorry) := by
+    IsGreatest {c | ∃ a : Fin 3 → ℤ, ¬ RadoCondition a ∧ minColours a = c}
+      green_21.variants.fox_kleitman_sharp.answer := by
   sorry
 
 /--
@@ -114,8 +117,8 @@ The point of the question is that the number of colours $f(k)$ must not depend o
 The arity $k$ is required to be positive, as in [FoKl06]: for $k = 0$ the empty tuple is a
 monochromatic solution with sum $0$ for every colouring, so no $f(0)$ could work.
 -/
-@[category research open, AMS 5 11]
-theorem green_21.variants.fox_kleitman_modular : answer(sorry) ↔ ∃ f : ℕ → ℕ,
+@[category research open, question, AMS 5 11]
+theorem green_21.variants.fox_kleitman_modular : ∃ f : ℕ → ℕ,
     ∀ (k p : ℕ), 0 < k → p.Prime → ∀ a : Fin k → ℤ,
       (∀ I : Finset (Fin k), (p : ℤ) ∣ ∑ i ∈ I, a i → I = ∅) →
       ∃ col : (ZMod p)ˣ → Fin (f k), ∀ x : Fin k → (ZMod p)ˣ,

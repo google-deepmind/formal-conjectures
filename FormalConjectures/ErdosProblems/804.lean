@@ -46,6 +46,7 @@ at least `f m n`. -/
 noncomputable def f (m n : ℕ) : ℕ :=
   sInf {k | ∃ G : SimpleGraph (Fin n), HasLocalIndependence G m ⌈log n⌉₊ ∧ G.indepNum = k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(m,n)$ be maximal such that any graph on $n$ vertices in which every induced subgraph on
 $m$ vertices has an independent set of size at least $\log n$ must contain an independent set of
@@ -56,25 +57,27 @@ Estimate $f(n)$. In particular, is it true that $f((\log n)^2,n) \geq n^{1/2-o(1
 The answer is no: Alon and Sudakov [AlSu07] proved that in fact
 $$\frac{(\log n)^2}{\log\log n}\ll f((\log n)^2,n) \ll (\log n)^2.$$
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos804.lean#L3532"]
-theorem erdos_804.parts.i : answer(False) ↔
-    ∀ ε > 0, ∀ᶠ n : ℕ in atTop,
+theorem erdos_804.parts.i :
+    ¬ ∀ ε > 0, ∀ᶠ n : ℕ in atTop,
       (n : ℝ) ^ (1 / 2 - ε : ℝ) ≤ f ⌊(log n) ^ 2⌋₊ n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $f((\log n)^3,n)\gg (\log n)^3$?
 
 The answer is no: Alon and Sudakov [AlSu07] proved that in fact
 $$f((\log n)^3,n)\asymp \frac{(\log n)^2}{\log\log n}.$$
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos804.lean#L3532"]
-theorem erdos_804.parts.ii : answer(False) ↔
-    ∃ c > 0, ∀ᶠ n : ℕ in atTop, c * (log n) ^ 3 ≤ f ⌊(log n) ^ 3⌋₊ n := by
+theorem erdos_804.parts.ii :
+    ¬ ∃ c > 0, ∀ᶠ n : ℕ in atTop, c * (log n) ^ 3 ≤ f ⌊(log n) ^ 3⌋₊ n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Alon and Sudakov [AlSu07] proved that
 $$\frac{(\log n)^2}{\log\log n}\ll f((\log n)^2,n) \ll (\log n)^2$$

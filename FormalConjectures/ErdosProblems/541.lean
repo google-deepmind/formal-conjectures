@@ -34,6 +34,7 @@ open Filter
 
 namespace Erdos541
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_1, \dots, a_p$ be (not necessarily distinct) residues modulo a prime $p$, such that there
 exists some $r$ so that if $S \subseteq [p]$ is non-empty and
@@ -44,8 +45,8 @@ Must there be at most two distinct residues amongst the $a_i$?
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos541.lean"]
-theorem erdos_541 : answer(True) ↔ (∀ p, Fact p.Prime → ∀ (a : Fin p → ZMod p),
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos541.lean"]
+theorem erdos_541 : (∀ p, Fact p.Prime → ∀ (a : Fin p → ZMod p),
     (∃ r, ∀ (S : Finset (Fin p)), S ≠ ∅ → ∑ i ∈ S, a i = 0 → S.card = r) →
       (Set.range a).ncard ≤ 2) := by
   sorry

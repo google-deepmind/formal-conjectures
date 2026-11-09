@@ -37,6 +37,7 @@ open Set Pointwise
 namespace Erdos35
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $B\subseteq\mathbb{N}$ be an additive basis of order $k$ with $0\in B$. Is it true that for
 every $A\subseteq\mathbb{N}$ we have
@@ -52,9 +53,9 @@ Ruzsa has observed that this follows immediately from the stronger fact proved b
 [Pl70] that (under the same assumptions, and for $\alpha>0$)
 $$d_S(A+B)\geq \alpha^{1-1/k}.$$
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos35.lean#L1738"]
-theorem erdos_35 : answer(True) ↔ ∀ (B : Set ℕ) (k : ℕ), 0 ∈ B → B.IsAddBasisOfOrder k →
+theorem erdos_35 : ∀ (B : Set ℕ) (k : ℕ), 0 ∈ B → B.IsAddBasisOfOrder k →
     ∀ A : Set ℕ, schnirelmannDensity A +
       schnirelmannDensity A * (1 - schnirelmannDensity A) / k ≤ schnirelmannDensity (A + B) := by
   sorry

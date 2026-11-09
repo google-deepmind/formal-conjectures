@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos645
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If ℕ is $2$-coloured then there must exist a monochromatic three-term arithmetic progression
 $x,x+d,x+2d$ such that $d>x$.

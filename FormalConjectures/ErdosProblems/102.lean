@@ -112,29 +112,31 @@ Let $c > 0$ and let $h_c(n)$ be such that for any $n$ points in $\mathbb{R}^2$ w
 $cn^2$ lines that each contain more than three of the points, some line contains $h_c(n)$ of
 the points. Is it true that, for fixed $c > 0$, $h_c(n) \to \infty$?
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_102 :
-    answer(sorry) ↔ ∀ c > 0, ∀ M : ℕ, ∀ᶠ n in atTop, (M : ℕ∞) ≤ h c n := by
+    ∀ c > 0, ∀ M : ℕ, ∀ᶠ n in atTop, (M : ℕ∞) ≤ h c n := by
   sorry
 
 /--
 It is not known whether $h_c(n) \geq 5$ for all sufficiently large $n$.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_102.variants.five :
-    answer(sorry) ↔ ∀ c > 0, ∀ᶠ n in atTop, (5 : ℕ∞) ≤ h c n := by
+    ∀ c > 0, ∀ᶠ n in atTop, (5 : ℕ∞) ≤ h c n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is easy to see that $h_c(n) \ll_c n^{1/2}$: for all sufficiently small $c > 0$ there are
 admissible configurations (e.g. grids) in which no line contains more than $C_c n^{1/2}$ points.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/eee8e904a0eb8511302bc809b9486116ec079e69/Proofs/T_Erdos102_erdos_102_variants_upper_sqrt.lean#L1100"]
 theorem erdos_102.variants.upper_sqrt :
     ∃ c₀ > (0 : ℝ), ∀ c ∈ Set.Ioc 0 c₀, ∃ C : ℝ, ∀ᶠ n in atTop,
       h c n ≤ (⌈C * Real.sqrt n⌉₊ : ℕ∞) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős [Er95] suggested that perhaps $h_c(n) \gg_c n^{1/2}$. Zach Hunter pointed out that this is
 false: the points of $\{1, \dots, m\}^d$ with $n \approx m^d$, randomly projected to
@@ -142,7 +144,7 @@ $\mathbb{R}^2$, meet every line in $\ll_d n^{1/d}$ points and determine $\gg_d n
 more than three points. This gives $h_c(n) \ll n^{1 / \log(1/c)}$; we state the underlying form:
 for every $d \geq 1$ there is $c > 0$ with $h_c(n) \ll_d n^{1/d}$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/eee8e904a0eb8511302bc809b9486116ec079e69/Proofs/T_Erdos102_erdos_102_variants_hunter.lean#L1113"]
 theorem erdos_102.variants.hunter :
     ∀ d : ℕ, 1 ≤ d → ∃ c > (0 : ℝ), ∃ C : ℝ, ∀ᶠ n in atTop,
       h c n ≤ (⌈C * (n : ℝ) ^ (1 / (d : ℝ))⌉₊ : ℕ∞) := by

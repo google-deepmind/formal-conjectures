@@ -49,9 +49,9 @@ if `B ⊂ A` is any infinite set, then `A \ B` is not a basis of order `k`.
 Must there exist an infinite `B ⊂ A` such that `A \ B`
 is an additive basis of order `k + 1`?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem erdos_881 :
-    answer(sorry) ↔ ∀ (k : ℕ) (A : Set ℕ),
+    ∀ (k : ℕ) (A : Set ℕ),
       IsMinimalAsymptoticAddBasisOfOrder k A →
         ∃ (B : Set ℕ), B ⊆ A ∧ B.Infinite ∧
           (A \ B).IsAsymptoticAddBasisOfOrder (k + 1) := by

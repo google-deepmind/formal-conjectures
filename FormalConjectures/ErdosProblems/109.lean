@@ -32,6 +32,7 @@ open Pointwise
 
 namespace Erdos109
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Any $A\subseteq \mathbb{N}$ of positive upper density contains a sumset $B+C$ where both $B$ and $C$
 are infinite.

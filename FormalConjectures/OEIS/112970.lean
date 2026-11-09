@@ -66,6 +66,7 @@ theorem a_3 : a 3 = 1 := by unfold a; unfold a; rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = 2 := by unfold a; unfold a; unfold a; unfold a; rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(2^n)=a(2^(n+1)+1)=\textrm{A033638}(n)$.
 This formalizes the equality $a(2^n) = a(2^(n+1)+1)$.
@@ -76,15 +77,17 @@ This formalizes the equality $a(2^n) = a(2^(n+1)+1)$.
 theorem conjecture1 (n : ℕ) : a (2^n) = a (2^(n + 1) + 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Second part of the conjecture, $a(2^n)=\textrm{A033638}(n)=\lfloor n^2 / 4 \rfloor + 1$.
 It holds by induction on $n$, since $a(2^{n+1}) = a(2^n) + a(2^n - 2)$ for $n \ge 1$ and
 $a(2^m - 2) = \lfloor (m+1)/2 \rfloor$ for $m \ge 1$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_OeisA112970_conjecture1_value.lean#L139"]
 theorem conjecture1_value (n : ℕ) : a (2^n) = n ^ 2 / 4 + 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(2^n-1)=a(3*2^n-1)=1$.
 This formalizes the equality part $a(2^n-1) = a(3*2^n-1)$.
@@ -95,6 +98,7 @@ This formalizes the equality part $a(2^n-1) = a(3*2^n-1)$.
 theorem conjecture2 (n : ℕ) : a (2^n - 1) = a (3 * 2^n - 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Conjecture: $a(2^n-1)=a(3*2^n-1)=1$. This formalizes the value part $a(2^n-1)=1$. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at

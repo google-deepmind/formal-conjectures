@@ -47,8 +47,8 @@ noncomputable abbrev A (x : ℝ) : ℝ :=
 We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b$. Are there
 infinitely many amicable pairs?
 -/
-@[category research open, AMS 11]
-theorem erdos_830.parts.i : answer(sorry) ↔ {(a, b) | IsAmicable a b}.Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_830.parts.i : {(a, b) | IsAmicable a b}.Infinite := by
   sorry
 
 /-- **Erdos Problem 830, Part 2**
@@ -56,8 +56,8 @@ We say that $a,b\in \mathbb{N}$ are an amicable pair if $\sigma(a)=\sigma(b)=a+b
 If $A(x)$ counts the number of amicable $1\leq a\leq b\leq x$ then is it true that
 $$A(x) > x^{1-o(1)}?$$
 -/
-@[category research open, AMS 11]
-theorem erdos_830.parts.ii : answer(sorry) ↔ ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → ℝ) ∧ ∀ᶠ x in atTop,
+@[category research open, question, AMS 11]
+theorem erdos_830.parts.ii : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → ℝ) ∧ ∀ᶠ x in atTop,
     x ^ (1 - o x) < A x := by
   sorry
 

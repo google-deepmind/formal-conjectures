@@ -71,9 +71,9 @@ theorem a_4 : a 4 = 11 := by
     show (30 : ℕ).divisors = {1, 2, 3, 5, 6, 10, 15, 30} by decide]
 
 /-- Does Chua's sequence contain every prime? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∀ p : ℕ, p.Prime → ∃ n ≥ 1, a n = p := by
+    ∀ p : ℕ, p.Prime → ∃ n ≥ 1, a n = p := by
   sorry
 
 end OeisA167604

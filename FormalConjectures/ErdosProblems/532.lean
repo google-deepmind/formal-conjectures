@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos532
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\mathbb{N}$ is 2-coloured then is there some infinite set $A\subseteq \mathbb{N}$ such that
 all finite subset sums$$ \sum_{n\in S}n$$(as $S$ ranges over all non-empty finite subsets of $A$)
@@ -39,9 +40,9 @@ are monochromatic?
 
 Asked by Graham and Rothschild. Proved by Hindman [Hi74] (for any number of colours).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos532.lean"]
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos532.lean"]
 theorem erdos_532 :
-    answer(True) ↔ ∀ (c : ℕ → Fin 2),
+    ∀ (c : ℕ → Fin 2),
       ∃ A : Set ℕ, A.Infinite ∧
         ∃ color : Fin 2,
           ∀ S : Finset ℕ, S.Nonempty → ↑S ⊆ A →
