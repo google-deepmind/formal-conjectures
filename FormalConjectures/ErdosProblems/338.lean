@@ -148,7 +148,73 @@ order $h$ with no restricted order.
 theorem erdos_338.variants.bateman (h : ℕ) (hh : 3 ≤ h) :
     basisOrder (insert 1 {x : ℕ | 0 < x ∧ h ∣ x}) = h ∧
       ¬ ∃ t, HasRestrictedOrder (insert 1 {x : ℕ | 0 < x ∧ h ∣ x}) t := by
-  sorry
+  set A : Set ℕ := insert 1 {x : ℕ | 0 < x ∧ h ∣ x}
+  have hmem : ∀ x ∈ A, x ≠ 1 → h ∣ x := by
+    intro x hx hx1
+    rcases (Set.mem_insert_iff.1 hx) with rfl | hx
+    · exact absurd rfl hx1
+    · exact hx.2
+  -- Every `m ≥ h` is `m % h` ones plus the positive multiple `h * (m / h)`.
+  have hord : HasOrder A h := by
+    refine eventually_atTop.2 ⟨h, fun m hm ↦ ?_⟩
+    have hpos : 0 < h := by omega
+    refine ⟨h * (m / h) ::ₘ Multiset.replicate (m % h) 1, ?_, ?_, ?_⟩
+    · intro x hx
+      rcases Multiset.mem_cons.1 hx with rfl | hx
+      · exact Set.mem_insert_of_mem _ ⟨Nat.mul_pos hpos (Nat.div_pos hm hpos), dvd_mul_right h _⟩
+      · rw [Multiset.eq_of_mem_replicate hx]
+        exact Set.mem_insert 1 _
+    · have := Nat.mod_lt m hpos
+      simp only [Multiset.card_cons, Multiset.card_replicate]
+      omega
+    · simp [Nat.div_add_mod]
+  -- A sum equal to `h * (N + 2) - 1` has at least `h - 1` summands equal to `1`, and at least
+  -- `h` summands in all.
+  have hlow : ∀ k, HasOrder A k → h ≤ k := by
+    intro k hk
+    obtain ⟨N, hN⟩ := eventually_atTop.1 hk
+    have hM : 3 * (N + 2) ≤ h * (N + 2) := Nat.mul_le_mul_right (N + 2) hh
+    have hM2 : h * 2 ≤ h * (N + 2) := Nat.mul_le_mul_left h (by omega)
+    obtain ⟨S, hSA, hSk, hSm⟩ := hN (h * (N + 2) - 1) (by omega)
+    have hsplit := Multiset.filter_add_not (· = 1) S
+    rw [Multiset.filter_eq' S 1] at hsplit
+    obtain ⟨q, hq⟩ : h ∣ (S.filter fun x ↦ ¬x = 1).sum := Multiset.dvd_sum fun x hx ↦
+      hmem x (hSA x (Multiset.mem_filter.1 hx).1) (Multiset.mem_filter.1 hx).2
+    have hsum : S.count 1 + h * q = h * (N + 2) - 1 := by
+      have := congrArg Multiset.sum hsplit
+      rw [Multiset.sum_add, Multiset.sum_replicate, smul_eq_mul, mul_one, hq] at this
+      rw [this, hSm]
+    have hcard : S.count 1 + Multiset.card (S.filter fun x ↦ ¬x = 1) ≤ k := by
+      rw [← Multiset.card_replicate (S.count 1) 1, ← Multiset.card_add, hsplit]
+      exact hSk
+    have hc : h ≤ S.count 1 + 1 := by
+      refine Nat.le_of_dvd (Nat.succ_pos _) ((Nat.dvd_add_right (dvd_mul_right h q)).1 ?_)
+      have : h * q + (S.count 1 + 1) = h * (N + 2) := by omega
+      exact this ▸ dvd_mul_right h (N + 2)
+    rcases Nat.eq_zero_or_pos (Multiset.card (S.filter fun x ↦ ¬x = 1)) with h0 | h0
+    · rw [Multiset.card_eq_zero.1 h0, Multiset.sum_zero] at hq
+      omega
+    · omega
+  refine ⟨le_antisymm (iInf₂_le h hord) (le_iInf₂ fun k hk ↦ by exact_mod_cast hlow k hk), ?_⟩
+  -- A sum of distinct elements of `A` is `0` or `1` mod `h`, and `h * (N + 1) + 2` is neither.
+  rintro ⟨t, ht⟩
+  obtain ⟨N, hN⟩ := eventually_atTop.1 ht
+  have hN1 : N ≤ h * (N + 1) := le_trans (Nat.le_succ N) (Nat.le_mul_of_pos_left _ (by omega))
+  obtain ⟨S, hSA, -, hSm⟩ := hN (h * (N + 1) + 2) (by omega)
+  by_cases h1 : 1 ∈ S
+  · obtain ⟨q, hq⟩ : h ∣ ∑ x ∈ S.erase 1, x := Finset.dvd_sum fun x hx ↦
+      hmem x (hSA x (Finset.mem_of_mem_erase hx)) (Finset.ne_of_mem_erase hx)
+    rw [← Finset.add_sum_erase S _ h1, hq] at hSm
+    have : h * (N + 1) + 1 = h * q := by omega
+    have := Nat.le_of_dvd one_pos
+      ((Nat.dvd_add_right (dvd_mul_right h (N + 1))).1 (this ▸ dvd_mul_right h q))
+    omega
+  · obtain ⟨q, hq⟩ : h ∣ ∑ x ∈ S, x := Finset.dvd_sum fun x hx ↦
+      hmem x (hSA x hx) fun hx1 ↦ h1 (hx1 ▸ hx)
+    rw [hq] at hSm
+    have := Nat.le_of_dvd two_pos
+      ((Nat.dvd_add_right (dvd_mul_right h (N + 1))).1 (hSm.symm ▸ dvd_mul_right h q))
+    omega
 
 /--
 Kelly [Ke57] showed that any basis of order $2$ has restricted order at most $4$.
