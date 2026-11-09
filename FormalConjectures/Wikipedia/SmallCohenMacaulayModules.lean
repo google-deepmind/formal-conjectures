@@ -76,6 +76,8 @@ Systems of parameters and Cohen-Macaulay modules are defined in
   [arXiv:2203.10368](https://arxiv.org/abs/2203.10368)
 - [Bh14] B. Bhatt, *On the non-existence of small Cohen-Macaulay algebras*, J. Algebra 411
   (2014), 1-11. [arXiv:1207.5413](https://arxiv.org/abs/1207.5413)
+- [OAI26] OpenAI, *A Complete Local Domain without a Small Cohen-Macaulay Module*, manuscript,
+  September 23, 2026. [repository, pinned commit](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb)
 -/
 
 @[expose] public section
@@ -111,6 +113,11 @@ are equivalent: for a minimal prime $P$ of $R$ with $\dim R/P = \dim R$, a small
 module over the complete local domain $R/P$ is one over $R$. In the 2000s Hochster conjectured
 the opposite, that some complete local domain has no small Cohen-Macaulay module
 [Ho17, Conjecture 2.2], so this statement may well be false.
+
+A September 2026 manuscript [OAI26, Theorem 1.1] (openai/math repository, pinned commit linked in
+the references) claims a counterexample: a three-dimensional complete Noetherian normal local
+domain containing $\mathbb C$ with no nonzero finitely generated module of depth three. It is
+unrefereed; status unchanged.
 -/
 @[category research open, AMS 13]
 theorem exists_isSmallCohenMacaulay [IsAdicComplete (maximalIdeal R) R] :
