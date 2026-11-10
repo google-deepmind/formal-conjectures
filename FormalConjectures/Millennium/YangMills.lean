@@ -86,14 +86,42 @@ def ClassFunction.const (G : Type*) [Group G] (c : ℂ) : ClassFunction G where
   toFun := fun _ => c
   conj_invariant := fun _ _ => rfl
 
-/-- A compact simple Lie group acting as the internal gauge symmetry group $G$.
-Formulated as a `Prop`-valued class with propositional compactness (`IsCompact`)
-following Howard Georgi ("Lie Algebras in Particle Physics", 2nd ed., Chapter 1 & 2):
-$G$ is a compact topological group whose Lie algebra is simple with finite discrete center. -/
+/-- A compact, connected, non-abelian simple Lie group acting as the internal gauge symmetry group $G$
+(Arthur Jaffe & Edward Witten, 2000, §4, p. 6; Howard Georgi, "Lie Algebras in Particle Physics", Ch. 1 & 2).
+Formulated as a `Prop`-valued class with:
+1. Compactness of the underlying group space (`is_compact`),
+2. Connectedness of the underlying group space (`is_connected`),
+3. Non-abelianity (`non_abelian`),
+4. Simplicity up to the discrete center: every normal subgroup is either $\top$ or contained in the finite discrete center $Z(G)$ (`normal_subgroups_central`),
+5. Finiteness of the center $Z(G)$ (`finite_center`),
+6. Existence of a non-trivial fundamental representation character $\chi_{\mathrm{fund}}$ of dimension $\ge 2$ (`has_fundamental_character`),
+7. Existence of an associated finite-dimensional real Lie algebra $\mathfrak{g} = \mathrm{Lie}(G)$ of dimension $\ge 3$ admitting a continuous exponential map $\exp : \mathfrak{g} \to G$ that is a local homeomorphism at the origin (`has_lie_algebra`). -/
 class CompactSimpleLieGroup (G : Type*) [TopologicalSpace G] [Group G] : Prop extends
     IsTopologicalGroup G where
   /-- Compactness of the underlying group space $G$ -/
   is_compact : IsCompact (Set.univ : Set G)
+  /-- Connectedness of the underlying group space $G$ -/
+  is_connected : IsConnected (Set.univ : Set G)
+  /-- $G$ is non-abelian -/
+  non_abelian : ∃ g h : G, g * h ≠ h * g
+  /-- Simplicity up to the discrete center: every normal subgroup is either $\top$ or finite central -/
+  normal_subgroups_central :
+    ∀ (N : Subgroup G), N.Normal → N = ⊤ ∨ (N ≤ Subgroup.center G ∧ Finite N)
+  /-- The discrete center $Z(G)$ is finite -/
+  finite_center : Finite (Subgroup.center G)
+  /-- Existence of a non-trivial fundamental representation character $\chi_{\mathrm{fund}}$ of dimension $\ge 2$ -/
+  has_fundamental_character :
+    ∃ χ : ClassFunction G, 2 ≤ (χ.toFun 1).re ∧ ∃ g : G, χ.toFun g ≠ χ.toFun 1
+  /-- Existence of an associated finite-dimensional real Lie algebra $\mathfrak{g} = \mathrm{Lie}(G)$
+      with an exponential map that is a local homeomorphism at the origin -/
+  has_lie_algebra :
+    ∃ (Lie : Type) (_ : LieRing Lie) (_ : LieAlgebra ℝ Lie) (_ : FiniteDimensional ℝ Lie)
+      (_ : TopologicalSpace Lie) (exp : Lie → G),
+      1 < FiniteDimensional.finrank ℝ Lie ∧
+      Continuous exp ∧ exp 0 = 1 ∧
+      ∃ (U : Set Lie) (V : Set G),
+        IsOpen U ∧ (0 : Lie) ∈ U ∧ IsOpen V ∧ (1 : G) ∈ V ∧
+        Set.BijOn exp U V ∧ ContinuousOn exp U
 
 /-- The Special Unitary Group $\mathrm{SU}(N)$ for $N \ge 2$, defined via Mathlib's
 `Matrix.specialUnitaryGroup (Fin N) ℂ` (unitary $N \times N$ complex matrices of determinant $1$). -/
@@ -171,11 +199,12 @@ instance (priority := high) sun_isTopologicalGroup (N : ℕ) :
     continuous_induced_rng.mpr (continuous_star.comp continuous_subtype_val)
 
 /-- Standard Lie-theoretic theorem: For every $N \ge 2$, the special unitary group $\mathrm{SU}(N)$
-is a compact simple Lie group. Proved unconditionally with ZERO sorry! -/
-@[category research solved, AMS 22]
+is a compact, connected, non-abelian simple Lie group with finite center $\mathbb{Z}/N\mathbb{Z}$,
+Lie algebra $\mathfrak{su}(N)$, and trace character of dimension $N \ge 2$. -/
+@[category textbook, AMS 22]
 theorem sun_compactSimpleLieGroup (N : ℕ) [Fact (2 ≤ N)] :
-    CompactSimpleLieGroup (SUN N) where
-  is_compact := sun_is_compact N
+    CompactSimpleLieGroup (SUN N) := by
+  sorry
 
 attribute [instance] sun_compactSimpleLieGroup
 
@@ -1462,9 +1491,7 @@ local quantum field operators in correspondence with gauge-invariant polynomials
 curvature $F$ and its covariant derivatives with short-distance correlations governed by
 asymptotic freedom ($b_0 = \frac{11 C_2(G)}{48\pi^2} > 0$) and perturbative renormalization,
 and possessing a strictly positive mass gap $\Delta > 0$. -/
-@[category research solved, AMS 81,
-  formal_proof using lean4 at
-    "https://github.com/Cloudhabil/yang-mills-lean4/commit/bd8fe800457d2d9e26db41a9f404a1b7ab2aef78"]
+@[category research open, AMS 81]
 theorem yang_mills_existence_and_mass_gap
     (G : Type*) [TopologicalSpace G] [Group G] [CompactSimpleLieGroup G] :
     ∃ (Curv : CurvaturePolynomialAlgebra G)
@@ -1475,9 +1502,7 @@ theorem yang_mills_existence_and_mass_gap
   sorry
 
 /-- Canonical Specialization to $\mathrm{SU}(N)$ for any $N \ge 2$ -/
-@[category research solved, AMS 81,
-  formal_proof using lean4 at
-    "https://github.com/Cloudhabil/yang-mills-lean4/commit/bd8fe800457d2d9e26db41a9f404a1b7ab2aef78"]
+@[category research open, AMS 81]
 theorem yang_mills_sun_mass_gap (N : ℕ) [Fact (2 ≤ N)] :
     ∃ (Curv : CurvaturePolynomialAlgebra (SUN N))
       (ℋ : Type*) (_ : NormedAddCommGroup ℋ) (_ : InnerProductSpace ℂ ℋ)
@@ -1488,9 +1513,7 @@ theorem yang_mills_sun_mass_gap (N : ℕ) [Fact (2 ≤ N)] :
   sorry
 
 /-- Canonical Specialization to $\mathrm{SU}(2)$ Pure Yang–Mills Gauge Theory -/
-@[category research solved, AMS 81,
-  formal_proof using lean4 at
-    "https://github.com/Cloudhabil/yang-mills-lean4/commit/bd8fe800457d2d9e26db41a9f404a1b7ab2aef78"]
+@[category research open, AMS 81]
 theorem yang_mills_su2_mass_gap :
     ∃ (Curv : CurvaturePolynomialAlgebra SU2)
       (ℋ : Type*) (_ : NormedAddCommGroup ℋ) (_ : InnerProductSpace ℂ ℋ)
@@ -1501,9 +1524,7 @@ theorem yang_mills_su2_mass_gap :
   sorry
 
 /-- Canonical Specialization to $\mathrm{SU}(3)$ (Quantum Chromodynamics Gluon Sector) -/
-@[category research solved, AMS 81,
-  formal_proof using lean4 at
-    "https://github.com/Cloudhabil/yang-mills-lean4/commit/bd8fe800457d2d9e26db41a9f404a1b7ab2aef78"]
+@[category research open, AMS 81]
 theorem yang_mills_su3_mass_gap :
     ∃ (Curv : CurvaturePolynomialAlgebra SU3)
       (ℋ : Type*) (_ : NormedAddCommGroup ℋ) (_ : InnerProductSpace ℂ ℋ)
