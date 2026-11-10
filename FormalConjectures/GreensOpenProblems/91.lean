@@ -112,7 +112,7 @@ $(\gamma + \varepsilon)\sqrt{n}$. Here $\gamma = \gamma_{\mathrm{crit}} / \sqrt{
 and $\gamma_{\mathrm{crit}}$ is defined by an optimisation problem for Gaussian tail
 probabilities [MSS24, Definition 1.2].
 -/
-@[category research open, question, AMS 5 60]
+@[category research solved, question, AMS 5 60]
 theorem green_91.variants.all_friendly :
     Tendsto (fun n : ℕ ↦ prob n fun G ↦
       ∃ s : Finset (Fin n), s.card = n / 2 ∧ ∀ v, 0 < friendliness G s v)
