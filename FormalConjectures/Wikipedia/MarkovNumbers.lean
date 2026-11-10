@@ -70,4 +70,11 @@ theorem markov_unicity_conjecture :
     ∀ c, IsMarkovNumber c → ∃! q : ℕ × ℕ, IsMarkovTriple q.1 q.2 c := by
   sorry
 
+/-- The unicity conjecture holds for all Markov numbers $c \le 10^{500000}$. This was verified by
+computer by Tan and Zhang (arXiv:2611.01007). -/
+@[category research solved, AMS 11]
+theorem markov_unicity_conjecture.variants.le_ten_pow_500000 :
+    ∀ c ≤ 10 ^ 500000, IsMarkovNumber c → ∃! q : ℕ × ℕ, IsMarkovTriple q.1 q.2 c := by
+  sorry
+
 end MarkovNumbers
