@@ -105,12 +105,17 @@ theorem erdos_308.variants.croot :
         f N ≤ ⌊(harmonic N : ℝ) - 1 / 2 * (1 + o₂ N) * (log (log N)) ^ 2 / log N⌋₊ + 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $N\geq 1$, the set of integers representable as the sum of distinct
 unit fractions with denominators from $\{1,\ldots,N\}$ has the shape $\{1,\ldots,m\}$ for some
 $m$?
+
+This was proved by Ilia Pauzner using Gemini.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11,
+  formal_proof using formal_conjectures at
+    "https://github.com/ilpauzner/formal-conjectures/blob/7dfdc8337eec06a88d8d729810c01d2452f2455e/FormalConjectures/ErdosProblems/308.lean#L3879"]
 theorem erdos_308.variants.all_N :
     ∀ N ≥ 1, ∃ m, representable N = Set.Icc 1 m := by
   sorry
