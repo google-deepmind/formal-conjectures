@@ -166,11 +166,19 @@ $\ell^2$-to-$\ell^2$ operator norm.)
 the normalised Hilbert–Schmidt norm, and approximation in the operator norm defines a class of
 groups whose relation to hyperlinear groups was open there [Pe08, Remark 8.6 and Question 8.7];
 these are now usually called MF groups. We state the question as written, with the operator
-norm, for every group. Eckhardt [Ec26] (a 2026 preprint) claims a finitely generated group that
-is not MF; such a group would give a negative answer here.
+norm, for every group.
+
+[Gr24] lists this as open. The answer is no. Exhausting a countable group by finite sets
+containing the identity, with errors tending to zero, the maps $\phi$ give a homomorphism into the
+unitary group of $\prod_k M_{n_k}(\mathbb{C}) / \bigoplus_k M_{n_k}(\mathbb{C})$, which is
+injective by the bound $\|\phi(a) - I_n\| \ge 1$. So every countable group with this property is
+MF in the sense of [Ec26, Definition 4.1]. Eckhardt [Ec26, Theorem 4.3 and Examples 3.2 and 4.5]
+gives a countable group that is not MF, built from a property (T) group such as
+$\mathbb{Z}^3 \rtimes \mathrm{SL}_3(\mathbb{Z})$. This is a 2026 preprint.
 -/
-@[category research open, question, AMS 20 46]
-theorem green_100.variants.operator_norm : ∀ (G : Type) [Group G], OperatorNormApprox G := by
+@[category research solved, question, AMS 20 46]
+theorem green_100.variants.operator_norm :
+    ¬ ∀ (G : Type) [Group G], OperatorNormApprox G := by
   sorry
 
 /--
