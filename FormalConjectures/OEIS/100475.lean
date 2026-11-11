@@ -121,10 +121,18 @@ Starting at a positive value other than $a(0) = 1$, does this sequence ever go i
 
 The positivity hypothesis is required because the source recurrence uses the one-based prime index
 `p₁ = 2`; the `x = 0` branch above is only an artifact of making `aStartAt` total on `ℕ`.
+
+The answer is no: no positive start, $1$ included, ever enters a loop, so the statement is the
+negation of the question. The number of decimal digits never decreases along an orbit (as $p_y > y$
+and a prime never ends in the digit $0$), which bounds the elements of a cycle by prime counts. A
+finite check of the starts below $1230$ and the bound "fewer than $10^{D-1}$ primes below $10^D$"
+for $D \geq 5$ (Legendre's sieve for $D = 5, \dots, 8$, Chebyshev's $\theta(x) \leq x \log 4$ for
+$D \geq 9$) then exclude every cycle.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-11-000001"]
 theorem conjecture :
-    ∃ x : ℕ, 0 < x ∧ x ≠ 1 ∧ IsUltimatelyPeriodic (aStartAt x) := by
+    ¬ ∃ x : ℕ, 0 < x ∧ x ≠ 1 ∧ IsUltimatelyPeriodic (aStartAt x) := by
   sorry
 
 end OeisA100475
