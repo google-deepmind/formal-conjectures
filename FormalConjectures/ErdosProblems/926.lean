@@ -59,6 +59,7 @@ def H (k : ℕ) : SimpleGraph (Unit ⊕ (Fin k ⊕ {p : Fin k × Fin k // p.1 < 
     intro x
     rcases x with _ | _ | _ <;> simp
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 4$. Is it true that
 $$\mathrm{ex}(n;H_k) \ll_k n^{3/2},$$
@@ -75,9 +76,9 @@ Since each $H_k$ is 2-degenerate this is a special case of [146](https://www.erd
 The extremal number of the graph $H_k$ with the vertex $x$ omitted is the subject of
 [1021](https://www.erdosproblems.com/1021).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos926.lean#L644"]
-theorem erdos_926 : answer(True) ↔ ∀ k : ℕ, 4 ≤ k →
+theorem erdos_926 : ∀ k : ℕ, 4 ≤ k →
     (fun n : ℕ => (extremalNumber n (H k) : ℝ)) =O[atTop] fun n : ℕ => (n : ℝ) ^ (3 / 2 : ℝ) := by
   sorry
 

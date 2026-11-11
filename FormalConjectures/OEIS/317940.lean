@@ -179,6 +179,7 @@ theorem a_5 : a 5 = 1 := by
   rw [a, f_five]
   rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "No negative terms among the first 2^20 terms. Is the sequence nonnegative?"
 

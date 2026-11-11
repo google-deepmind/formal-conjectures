@@ -70,9 +70,10 @@ In particular, if $p$ is an odd prime then $p$ divides $a(p)$. For $p=2$, $2$ di
 -/
 @[category textbook, AMS 11]
 theorem prime_divides_some_term (p : ℕ) (hp : p.Prime) :
-    ∃ n : ℕ, (p : ℤ) ∣ a n := by
+    ∃ n : ℕ, a n ≠ 0 ∧ (p : ℤ) ∣ a n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Moll's conjecture 5.5 extends to this sequence and takes the form:
 (i) the $2$-adic valuation $\nu_2(a(n)) \sim n/4$ as n -> oo.

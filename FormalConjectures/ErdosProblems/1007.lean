@@ -39,6 +39,7 @@ variable {V : Type*}
 /-- The complete tripartite graph $K_{1,3,3}$. -/
 abbrev K133 := SimpleGraph.completeMultipartiteGraph fun i : Fin 3 => Fin (![1, 3, 3] i)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The dimension of a graph $G$ is the minimal $n$ such that $G$ can be embedded in $\mathbb{R}^n$
 such that every edge of $G$ is a unit line segment.
@@ -55,6 +56,7 @@ theorem erdos_1007 :
       9 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The smallest number of edges in a graph of dimension $4$ is achieved solely by $K_{3,3}$.
 -/
@@ -67,19 +69,25 @@ theorem erdos_1007.variants.dimension_four_extremal (n : ℕ) (G : SimpleGraph (
     Nonempty (G ≃g completeBipartiteGraph (Fin 3) (Fin 3)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The smallest number of edges in a graph of dimension $5$ is $15$.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/Dishah3241/Erdos1007Dim5/blob/7118d68eabffe49e41a672d16eb8ddba2608f03d/Erdos1007Dim5/Standalone/Mathlib/InlineErdos1007Dim5Proof.lean#L145"]
 theorem erdos_1007.variants.dimension_five :
     IsLeast {m | ∃ (n : ℕ) (G : SimpleGraph (Fin n)), G.HasDimension 5 ∧ G.edgeSet.ncard = m}
       15 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The smallest number of edges in a graph of dimension $5$ is achieved by $K_6$ and $K_{1,3,3}$.
 -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://github.com/Dishah3241/Erdos1007Dim5/blob/7118d68eabffe49e41a672d16eb8ddba2608f03d/Erdos1007Dim5/Standalone/Mathlib/InlineErdos1007Dim5Proof.lean#L161"]
 theorem erdos_1007.variants.dimension_five_extremal :
     ((SimpleGraph.completeGraph (Fin 6)).HasDimension 5 ∧
         (SimpleGraph.completeGraph (Fin 6)).edgeSet.ncard = 15) ∧

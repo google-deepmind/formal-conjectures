@@ -38,8 +38,9 @@ The Erdős–Hajnal "exceptional pair" trio of predicates:
 These were introduced for Erdős Problem 596 but are reusable for Problem 595 and other
 Ramsey-type questions; we factor them out per mo271's review.
 
-It also defines the two-colour graph Ramsey number `graphRamsey G H` and the notion of a
-**Ramsey size linear** graph `IsRamseySizeLinear G` of Erdős, Faudree, Rousseau and Schelp.
+It also defines the two-colour graph Ramsey number `graphRamsey G H`, the `k`-colour Ramsey
+number `multicolourRamsey G k` of a single graph `G`, and the notion of a **Ramsey size
+linear** graph `IsRamseySizeLinear G` of Erdős, Faudree, Rousseau and Schelp.
 
 ## References
 
@@ -101,6 +102,15 @@ noncomputable def diagonalRamsey (k : ℕ) : ℕ :=
   classicalRamsey k k
 
 /--
+The `k`-colour Ramsey number of a graph `G`: the least `N` such that every `k`-colouring of
+the edges of the complete graph on `Fin N` (an edge-colouring `c : Fin k → SimpleGraph (Fin N)`
+of `⊤`) contains a monochromatic copy of `G`, i.e. `G ⊑ c i` for some colour `i`.
+-/
+noncomputable def multicolourRamsey {V : Type*} (G : SimpleGraph V) (k : ℕ) : ℕ :=
+  sInf {N : ℕ | ∀ c : Fin k → SimpleGraph (Fin N),
+    (⊤ : SimpleGraph (Fin N)).IsEdgeColouring c → ∃ i, G ⊑ c i}
+
+/--
 A graph `G` is **Ramsey size linear** if there exists a constant `c > 0` such that
 for all graphs `H` with `m` edges and no isolated vertices, the Ramsey number satisfies
 `R(G, H) ≤ c · m`.
@@ -112,5 +122,17 @@ def IsRamseySizeLinear {α : Type*} [Fintype α] (G : SimpleGraph α) : Prop :=
   ∃ c > (0 : ℝ), ∀ (n : ℕ) (H : SimpleGraph (Fin n)) [DecidableRel H.Adj],
     (∀ v, 0 < H.degree v) →
     (graphRamsey G H : ℝ) ≤ c * H.edgeSet.ncard
+
+/--
+The `k`-colour Ramsey number `multicolourGraphRamsey k G` is the minimum number of vertices `n`
+such that every `k`-colouring of the edges of the complete graph on `n` vertices contains a
+monochromatic copy of `G`.
+
+A `k`-colouring of the edges of the complete graph on `Fin n` is a `TopEdgeLabeling (Fin n) (Fin k)`,
+and `C.labelGraph i` is the graph formed by the edges of colour `i`. For `k = 2` this agrees with
+`diagonalGraphRamsey`.
+-/
+noncomputable def multicolourGraphRamsey {α : Type*} [Fintype α] (k : ℕ) (G : SimpleGraph α) : ℕ :=
+  sInf {n : ℕ | ∀ C : TopEdgeLabeling (Fin n) (Fin k), ∃ i, G.IsContained (C.labelGraph i)}
 
 end SimpleGraph

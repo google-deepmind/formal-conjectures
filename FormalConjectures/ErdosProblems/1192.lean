@@ -93,13 +93,12 @@ theorem erdos_1192.f_r_no_rep : f_r {0} 1 1 = 0 := by
 Does there exist, for all $r\geq 2$, a basis $A$ of order $r$ (so that $f_r(n)>0$ for all
 large $n$) such that $$\sum_{n\leq x}f_r(n)^2 \ll x$$ for all $x$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_1192 :
-    answer(sorry) ↔
-      ∀ r ≥ 2, ∃ A : Set ℕ,
-        (∀ᶠ n in atTop, f_r A r n > 0) ∧
-        (fun (x : ℕ) ↦ ∑ n ∈ range (x + 1), (f_r A r n : ℝ) ^ 2) =O[atTop]
-          (fun (x : ℕ) ↦ (x : ℝ)) := by
+    ∀ r ≥ 2, ∃ A : Set ℕ,
+      (∀ᶠ n in atTop, f_r A r n > 0) ∧
+      (fun (x : ℕ) ↦ ∑ n ∈ range (x + 1), (f_r A r n : ℝ) ^ 2) =O[atTop]
+        (fun (x : ℕ) ↦ (x : ℝ)) := by
   sorry
 
 open scoped Classical in

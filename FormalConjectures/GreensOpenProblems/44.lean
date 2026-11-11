@@ -39,9 +39,9 @@ $\frac{1}{10} N$?
 
 We interpret "half the residue classes" as $\lfloor p_i / 2 \rfloor$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_44 :
-    answer(sorry) ↔ ∀ (N : ℕ) (p : Fin 1000 → ℕ) (A : (i : Fin 1000) → Finset (ZMod (p i))),
+    ∀ (N : ℕ) (p : Fin 1000 → ℕ) (A : (i : Fin 1000) → Finset (ZMod (p i))),
       let remaining := (Finset.Icc 1 N).filter (fun x => ∀ i, (x : ZMod (p i)) ∉ A i)
       (∀ i, (p i).Prime) →
       StrictMono p →

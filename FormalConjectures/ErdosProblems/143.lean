@@ -43,9 +43,14 @@ Does this imply that
 $$
 \liminf \frac{|A \cap [1,x]|}{x} = 0?
 $$
+
+The answer is yes: Koukoulopoulos, Lamzouri and Lichtman proved that every such $A$ satisfies
+$\sum_{x \in A,\, x < n} \frac{1}{x} = o(\log n)$
+([arXiv:2502.09539](https://arxiv.org/abs/2502.09539), Theorem 1), and this implies
+$\liminf \frac{|A \cap [1,x]|}{x} = 0$ by partial summation.
 -/
-@[category research open, AMS 11]
-theorem erdos_143.parts.i : answer(sorry) ↔ ∀ (A : Set ℝ), WellSeparatedSet A →
+@[category research solved, question, AMS 11]
+theorem erdos_143.parts.i : ∀ (A : Set ℝ), WellSeparatedSet A →
     liminf (fun x => (A ∩ (Set.Icc 1 x)).ncard / x) atTop = 0 := by
   sorry
 

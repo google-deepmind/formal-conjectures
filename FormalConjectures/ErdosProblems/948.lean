@@ -33,6 +33,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos948
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a function $f(n)$ and a $k$ such that in any $k$-colouring of the integers there exists a
 sequence $a_1 < a_2 < \cdots$ such that $a_n < f(n)$ for infinitely many $n$ and the set
@@ -46,22 +47,23 @@ every $f$ and $k \ge 1$, a colouring $c : \mathbb{Z} \to \{0, \ldots, k - 1\}$ s
 strictly increasing $a$ with $a_n < f(n)$ infinitely often and every colour, some nonempty finite
 sum of the $a_i$ has that colour.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos948.lean#L451"]
-theorem erdos_948 : answer(False) ↔
-    ∃ (f : ℕ → ℕ) (k : ℕ), 0 < k ∧ ∀ colouring : ℤ → Fin k,
+theorem erdos_948 :
+    ¬ ∃ (f : ℕ → ℕ) (k : ℕ), 0 < k ∧ ∀ colouring : ℤ → Fin k,
       ∃ a : ℕ → ℤ, StrictMono a ∧ {n | a n < f n}.Infinite ∧
         ∃ c : Fin k, ∀ S : Finset ℕ, S.Nonempty → colouring (∑ i ∈ S, a i) ≠ c := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The original question asks for the set of finite sums to be monochromatic. Galvin showed that
 this fails for $k = 2$, and it fails for every $k \ge 2$ by the negative answer to `erdos_948`.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos948.lean#L451"]
-theorem erdos_948.variants.monochromatic : answer(False) ↔
-    ∃ (f : ℕ → ℕ) (k : ℕ), 2 ≤ k ∧ ∀ colouring : ℤ → Fin k,
+theorem erdos_948.variants.monochromatic :
+    ¬ ∃ (f : ℕ → ℕ) (k : ℕ), 2 ≤ k ∧ ∀ colouring : ℤ → Fin k,
       ∃ a : ℕ → ℤ, StrictMono a ∧ {n | a n < f n}.Infinite ∧
         ∃ c : Fin k, ∀ S : Finset ℕ, S.Nonempty → colouring (∑ i ∈ S, a i) = c := by
   sorry

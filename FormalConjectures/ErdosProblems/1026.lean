@@ -123,6 +123,7 @@ theorem erdos_1026.variants.hanani (ε : ℝ) (hε : 0 < ε) :
         (m : ℝ) ≤ (Real.sqrt 2 + ε) * Real.sqrt (n : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Cambie makes the stronger conjecture that if $x_1,\ldots,x_{k^2}$ are distinct positive real
 numbers with $\sum x_i=1$ then there is always a monotonic subsequence with sum at least $1/k$.

@@ -35,6 +35,8 @@ This conjecture is **true**, proved in
 [arXiv:2606.29553](https://arxiv.org/abs/2606.29553) (C. Gupta).
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Arxiv.«2507.17780»

@@ -43,6 +43,7 @@ open Filter Real SimpleGraph
 namespace Erdos559
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\hat{R}(G)$ denote the size Ramsey number, the minimal number of edges $m$ such that there is
 a graph $H$ with $m$ edges that is Ramsey for $G$.
@@ -54,14 +55,15 @@ This was disproved for $d=3$ by Rödl and Szemerédi [RoSz00], who constructed a
 vertices with maximum degree $3$ such that $\hat{R}(G)\gg n(\log n)^{c}$ for some absolute
 constant $c>0$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos559.lean#L1275"]
-theorem erdos_559 : answer(False) ↔
-    ∀ d : ℕ, ∃ C : ℝ, ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
+theorem erdos_559 :
+    ¬ ∀ d : ℕ, ∃ C : ℝ, ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       G.maxDegree ≤ d → (sizeRamsey G G : ℝ) ≤ C * Fintype.card V := by
   sorry
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /-- Rödl and Szemerédi [RoSz00] disproved the linear bound already for maximum degree $3$. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos559.lean#L1275"]

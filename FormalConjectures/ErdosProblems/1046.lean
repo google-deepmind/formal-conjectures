@@ -26,6 +26,12 @@ public import FormalConjecturesUtil
   Analyse Math. (1958), 125-148.
 - [Po59] Pommerenke, Ch., *On some problems by Erdős, Herzog and Piranian*. Michigan Math. J.
   (1959), 221-225.
+- [BPS02] Barnard, Roger W. and Pearce, Kent and Solynin, Alexander Yu., *An isoperimetric
+  inequality for logarithmic capacity*. Ann. Acad. Sci. Fenn. Math. (2002), 419-436.
+- [Po28] Pólya, G., *Beitrag zur Verallgemeinerung des Verzerrungssatzes auf mehrfach
+  zusammenhängende Gebiete*. S.-B. Preuss. Akad. Wiss. (1928), 280-282.
+- [Ra95] Ransford, Thomas, *Potential theory in the complex plane*. London Mathematical Society
+  Student Texts 28, Cambridge University Press (1995).
 -/
 
 @[expose] public section
@@ -40,6 +46,7 @@ def lemniscate (f : ℂ[X]) : Set ℂ := {z | ‖f.eval z‖ < 1}
 /-- The closed unit lemniscate $\{z : \lvert f(z)\rvert \leq 1\}$ of a complex polynomial. -/
 def closedLemniscate (f : ℂ[X]) : Set ℂ := {z | ‖f.eval z‖ ≤ 1}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f\in \mathbb{C}[x]$ be a monic polynomial and
 $$E=\{ z: \lvert f(z)\rvert <1\}.$$
@@ -56,12 +63,13 @@ The condition that $E$ is connected is equivalent to $E$ containing all zeros of
 The answer is yes, and in fact the centre of this disc can be taken to be
 $\frac{z_1+\cdots+z_n}{n}$, where the $z_i$ are the roots of $f$, as shown by Pommerenke [Po59].
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at
+@[category research solved, question, AMS 30, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1046.lean#L329"]
-theorem erdos_1046 : answer(True) ↔ ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
+theorem erdos_1046 : ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
     ∃ c : ℂ, lemniscate f ⊆ ball c 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Pommerenke [Po59] showed that the centre of the disc can be taken to be the centroid
 $\frac{z_1+\cdots+z_n}{n}$ of the roots $z_i$ of $f$.
@@ -75,9 +83,14 @@ theorem erdos_1046.variants.centroid : ∀ f : ℂ[X], f.Monic → IsConnected (
 /--
 Erdős, Herzog, and Piranian [EHP58] conjecture that if $\{ z: \lvert f(z)\rvert\leq 1\}$ is
 connected then its diameter is at least $2$.
+
+The answer is yes, and connectedness is not needed. For monic $f$ of degree $n \geq 1$ the set
+$\{ z: \lvert f(z)\rvert\leq 1\}$ has logarithmic capacity $1$ [Ra95, Theorem 5.2.5], and Pólya
+[Po28] proved $\mathrm{cap}(E) \leq \frac{1}{2}\operatorname{diam}(E)$ for every compact
+$E \subseteq \mathbb{C}$, see [BPS02, (1.2)]. Hence the diameter is at least $2$.
 -/
-@[category research open, AMS 30]
-theorem erdos_1046.variants.diameter : answer(sorry) ↔ ∀ f : ℂ[X], f.Monic →
+@[category research solved, question, AMS 30]
+theorem erdos_1046.variants.diameter : ∀ f : ℂ[X], f.Monic →
     IsConnected (closedLemniscate f) → 2 ≤ Metric.ediam (closedLemniscate f) := by
   sorry
 

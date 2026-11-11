@@ -33,15 +33,15 @@ open scoped Nat
 Is it true that, for any $a \in \mathbb{Z}$, there are infinitely many $n$ such that
 $$\phi(n) | n + a$$?
 -/
-@[category research open, AMS 11]
-theorem erdos_828 : answer(sorry) ↔ ∀ a : ℤ, Set.Infinite {n : ℕ | ↑(φ n) ∣ n + a} := by
+@[category research open, question, AMS 11]
+theorem erdos_828 : ∀ a : ℤ, Set.Infinite {n : ℕ | ↑(φ n) ∣ n + a} := by
   sorry
 
 /--
 When $n > 1$, Lehmer conjectured that $\phi(n) | n - 1$ if and only if $n$ is prime.
 -/
-@[category research open, AMS 11]
-theorem erdos_828.variants.lehmer_conjecture : answer(sorry) ↔ ∀ n > 1, φ n ∣ n - 1 ↔ Prime n := by
+@[category research open, question, AMS 11]
+theorem erdos_828.variants.lehmer_conjecture : ∀ n > 1, φ n ∣ n - 1 ↔ Prime n := by
   sorry
 
 /--
@@ -49,7 +49,7 @@ It is an easy exercise to show that $\phi(n) | n$ if and only if $n = 0, 1$ or $
 some $a > 0$.
 -/
 @[category textbook, AMS 11, formal_proof using formal_conjectures at
-"https://github.com/XC0R/formal-conjectures/blob/03e00cf8d44098d0fb06e891fca30c29769df619/FormalConjectures/ErdosProblems/828.lean#L49"]
+"https://github.com/XC0R/formal-conjectures/blob/d252395a9c80fc8eca30d9e5feb6e3b0bc7fc612/FormalConjectures/ErdosProblems/828.lean#L49"]
 theorem erdos_828.variants.phi_dvd_self_iff_pow2_pow3 {n : ℕ} :
     φ n ∣ n ↔ n ≤ 1 ∨ ∃ᵉ (a > 0) (b), n = 2 ^ a * 3 ^ b := by
   sorry

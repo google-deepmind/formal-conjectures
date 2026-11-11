@@ -29,7 +29,7 @@ interpreted once.
 It starts deliberately small: `FormalProofInfo` is the schema
 `extract_names` exports as `formalProofs` (`schemaVersion` 2), moved here so
 its next consumer imports it rather than restating it. A `ProblemSpec`
-bundling declaration, module, category, subjects, answer holes and source
+bundling declaration, module, category, subjects, question kind and source
 range belongs here too, and arrives when `extract_names`' internal
 `TheoremInfo` migrates; growing it ahead of its consumers would be schema
 fiction.

@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The symbol length of $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$
@@ -101,9 +103,13 @@ are in `FormalConjecturesForMathlib/FieldTheory/MilnorKTheory.lean`.
   [doi:10.4007/annals.2011.174.1.11](https://doi.org/10.4007/annals.2011.174.1.11).
 -/
 
+@[expose] public section
+
 open MilnorK
 
 namespace SymbolLengthMilnorKTheory
+
+def symbol_length_problem.answer : ℕ → ℕ → ℕ → ℕ∞ := sorry
 
 /--
 **The symbol length problem** for complex rational function fields [Krashen2024, Problem 2.1.3.12
@@ -112,11 +118,11 @@ $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$, that is the least $k$ such that every cl
 most $k$ symbols, or $\infty$ if there is no such $k$. The answer `sl m n p : ℕ∞` is
 characterised by: `k` is such a bound if and only if `sl m n p ≤ k`.
 -/
-@[category research open, AMS 12 19]
+@[category research open, question value, AMS 12 19]
 theorem symbol_length_problem :
-    let sl : ℕ → ℕ → ℕ → ℕ∞ := answer(sorry)
     ∀ m n p : ℕ, p.Prime → ∀ k : ℕ,
-      k ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n ↔ sl m n p ≤ k := by
+      k ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n ↔ symbol_length_problem.answer m n p ≤ k
+        := by
   sorry
 
 /--
@@ -124,9 +130,9 @@ The symbol length problem in the form of [Krashen2024, Problem 2.1.3.12]: is the
 $m$, $n$ and prime $p$, a bound $k$ such that every class in $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$
 is a sum of at most $k$ symbols?
 -/
-@[category research open, AMS 12 19]
+@[category research open, question, AMS 12 19]
 theorem symbol_length_problem.variants.bounded :
-    answer(sorry) ↔ ∀ m n p : ℕ, p.Prime →
+    ∀ m n p : ℕ, p.Prime →
       (symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n).Nonempty := by
   sorry
 
@@ -137,9 +143,9 @@ $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$ is a sum of at most $k$ symbols for every
 Degree $0$ is excluded because $K^M_0(F)/p = \mathbb{Z}/p$ has symbol length $p - 1$
 (`symbol_length_problem.variants.degree_zero`), which is not bounded independently of $p$.
 -/
-@[category research open, AMS 12 19]
+@[category research open, question, AMS 12 19]
 theorem symbol_length_problem.variants.uniform :
-    answer(sorry) ↔ ∀ m n : ℕ, 0 < n → ∃ k : ℕ, ∀ p : ℕ, p.Prime →
+    ∀ m n : ℕ, 0 < n → ∃ k : ℕ, ∀ p : ℕ, p.Prime →
       k ∈ symbolLengthBounds (MvRatFunc (Fin m) ℂ) p n := by
   sorry
 
@@ -196,9 +202,9 @@ symbol, which holds for $p \le 3$ by a theorem of Artin and is open for $p \ge 5
 does not involve $p$, an affirmative answer would settle
 `symbol_length_problem.variants.uniform` in degree $2$.
 -/
-@[category research open, AMS 12 16 19]
+@[category research open, question, AMS 12 16 19]
 theorem symbol_length_problem.variants.degree_two_isLeast :
-    answer(sorry) ↔ ∀ m p : ℕ, 1 ≤ m → p.Prime →
+    ∀ m p : ℕ, 1 ≤ m → p.Prime →
       IsLeast (symbolLengthBounds (MvRatFunc (Fin m) ℂ) p 2) (m - 1) := by
   sorry
 

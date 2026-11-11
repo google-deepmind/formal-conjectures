@@ -72,10 +72,11 @@ theorem inverse_galois_problem.variants.abelian
     IsRealizable ℚ G := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every finite symmetric group is realizable.
 -/
-@[category research solved, AMS 12]
+@[category research solved, AMS 12, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/4e37e8779287010f34ffc6c817ea45fc26d8ba0a/Proofs/T_InverseGalois_inverse_galois_problem_variants_symmetric_group.lean#L392"]
 theorem inverse_galois_problem.variants.symmetric_group
     {S : Type*} [Fintype S] :
     IsRealizable ℚ (S ≃ S) := by

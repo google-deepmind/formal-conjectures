@@ -35,8 +35,8 @@ Let $p(n)$ denote the least prime factor of $n$. Is there a constant $C>0$ such 
 $$\sum_{x\leq n\leq x+C\sqrt{x}(\log x)^2}\frac{p(n)}{n}\gg 1$$
 for all sufficiently large $x$?
 -/
-@[category research open, AMS 11]
-theorem erdos_462 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_462 :
     ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ᶠ x : ℕ in atTop,
       c ≤ ∑ n ∈ Finset.Icc x
         ⌊(x : ℝ) + C * Real.sqrt x * (Real.log x) ^ 2⌋₊, (n.minFac : ℝ) / n := by

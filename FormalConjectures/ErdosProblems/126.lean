@@ -35,6 +35,7 @@ def IsMaximalAddFactorsCard (f : ℕ → ℕ) : Prop := ∀ n,
         m ≤ (∏ ⟨a, b⟩ ∈ A.offDiag, (a + b)).primeFactors.card}
       (f n)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be maximal such that if $A\subseteq\mathbb{N}$ has $|A| = n$ then
 $\prod_{a\neq b\in A}(a + b)$ has at least $f(n)$ distinct prime factors.
@@ -42,9 +43,9 @@ Is it true that $\frac{f(n)}{\log n} \to\infty$?
 
 The answer is yes, and a machine-checked proof is available.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/tadamcz/erdos126/blob/2516785fe6bbc43e979cf6029c976d9f998a7fba/Erdos126/Resolutions/Erdos126_132usd_25h.lean#L3053"]
-theorem erdos_126 : answer(True) ↔ ∀ (f : ℕ → ℕ), IsMaximalAddFactorsCard f →
+theorem erdos_126 : ∀ (f : ℕ → ℕ), IsMaximalAddFactorsCard f →
     Tendsto (fun n => f n / Real.log n) atTop atTop := by
   sorry
 

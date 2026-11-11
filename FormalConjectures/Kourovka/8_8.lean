@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture 8.8
@@ -26,6 +28,8 @@ Both parts of the problem are due to D. V. Anosov.
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v46)
 -/
 
+@[expose] public section
+
 namespace Kourovka.«8.8»
 
 /--
@@ -36,8 +40,8 @@ Here a power of $a$ means $a^n$ for some $n \in \mathbb{Z}$.
 
 Answered affirmatively by V. S. Guba, Math. USSR-Izv. 29 (1986), 233–277.
 -/
-@[category research solved, AMS 20]
-theorem kourovka_8_8a : answer(True) ↔
+@[category research solved, question, AMS 20]
+theorem kourovka_8_8a :
     ∃ (G : Type) (_ : Group G), ¬ IsCyclic G ∧ Group.FG G ∧
       ∃ a : G, ∀ g : G, ∃ n : ℤ, IsConj g (a ^ n) := by
   sorry
@@ -48,8 +52,8 @@ element $a$ such that each element of $G$ is conjugate to some power of $a$?
 
 Here a power of $a$ means $a^n$ for some $n \in \mathbb{Z}$.
 -/
-@[category research open, AMS 20]
-theorem kourovka_8_8b : answer(sorry) ↔
+@[category research open, question, AMS 20]
+theorem kourovka_8_8b :
     ∃ (G : Type) (_ : Group G), ¬ IsCyclic G ∧ Group.IsFinitelyPresented G ∧
       ∃ a : G, ∀ g : G, ∃ n : ℤ, IsConj g (a ^ n) := by
   sorry

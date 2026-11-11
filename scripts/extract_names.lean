@@ -18,33 +18,26 @@ module
 public import Lean
 public meta import FormalConjecturesUtil.Metadata
 public import FormalConjecturesUtil.Attributes.Basic
-public import FormalConjecturesUtil.Answer
 
 /-!
 # Extract Names
 
 This script extracts metadata (theorem names, statements, categories, subjects,
-formal proof links, and answer kinds) from formalized mathematical conjectures
-in the repository.
+formal proof links, and whether the source poses the statement as a question) from
+formalized mathematical conjectures in the repository.
 
 ### Usage
+
+The script reads the compiled `.olean` files, so build the problems first.
 ```bash
-# Compile with postpone setting for answerKind extraction
-lake build FormalConjecturesAnswerPostpone
+lake build
 lake exe extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]
 ```
-
-**IMPORTANT NOTE**: Make sure to build with `lake build FormalConjecturesAnswerPostpone`
-before running this script. This compiles the library under `weak.google.answer = "postpone"`
-mode, allowing `extract_names` to correctly locate and extract `answerKinds` (Prop vs
-non-Prop answer metadata). Otherwise, `answer(sorry)` simplifies to `True` during
-default elaboration, and `answerKinds` will always be extracted as `[]` for `Prop`
-valued answers.
 -/
 
 @[expose] public meta section
 
-open Lean ProblemAttributes Google
+open Lean ProblemAttributes
 
 def getModuleNameFromFile (file : System.FilePath) : IO Name := do
   let components := file.withExtension "" |>.components
@@ -73,28 +66,6 @@ def formalProofKindToString : FormalProofKind → String
   | .lean4 => "lean4"
   | .otherSystem => "other_system"
 
-def nameAny (n : Name) (p : String → Bool) : Bool :=
-  match n with
-  | .anonymous => false
-  | .str p' s => p s || nameAny p' p
-  | .num p' _ => nameAny p' p
-
-def isInternal (n : Name) : Bool :=
-  nameAny n (fun s => s.startsWith "_" || s.startsWith "match_" || s.startsWith "proof_")
-
-/-- Determine the `answerKinds` for a theorem's type expression.
-
-For each `answer(...)` occurrence found in the type,
-returns `"Prop"` or `"non-Prop"` depending on the type
-of the annotated subexpression. -/
-def getAnswerKinds (type : Expr) : MetaM (List String) := do
-  let ansExprs := findAnswerExprs type
-  ansExprs.toList.mapM fun ansExpr => do
-    if ← Meta.isProp ansExpr then
-      return "Prop"
-    else
-      return "non-Prop"
-
 /-- Run a git command and return its stdout, trimmed. Returns `none` on failure. -/
 def gitOutput (args : Array String) : IO (Option String) := do
   try
@@ -117,7 +88,7 @@ def getFileLastModified (file : System.FilePath) : IO (Option String) :=
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
   ["docstring", "statement", "subjects", "formalProofs",
-   "hasSorryFreeProof", "moduleDocstrings", "answerKinds",
+   "hasSorryFreeProof", "moduleDocstrings", "question",
    "fileFirstAdded", "fileLastModified"]
 
 -- `FormalProofInfo` and its ordering live in `FormalConjecturesUtil.Metadata`,
@@ -134,7 +105,9 @@ structure TheoremInfo where
   formalProofs : List FormalProofInfo
   hasSorryFreeProof : Bool
   subsets : List String
-  answerKinds : List String
+  /-- The kind of question (`"yes_no"` or `"value"`) if the declaration carries the
+  `question` attribute. -/
+  question : Option String
   fileFirstAdded : Option String
   fileLastModified : Option String
 
@@ -153,8 +126,9 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (if exclude.contains "hasSorryFreeProof" then [] else
         [("hasSorryFreeProof", toJson info.hasSorryFreeProof)])
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
-    ++ (if exclude.contains "answerKinds" then [] else
-        [("answerKinds", toJson info.answerKinds)])
+    ++ (match info.question with
+        | some kind => if exclude.contains "question" then [] else [("question", toJson kind)]
+        | none => [])
     ++ (if exclude.contains "fileFirstAdded" then [] else
         [("fileFirstAdded", toJson info.fileFirstAdded)])
     ++ (if exclude.contains "fileLastModified" then [] else
@@ -212,8 +186,7 @@ unsafe def main (args : List String) : IO Unit := do
     | _ =>
       let usageMsg :=
         "Usage: extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]\n\n" ++
-        "Note: Make sure to run `lake build FormalConjecturesAnswerPostpone` before running " ++
-        "this script so that `answerKind` metadata is extracted correctly."
+        "Note: Build first."
       throw <| IO.userError usageMsg
 
   -- Pre-compute git timestamps for each file and build module name array (only when not excluded)
@@ -282,7 +255,7 @@ unsafe def main (args : List String) : IO Unit := do
         let name := info.name
         match info with
         | ConstantInfo.thmInfo .. =>
-          if !isInternal name then
+          if !isPrivateName name then
             let cats := categoryMap.getD name []
             let subjs := subjectMap.getD name []
             if !cats.isEmpty || !subjs.isEmpty then
@@ -315,9 +288,6 @@ unsafe def main (args : List String) : IO Unit := do
                   IO.eprintln s!"WARNING: Theorem {name} is categorised as `API` but has no sorry-free proof"
                 | _, _ => pure ()
               let subsets := (theoremToSubsets.getD name []).toArray.qsort (· < ·) |>.toList
-              -- Determine answerKinds from the elaborated type
-              let answerKinds ← Meta.MetaM.run'
-                (getAnswerKinds info.type)
               let (fileFirstAdded, fileLastModified) :=
                 fileTimestamps.getD modName (none, none)
               allResults := {
@@ -330,7 +300,7 @@ unsafe def main (args : List String) : IO Unit := do
                 formalProofs := formalProofs,
                 hasSorryFreeProof := hasSorryFreeProof,
                 subsets := subsets
-                answerKinds := answerKinds
+                question := (← getQuestionKind? name).map toString
                 fileFirstAdded := fileFirstAdded
                 fileLastModified := fileLastModified
               } :: allResults

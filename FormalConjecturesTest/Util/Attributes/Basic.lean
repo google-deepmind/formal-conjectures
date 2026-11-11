@@ -42,9 +42,131 @@ theorem an_open_problem : Transcendental ℝ (π + rexp 1) := by
   sorry
 
 #guard_msgs in
-@[category research solved, formal_proof using lean4 at "https://github.com/example/formal-proof"]
+@[category research solved,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
 theorem a_formally_solved_problem : 2 + 2 = 4 := by
   rfl
+
+-- The `question` attribute
+
+#guard_msgs in
+/-- Is `2 + 2` equal to `4`? -/
+@[category research solved, question, AMS 11]
+theorem a_question : 2 + 2 = 4 := by
+  rfl
+
+-- The attribute is independent of the order of attributes.
+#guard_msgs in
+@[question, category research open]
+theorem a_question_first : 2 + 2 = 4 := by
+  sorry
+
+-- `question` is not a keyword.
+#guard_msgs in
+example (question : Nat) : question = question := rfl
+
+/--
+error: the `question` attribute only applies to theorems, but the type of 'not_a_theorem' is not a proposition
+-/
+#guard_msgs in
+@[question]
+def not_a_theorem : Prop := True
+
+-- The unknown of a value question is a definition `<theorem>.answer`.
+def a_value_question_with_def.answer : Nat := sorry
+
+#guard_msgs in
+/-- What is `2 + 2`? -/
+@[category research open, question value, AMS 11]
+theorem a_value_question_with_def : 2 + 2 = a_value_question_with_def.answer := by
+  sorry
+
+-- The form is checked against the statement, in both directions.
+def a_value_question_with_def_tagged_yes_no.answer : Nat := sorry
+
+/--
+error: the statement of 'a_value_question_with_def_tagged_yes_no' refers to the unknown of a value question; use `question value`
+-/
+#guard_msgs in
+@[category research open, question, AMS 11]
+theorem a_value_question_with_def_tagged_yes_no : 2 + 2 = a_value_question_with_def_tagged_yes_no.answer := by
+  sorry
+
+/--
+error: `question value` requires the statement of 'a_yes_no_question_tagged_value' to refer to the definition `a_yes_no_question_tagged_value.answer`; for a yes-or-no question use `question`
+-/
+#guard_msgs in
+@[category research open, question value, AMS 11]
+theorem a_yes_no_question_tagged_value : 2 + 2 = 4 := by
+  sorry
+
+open ProblemAttributes
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_question
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_question_first
+
+/-- info: some QuestionKind.value -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_value_question_with_def
+
+-- An untagged theorem has no kind.
+/-- info: none -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `a_formally_solved_problem
+
+-- A question belongs to a research problem, whichever attribute comes first.
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_test' is categorised as `test`
+-/
+#guard_msgs in
+@[category test, question]
+theorem question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_api' is categorised as `API`
+-/
+#guard_msgs in
+@[question, category API]
+theorem question_on_api : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'question_on_textbook' is categorised as `textbook`
+-/
+#guard_msgs in
+@[category textbook, question]
+theorem question_on_textbook : 1 + 1 = 2 := by
+  rfl
+
+-- The check also covers the `attribute` command.
+#guard_msgs in
+@[category test]
+theorem later_question_on_test : 1 + 1 = 2 := by
+  rfl
+
+/--
+error: the `question` attribute belongs to a `research open` or `research solved` problem, but 'later_question_on_test' is categorised as `test`
+-/
+#guard_msgs in
+attribute [question] later_question_on_test
+
+#guard_msgs in
+@[category research open]
+theorem later_question : 1 + 1 = 2 := by
+  sorry
+
+#guard_msgs in
+attribute [question] later_question
+
+/-- info: some QuestionKind.yesNo -/
+#guard_msgs in
+#eval show Lean.CoreM _ from getQuestionKind? `later_question
 
 -- formal_proof on non-research categories
 #guard_msgs in
@@ -67,14 +189,16 @@ theorem another_conditional_formal_proof_hypothesis : 1 = 1 := by
 
 #guard_msgs in
 @[category research solved,
-  conditional formal_proof using lean4 at "https://github.com/example/conditional-proof"
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming conditional_formal_proof_hypothesis]
 theorem a_conditionally_formally_solved_problem : 4 + 4 = 8 := by
   rfl
 
 #guard_msgs in
 @[category research solved,
-  conditional formal_proof using lean4 at "https://github.com/example/two-hypotheses"
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming conditional_formal_proof_hypothesis another_conditional_formal_proof_hypothesis]
 theorem a_conditionally_formally_solved_problem_with_two_hypotheses : 5 + 5 = 10 := by
   rfl
@@ -132,6 +256,197 @@ warning: A `formal_proof` link should be a URL (http:// or https://), but got: "
 @[category test, formal_proof using lean4 at "not-a-url"]
 theorem a_formal_proof_with_malformed_link : 5 + 5 = 10 := by
   rfl
+
+-- Open research problems retain their existing warning for non-Palomar links.
+
+/--
+warning: A `formal_proof` annotation on a `research open` problem is suspicious. If a formal proof exists, the problem should not be categorised as `open`.
+-/
+#guard_msgs in
+@[category research open, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem an_open_problem_with_formal_proof : True := by
+  sorry
+
+-- Solved research problems require Palomar entries, in either attribute order.
+
+#guard_msgs in
+@[category research solved,
+  formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002&version=1"]
+theorem a_solved_problem_with_palomar_proof : True := by
+  sorry
+
+#guard_msgs in
+@[formal_proof using other_system at
+    "https://palomar-registry.org/entry.html?version=1&id=PALOMAR-2026-10-05-000002",
+  category research solved]
+theorem a_solved_problem_with_palomar_proof_first : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[category research solved, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem a_solved_problem_with_non_palomar_proof : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[formal_proof using other_system at "https://github.com/example/proof", category research solved]
+theorem a_solved_problem_with_non_palomar_proof_first : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[category research solved, formal_proof using formal_conjectures at ""]
+theorem a_solved_problem_with_empty_proof_link : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/conditional-proof"
+    assuming conditional_formal_proof_hypothesis]
+theorem a_solved_problem_with_non_palomar_conditional_proof : True := by
+  sorry
+
+-- Applying either attribute later must enforce the same restriction.
+
+#guard_msgs in
+theorem an_uncategorised_problem_with_palomar_proof : True := by
+  sorry
+
+#guard_msgs in
+attribute [formal_proof using formal_conjectures at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
+  an_uncategorised_problem_with_palomar_proof
+
+#guard_msgs in
+attribute [category research solved] an_uncategorised_problem_with_palomar_proof
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+attribute [formal_proof using lean4 at "https://github.com/example/proof"] FLT
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+attribute [category research solved] a_graduate_problem_with_formal_proof
+
+-- The opt-out is local and does not disable the other link checks.
+
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[category research solved, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem a_solved_problem_with_palomar_check_disabled : True := by
+  sorry
+
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[formal_proof using other_system at "https://github.com/example/proof", category research solved]
+theorem a_solved_problem_with_palomar_check_disabled_first : True := by
+  sorry
+
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[category research solved,
+  conditional formal_proof using lean4 at "https://github.com/example/conditional-proof"
+    assuming conditional_formal_proof_hypothesis]
+theorem a_conditional_proof_with_palomar_check_disabled : True := by
+  sorry
+
+/--
+warning: A `lean4` or `other_system` `formal_proof` should include a link to the proof.
+-/
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[category research solved, formal_proof using lean4 at ""]
+theorem a_solved_problem_with_empty_link_and_palomar_check_disabled : True := by
+  sorry
+
+/--
+warning: A `formal_proof` link should be a URL (http:// or https://), but got: "not-a-url".
+-/
+#guard_msgs in
+set_option linter.style.formal_proof_palomar false in
+@[category research solved, formal_proof using lean4 at "not-a-url"]
+theorem a_solved_problem_with_malformed_link_and_palomar_check_disabled : True := by
+  sorry
+
+/--
+error: A `formal_proof` annotation on a `research solved` problem must link to a Palomar entry (https://palomar-registry.org/entry.html?id=...).
+-/
+#guard_msgs in
+@[category research solved, formal_proof using lean4 at "https://github.com/example/proof"]
+theorem a_solved_problem_after_local_palomar_opt_out : True := by
+  sorry
+
+-- Check URL boundaries without relying on the registry being reachable.
+run_meta do
+  let invalidLinks := [
+    "https://palomar-registry.org/",
+    "https://palomar-registry.org/entry.html",
+    "https://palomar-registry.org/entry.html?id=",
+    "https://palomar-registry.org/entry.html?version=1",
+    "https://palomar-registry.org/entry.html#?id=PALOMAR-2026-10-05-000002",
+    "https://palomar-registry.org.evil.example/entry.html?id=PALOMAR-2026-10-05-000002",
+    "https://palomar-registry.org@evil.example/entry.html?id=PALOMAR-2026-10-05-000002",
+    "https://example.com/palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002",
+    "ftp://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
+  for link in invalidLinks do
+    let rejected ← try
+      ProblemAttributes.checkFormalProofLink (.research .solved) link
+      pure false
+    catch _ => pure true
+    unless rejected do
+      throwError "unexpectedly accepted Palomar entry link: {link}"
+
+-- The `optimization_constant` attribute
+
+#guard_msgs in
+@[optimization_constant "1a"]
+noncomputable def anOptimizationConstant : ℝ := 1
+
+#guard_msgs in
+@[optimization_constant "21a"]
+def anotherOptimizationConstant : ℕ := 4
+
+/--
+warning: An `optimization_constant` id should be the name of the entry's page `https://teorth.github.io/optimizationproblems/constants/<id>.html`. This is one or more digits followed by one lowercase letter (e.g. "1a" or "21a"). The letter is required even when the database table shows only the number. Got: "21".
+-/
+#guard_msgs in
+@[optimization_constant "21"]
+def anOptimizationConstantWithoutLetter : ℕ := 4
+
+run_meta do
+  let tags ← ProblemAttributes.getOptimizationConstants ``anOptimizationConstant
+  unless tags.map (·.constantId) = #["1a"] do
+    throwError "unexpected optimization constant tags for anOptimizationConstant"
+
+/--
+warning: An `optimization_constant` id should be the name of the entry's page `https://teorth.github.io/optimizationproblems/constants/<id>.html`. This is one or more digits followed by one lowercase letter (e.g. "1a" or "21a"). The letter is required even when the database table shows only the number. Got: "a1".
+-/
+#guard_msgs in
+@[optimization_constant "a1"]
+noncomputable def anOptimizationConstantWithMalformedId : ℝ := 3
+
+/--
+warning: An `optimization_constant` annotation should be applied to the definition of the constant, but `an_optimization_constant_theorem` is not a definition. Theorems about the constant (e.g. bounds) should not carry this attribute.
+-/
+#guard_msgs in
+@[category research open, AMS 11, optimization_constant "1a"]
+theorem an_optimization_constant_theorem : 3 + 3 = 6 := by
+  sorry
 
 -- The `#AMS` command
 

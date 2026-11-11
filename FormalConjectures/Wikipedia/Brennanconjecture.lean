@@ -24,6 +24,9 @@ public import FormalConjecturesUtil
 - [Wikipedia](https://en.wikipedia.org/wiki/Brennan_conjecture)
 - [arXiv:2409.15074](https://arxiv.org/abs/2409.15074)
 - [arXiv:2512.09330](https://arxiv.org/abs/2512.09330)
+- [OAI26a] OpenAI, *Brennan's conjecture and sharp inverse-square integral means*.
+  OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Brennans-conjecture-and-sharp-inverse-square-integral-means-September-24-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -67,10 +70,21 @@ theorem universalSpectrumBounded_le (τ : ℝ) :
 
 @[category test, AMS 30]
 theorem integralMeansSpectrum_id (τ : ℝ) : integralMeansSpectrum id τ = 0 := by
-  sorry
+  have hsub : Tendsto (fun r : ℝ => 1 - r) (𝓝[Iio 1] (1 : ℝ)) (𝓝[Ioi 0] 0) := by
+    refine tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within _ ?_
+      (eventually_nhdsWithin_of_forall fun r hr => mem_Ioi.mpr (sub_pos.mpr hr))
+    simpa using ((continuous_sub_left (1 : ℝ)).tendsto 1).mono_left nhdsWithin_le_nhds
+  have habs : Tendsto (fun r : ℝ => |Real.log (1 - r)|) (𝓝[Iio 1] (1 : ℝ)) atTop :=
+    tendsto_abs_atBot_atTop.comp (Real.tendsto_log_nhdsGT_zero.comp hsub)
+  simp [integralMeansSpectrum, (tendsto_const_nhds.div_atTop habs).limsup_eq]
 
-/-- Brennan's conjecture, part 1: $B(-2) = 1$. -/
-@[category research open, AMS 30]
+set_option linter.style.formal_proof_palomar false in
+/-- Brennan's conjecture, part 1: $B(-2) = 1$.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
+proof. -/
+@[category research solved, AMS 30, formal_proof using lean4 at
+  "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/IntegralMeans/Main.lean#L10"]
 theorem brennan_universalSpectrum :
     universalSpectrum (-2) = 1 := by
   sorry

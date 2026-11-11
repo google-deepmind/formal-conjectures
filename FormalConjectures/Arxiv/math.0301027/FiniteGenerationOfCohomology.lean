@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Finite generation of the cohomology of finite-dimensional Hopf algebras
@@ -75,6 +77,8 @@ finite-dimensional modules, as the module docstring of
   (organisers), *Mini-Workshop: Cohomology of Hopf Algebras and Tensor Categories*, Oberwolfach
   Rep. (2019), 663–693; "asked by a number of mathematicians", p. 664.
 -/
+
+@[expose] public section
 
 open Bialgebra
 open scoped ModuleCat.Algebra

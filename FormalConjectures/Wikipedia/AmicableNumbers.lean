@@ -62,9 +62,9 @@ whether a pair of relatively prime amicable numbers can exist.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Amicable_numbers)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem relatively_prime_amicable :
-    answer(sorry) ↔ ∃ a b : ℕ, IsAmicable a b ∧ a ≠ b ∧ a.Coprime b := by
+    ∃ a b : ℕ, IsAmicable a b ∧ a ≠ b ∧ a.Coprime b := by
   sorry
 
 /--
@@ -77,7 +77,7 @@ While many amicable pairs are known, it remains open whether there are infinitel
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Amicable_numbers),
 [erdosproblems.com/830](https://www.erdosproblems.com/830)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_amicable : type_of% Erdos830.erdos_830.parts.i := by
   sorry
 
@@ -90,9 +90,9 @@ that mixed-parity amicable pairs do not exist, but this remains open.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Amicable_numbers)
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem opposite_parity_amicable :
-    answer(sorry) ↔ ∃ a b : ℕ, IsAmicable a b ∧ (Even a ↔ Odd b) := by
+    ∃ a b : ℕ, IsAmicable a b ∧ (Even a ↔ Odd b) := by
   sorry
 
 end AmicableNumbers

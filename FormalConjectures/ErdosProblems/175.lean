@@ -37,6 +37,7 @@ independently proved the full range `n ≥ 5`.
 
 namespace Erdos175
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Show that, for any $n\geq 5$, the binomial coefficient $\binom{2n}{n}$ is not squarefree.
 -/

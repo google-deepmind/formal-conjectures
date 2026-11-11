@@ -40,15 +40,15 @@ def AbundancyIndex (n : ℕ) : ℚ := (∑ d ∈ n.divisors, d) / n
 /--
 Are there any odd weird numbers?
 -/
-@[category research open, AMS 11]
-theorem erdos_470.parts.i : answer(sorry) ↔ ∃ n : ℕ, n.Weird ∧ Odd n := by
+@[category research open, question, AMS 11]
+theorem erdos_470.parts.i : ∃ n : ℕ, n.Weird ∧ Odd n := by
   sorry
 
 /--
 Are there infinitely many primitive weird numbers?
 -/
-@[category research open, AMS 11]
-theorem erdos_470.parts.ii : answer(sorry) ↔ Set.Infinite PrimitiveWeird := by
+@[category research open, question, AMS 11]
+theorem erdos_470.parts.ii : Set.Infinite PrimitiveWeird := by
   sorry
 
 /--
@@ -122,6 +122,7 @@ theorem erdos_470.variants.odd_weird_prime_div :
     ∀ n : ℕ, Odd n → n.Weird → 6 ≤ {m | m ∈ n.divisors ∧ m.Prime}.ncard := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If there are no odd weird numbers then every weird number has abundancy index < 4.
 -/

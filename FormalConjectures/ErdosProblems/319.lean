@@ -31,6 +31,8 @@ open scoped Topology Finset Real
 
 namespace Erdos319
 
+def erdos_319.answer : ℕ := sorry
+
 /-- What is the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
@@ -41,16 +43,19 @@ $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
 for all non-empty $A'\subsetneq A$. -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_319 (N : ℕ) : IsGreatest
     { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) }
-    answer(sorry) := by
+    erdos_319.answer := by
   sorry
 
 -- Formalisation note: it's possible that solution to `erdos_319` needs to be
 -- expressed asymptotically. To handle this we include an `IsTheta` variant below.
+
+def erdos_319.variants.isTheta.answer : ℕ → ℝ := fun N ↦ (N : ℝ)
+
 /-- Let $c(N)$ be the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
 $$
@@ -60,14 +65,17 @@ and
 $$
   \sum_{n\in A'}\frac{\delta n}{n} \neq 0
 $$
-for all non-empty $A'\subsetneq A$. What is $\Theta(c(N))$?-/
-@[category research open, AMS 5]
+for all non-empty $A'\subsetneq A$. What is $\Theta(c(N))$?
+
+Trivially $c(N) \leq N$, and `erdos_319.variants.lb` gives $c(N) \geq (1 - \frac{1}{e} + o(1))N$,
+so $c(N) = \Theta(N)$. -/
+@[category research solved, question value, AMS 5]
 theorem erdos_319.variants.isTheta (N : ℕ) (c : ℕ → ℝ)
     (h : ∀ N, IsGreatest
     { (#A : ℝ) | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) } (c N)) :
-    c =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    c =Θ[atTop] erdos_319.variants.isTheta.answer := by
   sorry
 
 /-- Adenwalla has observed that a lower bound (on the maximum size of $A$) of

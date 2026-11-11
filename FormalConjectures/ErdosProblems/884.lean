@@ -64,6 +64,7 @@ This conjecture has been **disproved**:
 def Erdos884Prop : Prop :=
     sumDivisorInvPairwiseDifference ≪ 1 + sumDivisorInvConsecutiveDifference
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For a natural number n, let $1 = d_1 < \dotsc < d_{\tau(n)} = n$ denote the divisors of $n$
 in increasing order.
@@ -82,9 +83,9 @@ This conjecture has been **disproved**:
 
 *Reference:* [erdosproblems.com/884](https://www.erdosproblems.com/884)
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/884/Erdos884.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/884/Erdos884.lean"]
 theorem erdos_884 :
-    answer(False) ↔ Erdos884Prop := by
+    ¬ Erdos884Prop := by
   sorry
 
 /--

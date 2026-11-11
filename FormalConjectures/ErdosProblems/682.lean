@@ -36,6 +36,7 @@ namespace Erdos682
 /-- The `n`th prime, indexed from zero: `p 0 = 2`, `p 1 = 3`, ... -/
 noncomputable abbrev p (n : ℕ) : ℕ := Nat.nth Nat.Prime n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that for almost all $n$ there exists some $m\in (p_n,p_{n+1})$ such that
 $$p(m) \geq p_{n+1}-p_n,$$
@@ -45,8 +46,8 @@ This was solved in the affirmative by Gafni and Tao [GaTa25].
 
 This was formalized in Lean by Codex and GPT-5.6 Sol.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos682.lean#L5018"]
-theorem erdos_682 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos682.lean#L5018"]
+theorem erdos_682 :
     {n | ∃ m ∈ Set.Ioo (p n) (p (n + 1)), p (n + 1) - p n ≤ m.minFac}.HasDensity 1 := by
   sorry
 

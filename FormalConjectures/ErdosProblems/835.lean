@@ -48,11 +48,13 @@ Does there exist a $k>2$ such that the $k$-sized subsets of {1,...,2k} can be co
 $k+1$ colours such that for every $A\subset \{1,\ldots,2k\}$ with $\lvert A\rvert=k+1$ all $k+1$
 colours appear among the $k$-sized subsets of $A$?
 -/
-@[category research open, AMS 5]
-theorem erdos_835 : (∃ k > 2, Property k) ↔ answer(sorry) := by
+@[category research open, question, AMS 5]
+theorem erdos_835 : ∃ k > 2, Property k := by
   sorry
 
-@[category test, AMS 5]
+@[category test, AMS 5,
+  formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000008"]
 theorem property_iff_chromaticNumber (k : ℕ) (hk : 0 < k) :
     (J(2 * k, k).chromaticNumber = k + 1) ↔
     Property k := by
@@ -63,11 +65,11 @@ Alternative statement of Erdős Problem 835 using the chromatic number of the Jo
 This is equivalent to asking whether there exists $k > 2$ such that the chromatic number of the
 Johnson graph $J(2k, k)$ is $k+1$.
 -/
-@[category research open, AMS 5]
-theorem erdos_835.variants.johnson : (∃ l,
+@[category research open, question, AMS 5]
+theorem erdos_835.variants.johnson : ∃ l,
     -- making sure k > 2
     letI k := l + 3
-    J(2 * k, k).chromaticNumber = k + 1) ↔ answer(sorry) := by
+    J(2 * k, k).chromaticNumber = k + 1 := by
   sorry
 
 /--
@@ -84,7 +86,9 @@ The smallest case not on this page is $k=9$:
 But that one can be solved as well:
 The chromatic number of $J(18, 9)$ is at least $11$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000008"]
 theorem johnsonGraph_18_9_chromaticNumber : J(18, 9).chromaticNumber > 9 + 1 := by
   sorry
 
@@ -98,7 +102,8 @@ def johnsonBound : ℕ → ℕ → ℕ → ℕ
   | n + 1, d, w + 1 => if 2 * (w + 1) < d then 1 else (n + 1) * johnsonBound n d w / (w + 1)
 
 /-- Johnson's bound for the independence number of the Johnson graph. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-06-000013"]
 lemma indepNum_johnson_le_johnsonBound : α(J(n, k)) ≤ johnsonBound n 4 k := sorry
 
 /-- Johnson's bound for the chromatic number of the Johnson graph. -/
@@ -129,7 +134,9 @@ theorem chromaticNumber_johnson_2k_k_lower_bound_odd (hk : 3 ≤ k) (hk' : k ≤
 /--
 It can be seen that the chromatic number of $J(2k,k)$ is $>k+1$ for all odd $k>2$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000008"]
 theorem johnson_chromaticNumber_odd (k : ℕ) (hk : 2 < k) (h : Odd k) :
     k + 1 < J(2 * k, k).chromaticNumber :=
   sorry
@@ -138,7 +145,9 @@ theorem johnson_chromaticNumber_odd (k : ℕ) (hk : 2 < k) (h : Odd k) :
 Ma and Tang have proved that the chromatic number of $J(2k,k)$ is $>k+1$ for all $k>2$ not of the
 form $p-1$ for prime $p$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000008"]
 theorem johnson_chromaticNumber_composite (k : ℕ) (hk : 2 < k) (h : (k + 1).Composite) :
     k + 1 < J(2 * k, k).chromaticNumber :=
   sorry
@@ -158,8 +167,8 @@ theorem johnsonGraph_chromaticNumber_odd_of_johnson_chromaticNumber_composite :
   · omega
 
 /-- Is the chromatic number of `J(2 * k, k)` always at least `k + 2`? -/
-@[category research open, AMS 5]
-theorem johnson_chromaticNumber : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem johnson_chromaticNumber :
     ∀ k ≥ 3, k + 2 ≤ J(2 * k, k).chromaticNumber :=
   sorry
 

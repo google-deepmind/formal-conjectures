@@ -69,6 +69,7 @@ theorem a_13 : a 13 = 0 := by decide
 @[category test, AMS 11]
 theorem a_14 : a 14 = 2 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 On Feb. 24, 2009, Zhi-Wei Sun conjectured that $a(n) = 0$ if and only if $n < 11$ or
 $n \in \{13, 16, 992\}$; in other words, except for $25, 31, 1983$, any odd integer greater
@@ -82,8 +83,8 @@ See T. Adamczewski, OEIS Open: How many conjectures can language models turn int
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/epoch-research/LeanOpenProblems-results/blob/main/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_157225_conjecture_0/Submission/Spec.lean"]
-theorem conjecture (n : ℕ) (hn : 0 < n) :
-    a n = 0 ↔ n < 11 ∨ n = 13 ∨ n = 16 ∨ n = 992 := by
+theorem conjecture :
+    ¬ ∀ n : ℕ, 0 < n → (a n = 0 ↔ n < 11 ∨ n = 13 ∨ n = 16 ∨ n = 992) := by
   sorry
 
 end OeisA157225

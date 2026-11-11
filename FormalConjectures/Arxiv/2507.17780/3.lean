@@ -31,6 +31,8 @@ where $i(G)$ is the independent domination number and $\mu^*(G)$ the saturation
 number (minimum size of a maximal matching).
 -/
 
+@[expose] public section
+
 open SimpleGraph
 
 namespace Arxiv.«2507.17780»
