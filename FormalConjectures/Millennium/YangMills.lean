@@ -88,14 +88,15 @@ def ClassFunction.const (G : Type*) [Group G] (c : ℂ) : ClassFunction G where
 
 /-- A compact, connected, non-abelian simple Lie group acting as the internal gauge symmetry group $G$
 (Arthur Jaffe & Edward Witten, 2000, §4, p. 6; Howard Georgi, "Lie Algebras in Particle Physics", Ch. 1 & 2).
-Formulated as a `Prop`-valued class with:
+Formulated as a `Prop`-valued class requiring:
 1. Compactness of the underlying group space (`is_compact`),
 2. Connectedness of the underlying group space (`is_connected`),
 3. Non-abelianity (`non_abelian`),
 4. Simplicity up to the discrete center: every normal subgroup is either $\top$ or contained in the finite discrete center $Z(G)$ (`normal_subgroups_central`),
 5. Finiteness of the center $Z(G)$ (`finite_center`),
 6. Existence of a non-trivial fundamental representation character $\chi_{\mathrm{fund}}$ of dimension $\ge 2$ (`has_fundamental_character`),
-7. Existence of an associated finite-dimensional real Lie algebra $\mathfrak{g} = \mathrm{Lie}(G)$ of dimension $\ge 3$ admitting a continuous exponential map $\exp : \mathfrak{g} \to G$ that is a local homeomorphism at the origin (`has_lie_algebra`). -/
+7. An actual compatible Lie-group structure on $G$ (`admits_lie_group`), modeled on a finite-dimensional Euclidean space,
+8. A compatible algebraic-topological Lie algebra condition (`has_lie_algebra`): existence of an associated finite-dimensional real Lie algebra $\mathfrak{g} = \mathrm{Lie}(G)$ endowed with its canonical real normed space topology (`NormedAddCommGroup`, `NormedSpace ℝ`), an exponential map generating 1-parameter subgroups that is a genuine local homeomorphism at the origin with a continuous local inverse $\log$, and an adjoint representation whose infinitesimal generator recovers the Lie bracket $\mathrm{ad}_X(Y) = [X, Y]$. -/
 class CompactSimpleLieGroup (G : Type*) [TopologicalSpace G] [Group G] : Prop extends
     IsTopologicalGroup G where
   /-- Compactness of the underlying group space $G$ -/
@@ -112,16 +113,31 @@ class CompactSimpleLieGroup (G : Type*) [TopologicalSpace G] [Group G] : Prop ex
   /-- Existence of a non-trivial fundamental representation character $\chi_{\mathrm{fund}}$ of dimension $\ge 2$ -/
   has_fundamental_character :
     ∃ χ : ClassFunction G, 2 ≤ (χ.toFun 1).re ∧ ∃ g : G, χ.toFun g ≠ χ.toFun 1
-  /-- Existence of an associated finite-dimensional real Lie algebra $\mathfrak{g} = \mathrm{Lie}(G)$
-      with an exponential map that is a local homeomorphism at the origin -/
+  /-- $G$ admits an actual compatible real-analytic Lie group structure modeled on a finite-dimensional Euclidean space -/
+  admits_lie_group : AdmitsLieGroupStructure G
+  /-- Compatible algebraic-topological Lie algebra condition: existence of an associated finite-dimensional real
+      Lie algebra $\mathfrak{g} = \mathrm{Lie}(G)$ endowed with its canonical real normed space topology,
+      an exponential map generating 1-parameter subgroups that is a genuine local homeomorphism at the origin with
+      continuous local inverse $\log$, and an adjoint representation whose infinitesimal generator recovers the Lie bracket. -/
   has_lie_algebra :
     ∃ (Lie : Type) (_ : LieRing Lie) (_ : LieAlgebra ℝ Lie) (_ : FiniteDimensional ℝ Lie)
-      (_ : TopologicalSpace Lie) (exp : Lie → G),
-      1 < FiniteDimensional.finrank ℝ Lie ∧
+      (_ : NormedAddCommGroup Lie) (_ : NormedSpace ℝ Lie)
+      (adjoint_action : G → Lie →ₗ[ℝ] Lie)
+      (exp : Lie → G) (log : G → Lie),
+      1 < Module.finrank ℝ Lie ∧
       Continuous exp ∧ exp 0 = 1 ∧
+      (∀ (x : Lie) (s t : ℝ), exp ((s + t) • x) = exp (s • x) * exp (t • x)) ∧
+      adjoint_action 1 = LinearMap.id ∧
+      (∀ (g h : G) (X : Lie), adjoint_action (g * h) X = adjoint_action g (adjoint_action h X)) ∧
+      (∀ (g : G) (X Y : Lie), adjoint_action g ⁅X, Y⁆ = ⁅adjoint_action g X, adjoint_action g Y⁆) ∧
+      (∀ (g : G) (X : Lie), exp (adjoint_action g X) = g * exp X * g⁻¹) ∧
+      (∀ X Y : Lie, HasDerivAt (fun t : ℝ => adjoint_action (exp (t • X)) Y) ⁅X, Y⁆ 0) ∧
       ∃ (U : Set Lie) (V : Set G),
         IsOpen U ∧ (0 : Lie) ∈ U ∧ IsOpen V ∧ (1 : G) ∈ V ∧
-        Set.BijOn exp U V ∧ ContinuousOn exp U
+        Set.BijOn exp U V ∧ ContinuousOn log V ∧
+        (∀ x ∈ U, log (exp x) = x) ∧ (∀ g ∈ V, exp (log g) = g) ∧
+        ∀ ⦃x⦄, x ∈ U → ∀ ⦃O : Set Lie⦄, IsOpen O → x ∈ O →
+          exp '' (U ∩ O) ∈ nhds (exp x)
 
 /-- The Special Unitary Group $\mathrm{SU}(N)$ for $N \ge 2$, defined via Mathlib's
 `Matrix.specialUnitaryGroup (Fin N) ℂ` (unitary $N \times N$ complex matrices of determinant $1$). -/
