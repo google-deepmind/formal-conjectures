@@ -121,7 +121,7 @@ class CompactSimpleLieGroup (G : Type*) [TopologicalSpace G] [Group G] : Prop ex
       continuous local inverse $\log$, and an adjoint representation whose infinitesimal generator recovers the Lie bracket. -/
   has_lie_algebra :
     ∃ (Lie : Type) (_ : LieRing Lie) (_ : LieAlgebra ℝ Lie) (_ : FiniteDimensional ℝ Lie)
-      (_ : NormedAddCommGroup Lie) (_ : NormedSpace ℝ Lie)
+      (_ : NormedAddCommGroup Lie) (_ : NormedSpace ℝ Lie) (_ : ContinuousSMul ℝ Lie)
       (adjoint_action : G → Lie →ₗ[ℝ] Lie)
       (exp : Lie → G) (log : G → Lie),
       1 < Module.finrank ℝ Lie ∧
