@@ -90,6 +90,71 @@ theorem erdos_1114.variants.rolle {N : ℕ} {a d : ℝ} (hd : 0 < d) {f : ℝ[X]
       ∃! x : ℝ, x ∈ Set.Ioo (a + d * k) (a + d * (k + 1)) ∧ f.derivative.eval x = 0) ∧
     (∀ x : ℝ, f.derivative.eval x = 0 →
       ∃ k : ℕ, k < N ∧ x ∈ Set.Ioo (a + d * k) (a + d * (k + 1))) := by
-  sorry
+  -- Rolle's theorem gives a zero `c k` of `f'` in each interval.
+  have hex : ∀ k : ℕ, k < N →
+      ∃ c ∈ Set.Ioo (a + d * k) (a + d * (k + 1)), f.derivative.eval c = 0 := by
+    intro k hk
+    have hab : a + d * k < a + d * (k + 1) := by nlinarith
+    have h0 := hroots k hk.le
+    have h1 := hroots (k + 1) hk
+    push_cast at h1
+    obtain ⟨c, hc, hc0⟩ := exists_deriv_eq_zero hab (f := fun x => f.eval x)
+      f.continuous.continuousOn (h0.trans h1.symm)
+    exact ⟨c, hc, by rwa [Polynomial.deriv] at hc0⟩
+  choose! c hc hc0 using hex
+  have hmono : ∀ j k, j < k → k < N → c j < c k := by
+    intro j k hjk hk
+    have h1 := (hc j (hjk.trans hk)).2
+    have h2 := (hc k hk).1
+    have h3 : (j : ℝ) + 1 ≤ k := by exact_mod_cast hjk
+    have h4 := mul_le_mul_of_nonneg_left h3 hd.le
+    linarith
+  have hinj : Set.InjOn c (Finset.range N : Set ℕ) := by
+    intro j hj k hk hjk
+    simp only [Finset.coe_range, Set.mem_Iio] at hj hk
+    by_contra hne
+    rcases Nat.lt_or_gt_of_ne hne with h | h
+    · exact (hmono j k h hk).ne hjk
+    · exact (hmono k j h hj).ne' hjk
+  -- `f'` is nonzero of degree at most `N`, so these `N` zeros are all of its zeros.
+  have hf' : f.derivative ≠ 0 := fun h => by
+    have := Polynomial.derivative_eq_zero.mp h
+    omega
+  have hdeg' : f.derivative.natDegree ≤ N := by
+    have := Polynomial.natDegree_derivative_lt (p := f) (by omega)
+    omega
+  have hsub : (Finset.range N).image c ⊆ f.derivative.roots.toFinset := by
+    intro x hx
+    obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hx
+    rw [Multiset.mem_toFinset, Polynomial.mem_roots hf']
+    exact hc0 k (Finset.mem_range.mp hk)
+  have hall : (Finset.range N).image c = f.derivative.roots.toFinset := by
+    refine Finset.eq_of_subset_of_card_le hsub ?_
+    rw [Finset.card_image_of_injOn hinj, Finset.card_range]
+    exact (Multiset.toFinset_card_le _).trans ((Polynomial.card_roots' _).trans hdeg')
+  have hzero : ∀ x : ℝ, f.derivative.eval x = 0 → ∃ k, k < N ∧ x = c k := by
+    intro x hx
+    have hmem : x ∈ f.derivative.roots.toFinset := by
+      rw [Multiset.mem_toFinset, Polynomial.mem_roots hf']
+      exact hx
+    rw [← hall] at hmem
+    obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hmem
+    exact ⟨k, Finset.mem_range.mp hk, rfl⟩
+  refine ⟨fun k hk => ⟨c k, ⟨hc k hk, hc0 k hk⟩, ?_⟩, fun x hx => ?_⟩
+  · rintro x ⟨hx, hx0⟩
+    obtain ⟨j, hj, rfl⟩ := hzero x hx0
+    have hj' := hc j hj
+    have hjk : j = k := by
+      by_contra hne
+      rcases Nat.lt_or_gt_of_ne hne with h | h
+      · have h3 : (j : ℝ) + 1 ≤ k := by exact_mod_cast h
+        have h4 := mul_le_mul_of_nonneg_left h3 hd.le
+        linarith [hj'.2, hx.1]
+      · have h3 : (k : ℝ) + 1 ≤ j := by exact_mod_cast h
+        have h4 := mul_le_mul_of_nonneg_left h3 hd.le
+        linarith [hj'.1, hx.2]
+    rw [hjk]
+  · obtain ⟨k, hk, rfl⟩ := hzero x hx
+    exact ⟨k, hk, hc k hk⟩
 
 end Erdos1114
