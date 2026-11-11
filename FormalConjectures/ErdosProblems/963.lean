@@ -106,13 +106,80 @@ this statement.
 theorem erdos_963.parts.ii : ∀ n : ℕ, 1 ≤ n → Nat.log 2 n ≤ f n := by
   sorry
 
+section Greedy
+
+/-- The sums $\sum_{b\in B}\varepsilon_b b$ with all coefficients $\varepsilon_b\in\{-1,0,1\}$. -/
+private noncomputable def signedSums (B : Finset ℝ) : Finset ℝ :=
+  (Fintype.piFinset fun _ : B ↦ ({-1, 0, 1} : Finset ℝ)).image fun ε ↦ ∑ b : B, ε b * b
+
+/-- There are at most $3^{\lvert B\rvert}$ signed sums of `B`. -/
+@[category API, AMS 5 11]
+private lemma card_signedSums_le (B : Finset ℝ) : (signedSums B).card ≤ 3 ^ B.card := by
+  refine Finset.card_image_le.trans ?_
+  rw [Fintype.card_piFinset]
+  refine (Finset.prod_le_pow_card _ _ 3 fun _ _ ↦ Finset.card_le_three).trans ?_
+  simp
+
+/-- The difference of two subset sums of `B` is a signed sum of `B`. -/
+@[category API, AMS 5 11]
+private lemma sum_sub_sum_mem_signedSums {B t u : Finset ℝ} (ht : t ⊆ B) (hu : u ⊆ B) :
+    ∑ x ∈ u, x - ∑ x ∈ t, x ∈ signedSums B := by
+  classical
+  refine Finset.mem_image.2 ⟨fun b ↦ (if (b : ℝ) ∈ u then 1 else 0) - if (b : ℝ) ∈ t then 1 else 0,
+    Fintype.mem_piFinset.2 fun b ↦ ?_, ?_⟩
+  · split_ifs <;> simp
+  · simp only [sub_mul, ite_mul, one_mul, zero_mul, Finset.sum_sub_distrib]
+    rw [Finset.sum_coe_sort B fun x ↦ if x ∈ u then x else 0,
+      Finset.sum_coe_sort B fun x ↦ if x ∈ t then x else 0, Finset.sum_ite_mem,
+      Finset.sum_ite_mem, Finset.inter_eq_right.2 hu, Finset.inter_eq_right.2 ht]
+
+/-- If `t` and `u` are disjoint subsets of `insert a B` with the same sum and `a ∈ t`, then `a` is
+a signed sum of `B`. -/
+@[category API, AMS 5 11]
+private lemma mem_signedSums_of_mem {B t u : Finset ℝ} {a : ℝ} (ht : t ⊆ insert a B)
+    (hu : u ⊆ insert a B) (htu : Disjoint t u) (hsum : ∑ x ∈ t, x = ∑ x ∈ u, x) (ha : a ∈ t) :
+    a ∈ signedSums B := by
+  classical
+  have h := sum_sub_sum_mem_signedSums (Finset.subset_insert_iff.1 ht)
+    ((Finset.subset_insert_iff_of_notMem (Finset.disjoint_left.1 htu ha)).1 hu)
+  rwa [← hsum, ← Finset.add_sum_erase t _ ha, add_sub_cancel_right] at h
+
+end Greedy
+
 /--
 Erdős noted that the greedy algorithm showed $f(n)\geq \lfloor \log_3 n\rfloor$
 [Er65, p. 188].
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_963.variants.greedy (n : ℕ) : Nat.log 3 n ≤ f n := by
-  sorry
+  classical
+  refine le_f fun A hA ↦ ?_
+  -- Take a maximal dissociated subset `B` of `A`.
+  obtain ⟨B, hB⟩ :=
+    (A.powerset.filter fun B : Finset ℝ ↦ AddDissociated (B : Set ℝ)).exists_maximal
+      ⟨∅, Finset.mem_filter.2 ⟨Finset.empty_mem_powerset _, by simp⟩⟩
+  simp only [Finset.mem_filter, Finset.mem_powerset] at hB
+  -- Every element of `A` is a signed sum of `B`.
+  have hAB : A ⊆ signedSums B := by
+    intro a ha
+    by_cases haB : a ∈ B
+    · simpa using
+        sum_sub_sum_mem_signedSums (Finset.empty_subset B) (Finset.singleton_subset_iff.2 haB)
+    obtain ⟨t, u, ht, hu, htu, hne, hsum⟩ := not_addDissociated_iff_exists_disjoint.1 fun h ↦
+      hB.not_gt ⟨Finset.insert_subset_iff.2 ⟨ha, hB.1.1⟩, h⟩ <| Finset.ssubset_insert haB
+    rw [Finset.coe_subset] at ht hu
+    by_cases hat : a ∈ t
+    · exact mem_signedSums_of_mem ht hu htu hsum hat
+    by_cases hau : a ∈ u
+    · exact mem_signedSums_of_mem hu ht htu.symm hsum.symm hau
+    rw [Finset.subset_insert_iff_of_notMem hat] at ht
+    rw [Finset.subset_insert_iff_of_notMem hau] at hu
+    exact absurd (hB.1.2 (Finset.coe_subset.2 ht) (Finset.coe_subset.2 hu) hsum) hne
+  refine ⟨B, hB.1.1, ?_, hB.1.2⟩
+  calc Nat.log 3 n = Nat.log 3 A.card := by rw [hA]
+    _ ≤ Nat.log 3 (3 ^ B.card) :=
+        Nat.log_mono_right ((Finset.card_le_card hAB).trans (card_signedSums_le B))
+    _ = B.card := Nat.log_pow (by norm_num) _
 
 /--
 The second part for sets of positive reals, with $\lfloor\log_2\lvert A\rvert\rfloor$ as in
