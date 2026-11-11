@@ -30,9 +30,6 @@ namespace Erdos489
 open Filter
 open scoped Topology
 
-/-- The set of positive integers not divisible by any element of `A`. -/
-def sievedSet (A : Set ℕ) : Set ℕ := {n : ℕ | 0 < n ∧ ∀ a ∈ A, ¬(a ∣ n)}
-
 /-- The squared-gap sum `∑_{b_i < x} (b_{i+1} - b_i)²`, where `b_i` enumerates the positive
 integers not divisible by any element of `A`. -/
 noncomputable def GapSumSq (A : Set ℕ) (x : ℕ) : ℝ :=
