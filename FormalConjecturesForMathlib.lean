@@ -68,6 +68,7 @@ public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon
 public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Tournamenton
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey.Diagonal
+public import FormalConjecturesForMathlib.Combinatorics.Roommates
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.PropertyB
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.Sunflower
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.UnionFree
@@ -125,6 +126,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistan
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WienerIndex
 public import FormalConjecturesForMathlib.Combinatorics.StableMarriage
+public import FormalConjecturesForMathlib.Combinatorics.StableMarriage.Unbalanced
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.AutomaticSequence
 public import FormalConjecturesForMathlib.Computability.BitstringEncoding
