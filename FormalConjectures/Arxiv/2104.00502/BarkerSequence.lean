@@ -24,10 +24,20 @@ A Barker sequence is a finite sequence of $\pm 1$ values whose nontrivial aperio
 autocorrelations all have magnitude at most one. The Barker conjecture says that no such sequence
 has length greater than $13$.
 
+Turyn and Storer [TS61] showed that an odd-length Barker sequence has length at most $13$. Willms
+found a gap in their proof, and Schmidt and Willms [SW15] gave a corrected and simpler proof. A Barker sequence of even length $n > 4$ would give a
+circulant Hadamard matrix of order $n$. OpenAI [OAI26] proved the circulant Hadamard conjecture,
+and with it that every even-length Barker sequence has length $2$ or $4$.
+
 *References:*
 * J. Willms, [A note on Barker sequences of even length](https://arxiv.org/abs/2104.00502)
 * [Barker code](https://en.wikipedia.org/wiki/Barker_code)
 * [OEIS A091704](https://oeis.org/A091704)
+* [TS61] R. Turyn and J. Storer, *On binary sequences*, Proc. Amer. Math. Soc. 12 (1961), 394–399.
+* [SW15] K.-U. Schmidt and J. Willms, *Barker sequences of odd length*,
+  [arXiv:1501.06035](https://arxiv.org/abs/1501.06035)
+* [OAI26] OpenAI, *The circulant Hadamard conjecture*. OpenAI Math Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-circulant-Hadamard-conjecture-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -45,10 +55,36 @@ def IsBarkerSequence (a : List ℤ) : Prop :=
   (∀ x ∈ a, x = 1 ∨ x = -1) ∧
     ∀ k : ℕ, 0 < k → k < a.length → |aperiodicAutocorrelation a k| ≤ 1
 
-/-- Every Barker sequence has length at most $13$. -/
-@[category research open, AMS 5 11 94]
+/--
+Every Barker sequence has length at most $13$. This follows from the odd case [TS61, SW15] and the
+even case [OAI26]; see `barker_conjecture_of_odd_of_even`.
+-/
+@[category research solved, AMS 5 11 94]
 theorem barker_conjecture (a : List ℤ) (ha : IsBarkerSequence a) : a.length ≤ 13 := by
   sorry
+
+/-- Every Barker sequence of odd length has length at most $13$ [TS61, SW15]. -/
+@[category research solved, AMS 5 11 94]
+theorem barker_conjecture.variants.odd (a : List ℤ) (hodd : Odd a.length)
+    (ha : IsBarkerSequence a) : a.length ≤ 13 := by
+  sorry
+
+/-- Every Barker sequence of positive even length has length $2$ or $4$ [OAI26]. -/
+@[category research solved, AMS 5 11 94]
+theorem barker_conjecture.variants.even (a : List ℤ) (hpos : 0 < a.length)
+    (heven : Even a.length) (ha : IsBarkerSequence a) : a.length = 2 ∨ a.length = 4 := by
+  sorry
+
+/-- The odd and even cases give the Barker conjecture. -/
+@[category test, AMS 5 11 94]
+theorem barker_conjecture_of_odd_of_even (hodd : type_of% barker_conjecture.variants.odd)
+    (heven : type_of% barker_conjecture.variants.even) : type_of% barker_conjecture := by
+  intro a ha
+  rcases Nat.even_or_odd a.length with h | h
+  · rcases Nat.eq_zero_or_pos a.length with h0 | h0
+    · omega
+    · rcases heven a h0 h ha with h2 | h4 <;> omega
+  · exact hodd a h ha
 
 /--
 The known sequence $(1,1,1,1,1,-1,-1,1,1,-1,1,-1,1)$ of length $13$ is a Barker sequence.
