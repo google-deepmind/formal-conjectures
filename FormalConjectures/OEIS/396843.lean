@@ -47,7 +47,7 @@ noncomputable def a (n : ℕ) : ℤ := coeff n series
 
 /-- The defining equation has a unique normalized integral solution; see [Li26]. -/
 @[category API, AMS 11 13,
-  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/1cc54d7f3ecfdcea49625ce31c8df3e22d4c6146/LeanOeisProofs/IndependentFormalization/A396843.lean#L508"]
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000016"]
 theorem source_existence : ∃! A : PowerSeries ℤ, SourceEquation A := by
   sorry
 
@@ -88,7 +88,7 @@ Wentao Li's formalization also proves integral existence and uniqueness; see [Li
 AI assistance was used for development and verification.
 -/
 @[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/1cc54d7f3ecfdcea49625ce31c8df3e22d4c6146/LeanOeisProofs/IndependentFormalization/A396843.lean#L531"]
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000016"]
 theorem conjecture (n : ℕ) (hn : 1 ≤ n) : Odd (a n) := by
   sorry
 
