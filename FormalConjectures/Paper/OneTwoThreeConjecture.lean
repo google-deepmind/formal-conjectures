@@ -75,7 +75,8 @@ theorem one_two_three_conjecture :
 
 *Reference:* [KKP10].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000017"]
 theorem one_two_three_conjecture.variants.one_to_five
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
     (hG : NoIsolatedEdge G) :
@@ -88,7 +89,8 @@ theorem one_two_three_conjecture.variants.one_to_five
 
 *Reference:* [ABDMRT07]; see also the introduction of [KKP10].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000017"]
 theorem one_two_three_conjecture.variants.one_to_thirty
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
     (hG : NoIsolatedEdge G) :
