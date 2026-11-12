@@ -132,7 +132,7 @@ theorem erdos_494.variants.card_eq_2k :
   sorry
 
 /--
-Gordon, Fraenkel, and Straus [GRS62] proved that the claim is true for all $k > 2$ when
+Gordon, Fraenkel, and Straus [GFS62] proved that the claim is true for all $k > 2$ when
 $|A|$ is sufficiently large.
 -/
 @[category research solved, AMS 5]
@@ -148,14 +148,12 @@ $A = \{1, \zeta_6, \zeta_6^2, \zeta_6^4\}$ and $B = \{1, \zeta_6^2, \zeta_6^3, \
 noncomputable def prodMultiset (A : Finset ℂ) (k : ℕ) : Multiset ℂ :=
   ((A.powersetCard k).val.map (fun s => s.prod id))
 
-set_option linter.style.formal_proof_palomar false in
-/-- A counterexample to the product version of the conjecture (by Steinerberger). -/
-@[category research solved, AMS 5,
-  formal_proof using formal_conjectures at
-    "https://github.com/hjyuh/formal-conjectures/blob/e0da6ec78953b17618895a093d4bee90fd3f6f67/FormalConjectures/ErdosProblems/494.lean#L951"]
+/-- A counterexample to the product version of the conjecture for sets of nonzero complex numbers
+of size greater than $3$ (by Steinerberger). -/
+@[category research solved, AMS 5]
 theorem erdos_494.variants.product :
-    ∃ (A B : Finset ℂ), A.card = B.card ∧ prodMultiset A 3 = prodMultiset B 3 ∧
-      A ≠ B := by
+    ∃ (A B : Finset ℂ), 3 < A.card ∧ A.card = B.card ∧ (0 : ℂ) ∉ A ∧ (0 : ℂ) ∉ B ∧
+      prodMultiset A 3 = prodMultiset B 3 ∧ A ≠ B := by
   sorry
 
 end Erdos494
