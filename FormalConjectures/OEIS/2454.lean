@@ -72,7 +72,7 @@ Lean formalization by Wentao Li; see [Li26].
 AI assistance was used for development and verification.
 -/
 @[category research solved, AMS 11 15,
-  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/1cc54d7f3ecfdcea49625ce31c8df3e22d4c6146/LeanOeisProofs/NewFormalization/A002454.lean#L521"]
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000003"]
 theorem conjecture (n : ℕ) :
     let N : ℕ := 2 * n
     let K : ℕ := N + 1
