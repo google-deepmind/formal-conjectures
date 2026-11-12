@@ -57,22 +57,22 @@ theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
     simpa using he (.single (N + 1) 1) (.single N 1) (by simpa [Finsupp.ext_iff] using ⟨N, by simp⟩)
   linarith [abs_lt.1 (hN N le_rfl), abs_lt.1 (hN (N + 1) (by grind))]
 
-/-- If `1 < a 0 < ...` has property `Erdos951Prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
+/-- If `1 < a 0 < ...` has property `Erdos951Prop`, is it true that `#{a i ≤ x} ≤ π x` for all
+sufficiently large $x$? -/
 @[category research open, question, AMS 11]
 theorem erdos_951 :
     ∀ a : ℕ → ℝ, 1 < a 0 → StrictMono a → Erdos951Prop a →
       ∀ᶠ (x : ℝ) in Filter.atTop, {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry
 
-/-- Beurling conjectured that if `1 < a 0 < a 1 < ⋯` has property `Erdos951Prop` and the number
-of reals in $[1, x]$ of the form $\prod_i a_i^{k_i}$ is $x + o(\log x)$, then `a` must be the
-sequence of primes. Property `Erdos951Prop` makes distinct exponent vectors give distinct
-Beurling integers, so counting the set `BeurlingIntegers a` counts the generalised integers. -/
-@[category research solved, AMS 11]
+/-- Beurling conjectured that if $1 < a_0 < a_1 < \cdots$ is a sequence of Beurling primes and
+the number of generalised integers $\prod_i a_i^{k_i} \le x$ (counted with multiplicity) is
+$x + o(\log x)$, then $a$ must be the sequence of primes. -/
+@[category research open, AMS 11]
 theorem erdos_951.variants.beurling :
-    ∀ a : ℕ → ℝ, IsBeurlingPrimes a → Erdos951Prop a →
-    ((fun x => (BeurlingIntegers a ∩ .Iic x).ncard - x) =o[atTop] Real.log) →
-    a = Nat.cast ∘ Nat.nth Nat.Prime := by
+    ∀ a : ℕ → ℝ, IsBeurlingPrimes a →
+      ((fun x => ({k : ℕ →₀ ℕ | beurlingInteger a k ≤ x}.ncard : ℝ) - x) =o[atTop] Real.log) →
+      a = Nat.cast ∘ Nat.nth Nat.Prime := by
   sorry
 
 end Erdos951
