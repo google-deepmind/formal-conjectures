@@ -110,6 +110,31 @@ not state this here as a Lean theorem because Martin's Axiom is not yet formalis
 Mathlib (and a bare `MA : Prop` placeholder would not faithfully encode the axiom).
 -/
 
+/-- `HasPathOrIndepSetOfType ω` in a fixed universe: Ramsey for pairs along an injective
+sequence gives a path or an infinite independent set, and an infinite subset of `ω` has order
+type `ω`. -/
+@[category API, AMS 5]
+private theorem at_omega_aux : HasPathOrIndepSetOfType.{u} ω := by
+  intro G
+  have : Infinite (ω : Ordinal.{u}).ToType :=
+    Cardinal.infinite_iff.2 (le_of_eq (by rw [Cardinal.mk_toType, Ordinal.card_omega0]))
+  let e := Infinite.natEmbedding (ω : Ordinal.{u}).ToType
+  obtain ⟨g, hpath | hind⟩ := exists_increasing_or_nonincreasing_subseq' G.Adj e
+  · exact Or.inl ⟨fun n => e (g n), e.injective.comp g.injective, hpath⟩
+  have hinj : Function.Injective fun n => e (g n) := e.injective.comp g.injective
+  refine Or.inr ⟨Set.range fun n => e (g n), (isIndepSet_iff G).2 ?_, le_antisymm ?_ ?_⟩
+  · rintro _ ⟨m, rfl⟩ _ ⟨n, rfl⟩ hmn
+    rcases lt_trichotomy m n with h | rfl | h
+    · exact hind m n h
+    · exact absurd rfl hmn
+    · exact fun hadj => hind n m h hadj.symm
+  · exact (Ordinal.type_set_le _).trans (Ordinal.type_toType ω).le
+  · by_contra h
+    have hcard := Ordinal.card_lt_aleph0.2 (not_le.1 h)
+    rw [Ordinal.card_type] at hcard
+    exact Set.infinite_range_of_injective hinj
+      (Set.finite_coe_iff.1 (Cardinal.lt_aleph0_iff_finite.1 hcard))
+
 /--
 **Base case $\alpha = \omega$**: `HasPathOrIndepSetOfType ω` holds.
 
@@ -119,8 +144,8 @@ Ramsey-theoretic arguments (or directly from the Erdős–Hajnal–Milner result
 $\omega < \omega_1^{\omega+2}$).
 -/
 @[category research solved, AMS 5]
-theorem at_omega : HasPathOrIndepSetOfType ω := by
-  sorry
+theorem at_omega : HasPathOrIndepSetOfType ω :=
+  at_omega_aux
 
 end erdos_601.variants
 
