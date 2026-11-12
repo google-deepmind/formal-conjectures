@@ -38,6 +38,7 @@ namespace Erdos967
 /-- The summand $\frac{1}{n^{1+it}}$, for a natural number $n$ and $t\in\mathbb{R}$. -/
 noncomputable def summand (t : ℝ) (n : ℕ) : ℂ := 1 / (n : ℂ) ^ (1 + t * Complex.I : ℂ)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $1<a_1<\cdots$ be a sequence of integers such that $\sum\frac{1}{a_i}<\infty$. Is it true
 that, for every $t\in \mathbb{R}$,

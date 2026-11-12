@@ -75,6 +75,7 @@ theorem a_4 : a 4 = 72 := by
 theorem a_5 : a 5 = 243 := by
   decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 $a(n) \equiv 0 \pmod 3$ if $n > 2$. Is $a(n)$ always of the form $2^j \cdot 3^k \cdot s$
 where $s$ is a squarefree number?

@@ -70,6 +70,7 @@ theorem erdos_873.variants.triple_lower_bound_infinitely_often :
           (c * X ^ (1 / 3 : ℝ) * Real.log X).toEReal ≤ (F a X 3 : EReal) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- There may be a sequence for which the lower bound in (3) holds for every $X$, that is, for
 all sufficiently large $X$ rather than only for infinitely many $X$. (Asking it for every
 $X > 0$ fails trivially: the lcm of three distinct positive integers is at least $4$, so

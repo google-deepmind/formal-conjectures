@@ -56,6 +56,7 @@ structure RatEllipticCurve : Type where
 open Module (finrank)
 open WeierstrassCurve
 
+set_option linter.style.formal_proof_palomar false in
 /-- The rank of an elliptic curve over a number field is always finite by the Mordell–Weil theorem.
 Consequently, the rank is always finite, so `finrank ℤ E⟮K⟯ = 0` really means that the group of
 rational points is torsion, not that it is of infinite rank.

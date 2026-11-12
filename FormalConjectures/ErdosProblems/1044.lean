@@ -53,6 +53,7 @@ noncomputable def maxBoundaryLength (f : ℂ[X]) : ℝ≥0∞ :=
 
 def erdos_1044.answer : ℝ≥0∞ := 2
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(z)=\prod_{i=1}^n(z-z_i)\in\mathbb{C}[x]$ where $\lvert z_i\rvert\leq 1$ for all $i$.
 If $\Lambda(f)$ is the maximum of the lengths of the boundaries of the connected components of
@@ -71,6 +72,7 @@ theorem erdos_1044 :
     IsGLB {L : ℝ≥0∞ | ∃ f : ℂ[X], IsAdmissible f ∧ maxBoundaryLength f = L} erdos_1044.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 This has been resolved by Tang, who proved that the infimum of $\Lambda(f)$ over all such $f$
 is $2$.

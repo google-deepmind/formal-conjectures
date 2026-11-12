@@ -40,6 +40,7 @@ open Filter Set Asymptotics
 
 open scoped Pointwise
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be an additive basis (of any finite order) such that
 $\lvert A\cap \{1,\ldots,N\}\rvert=o(N)$. Is it true that
@@ -81,6 +82,7 @@ theorem erdos_337.variants.h_fold : ∀ h : ℕ, 2 ≤ h →
         atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ruzsa and Turjányi do prove (under the same hypotheses) that
 $$
@@ -104,6 +106,7 @@ theorem erdos_337.variants.ruzsa_turjanyi :
         atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ruzsa and Turjányi do prove (under the same hypotheses) that
 $$
