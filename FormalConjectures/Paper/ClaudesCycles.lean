@@ -115,6 +115,7 @@ theorem not_hasHamiltonianArcDecomposition_one : ¬ HasHamiltonianArcDecompositi
   rintro ⟨σ, hcyc, -⟩
   exact (hcyc 0).2.1.ne_one (Subsingleton.elim _ _)
 
+set_option linter.style.formal_proof_palomar false in
 /-- For odd `m > 1`, the cube digraph on `(ZMod m)³` has a Hamiltonian arc decomposition
 into three directed cycles [Knu26]. -/
 @[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/kim-em/KnuthClaudeLean/blob/bdda6025fb7954f614ed9a7ac7382455fd064940/Solution.lean#L5"]

@@ -40,6 +40,7 @@ open MeasureTheory Polynomial
 def levelSet (f : Polynomial ℂ) : Set ℂ :=
   {z : ℂ | ‖f.eval z‖ ≤ 1}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 1043**:
 Let $f\in \mathbb{C}[x]$ be a monic polynomial.
@@ -55,8 +56,7 @@ line, so `volume` of the projected set is its length.
 This was formalized in Lean by Alexeev using Aristotle.
 -/
 @[category research solved, question, AMS 28 30,
-formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1043.lean",
-formal_proof using formal_conjectures at "https://github.com/XC0R/formal-conjectures/blob/7db17471701f15b125d1c36bc1fa5bb9b702d6be/FormalConjectures/ErdosProblems/1043.lean#L214"]
+formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1043.lean"]
 theorem erdos_1043 :
     ¬ ∀ (f : ℂ[X]), f.Monic → f.degree ≥ 1 →
       ∃ (u : ℂ), ‖u‖ = 1 ∧

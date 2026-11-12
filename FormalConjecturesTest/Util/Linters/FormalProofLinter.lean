@@ -30,7 +30,8 @@ theorem an_open_assumption : 0 = 0 := by
 #guard_msgs in
 /-- A proof conditional on something nobody has proved. -/
 @[category research solved,
-  conditional formal_proof using lean4 at "https://github.com/example/conditional"
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming an_open_assumption]
 theorem conditional_on_an_open_assumption : 4 + 4 = 8 := by
   rfl
@@ -47,7 +48,8 @@ Note: This linter can be disabled with `set_option linter.style.conditional_form
 #guard_msgs in
 /-- A proof still marked conditional on something now proved. -/
 @[category research solved,
-  conditional formal_proof using lean4 at "https://github.com/example/no-longer-conditional"
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming a_proved_assumption]
 theorem conditional_on_a_proved_assumption : 6 + 6 = 12 := by
   rfl
@@ -57,7 +59,8 @@ end FormalProofLinter
 #guard_msgs in
 /-- A statement with a formal proof that has a proper `by sorry` proof. -/
 @[category research solved,
-  formal_proof using lean4 at "https://example.com"]
+  formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
 theorem a_formal_proof_with_sorry : 2 + 2 = 4 := by
   sorry
 
@@ -69,7 +72,8 @@ Note: This linter can be disabled with `set_option linter.style.conditional_form
 #guard_msgs in
 /-- A statement with a formal proof that does NOT have exactly `sorry` (it is proved). -/
 @[category research solved,
-  formal_proof using lean4 at "https://example.com"]
+  formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
 theorem a_formal_proof_with_rfl : 2 + 2 = 4 := by
   rfl
 
@@ -81,7 +85,8 @@ Note: This linter can be disabled with `set_option linter.style.conditional_form
 #guard_msgs in
 /-- A statement with a formal proof that does NOT have exactly `sorry` (it has induction then sorry). -/
 @[category research solved,
-  formal_proof using lean4 at "https://example.com"]
+  formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
 theorem a_formal_proof_with_partial_proof (n : Nat) : n = n := by
   cases n <;> sorry
 
@@ -93,9 +98,11 @@ Note: This linter can be disabled with `set_option linter.style.conditional_form
 #guard_msgs in
 /-- One unconditional proof among several makes the exact-sorry rule apply. -/
 @[category research solved,
-  conditional formal_proof using lean4 at "https://example.com/conditional"
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming FormalProofLinter.an_open_assumption,
-  formal_proof using other_system at "https://example.com/unconditional"]
+  formal_proof using other_system at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
 theorem mixed_conditional_and_unconditional_proofs : 8 + 8 = 16 := by
   rfl
 
@@ -107,9 +114,11 @@ Note: This linter can be disabled with `set_option linter.style.conditional_form
 #guard_msgs in
 /-- Every proof condition is inspected, with duplicate conditions reported once. -/
 @[category research solved,
-  conditional formal_proof using lean4 at "https://example.com/first"
+  conditional formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming FormalProofLinter.a_proved_assumption,
-  conditional formal_proof using other_system at "https://example.com/second"
+  conditional formal_proof using other_system at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"
     assuming FormalProofLinter.a_proved_assumption]
 theorem multiple_conditional_proofs : 10 + 10 = 20 := by
   rfl

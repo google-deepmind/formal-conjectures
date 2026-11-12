@@ -37,6 +37,7 @@ open Filter
 
 namespace Erdos491
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f : \mathbb{N} \to \mathbb{R}$ be an additive function (so that $f(ab) = f(a) + f(b)$
 whenever $(a, b) = 1$). If $|f(n+1) - f(n)| < c$ for some constant $c$ and all $n$, then must

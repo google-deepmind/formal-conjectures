@@ -30,6 +30,7 @@ open scoped Nat Topology
 
 namespace Erdos728
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\varepsilon$ be sufficiently small and $C, C' > 0$. Are there integers $a, b, n$ such that
 $$a, b > \varepsilon n\quad a!\, b! \mid n!\, (a + b - n)!, $$

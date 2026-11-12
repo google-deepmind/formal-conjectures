@@ -52,6 +52,7 @@ The series $\sum_{n=0}^\infty \frac{1}{a_n \cdot a_{n+1}}$.
 noncomputable def ErdosSeries (a : ℕ → ℤ) : ℝ :=
   ∑' n : ℕ, 1 / ((a n : ℝ) * (a (n + 1) : ℝ))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $a_0 < a_1 < a_2 < \cdots$ is a strictly increasing sequence
 of integers with $\liminf a_n^{1/2^n} > 1$, then the series

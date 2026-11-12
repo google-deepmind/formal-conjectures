@@ -160,6 +160,7 @@ theorem isOptimal_iff_isOptimalWith {n : ℕ} (p : ℝ) (F : Finset (Finset (Fin
   Iff.rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Problem: For every monotone increasing family $F$, given an interval $[s,t]$ of real numbers so
 that $t/s > 1000 \log n$ we have some $p$ in the interval $[s,t]$ so that $F$ is optimal with
@@ -182,6 +183,7 @@ theorem mathoverflow_10799 :
     ∃ p, s ≤ p ∧ p ≤ t ∧ IsOptimal p F := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 7 from Kahn–Kalai 2006: a fixed-`1000` variant of the original
 conjecture, with the additional assumption that $t$ is the critical probability for $F$,

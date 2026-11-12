@@ -60,6 +60,7 @@ noncomputable def A (x : ℕ → ℝ) (k : ℕ) : EReal :=
 
 /- ## Question 1 -/
 
+set_option linter.style.formal_proof_palomar false in
 /-- Question 1:
 
 Is it true that $\limsup_{k \to \infty} A_k = \infty$?
@@ -75,6 +76,7 @@ theorem erdos_987.parts.i :
       atTop.limsup (fun k : ℕ => A x k) = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Erdős [Er64b] remarks it is "easy to see" that for every infinite sequence
 $x_1, x_2, \ldots \in (0, 1)$,
 $$\limsup_{k \to \infty} \sup_n \left\lvert \sum_{j \le n} e(k x_j) \right\rvert = \infty.$$ -/
@@ -86,6 +88,7 @@ theorem erdos_987.variants.sup_limsup_infty
       ⨆ n : ℕ, ((‖∑ j ∈ range n, e ((k : ℝ) * x j)‖ : ℝ) : EReal)) = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Erdős [Er65b] proved that, for every infinite sequence $x_1, x_2, \ldots \in (0, 1)$,
 $A_k \gg \log k$ for infinitely many $k$. -/
 @[category research solved, AMS 11 40 42, formal_proof using lean4 at
@@ -95,6 +98,7 @@ theorem erdos_987.variants.log_lower_bound
     ∃ c > 0, ∃ᶠ k : ℕ in atTop, ((c * Real.log k : ℝ) : EReal) ≤ A x k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Clunie [Cl67] proved that, for every infinite sequence $x_1, x_2, \ldots \in (0, 1)$,
 $A_k \gg k^{1/2}$ for infinitely many $k$. (Tao independently found a proof.) -/
 @[category research solved, AMS 11 40 42, formal_proof using lean4 at
@@ -104,6 +108,7 @@ theorem erdos_987.variants.sqrt_lower_bound
     ∃ c > 0, ∃ᶠ k : ℕ in atTop, ((c * Real.sqrt k : ℝ) : EReal) ≤ A x k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Linear upper bound (weakened).** A first weakened version of Clunie's `A_k ≤ k`: there
 exists a sequence $x \in (0,1)$ with $A_k \le 2k$ for all $k \ge 1$. The witness is the
 (shifted) van der Corput sequence. For the tighter $A_k \le k + 1$ bound see
@@ -115,6 +120,7 @@ theorem erdos_987.variants.linear_upper_bound_weak :
       ∀ k : ℕ, 1 ≤ k → A x k ≤ ((2 * k : ℝ) : EReal) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Linear upper bound (tight via Clunie phase tracking).** Tighter than
 `linear_upper_bound_weak`: there exists a sequence $x \in (0,1)$ with $A_k \le k + 1$ for all
 $k \ge 1$, via the (shifted) van der Corput sequence. Whether the $+1$ can be eliminated to
@@ -127,6 +133,7 @@ theorem erdos_987.variants.linear_upper_bound_clunie :
       ∀ k : ℕ, 1 ≤ k → A x k ≤ (((k : ℝ) + 1) : EReal) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Clunie [Cl67] proved that there exists an infinite sequence $\{z_\nu\}$ on the unit circle
 with $A_\nu \le \nu$ for all $\nu \ge 1$. Translating $z_\nu = e(x_\nu)$, the natural domain of
 $x_\nu$ is the half-open unit interval $\mathrm{Ico}\,0\,1$, matching the original
@@ -143,6 +150,7 @@ theorem erdos_987.variants.linear_upper_bound :
       ∀ k : ℕ, 1 ≤ k → A x k ≤ ((k : ℝ) : EReal) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- An internal OpenAI model (see [APSSV26b, §3]) proved that there exists an infinite sequence
 $x_1, x_2, \ldots \in (0, 1)$ such that
 $\sup_n \left\lvert \sum_{j \le n} e(k x_j) \right\rvert \ll (k \log k)^{1/2}$ for all $k \ge 1$
@@ -159,6 +167,7 @@ theorem erdos_987.variants.sqrt_log_upper_bound :
 
 /- ## Question 2 -/
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Question 2 (parts.ii)**: Is it possible for $A_k = o(k)$? Yes — there exists a sequence
 $(x_n) \in (0, 1)$ and a bound $b(k) = o(k)$ with $A x k \le b k$ eventually. A corollary of
 `sqrt_log_upper_bound` (which gives a $\sqrt{k \log k}$ bound) plus the asymptotic
@@ -170,6 +179,7 @@ theorem erdos_987.parts.ii :
       b =o[atTop] (fun k : ℕ => (k : ℝ)) ∧ ∀ᶠ k : ℕ in atTop, A x k ≤ ((b k : ℝ) : EReal) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Liu [Li69] showed that, for any $\epsilon > 0$, $A_k \gg k^{1 - \epsilon}$ infinitely often
 under the additional assumption that there are only a finite number of distinct points. Clunie
 observed in the Mathscinet review of [Li69] that under this assumption in fact $A_k = \infty$

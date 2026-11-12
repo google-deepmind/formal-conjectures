@@ -24,6 +24,13 @@ public import Mathlib.Order.Interval.Finset.Nat
 public import Mathlib.Order.Lattice.Nat
 public import Mathlib.Order.WellFounded
 
+/-!
+# Complete and subcomplete sets
+
+A complete set has all sufficiently large elements among its finite subset sums.
+A subcomplete set of natural numbers has an infinite arithmetic progression among those sums.
+-/
+
 @[expose] public section
 
 variable {M : Type*} [AddCommMonoid M]
@@ -42,6 +49,44 @@ theorem subsetSums_mono {A B : Set M} (h : A ⊆ B) : subsetSums A ⊆ subsetSum
 /-- The set of subset sums of a sequence `ℕ → M`, where repetition is allowed. -/
 def subseqSums' (A : ℕ → M) : Set M :=
   {n | ∃ B : Finset ℕ, n = ∑ i ∈ B, A i}
+
+/-- Zero is a finite subset sum of every set. -/
+@[simp]
+theorem zero_mem_subsetSums (A : Set M) : 0 ∈ subsetSums A := by
+  exact ⟨∅, by simp, by simp⟩
+
+/-- A set of natural numbers is subcomplete if its finite subset sums contain an infinite
+arithmetic progression with positive common difference. -/
+def IsSubcomplete (A : Set ℕ) : Prop :=
+  ∃ a d : ℕ, 0 < d ∧ ∀ k : ℕ, a + k * d ∈ subsetSums A
+
+/-- A superset of a subcomplete set is subcomplete. -/
+theorem IsSubcomplete.mono {A B : Set ℕ} (hAB : A ⊆ B) (hA : IsSubcomplete A) :
+    IsSubcomplete B := by
+  obtain ⟨a, d, hd, hk⟩ := hA
+  exact ⟨a, d, hd, fun k ↦ subsetSums_mono hAB (hk k)⟩
+
+/-- A finite set is not subcomplete because its finite subset sums are bounded. -/
+theorem not_isSubcomplete_of_finite {A : Set ℕ} (hA : A.Finite) : ¬ IsSubcomplete A := by
+  rintro ⟨a, d, hd, hk⟩
+  have hbound : ∀ s ∈ subsetSums A, s ≤ ∑ n ∈ hA.toFinset, n := by
+    rintro s ⟨B, hB, rfl⟩
+    exact Finset.sum_le_sum_of_subset (fun x hx ↦ by simpa using hB hx)
+  set S := ∑ n ∈ hA.toFinset, n
+  have h1 := hbound _ (hk (S + 1))
+  have h2 : S + 1 ≤ (S + 1) * d := Nat.le_mul_of_pos_right _ hd
+  omega
+
+/-- The set of all natural numbers is subcomplete. -/
+@[simp]
+theorem isSubcomplete_univ : IsSubcomplete Set.univ := by
+  refine ⟨0, 1, one_pos, fun k ↦ ?_⟩
+  exact ⟨{k}, by simp, by simp⟩
+
+/-- The empty set is not subcomplete. -/
+@[simp]
+theorem not_isSubcomplete_empty : ¬ IsSubcomplete ∅ :=
+  not_isSubcomplete_of_finite Set.finite_empty
 
 variable [Preorder M]
 

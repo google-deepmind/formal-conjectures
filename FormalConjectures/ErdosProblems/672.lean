@@ -43,6 +43,7 @@ theorem erdos_672 :
     ∃ᵉ (k ≥ 4) (l > 1), ¬ Erdos672With k l := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/herakles-dev/erdos672-four-squares-lean/blob/68adec55180c6103ac5511a5c91c84b25a5044f9/Erdos672/Statement.lean#L41"]
 lemma erdos_672.variants.euler :

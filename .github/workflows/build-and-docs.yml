@@ -65,7 +65,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '3.12.9'
+          python-version: '>=3.12.16'
+          check-latest: true
 
       - name: Run script tests
         run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
@@ -128,6 +129,26 @@ jobs:
             fi
           fi
           echo "site=$site" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        if: steps.mode.outputs.website_only != 'true'
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '>=3.12.16'
+          check-latest: true
+
+      # Check plotting dependencies before starting the Lean build.
+      - name: Install Python dependencies
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --only-binary=:all: pandas==3.1.0 numpy==2.5.4 plotly==5.20.0 beautifulsoup4 lxml
+
+      - name: Run plotting script
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        run: |
+          mkdir -p site/data
+          python site/plot_growth.py
 
       - name: Install elan
         if: steps.mode.outputs.website_only != 'true'
@@ -302,26 +323,6 @@ jobs:
         with:
           path: ~/.cache/mathlib
           key: oleans-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
-
-      - name: Set up Python
-        if: steps.mode.outputs.website_only != 'true'
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: '3.12.9'
-
-      # Only the plotting and Verso-fragment scripts need these; the category
-      # check below is standard library only.
-      - name: Install Python dependencies
-        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
-        run: |
-          python -m pip install --upgrade pip
-          pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0 beautifulsoup4 lxml
-
-      - name: Run plotting script
-        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
-        run: |
-          mkdir -p site/data
-          python site/plot_growth.py
 
       - name: Set up Node.js
         if: steps.mode.outputs.site == 'true'

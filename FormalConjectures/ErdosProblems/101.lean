@@ -32,13 +32,6 @@ namespace Erdos101
 open EuclideanGeometry Filter Asymptotics
 
 /--
-The set of lines in $\mathbb{R}^2$ containing exactly $k$ points from a given set $S$.
--/
-noncomputable def linesWithPointsFor (k : ℕ) (S : Set ℝ²) : Set (AffineSubspace ℝ ℝ²) :=
-  let determined_lines := { affineSpan ℝ {p, q} | (p ∈ S) (q ∈ S) (_ : p ≠ q) }
-  { L ∈ determined_lines | (↑L ∩ S).ncard = k }
-
-/--
 The maximum number of lines containing exactly $4$ points among all sets $S$ of $n$
 points in $\mathbb{R}^2$ satisfying the condition that no five points are collinear.
 -/

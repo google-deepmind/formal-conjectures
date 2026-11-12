@@ -39,6 +39,7 @@ noncomputable def f (n : ℕ) : ℕ :=
     Nat.find h
   else 0
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$?
 
@@ -50,6 +51,7 @@ $\{ n : f(n)\leq \delta n\}$ is $\ll \delta^2$.
 theorem erdos_1054.parts.i : ¬ (fun n ↦ (f n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Is it true that $f(n)=o(n)$ for almost all $n$?
 
@@ -61,6 +63,7 @@ theorem erdos_1054.parts.ii : ¬ ∃ (A : Set ℕ), A.HasDensity 1 ∧
     (fun (n : A) ↦ (f ↑n : ℝ)) =o[atTop] (fun n ↦ (n : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $f(n)$ be the minimal integer $m$ such that $n$ is the sum of the $k$ smallest divisors
 of $m$ for some $k\geq 1$. Is it true that $\limsup f(n)/n=\infty$?
 

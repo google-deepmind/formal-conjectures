@@ -78,7 +78,20 @@ theorem erdos_885.variants.k_eq_2 :
       (∀ n ∈ Ns, 1 ≤ n) ∧
       Ns.card = 2 ∧
       (⋂ n ∈ Ns, factorDifferenceSet n).ncard ≥ 2 := by
-  sorry
+  refine ⟨{12, 42}, by decide, by decide, ?_⟩
+  have hsub : ({1, 11} : Set ℕ) ⊆
+      ⋂ n ∈ ({12, 42} : Finset ℕ), factorDifferenceSet n := by
+    simp only [Set.subset_def, Set.mem_insert_iff, Set.mem_singleton_iff, Set.mem_iInter,
+      Finset.mem_insert, Finset.mem_singleton]
+    rintro d (rfl | rfl) n (rfl | rfl)
+    · exact ⟨3, 4, by norm_num, by norm_num⟩
+    · exact ⟨6, 7, by norm_num, by norm_num⟩
+    · exact ⟨1, 12, by norm_num, by norm_num⟩
+    · exact ⟨3, 14, by norm_num, by norm_num⟩
+  have hfin : (⋂ n ∈ ({12, 42} : Finset ℕ), factorDifferenceSet n).Finite :=
+    (factorDifferenceSet_finite (by norm_num)).subset (Set.iInter₂_subset 12 (by simp))
+  have h2 : ({1, 11} : Set ℕ).ncard = 2 := Set.ncard_pair (by norm_num)
+  exact h2 ▸ Set.ncard_le_ncard hsub hfin
 
 /--
 Jiménez-Urroz [Ji99] proved this for $k=3$.
@@ -89,7 +102,26 @@ theorem erdos_885.variants.k_eq_3 :
       (∀ n ∈ Ns, 1 ≤ n) ∧
       Ns.card = 3 ∧
       (⋂ n ∈ Ns, factorDifferenceSet n).ncard ≥ 3 := by
-  sorry
+  refine ⟨{1936, 4900, 32400}, by decide, by decide, ?_⟩
+  have hsub : ({0, 105, 480} : Set ℕ) ⊆
+      ⋂ n ∈ ({1936, 4900, 32400} : Finset ℕ), factorDifferenceSet n := by
+    simp only [Set.subset_def, Set.mem_insert_iff, Set.mem_singleton_iff, Set.mem_iInter,
+      Finset.mem_insert, Finset.mem_singleton]
+    rintro d (rfl | rfl | rfl) n (rfl | rfl | rfl)
+    · exact ⟨44, 44, by norm_num, by norm_num⟩
+    · exact ⟨70, 70, by norm_num, by norm_num⟩
+    · exact ⟨180, 180, by norm_num, by norm_num⟩
+    · exact ⟨16, 121, by norm_num, by norm_num⟩
+    · exact ⟨35, 140, by norm_num, by norm_num⟩
+    · exact ⟨135, 240, by norm_num, by norm_num⟩
+    · exact ⟨4, 484, by norm_num, by norm_num⟩
+    · exact ⟨10, 490, by norm_num, by norm_num⟩
+    · exact ⟨60, 540, by norm_num, by norm_num⟩
+  have hfin : (⋂ n ∈ ({1936, 4900, 32400} : Finset ℕ), factorDifferenceSet n).Finite :=
+    (factorDifferenceSet_finite (by norm_num)).subset (Set.iInter₂_subset 1936 (by simp))
+  have h3 : ({0, 105, 480} : Set ℕ).ncard = 3 :=
+    Set.ncard_eq_three.mpr ⟨0, 105, 480, by norm_num, by norm_num, by norm_num, rfl⟩
+  exact h3 ▸ Set.ncard_le_ncard hsub hfin
 
 /--
 Bremner [Br19] proved this for $k=4$.

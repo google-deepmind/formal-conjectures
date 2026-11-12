@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos1125
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f:\mathbb{R}\to \mathbb{R}$ be such that
 $$2f(x) \leq f(x+h)+f(x+2h)$$

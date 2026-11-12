@@ -45,6 +45,7 @@ given by `∑_{j=0}^{n} x^j / j!` over `ℚ`, which is the
 noncomputable def truncatedExp (n : ℕ) : ℚ[X] :=
   ∑ j ∈ Finset.range (n + 1), (1 / j ! : ℚ) • X ^ j
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Schur's Theorem (1924):**
 Let `f_n(x) = ∑_{j=0}^n x^j/j!` be the `n`-th truncated

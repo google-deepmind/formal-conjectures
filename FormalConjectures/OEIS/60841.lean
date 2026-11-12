@@ -77,6 +77,7 @@ theorem conjecture1 :
     ∀ n : ℕ, 1 ≤ n → (((lcmMatrix n).det)⁻¹.den = 1 ↔ n ∈ integerDetN) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "All denominators are powers of two (A000079)." - _Robert G. Wilson v_, Aug 02 2015
 
