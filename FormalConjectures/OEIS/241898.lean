@@ -88,8 +88,14 @@ of $4$ squares none of which is $7^2$."
 
 Note that $0 \in \mathbb{N} \setminus \{7\}$ allows representations as a sum of at most four
 positive squares none of which is $7^2$.
+
+Answered affirmatively by W. Chae, Y.-S. Ji, K. Kim, K. Kim, B.-K. Oh and J. Yoon,
+*Sums of squares of integers except for a fixed one*,
+[arXiv:2504.03467](https://arxiv.org/abs/2504.03467): their main theorem gives $M(7) = 4$,
+i.e. every positive integer is a sum of at most four squares of nonnegative integers
+different from $7$.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem conjecture_2 :
     ∀ n : ℕ, ∃ a b c d : ℕ,
       a ≠ 7 ∧ b ≠ 7 ∧ c ≠ 7 ∧ d ≠ 7 ∧ a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n := by
