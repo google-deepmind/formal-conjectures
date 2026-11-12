@@ -47,7 +47,7 @@ noncomputable def a : ℕ → ℤ := Classical.epsilon IsGeneratingSequence
 
 /-- The original equation defines a unique integer coefficient sequence; see [Li26]. -/
 @[category API, AMS 11 13,
-  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/e0e499973c3398f08ed91b39618f1948fe1804a5/LeanOeisProofs/NewProofs/A368630.lean#L1003"]
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000013"]
 theorem exists_unique_sequence : ∃! c : ℕ → ℤ, IsGeneratingSequence c := by
   sorry
 
@@ -85,7 +85,7 @@ For every $n \ge 0$, "a(n) == 1 (mod 3)".
 Proved by Wentao Li with OpenAI Codex assistance; see [Li26].
 -/
 @[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/e0e499973c3398f08ed91b39618f1948fe1804a5/LeanOeisProofs/NewProofs/A368630.lean#L1017"]
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000013"]
 theorem conjecture_mod_three (n : ℕ) : a n % 3 = 1 := by
   sorry
 
@@ -96,7 +96,7 @@ For every $n \ge 0$, "a(2*n) == 1 (mod 2)".
 Proved by Wentao Li with OpenAI Codex assistance; see [Li26].
 -/
 @[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/e0e499973c3398f08ed91b39618f1948fe1804a5/LeanOeisProofs/NewProofs/A368630.lean#L1023"]
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000013"]
 theorem conjecture_even (n : ℕ) : a (2 * n) % 2 = 1 := by
   sorry
 
@@ -107,7 +107,7 @@ For every $n \ge 1$, "a(2*n+1) == 0 (mod 2)". The term $a(1)=1$ is excluded.
 Proved by Wentao Li with OpenAI Codex assistance; see [Li26].
 -/
 @[category research solved, AMS 11,
-  formal_proof using lean4 at "https://github.com/VictorLiwentao/lean-oeis-proofs/blob/e0e499973c3398f08ed91b39618f1948fe1804a5/LeanOeisProofs/NewProofs/A368630.lean#L1028"]
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000013"]
 theorem conjecture_odd (n : ℕ) (hn : 1 ≤ n) : a (2 * n + 1) % 2 = 0 := by
   sorry
 
