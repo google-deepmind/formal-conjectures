@@ -62,6 +62,53 @@ theorem hall_ratio_conjecture : ¬
       G.fractionalChromaticNumber ≤ C * hallRatio G := by
   sorry
 
+/-- An independent set of `G` meets `S` in at most `α(G[S])` vertices. -/
+@[category API, AMS 5]
+theorem card_filter_le_indepNum {G : SimpleGraph V} {T : Finset V}
+    (hT : G.IsIndepSet (T : Set V)) (S : Finset V) :
+    (S.filter (· ∈ T)).card ≤ (G.induce (S : Set V)).indepNum := by
+  let t := (S.filter (· ∈ T)).subtype (· ∈ (S : Set V))
+  have ht : (G.induce (S : Set V)).IsIndepSet (t : Set (S : Set V)) := by
+    intro x hx y hy hxy
+    simp only [t, Finset.mem_coe, Finset.mem_subtype, Finset.mem_filter] at hx hy
+    exact hT hx.2 hy.2 (Subtype.coe_injective.ne hxy)
+  calc (S.filter (· ∈ T)).card = t.card := by
+        rw [Finset.card_subtype, Finset.filter_true_of_mem (p := fun x => x ∈ (S : Set V))
+          fun x hx => Finset.mem_coe.mpr (Finset.mem_filter.mp hx).1]
+    _ ≤ _ := ht.card_le_indepNum
+
+/-- Double counting: `|S| ≤ α(G[S]) · t` for a fractional colouring of total weight `t`. -/
+@[category API, AMS 5]
+theorem card_le_indepNum_mul {G : SimpleGraph V} {w : Finset V → ℝ}
+    (hw : G.IsFractionalColoring w) (S : Finset V) :
+    (S.card : ℝ) ≤ (G.induce (S : Set V)).indepNum * ∑ T, w T := by
+  calc (S.card : ℝ) = ∑ _v ∈ S, (1 : ℝ) := by simp
+    _ ≤ ∑ v ∈ S, ∑ T ∈ Finset.univ.filter (fun T => v ∈ T), w T :=
+        Finset.sum_le_sum fun v _ => hw.cover v
+    _ = ∑ T, ∑ v ∈ S, if v ∈ T then w T else 0 := by
+        simp_rw [Finset.sum_filter]
+        exact Finset.sum_comm
+    _ = ∑ T, ((S.filter (· ∈ T)).card : ℝ) * w T := by
+        refine Finset.sum_congr rfl fun T _ => ?_
+        rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
+    _ ≤ ∑ T, ((G.induce (S : Set V)).indepNum : ℝ) * w T := by
+        refine Finset.sum_le_sum fun T _ => ?_
+        by_cases h : w T = 0
+        · simp [h]
+        · exact mul_le_mul_of_nonneg_right
+            (by exact_mod_cast card_filter_le_indepNum (hw.indep T h) S) (hw.nonneg T)
+    _ = _ := by rw [Finset.mul_sum]
+
+/-- Each ratio `|S| / α(G[S])` is at most the total weight of any fractional colouring. -/
+@[category API, AMS 5]
+theorem div_indepNum_le {G : SimpleGraph V} {w : Finset V → ℝ}
+    (hw : G.IsFractionalColoring w) (S : Finset V) :
+    (S.card : ℝ) / (G.induce (S : Set V)).indepNum ≤ ∑ T, w T := by
+  rcases Nat.eq_zero_or_pos (G.induce (S : Set V)).indepNum with h | h
+  · simpa [h] using Finset.sum_nonneg fun T _ => hw.nonneg T
+  · rw [div_le_iff₀ (by exact_mod_cast h), mul_comm]
+    exact card_le_indepNum_mul hw S
+
 /--
 **The Hall ratio is a lower bound for the fractional chromatic number.**
 
@@ -72,7 +119,11 @@ the other direction up to a constant.
 theorem hall_ratio_conjecture.variants.hallRatio_le_fractionalChromaticNumber
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :
     hallRatio G ≤ G.fractionalChromaticNumber := by
-  sorry
+  refine Real.sSup_le ?_ G.fractionalChromaticNumber_nonneg
+  rintro r ⟨S, -, rfl⟩
+  refine le_csInf G.fractionalColoringWeights_nonempty ?_
+  rintro t ⟨w, hw, rfl⟩
+  exact div_indepNum_le hw S
 
 /--
 **Unbounded ratio (Dvořák–Ossona de Mendez–Wu 2020; Blumenthal et al. 2022).**
