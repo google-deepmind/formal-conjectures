@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos1214
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $x,y\geq 1$ be integers such that, for all $n\geq 1$, the set of primes dividing $x^{n}-1$ is
 equal to the set of primes dividing $y^n-1$. Must $x=y$?

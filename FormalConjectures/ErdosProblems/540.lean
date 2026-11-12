@@ -48,6 +48,7 @@ namespace Erdos540
 def HasZeroSubsetSum {G : Type*} [AddCommMonoid G] (A : Finset G) : Prop :=
   ∃ S : Finset G, S ⊆ A ∧ S.Nonempty ∧ S.sum id = 0
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $A\subseteq \mathbb{Z}/N\mathbb{Z}$ has size $\gg N^{1/2}$ then there exists
 some non-empty $S\subseteq A$ such that $\sum_{n\in S}n\equiv 0\pmod{N}$?

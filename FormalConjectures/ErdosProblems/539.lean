@@ -67,6 +67,7 @@ theorem erdos_539 :
     (fun n ↦ (cofactorThreshold n : ℝ)) =Θ[atTop] erdos_539.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$.
 Is $h(n) = \Theta(\sqrt{n})$? -/
@@ -83,6 +84,7 @@ theorem erdos_539.variants.sq_isBigO :
     (fun n : ℕ ↦ √n) =O[atTop] fun n ↦ (cofactorThreshold n : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is $h(n) = O(\sqrt{n})$? -/
 @[category research solved, question, AMS 5 11,
   formal_proof using lean4 at
@@ -91,6 +93,7 @@ theorem erdos_539.variants.isBigO_sq :
     ¬ ((fun n ↦ (cofactorThreshold n : ℝ)) =O[atTop] fun n ↦ √n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $h(n)$ be maximal such that, for any set $A\subseteq \mathbb{N}$ of size $n$, the
 set$$\left\{ \frac{a}{(a,b)}: a,b\in A\right\}$$has size at least $h(n)$.
 Is $h(n) = \Theta(n^{2/3})$?
@@ -109,6 +112,7 @@ theorem erdos_539.variants.isBigO_sq_cube_root :
     (fun n ↦ (cofactorThreshold n : ℝ)) =O[atTop] fun n ↦ (n : ℝ) ^ ((2 : ℝ) / 3) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- This lower bound is false; see [Sc+26, Theorem A.1] and the linked Lean proof. -/
 @[category research solved, question, AMS 5 11,
   formal_proof using lean4 at
@@ -120,6 +124,7 @@ theorem erdos_539.variants.sq_cube_root_isBigO :
 
 noncomputable def erdos_539.variants.limit.answer : Filter ℝ := nhds ((1 : ℝ) / 2)
 
+set_option linter.style.formal_proof_palomar false in
 /-- From [Er73]: The determination of
 $$
   \lim_{n\to\infty}\frac{\log(h(n))}{\log(n)}

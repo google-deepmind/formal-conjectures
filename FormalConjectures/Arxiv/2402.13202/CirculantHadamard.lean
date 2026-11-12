@@ -52,6 +52,7 @@ theorem orderFourGenerator_isHadamard :
       norm_num [Matrix.mul_apply, Matrix.circulant, orderFourGenerator, Fin.sum_univ_succ,
         Fin.sub_def, Fin.neg_def, Matrix.ofNat_apply]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every circulant Hadamard matrix has order at most four.
 

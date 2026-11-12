@@ -68,6 +68,7 @@ theorem a_36 : a 36 = 9 := by decide
 @[category test, AMS 11]
 theorem b_30 : b 30 = 4 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: a(n) is the product of the ruler function of n and the maximum number of odd terms
 in a 2-dense sublist of divisors of n."

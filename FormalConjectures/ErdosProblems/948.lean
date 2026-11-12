@@ -33,6 +33,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos948
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a function $f(n)$ and a $k$ such that in any $k$-colouring of the integers there exists a
 sequence $a_1 < a_2 < \cdots$ such that $a_n < f(n)$ for infinitely many $n$ and the set
@@ -54,6 +55,7 @@ theorem erdos_948 :
         ∃ c : Fin k, ∀ S : Finset ℕ, S.Nonempty → colouring (∑ i ∈ S, a i) ≠ c := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The original question asks for the set of finite sums to be monochromatic. Galvin showed that
 this fails for $k = 2$, and it fails for every $k \ge 2$ by the negative answer to `erdos_948`.

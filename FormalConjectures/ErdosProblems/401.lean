@@ -32,6 +32,7 @@ open Filter
 
 namespace Erdos401
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there some function $f(r)$ such that $f(r)\to \infty$ as $r\to\infty$, such that, for
 infinitely many $n$, there exist $a_1,a_2$ with

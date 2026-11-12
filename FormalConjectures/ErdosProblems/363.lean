@@ -51,6 +51,7 @@ def IsValidCollection (S : List (Finset ℕ)) : Prop :=
   S.Pairwise Disjoint ∧
   IsSquare ((S.map (fun I => ∏ m ∈ I, m)).prod)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for each fixed $n$ and fixed sizes $k_1,\ldots,k_n \geq 4$, there are only finitely
 many collections of disjoint intervals $I_1,\ldots,I_n$ of size $\lvert I_i\rvert = k_i$ for

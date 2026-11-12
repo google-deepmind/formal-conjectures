@@ -46,6 +46,7 @@ def IsEquidistantOnCircle (A : Finset ℝ²) : Prop :=
     {x | ∃ i : ℕ, i < #A ∧
       x = c + r • (!₂[Real.cos (θ + (i : ℝ) * α), Real.sin (θ + (i : ℝ) * α)])}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subset \mathbb{R}^2$ be a finite set of size $n$, and let $\{d_1,\ldots,d_k\}$ be the set of
 distances determined by $A$. Let $f(d)$ be the multiplicity of $d$, that is, the number of

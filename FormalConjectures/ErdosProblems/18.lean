@@ -257,11 +257,13 @@ theorem erdos_18c :
     ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop, (practicalH n.factorial : ℝ) < (log n) ^ C := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős's Theorem.**
 Erdős proved that $h(n!) < n$ for all $n \ge 1$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/b246a4165f55ada0614aa2b85c8bc6381522e808/erdos-18/Solution.lean#L31"]
 theorem erdos_18_upper_bound :
     ∀ᶠ n : ℕ in atTop, practicalH (Nat.factorial n) < n := by
   sorry

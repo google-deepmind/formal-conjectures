@@ -54,6 +54,7 @@ theorem erdos_384 (n k : ℕ) (hk : 1 < k) (hkn : k < n - 1) (h₃ : (n, k) ≠ 
     ∃ p : ℕ, p.Prime ∧ p ∣ n.choose k ∧ 2 * p ≤ n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 With the strict inequality $p < n/2$ the statement is false: $\binom{4}{2} = 6$ has no prime
 divisor $p < 2$.

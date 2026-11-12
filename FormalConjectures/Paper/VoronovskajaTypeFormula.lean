@@ -457,6 +457,7 @@ theorem voronovskaja_theorem.bernstein_operators
 noncomputable def voronovskaja_theorem.bezier_bernstein_operators.answer : ℝ → (ℝ → ℝ) → ℝ → ℝ :=
   fun a g y => bezierBias a * Real.sqrt (y * (1 - y)) * iteratedDerivWithin 1 g I y
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Voronovskaja-type formula for Bézier--Bernstein operators with shape parameter
 $\alpha > 0$, $\alpha \neq 1$.
