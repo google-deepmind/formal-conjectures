@@ -26,6 +26,8 @@ public import FormalConjecturesUtil
   (Cambridge, 1993) (1997), 1-10.
 - [Ho26] Ho, B. S., *Erdős's diameter conjecture for separated distances fails in high
   dimensions*. [arXiv:2604.15305](https://arxiv.org/abs/2604.15305) (2026).
+- [Tr26] Tripodo, J., *Separated distances in fixed dimension*.
+  [hexagon:2610.00254v2](https://hexagonmath.org/2610.00254v2) (2026).
 -/
 
 @[expose] public section
@@ -48,11 +50,19 @@ at least $1$. Is the diameter of $A$ at least $(1+o(1))n^2$?
 The quantifiers in the source are ambiguous. Following the remarks on erdosproblems.com, this is
 the regime where $d$ is fixed and the $o(1)$ term tends to $0$ as $n \to \infty$, at a rate
 which may depend on $d$. The case $d = 1$ was proved by Erdős
-(`Erdos670.erdos_670.variants.dim_one`), so the question is open for $d \geq 2$.
+(`Erdos670.erdos_670.variants.dim_one`).
+
+The answer is no [Tr26]: there are infinitely many $n$ for which some set of $n$ points in
+$\mathbb{R}^{29}$ has separated distances and diameter less than $\frac{499}{500}n^2$. This is
+enough to refute the statement with $d = 29$ and $\varepsilon = 1/1000$. See
+`Erdos670.erdos_670.variants.tripodo`. Since $\mathbb{R}^{29}$ embeds isometrically in
+$\mathbb{R}^d$, the claim also fails for every $d \geq 29$. This does not settle
+$2 \leq d \leq 28$.
 -/
-@[category research open, question, AMS 52]
+@[category research solved, question, AMS 52, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-11-000002"]
 theorem erdos_670 :
-    ∀ d : ℕ, 1 ≤ d → ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
+    ¬ ∀ d : ℕ, 1 ≤ d → ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ A : Finset (EuclideanSpace ℝ (Fin d)), A.card = n → HasSeparatedDistances A →
         (1 - ε) * (n : ℝ) ^ 2 ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
   sorry
@@ -104,6 +114,18 @@ theorem erdos_670.variants.ho :
         HasSeparatedDistances A ∧
         Metric.diam (A : Set (EuclideanSpace ℝ (Fin (n ^ 2 - n)))) ≤
           (1 - 1 / Real.pi ^ 2 + ε) * (n : ℝ) ^ 2 := by
+  sorry
+
+/--
+Tripodo [Tr26] showed that there are infinitely many $n$ for which some set of $n$ points in
+$\mathbb{R}^{29}$ has separated distances and diameter less than $\frac{499}{500}n^2$.
+-/
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-11-000002"]
+theorem erdos_670.variants.tripodo :
+    ∃ᶠ n : ℕ in atTop, ∃ A : Finset (EuclideanSpace ℝ (Fin 29)), A.card = n ∧
+      HasSeparatedDistances A ∧
+      Metric.diam (A : Set (EuclideanSpace ℝ (Fin 29))) < (499 / 500 : ℝ) * (n : ℝ) ^ 2 := by
   sorry
 
 /--
