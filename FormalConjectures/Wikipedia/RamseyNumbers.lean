@@ -125,17 +125,17 @@ remain open. The values below are collected in the dynamic survey [Rad] (see als
 for $3 \le k \le 9$, and $R(4,5) = 25$. -/
 
 /-- $R(3,3) = 6$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/abd0e7f82fd6877a85f5314738c87e89ca5bc268/Solution.lean#L7"]
 theorem ramsey_number_three_three : R(3, 3) = 6 := by
   sorry
 
 /-- $R(3,4) = 9$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/24c3c49df81607e1338d4261d9c00e7c5c7f8f00/Solution.lean#L7"]
 theorem ramsey_number_three_four : R(3, 4) = 9 := by
   sorry
 
 /-- $R(3,5) = 14$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/0fa951c4c2b52a41dfb6b59706d42d4cdb87a618/Solution.lean#L7"]
 theorem ramsey_number_three_five : R(3, 5) = 14 := by
   sorry
 
@@ -160,7 +160,7 @@ theorem ramsey_number_three_nine : R(3, 9) = 36 := by
   sorry
 
 /-- The diagonal Ramsey number $R(4,4) = 18$. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/d9728c6c90e906feee35e01e46cd2e370dd0639d/Solution.lean#L150"]
 theorem ramsey_number_four_four : R(4, 4) = 18 := by
   sorry
 

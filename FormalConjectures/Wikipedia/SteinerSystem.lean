@@ -249,7 +249,7 @@ There exists a unique Steiner system $S(5, 8, 24)$, known as the large Witt desi
 It was constructed by Witt (1938) and is closely related to the Mathieu group $M_{24}$.
 This is one of only two known Steiner systems with $t = 5$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/6bd7a2cd9d9a50ba92c3d3b3ae1a2d64e241f4bd/Solution.lean#L6"]
 theorem steiner_system_5_8_24 : Nonempty S(5, 8, 24) := by
   sorry
 

@@ -94,7 +94,7 @@ For example, `S₃ × C₅` (order 30) and `A₅ × C₁₅₁₂₈` are Leinst
 
 Reference: Leinster, Tom (2001). "Perfect numbers and groups".
 -/
-@[category research solved, AMS 20]
+@[category research solved, AMS 20, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/24b3c79ac9847dbd46b8dae73f9b2c04a55e7bf1/Solution.lean#L6"]
 theorem exists_nonabelian_leinster_group :
     ∃ G : Type, ∃ (_ : Group G) (_ : Fintype G),
       IsLeinster G ∧ ¬ ∀ (a b : G), a * b = b * a := by
@@ -110,7 +110,7 @@ dihedral Leinster groups.
 
 Reference: Leinster, Tom (2001). "Perfect numbers and groups".
 -/
-@[category research solved, AMS 20]
+@[category research solved, AMS 20, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/79a26cf4e2db98f9ca0d8f7223b3e3887a76a0ed/Solution.lean#L300"]
 theorem dihedral_is_leinster_iff_odd_perfect (n : ℕ) [NeZero n] :
     IsLeinster (DihedralGroup n) ↔ Nat.Perfect n ∧ Odd n := by
   sorry
