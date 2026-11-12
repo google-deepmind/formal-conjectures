@@ -1,0 +1,19 @@
+# Greetings from The On-Line Encyclopedia of Integer Sequences! http://oeis.org/
+
+Search: id:a110854
+Showing 1-1 of 1
+
+%I A110854 #14 Oct 11 2020 13:15:18
+%S A110854 1,0,0,4,0,-4,4,-4,2,2,0,-2,0,0,0,-2,0,4,0,-4,0,0,10,-10,4,4,-4,-4,2,
+%T A110854 6,-6,0,2,-4,4,0,-2,4,0,-6,0,2,4,-6,10,-8,0,8,6,-8,-4,0,0,-4,4,-4,8,
+%U A110854 -6,2,6,-6,4,0,-4,-2,2,2,6,-2,-2,-6,6,-6,0,0,0,0,6,-6,2,-2,2,0,-2,-2,0,8,0
+%N A110854 A155750(n)-A155067(n) = prime(2n+2)-prime(2n+1)-prime(2n)+prime(2n-1).
+%C A110854 Do the absolute values cover A004275?
+%H A110854 Harvey P. Dale, <a href="/A110854/b110854.txt">Table of n, a(n) for n = 1..1000</a>
+%t A110854 #[[4]]-#[[3]]-#[[2]]+#[[1]]&/@Partition[Prime[Range[200]],4,2] (* _Harvey P. Dale_, Oct 11 2020 *)
+%K A110854 sign,easy
+%O A110854 1,4
+%A A110854 _Paul Curtz_, Aug 25 2008
+%E A110854 Edited by _R. J. Mathar_, Feb 27 2009
+
+# Content is available under The OEIS End-User License Agreement: http://oeis.org/LICENSE

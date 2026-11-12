@@ -1,0 +1,122 @@
+[
+  {
+    "id": "P01",
+    "query": "Can you review FormalConjectures/ErdosProblems/479.lean against the cited problem before I submit it?",
+    "should_trigger": true,
+    "split": "development"
+  },
+  {
+    "id": "P02",
+    "query": "This theorem compiles, but I think the quantifiers say something weaker than the paper. Can you check?",
+    "should_trigger": true,
+    "split": "development"
+  },
+  {
+    "id": "P03",
+    "query": "Someone says my FC formalisation is vacuous at zero. Please check their finding against the current statement.",
+    "should_trigger": true,
+    "split": "development"
+  },
+  {
+    "id": "P04",
+    "query": "Review this formal_proof claim: does the linked result actually establish the conjecture as stated?",
+    "should_trigger": true,
+    "split": "development"
+  },
+  {
+    "id": "P05",
+    "query": "The source says for every epsilon there is a constant; did I put the constant in the right place in Lean?",
+    "should_trigger": true,
+    "split": "development"
+  },
+  {
+    "id": "P06",
+    "query": "can u check whether the finite-set definition loses repeated summands in this formal conjecture?",
+    "should_trigger": true,
+    "split": "development"
+  },
+  {
+    "id": "P07",
+    "query": "We changed the source citation and marked this FC problem solved. Please review whether the mathematical claims and status are justified.",
+    "should_trigger": true,
+    "split": "validation"
+  },
+  {
+    "id": "P08",
+    "query": "The reviewer wants an extra nonempty hypothesis. Read the cited theorem and tell me whether the change is justified.",
+    "should_trigger": true,
+    "split": "validation"
+  },
+  {
+    "id": "P09",
+    "query": "Please give this Formal Conjectures PR a semantic second pass, especially the helper definitions.",
+    "should_trigger": true,
+    "split": "validation"
+  },
+  {
+    "id": "P10",
+    "query": "Does this answer(sorry) statement ask the same yes/no question as the original problem?",
+    "should_trigger": true,
+    "split": "validation"
+  },
+  {
+    "id": "N01",
+    "query": "Fix the Lean unknown identifier build error in FormalConjectures/ErdosProblems/479.lean. The statement is already agreed.",
+    "should_trigger": false,
+    "split": "development"
+  },
+  {
+    "id": "N02",
+    "query": "Find a proof of this theorem using Mathlib; leave the agreed statement unchanged.",
+    "should_trigger": false,
+    "split": "development"
+  },
+  {
+    "id": "N03",
+    "query": "Reformat the docstring and put the AMS tags in ascending order. No mathematical review needed.",
+    "should_trigger": false,
+    "split": "development"
+  },
+  {
+    "id": "N04",
+    "query": "Run scripts/review_report.py on these JSON files and show the Markdown output.",
+    "should_trigger": false,
+    "split": "development"
+  },
+  {
+    "id": "N05",
+    "query": "Where is the raw JSON for yesterday's FC review report?",
+    "should_trigger": false,
+    "split": "development"
+  },
+  {
+    "id": "N06",
+    "query": "Update the workflow so that review bundles are uploaded to the review-data repo.",
+    "should_trigger": false,
+    "split": "development"
+  },
+  {
+    "id": "N07",
+    "query": "Explain what the Lean syntax answer(sorry) does. I am not asking to audit a problem.",
+    "should_trigger": false,
+    "split": "validation"
+  },
+  {
+    "id": "N08",
+    "query": "Rename this Lean lemma and update its callers without changing its type.",
+    "should_trigger": false,
+    "split": "validation"
+  },
+  {
+    "id": "N09",
+    "query": "Review the Python security of the review-report renderer and its path handling.",
+    "should_trigger": false,
+    "split": "validation"
+  },
+  {
+    "id": "N10",
+    "query": "Compare the runtime and token usage in these review-evaluation result files.",
+    "should_trigger": false,
+    "split": "validation"
+  }
+]
