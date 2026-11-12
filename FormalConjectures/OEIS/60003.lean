@@ -30,7 +30,6 @@ whether $5777$ and $5993$ are the only odd composite numbers not of the form $p 
 
 *References:*
 - [A060003](https://oeis.org/A060003)
-- [A058320](https://oeis.org/A058320)
 - Richard K. Guy, *Unsolved Problems in Number Theory* (3rd ed.), Problem A19.
 - Laurent Hodges, "A lesser-known Goldbach conjecture", *Mathematics Magazine* 66 (1993), 45–47.
 -/
@@ -65,9 +64,7 @@ theorem not_forall_odd_composite_isPrimePlusTwiceSquare :
   exact stern_5777.2.2 (h 5777 stern_5777.1 (by decide) stern_5777.2.1)
 
 /--
-"Are there any other odd composite numbers beside 5777 and 5993 that cannot be written as
-$p + 2a^2$?" — Richard K. Guy, *Unsolved Problems in Number Theory*, Problem A19;
-see also [A060003](https://oeis.org/A060003).
+Are 5777 and 5993 the only odd composite exceptions?
 -/
 @[category research open, question, AMS 11]
 theorem no_other_odd_composite_stern_number :
