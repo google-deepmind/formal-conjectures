@@ -38,14 +38,14 @@ A prime constellation is a tuple $(p, p + m_1, \dots, p + m_k)$ such that the $m
 all positive even integers and every entry is a prime number.
 -/
 def IsPrimeConstellation {k : ℕ} (m : Fin k.succ → ℕ) (p : ℕ) : Prop :=
-  m 0 = 0 ∧ (∀ i ≠ 0, 0 < m i) ∧ (∀ i, p + 2 * m i |>.Prime)
+  m 0 = 0 ∧ (∀ i ≠ 0, 0 < m i ∧ Even (m i)) ∧ (∀ i, p + m i |>.Prime)
 
 /--
 A prime constellation is said to be admissible if its elements do not form a complete
 set of residue classes with respect to any prime.
 -/
 def IsAdmissiblePrimeConstellation {k : ℕ} (m : Fin k.succ → ℕ) (p : ℕ) : Prop :=
-  IsPrimeConstellation m p ∧ ∀ (q : ℕ), q.Prime → ¬(fun i => (p + 2 * m i : ZMod q)).Surjective
+  IsPrimeConstellation m p ∧ ∀ (q : ℕ), q.Prime → ¬(fun i => (p + m i : ZMod q)).Surjective
 
 /--
 The number of distinct residue classes amongst a tuple $(m_0, \dots, m_k)$ for a prime $q$.
@@ -62,14 +62,14 @@ noncomputable def Nat.primeTupleCounting {k : ℕ} (m : Fin k.succ → ℕ) (n :
   Nat.count (IsAdmissiblePrimeConstellation m) n.succ
 
 /--
-The first Hardy–Littlewood conjecture for the tuple $(m_0, m_1, \dots, m_k)$: if $m_0 = 0$ and
-the $m_i$ are pairwise distinct, then
+The first Hardy–Littlewood conjecture for the tuple $(m_0, m_1, \dots, m_k)$: if $m_0 = 0$,
+the $m_i$ ($i \neq 0$) are positive even integers, and the $m_i$ are pairwise distinct, then
 $$
   \pi_P(n)\sim C_P\int_2^n\frac{dt}{\log^{k+1}t}.
 $$
 -/
 def FirstHardyLittlewoodConjectureFor {k : ℕ} (m : Fin k.succ → ℕ) : Prop :=
-  m 0 = 0 → Function.Injective m →
+  m 0 = 0 → (∀ i ≠ 0, Even (m i)) → Function.Injective m →
     let C : ℝ :=
       2 ^ k * ∏' (q : { q : ℕ // q.Prime ∧ 3 ≤ q}),
         (1 - (Nat.numResidues q m : ℝ) / q) / (1 - 1 / q) ^ k.succ
