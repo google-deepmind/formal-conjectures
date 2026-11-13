@@ -115,11 +115,17 @@ where:
 This is false: the source records a 12-vertex counterexample by Zyad Tamimi (July 23, 2026)
 with $\gamma_t(G) = 4 > 2 + 1 = k + \mathrm{frequency}(t_{\min}(v))$.
 
+The linked Lean proof certifies the twelve-vertex member ($m = 6$) of the family given by
+[`vulnix0x4`](https://github.com/google-deepmind/formal-conjectures/issues/4562).
+
 The hypothesis $n > 2$ is stated in the source's full list of conjectures (as for the
 neighbouring Conjectures 290, 292 and 293) but omitted on its list of open conjectures;
 the counterexample has $12$ vertices, so it refutes both readings.
+
+Lean formalization by Wentao Li, with AI assistance.
 -/
-@[category research solved, question, AMS 5]
+@[category research solved, question, AMS 5,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000012"]
 theorem conjecture291 :
     ¬ ∀ (α : Type) [Fintype α] [DecidableEq α] [Nontrivial α]
       (G : SimpleGraph α) [DecidableRel G.Adj] (_h : G.Connected) (_hn : 2 < Fintype.card α),
