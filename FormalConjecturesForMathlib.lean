@@ -239,6 +239,8 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.Probability.TimeSeries.Autoregression
+public import FormalConjecturesForMathlib.Probability.TimeSeries.SampledAutoregression
 public import FormalConjecturesForMathlib.RepresentationTheory.CharacterDegree
 public import FormalConjecturesForMathlib.RepresentationTheory.Homological.ContCohomology.Sha
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
