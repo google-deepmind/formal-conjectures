@@ -22,10 +22,13 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/596](https://www.erdosproblems.com/596)
-- [Er87] Erdős, *Some of my favourite problems in various branches of combinatorics*,
-  *Mat. Lapok* 1987.
-- [NeRo75] Nešetřil and Rödl, *The Ramsey property for graphs with forbidden complete
-  subgraphs*, *J. Combin. Theory* B **20** (1976), 243--249.
+- [Er87] Erdős, P., *Some problems on finite and infinite graphs*, in *Logic and combinatorics*
+  (Arcata, Calif., 1985), Contemp. Math. **65** (1987), 223–228.
+- [NeRo75] Nešetřil, J. and Rödl, V., *Type theory of partition properties of graphs*, in
+  *Infinite and finite sets* (Colloq., Keszthely, 1973), Colloq. Math. Soc. János Bolyai **10**
+  (1975), 405–412.
+- [NeRo87] Nešetřil, J. and Rödl, V., *Strong Ramsey theorems for Steiner systems*,
+  *Trans. Amer. Math. Soc.* **303** (1987), 183–192.
 -/
 
 @[expose] public section
@@ -37,7 +40,7 @@ namespace Erdos596
 def erdos_596.answer {U₁ : Type} {U₂ : Type} : SimpleGraph U₁ → SimpleGraph U₂ → Prop := sorry
 
 /--
-**Erdős Problem 596** (Erdős–Hajnal, [Er87]). For which graph pairs $(G_1, G_2)$ is it
+**Erdős Problem 596** (Erdős–Hajnal, [Er87]). For which finite graph pairs $(G_1, G_2)$ is it
 true that
 
   (1) for every $n \geq 1$ there is a graph $H$ without a $G_1$ such that any
@@ -53,14 +56,15 @@ See Problem 595 for the specific case $(G_1, G_2) = (K_4, K_3)$.
 -/
 @[category research open, question value, AMS 5]
 theorem erdos_596 :
-    ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
+    ∀ {U₁ U₂ : Type} [Finite U₁] [Finite U₂] (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
       IsErdosHajnalExceptional G₁ G₂ ↔ erdos_596.answer G₁ G₂ := by
   sorry
 
-/-- Erdős–Hajnal exceptional pairs exist — recorded as a known direction of `erdos_596`. -/
+/-- Finite Erdős–Hajnal exceptional pairs exist — recorded as a known direction of `erdos_596`. -/
 @[category research solved, AMS 5]
 theorem erdos_596.variants.exists_exceptional :
-    ∃ (U₁ U₂ : Type) (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
+    ∃ (U₁ U₂ : Type) (_ : Finite U₁) (_ : Finite U₂)
+      (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
       IsErdosHajnalExceptional G₁ G₂ := by
   sorry
 
@@ -71,7 +75,7 @@ theorem erdos_596.variants.C4_free_countable_escape :
     HasCountableRamseyEscape (cycleGraph 4) (cycleGraph 6) := by
   sorry
 
-/-- Nešetřil–Rödl [NeRo75]: for every $n \geq 1$ there is a $C_4$-free graph whose edges
+/-- Nešetřil–Rödl [NeRo87]: for every $n \geq 1$ there is a $C_4$-free graph whose edges
 cannot be $n$-coloured without a monochromatic $C_6$. -/
 @[category research solved, AMS 5]
 theorem erdos_596.variants.C4_C6_finite_ramsey :
@@ -85,11 +89,11 @@ theorem erdos_596.variants.C4_C6_is_exceptional :
     IsErdosHajnalExceptional (cycleGraph 4) (cycleGraph 6) :=
   ⟨erdos_596.variants.C4_C6_finite_ramsey, erdos_596.variants.C4_free_countable_escape⟩
 
-/-- The original Erdős–Hajnal conjecture (that no exceptional pair exists) is **false** —
+/-- The original Erdős–Hajnal conjecture (that no finite exceptional pair exists) is **false** —
 witnessed by $(C_4, C_6)$ via `C4_C6_is_exceptional`. -/
 @[category research solved, question, AMS 5]
 theorem erdos_596.variants.original_conjecture_is_false :
-    ¬ ∀ {U₁ U₂ : Type} (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
+    ¬ ∀ {U₁ U₂ : Type} [Finite U₁] [Finite U₂] (G₁ : SimpleGraph U₁) (G₂ : SimpleGraph U₂),
       ¬IsErdosHajnalExceptional G₁ G₂ := by
   sorry
 
