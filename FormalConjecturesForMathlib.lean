@@ -169,6 +169,7 @@ public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Basic
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Equilibrium
+public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Minmax
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Payoffs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Group.Hyperbolic
