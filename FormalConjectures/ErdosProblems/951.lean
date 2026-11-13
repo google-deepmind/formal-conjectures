@@ -67,7 +67,9 @@ theorem erdos_951 :
 
 /-- Beurling conjectured that if $1 < a_0 < a_1 < \cdots$ is a sequence of Beurling primes and
 the number of generalised integers $\prod_i a_i^{k_i} \le x$ (counted with multiplicity) is
-$x + o(\log x)$, then $a$ must be the sequence of primes. -/
+$x + o(\log x)$, then $a$ must be the sequence of primes. Counting with multiplicity is needed
+because without it $a_n = n + 2$ is a counterexample (its set of generalised integers is
+$\mathbb{N}_{\ge 1}$, giving count $\lfloor x \rfloor = x + O(1)$). -/
 @[category research open, AMS 11]
 theorem erdos_951.variants.beurling :
     ∀ a : ℕ → ℝ, IsBeurlingPrimes a →
