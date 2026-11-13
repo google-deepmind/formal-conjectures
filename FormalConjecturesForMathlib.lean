@@ -132,7 +132,9 @@ public import FormalConjecturesForMathlib.Computability.AutomaticSequence
 public import FormalConjecturesForMathlib.Computability.BitstringEncoding
 public import FormalConjecturesForMathlib.Computability.Complexity
 public import FormalConjecturesForMathlib.Computability.DFA
+public import FormalConjecturesForMathlib.Computability.FiniteGraphEncoding
 public import FormalConjecturesForMathlib.Computability.Primrec
+public import FormalConjecturesForMathlib.Computability.PromiseProblem
 public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 public import FormalConjecturesForMathlib.Computability.TuringMachine.Notation
 public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
@@ -257,6 +259,7 @@ public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.ContinuumHypothesis
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 public import FormalConjecturesForMathlib.SetTheory.Ordinal.PartitionRelation
+public import FormalConjecturesForMathlib.Statistics.NetworkExperiment
 public import FormalConjecturesForMathlib.Tactic.Linter.Term
 public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
