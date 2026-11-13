@@ -171,6 +171,7 @@ public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Basic
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Equilibrium
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.FiniteMemory
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Payoffs
+public import FormalConjecturesForMathlib.GameTheory.StochasticGame.SubgamePerfect
 public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Group.Hyperbolic
 public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
