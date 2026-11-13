@@ -114,14 +114,20 @@ theorem a_5 : a 5 = 1188 := by
   rw [bernoulli_eq_bernoulli'_of_ne_one (by decide), bernoulli'_ten]
   norm_num
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture I: if $n > 2$, then $\frac{a(\text{A005382}(n))}{12}$ is prime,
 where A005382 is the sequence of primes $p$ such that $2p-1$ is also prime.
 Since $\text{A005382}(1) = 2$, $\text{A005382}(2) = 3$ and $\text{A005382}(3) = 7$, this says
 that $\frac{a(p)}{12}$ is prime for every prime $p > 3$ such that $2p-1$ is also prime.
 - Lorenzo Sauras Altuzarra, Oct 13 2020
+
+This is true: in fact $a(p) = 12(2p-1)$. By the von Staudt–Clausen theorem the denominator of
+$B_{2p}$ is $6$; the prime $p$ divides the numerator of $B_{2p}$ (Adams), and $2p-1$ does not,
+since $B_{2p}/(2p) \equiv B_2/2 = 1/12 \pmod{2p-1}$ (Kummer).
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/zedansoorya-ui/formal-conjectures/blob/549eca366f19829fef8d226b156084d3eeb6c785/ExternalProofs/OeisA46969_conjecture1.lean#L368"]
 theorem conjecture1 (p : ℕ) (hp : p.Prime) (hp' : (2 * p - 1).Prime) (h3 : 3 < p) :
     (a p / 12).Prime := by
   sorry
