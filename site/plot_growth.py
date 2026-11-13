@@ -3,11 +3,12 @@ import os
 import pandas as pd
 import plotly.express as px
 import re
+import status_counts
 import subprocess
 from datetime import datetime
 
 conf = {
-    'line_color': '#4285F4',
+    'line_colors': ['#4285F4'],
     'line_width': 2,
     'title': dict(
         text='Number of Lean files in Formal Conjectures',
@@ -23,6 +24,22 @@ conf = {
     'ylabel': 'File Count',
     'out_path_prefix': 'site/data/file_counts'
 }
+
+status_conf = dict(
+    conf,
+    # Same dimensions and starting point as the file count, only the series and
+    # where they are written differ.
+    line_colors=['#EA4335', '#34A853', '#4285F4'],
+    title=dict(
+        text='Statements by status in Formal Conjectures',
+        font=dict(size=18),
+        x=0.5,
+        xanchor='center'
+    ),
+    ylabel=['Open', 'Solved', 'Formally proved'],
+    yaxis_title='Statement Count',
+    out_path_prefix='site/data/status_counts'
+)
 
 def get_file_counts_over_time(start_date, columns):
     """
@@ -67,36 +84,38 @@ def get_file_counts_over_time(start_date, columns):
 
     return pd.DataFrame(data, columns=columns)
 
-def plot_file_counts(
+def plot_counts(
       df,
       xlabel,
       ylabel,
       max_width,
       width_pct,
       height,
-      line_color,
+      line_colors,
       line_width,
       title,
       out_path,
-      theme):
+      theme,
+      yaxis_title=None):
     """
-    Plots the number of files over time.
+    Plots one or more counts over time.
 
     Args:
         df (pd.DataFrame): A pandas DataFrame which should contain `xlabel` and `ylabel` as columns
         xlabel (str): The column from `df` to use as the `x`-axis
-        ylabel (str): The column from `df` to use as the `y`-axis
+        ylabel (str | list[str]): The column(s) from `df` to use as the `y`-axis
         max_width (int): Maximum width of plot in `px`
         width_pct (str): % width of plot inside parent div
         height (int): Height of plot in `px`
-        line_color (str): Colour of plotted graph
+        line_colors (list[str]): Colour of each plotted graph, in order
         line_width (float): Width of plotted line in `px`
         title (dict): Dictionary specifying graph title and style
         out_path (str): Save location of html
         theme (str): plotly template suffix to use as plot theme. E.g., use "dark" for "plotly_dark"
+        yaxis_title (str): Label of the `y`-axis, required when `ylabel` names several columns
     """
     out_path = f"{out_path}_{theme}.html"
-    fig = px.line(df, xlabel, ylabel)
+    fig = px.line(df, xlabel, ylabel, color_discrete_sequence=line_colors)
 
     fig.update_layout(
         title=title,
@@ -109,9 +128,14 @@ def plot_file_counts(
     fig.update_yaxes(rangemode='tozero')
 
     fig.update_traces(
-        line=dict(color=line_color, width=line_width, shape='hv'),
+        line=dict(width=line_width, shape='hv'),
         marker=dict(size=6)
     )
+
+    if isinstance(ylabel, list):
+        # For several columns `px` names the axis "value" and the legend
+        # "variable", neither of which says anything to a reader.
+        fig.update_layout(yaxis_title=yaxis_title, legend_title_text='')
 
     fig_html = fig.to_html(
         full_html=False,
@@ -144,17 +168,32 @@ if __name__ == "__main__":
 
     columns = [conf['xlabel'], conf['ylabel']]
     df = get_file_counts_over_time(conf['start_date'], columns)
-    for theme in ["white", "dark"]:
-        plot_file_counts(
-          df=df,
-          xlabel=conf['xlabel'],
-          ylabel=conf['ylabel'],
-          max_width=conf['max_width'],
-          width_pct=conf['width_pct'],
-          height=conf['height_px'],
-          line_color=conf['line_color'],
-          line_width=conf['line_width'],
-          title=conf['title'],
-          out_path=conf['out_path_prefix'],
-          theme=theme
-        )
+
+    status_columns = [status_conf['xlabel']] + status_conf['ylabel']
+    status_df = pd.DataFrame(
+        status_counts.get_status_counts_over_time(
+            status_conf['start_date'], status_columns),
+        columns=status_columns)
+
+    # The last point should agree with the counts `extract_names` reports, so
+    # print it where a mismatch is visible without opening the site.
+    latest = status_df.iloc[-1]
+    print('Latest statement counts: ' +
+          ', '.join(f'{label} {latest[label]}' for label in status_conf['ylabel']))
+
+    for settings, data in [(conf, df), (status_conf, status_df)]:
+        for theme in ["white", "dark"]:
+            plot_counts(
+              df=data,
+              xlabel=settings['xlabel'],
+              ylabel=settings['ylabel'],
+              max_width=settings['max_width'],
+              width_pct=settings['width_pct'],
+              height=settings['height_px'],
+              line_colors=settings['line_colors'],
+              line_width=settings['line_width'],
+              title=settings['title'],
+              out_path=settings['out_path_prefix'],
+              theme=theme,
+              yaxis_title=settings.get('yaxis_title')
+            )
