@@ -38,7 +38,8 @@ namespace Green64
 Do there exist infinitely many primes $p$ for which $p - 2$ has an odd number of prime factors,
 counted with multiplicity (i.e. $\Omega(p - 2)$ is odd)?
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000010&version=1"]
 theorem green_64 :
     {p : ℕ | p.Prime ∧ Odd (Ω (p - 2))}.Infinite := by
   sorry
