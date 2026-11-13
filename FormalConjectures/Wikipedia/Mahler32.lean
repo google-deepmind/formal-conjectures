@@ -47,7 +47,27 @@ fractional parts `{x (3/2)^n}` below `1/2`, so `Ω(3/2) ≤ 1/2`. -/
 @[category textbook, AMS 11]
 theorem mahler_conjecture.variants.consequence (H : 1 / 2 < Ω (3 / 2)) :
     type_of% mahler_conjecture := by
-  sorry
+  intro x hx
+  set u : ℕ → ℝ := fun n ↦ Int.fract (x * (3 / 2 : ℝ) ^ n) with hu
+  have hle : ∀ θ : ℝ, Filter.atTop.IsBoundedUnder (· ≤ ·)
+      fun n : ℕ ↦ Int.fract (θ * (3 / 2 : ℝ) ^ n) :=
+    fun θ ↦ Filter.isBoundedUnder_of ⟨1, fun n ↦ (Int.fract_lt_one _).le⟩
+  have hge : ∀ θ : ℝ, Filter.atTop.IsBoundedUnder (· ≥ ·)
+      fun n : ℕ ↦ Int.fract (θ * (3 / 2 : ℝ) ^ n) :=
+    fun θ ↦ Filter.isBoundedUnder_of ⟨0, fun n ↦ Int.fract_nonneg _⟩
+  -- `Ω (3 / 2)` is at most the oscillation of the fractional parts for `θ = x`.
+  have hΩ : Ω (3 / 2) ≤ Filter.atTop.limsup u - Filter.atTop.liminf u :=
+    csInf_le ⟨0, by
+      rintro _ ⟨θ, _, rfl⟩
+      exact sub_nonneg.mpr (Filter.liminf_le_limsup (hle θ) (hge θ))⟩ ⟨x, hx.1, rfl⟩
+  -- For a Z-number these fractional parts lie in `[0, 1/2)` from `n = 1` on.
+  have h1 : Filter.atTop.limsup u ≤ 1 / 2 :=
+    Filter.limsup_le_of_le (hge x).isCoboundedUnder_le
+      (Filter.eventually_atTop.mpr ⟨1, fun n hn ↦ (hx.2 n hn).le⟩)
+  have h2 : 0 ≤ Filter.atTop.liminf u :=
+    Filter.le_liminf_of_le (hle x).isCoboundedUnder_ge
+      (Filter.Eventually.of_forall fun n ↦ Int.fract_nonneg _)
+  linarith
 
 /-- Flatto, Lagarias and Pollington proved that for all rational `p/q > 1` in lowest terms with
 `q ≥ 2`, we have `Ω(p/q) ≥ 1/p`: for every `θ > 0`, the limit points of `{θ (p/q)^n}` are not
