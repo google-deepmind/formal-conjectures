@@ -260,6 +260,7 @@ public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.ContinuumHypothesis
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 public import FormalConjecturesForMathlib.SetTheory.Ordinal.PartitionRelation
+public import FormalConjecturesForMathlib.Statistics.InstrumentalVariables.RelativeBias
 public import FormalConjecturesForMathlib.Tactic.Linter.Term
 public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
