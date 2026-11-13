@@ -167,6 +167,10 @@ public import FormalConjecturesForMathlib.Dynamics.SymbolicDynamics.BlockComplex
 public import FormalConjecturesForMathlib.FieldTheory.AbsoluteGaloisGroup
 public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
+public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Basic
+public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Equilibrium
+public import FormalConjecturesForMathlib.GameTheory.StochasticGame.FiniteMemory
+public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Payoffs
 public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Group.Hyperbolic
 public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
@@ -238,7 +242,10 @@ public import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
 public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
 public import FormalConjecturesForMathlib.Order.Nat
 public import FormalConjecturesForMathlib.Order.Unimodular
+public import FormalConjecturesForMathlib.Probability.BoundedPayoffs
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
+public import FormalConjecturesForMathlib.Probability.Kernel.DiscreteTrajectory
+public import FormalConjecturesForMathlib.Probability.ProbabilityMassFunction.Observation
 public import FormalConjecturesForMathlib.RepresentationTheory.CharacterDegree
 public import FormalConjecturesForMathlib.RepresentationTheory.Homological.ContCohomology.Sha
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
