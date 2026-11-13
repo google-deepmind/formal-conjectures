@@ -110,6 +110,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Matching
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Mycielski
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.PathCover
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Petersen
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Planar
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Prod
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
