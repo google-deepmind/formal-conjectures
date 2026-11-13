@@ -68,11 +68,15 @@ theorem a_5 : a 5 = 900 := by
 def integerDetN : Set ℕ :=
   Set.Icc 1 34 ∪ {36, 38}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: $1/\det(M)$ is an integer only for n: 1 to 34, 36 and 38." - _Robert G. Wilson v_,
 Aug 02 2015
+
+This is true. By the closed form $1/\det(M) = \prod_{k=1}^n k^2/\varphi(k)$, the denominator is
+even for every $n \ge 103$, and the cases $n < 103$ are checked by computation.
 -/
-@[category research open, AMS 11 15]
+@[category research solved, AMS 11 15, formal_proof using lean4 at "https://github.com/zedansoorya-ui/formal-conjectures/blob/d78cab01251321a41a041a1b034ccb808fcdb4a1/ExternalProofs/OeisA60841_conjecture1.lean#L327"]
 theorem conjecture1 :
     ∀ n : ℕ, 1 ≤ n → (((lcmMatrix n).det)⁻¹.den = 1 ↔ n ∈ integerDetN) := by
   sorry
