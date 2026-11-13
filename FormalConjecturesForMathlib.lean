@@ -44,6 +44,7 @@ public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
 public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
 public import FormalConjecturesForMathlib.Analysis.Fourier.SpectralSets
 public import FormalConjecturesForMathlib.Analysis.HasGaps
+public import FormalConjecturesForMathlib.Analysis.Matrix.SingularValues
 public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
@@ -193,6 +194,7 @@ public import FormalConjecturesForMathlib.LinearAlgebra.GeneralLinearGroup
 public import FormalConjecturesForMathlib.LinearAlgebra.QuadraticForm.UInvariant
 public import FormalConjecturesForMathlib.LinearAlgebra.SpecialLinearGroup
 public import FormalConjecturesForMathlib.Logic.Equiv.Fin.Rotate
+public import FormalConjecturesForMathlib.MeasureTheory.Constructions.Matrix
 public import FormalConjecturesForMathlib.ModelTheory.Decidability
 public import FormalConjecturesForMathlib.ModelTheory.Encoding
 public import FormalConjecturesForMathlib.ModelTheory.Real
@@ -242,6 +244,7 @@ public import FormalConjecturesForMathlib.Probability.Distributions.Gaussian.Qua
 public import FormalConjecturesForMathlib.Probability.Distributions.NoncentralChiSquared
 public import FormalConjecturesForMathlib.Probability.FiniteMethod
 public import FormalConjecturesForMathlib.Probability.Quantile
+public import FormalConjecturesForMathlib.Probability.UniformStochasticOrder
 public import FormalConjecturesForMathlib.RepresentationTheory.CharacterDegree
 public import FormalConjecturesForMathlib.RepresentationTheory.Homological.ContCohomology.Sha
 public import FormalConjecturesForMathlib.RingTheory.Bialgebra.Cohomology
@@ -260,6 +263,7 @@ public import FormalConjecturesForMathlib.SetTheory.Cardinal.Continuum
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.ContinuumHypothesis
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.SimpleGraph
 public import FormalConjecturesForMathlib.SetTheory.Ordinal.PartitionRelation
+public import FormalConjecturesForMathlib.Statistics.ConfidenceInterval
 public import FormalConjecturesForMathlib.Tactic.Linter.Term
 public import FormalConjecturesForMathlib.Topology.AbsoluteNeighborhoodRetract
 public import FormalConjecturesForMathlib.Topology.Algebra.InfiniteSum.Group
