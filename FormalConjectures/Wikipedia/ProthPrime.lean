@@ -22,9 +22,9 @@ public import FormalConjecturesUtil
 
 A *Proth number* is an integer $N = k \cdot 2^n + 1$ where $k$ is odd and $1 \le k < 2^n$. A Proth
 number that is prime is called a *Proth prime*. Proth proved in 1878 that a Proth number $N$ is
-prime if and only if $-1$ is an $((N - 1)/2)$-th power modulo $N$. While infinitely many Proth
-primes exist across varying multipliers (for instance by Dirichlet's theorem), it remains open
-whether any fixed odd multiplier such as $k = 3$ produces infinitely many primes $3 \cdot 2^n + 1$.
+prime if and only if $-1$ is an $((N - 1)/2)$-th power modulo $N$. It remains open whether
+infinitely many Proth primes exist, and in particular whether any fixed odd multiplier such as
+$k = 3$ produces infinitely many primes $3 \cdot 2^n + 1$.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Proth_prime)
