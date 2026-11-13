@@ -54,6 +54,7 @@ lemma baumgartner_headline (V : Type*) [AddCommGroup V] [Module ℚ V] :
       (∀ Y, IsAPOfLength Y 3 → (X ∩ Y).ncard ≤ 2) :=
   baumgartner_strong V 3
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The answer is no; Erdős and Graham report this was proved by Baumgartner, presumably referring to
 the paper [Ba75], which does not state this exactly, but the following simple construction is
@@ -76,6 +77,7 @@ formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v
 theorem erdos_198 : ¬ (∀ A : Set ℕ, IsSidon A → (∃ Y, IsAPOfLength Y ⊤ ∧ Y ⊆ Aᶜ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In fact one such sequence is $n! + n$.
 

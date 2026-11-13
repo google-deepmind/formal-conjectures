@@ -55,6 +55,7 @@ noncomputable def maxUpTo (g : ℕ → ℕ) (x : ℕ) : ℕ :=
 noncomputable def H (x : ℕ) : ℝ :=
   ∑ n ∈ Finset.Ico 1 x, (f n : ℝ) / n
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is it true that, for almost all $n$, $f(n)=o(n\log\log n)$ and
 $F(n)\gg n\log\log n$?
 
@@ -70,6 +71,7 @@ theorem erdos_878.parts.i :
         (fun n : A ↦ (F n : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is it true that $\max_{n\le x}f(n)\sim x\log x/\log\log x$?
 
 The answer is yes; a Lean proof is given in [Ki26]. -/
@@ -89,6 +91,7 @@ theorem erdos_878.parts.iii_all :
     ¬ ∀ x : ℕ, maxUpTo f x = maxUpTo F x := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is it true that, for all large $x$, $\max_{n\le x}f(n)=\max_{n\le x}F(n)$?
 
 This is false, as formalized in Lean 4 by Ilia Pauzner using Gemini 4 Argon. -/
@@ -133,6 +136,7 @@ theorem erdos_878.variants.second_question_subsequence :
         atTop (𝓝 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For almost all $n$, $F(n)\sim \frac12 n\log\log n$.
 A Lean proof is given in [Ki26]. -/
 @[category research solved, AMS 11,
@@ -179,6 +183,7 @@ noncomputable def h (x : ℕ) : ℕ :=
 /-- The function $m(x)=\max_{n\le x}f(n)$ from [Er84e]. -/
 noncomputable def m (x : ℕ) : ℕ := maxUpTo f x
 
+set_option linter.style.formal_proof_palomar false in
 /-- Formula (17) of [Er84e]: does $(x h(x)-m(x))/x\to\infty$?
 
 The answer is yes; a Lean proof is given in [Ki26]. -/

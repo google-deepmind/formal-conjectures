@@ -63,6 +63,7 @@ $\epsilon < 1$ comparison in the problem meaningful. -/
 theorem tauPlus_le_tau (n : ℕ) : tauPlus n ≤ n.divisors.card :=
   Finset.card_image_le
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\tau(n)$ count the divisors of $n$ and $\tau^+(n)$ count the number of $k$ such that $n$ has a
 divisor in $[2^k, 2^{k+1})$. Is it true that, for all $\epsilon > 0$,

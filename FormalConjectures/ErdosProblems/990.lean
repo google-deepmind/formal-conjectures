@@ -55,6 +55,7 @@ noncomputable def M (f : ℂ[X]) : ℝ :=
   (∑ i ∈ Finset.range (f.natDegree + 1), ‖f.coeff i‖) /
     Real.sqrt (‖f.coeff 0‖ * ‖f.leadingCoeff‖)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f=a_0+\cdots+a_dx^d\in \mathbb{C}[x]$ be a polynomial. Is it true that, if $f$ has roots
 $z_1,\ldots,z_d$ with corresponding arguments $\theta_1,\ldots,\theta_d\in [0,2\pi]$, then for all

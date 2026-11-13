@@ -34,6 +34,7 @@ open Filter
 
 namespace Erdos541
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_1, \dots, a_p$ be (not necessarily distinct) residues modulo a prime $p$, such that there
 exists some $r$ so that if $S \subseteq [p]$ is non-empty and

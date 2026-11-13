@@ -80,6 +80,7 @@ lemma a_6 : a 6 = 17 := by rfl
 lemma a_7 : a 7 = 47 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: The sequence contains only 1's and primes.
 

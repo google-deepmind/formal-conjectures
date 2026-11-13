@@ -270,6 +270,7 @@ theorem minimum_overlap.variants.lower.erdos_1955 :
     (1 : ℝ) / 4 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A lower bound of $1 - frac{1}{\sqrt 2}$.
 Scherk (written communication), see
@@ -282,6 +283,7 @@ theorem minimum_overlap.variants.lower.scherk_1955 :
     1 - (√2)⁻¹ < atTop.liminf MinOverlapQuotient := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A lower bound of $\frac{4 - \sqrt{6}}{5}$.
 See [On the intersection of a linear set with the translation of its complement](https://bibliotekanauki.pl/articles/969027)
@@ -312,6 +314,7 @@ theorem minimum_overlap.variants.lower.white_2022 :
     0.379005 ≤ atTop.liminf MinOverlapQuotient := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The example (with $N$ even), $A = \{\frac N 2 + 1, \dots, \frac{3N}{2}\}$
 shows an upper bound of $\frac 1 2$.

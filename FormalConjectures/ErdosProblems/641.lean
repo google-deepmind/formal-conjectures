@@ -57,6 +57,7 @@ def ErdosHajnalProperty (f : ℕ → ℕ) : Prop :=
     ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       (f k : ℕ∞) ≤ G.chromaticNumber → HasCommonVertexCycles G k
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there some function $f$ such that for all $k\geq 1$ if a finite graph $G$ has chromatic
 number $\geq f(k)$ then $G$ has $k$ edge disjoint cycles on the same set of vertices?

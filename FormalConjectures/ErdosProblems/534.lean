@@ -54,6 +54,7 @@ def ahlswedeKhachatrian (N q : ℕ) : Finset ℕ :=
   (Finset.Icc 1 N).filter fun m ↦
     (∏ p ∈ primePrefix N q, p) ∣ m ∨ ∃ p ∈ primePrefix N q, 2 * p ∣ m
 
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the largest possible subset $A\subseteq\{1,\ldots,N\}$ which contains $N$ such that
 $\mathrm{gcd}(a,b)>1$ for all $a\neq b\in A$?

@@ -88,6 +88,7 @@ lemma a_6 : a 6 = 11 := by delta a; repeat rw [continuedFractionDenominator]; no
 lemma a_7 : a 7 = 59 := by delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: The sequence contains all prime numbers which end with a 1 or 9 (i.e., primes $p \equiv 1$ or $9 \pmod{10}$).
 

@@ -29,6 +29,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos73
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\ge 0$. Let $G$ be a graph such that every subgraph $H$ contains an independent set of size
 $\ge (n-k)/2$, where $n$ is the number of vertices of $H$. Must $G$ be the union of a bipartite

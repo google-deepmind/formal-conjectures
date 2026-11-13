@@ -89,6 +89,7 @@ def HasFiniteConcentration (M : Matrix X X ℝ) : Prop :=
 -- In the docstring below, matrix rows are separated by `\cr` rather than `\\`: the website's
 -- markdown processing strips one backslash from `\\` before KaTeX runs, which destroys the
 -- row breaks.
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture 3.3 (Roff-Willerton, 2026).** A finite metric space admits a microscopic weighting
 if and only if its distance matrix has finite concentration.

@@ -33,6 +33,7 @@ open SimpleGraph
 namespace Erdos577
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 If $G$ is a graph with $4k$ vertices and minimum degree at least $2k$ then $G$ contains $k$
 vertex-disjoint $4$-cycles.
