@@ -57,7 +57,26 @@ lemma τ_one : τ 1 = 1 := by
 
 @[category test, AMS 11]
 lemma τ_two : τ 2 = -24 := by
-  sorry
+  -- Only the `n = 1` factor contributes to the `X`-coefficient of the product; eventual
+  -- constancy of the convergent product transfers this to `Δ`.
+  have key : ∀ s : Finset ℕ+,
+      coeff 1 (∏ n ∈ s, ((1 - X ^ (n : ℕ)) ^ 24 : PowerSeries ℤ)) =
+        if 1 ∈ s then -24 else 0 := by
+    intro s
+    induction s using Finset.induction_on with
+    | empty => simp
+    | insert a s ha ih =>
+      rw [Finset.prod_insert ha, coeff_one_mul, ih, coeff_one_pow]
+      rcases eq_or_ne a 1 with rfl | h
+      · simp [ha, coeff_one]
+      · have h' : (a : ℕ) ≠ 1 := by simpa using h
+        simp [coeff_one, coeff_X_pow, h.symm, h'.symm]
+  obtain ⟨i, hi⟩ := by
+    simpa using ((continuous_coeff ℤ 1).tendsto _).comp multipliable.hasProd
+  have h2 := hi (insert 1 i) (Finset.subset_insert _ _)
+  rw [key] at h2
+  simp only [Finset.mem_insert_self, if_pos] at h2
+  simp [τ, Δ, show (2 : ℕ) = 1 + 1 from rfl, coeff_succ_X_mul, ← h2]
 
 
 /-- The Ramanujan-Petersson conjecture: $|\tau(p)| \le 2 p^{11/2}$ for primes $p$. -/
