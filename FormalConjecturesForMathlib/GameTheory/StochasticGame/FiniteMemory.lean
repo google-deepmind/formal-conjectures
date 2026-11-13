@@ -29,8 +29,11 @@ own observed action given the public record. Its canonical strategy is therefore
 opponent policies, including at opponent-null histories. Zero own-action likelihood resets the
 memory distribution to a designated state.
 
-Reference: Hansen, Ibsen-Jensen and Neyman, *The Big Match with a Clock and a Bit of Memory*,
-§2.2 and Theorem 1, https://doi.org/10.1287/moor.2022.1267.
+The clock and randomized-memory convention is based on Hansen, Ibsen-Jensen and Neyman,
+*The Big Match with a Clock and a Bit of Memory*, §2.2 and Theorem 1,
+https://doi.org/10.1287/moor.2022.1267. Here the update kernel also receives the observed next
+state, as specified in https://github.com/google-deepmind/formal-conjectures/issues/7959;
+the paper's §2.2 update kernel omits that argument.
 -/
 
 @[expose] public section

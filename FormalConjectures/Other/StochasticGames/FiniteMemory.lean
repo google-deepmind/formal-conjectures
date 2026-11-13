@@ -23,8 +23,11 @@ public import FormalConjecturesUtil
 Four separate questions restrict the witnessing profiles to clocked finite-private-memory
 controllers with randomized updates. Deviations remain unrestricted behavioral strategies.
 
-The strategy convention follows Hansen, Ibsen-Jensen and Neyman, *The Big Match with a Clock
-and a Bit of Memory*, §2.2 and Theorem 1, https://doi.org/10.1287/moor.2022.1267.
+The clock and randomized updates follow Hansen, Ibsen-Jensen and Neyman, *The Big Match with
+a Clock and a Bit of Memory*, §2.2 and Theorem 1, https://doi.org/10.1287/moor.2022.1267.
+This formulation also lets the update use the observed next state, as chosen in issue
+https://github.com/google-deepmind/formal-conjectures/issues/7959; that argument is absent
+from the paper's §2.2 update kernel.
 The multiplayer equilibrium questions are the finite-memory refinements in
 https://we-solve.github.io/problems/equilibrium-payoffs-in-finite-multiplayer-stochastic-games/.
 
