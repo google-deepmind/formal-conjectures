@@ -170,6 +170,7 @@ public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Basic
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Equilibrium
 public import FormalConjecturesForMathlib.GameTheory.StochasticGame.Payoffs
+public import FormalConjecturesForMathlib.GameTheory.StochasticGame.UniformDiscount
 public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Group.Hyperbolic
 public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
