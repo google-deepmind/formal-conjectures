@@ -68,8 +68,11 @@ $$Z(G) \le \alpha(G) + 1.$$
 This conjecture is **false**. Fischer gives a connected 24-vertex
 counterexample with maximum degree $3$; see
 [arXiv:2607.23664](https://arxiv.org/abs/2607.23664).
+Wentao Li formalized Fischer's counterexample in Lean, proving $Z(G) \ge 11$
+and $\alpha(G) \le 9$.
 -/
-@[category research solved, question, AMS 5]
+@[category research solved, question, AMS 5,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000014"]
 theorem tx_graffiti_conjecture_2 :
     ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj] (_hConn : G.Connected)
