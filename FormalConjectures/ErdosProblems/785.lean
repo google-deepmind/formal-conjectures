@@ -96,24 +96,30 @@ theorem erdos_785.variants.danzer :
 
 /--
 Sárközy and Szemerédi [SaSz94] proved that it is impossible for
-$$A(x)B(x)-x=o(A(x)).$$
+$$A(x)B(x)-x=o(A(x)),$$
+even along a subsequence for the sparser set: there exists $c > 0$ such that
+$A(x)B(x) - x \ge c \min(A(x), B(x))$ for all sufficiently large $x$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.sarkozy_szemeredi (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
     (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B) :
-    ¬ (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) =o[atTop]
-      (fun x : ℕ => (counting A x : ℝ)) := by
+    ∃ c > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
+      c * (min (counting A x) (counting B x) : ℝ) ≤
+        (counting A x * counting B x : ℝ) - (x : ℝ) := by
   sorry
 
 /--
-Chen and Fang [ChFa15] proved $A(x)B(x)-x\ll \min(A(x),B(x))^c$ cannot hold for any constant
-$c>0$. In particular $A(x)B(x)-x\ll A(x)^c$ cannot hold when $A$ is the sparser of the two sets.
+Chen and Fang [ChFa15, Theorem 0.2] proved that for any $M > 1$,
+$$A(x)B(x) - x \ge \min(A(x), B(x))^M$$
+for all sufficiently large $x$. In particular $A(x)B(x)-x\ll A(x)^c$ cannot hold for any constant
+$c>0$ when $A$ is the sparser of the two sets.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.chen_fang (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
-    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B) (c : ℝ) (hc : 0 < c) :
-    ¬ (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) =O[atTop]
-      (fun x : ℕ => (min (counting A x) (counting B x) : ℝ) ^ c) := by
+    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B) (M : ℝ) (hM : 1 < M) :
+    ∀ᶠ x : ℕ in atTop,
+      (min (counting A x) (counting B x) : ℝ) ^ M ≤
+        (counting A x * counting B x : ℝ) - (x : ℝ) := by
   sorry
 
 /--
@@ -142,19 +148,18 @@ theorem erdos_785.variants.ruzsa_upper_bound (w : ℕ → ℝ) (hw : Tendsto w a
   sorry
 
 /--
-Ruzsa [Ru17] proves that, if $a^*(x)=\max A \cap [1,x]$ and $A$ and $B$ satisfy the conditions
-in the problem then (after possibly changing the roles of $A$ and $B$)
+Ruzsa [Ru17, Theorem 1.2] proves that, if $a^*(x)=\max A \cap [1,x]$, $A$ and $B$ satisfy the
+conditions in the problem, and $A$ is the sparser set with $A(2x)/A(x) \to 1$ (which holds after
+possibly swapping the roles of $A$ and $B$ by Narkiewicz's theorem), then
 $$A(x)B(x)-x > (1-o(1))\frac{a^*(x)}{A(x)}.$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.ruzsa_lower_bound (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
-    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B) :
-    (∀ ε > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
-        (1 - ε) * (aStar A x : ℝ) / (counting A x : ℝ)
-          < (counting A x * counting B x : ℝ) - (x : ℝ)) ∨
-    (∀ ε > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
-        (1 - ε) * (aStar B x : ℝ) / (counting B x : ℝ)
-          < (counting A x * counting B x : ℝ) - (x : ℝ)) := by
+    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B)
+    (hsmall : Tendsto (fun x : ℕ => (counting A (2 * x) : ℝ) / (counting A x : ℝ)) atTop (𝓝 1)) :
+    ∀ ε > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
+      (1 - ε) * (aStar A x : ℝ) / (counting A x : ℝ)
+        < (counting A x * counting B x : ℝ) - (x : ℝ) := by
   sorry
 
 /--
