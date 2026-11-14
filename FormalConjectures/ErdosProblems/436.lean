@@ -122,10 +122,85 @@ theorem erdos_436.variants.seven_two : Λ 7 2 = 1649375 := by
 theorem erdos_436.variants.three_three : Λ 3 3 = 23532 := by
   sorry
 
+/-- The modulus $4 \prod n$ over $1 \le n \le N$ with $3 \nmid n$, used for `even_three`. -/
+private def evenThreeModulus (N : ℕ) : ℕ := 4 * ∏ n ∈ Finset.Icc 1 N with ¬ 3 ∣ n, n
+
+@[category API, AMS 11]
+private theorem evenThreeModulus_pos (N : ℕ) : 0 < evenThreeModulus N :=
+  Nat.mul_pos (by norm_num) (Finset.prod_pos fun n hn => by
+    rw [Finset.mem_filter, Finset.mem_Icc] at hn
+    omega)
+
+@[category API, AMS 11]
+private theorem coprime_three_evenThreeModulus (N : ℕ) : Nat.Coprime 3 (evenThreeModulus N) := by
+  refine Nat.Coprime.mul_right (by decide) (Nat.Coprime.prod_right fun n hn => ?_)
+  rw [Finset.mem_filter] at hn
+  exact (Nat.Prime.coprime_iff_not_dvd Nat.prime_three).mpr hn.2
+
+/-- If $p \equiv 3 \pmod{M}$, then $J(n \mid p) = -1$ for $1 \le n \le N$ with
+$n \equiv 2 \pmod 3$, by reciprocity modulo $4n$. -/
+@[category API, AMS 11]
+private theorem jacobiSym_eq_neg_one {N p n : ℕ} (hp : (p : ZMod (evenThreeModulus N)) = 3)
+    (hn1 : 1 ≤ n) (hnN : n ≤ N) (hn3 : n % 3 = 2) : jacobiSym n p = -1 := by
+  have hdvd : 4 * n ∣ evenThreeModulus N := mul_dvd_mul_left 4
+    (Finset.dvd_prod_of_mem (fun i => i)
+      (Finset.mem_filter.mpr ⟨Finset.mem_Icc.mpr ⟨hn1, hnN⟩, by omega⟩))
+  have hmod : p % (4 * n) = 3 := by
+    have h : p ≡ 3 [MOD evenThreeModulus N] :=
+      (ZMod.natCast_eq_natCast_iff' p 3 (evenThreeModulus N)).mp (by simpa using hp)
+    have h' := Nat.ModEq.of_dvd hdvd h
+    rwa [Nat.ModEq, Nat.mod_eq_of_lt (show 3 < 4 * n by omega)] at h'
+  have hodd : Odd p := by
+    have h := Nat.mod_mod_of_dvd p (show 2 ∣ 4 * n from ⟨2 * n, by ring⟩)
+    rw [hmod] at h
+    exact Nat.odd_iff.mpr (by omega)
+  have h2 : ((n : ℕ) : ℤ) % ((3 : ℕ) : ℤ) = 2 := by push_cast; omega
+  rw [jacobiSym.mod_right' n hodd, hmod, jacobiSym.mod_left, h2, jacobiSym.at_two (by decide),
+    ZMod.χ₈_nat_eq_if_mod_eight]
+  norm_num
+
+/-- For even $k$, a $k$th power residue modulo a prime $p$ has $J(n \mid p) \ne -1$. -/
+@[category API, AMS 11]
+private theorem not_isPowerResidue_of_even {k p n : ℕ} [Fact p.Prime] (hk : Even k)
+    (h : jacobiSym n p = -1) : ¬ IsPowerResidue k p n := by
+  rintro ⟨-, x, hx⟩
+  obtain ⟨t, rfl⟩ := hk
+  have hsq : IsSquare ((n : ℤ) : ZMod p) := ⟨x ^ t, by rw [Int.cast_natCast, ← hx, pow_add]⟩
+  exact ZMod.nonsquare_iff_jacobiSym_eq_neg_one.mp h hsq
+
+/-- For even $k$ and a prime $p \equiv 3 \pmod{M}$, $M$ the modulus for $N + 2$:
+$r(k, 3, p) \ge N$. -/
+@[category API, AMS 11]
+private theorem le_r_of_even {k N p : ℕ} (hk : Even k) (hp : p.Prime)
+    (hpM : (p : ZMod (evenThreeModulus (N + 2))) = 3) : (N : ℕ∞) ≤ r k 3 p := by
+  have := Fact.mk hp
+  refine le_iInf₂ fun n hn => ?_
+  obtain ⟨hn1, hres⟩ := hn
+  by_contra hlt
+  have hnN : n < N := by exact_mod_cast not_le.mp hlt
+  obtain ⟨i, hi, hi3⟩ : ∃ i < 3, (n + i) % 3 = 2 := by
+    rcases (by omega : n % 3 = 0 ∨ n % 3 = 1 ∨ n % 3 = 2) with h | h | h
+    · exact ⟨2, by norm_num, by omega⟩
+    · exact ⟨1, by norm_num, by omega⟩
+    · exact ⟨0, by norm_num, by omega⟩
+  exact not_isPowerResidue_of_even hk
+    (jacobiSym_eq_neg_one hpM (by omega) (by omega) hi3) (hres i hi)
+
 /-- Lehmer and Lehmer [LeLe62] proved $\Lambda(k, 3) = \infty$ for all even $k$. -/
 @[category research solved, AMS 11]
 theorem erdos_436.variants.even_three : ∀ k ≥ 2, Even k → Λ k 3 = ⊤ := by
-  sorry
+  intro k _ hk
+  refine ENat.eq_top_iff_forall_ge.mpr fun N => ?_
+  unfold runLimsup
+  apply le_limsup_of_frequently_le'
+  rw [frequently_inf_principal, frequently_atTop]
+  intro a
+  have : NeZero (evenThreeModulus (N + 2)) := NeZero.of_pos (evenThreeModulus_pos _)
+  have hunit : IsUnit ((3 : ℕ) : ZMod (evenThreeModulus (N + 2))) :=
+    (ZMod.isUnit_iff_coprime 3 _).mpr (coprime_three_evenThreeModulus _)
+  -- Dirichlet: arbitrarily large primes `p ≡ 3 (mod M)`.
+  obtain ⟨p, hpa, hp, hpM⟩ := Nat.forall_exists_prime_gt_and_eq_mod hunit a
+  exact ⟨p, hpa.le, hp, le_r_of_even hk hp (by simpa using hpM)⟩
 
 /-- Graham [Gr64g] proved $\Lambda(k, l) = \infty$ for all $k \geq 2$ and $l \geq 4$. -/
 @[category research solved, AMS 11]
