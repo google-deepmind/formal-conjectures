@@ -80,7 +80,8 @@ equal to $a(i+j)$ for all $i,j = 0, \ldots, n$. Then $P(n)/2^{n(n+3)}$ is a posi
 Proved by [ZS18], Theorem 1.2: $2^{-n(n+3)} |P_{i+j}|_{0 \le i,j \le n}$ is a positive odd
 integer for every $n \in \mathbb{N}$, where $P_n$ are the Catalan-Larcombe-French numbers.
 -/
-@[category research solved, AMS 11 15]
+@[category research solved, AMS 11 15, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000018"]
 theorem conjecture (n : ℕ) :
     let detP := (hankelMatrix n).det
     let pow2 := (2 : ℤ) ^ (n * (n + 3))
