@@ -49,17 +49,30 @@ $\frac{1}{a} = \frac{1}{b_1} + \cdots + \frac{1}{b_k}$ with distinct $a, b_1, \l
 def IsMaxNoUnitFractionSumCard (N m : ℕ) : Prop :=
   IsGreatest {k | ∃ A ⊆ Finset.Icc 1 N, NoUnitFractionSum A ∧ A.card = k} m
 
-def erdos_301.parts.i.answer : ℝ := sorry
+def erdos_301.parts.i.liminf.answer : ℝ := sorry
 
 /--
 Let $f(N)$ be the size of the largest $A \subseteq \{1, \ldots, N\}$ such that there are no
 solutions to
 $$\frac{1}{a} = \frac{1}{b_1} + \cdots + \frac{1}{b_k}$$
-with distinct $a, b_1, \ldots, b_k \in A$. Estimate $f(N)$.
+with distinct $a, b_1, \ldots, b_k \in A$. What is $\liminf_{N \to \infty} f(N) / N$?
 -/
 @[category research open, question value, AMS 11]
-theorem erdos_301.parts.i (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoUnitFractionSumCard N (f N)) :
-    Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 erdos_301.parts.i.answer) := by
+theorem erdos_301.parts.i.liminf (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoUnitFractionSumCard N (f N)) :
+    liminf (fun N : ℕ => (f N : ℝ) / N) atTop = erdos_301.parts.i.liminf.answer := by
+  sorry
+
+def erdos_301.parts.i.limsup.answer : ℝ := sorry
+
+/--
+Let $f(N)$ be the size of the largest $A \subseteq \{1, \ldots, N\}$ such that there are no
+solutions to
+$$\frac{1}{a} = \frac{1}{b_1} + \cdots + \frac{1}{b_k}$$
+with distinct $a, b_1, \ldots, b_k \in A$. What is $\limsup_{N \to \infty} f(N) / N$?
+-/
+@[category research open, question value, AMS 11]
+theorem erdos_301.parts.i.limsup (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoUnitFractionSumCard N (f N)) :
+    limsup (fun N : ℕ => (f N : ℝ) / N) atTop = erdos_301.parts.i.limsup.answer := by
   sorry
 
 /--
