@@ -30,7 +30,7 @@ open Filter
 
 namespace Erdos409
 
-def erdos_409.parts.i.answer : ℕ := sorry
+def erdos_409.parts.i.answer (n : ℕ) : ℕ := sorry
 
 /--
 How many iterations of $n\mapsto\phi(n) + 1$ are needed before a prime is reached?
@@ -40,7 +40,7 @@ How many iterations of $n\mapsto\phi(n) + 1$ are needed before a prime is reache
 -- it becomes static. See also https://oeis.org/A39651
 @[category research open, question value, AMS 11]
 theorem erdos_409.parts.i (n : ℕ) (hn : 0 < n) :
-    IsLeast { i | (φ · + 1)^[i] n |>.Prime } erdos_409.parts.i.answer := by
+    IsLeast { i | (φ · + 1)^[i] n |>.Prime } (erdos_409.parts.i.answer n) := by
   sorry
 
 /-- If $n > 0$, then the iteration $n\mapsto\phi(n) + 1$ necessarily
@@ -118,17 +118,17 @@ theorem erdos_409.parts.ii :
     ∃ (p : ℕ) (hp : p.Prime), { n | ∃ i, (φ · + 1)^[i] n = p }.Infinite := by
   sorry
 
-def erdos_409.parts.iii.answer : ℝ := sorry
+def erdos_409.parts.iii.answer (p : ℕ) : ℝ := sorry
 
 /--
 What is the density of $n$ which reach any fixed prime under the iteration $n\mapsto\phi(n) + 1$?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_409.parts.iii (p : ℕ) (h : p.Prime) :
-    { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity erdos_409.parts.iii.answer := by
+    { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity (erdos_409.parts.iii.answer p) := by
   sorry
 
-def erdos_409.variants.sigma.answer : ℕ := sorry
+def erdos_409.variants.sigma.answer (n : ℕ) : ℕ := sorry
 
 /--
 If the iteration $n\mapsto\sigma(n) - 1$ starting at $n > 1$ reaches a prime, how many
@@ -139,7 +139,7 @@ iterations are needed before a prime is reached?
 @[category research open, question value, AMS 11]
 theorem erdos_409.variants.sigma (n : ℕ) (hn : n > 1)
     (hterm : ∃ i, (σ 1 · - 1)^[i] n |>.Prime) :
-    IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } erdos_409.variants.sigma.answer := by
+    IsLeast { i | (σ 1 · - 1)^[i] n |>.Prime } (erdos_409.variants.sigma.answer n) := by
   sorry
 
 /-- If $n > 1$ then the iteration $n\mapsto\sigma(n) - 1$ necessarily reaches a prime.
