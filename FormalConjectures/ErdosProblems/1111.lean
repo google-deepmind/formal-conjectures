@@ -71,7 +71,8 @@ theorem erdos_1111 :
 El-Zahar and Erdős note that a result of Wagon [Wa80b] implies $d(t,2)\leq \binom{t}{2}+1$, where
 $d(t,c)$ is the minimal $d$ in the problem.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000024"]
 theorem erdos_1111.variants.wagon (t : ℕ) :
     ∀ (V : Type*) [Finite V] (G : SimpleGraph V),
       ((t.choose 2 + 1 : ℕ) : ℕ∞) ≤ G.chromaticNumber → G.CliqueFree t →
