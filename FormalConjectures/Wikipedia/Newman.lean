@@ -36,7 +36,7 @@ infinitely many nonnegative integers such that $p(n) \equiv r \pmod m$.
 -/
 @[category research open, AMS 5 11]
 theorem newman_conjecture (m r : ℕ) (hr : r < m) :
-  Infinite {n : ℕ | (Nat.partitionNumber n : ZMod m) = r} := by
+  Infinite {n : ℕ | Nat.partitionNumber n % m = r} := by
   sorry
 
 /--
@@ -45,7 +45,7 @@ $m | p(n)$.
 -/
 @[category textbook, AMS 5 11]
 theorem newman_implies_erdos (m : ℕ) (hm : m.Prime) (P: type_of% newman_conjecture) :
-  ¬ IsEmpty {n : ℕ | (Nat.partitionNumber n : ZMod m) = (0 : ℕ)} := by
+  ¬ IsEmpty {n : ℕ | Nat.partitionNumber n % m = (0 : ℕ)} := by
 
   specialize P m 0 (Nat.Prime.pos hm)
   intro h_contra
@@ -57,7 +57,7 @@ for some $n > 0, m | p(n)$.
 -/
 @[category textbook, AMS 5 11]
 theorem newman_implies_erdos_ivic' (P: type_of% newman_conjecture) :
-  Infinite {m : ℕ | m.Prime ∧ ¬ IsEmpty {n : ℕ | (Nat.partitionNumber n : ZMod m) = (0 : ℕ)}} := by
+  Infinite {m : ℕ | m.Prime ∧ ¬ IsEmpty {n : ℕ | Nat.partitionNumber n % m = (0 : ℕ)}} := by
 
   rw [← not_finite_iff_infinite]
   intro hfin
