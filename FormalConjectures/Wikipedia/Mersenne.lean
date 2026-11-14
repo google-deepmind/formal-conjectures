@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 - [Wikipedia: Mersenne conjectures](https://en.wikipedia.org/wiki/Mersenne_conjectures)
 - [Wikipedia: Catalan's Mersenne conjecture](https://en.wikipedia.org/wiki/Catalan%27s_Mersenne_conjecture)
 - [MathWorld: Catalan-Mersenne Number](https://mathworld.wolfram.com/Catalan-MersenneNumber.html)
+- S. S. Wagstaff Jr., *Divisors of Mersenne numbers*, Math. Comp. 40 (1983), 385–397.
 -/
 
 @[expose] public section
@@ -135,6 +136,20 @@ Are there infinitely many Mersenne primes?
 theorem infinitely_many_mersenne_primes :
   Set.Infinite { p : ℕ | (mersenne p).Prime } := by
     sorry
+
+/-- `mersenneExponentCount y` counts the exponents $p < y$ such that $2^p - 1$ is a
+Mersenne prime. -/
+def mersenneExponentCount (y : ℕ) : ℕ := Nat.count (fun p => (mersenne p).Prime) y
+
+open Filter Asymptotics in
+/-- The *Lenstra–Pomerance–Wagstaff conjecture* states that the number of exponents $p < y$
+such that $2^p - 1$ is a Mersenne prime is asymptotic to $e^\gamma \log_2 y$ as $y \to \infty$,
+where $\gamma$ is the Euler–Mascheroni constant. -/
+@[category research open, AMS 11]
+theorem lenstra_pomerance_wagstaff_conjecture :
+    (fun y => (mersenneExponentCount y : ℝ)) ~[atTop]
+      (fun y => Real.exp Real.eulerMascheroniConstant * Real.logb 2 y) := by
+  sorry
 
 /--
 The first five Catalan-Mersenne numbers $c_0, \ldots, c_4$ are known to be prime.
