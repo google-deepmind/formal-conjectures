@@ -39,20 +39,17 @@ contains an elementary abelian subgroup of order $2^{85} > 2^{84}$.
 
 
 -- define the residually finite group G
-def Residually_Finite (G : Type*) [Group G] : Prop := ∀ g : G, g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
+--def Residually_Finite (G : Type*) [Group G] : Prop := ∀ g : G, g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
+
+
+class ResiduallyFinite (G : Type*) extends Group G where
+  fin_sep_one (g : G) : g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
 
 
 @[category research open, question, AMS 20]
-theorem kourovka_20_15 (G : Type*) [Group G] (s : Type) (h_inf : Infinite s) (h_res_fin : Residually_Finite G) (h_emb : ∃ f : G →* Equiv.Perm s, Function.Injective f) : ∃ ι : s → FiniteGrp , ∃ ψ : G →* ((i:s)→ ι i), Function.Injective ψ
+theorem kourovka_20_15 (G : Type*) [Group G] (s : Type) (h_inf : Infinite s) (h_res_fin : ResiduallyFinite G) (h_emb : ∃ f : G →* Equiv.Perm s, Function.Injective f) : ∃ ι : s → FiniteGrp , ∃ ψ : G →* ((i:s)→ ι i), Function.Injective ψ
     := by
   sorry
-
-example (hG : Residually_Finite G) : True := by
-  trivial
-
--- universe u v
--- variable {s:Type u} (F : s→ FiniteGrp.{v})
--- #check ((i:s)→ F i)
 
 
 end Kourovka.«20.15»
