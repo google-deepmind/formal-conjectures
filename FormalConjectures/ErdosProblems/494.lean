@@ -94,7 +94,8 @@ theorem erdos_494.variants.k_eq_3_card_gt_6 :
 Selfridge and Straus [SeSt58] showed that the conjecture is true
 when $k = 4$ and $|A| > 12$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000008"]
 theorem erdos_494.variants.k_eq_4_card_gt_12 :
     ∀ card > 12, Erdos494Unique 4 card := by
   sorry
@@ -103,7 +104,8 @@ theorem erdos_494.variants.k_eq_4_card_gt_12 :
 Selfridge and Straus [SeSt58] proved that $A$ is determined by $A_k$
 if $|A|$ is divisible by a prime greater than $k$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000008"]
 theorem erdos_494.variants.card_divisible_by_prime_gt_k :
     ∀ (k card p : ℕ), p.Prime → k ∈ Set.Ioo 0 p → p ∣ card → Erdos494Unique k card := by
   sorry
