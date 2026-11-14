@@ -25,6 +25,8 @@ public import FormalConjecturesUtil
 - [Ben Green's Open Problem 81](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#section.11)
 - [Ru04] Ruzsa, Imre Z., Negative values of cosine sums. Acta Arith. (2004), 179-186.
 - [Be25c] B. Bedert, Polynomial bounds for the Chowla Cosine Problem. arXiv:2509.05260 (2025).
+- [Sh26] A. Shankar, [A Log-Free $n^{1/5}$ Bound for Chowla's Cosine Problem](https://arxiv.org/abs/2609.05338)
+  (2026), Theorem 1.1.
 -/
 
 @[expose] public section
@@ -66,6 +68,18 @@ theorem erdos_510.variants.bedert :
     ∃ (c : ℝ) (hc : 0 < c),
       ∀ᶠ N in atTop, ∀ (A : Finset ℕ), 0 ∉ A → #A = N →
       ∃ θ, ∑ n ∈ A, cos (n * θ) < - c * N ^ (1 / 7 : ℝ) := by
+  sorry
+
+/--
+Shankar [Sh26, Theorem 1.1] proved that there is an absolute constant $c > 0$ such that
+every nonempty finite set $A$ of positive integers admits a $\theta$ with
+$\sum_{n\in A}\cos(n\theta) < -c|A|^{1/5}$, removing the logarithmic loss in Bedert's bound.
+-/
+@[category research solved, AMS 11]
+theorem erdos_510.variants.shankar :
+    ∃ (c : ℝ) (hc : 0 < c),
+      ∀ (A : Finset ℕ), A.Nonempty → 0 ∉ A →
+      ∃ θ, ∑ n ∈ A, cos (n * θ) < - c * (#A : ℝ) ^ (1 / 5 : ℝ) := by
   sorry
 
 -- TODO(firsching): add the additional material
