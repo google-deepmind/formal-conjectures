@@ -103,7 +103,8 @@ theorem ramsey_number_five_five :
 Lower bound $43 \le R(5,5)$, equivalently: there exists a graph on $42$ vertices with no
 $5$-clique and no independent set of size $5$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000020"]
 theorem ramsey_number_five_five_lower_bound :
     ∃ G : SimpleGraph (Fin 42), G.CliqueFree 5 ∧ (Gᶜ).CliqueFree 5 := by
   sorry
