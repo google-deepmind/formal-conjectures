@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Set.Density
+public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
 
 /-!
 # Erdős Problem 347

@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Geometry.Euclidean
+public import FormalConjecturesForMathlib.Geometry.«2d»
+public import FormalConjecturesForMathlib.Geometry.«3d»
 
 /-!
 # Erdős Problem 503

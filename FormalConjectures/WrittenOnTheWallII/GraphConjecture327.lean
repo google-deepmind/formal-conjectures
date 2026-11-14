@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
 
 /-!
 # Written on the Wall II - Conjecture 327

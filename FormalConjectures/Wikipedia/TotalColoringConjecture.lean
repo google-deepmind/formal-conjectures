@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.TotalColouring
 
 /-!
 # The total colouring conjecture (Behzad 1965, Vizing 1968)

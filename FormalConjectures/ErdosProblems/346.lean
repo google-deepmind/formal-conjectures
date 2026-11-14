@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.NumberTheory.AdditivelyComplete
+public import FormalConjecturesForMathlib.NumberTheory.Lacunary
 
 /-!
 # Erdős Problem 346

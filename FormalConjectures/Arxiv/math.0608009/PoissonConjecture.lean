@@ -17,6 +17,7 @@ module
 
 public import FormalConjectures.Wikipedia.JacobianConjecture
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Algebra.MvPolynomial.PoissonBracket
 
 /-!
 # The Poisson Conjecture

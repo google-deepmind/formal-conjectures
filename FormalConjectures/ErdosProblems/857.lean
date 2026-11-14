@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SetFamily.Sunflower
 
 /-!
 # Erdős Problem 857

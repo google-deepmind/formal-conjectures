@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public meta import Mathlib.Data.Nat.MaxPowDiv
 
 /-!
 # Largest odd divisor of $a(n-1) + \textrm{prime}(n)$

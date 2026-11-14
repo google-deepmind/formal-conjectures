@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Mycielski
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 
 /-!
 # Erdős Problem 627

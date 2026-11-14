@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
+public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Uniform
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 
 /-!
 # Erdős Problem 593

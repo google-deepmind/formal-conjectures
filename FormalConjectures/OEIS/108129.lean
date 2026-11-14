@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
+public import FormalConjecturesForMathlib.Order.Nat
 
 /-!
 # Riesel Problem

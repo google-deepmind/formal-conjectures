@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.LinearAlgebra.SpecialLinearGroup
 
 /-!
 # A conjecture by Margulis on matrix groups

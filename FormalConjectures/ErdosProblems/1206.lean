@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Data.Set.Density
 
 /-!
 # Erdős Problem 1206
