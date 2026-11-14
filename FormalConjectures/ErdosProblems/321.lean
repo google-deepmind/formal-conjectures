@@ -39,7 +39,7 @@ noncomputable def R (N : ℕ) : ℕ :=
   sSup { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) }
 
-def erdos_321.answer : ℕ := sorry
+def erdos_321.answer (N : ℕ) : ℕ := sorry
 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
@@ -47,7 +47,7 @@ $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $R(N)$?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_321 (N : ℕ) :
-    R N = erdos_321.answer := by
+    R N = erdos_321.answer N := by
   sorry
 
 /-
