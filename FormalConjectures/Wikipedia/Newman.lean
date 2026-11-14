@@ -36,7 +36,7 @@ infinitely many nonnegative integers such that $p(n) \equiv r \pmod m$.
 -/
 @[category research open, AMS 5 11]
 theorem newman_conjecture (m r : ℕ) (hr : r < m) :
-  Infinite {n : ℕ | Nat.partitionNumber n % m = r} := by
+    {n : ℕ | Nat.partitionNumber n % m = r}.Infinite := by
   sorry
 
 /--
@@ -44,26 +44,20 @@ Newman's Conjecture implies Erdős : For every prime $m$ there exists some $n$ s
 $m | p(n)$.
 -/
 @[category textbook, AMS 5 11]
-theorem newman_implies_erdos (m : ℕ) (hm : m.Prime) (P: type_of% newman_conjecture) :
-  ¬ IsEmpty {n : ℕ | Nat.partitionNumber n % m = (0 : ℕ)} := by
-
-  specialize P m 0 (Nat.Prime.pos hm)
-  intro h_contra
-  exact IsEmpty.false (Classical.choice P.nonempty)
-
+theorem newman_implies_erdos (m : ℕ) (hm : m.Prime) (P : type_of% newman_conjecture) :
+    {n : ℕ | Nat.partitionNumber n % m = (0 : ℕ)}.Nonempty := (P m 0 hm.pos).nonempty
 /--
 Newman's Conjecture implies Erdős–Ivić : There exist infinitely many primes $m$ such that
 for some $n > 0, m | p(n)$.
 -/
 @[category textbook, AMS 5 11]
-theorem newman_implies_erdos_ivic' (P: type_of% newman_conjecture) :
-  Infinite {m : ℕ | m.Prime ∧ ¬ IsEmpty {n : ℕ | Nat.partitionNumber n % m = (0 : ℕ)}} := by
-
-  rw [← not_finite_iff_infinite]
+theorem newman_implies_erdos_ivic (P : type_of% newman_conjecture) :
+    {m : ℕ | m.Prime ∧ ¬ IsEmpty {n : ℕ | Nat.partitionNumber n % m = (0 : ℕ)}}.Infinite := by
   intro hfin
   obtain ⟨B, hB⟩ := (Set.finite_coe_iff.mp hfin).bddAbove
   obtain ⟨m, hm_ge, hm_prime⟩ := Nat.exists_infinite_primes (B + 1)
-  have h_infinite_primes := P m 0 hm_prime.pos
-  have hm_le_B : m ≤ B := hB ⟨hm_prime, not_isEmpty_iff.mpr inferInstance⟩
-  linarith
+  have hm_le_B : m ≤ B := by
+    refine hB ⟨hm_prime, not_isEmpty_iff.mpr ?_⟩
+    exact Set.nonempty_coe_sort.mpr <| (P m 0 (hm_prime.pos)).nonempty
+  lia
 end NewmanConjecture
