@@ -212,8 +212,14 @@ theorem maximalLength_le (n : ℕ) : F n ≤ n ^ 2 := by
       | succ n =>
         exact (hn (Nat.succ_le_succ (Nat.succ_le_succ (Nat.zero_le _)))).elim
 
-/-- Moreover, whenever $n$ is a perfect square we have $F(n) \geq n^{3/2}$. -/
-@[category research solved, AMS 5]
+/--
+Whenever $n$ is a perfect square we have $F(n) \geq n^{3/2}$.
+
+This is the lower bound in [GoLo21, Proposition 1.4]. The linked Lean proof by Wentao Li
+formalizes that construction. An earlier Lean proof is in `weiyangzen/awesome_theorems`.
+-/
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000015"]
 theorem maximalLength_ge_of_isSquare {n : ℕ} (h : IsSquare n) :
     n.sqrt ^ 3 ≤ F n := by
   sorry
