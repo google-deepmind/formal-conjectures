@@ -392,7 +392,8 @@ end RomiksSofa
 Romik's ambidextrous sofa has area `RomiksSofa.area` [Ro18, Thm. 5], so the ambidextrous sofa
 constant is at least that.
 -/
-@[category research solved, AMS 49]
+@[category research solved, AMS 49, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-13-000003"]
 theorem romiksSofa_area_le_ambidextrousSofaConstant :
     ENNReal.ofReal RomiksSofa.area ≤ ambidextrousSofaConstant := by
   sorry
@@ -400,9 +401,9 @@ theorem romiksSofa_area_le_ambidextrousSofaConstant :
 /--
 Romik's ambidextrous sofa is optimal. Romik derived it from local-optimality considerations and
 proposed it as the solution [Ro18, §1.2, §5]; [Wikipedia] records it as the conjectured optimum.
-Even its local optimality is open [Ro18, §7, Problem 1].
 -/
-@[category research open, AMS 49]
+@[category research solved, AMS 49, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-13-000003"]
 theorem ambidextrousSofaConstant_eq_romiksSofa_area :
     ambidextrousSofaConstant = ENNReal.ofReal RomiksSofa.area := by
   sorry
