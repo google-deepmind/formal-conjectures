@@ -71,7 +71,9 @@ theorem erdos_652 : Tendsto alpha atTop atTop := by
 
 /-- It is trivial that $R(x_1)=1$ is possible.
 We require $n\geq 2$ because a singleton determines no distances to other points. -/
-@[category research solved, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+  "https://github.com/stokes/erdos-proofs/blob/2a9eb1a1bdd869f09f9fad2c654db8508c6ad7fc/ErdosProofs/Erdos652.lean"]
 theorem erdos_652.variants.first (n : ℕ) (hn : 2 ≤ n) :
     ∃ points : Finset ℝ², points.card = n ∧
       ∃ point ∈ points, distinctDistancesFrom points point = 1 := by
