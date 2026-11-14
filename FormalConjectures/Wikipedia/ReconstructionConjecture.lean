@@ -112,7 +112,8 @@ theorem reconstruction_conjecture.variants.tree {V W : Type} [Fintype V] [Fintyp
 Every disconnected graph on at least three vertices is determined up to isomorphism by its
 deck of vertex-deleted subgraphs; see [Bo91].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000007"]
 theorem reconstruction_conjecture.variants.disconnected {V W : Type} [Fintype V] [Fintype W]
     (hV : 3 ≤ Fintype.card V) (G : SimpleGraph V) (H : SimpleGraph W)
     (hd : ¬G.Connected) (h : Hypomorphic G H) : Nonempty (G ≃g H) := by
@@ -161,7 +162,8 @@ isomorphism by its deck of edge-deleted subgraphs.
 
 *Reference:* [Lo72].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000007"]
 theorem edge_reconstruction_conjecture.variants.lovasz {V : Type} [Fintype V]
     (G H : SimpleGraph V) (hE : (Fintype.card V).choose 2 < 2 * G.edgeSet.ncard)
     (h : EdgeHypomorphic G H) : Nonempty (G ≃g H) := by
@@ -175,7 +177,8 @@ up to isomorphism by its deck of edge-deleted subgraphs.
 
 *Reference:* [Mu77].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000007"]
 theorem edge_reconstruction_conjecture.variants.mueller {V : Type} [Fintype V]
     (G H : SimpleGraph V) (hE : Nat.factorial (Fintype.card V) < 2 ^ (G.edgeSet.ncard - 1))
     (h : EdgeHypomorphic G H) : Nonempty (G ≃g H) := by
