@@ -30,7 +30,7 @@ namespace Kourovka.«6.48»
 
 /-A group G is binary finite if it is periodic and any two elements of G generate a finite subgroup-/
 def BinaryFinite (G : Type*) [Group G] : Prop :=
-(∀ x : G, IsOfFinOrder x) ∧ (∀ x y : G, Set.Finite {z : G | ∃ a b : ℤ, z = x ^ a * y ^ b})
+(∀ x : G, IsOfFinOrder x) ∧ (∀ x y : G, (Subgroup.closure ({x, y} : Set G)).carrier.Finite)
 
 /- G is a p-group if the order of every element is a power of p-/
 def IsPGroup (G : Type*) [Group G] (p : ℕ): Prop :=
