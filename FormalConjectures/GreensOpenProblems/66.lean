@@ -47,7 +47,7 @@ theorem green_66 :
 /--
 Green notes that a well-known, almost trivial argument gives an $O(X^{1/4})$ bound on the left.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/danielpuri1901/erdos-lean-formalization/blob/22c66e626b748ce55b91bd58692f00db1ce69d7f/Solution.lean#L43"]
 theorem green_66.variants.trivial_bound :
     ∃ C > (0 : ℝ), ∀ᶠ X : ℝ in atTop,
       ∃ n : ℕ, IsSumOfTwoSquares n ∧
