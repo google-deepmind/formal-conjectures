@@ -33,13 +33,13 @@ def BinaryFinite (G : Type*) [Group G] : Prop :=
 (∀ x : G, IsOfFinOrder x) ∧ (∀ x y : G, (Subgroup.closure ({x, y} : Set G)).carrier.Finite)
 
 /- G is a p-group if the order of every element is a power of p-/
-def IsPGroup (G : Type*) [Group G] (p : ℕ): Prop :=
-∀ x : G, ∃ n : ℕ, 0 < n ∧ x ^ (p ^ n) = 1
+/- def IsPGroup (G : Type*) [Group G] (p : ℕ): Prop :=
+∀ x : G, ∃ n : ℕ, 0 < n ∧ x ^ (p ^ n) = 1 -/
 
 /-- Kourovka 6.48: Is every infinite binary finite p-group non-simple? Here p is a prime number -/
 @[category research open, question, AMS 20]
 theorem kourovka_6_48 :
-∀ (G : Type*) [Group G] [Infinite G], ∀ p : ℕ, Nat.Prime p → BinaryFinite G → IsPGroup G p → ¬ IsSimpleGroup G := by sorry
+∀ (G : Type*) [Group G] [Infinite G], ∀ p : ℕ, Nat.Prime p → BinaryFinite G → IsPGroup p G → ¬ IsSimpleGroup G := by sorry
 
 
 end Kourovka.«6.48»
