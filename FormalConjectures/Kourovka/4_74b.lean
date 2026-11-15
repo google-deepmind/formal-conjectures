@@ -30,11 +30,15 @@ namespace Kourovka.«4.74b»
 
 /-A group G is binary finite if it is periodic and any two elements of G generate a finite subgroup-/
 def BinaryFinite (G : Type*) [Group G] : Prop :=
-    (∀ x : G, IsOfFinOrder x) ∧ (∀ x y : G, (Subgroup.closure ({x, y} : Set G)).carrier.Finite)
+  (∀ x : G, IsOfFinOrder x) ∧ (∀ x y : G, (Subgroup.closure ({x, y} : Set G)).carrier.Finite)
+
+def NFinite (G : Type*) [Group G] (N : ℕ): Prop :=
+  (∀ x : G, IsOfFinOrder x) ∧ (∀ (S : Set G), Nat.card S ≤ N → (Subgroup.closure (S : Set G)).carrier.Finite)
 
 /-- Kourovka 4.74b: Is every binary-finite 2-group of order greater than 2 non-simple? -/
 @[category research open, question, AMS 20]
-theorem kourovka_4_74b : ∀ (G : Type*) [Group G],
+theorem kourovka_4_74b :
+  ∀ (G : Type*) [Group G],
     BinaryFinite G → IsPGroup 2 G → ENat.card G > 2 → ¬ IsSimpleGroup G := by sorry
 
 end Kourovka.«4.74b»
