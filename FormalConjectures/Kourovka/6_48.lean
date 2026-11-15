@@ -40,6 +40,4 @@ def BinaryFinite (G : Type*) [Group G] : Prop :=
 @[category research open, question, AMS 20]
 theorem kourovka_6_48 :
 ∀ (G : Type*) [Group G] [Infinite G], ∀ p : ℕ, Nat.Prime p → BinaryFinite G → IsPGroup p G → ¬ IsSimpleGroup G := by sorry
-
-
 end Kourovka.«6.48»
