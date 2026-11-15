@@ -173,10 +173,13 @@ Note that $\omega_1$ is *not* a countable ordinal, so this is not directly an in
 main Erdős problem (which asks for *countable* $\beta$). Under CH, $\omega_1 = \mathfrak{c}.\mathrm{ord}$,
 making this a self-referential question about $\mathfrak{c}.\mathrm{ord} \to
 (\mathfrak{c}.\mathrm{ord}, n)^3_2$.
+
+The answer is no: the relation already fails at $n = 4$, and the refutation does not use CH.
 -/
-@[category research open, question, AMS 3]
+@[category research solved, question, AMS 3, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/2b6531b7186fe5c7663cc5580852d309a37b63b4/erdos-70/Solution.lean#L42"]
 theorem omega_one :
-    ∀ᵉ (n : ℕ) (_ : 2 ≤ n),
+    ¬ ∀ᵉ (n : ℕ) (_ : 2 ≤ n),
       OrdinalCardinalRamsey3 (𝔠).ord (Cardinal.aleph 1).ord n := by
   sorry
 
