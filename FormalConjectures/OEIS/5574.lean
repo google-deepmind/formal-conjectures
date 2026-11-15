@@ -53,7 +53,7 @@ theorem a_3 : 6 ∈ squareSuccIsPrime := by norm_num [squareSuccIsPrime]
 theorem a_4 : 10 ∈ squareSuccIsPrime := by norm_num [squareSuccIsPrime]
 
 /--
-Apparently Goldbach conjectured that any a > 1 from this sequence can be written as a=b+c where b and c are in this sequence ...
+Apparently Goldbach conjectured that any $a > 1$ from this sequence can be written as $a = b + c$ where $b$ and $c$ are in this sequence ...
 - Jeppe Stig Nielsen, Oct 14 2015, [A005574]
 
 See also [edoc.unibas.ch/58842], [MathOverflow]
