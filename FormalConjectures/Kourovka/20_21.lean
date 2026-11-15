@@ -18,7 +18,7 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# Conjecture 20.76
+# Conjecture 20.21
 by L. Pyber
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
 *Solution:* K. Muliarchyk, [Abelian subgroups of finite 2-groups: counterexamples to
@@ -26,21 +26,16 @@ Problems 20.75 and 20.76](https://kourovkanotebookorg.wordpress.com/wp-content/u
 !-/
 
 @[expose] public section
-namespace Kourovka.«20.76»
+namespace Kourovka.«20.21»
 /--
-Let $G$ be a finite $p$-group and assume that all abelian normal subgroups of $G$
-have order at most $p^k$. Is it true that every abelian subgroup of $G$ has order at most
-$p^{2k}$?
-
-The answer is no. Muliarchyk's Proposition 6.1 gives a finite $2$-group of order
-$2^{145}$ whose abelian normal subgroups have order at most $2^{42}$, but which
-contains an elementary abelian subgroup of order $2^{85} > 2^{84}$.
+Does there exist a finite group $G$ with two normal subgroups $K$ and $L$, each with index 12 in $G$, such that $K$ is isomorphic to $L$, but G/K is isomorphic to $C_12$, while $G/L$ is isomorphic to $A_4$?
 -/
 @[category research solved, question, AMS 20]
 theorem kourovka_20_76 :
-    ¬ (∀ᵉ (p : ℕ) (hp : p.Prime) (G : Type) (_ : Group G) (hg : IsPGroup p G) (_ : Finite G) (k : ℕ)
-    (h : ∀ H: Subgroup G, H.Normal ∧ IsMulCommutative H → Nat.card H ≤ p ^ k),
-    (∀ H : Subgroup G, IsMulCommutative H → Nat.card H ≤ p ^ (2 * k))) := by
+    ∃ (G : Type*) (G : FiniteGrp.{u_1}) (K L : Subgroup G) (hK : (K.index = 12) ∧ (K.Normal)) (hL : (L.index = 12) ∧ (L.Normal)),
+    letI : K.Normal := hK.2
+    letI : L.Normal := hL.2
+    Nonempty (K ≃* L) ∧ IsCyclic (G⧸K) ∧ Nonempty (G⧸L ≃* alternatingGroup (Fin 4)) := by
   sorry
 
-end Kourovka.«20.76»
+end Kourovka.«20.21»
