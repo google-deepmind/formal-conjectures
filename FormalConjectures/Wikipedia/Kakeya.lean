@@ -20,7 +20,14 @@ public import FormalConjecturesUtil
 /-!
 # Kakeya problem
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Kakeya_set)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Kakeya_set)
+- [OAI26a] OpenAI, *Local smoothing for the Euclidean wave equation*. OpenAI Math Release
+  preprint (2026).
+  https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/preprints/Local-smoothing-for-the-Euclidean-wave-equation-October-25-2026/paper.pdf
+- [OAI26b] OpenAI, *Every four-dimensional Kakeya set has full Hausdorff dimension*. OpenAI Math
+  Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Every-four-dimensional-Kakeya-set-has-full-Hausdorff-dimension-September-24-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -57,11 +64,87 @@ Hausdorff dimension `n`.
 def KakeyaSetConjectureDim (n : ℕ) : Prop :=
   ∀ S : Set (ℝ^n), IsKakeya S → dimH S = n
 
-/-- The Kakeya set conjecture: Kakeya sets in $\mathbb{R}^n$ have Hausdorff dimension $n$. -/
-@[category research open, AMS 42]
+/-- The Kakeya set conjecture: Kakeya sets in $\mathbb{R}^n$ have Hausdorff dimension $n$.
+
+This was proved by an internal OpenAI model in October 2026 [OAI26a]. OpenAI's Lean proof
+covers $n \ge 2$ (`kakeya_set_conjecture.variants.two_le`). The case $n = 1$ is elementary
+(`kakeya_set_conjecture_one`), and `kakeya_set_conjecture_of_two_le` derives this statement
+from it. -/
+@[category research solved, AMS 42]
 theorem kakeya_set_conjecture (n : ℕ) (hn : n > 0) :
     KakeyaSetConjectureDim n := by
   sorry
+
+namespace Segments
+
+/-- The unit segment centred at `x` in direction `ω`, as in [OAI26a]. -/
+def unitSegment {n : ℕ} (ω x : ℝ^n) : Set (ℝ^n) :=
+  {y | ∃ t ∈ Set.Icc (- (1 / 2 : ℝ)) (1 / 2), y = x + t • ω}
+
+/-- A Kakeya set as in [OAI26a]: a set that contains a centred unit segment in every
+direction. -/
+def IsKakeyaSet {n : ℕ} (F : Set (ℝ^n)) : Prop :=
+  ∀ ω : ℝ^n, ‖ω‖ = 1 → ∃ x, unitSegment ω x ⊆ F
+
+end Segments
+
+/-- The Kakeya set conjecture in every dimension $n \ge 2$, as stated in OpenAI's Lean proof
+of [OAI26a]. Segments are centred at a point and no measurability is assumed. -/
+@[category research solved, AMS 42]
+theorem kakeya_set_conjecture.variants.two_le :
+    ∀ n : ℕ, 2 ≤ n → ∀ F : Set (ℝ^n), Segments.IsKakeyaSet F → dimH F = n := by
+  sorry
+
+/-- A Kakeya set in the sense of `IsKakeya` is a Kakeya set in the sense of [OAI26a]. -/
+@[category API, AMS 42]
+theorem Segments.isKakeyaSet_of_isKakeya {n : ℕ} {S : Set (ℝ^n)} (hS : IsKakeya S) :
+    Segments.IsKakeyaSet S := by
+  intro ω hω
+  obtain ⟨a, ha⟩ := hS ω hω
+  refine ⟨a + (1 / 2 : ℝ) • ω, ?_⟩
+  rintro _ ⟨t, ⟨ht₀, ht₁⟩, rfl⟩
+  refine ha ⟨t + 1 / 2, ⟨by linarith, by linarith⟩, ?_⟩
+  rw [lineMap_apply, vsub_eq_sub, add_sub_cancel_left, vadd_eq_add, add_smul]
+  abel
+
+/-- A unit segment in `ℝⁿ` has Hausdorff dimension one. -/
+@[category API, AMS 42]
+theorem dimH_affineSegment {n : ℕ} (a v : ℝ^n) (hv : ‖v‖ = 1) :
+    dimH (affineSegment ℝ a (a + v)) = 1 := by
+  have hf : Isometry fun t : ℝ => a + t • v := by
+    refine Isometry.of_dist_eq fun s t => ?_
+    rw [dist_eq_norm, add_sub_add_left_eq_sub, ← sub_smul, norm_smul, hv, mul_one,
+      Real.dist_eq, Real.norm_eq_abs]
+  have hseg : affineSegment ℝ a (a + v) = (fun t : ℝ => a + t • v) '' Set.Icc 0 1 := by
+    unfold affineSegment
+    congr 1
+    funext t
+    rw [lineMap_apply, vsub_eq_sub, add_sub_cancel_left, vadd_eq_add, add_comm]
+  rw [hseg, hf.dimH_image, Real.dimH_of_nonempty_interior, Module.finrank_self, Nat.cast_one]
+  rw [interior_Icc]
+  exact ⟨1 / 2, by norm_num, by norm_num⟩
+
+/-- The Kakeya set conjecture in dimension one: a set that contains a unit segment has
+Hausdorff dimension one. -/
+@[category API, AMS 42]
+theorem kakeya_set_conjecture_one : KakeyaSetConjectureDim 1 := by
+  intro S hS
+  have hv : ‖(EuclideanSpace.single 0 1 : ℝ^1)‖ = 1 := by simp
+  obtain ⟨a, ha⟩ := hS _ hv
+  refine le_antisymm ?_ ?_
+  · calc dimH S ≤ dimH (Set.univ : Set (ℝ^1)) := dimH_mono (Set.subset_univ S)
+      _ = (1 : ℕ) := by rw [Real.dimH_univ_eq_finrank, finrank_euclideanSpace_fin]
+  · rw [Nat.cast_one, ← dimH_affineSegment a _ hv]
+    exact dimH_mono ha
+
+/-- OpenAI's Lean statement `kakeya_set_conjecture.variants.two_le` implies
+`kakeya_set_conjecture`. -/
+@[category test, AMS 42]
+theorem kakeya_set_conjecture_of_two_le (h : type_of% kakeya_set_conjecture.variants.two_le)
+    (n : ℕ) (hn : n > 0) : KakeyaSetConjectureDim n := by
+  obtain rfl | hn2 : n = 1 ∨ 2 ≤ n := by omega
+  · exact kakeya_set_conjecture_one
+  · exact fun S hS => h n hn2 S (Segments.isKakeyaSet_of_isKakeya hS)
 
 
 /--
@@ -81,6 +164,14 @@ The three-dimensional case, proved by Wang, Zahl [WaZa25].
 -/
 @[category research solved, AMS 42]
 theorem kakeya_3d : KakeyaSetConjectureDim 3 := by
+  sorry
+
+/--
+The four-dimensional case, proved by an internal OpenAI model [OAI26b]. It is also the case
+$n = 4$ of `kakeya_set_conjecture` [OAI26a], whose Lean proof covers it.
+-/
+@[category research solved, AMS 42]
+theorem kakeya_4d : KakeyaSetConjectureDim 4 := by
   sorry
 
 
