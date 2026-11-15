@@ -19,28 +19,23 @@ public import FormalConjecturesUtil
 
 /-!
 # Conjecture 20.15
-by L. Pyber
-*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v40)
-*Solution:* K. Muliarchyk, [Abelian subgroups of finite 2-groups: counterexamples to
-Problems 20.75 and 20.76](https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/09/kourovka_20_75-20_76_solution.pdf), Proposition 6.1.
+by T. Müller, J. Xu
+*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300)
 !-/
 
 @[expose] public section
 namespace Kourovka.«20.15»
 /--
-Let $G$ be a finite $p$-group and assume that all abelian normal subgroups of $G$
-have order at most $p^k$. Is it true that every abelian subgroup of $G$ has order at most
-$p^{2k}$?
+Let $κ$ be an infinite cardinal. If residually finite group $G$ is embeddable in the full permutation group of a set of cardinality $κ$, must it be embeddable in the direct product of $κ$ finite groups?
 
-The answer is no. Muliarchyk's Proposition 6.1 gives a finite $2$-group of order
-$2^{145}$ whose abelian normal subgroups have order at most $2^{42}$, but which
-contains an elementary abelian subgroup of order $2^{85} > 2^{84}$.
+The converse is true: any such direct product is residually finite and embeddable in the indicated permutation group. Also, the statement asked for becomes true if one replaces "direct product of 2^κ finite groups", since $G$ has cardinality at most $2^κ$, hence homomorphisms to that many finite groups can be chosen which, together, separate each element of $G$ from $e$.
+
+See (G.M. Bergman, Indag. Math., 18 (2007), 349-403)
 -/
 
 
 -- define the residually finite group G
 --def Residually_Finite (G : Type*) [Group G] : Prop := ∀ g : G, g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
-
 
 class ResiduallyFinite (G : Type*) extends Group G where
   fin_sep_one (g : G) : g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
