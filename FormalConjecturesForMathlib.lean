@@ -57,8 +57,10 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.DifferenceBasis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Combinatorics.BostonAssignment
 public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
 public import FormalConjecturesForMathlib.Combinatorics.Enumerative.Partition.Basic
+public import FormalConjecturesForMathlib.Combinatorics.FiniteAssignment
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Extremal
 public import FormalConjecturesForMathlib.Combinatorics.Hypergraph.Finite
