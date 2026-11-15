@@ -70,11 +70,17 @@ theorem erdos_354.parts.ii : ¬ ∀ γ ∈ Set.Ioo (1 : ℝ) 2, ∀ᵉ (α > 0) 
     IsAddCompleteNatSeq' (FloorMultiples.interleave α β γ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- A weaker variant of part (ii): is there some $\gamma$ with $1 < \gamma < 2$ such that, for all
 $\alpha,\beta\in \mathbb{R}_{>0}$ with $\alpha/\beta$ irrational,
 $$\{ \lfloor \alpha\rfloor,\lfloor \gamma\alpha\rfloor,\lfloor \gamma^2\alpha\rfloor,\ldots\}\cup
-\{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}$$ is complete? -/
-@[category research open, question, AMS 11]
+\{ \lfloor \beta\rfloor,\lfloor \gamma\beta\rfloor,\lfloor \gamma^2\beta\rfloor,\ldots\}$$ is complete?
+
+The answer is yes: $\gamma = \sqrt{\varphi}$ works, where $\varphi = (1+\sqrt5)/2$. See
+[KitaKen1/erdos-354-part-ii](https://github.com/KitaKen1/erdos-354-part-ii).
+-/
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/KitaKen1/erdos-354-part-ii/blob/5536b1874d734cfaac522a379722b8cd828dd343/lean/Erdos354PartIIFC.lean#L362-L380"]
 theorem erdos_354.variants.exists_base : ∃ γ ∈ Set.Ioo (1 : ℝ) 2, ∀ᵉ (α > 0) (β > 0),
     Irrational (α / β) → IsAddCompleteNatSeq' (FloorMultiples.interleave α β γ) := by
   sorry
