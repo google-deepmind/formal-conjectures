@@ -42,7 +42,4 @@ def BinaryFinite (G : Type*) [Group G] : Prop :=
 theorem kourovka_4_74b :
 ∀ (G : Type*) [Group G],
 BinaryFinite G → IsPGroup 2 G → ENat.card G > 2 → ¬ IsSimpleGroup G := by sorry
-
-
-
 end Kourovka.«4.74b»
