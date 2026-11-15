@@ -27,7 +27,7 @@ hypergraph without Property B.
 - [Wikipedia: Property B](https://en.wikipedia.org/wiki/Property_B)
 - [EL75] Erdős, Paul, and László Lovász. "Problems and results on 3-chromatic hypergraphs and some
   related questions." Infinite and Finite Sets (1975), 609-627.
-  https://cs.nyu.edu/spencer/papers/french.pdf
+  https://www.renyi.hu/~p_erdos/1975-34.pdf
 - [GL24] Grill, Karl, and Daniel Linzmayer. "Improved Lower Bounds for Property B."
   https://arxiv.org/abs/2403.05674
 - [Erdős Problems: Property B](https://mathweb.ucsd.edu/~erdosproblems/erdos/newproblems/PropertyB.html)
@@ -70,7 +70,8 @@ theorem propertyBNumber_three : propertyBNumber 3 = 7 := by
 theorem propertyBNumber_four : propertyBNumber 4 = 23 := by
   sorry
 
-/-- The currently known bounds for the fifth Property B number are `29 ≤ m(5) ≤ 51`. -/
+/-- Bounds for the fifth Property B number using the earlier lower bound of 29.
+[GL24, Theorem 1] improves the lower bound to 32. -/
 @[category research solved, AMS 5]
 theorem propertyBNumber_five_bounds :
     29 ≤ propertyBNumber 5 ∧ propertyBNumber 5 ≤ 51 := by
