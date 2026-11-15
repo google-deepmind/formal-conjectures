@@ -35,7 +35,7 @@ theorem kourovka_20_76 :
     ∃ (G : Type*) (G : FiniteGrp.{u_1}) (K L : Subgroup G) (hK : (K.index = 12) ∧ (K.Normal)) (hL : (L.index = 12) ∧ (L.Normal)),
     letI : K.Normal := hK.2
     letI : L.Normal := hL.2
-    Nonempty (K ≃* L) ∧ IsCyclic (G⧸K) ∧ Nonempty (G⧸L ≃* alternatingGroup (Fin 4)) := by
+    Nonempty (K ≃* L) ∧ IsCyclic (G⧸K) ∧ Nonempty (G⧸L ≃* alternatingGroup (Fin 4)) :=  by
   sorry
 
 end Kourovka.«20.21»
