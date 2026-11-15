@@ -79,13 +79,15 @@ theorem erdos_110.variants.lambie_hanson (f : ℕ → ℕ) :
         H.coe.chromaticNumber < (k : ℕ∞) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A theorem of de Bruijn and Erdős [dBEr51] implies that, if $G$ has infinite chromatic number,
 then $G$ has a finite subgraph of chromatic number $n$ for every $n\geq 1$.
 
 Infinite chromatic number is `G.chromaticNumber = ⊤`.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/veljjanoski/erdos110-palomar/blob/1cb8f2b3cc84a293b58a33e96d4cbecfd22f799b/Solution.lean#L95"]
 theorem erdos_110.variants.de_bruijn_erdos {V : Type*} (G : SimpleGraph V)
     (hG : G.chromaticNumber = ⊤) (n : ℕ) (hn : 1 ≤ n) :
     ∃ H : G.Subgraph, H.verts.Finite ∧ H.coe.chromaticNumber = (n : ℕ∞) := by
