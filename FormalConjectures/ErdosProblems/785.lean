@@ -95,10 +95,11 @@ theorem erdos_785.variants.danzer :
   sorry
 
 /--
-Sárközy and Szemerédi [SaSz94] proved that it is impossible for
-$$A(x)B(x)-x=o(A(x)),$$
-even along a subsequence for the sparser set: there exists $c > 0$ such that
-$A(x)B(x) - x \ge c \min(A(x), B(x))$ for all sufficiently large $x$.
+Sárközy and Szemerédi [SaSz94, pp. 244–245] stated that the global estimate
+$A(x)B(x) - x = o(\min(A(x), B(x)))$ is impossible. The stronger eventual bound stated here,
+$$A(x)B(x) - x \ge c \min(A(x), B(x))$$
+for some $c > 0$ and all sufficiently large $x$, follows as a later consequence of Chen and Fang
+[ChFa15, Theorem 0.2] (for instance, taking $M = 2$).
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.sarkozy_szemeredi (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
