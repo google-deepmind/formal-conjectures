@@ -69,7 +69,7 @@ The strengthened problem was solved by Alex Chengyu Li; see
 and the accompanying
 [Lean formalization](https://github.com/crabsatellite/erdos-1212-visible-lattice-path).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/blob/400001f0847afe36a26c588d34445210dbdc116e/kernel/Erdos1212Kernel/AlgebraicCorridorKernelAudit.lean"]
 theorem erdos_1212 :
     ∃ f : ℕ → ℕ × ℕ, Function.Injective f ∧ (∀ n, Adj (f n) (f (n + 1))) ∧

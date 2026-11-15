@@ -68,6 +68,7 @@ public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Graphon
 public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Tournamenton
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.Ramsey.Diagonal
+public import FormalConjecturesForMathlib.Combinatorics.Roommates
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.PropertyB
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.Sunflower
 public import FormalConjecturesForMathlib.Combinatorics.SetFamily.UnionFree
@@ -125,6 +126,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistan
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WienerIndex
 public import FormalConjecturesForMathlib.Combinatorics.StableMarriage
+public import FormalConjecturesForMathlib.Combinatorics.StableMarriage.Unbalanced
 public import FormalConjecturesForMathlib.Combinatorics.YoungDiagram
 public import FormalConjecturesForMathlib.Computability.AutomaticSequence
 public import FormalConjecturesForMathlib.Computability.BitstringEncoding
@@ -150,6 +152,7 @@ public import FormalConjecturesForMathlib.Data.Nat.Prime.Composite
 public import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 public import FormalConjecturesForMathlib.Data.Nat.Prime.Finset
 public import FormalConjecturesForMathlib.Data.Nat.Prime.Infinite
+public import FormalConjecturesForMathlib.Data.Nat.Prime.Nth
 public import FormalConjecturesForMathlib.Data.Nat.Squarefree
 public import FormalConjecturesForMathlib.Data.Real.Constants
 public import FormalConjecturesForMathlib.Data.Real.NearestInt
@@ -220,6 +223,7 @@ public import FormalConjecturesForMathlib.NumberTheory.NumberField.FundamentalDi
 public import FormalConjecturesForMathlib.NumberTheory.NumberField.Quadratic
 public import FormalConjecturesForMathlib.NumberTheory.PerfectNumber
 public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
+public import FormalConjecturesForMathlib.NumberTheory.PolygonalNumber
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
