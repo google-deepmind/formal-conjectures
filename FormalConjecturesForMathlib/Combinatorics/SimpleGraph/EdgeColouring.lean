@@ -42,6 +42,9 @@ and with no 2-coloured cycle.
 `SimpleGraph.AcyclicEdgeColourable G k` asserts that the graph `G` has an acyclic edge colouring
 with at most `k` colours.
 
+`SimpleGraph.acyclicChromaticIndex G` is the acyclic chromatic index of `G`, the least number of
+colours in an acyclic edge colouring of `G`.
+
 `SimpleGraph.TopEdgeLabeling.CliqueFree` is the Ramsey-theoretic condition on the other
 edge-colouring shape Mathlib provides, a labelling of the edges of the complete graph: no
 colour class contains a clique of the given size.
@@ -96,6 +99,12 @@ def IsAcyclicEdgeColouring {V ι : Type*} (c : ι → SimpleGraph V) : Prop :=
 with at most `k` colours. -/
 def AcyclicEdgeColourable {V : Type*} (G : SimpleGraph V) (k : ℕ) : Prop :=
   ∃ c : Fin k → SimpleGraph V, IsEdgeColouring G c ∧ IsAcyclicEdgeColouring c
+
+/-- `acyclicChromaticIndex G` is the acyclic chromatic index of `G`: the smallest number of
+colours in an acyclic edge colouring of `G`. It is `0` if `G` has no acyclic edge colouring
+with finitely many colours, which can only happen for infinite graphs. -/
+noncomputable def acyclicChromaticIndex {V : Type*} (G : SimpleGraph V) : ℕ :=
+  sInf {k : ℕ | G.AcyclicEdgeColourable k}
 
 /-- A labelling of the edges of the complete graph on `V` by `ι` is `n`-clique-free when no
 colour class contains an `n`-clique, that is, when it admits no monochromatic `n`-clique. -/
