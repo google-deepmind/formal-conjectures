@@ -48,8 +48,8 @@ def IsSolitary (n : ℕ) : Prop := 0 < n ∧ ∀ m, Friendly m n → m = n
 **Is 10 a solitary number?**  The smallest positive integer whose solitary status is
 currently unresolved is $10$, with abundancy index $\sigma(10) / 10 = 9/5$.
 -/
-@[category research open, AMS 11]
-theorem is_ten_solitary : answer(sorry) ↔ IsSolitary 10 := by
+@[category research open, question, AMS 11]
+theorem is_ten_solitary : IsSolitary 10 := by
   sorry
 
 /--
@@ -57,9 +57,9 @@ theorem is_ten_solitary : answer(sorry) ↔ IsSolitary 10 := by
 the set of all positive integers friendly with a given $n$.  It is unknown whether any club
 is infinite.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinite_club_exists :
-    answer(sorry) ↔ ∃ n, 0 < n ∧ {m : ℕ | Friendly m n}.Infinite := by
+    ∃ n, 0 < n ∧ {m : ℕ | Friendly m n}.Infinite := by
   sorry
 
 end SolitaryNumber

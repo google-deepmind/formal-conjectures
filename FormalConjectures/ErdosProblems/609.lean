@@ -58,13 +58,15 @@ then there must be a monochromatic odd cycle of length at most $m$.
 noncomputable def f (n : ℕ) : ℕ :=
   sInf {m : ℕ | ∀ (c : Sym2 (Fin (2 ^ n + 1)) → Fin n), MonochromaticHasOddCycleLe n m c}
 
+def erdos_609.answer : ℕ → ℝ := sorry
+
 /--
 Let $f(n)$ be the minimal $m$ such that if the edges of $K_{2^n+1}$ are coloured with $n$ colours
 then there must be a monochromatic odd cycle of length at most $m$. Estimate $f(n)$.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_609 :
-    (fun n ↦ (f n : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+    (fun n ↦ (f n : ℝ)) =Θ[atTop] erdos_609.answer := by
   sorry
 
 -- TODO: Add variants of the problem.

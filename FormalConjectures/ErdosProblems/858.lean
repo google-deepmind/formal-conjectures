@@ -47,6 +47,7 @@ def IsAdmissible (A : Finset ℕ) : Prop :=
 noncomputable def M (N : ℕ) : ℝ :=
   sSup {m | ∃ A ⊆ Finset.Icc 1 N, IsAdmissible A ∧ ∑ n ∈ A, (1 : ℝ) / n = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \{1,\ldots,N\}$ be such that there is no solution to $at=b$ with $a,b\in A$ and
 the smallest prime factor of $t$ is $>a$. Estimate the maximum of

@@ -64,6 +64,7 @@ theorem a_4 : a 4 = 36 := by rfl
 def b (n : ℕ) : ℕ :=
   a (2 * n - 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: Let $b(n) = a(2n-1)$. Then the supercongruence
 $b(np^k) \equiv b(np^{k-1}) \pmod{p^{3k}}$ holds for positive integers $n$ and $k$

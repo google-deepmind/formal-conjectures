@@ -45,6 +45,7 @@ $P(z)=\sum_{1\leq k\leq n}a_kz^k$. -/
 noncomputable def circleMax {n : ℕ} (a : Fin n → ℂ) : ℝ :=
   ⨆ z : Metric.sphere (0 : ℂ) 1, ‖∑ k : Fin n, a k * (z : ℂ) ^ ((k : ℕ) + 1)‖
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $P(z)=\sum_{1\leq k\leq n}a_kz^k$ for some $a_k\in \mathbb{C}$ with $\lvert a_k\rvert=1$ for
 $1\leq k\leq n$. Does there exist a constant $c>0$ such that, for $n\geq 2$, we have
@@ -71,9 +72,9 @@ for all $z\in\mathbb{C}$ with $\lvert z\rvert=1$.
 See also [228](https://www.erdosproblems.com/228) and
 [1150](https://www.erdosproblems.com/1150).
 -/
-@[category research solved, AMS 30 42, formal_proof using lean4 at
+@[category research solved, question, AMS 30 42, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos230.lean#L40"]
-theorem erdos_230 : answer(False) ↔ ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 2 ≤ n →
+theorem erdos_230 : ¬ ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 2 ≤ n →
     ∀ a : Fin n → ℂ, (∀ k, ‖a k‖ = 1) → (1 + c) * √n ≤ circleMax a := by
   sorry
 

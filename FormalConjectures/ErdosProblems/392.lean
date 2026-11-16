@@ -31,6 +31,7 @@ open scoped Nat
 
 namespace Erdos392
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A(n)$ denote the least value of $t$ such that
 $$
@@ -63,6 +64,7 @@ theorem erdos_392.variants.lower (A : ℕ → ℕ)
     (fun (n : ℕ) => (A n - n + n / Real.log n : ℝ)) =o[atTop] fun n => n / Real.log n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Cambie has observed that a positive answer follows from the result above with $a_t \leq n$, simply
 by pairing variables together, e.g. taking $a'_i = a_{2i-1}a_{2i}$ (and the lower bound follows from

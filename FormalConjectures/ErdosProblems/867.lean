@@ -41,6 +41,7 @@ $[m,n]$ is not itself an element of $A$. -/
 def ConsecutiveSumFree (A : Finset ℕ) : Prop :=
   ∀ m n : ℕ, 2 ≤ (Finset.Icc m n ∩ A).card → (∑ a ∈ Finset.Icc m n ∩ A, a) ∉ A
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $A=\{a_1<\cdots <a_t\}\subseteq \{1,\ldots,N\}$ has no solutions to
 $$a_i+a_{i+1}+\cdots+a_j\in A$$
@@ -52,9 +53,9 @@ The current best bounds are due to Coppersmith and Phillips [CoPh96], who prove 
 maximal size of such an $A$ satisfies
 $$\frac{13}{24}N -O(1)\leq \lvert A\rvert \leq \left(\frac{2}{3}-\frac{1}{512}\right)N+\log N.$$
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos867.lean"]
-theorem erdos_867 : answer(False) ↔
-    ∃ C : ℝ, ∀ N : ℕ, ∀ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A →
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos867.lean"]
+theorem erdos_867 :
+    ¬ ∃ C : ℝ, ∀ N : ℕ, ∀ A ⊆ Finset.Icc 1 N, ConsecutiveSumFree A →
       (A.card : ℝ) ≤ (N : ℝ) / 2 + C := by
   sorry
 
@@ -90,6 +91,7 @@ theorem erdos_867.variants.lower_bound :
     push_cast at h4
     linarith
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Adenwalla has observed that
 $$\lvert A\rvert \leq (\tfrac{2}{3}+o(1))N.$$

@@ -44,6 +44,7 @@ def IsCancellative (k A : Type*) [Field k]
     [CommRing B] [Algebra k B] [Algebra.FiniteType k B], Nonempty (A[X] ≃ₐ[k] B[X]) →
     Nonempty (A ≃ₐ[k] B)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The **Zariski Cancellation Problem**: is every polynomial ring over a field `k` of characteristic
 `0` cancellative?
@@ -59,6 +60,7 @@ theorem zariski_cancellation_problem :
       IsCancellative k (MvPolynomial ι k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The polynomial ring in four variables over $\mathbb{C}$ is not cancellative: there is a finitely
 generated $\mathbb{C}$-domain $A$ of Krull dimension $4$ with

@@ -42,6 +42,7 @@ noncomputable
 def g (k : ℕ) (n : ℕ) : ℕ := sInf { N | ∃ A ⊆ Finset.Icc 1 N, A.card = n ∧
     ∀ s, s ⊆ { ∑ a ∈ B, a | B ∈ A.powerset } → s.IsAPOfLengthFree k}
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $k \geq 3$. Define $g_k(n)$ to be the minimal $N$ such that
 $\{1, ..., N\}$ contains some $A$ of size $|A| = n$ such that
 $$
@@ -56,10 +57,10 @@ $$
 The answer is no: Costa [Co26, Corollary 1.2] proved that $\liminf_{n \to \infty} g_3(n)/3^n = 0$.
 -/
 -- Formalisation note : only formalising the "In particular" part
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://zenodo.org/records/22638810"]
 theorem erdos_817 :
-    answer(False) ↔ (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
+    ¬ (fun n => (3 ^ n : ℝ)) =O[atTop] fun n => (g 3 n : ℝ) := by
   sorry
 
 /-- A problem of Erdős and Sárközy who proved

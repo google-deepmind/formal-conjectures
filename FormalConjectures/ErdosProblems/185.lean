@@ -43,6 +43,7 @@ noncomputable def f3 (n : ℕ) : ℕ :=
       ¬ Collinear ℝ ({fun i => ((x i : ℕ) : ℝ), fun i => ((y i : ℕ) : ℝ),
         fun i => ((z i : ℕ) : ℝ)} : Set (Fin n → ℝ))) ∧ A.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f_3(n)$ be the maximal size of a subset of $\{0,1,2\}^n$ which contains no three points on
 a line. Is it true that $f_3(n)=o(3^n)$?
@@ -54,9 +55,9 @@ $$f_3(n) \gg \frac{3^n}{\sqrt{n}}.$$
 The answer is yes, which is a corollary of the density Hales-Jewett theorem, proved by
 Furstenberg and Katznelson [FuKa91].
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos185.lean#L49"]
-theorem erdos_185 : answer(True) ↔ (fun n : ℕ => (f3 n : ℝ)) =o[atTop] fun n : ℕ => (3 : ℝ) ^ n := by
+theorem erdos_185 : (fun n : ℕ => (f3 n : ℝ)) =o[atTop] fun n : ℕ => (3 : ℝ) ^ n := by
   sorry
 
 /-- Moser showed that $f_3(n) \gg \frac{3^n}{\sqrt{n}}$. -/

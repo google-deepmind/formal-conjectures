@@ -223,6 +223,7 @@ theorem a_5 : a 5 = 121 := by
   rw [show 5 = 4 + 1 from rfl, a_succ]
   norm_num [Finset.sum_range_succ, inv_0, inv_1, inv_2, inv_3, inv_4, f_0, f_1, f_2, f_3, f_4, f_5]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: $a(n)$ is divisible by $\operatorname{prime}(n)$ for $n > 1$."
 - Paul D. Hanna, Mar 11 2025.

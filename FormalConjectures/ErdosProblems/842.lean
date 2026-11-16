@@ -41,6 +41,7 @@ def IsTrianglesPlusHamiltonianCycle {V : Type*} (G : SimpleGraph V) (n : ℕ) : 
     (∃ e : V ≃ Fin n × Fin 3, ∀ u v, T.Adj u v ↔ u ≠ v ∧ (e u).1 = (e v).1) ∧
     ∃ e : Fin (3 * n) ≃ V, C = (cycleGraph (3 * n)).map e.toEmbedding
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph on $3n$ vertices formed by taking $n$ vertex disjoint triangles and adding a
 Hamiltonian cycle (with all new edges) between these vertices. Does $G$ have chromatic number at
@@ -48,9 +49,9 @@ most $3$?
 
 The answer is yes, proved by Fleischner and Stiebitz [FlSt92].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos842.lean#L46"]
-theorem erdos_842 : answer(True) ↔
+theorem erdos_842 :
     ∀ (V : Type) (G : SimpleGraph V) (n : ℕ), IsTrianglesPlusHamiltonianCycle G n →
       G.chromaticNumber ≤ 3 := by
   sorry
