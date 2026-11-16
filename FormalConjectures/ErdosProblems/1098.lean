@@ -40,6 +40,7 @@ def nonCommutingGraph (G : Type*) [Group G] : SimpleGraph G where
 theorem nonCommutingGraph_adj {G : Type*} [Group G] (g h : G) :
     (nonCommutingGraph G).Adj g h ↔ g * h ≠ h * g := Iff.rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a group and $\Gamma=\Gamma(G)$ be the non-commuting graph, with vertices the elements
 of $G$ and an edge between $g$ and $h$ if and only if $g$ and $h$ do not commute, $gh\neq hg$.
@@ -51,8 +52,8 @@ This was solved by Neumann [Ne76], who proved that $\Gamma$ contains no infinite
 if and only if the centre of the group has finite index, and noted that if the centre has index $n$
 then $\Gamma$ contains no complete subgraph on $>n$ vertices.
 -/
-@[category research solved, AMS 5 20, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1098.lean"]
-theorem erdos_1098 : answer(True) ↔
+@[category research solved, question, AMS 5 20, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1098.lean"]
+theorem erdos_1098 :
     ∀ (G : Type*) [Group G],
       (∀ s : Set G, (nonCommutingGraph G).IsClique s → s.Finite) →
         ∃ n : ℕ, ∀ s : Finset G, (nonCommutingGraph G).IsClique (s : Set G) → s.card ≤ n := by
@@ -76,6 +77,19 @@ on $>n$ vertices.
 theorem erdos_1098.variants.upper_bound (G : Type*) [Group G]
     [(Subgroup.center G).FiniteIndex] :
     (nonCommutingGraph G).CliqueFree ((Subgroup.center G).index + 1) := by
-  sorry
+  intro s hs
+  have hinj : Set.InjOn (fun g : G => (QuotientGroup.mk g : G ⧸ Subgroup.center G)) s := by
+    intro x hx y hy hxy
+    by_contra hne
+    apply hs.isClique hx hy hne
+    obtain ⟨z, hz, rfl⟩ : ∃ z ∈ Subgroup.center G, y = x * z :=
+      ⟨x⁻¹ * y, QuotientGroup.eq.mp hxy, by group⟩
+    rw [mul_assoc, Subgroup.mem_center_iff.mp hz x, ← mul_assoc]
+  have : Finite (G ⧸ Subgroup.center G) := Subgroup.finite_quotient_of_finiteIndex
+  let _ := Fintype.ofFinite (G ⧸ Subgroup.center G)
+  have h1 := Finset.card_le_card_of_injOn _ (t := Finset.univ)
+    (fun x _ => Finset.mem_coe.2 (Finset.mem_univ _)) hinj
+  rw [hs.card_eq, Finset.card_univ, ← Nat.card_eq_fintype_card, ← Subgroup.index] at h1
+  omega
 
 end Erdos1098

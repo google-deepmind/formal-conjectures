@@ -43,11 +43,17 @@ The answer is trivially no to both questions: indeed if $A=\mathbb{N}$ (assuming
 then $1_A\ast 1_A(n)=n+1$ for all $n$. Presumably Erdős had some additional restrictions on either
 $g$ or $A$ in mind, but these are not recorded in [Er80].
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_1193.parts.i : answer(False) ↔
-    ∀ (A : Set ℕ) (g : ℕ → ℕ), Monotone g → (∀ n, 0 < g n) →
+@[category research solved, question, AMS 5 11]
+theorem erdos_1193.parts.i :
+    ¬ ∀ (A : Set ℕ) (g : ℕ → ℕ), Monotone g → (∀ n, 0 < g n) →
       {n : ℕ | sumRep A n = g n}.lowerDensity = 0 := by
-  sorry
+  have hset : {n : ℕ | sumRep Set.univ n = n + 1} = Set.univ := by ext n; simp [sumRep_def]
+
+  intro h
+  have := h Set.univ (fun n => n + 1) (fun _ _ h => by simpa using h) (fun n => Nat.succ_pos n)
+  rw [hset, show (Set.univ : Set ℕ).lowerDensity = 1 from
+    Filter.Tendsto.liminf_eq HasDensity.univ_nat_hasDensity_one] at this
+  norm_num at this
 
 /--
 Let $A\subset \mathbb{N}$ and let $g(n)$ be a non-decreasing function of $n$ which is always $>0$.
@@ -60,12 +66,19 @@ The answer is trivially no to both questions: indeed if $A=\mathbb{N}$ (assuming
 then $1_A\ast 1_A(n)=n+1$ for all $n$. Presumably Erdős had some additional restrictions on either
 $g$ or $A$ in mind, but these are not recorded in [Er80].
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_1193.parts.ii : answer(False) ↔
-    ∃ c < (1 : ℝ), ∀ (A : Set ℕ) (g : ℕ → ℕ), Monotone g → (∀ n, 0 < g n) →
+@[category research solved, question, AMS 5 11]
+theorem erdos_1193.parts.ii :
+    ¬ ∃ c < (1 : ℝ), ∀ (A : Set ℕ) (g : ℕ → ℕ), Monotone g → (∀ n, 0 < g n) →
       {n : ℕ | sumRep A n = g n}.upperDensity < c := by
-  sorry
+  have hset : {n : ℕ | sumRep Set.univ n = n + 1} = Set.univ := by ext n; simp [sumRep_def]
 
+  rintro ⟨c, hc, h⟩
+  have := h Set.univ (fun n => n + 1) (fun _ _ h => by simpa using h) (fun n => Nat.succ_pos n)
+  rw [hset, show (Set.univ : Set ℕ).upperDensity = 1 from
+    Filter.Tendsto.limsup_eq HasDensity.univ_nat_hasDensity_one] at this
+  linarith
+
+set_option linter.style.formal_proof_palomar false in
 /--
 Indeed if $A=\mathbb{N}$ (assuming $0\in\mathbb{N}$) then $1_A\ast 1_A(n)=n+1$ for all $n$.
 -/
@@ -80,6 +93,11 @@ Erdős writes the upper density can be positive, but he believes it is bounded a
 theorem erdos_1193.variants.upper_density_pos :
     ∃ (A : Set ℕ) (g : ℕ → ℕ), Monotone g ∧ (∀ n, 0 < g n) ∧
       0 < {n : ℕ | sumRep A n = g n}.upperDensity := by
-  sorry
+  have hset : {n : ℕ | sumRep Set.univ n = n + 1} = Set.univ := by ext n; simp [sumRep_def]
+
+  refine ⟨Set.univ, fun n => n + 1, fun _ _ h => by simpa using h, fun n => Nat.succ_pos n, ?_⟩
+  rw [hset, show (Set.univ : Set ℕ).upperDensity = 1 from
+    Filter.Tendsto.limsup_eq HasDensity.univ_nat_hasDensity_one]
+  norm_num
 
 end Erdos1193

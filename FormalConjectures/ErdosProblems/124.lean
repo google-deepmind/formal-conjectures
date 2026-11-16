@@ -44,8 +44,8 @@ where $c_i \in \{0, 1\}$ and $a_i$ has only the digits $0, 1$ when written in ba
 
 Conjectured by Erdős [Er97], solved by Boris Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11]
-lemma erdos124.zero : answer(True) ↔
+@[category research solved, question, AMS 11]
+lemma erdos124.zero :
     ∀ D : Finset ℕ, (∀ d ∈ D, 3 ≤ d) → 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ →
       ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d 0 := sorry
 
@@ -58,8 +58,8 @@ written in base $d_i$?
 
 Conjectured by Burr, Erdős, Graham, and Li [BEGL96]
 -/
-@[category research open, AMS 11]
-lemma erdos124.ne_zero : answer(sorry) ↔
+@[category research open, question, AMS 11]
+lemma erdos124.ne_zero :
     ∀ k ≠ 0, ∀ D : Finset ℕ, (∀ d ∈ D, 3 ≤ d) → 1 ≤ ∑ d ∈ D, (d - 1 : ℚ)⁻¹ → D.gcd id = 1 →
       ∀ᶠ n in atTop, n ∈ ∑ d ∈ D, sumsOfDistinctPowers d k := by
   sorry
@@ -77,6 +77,7 @@ lemma erdos124.ne_zero_three_four_seven :
       n ∈ sumsOfDistinctPowers 3 1 + sumsOfDistinctPowers 4 1 + sumsOfDistinctPowers 7 1 :=
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $3\leq d_1 < d_2 < \cdots < d_r$ be integers such that all sufficiently large integers can be
 written as a sum of the shape $\sum_i c_ia_i$ where $c_i \in \{0, 1\}$ and $a_i$ has only the digits
