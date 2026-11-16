@@ -95,7 +95,39 @@ There exist infinitely many integral Diophantine 4-tuples. [Du16]
 Proof: many parameterizations exist, e.g. $\{k, k + 2, 4k + 4, 16k^3 + 48k^2 + 44k + 12\}$.
 -/
 @[category textbook, AMS 11]
-example : integralDiophantine4Tuple.encard = ⊤ := by sorry
+example : integralDiophantine4Tuple.encard = ⊤ := by
+  -- The family from the docstring, with `k + 1` in place of `k` so that every element is positive.
+  let s : ℕ → Finset ℕ := fun k =>
+    {k + 1, k + 3, 4 * k + 8, 16 * (k + 1) ^ 3 + 48 * (k + 1) ^ 2 + 44 * (k + 1) + 12}
+  have hmem : ∀ k x, x ∈ s k → k + 1 ≤ x := by
+    intro k x hx
+    simp only [s, Finset.mem_insert, Finset.mem_singleton] at hx
+    rcases hx with rfl | rfl | rfl | rfl <;> omega
+  have hinj : Function.Injective s := by
+    intro k k' h
+    have h1 : k + 1 ∈ s k' := by rw [← h]; simp [s]
+    have h2 : k' + 1 ∈ s k := by rw [h]; simp [s]
+    have := hmem k' _ h1
+    have := hmem k _ h2
+    omega
+  refine Set.encard_eq_top_iff.mpr
+    (Set.infinite_of_injective_forall_mem hinj fun k => ⟨⟨?_, ?_⟩, ?_⟩)
+  · exact fun x hx => by have := hmem k x hx; omega
+  · intro x hx y hy hxy
+    simp only [s, Finset.mem_insert, Finset.mem_singleton] at hx hy
+    rcases hx with rfl | rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl | rfl <;>
+      first
+      | exact absurd rfl hxy
+      | exact ⟨k + 2, by ring1⟩
+      | exact ⟨2 * k + 3, by ring1⟩
+      | exact ⟨2 * k + 5, by ring1⟩
+      | exact ⟨4 * (k + 1) ^ 2 + 6 * (k + 1) + 1, by ring1⟩
+      | exact ⟨4 * (k + 1) ^ 2 + 10 * (k + 1) + 5, by ring1⟩
+      | exact ⟨8 * (k + 1) ^ 2 + 16 * (k + 1) + 7, by ring1⟩
+  · have h : 4 * k + 8 < 16 * (k + 1) ^ 3 + 48 * (k + 1) ^ 2 + 44 * (k + 1) + 12 := by omega
+    rw [Finset.card_insert_of_notMem (by simp; omega),
+      Finset.card_insert_of_notMem (by simp; omega),
+      Finset.card_insert_of_notMem (by simp; omega), Finset.card_singleton]
 
 /--
 The statement that there is no integral Diophantine 5-tuple.

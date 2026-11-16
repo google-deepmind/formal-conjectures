@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos729
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $C>0$ be a constant. Are there infinitely many integers $a,b,n$ with $a+b> n+C\log n$ such
 that the denominator of $$\frac{n!}{a!b!}$$contains only primes $\ll_C 1$?

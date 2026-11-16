@@ -139,6 +139,7 @@ theorem erdos_302.variants.upper_nine_tenths (f : ℕ → ℕ) (hf : ∀ N, IsMa
     ∀ᶠ N : ℕ in atTop, (f N : ℝ) ≤ ((9 : ℝ) / 10 + ε) * N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Kenta Kitamura (KitaKen1 on GitHub) has given a Lean proof
 ([erdos-302-upper-bound](https://github.com/KitaKen1/erdos-302-upper-bound)) that

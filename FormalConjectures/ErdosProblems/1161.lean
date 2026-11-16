@@ -62,6 +62,7 @@ theorem f_one (n : ℕ) : f 1 n = 1 := by
 def erdos_1161.answer (n : ℕ) : Set ℕ :=
   {k | IsLeast {m : ℕ | 0 < m ∧ Nat.lcmUpto (n - m) ∣ m} k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f_k(n)$ count the number of elements of $S_n$ of order $k$. For which values of $k$ will
 $f_k(n)$ be maximal? [Va99, 5.72]
@@ -78,6 +79,7 @@ theorem erdos_1161 :
     ∀ᶠ n : ℕ in atTop, {k : ℕ | ∀ j : ℕ, f j n ≤ f k n} = erdos_1161.answer n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Beker [Be25d, Theorem 1.1] proved that
 $$\max_{k\geq 1} f_k(n)\sim (n-1)!.$$
@@ -88,6 +90,7 @@ theorem erdos_1161.variants.max_asymptotic :
     (fun n : ℕ ↦ (maxF n : ℝ)) ~[atTop] (fun n : ℕ ↦ ((n - 1).factorial : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Beker [Be25d, Theorem 1.1] also proved that, if $n$ is sufficiently large and
 $f_k(n)\geq (n-1)!$, then $[1,\ldots,n-k]\mid k$. The statement also records $1\leq k\leq n$,

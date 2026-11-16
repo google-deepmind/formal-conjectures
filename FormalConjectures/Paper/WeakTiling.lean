@@ -77,6 +77,7 @@ def IsProperTiling (Ω T : Set ℝ) : Prop :=
 def HasBoundedDensity (Λ : Set ℝ) : Prop :=
   ∃ C : ℕ, ∀ x : ℝ, (Λ ∩ Set.Ioo x (x + 1)).Finite ∧ (Λ ∩ Set.Ioo x (x + 1)).ncard ≤ C
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Problem 4.1.** Let $\Omega \subset \mathbb{R}$ be a finite union of intervals and $\nu$
     a weak tiling measure for $\Omega$. Must $\mathrm{supp}(\nu)$ have bounded density?
 
@@ -101,6 +102,7 @@ theorem problem_4_2 :
       ∃ T : Set ℝ, IsProperTiling Ω T := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Problem 4.3.** Let $\Omega \subset \mathbb{R}$ be a finite union of intervals and $\nu$
     a weak tiling measure for $\Omega$. Must $\nu$ be expressible as a convex combination of
     proper tiling measures?

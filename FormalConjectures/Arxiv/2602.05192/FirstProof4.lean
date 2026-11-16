@@ -145,6 +145,7 @@ def FourProp (p q : ℝ[X]) (n : ℕ) : Prop :=
     p.degree = n → p.roots.card = n → q.degree = n  → q.roots.card = n → p.Monic → q.Monic →
     1 / Φ p + 1 / Φ q ≤ 1 / Φ (p (⊞_n) q)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $p(x)$ and $q(x)$ are monic real-rooted polynomials of
 degree $n$, then

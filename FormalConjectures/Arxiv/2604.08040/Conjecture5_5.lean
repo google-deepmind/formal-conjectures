@@ -63,6 +63,7 @@ This is $\pi(G)$ in the notation of the paper.
 noncomputable def numPrimeFactors : ℕ :=
   (Fintype.card G).primeFactors.card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture 5.5** (Das, Dey, Sharma 2026):
 If a finite group `G` satisfies $\mathrm{cyc}(G) < 2^{t+2}$, where $t = \pi(G)$ is the

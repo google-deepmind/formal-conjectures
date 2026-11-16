@@ -41,6 +41,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos362
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be a finite set of size $N$. Is it true that, for any fixed $t$,
 there are
@@ -58,6 +59,7 @@ theorem erdos_362 : ∃ C : ℝ, ∀ (A : Finset ℕ) (t : ℕ), A.Nonempty →
     ({S ∈ A.powerset | ∑ n ∈ S, n = t}.card : ℝ) ≤ C * 2 ^ A.card / (A.card : ℝ) ^ (3 / 2 : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If we further ask that $\lvert S\rvert=l$ (for any fixed $l$) then is the number of solutions
 $$\ll \frac{2^N}{N^2},$$

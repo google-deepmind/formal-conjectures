@@ -61,6 +61,7 @@ end Set
 
 end Prelims
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\operatorname{Log} x := \max\{\log x, 1\}$,
 $\operatorname{Log}_2x = \operatorname{Log} (\operatorname{Log} x)$, and

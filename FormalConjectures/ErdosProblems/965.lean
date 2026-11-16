@@ -35,6 +35,7 @@ all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour?
 
 namespace Erdos965
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős asks in [Er75b] if for every 2-coloring of ℝ, there is an uncountable set $A ⊆ ℝ$ such that
 all sums $a + b$ for $a, b ∈ A, a ≠ b$ have the same colour.

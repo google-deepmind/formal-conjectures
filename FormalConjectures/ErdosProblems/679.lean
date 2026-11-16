@@ -46,6 +46,7 @@ theorem erdos_679.parts.i :
           (1 + ε) * log k / log (log k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can one show the stronger version with
 $$\omega(n-k) < \frac{\log k}{\log\log k}+O(1)$$

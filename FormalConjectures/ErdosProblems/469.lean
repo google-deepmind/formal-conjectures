@@ -36,6 +36,7 @@ def Nat.IsSumDivisors (n : ℕ) : Prop :=
 
 open Erdos469
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be the set of all $n$ such that $n = d_1 + ⋯ + d_k$ with $d_i$ distinct
 proper divisors of $n$, but this is not true for any $m ∣ n$ with $m < n$. Does:

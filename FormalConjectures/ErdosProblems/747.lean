@@ -36,6 +36,7 @@ open scoped Topology
 
 noncomputable def erdos_747.answer : ℕ → ℝ := fun n : ℕ ↦ n * Real.log n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 How large should $\ell(n)$ be such that, almost surely, a random $3$-uniform hypergraph on $3n$
 vertices with $\ell(n)$ edges must contain $n$ vertex-disjoint edges?

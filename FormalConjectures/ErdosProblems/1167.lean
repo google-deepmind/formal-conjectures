@@ -67,6 +67,7 @@ theorem erdos_1167 :
 
 namespace erdos_1167.variants
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Finite-target case.** When all $\kappa_\alpha$ are finite, $\kappa_\alpha + 1$
 is the ordinary natural-number successor. Special case of `erdos_1167`.

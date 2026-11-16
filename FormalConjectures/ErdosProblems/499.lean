@@ -28,6 +28,7 @@ open Nat
 
 namespace Erdos499
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $M$ be a real $n \times n$ doubly stochastic matrix. Does there exist some $σ \in S_n$ such that
 $$

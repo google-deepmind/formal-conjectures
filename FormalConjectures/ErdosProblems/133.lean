@@ -46,6 +46,7 @@ diameter `2`, i.e. the largest `f` such that every such graph has a vertex of de
 noncomputable def f (n : ℕ) : ℕ :=
   sInf {d | ∃ G : SimpleGraph (Fin n), G.CliqueFree 3 ∧ G.diam = 2 ∧ ∀ v, G.degree v ≤ d}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be minimal such that every triangle-free graph $G$ with $n$ vertices and diameter
 $2$ contains a vertex with degree $\geq f(n)$. What is the order of growth of $f(n)$? Does
@@ -67,6 +68,7 @@ The precise asymptotics of $f(n)$ are unknown; Alon believes that the truth is $
 theorem erdos_133 : ¬ Tendsto (fun n : ℕ ↦ (f n : ℝ) / √n) atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The order of growth of $f(n)$ is $\sqrt{n}$. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos133.lean#L597"]

@@ -33,6 +33,7 @@ namespace Erdos899
 
 open Erdos899
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
 Is it true that

@@ -35,6 +35,7 @@ open scoped Pointwise
 
 namespace Erdos806
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \{1,\ldots,n\}$ with $\lvert A\rvert \leq n^{1/2}$. Must there exist some
 $B\subset\mathbb{Z}$ with $\lvert B\rvert=o(n^{1/2})$ such that $A\subseteq B+B$?

@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos699
 
+set_option linter.style.formal_proof_palomar false in
 /-- Sylvester and Schur: for $1 \le i \le n/2$ there is a prime $p > i$ dividing `n.choose i`. -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/AllenGrahamHart/FormalConjectures-Bench/blob/482dacc4d9335240f26218cdc62032da3100392b/formalizations/erdos699/Erdos699Formalization.lean#L7679"]
 theorem sylvester_schur (n i : ℕ) (hi : 1 ≤ i) (hi_half : i ≤ n / 2) :

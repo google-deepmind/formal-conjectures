@@ -38,6 +38,7 @@ open Filter
 
 namespace Erdos369
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon>0$ and $k\geq 2$. Is it true that, for all sufficiently large $n$, there is a
 sequence of $k$ consecutive integers in $\{1,\ldots,n\}$ all of which are $n^\epsilon$-smooth?

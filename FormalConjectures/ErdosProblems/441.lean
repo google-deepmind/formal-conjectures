@@ -63,6 +63,7 @@ $[(N/2)^{1/2},(2N)^{1/2}]$.
 def erdosConstruction (N : ℕ) : Finset ℕ :=
   (Finset.Icc 1 N).filter fun a ↦ 2 * a ^ 2 ≤ N ∨ (2 ∣ a ∧ a ^ 2 ≤ 2 * N)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $N\geq 1$. What is the size of the largest $A\subset \{1,\ldots,N\}$ such that $[a,b]\leq N$
 for all $a,b\in A$, where $[a,b]$ is the least common multiple of $a$ and $b$?

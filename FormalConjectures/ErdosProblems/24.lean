@@ -43,6 +43,7 @@ open SimpleGraph
 
 namespace Erdos24
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every triangle-free graph on $5n$ vertices contain at most $n^5$ copies of $C_5$?
 

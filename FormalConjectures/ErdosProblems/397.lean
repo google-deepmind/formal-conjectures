@@ -31,6 +31,7 @@ open Nat
 
 namespace Erdos397
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there only finitely many solutions to
 $$

@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos762
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The cochromatic number of $G$, denoted by $\zeta(G)$, is the minimum number of colours needed to
 colour the vertices of $G$ such that each colour class induces either a complete graph or empty

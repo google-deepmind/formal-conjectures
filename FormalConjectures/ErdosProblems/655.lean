@@ -34,6 +34,7 @@ no circle whose centre is one of the $x_i$ contains three other points. -/
 def IsValid (X : Finset ℝ²) : Prop :=
   ∀ᵉ (x ∈ X) (r > 0), ¬3 ≤ (Metric.sphere x r ∩ X).ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $x_1,\ldots,x_n\in \mathbb{R}^2$ be such that no circle whose centre is one
 of the $x_i$ contains three other points. Are there at least

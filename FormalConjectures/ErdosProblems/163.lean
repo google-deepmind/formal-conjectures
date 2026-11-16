@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos163
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The Burr-Erdős conjecture: For any $d\geq 1$ if $H$ is a graph such that every subgraph
 contains a vertex of degree at most $d$ then

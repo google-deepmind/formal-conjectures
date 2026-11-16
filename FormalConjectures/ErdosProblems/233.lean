@@ -49,6 +49,7 @@ theorem erdos_233.variants.upper_bound (h : RiemannHypothesis) :
     (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) =O[atTop] fun N => N * (log N)^4 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The prime number theorem immediately implies a lower bound of $\gg N(\log N)^2$ for the sum of
 squares of gaps between consecutive primes.

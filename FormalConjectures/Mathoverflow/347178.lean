@@ -31,6 +31,7 @@ open scoped EuclideanGeometry
 
 namespace Mathoverflow347178
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Is it true that
 $$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$?
@@ -46,6 +47,7 @@ theorem mathoverflow_347178 :
         (⨆ x, (f x : EReal)) = ⨆ x, (f (x + gradient f x) : EReal) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Is the boundedness of
 $\sup_{x \in \mathbb R^n}f(x)$ and $\sup_{x\in \mathbb R^n} f(x+\nabla f(x))$ equivalent?
@@ -60,6 +62,7 @@ theorem mathoverflow_347178.variants.bounded_iff :
         BddAbove (range f) ↔ BddAbove (range fun x ↦ f (x + gradient f x)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f : \mathbb R^n \to \mathbb R,  n \geq 2$ be a $C^1$ function. Does the equality
 $$\sup_{x \in \mathbb R^n}f(x) = \sup_{x\in \mathbb R^n} f(x+\nabla f(x))$$

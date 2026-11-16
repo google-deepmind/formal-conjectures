@@ -105,6 +105,7 @@ def IsRecursivelyBuiltMr : ∀ (_r : ℕ) {_V : Type u} (_G : SimpleGraph _V), P
   | r + 3, _, G => ∃ (W : Type u) (H : SimpleGraph W) (s : ℕ),
       1 ≤ s ∧ IsRecursivelyBuiltMr (r + 2) H ∧ Nonempty (G ≃g genMyc s H)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Stiebitz's theorem** [St85]: every graph in $M_r$ has chromatic number at least $r$. The
 matching upper bound follows from the construction, so the chromatic number is exactly $r$.
@@ -122,6 +123,7 @@ theorem erdos_750.variants.stiebitz {V : Type u} (G : SimpleGraph V) (r : ℕ)
     (h : IsRecursivelyBuiltMr r G) : (r : ℕ∞) ≤ G.chromaticNumber := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(m)$ be some function such that $f(m)\to \infty$ as $m\to \infty$. Does there exist a
 graph $G$ of infinite chromatic number such that every subgraph on $m$ vertices contains

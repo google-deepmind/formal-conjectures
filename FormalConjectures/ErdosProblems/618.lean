@@ -47,6 +47,7 @@ noncomputable def h2 {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
     (H.edgeFinset \ G.edgeFinset).card = k}
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 For a triangle-free graph $G$ let $h_2(G)$ be the smallest number of edges that need to be
 added to $G$ so that it has diameter $2$ and is still triangle-free. Is it true that if $G$

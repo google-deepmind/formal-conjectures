@@ -35,6 +35,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos897
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
 if $(a,b)=1$ such that $\limsup_{p,k} f(p^k) / \log(p^k) = ∞$.
@@ -52,6 +53,7 @@ theorem erdos_897.parts.i : ¬ ∀ (f : ℕ → ℝ),
     Filter.atTop.limsup (fun (n : ℕ) => ((f (n+1) - f n) / (n : ℝ).log : EReal)) = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be an additive function (so that $f(ab)=f(a)+f(b)$
 if $(a,b)=1$) such that $\limsup_{p,k} f(p^k) / \log(p^k) = ∞$.
@@ -68,6 +70,7 @@ theorem erdos_897.parts.ii : ¬ ∀ (f : ℕ → ℝ),
     Filter.atTop.limsup (fun (n : ℕ) => (f (n+1) / f n : EReal)) = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Wirsing [Wi70] proved that if $|f(n+1)−f(n)| ≤ C$ then $f(n) = c \log n + O(1)$ for some constant
 $c$. This is Erdős Problem 491; see `erdos_491`, whose linked formal proof gives this statement.

@@ -29,6 +29,7 @@ open scoped ArithmeticFunction.sigma
 
 namespace Erdos250
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is
 $$

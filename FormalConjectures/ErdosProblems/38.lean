@@ -33,6 +33,7 @@ open Set Pointwise
 namespace Erdos38
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist $B \subset \mathbb{N}$ which is not an additive basis,
 but is such that for every set $A \subseteq \mathbb{N}$ of Schnirelmann density $\alpha$

@@ -49,6 +49,7 @@ open Filter SimpleGraph
 namespace Erdos615
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist some constant $c > 0$ such that for all sufficiently large $n$, if $G$ is a
 graph with $n$ vertices and at least $(1/8 - c)n^2$ edges then $G$ must contain either a $K_4$

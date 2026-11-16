@@ -32,6 +32,7 @@ open Filter
 
 namespace Erdos1037
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph on $n$ vertices in which every degree occurs at most twice, and the number of
 distinct degrees is $>(\frac{1}{2}+\epsilon)n$. Must $G$ contain a trivial (empty or complete)

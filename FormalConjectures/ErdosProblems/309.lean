@@ -43,6 +43,7 @@ denominators from $\{1,\ldots,N\}$. -/
 noncomputable def F (N : ℕ) : ℕ :=
   {m : ℕ | ∃ A : Finset ℕ, A ⊆ Finset.Icc 1 N ∧ ∑ n ∈ A, (1 / n : ℚ) = m}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $N\geq 1$. How many integers can be written as the sum of distinct unit fractions with
 denominators from $\{1,\ldots,N\}$? Are there $o(\log N)$ such integers?
@@ -67,6 +68,7 @@ theorem erdos_309 :
     ¬ (fun N : ℕ => (F N : ℝ)) =o[atTop] fun N : ℕ => Real.log N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The number of representable integers satisfies $F(N) \sim \log N$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos309.lean#L374"]

@@ -41,6 +41,7 @@ namespace Erdos1080
 def IsBipartition {V : Type*} (G : SimpleGraph V) (X Y : Set V) : Prop :=
   Disjoint X Y ∧ X ∪ Y = Set.univ ∧ ∀ ⦃u v⦄, G.Adj u v → (u ∈ X ↔ v ∈ Y)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a bipartite graph on $n$ vertices such that one part has $\lfloor n^{2/3}\rfloor$
 vertices. Is there a constant $c>0$ such that if $G$ has at least $cn$ edges then $G$ must

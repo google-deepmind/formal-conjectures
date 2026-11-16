@@ -48,6 +48,7 @@ open Filter SimpleGraph
 namespace Erdos22
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon > 0$ and let $n$ be sufficiently large depending on $\epsilon$. Is there a graph
 on $n$ vertices with at least $n^2/8$ many edges which contains no $K_4$, such that the largest

@@ -47,6 +47,7 @@ open NormalNumber
 
 namespace BugeaudNormalAndRich
 
+set_option linter.style.formal_proof_palomar false in
 /-- A real number $\xi$ is normal in base $b$ if and only if $(b^n \xi)_{n \ge 0}$ is uniformly
 distributed modulo $1$ [Wal49], [Bug12, Theorem 4.14]. -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at

@@ -56,6 +56,7 @@ noncomputable def successProbability (G : Type*) [AddCommGroup G] [Fintype G] (�
   (((univ : Finset G).powersetCard k).filter (IsBalanced ε)).card /
     ((univ : Finset G).powersetCard k).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $0<\epsilon<1$ and let $g_\epsilon(N)$ be the minimal $k$ such that if $G$ is an abelian
 group of size $N$ and $A\subseteq G$ is a uniformly random subset of size $k$, and
@@ -90,6 +91,7 @@ theorem erdos_1179 : ∀ ε : ℝ, 0 < ε → ε < 1 → ∃ k : ℕ → ℕ,
             (nhds 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- It is trivial that $g_\epsilon(N)\geq \log_2N$: an $\epsilon$-balanced set $A$ with
 $\epsilon < 1$ must satisfy $|G| \leq 2^{|A|}$, since every $g$ has a representation. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at

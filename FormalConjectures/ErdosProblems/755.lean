@@ -79,6 +79,7 @@ theorem erdos_755.test_dim_one :
     unitEquilateralTriangleCount 1 (∅ : Finset (EuclideanSpace ℝ (Fin 1))) = 0 := by
   simp [unitEquilateralTriangleCount]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős asked whether every $n$-point set in
 $\mathbb{R}^6$ spans at most $(1/27 + o(1)) n^3$ unit equilateral triangles.

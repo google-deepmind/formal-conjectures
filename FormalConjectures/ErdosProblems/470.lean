@@ -122,6 +122,7 @@ theorem erdos_470.variants.odd_weird_prime_div :
     ∀ n : ℕ, Odd n → n.Weird → 6 ≤ {m | m ∈ n.divisors ∧ m.Prime}.ncard := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If there are no odd weird numbers then every weird number has abundancy index < 4.
 -/

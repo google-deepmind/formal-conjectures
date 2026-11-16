@@ -43,6 +43,7 @@ open SimpleGraph
 
 namespace Erdos915
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph with $1+n(m-1)$ vertices and $1+n\binom{m}{2}$ edges. Must $G$ contain two
 points which are connected by $m$ disjoint paths?

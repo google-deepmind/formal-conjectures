@@ -43,6 +43,7 @@ open Filter Real SimpleGraph
 namespace Erdos559
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\hat{R}(G)$ denote the size Ramsey number, the minimal number of edges $m$ such that there is
 a graph $H$ with $m$ edges that is Ramsey for $G$.
@@ -62,6 +63,7 @@ theorem erdos_559 :
   sorry
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /-- Rödl and Szemerédi [RoSz00] disproved the linear bound already for maximum degree $3$. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos559.lean#L1275"]

@@ -37,6 +37,7 @@ namespace WrittenOnTheWallII.GraphConjecture85
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 85](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 asked whether every simple connected graph $G$ satisfies

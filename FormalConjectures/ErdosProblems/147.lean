@@ -40,6 +40,7 @@ open Filter Asymptotics SimpleGraph
 
 namespace Erdos147
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $H$ is bipartite with minimum degree $r$ then there exists $\epsilon=\epsilon(H)>0$ such that
 $$\mathrm{ex}(n;H) \gg n^{2-\frac{1}{r-1}+\epsilon}.$$

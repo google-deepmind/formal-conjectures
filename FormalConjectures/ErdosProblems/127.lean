@@ -42,6 +42,7 @@ noncomputable def f (m : ℕ) : ℕ :=
     ∃ H : SimpleGraph V, H ≤ G ∧ H.IsBipartite ∧
       (m : ℝ) / 2 + (√(8 * m + 1) - 1) / 8 + k ≤ H.edgeSet.ncard}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(m)$ be maximal such that every graph with $m$ edges must contain a bipartite graph with
 $$\geq \frac{m}{2}+\frac{\sqrt{8m+1}-1}{8}+f(m)$$
@@ -58,6 +59,7 @@ theorem erdos_127 : ∃ m : ℕ → ℕ, Tendsto m atTop atTop ∧
     Tendsto (fun i => f (m i)) atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Edwards [Ed73] proved that every graph with $m$ edges contains a bipartite subgraph with at
 least $\frac{m}{2}+\frac{\sqrt{8m+1}-1}{8}$ edges. -/
 @[category research solved, AMS 5, formal_proof using lean4 at

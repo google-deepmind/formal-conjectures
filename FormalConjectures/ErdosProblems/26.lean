@@ -87,6 +87,7 @@ theorem not_isWeaklyBehrend_of_neg {ι : Type*} (A : ι → ℕ) {ε : ℝ} (hε
   norm_num [IsWeaklyBehrend]
   exact (add_lt_of_neg_right _ hε).trans_le (Set.lowerDensity_le_one _)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subset\mathbb{N}$ be infinite such that $\sum_{a \in A} \frac{1}{a} = \infty$. Must
 there exist some $k\geq 1$ such that almost all integers have a divisor of the form $a+k$
@@ -99,6 +100,7 @@ theorem erdos_26 : ¬ ∀ A : ℕ → ℕ, StrictMono A → IsThick A →
     ∃ k, IsBehrend (A · + k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If we allow for $\sum_{a\in A} \frac{1}{a} < \infty$ then Rusza has found a counter-example.
 -/
@@ -108,6 +110,7 @@ theorem erdos_26.variants.rusza : ∃ A : ℕ → ℕ,
     StrictMono A ∧ ¬IsThick A ∧ ∀ k, ¬IsBehrend (A · + k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Tenenbaum asked the weaker variant where for every $\epsilon>0$ there is
 some $k=k(\epsilon)$ such that at least $1-\epsilon$ density of all integers have a

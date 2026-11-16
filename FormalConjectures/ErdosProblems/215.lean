@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos215
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist $S\subseteq \mathbb{R}^2$ such that every set congruent to $S$ (that is, $S$
 after some translation and rotation) contains exactly one point from $\mathbb{Z}^2$?

@@ -52,7 +52,8 @@ arbitrarily large graphs with more than $n^2/4$ edges in which every triangle ha
 most $1.464n$, which is less than $2(\sqrt{3}-1)n$. Estimating the optimal value of $h(n)$ is
 still open.
 -/
-@[category research solved, question, AMS 5]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-03-000006"]
 theorem erdos_1033 :
     ¬ ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
       n ^ 2 < 4 * #G.edgeFinset →

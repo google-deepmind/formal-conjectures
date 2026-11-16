@@ -48,6 +48,7 @@ def Condition (p : ℚ[X]) : Prop :=
   1 = ∑ i ∈ Finset.Icc 1 (Fin.last k), (1 : ℚ) / (n i) ∧
   (m : ℚ) = ∑ i ∈ Finset.Icc 1 (Fin.last k), p.eval (n i : ℚ)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $p\colon \mathbb{Z} \rightarrow \mathbb{Z}$ be a polynomial (with rational coefficients,
 taking integer values at all integers) whose leading coefficient is positive and such that there
@@ -66,6 +67,7 @@ This was formalized in Lean by Ammanamanchi using Opus 4.6 and GPT 5.5 Pro.
 theorem erdos_283 : ∀ p : ℚ[X], Condition p := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Graham [Gr63] has proved this when $p(x)=x$.
 -/

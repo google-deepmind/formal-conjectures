@@ -65,6 +65,7 @@ theorem erdos_978.variants.sub_two {f : ℤ[X]} (hi : Irreducible f) (hd : 9 ≤
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $k > 3$ (and $k \neq 2^l$), then are there infinitely many $n$ for which $f(n)$ is
 $(k-2)$-power-free?
@@ -80,6 +81,7 @@ theorem erdos_978.variants.allow_fixed_divisors :
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $k>3$ (and $k \neq 2^l$), and for all primes $p$ there exists $n$ such that $p^{k-2}\nmid f(n)$,
 then are there infinitely many $n$ for which $f(n)$ is $(k-2)$-power-free?
@@ -96,6 +98,7 @@ theorem erdos_978.parts.ii :
     {n : ℕ | Powerfree (f.natDegree - 2) (f.eval (n : ℤ))}.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Does `n ^ 4 + 2` represent infinitely many squarefree numbers?
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean proof,

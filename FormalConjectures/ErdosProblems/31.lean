@@ -41,6 +41,7 @@ namespace Erdos31
 open Filter
 open scoped Pointwise
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Given any infinite set $A\subset \mathbb{N}$ there is a set $B$ of density $0$ such that $A+B$ contains all except finitely many integers.
 

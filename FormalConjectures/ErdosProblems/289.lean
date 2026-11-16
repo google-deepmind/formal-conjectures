@@ -34,6 +34,7 @@ open Asymptotics Filter Finset
 
 namespace Erdos289
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is it true that, for all sufficiently large $k$, there exist finite intervals
 $I_1, \dotsc, I_k \subset \mathbb{N}$, distinct, not overlapping or adjacent, with
 $|I_i| \geq 2$ for $1 \leq i \leq k$ such that

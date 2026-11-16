@@ -34,6 +34,7 @@ namespace Erdos674
 def solutionSet : Set (ℕ × ℕ × ℕ) :=
   {(x, y, z) | 1 < x ∧ 1 < y ∧ 1 < z ∧ x ^ x * y ^ y = z ^ z}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there any integer solutions to $x^xy^y=z^z$ with $x,y,z>1$?
 
@@ -44,6 +45,7 @@ general - for example, $x=2^{12}3^6$, $y = 2^83^8$, and $z = 2^{11}3^7$.
 theorem erdos_674 : solutionSet.Nonempty := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There are in fact infinitely many integer solutions to $x^xy^y=z^z$ with $x,y,z>1$.
 -/

@@ -39,6 +39,7 @@ open Filter
 
 namespace Erdos88
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For any $\epsilon>0$ there exists $\delta=\delta(\epsilon)>0$ such that if $G$ is a graph on $n$
 vertices with no independent set or clique of size $\geq \epsilon\log n$ then $G$ contains an

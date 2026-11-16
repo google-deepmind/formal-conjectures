@@ -40,6 +40,7 @@ $A_1(N)$, the number of maximal Sidon subsets of $\{1, \dots, N\}$.
 noncomputable def numMaximalSidonSets (N : ℕ) : ℕ :=
   {A : Finset ℕ | A ⊆ Icc 1 N ∧ Set.IsMaximalSidonSetIn (A : Set ℕ) N}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A_1(N)$ be the number of maximal Sidon subsets of $\{1,\ldots,N\}$. Is it true that
 $$A_1(N) < 2^{o(N^{1/2})}?$$
@@ -56,6 +57,7 @@ theorem erdos_862.parts.i :
       (fun N : ℕ => (N : ℝ) ^ (1 / 2 : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A_1(N)$ be the number of maximal Sidon subsets of $\{1,\ldots,N\}$. Is it true that
 $$A_1(N) > 2^{N^c}$$

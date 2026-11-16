@@ -126,6 +126,7 @@ least two points can be partitioned into $n + 1$ sets of strictly smaller diamet
 def BorsukConjecture (n : ℕ) : Prop :=
   ∀ s : Set (ℝ^n), IsBounded s → s.Nontrivial → HasBorsukCover (n + 1) s
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** fails in the formerly open range $4 \leq n \leq 62$: it is not the case
 that every bounded subset of $\mathbb{R}^n$ with at least two points can be partitioned into
@@ -183,6 +184,7 @@ splits at the midpoint of its smallest enclosing interval into two parts of smal
 theorem borsuk_conjecture.one : BorsukConjecture 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Borsuk's conjecture** in the plane, proved by Borsuk [Bo33]. -/
 @[category research solved, AMS 52,
   formal_proof using formal_conjectures at
@@ -190,6 +192,7 @@ theorem borsuk_conjecture.one : BorsukConjecture 1 := by
 theorem borsuk_conjecture.two : BorsukConjecture 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Borsuk's conjecture** in dimension $3$, proved by Perkal [Pe47] and Eggleston [Eg55]. -/
 @[category research solved, AMS 52,
   formal_proof using formal_conjectures at
@@ -197,6 +200,7 @@ theorem borsuk_conjecture.two : BorsukConjecture 2 := by
 theorem borsuk_conjecture.three : BorsukConjecture 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** is false in general: Kahn and Kalai [KK93] gave counterexamples in
 dimension $1325$ and in every dimension $n > 2014$.
@@ -207,6 +211,7 @@ dimension $1325$ and in every dimension $n > 2014$.
 theorem borsuk_conjecture.not_forall : ¬ ∀ n, BorsukConjecture n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Borsuk's conjecture** fails in dimension $65$, by Bondarenko [Bo14]. -/
 @[category research solved, AMS 52,
   formal_proof using formal_conjectures at
@@ -214,6 +219,7 @@ theorem borsuk_conjecture.not_forall : ¬ ∀ n, BorsukConjecture n := by
 theorem borsuk_conjecture.not_sixty_five : ¬ BorsukConjecture 65 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** fails in dimension $64$, by Jenrich and Brouwer [JB14]. This is the
 smallest dimension with a refereed counterexample.
@@ -224,6 +230,7 @@ smallest dimension with a refereed counterexample.
 theorem borsuk_conjecture.not_sixty_four : ¬ BorsukConjecture 64 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** fails in dimension $63$, by a 321-point configuration found in 2026
 by Grinsztajn [Gr26] and independently by Konz and Ji [Ji26]. This was the smallest dimension
@@ -235,6 +242,7 @@ with a known counterexample before [OAI26].
 theorem borsuk_conjecture.not_sixty_three : ¬ BorsukConjecture 63 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Borsuk's conjecture** fails in dimension $9$: the set of rank-one orthogonal projectors on
 $\mathbb{R}^4$, a compact subset of the nine-dimensional Euclidean space of trace-one symmetric

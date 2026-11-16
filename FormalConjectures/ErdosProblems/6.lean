@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos6
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There are infinitely many $n$ such that $d_n < d_{n+1} < d_{n+2}$, where $d$
 denotes the prime gap function.

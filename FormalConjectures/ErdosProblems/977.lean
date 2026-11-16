@@ -41,6 +41,7 @@ open Filter
 
 namespace Erdos977
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $P(m)$ is the greatest prime divisor of $m$, then is it true that
 $$\frac{P(2^n-1)}{n}\to \infty$$

@@ -41,6 +41,7 @@ determined by $a$, so this counts the $a \in A$ with $a \leq n$ and $n - a$ prim
 noncomputable def f (A : Set ℕ) (n : ℕ) : ℕ :=
   {a ∈ A | a ≤ n ∧ (n - a).Prime}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be a set such that $\lvert A\cap \{1,\ldots,N\}\rvert \gg \log N$ for
 all large $N$. Let $f(n)$ count the number of solutions to $n=p+a$ for $p$ prime and $a\in A$. Is
@@ -58,6 +59,7 @@ theorem erdos_237 : ∀ A : Set ℕ,
     limsup (fun n ↦ (f A n : ℕ∞)) atTop = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Chen and Ding [ChDi22] proved that the assumption
 $\lvert A\cap \{1,\ldots,N\}\rvert \gg \log N$ can be replaced with the assumption that $A$ is
@@ -69,6 +71,7 @@ theorem erdos_237.variants.infinite (A : Set ℕ) (hA : A.Infinite) :
     limsup (fun n ↦ (f A n : ℕ∞)) atTop = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős [Er50] proved the case $A=\{2^k : k\geq 0\}$.
 -/

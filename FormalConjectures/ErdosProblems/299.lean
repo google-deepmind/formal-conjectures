@@ -32,6 +32,7 @@ open Filter
 
 namespace Erdos299
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there an infinite sequence $a_1 < a_2 < \dots$ such that $a_{i+1} - a_i = O(1)$ and no finite
 sum of $\frac{1}{a_i}$ is equal to 1?

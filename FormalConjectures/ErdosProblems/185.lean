@@ -43,6 +43,7 @@ noncomputable def f3 (n : ℕ) : ℕ :=
       ¬ Collinear ℝ ({fun i => ((x i : ℕ) : ℝ), fun i => ((y i : ℕ) : ℝ),
         fun i => ((z i : ℕ) : ℝ)} : Set (Fin n → ℝ))) ∧ A.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f_3(n)$ be the maximal size of a subset of $\{0,1,2\}^n$ which contains no three points on
 a line. Is it true that $f_3(n)=o(3^n)$?

@@ -46,6 +46,7 @@ def lemniscate (f : ℂ[X]) : Set ℂ := {z | ‖f.eval z‖ < 1}
 /-- The closed unit lemniscate $\{z : \lvert f(z)\rvert \leq 1\}$ of a complex polynomial. -/
 def closedLemniscate (f : ℂ[X]) : Set ℂ := {z | ‖f.eval z‖ ≤ 1}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f\in \mathbb{C}[x]$ be a monic polynomial and
 $$E=\{ z: \lvert f(z)\rvert <1\}.$$
@@ -68,6 +69,7 @@ theorem erdos_1046 : ∀ f : ℂ[X], f.Monic → IsConnected (lemniscate f) →
     ∃ c : ℂ, lemniscate f ⊆ ball c 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Pommerenke [Po59] showed that the centre of the disc can be taken to be the centroid
 $\frac{z_1+\cdots+z_n}{n}$ of the roots $z_i$ of $f$.

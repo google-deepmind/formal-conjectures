@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos1187
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 3$. Is it true that, in any finite colouring of the integers, there are monochromatic
 arithmetic progressions of primes of length $k$?
@@ -50,6 +51,7 @@ theorem erdos_1187.parts.i : ∀ k : ℕ, 3 ≤ k →
         ∃ γ : κ, ∀ n ∈ S, c n = γ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 3$. In any finite colouring of the integers, are there monochromatic arithmetic
 progressions of length $k$ whose common difference is a prime?

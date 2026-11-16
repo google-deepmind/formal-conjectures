@@ -56,6 +56,7 @@ def IsWellDistributed (x : ℕ → ℝ) : Prop :=
     let count := (Finset.Ioc n (n + k)).filter (fun m ↦ x m ∈ I)
     abs ((count.card : ℝ) - (b - a) * k) < ε * k
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $\alpha$, the sequence $\{ \alpha p_n\}$ is not well-distributed,
 if $p_n$ is the sequence of primes?

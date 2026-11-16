@@ -32,6 +32,7 @@ open scoped ArithmeticFunction.sigma
 
 namespace Erdos277
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $c$, there exists an $n$ such that $\sigma(n)>cn$ but there is no
 covering system whose moduli all divide $n$?

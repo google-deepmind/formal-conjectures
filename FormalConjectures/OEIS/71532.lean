@@ -61,6 +61,7 @@ theorem a_4 : a 4 = 2 := by
 theorem a_5 : a 5 = 3 := by
   decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Is $a(n)>0$?"
 

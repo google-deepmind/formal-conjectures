@@ -106,6 +106,7 @@ theorem one_le_cliqueSubdivisionNumber {V : Type*} [Fintype V] [Nonempty V]
     (G : SimpleGraph V) : 1 ≤ cliqueSubdivisionNumber G :=
   le_cliqueSubdivisionNumber (containsCliqueSubdivision_one G (Classical.choice inferInstance))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph on $n$ vertices with chromatic number $\chi(G)$ and let $\sigma(G)$ be the
 maximal $k$ such that $G$ contains a subdivision of $K_k$. Is it true that

@@ -87,6 +87,7 @@ theorem erdos_205.parts.iii :
       ∀ᶠ n : ℕ in atTop, IsRepresentable f n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In fact there are infinitely many $n$ such that, for all $k$ with $2^k<n$, $n-2^k$ has at least
 $$\gg \left(\frac{\log n}{\log\log n}\right)^{1/2}$$

@@ -42,6 +42,7 @@ open Filter
 
 namespace Erdos191
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $C>0$ be arbitrary. Is it true that, if $n$ is sufficiently large depending on $C$, then in
 any $2$-colouring of $\binom{\{2,\ldots,n\}}{2}$ there exists some $X\subseteq \{2,\ldots,n\}$

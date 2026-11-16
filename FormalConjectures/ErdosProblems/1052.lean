@@ -43,6 +43,7 @@ theorem erdos_1052 :
     {n | IsUnitaryPerfect n}.Finite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 All unitary perfect numbers are even.
 

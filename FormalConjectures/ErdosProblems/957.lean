@@ -36,6 +36,7 @@ open scoped EuclideanGeometry
 
 namespace Erdos957
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subset \mathbb{R}^2$ be a set of size $n$ and let $\{d_1<\ldots<d_k\}$ be the set of
 distinct distances determined by $A$. Let $f(d)$ be the number of times the distance $d$ is
@@ -56,6 +57,7 @@ theorem erdos_957 :
             (9 / 8 + ε) * (n : ℝ) ^ 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The original problem was solved by Dumitrescu [Du19, Theorem 1], who proved that
 $$f(d_1)f(d_k)\leq \frac{9}{8}n^2+O(n).$$

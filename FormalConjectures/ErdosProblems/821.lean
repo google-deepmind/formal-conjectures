@@ -48,6 +48,7 @@ Let $g(n)$ count the number of $m$ such that $\phi(m)=n$.
 noncomputable def g (n : ℕ) : ℕ :=
   { m : ℕ | totient m = n }.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $\epsilon>0$, there exist infinitely many $n$ such that
 $g(n) > n^{1-\epsilon}$?

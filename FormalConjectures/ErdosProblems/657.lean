@@ -114,7 +114,8 @@ theorem erdos_657.variants.dim_one_upper :
 Straus observed that for every $k$ there is a set of $2^k$ points in $\mathbb{R}^k$ with no
 isosceles triangles which determines at most $2^k - 1$ distinct distances.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-02-000007"]
 theorem erdos_657.variants.straus (k : ℕ) :
     ∃ A : Finset (ℝ^k), A.card = 2 ^ k ∧ (A : Set (ℝ^k)).IsIsoscelesFree ∧
       distinctDistances A ≤ 2 ^ k - 1 := by

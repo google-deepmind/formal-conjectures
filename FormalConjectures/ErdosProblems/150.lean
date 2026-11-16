@@ -51,6 +51,7 @@ def IsMinimalCut {V : Type*} (G : SimpleGraph V) (T : Set V) : Prop :=
 noncomputable def maxMinimalCuts (n : ℕ) : ℕ :=
   sSup {k | ∃ G : SimpleGraph (Fin n), {T : Set (Fin n) | IsMinimalCut G T}.ncard = k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A minimal cut of a graph is a minimal set of vertices whose removal disconnects the graph. Let
 $c(n)$ be the maximum number of minimal cuts a graph on $n$ vertices can have.

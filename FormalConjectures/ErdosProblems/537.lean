@@ -32,6 +32,7 @@ open Filter
 
 namespace Erdos537
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon>0$ and $N$ be sufficiently large. If $A\subseteq \{1,\ldots,N\}$ has
 $\lvert A\rvert \geq \epsilon N$ then must there exist $a_1,a_2,a_3\in A$ and distinct primes

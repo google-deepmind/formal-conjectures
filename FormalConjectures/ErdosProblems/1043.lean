@@ -40,6 +40,7 @@ open MeasureTheory Polynomial
 def levelSet (f : Polynomial ℂ) : Set ℂ :=
   {z : ℂ | ‖f.eval z‖ ≤ 1}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 1043**:
 Let $f\in \mathbb{C}[x]$ be a monic polynomial.

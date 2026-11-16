@@ -88,6 +88,7 @@ a Dlab group, this says that $f$ is below $g$ just after the point where they st
 def DlabLt {G : Subgroup (ℝ ≃o ℝ)} (f g : G) : Prop :=
   ∃ x, (f : ℝ ≃o ℝ) x < (g : ℝ ≃o ℝ) x ∧ ∀ y, (g : ℝ ≃o ℝ) y < (f : ℝ ≃o ℝ) y → x < y
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there order automorphisms of Dlab groups that are not induced by conjugation by elements of
 a (possibly bigger) Dlab group?
@@ -108,6 +109,7 @@ theorem kourovka_21_149 :
           ∃ e : G →* A, Function.Injective e ∧ ∃ u : A, ∀ f : G, e (α f) = u⁻¹ * e f * u := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The original form of the problem: are there order automorphisms of Dlab groups that are not inner
 automorphisms?

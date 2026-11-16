@@ -105,6 +105,7 @@ $V_l(n)$ is the supremum of $V(n,k)$ for all $k \ge l$
 noncomputable def V_l (l n : ℕ) : ℕ∞ :=
   ⨆ k ≥ l, (V n k : ℕ∞)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does $V_1(n) = 1$ have finite solutions?
 

@@ -38,6 +38,7 @@ composed entirely of primes dividing `u * v`.)
 -/
 noncomputable def f (u : ℕ) : ℕ := sInf {v | u < v ∧ v.primeFactors ⊆ u.primeFactors}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(u)$ be the largest $v$ such that no $m\in (u,v)$ is composed entirely of primes dividing
 $uv$. Estimate $f(u)$.
@@ -50,6 +51,7 @@ that $f(n) = (1 + o(1))n$ for almost all $n$.
 theorem erdos_459 {u : ℕ} (hu : 2 ≤ u) : u + 2 ≤ f u ∧ f u ≤ u ^ 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The upper bound $f u ≤ u ^ 2$ is attained exactly when `u` is prime: $f p = p ^ 2$.
 -/

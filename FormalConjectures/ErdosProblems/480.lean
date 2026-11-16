@@ -29,6 +29,7 @@ namespace Erdos480
 
 open Filter
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $x_1,x_2,\ldots\in [0,1]$ be an infinite sequence.
 Is it true that

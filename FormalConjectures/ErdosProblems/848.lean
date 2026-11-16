@@ -66,6 +66,7 @@ $\{ n\equiv 7\pmod{25}\}$ or $\{n\equiv 18\pmod{25}\}$.
 theorem erdos_848 : ∀ N, Erdos848For N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- There exists $N₀$ such that for all $N ≥ N₀$, if $A ⊆ \{1, \dots, N\}$ satisfies that $ab + 1$
 is never squarefree for all $a, b ∈ A$, then $|A| ≤ |\{n ≤ N : n ≡ 7 \pmod{25}\}|$.
 

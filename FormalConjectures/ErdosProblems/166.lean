@@ -35,6 +35,7 @@ open Filter
 
 namespace Erdos166
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Prove that
 $$R(4,k) \gg \frac{k^3}{(\log k)^{O(1)}}.$$

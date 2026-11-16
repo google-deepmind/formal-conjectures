@@ -34,6 +34,7 @@ open Filter Real
 
 namespace Erdos286
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 2$. Is it true that there exists an interval $I$ of width $(e-1+o(1))k$ and integers
 $n_1<\cdots<n_k\in I$ such that

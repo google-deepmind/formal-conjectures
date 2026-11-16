@@ -73,6 +73,7 @@ lemma a_3 : a 3 = 3 := by rfl
 lemma a_4 : a 4 = 0 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: if $2n+1$ is an absolute Euler pseudoprime, then $a(n) = 0$.
 

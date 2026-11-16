@@ -152,6 +152,7 @@ theorem erdos_91 :
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For $n = 3$ the equilateral triangle is the only such set.
 -/
@@ -161,6 +162,7 @@ theorem erdos_91.variants.three : UniqueMinimizer 3 := by
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For $n=4$ the square or two equilateral triangles sharing an edge give two
 non-similar examples.
@@ -181,6 +183,7 @@ A published proof of this fact is provided by Kovács [Ko24c].
 theorem erdos_91.variants.five : UniqueMinimizer 5 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 6$.
 -/
@@ -190,6 +193,7 @@ theorem erdos_91.variants.six: ¬ UniqueMinimizer 6 := by
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In [Er87b] on p.171 Erdős says that there are at least two non-similar examples for $n = 7$.
 -/

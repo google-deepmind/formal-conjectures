@@ -34,6 +34,7 @@ namespace Erdos698
 
 open Filter
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there some $h(n)\to \infty$ such that for all $2\leq i<j\leq n/2$
 $$\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \geq h(n)?$$
@@ -153,6 +154,7 @@ theorem erdos_698.variants.erdos_szekeres_sharp (p : ℕ) (hp : p.Prime) (hp2 : 
   · field_simp
   · field_simp
 
+set_option linter.style.formal_proof_palomar false in
 /--
 This was resolved by Bergman [Be11], who proved that for any $2\leq i<j\leq n/2$
 $$\textrm{gcd}\left( \binom{n}{i},\binom{n}{j}\right) \gg n^{1/2}\frac{2^i}{i^{3/2}},$$

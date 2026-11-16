@@ -48,6 +48,7 @@ $n$-th term $u_n^{1/2^n}$ of the defining sequence is `(u i : ℝ) ^ ((1 / 2 : �
 `i = n - 1`. -/
 noncomputable def c₀ : ℝ := limUnder atTop fun i => (u i : ℝ) ^ ((1 / 2 : ℝ) ^ (i + 1))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $u_1=1$ and $u_{n+1}=u_n(u_n+1)$, so that $\sum_{k\geq 1}\frac{1}{u_k+1}$ and
 $u_k=\lfloor c_0^{2^k}+1\rfloor$ for $k\geq 1$, where

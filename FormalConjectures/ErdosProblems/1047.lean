@@ -46,6 +46,7 @@ def strictSublevelSet (f : ℂ[X]) (c : ℝ) : Set ℂ := {z : ℂ | ‖f.eval z
 def componentsIn (s : Set ℂ) : Set (Set ℂ) :=
   {t : Set ℂ | ∃ z ∈ s, t = connectedComponentIn s z}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f\in \mathbb{C}[x]$ be a monic polynomial with $m$ distinct roots, and let $c>0$ be a
 constant small enough such that $\{ z: \lvert f(z)\rvert\leq c\}$ has $m$ distinct connected
@@ -122,6 +123,7 @@ theorem erdos_1047.variants.referee :
 def erdos_1047.variants.max_non_convex_components.answer (n : ℕ) : ℕ :=
   if n ≤ 1 then 0 else if n = 2 then 1 else if n = 3 then 2 else n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Goodman raises the question of the maximum number of non-convex components of
 $\{ z: \lvert f(z)\rvert < c\}$ that are possible as a function of the degree of $f$, where

@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos486
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A \subseteq \mathbb{N}$, and for each $n \in A$ choose some
 $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$. Let

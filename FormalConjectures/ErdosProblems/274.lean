@@ -65,6 +65,7 @@ theorem erdos_274 : ∃ (G : Type*) (_ : Group G),
     1 < Fintype.card ι ∧ ∀ i j, i ≠ j → #(P.parts i) ≠ #(P.parts j) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If `G` is a finite abelian group then there cannot exist an exact covering of `G` by more
 than one cosets of different sizes? (i.e. each element is contained in exactly one

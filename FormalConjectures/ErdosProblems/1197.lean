@@ -35,6 +35,7 @@ open scoped Pointwise
 
 namespace Erdos1197
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $E\subset (0,\infty)$ be a set of positive measure. Is it true that, for almost all $x>0$,
 for all sufficiently large (depending on $x$) integers $n$ there exists an integer $r\geq 1$ such

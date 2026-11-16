@@ -48,6 +48,7 @@ noncomputable def L (x : ℕ) : ℕ :=
   sSup {m | ∃ a : List ℕ, a.Pairwise (· < ·) ∧ (∀ n ∈ a, n ∈ Finset.Icc 1 x) ∧
     squarePartialProducts a = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $1\leq a_1<\cdots<a_k\leq x$. How many of the partial products
 $a_1,a_1a_2,\ldots,a_1\cdots a_k$ can be squares? Is it true that, for any $\epsilon>0$, there can

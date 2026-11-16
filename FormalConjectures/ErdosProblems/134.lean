@@ -29,6 +29,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos134
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon,\delta>0$ and $n$ be sufficiently large in terms of $\epsilon$ and $\delta$.
 Let $G$ be a triangle-free graph on $n$ vertices with maximum degree $<n^{1/2-\epsilon}$.

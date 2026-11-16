@@ -39,6 +39,7 @@ open Finset Filter
 
 namespace Erdos973
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a constant $C>1$ such that, for every $n\geq 2$, there exists a sequence
 $z_i\in \mathbb{C}$ with $z_1=1$ and $\lvert z_i\rvert \geq 1$ for all $1\leq i\leq n$ with
@@ -60,6 +61,7 @@ theorem erdos_973 :
         (∀ k ∈ Icc 2 (n + 1), ‖∑ i ∈ Icc 1 n, z i ^ k‖ < C ^ (-(n : ℝ))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The result of [LYZ26] that settles the problem: for every fixed $\lambda>0$ and all large enough
 $n$, any $z_1,\dots,z_n$ with $\lvert z_j\rvert\geq 1$ satisfy

@@ -106,6 +106,7 @@ def IsRupert (vertices : Finset ℝ³) : Prop :=
    let outer_shadow := transformed_shadow (convexHull ℝ vertices) 0 outer_rotation
    inner_shadow ⊆ interior outer_shadow
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There exists a convex polyhedron with nonempty interior for which the Rupert property does
 not hold.

@@ -78,6 +78,7 @@ def EventuallyGreedy (x : ℝ) : Prop :=
     ∃ n₀ : ℕ, ∀ n ≥ n₀,
       IsBestNTerm (Finset.image m (Finset.range n)) n x
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $x>0$ be a real number. For any $n\geq 1$ let
 $$R_n(x) = \sum_{i=1}^n\frac{1}{m_i}<x$$

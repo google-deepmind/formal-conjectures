@@ -84,6 +84,7 @@ theorem a_4 : a 4 = some 2 := by
   have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (4 ^ 3 + m ^ 3 + 1).Prime := ⟨2, h.1⟩
   rw [a, if_pos h_ex, h.csInf_eq]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1: For any $k \ge 3$, there are infinitely many primes of the form $n^k + m^k$
 for $n, m \ge 1$.

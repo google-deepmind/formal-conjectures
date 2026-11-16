@@ -48,6 +48,7 @@ noncomputable def D (a b : ℕ) : ℕ :=
 /-- $D(b)=\max_{1\leq a<b}D(a,b)$. -/
 noncomputable def Dmax (b : ℕ) : ℕ := (Finset.Ico 1 b).sup fun a ↦ D a b
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For integers $1\leq a<b$ let $D(a,b)$ be the minimal value of $n_k$ such that there exist
 integers $1\leq n_1<\cdots <n_k$ with

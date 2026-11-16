@@ -62,6 +62,7 @@ satisfies `P`. -/
 noncomputable def prob (n : ℕ) (P : (Fin (n + 1) → ℤˣ) → Prop) : ℝ :=
   ((univ.filter P).card : ℝ) / 2 ^ (n + 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that all except at most $o(2^n)$ many degree $n$ polynomials with $\pm 1$-valued
 coefficients $f(z)$ have $\lvert f(z)\rvert <1$ for some $\lvert z\rvert=1$?
@@ -75,6 +76,7 @@ theorem erdos_525.parts.i :
     (fun n : ℕ ↦ ((exceptional n).ncard : ℝ)) =o[atTop] fun n : ℕ ↦ (2 : ℝ) ^ n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the behaviour of
 $$m(f)=\min_{\lvert z\rvert=1}\lvert f(z)\rvert?$$

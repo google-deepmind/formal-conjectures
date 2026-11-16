@@ -49,6 +49,7 @@ Ramsey for `G`. -/
 noncomputable abbrev sizeRamseyNumber {V : Type*} [Fintype V] (G : SimpleGraph V) : ℕ :=
   sizeRamsey G G
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\hat{R}(G)$ denote the size Ramsey number, the minimal number of edges $m$ such that there
 is a graph $H$ with $m$ edges such that in any $2$-colouring of the edges of $H$ there is a
@@ -64,6 +65,7 @@ theorem erdos_720.parts.i :
     ¬ Tendsto (fun n : ℕ ↦ (sizeRamseyNumber (pathGraph (n + 1)) : ℝ) / n) atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, if $P_n$ is the path of length $n$, then $\hat{R}(P_n)/n^2 \to 0$?
 
@@ -76,6 +78,7 @@ theorem erdos_720.parts.ii :
       (nhds 0) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, if $C_n$ is the cycle with $n$ edges, then $\hat{R}(C_n) =o(n^2)$?
 
@@ -88,6 +91,7 @@ theorem erdos_720.parts.iii :
       (nhds 0) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Beck [Be83b] proved that $\hat{R}(P_n)\ll n$ and $\hat{R}(C_n)\ll n$. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos720.lean#L39"]

@@ -47,6 +47,7 @@ noncomputable def g (N : ℕ) : ℕ :=
   sSup {k | ∃ A : Finset ℕ, A ⊆ Finset.Icc 1 N ∧ MonotoneOn Nat.totient (A : Set ℕ) ∧
     A.card = k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{a_1<\cdots<a_t\}\subseteq \{1,\ldots,N\}$ be such that $\phi(a_1)<\cdots<\phi(a_t)$.
 The primes are such an example. Are they the largest possible? Can one show that
@@ -68,6 +69,7 @@ theorem erdos_49 : ∀ ε : ℝ, 0 < ε →
     ∀ᶠ N : ℕ in atTop, (f N : ℝ) ≤ (1 + ε) * Nat.primeCounting N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The weaker statement $\lvert A\rvert=o(N)$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos49.lean#L340"]
@@ -75,6 +77,7 @@ theorem erdos_49.variants.little_o :
     (fun N : ℕ ↦ (f N : ℝ)) =o[atTop] fun N ↦ (N : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Tao [Ta24d] proved that
 $\lvert A\rvert \leq \left(1+O\left(\frac{(\log\log N)^5}{\log N}\right)\right)\pi(N)$, even for

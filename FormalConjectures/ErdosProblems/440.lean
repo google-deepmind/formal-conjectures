@@ -39,6 +39,7 @@ indices `i` with `lcm(aᵢ, aᵢ₊₁) ≤ x`. -/
 noncomputable def count (a : ℕ → ℕ) (x : ℕ) : ℕ :=
   {i | Nat.lcm (a i) (a (i + 1)) ≤ x}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{a_1<a_2<\cdots\}\subseteq \mathbb{N}$ be infinite and let $A(x)$ count the number of
 indices for which $\mathrm{lcm}(a_i,a_{i+1})\leq x$. Is it true that $A(x) \ll x^{1/2}$?
@@ -55,6 +56,7 @@ theorem erdos_440.parts.i :
 
 def erdos_440.parts.ii.answer : ℝ := 1
 
+set_option linter.style.formal_proof_palomar false in
 /--
 How large can
 $$\liminf \frac{A(x)}{x^{1/2}}$$
@@ -74,6 +76,7 @@ theorem erdos_440.parts.ii :
 (summed here over $n = m + 1$, $m \geq 0$). -/
 noncomputable def erdosSzemerediConstant : ℝ := ∑' m : ℕ, 1 / (√(m + 1 : ℝ) * (m + 2))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Szemerédi [ErSz80] proved that $A(x)\leq (c+o(1))x^{1/2}$ where
 $$c=\sum_{n\geq 1}\frac{1}{n^{1/2}(n+1)}\approx 1.86,$$

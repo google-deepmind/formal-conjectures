@@ -40,6 +40,7 @@ namespace Erdos226
 def PreservesRationality (f : ℝ → ℝ) : Prop :=
   ∀ x : ℝ, x ∈ Set.range ((↑) : ℚ → ℝ) ↔ f x ∈ Set.range ((↑) : ℚ → ℝ)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there an entire non-linear function $f$ such that, for all $x\in\mathbb{R}$, $x$ is rational if and only if $f(x)$ is?
 

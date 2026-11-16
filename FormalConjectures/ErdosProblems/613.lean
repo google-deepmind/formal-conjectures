@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos613
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 613:**
 Let $n \geq 3$ and $G$ be a graph with $\binom{2n+1}{2} - \binom{n}{2} - 1$ edges.

@@ -47,6 +47,7 @@ open Filter Asymptotics
 
 namespace Erdos765
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Give an asymptotic formula for $\mathrm{ex}(n; C_4)$.
 

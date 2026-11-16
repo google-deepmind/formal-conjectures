@@ -67,6 +67,7 @@ def Spectrum (x : ℕ → ℝ) : Set ℝ :=
   {θ | θ ∈ Set.Ioo (0 : ℝ) 1 ∧ Irrational θ ∧
     ¬ IsEquidistributedModuloOne (fun n => x n - n * θ)}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Problem 10.4. Let $\xi$ be a non-zero real number and $\alpha > 1$ be a real
 number. Is the spectrum of the sequence $(\xi \alpha^n)_{n \ge 1}$ at most

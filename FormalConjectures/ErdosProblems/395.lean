@@ -39,6 +39,7 @@ $\lvert \epsilon_1z_1+\cdots+\epsilon_nz_n\rvert \leq r$. -/
 noncomputable def signedSumCount {n : ℕ} (z : Fin n → ℂ) (r : ℝ) : ℕ :=
   {ε : Fin n → ℤ | (∀ i, ε i = -1 ∨ ε i = 1) ∧ ‖∑ i, (ε i : ℂ) * z i‖ ≤ r}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $z_1,\ldots,z_n\in \mathbb{C}$ with $\lvert z_i\rvert=1$ then is it true that the probability
 that

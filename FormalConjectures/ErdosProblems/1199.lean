@@ -45,6 +45,7 @@ theorem erdos_1199 :
     A.Infinite ∧ ∀ n ∈ (A+A), ∀ m ∈ (A+A), color n = color m := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Hindman [Hi79] has shown that this is false for 3-colourings.
 -/

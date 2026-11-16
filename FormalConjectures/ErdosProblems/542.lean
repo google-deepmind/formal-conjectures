@@ -48,6 +48,7 @@ def IsLcmFree (n : ℕ) (A : Finset ℕ) : Prop :=
 def uncovered (n : ℕ) (A : Finset ℕ) : Finset ℕ :=
   (Finset.Icc 1 n).filter fun m ↦ ∀ a ∈ A, ¬ a ∣ m
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $A\subseteq\{1,\ldots,n\}$ is a set such that $[a,b]>n$ for all $a\neq b$,
 where $[a,b]$ is the least common multiple, then
@@ -62,6 +63,7 @@ theorem erdos_542.parts.i :
     ∀ (n : ℕ) (A : Finset ℕ), IsLcmFree n A → ∑ a ∈ A, (1 : ℝ) / a ≤ 31 / 30 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The bound $31/30$ is attained by $A=\{2,3,5\}$ (with $n=5$). -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos542.lean#L2114"]
@@ -69,6 +71,7 @@ theorem erdos_542.variants.sharp :
     IsLcmFree 5 {2, 3, 5} ∧ ∑ a ∈ ({2, 3, 5} : Finset ℕ), (1 : ℝ) / a = 31 / 30 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $A\subseteq\{2,\ldots,n\}$ is a set such that $[a,b]>n$ for all $a\neq b$,
 then there must be $\gg n$ many $m\leq n$ which are not divisible by any $a\in A$?
@@ -85,6 +88,7 @@ theorem erdos_542.parts.ii :
       c * n ≤ ((uncovered n A).card : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Schinzel and Szekeres [ScSz59] proved that, for any $\epsilon>0$, there are sets
 $A\subseteq\{2,\ldots,n\}$ as in the problem with $o(n)$ many uncovered $m\leq n$ and for which

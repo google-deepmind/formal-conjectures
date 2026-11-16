@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos370
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many $n$ such that the largest prime factor of $n$ is $< n^{\frac{1}{2}}$ and
 the largest prime factor of $n + 1$ is $< (n + 1)^{\frac{1}{2}}$.

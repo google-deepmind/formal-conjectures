@@ -34,6 +34,7 @@ open SimpleGraph
 
 namespace Erdos1008
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every graph with $m$ edges contain a subgraph with $\gg m^{2/3}$ edges which contains
 no $C_4$?
