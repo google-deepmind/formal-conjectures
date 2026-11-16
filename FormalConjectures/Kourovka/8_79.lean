@@ -30,24 +30,25 @@ by B. Hartley
 namespace Kourovka«8.79»
 
 /--
-A group is locally finite if all by finite elements generated subgroups
+A group is locally finite if all finitely generated subgroups
 are finite
 -/
-def IsLocallyFiniteGroup (G : Type*) [G : Group] : Prop :=
-  ∀ H : Subgroup G, H.FG → Finite H
+def IsLocallyFiniteGroup (G : Type*) [Group G] : Prop :=
+  ∀ (H : Subgroup G), H.FG → Finite H
 
 /--
-The notion of a group having no outer automorphisms.
+The notion of a group having no outer automorphism is equivalent
+to every automorphisms being inner.
 -/
-def NoOuterAutomorph (G : Type*) [G : Group] : Prop :=
-  Nat.card (φ : G →* G → Function.Bijective φ) = ∅
+def NoOuterAutomorph (G : Type*) [Group G] : Prop :=
+  ∀ φ : G ≃* G → ∃ (g : G), ∀ (x : G), φ x = g * x  * g⁻¹
 
 /--
 A group is "complete" if it has no outer automorphisms
 and a trivial centre.
 -/
-def IsCompleteGroup (G : Type*) [G : Group] : Prop :=
-  SubGroup.centre G = ⊥ ∧ NoOuterAutomorph G
+def IsCompleteGroup (G : Type*) [Group G] : Prop :=
+  Subgroup.Centre G = ⊥ ∧ NoOuterAutomorph G
 
 /--
 Does there exist a countable infinite locally finite group that is complete,
@@ -57,10 +58,10 @@ The answer is "Yes", if one assumes that the group is uncountable. See
 [K.K. Hickin, Trans. Amer. Math. Soc., 239 (1978), 213-227].
 
 -/
-@[category research open, AMS20]
+@[category research open, question, AMS20]
 theorem Kourovka_8_79 :
    ∃ (G : Type) (_ : Group G), Countable G ∧ Infinite G ∧
-   IsLocallyFiniteGroup ∧ IsCompleteGroup G by
+   IsLocallyFiniteGroup G ∧ IsCompleteGroup G := by
   sorry
 
 end Kourovka«8.79»

@@ -32,7 +32,7 @@ namespace Kourovka«8.24»
 
 /-- Prove that every lineraly ordered group of finite rank is soluble. -/
 
-@[category research solved, AMS20]
+@[category research solved, question, AMS20]
 theorem Kourovka_8_24 (G : Type) [G : Group]:
   ∀ r : G → G → Prop → IslinearOrder G r → IsSolvable G  := by
   sorry
