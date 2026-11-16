@@ -115,13 +115,11 @@ $\operatorname{diam}(G)$.
 
 Disproved by Waller in Oct 2003 (counterexample: path number 5, radius 3, dp 1).
 -/
-@[category research solved, AMS 5]
-theorem conjecture36 : answer(False) ↔
-    ∀ {α : Type} [Fintype α] [DecidableEq α] [Nontrivial α],
+@[category research solved, question, AMS 5]
+theorem conjecture36 :
+    ¬ ∀ {α : Type} [Fintype α] [DecidableEq α] [Nontrivial α],
       ∀ (G : SimpleGraph α) [DecidableRel G.Adj] (_ : G.Connected) (_ : 0 < dp G),
         (2 * G.radius.toNat : ℝ) / (dp G : ℝ) ≤ (path G : ℝ) := by
-  show False ↔ _
-  rw [false_iff]
   intro h
   have hbad := h (α := Fin 10) wowii36Counterexample
     wowii36Counterexample_connected (by

@@ -42,6 +42,7 @@ $\{n ∈ ℕ  | ∀ a ∈ A, n > a\text{ implies }n + a\text{ is squarefree}\}$ 
 def HasPropertyQ (A : Set ℕ) : Prop :=
   {n : ℕ | ∀ a ∈ A, a < n → Squarefree (n + a)}.Infinite
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If `A = {a₁ < a₂ < …}` has property P,
 then `A` has natural density `0`.
@@ -56,6 +57,7 @@ theorem erdos_1102.density_zero_of_P
     Tendsto (fun j => (A j / j : ℝ)) atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conversely, for any function `f : ℕ → ℕ` that goes to infinity,
 there exists a strictly increasing sequence `A = {a₁ < a₂ < …}`
@@ -71,6 +73,7 @@ theorem erdos_1102.exists_sequence_with_P
     ∀ j : ℕ, (A j : ℝ) / j ≤ f j := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every sequence with property Q has upper density at most `6 / π^2`.
 --/
@@ -82,6 +85,7 @@ theorem erdos_1102.upper_density_Q
     limsup (fun j : ℕ  ↦ (j / A j : ℝ)) atTop ≤ 6 / Real.pi^2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There exists an infinite sequence $A = {a₁ < a₂ < …} ⊂ \mathsf{SF}$ where
 $\mathsf{SF} := \mathbb{N} \setminus \bigcup_{p} p^{2}\mathbb{N}$, i.e. the set of

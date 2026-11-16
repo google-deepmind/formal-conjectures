@@ -45,8 +45,8 @@ noncomputable abbrev S (x : ℝ) : ℝ :=
 How many (ordered) solutions are there to `σ(a) + σ(b) = σ(a + b)` with `a + b ≤ x`?
 Is it true that this number is asymptotic to `c * x` for some constant `c > 0`?
 -/
-@[category research open, AMS 11]
-theorem erdos_1061 : answer(sorry) ↔ ∃ c : ℝ, 0 < c ∧ S ~[atTop] (fun x : ℝ ↦ c * x) := by
+@[category research open, question, AMS 11]
+theorem erdos_1061 : ∃ c : ℝ, 0 < c ∧ S ~[atTop] (fun x : ℝ ↦ c * x) := by
   sorry
 
 end Erdos1061
