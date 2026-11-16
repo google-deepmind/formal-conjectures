@@ -96,6 +96,7 @@ theorem a_4 : a 4 = 0 := by eval_a
 @[category test, AMS 11]
 theorem a_5 : a 5 = 1 := by eval_a
 
+set_option linter.style.formal_proof_palomar false in
 /-- A102722 Conjecture: $a(n) \sim (1-\gamma)n$. -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at

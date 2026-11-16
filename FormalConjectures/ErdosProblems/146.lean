@@ -42,15 +42,16 @@ The answer is no. OpenAI [OpenAI26] give a connected bipartite `2`-degenerate `H
 `c, ε > 0` with $\mathrm{ex}(n;H)\geq cn^{3/2+\epsilon}$ for all large `n`, which exceeds the
 conjectured $n^{2-1/2}=n^{3/2}$. See `erdos_146.variants.two_degenerate_counterexample`.
 -/
-@[category research solved, AMS 5]
-theorem erdos_146 : answer(False) ↔
-    ∀ (r q : ℕ) (H : SimpleGraph (Fin q)),
+@[category research solved, question, AMS 5]
+theorem erdos_146 :
+    ¬ ∀ (r q : ℕ) (H : SimpleGraph (Fin q)),
       0 < r → H.IsBipartite → H.IsDegenerate r →
         Asymptotics.IsBigO atTop
           (fun n : ℕ => (extremalNumber n H : ℝ))
           (fun n : ℕ => (n : ℝ) ^ ((2 : ℝ) - 1 / (r : ℝ))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The counterexample: a connected bipartite `2`-degenerate `H` whose extremal number exceeds
 $n^{3/2+\epsilon}$ infinitely often, so the `r = 2` case of `erdos_146` fails.

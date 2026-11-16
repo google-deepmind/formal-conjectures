@@ -87,6 +87,7 @@ noncomputable def betaConst : Real := Real.log 5 / (2 * Real.log phi) - 1
 noncomputable def s (n : ℕ) : Real :=
   (Finset.Icc 1 n).sum (fun k => (a k : Real))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $\beta-2 < S(n)-\alpha n < \beta-1$.
 The constants $\alpha$ and $\beta$ are as defined in the formula section.

@@ -38,9 +38,8 @@ namespace Erdos1210
 Let $A\subseteq [1,n)$ be a set of integers such that $(a,b)=1$ for all distinct $a,b\in A$.
 Is it true that $\sum_{a\in A}\frac{1}{n-a}\leq \sum_{p < n}\frac{1}{p}+O(1)$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1210 :
-  answer(sorry) ↔
     ∃ C : ℝ, ∀ n : ℕ, ∀ A : Finset ℕ,
       (∀ a ∈ A, 1 ≤ a ∧ a < n) →
       (∀ a ∈ A, ∀ b ∈ A, a ≠ b → a.Coprime b) →
@@ -52,9 +51,8 @@ In [Er80] he claims he "did not state this quite correctly" in [Er77c]. The prob
 Erdős is presumably referring to states that if $n < q_1 < \cdots < q_k\leq m$ is the set of primes
 in $(n,m]$ then $\sum \frac{1}{q_i-n} < \sum_{p < m-n}\frac{1}{p}+O(1)$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1210.variants.er80_correction :
-  answer(sorry) ↔
     ∃ C : ℝ, ∀ n m : ℕ, n < m →
       ∑ q ∈ (Ioc n m).filter Prime, (1 / ((q : ℝ) - n)) <
       (∑ p ∈ (range (m - n)).filter Prime, (1 / (p : ℝ))) + C := by

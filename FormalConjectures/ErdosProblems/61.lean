@@ -45,9 +45,9 @@ def IsErdosHajnalLowerBound {α : Type*} [Fintype α] [DecidableEq α]
 The Erdős–Hajnal Conjecture states that there is a constant $c(H) > 0$ for each
 $H$ such that we can take $f(n) = n^{c(H)}$ in the above formulation.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_61 :
-    answer(sorry) ↔ ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
+    ∀ {α : Type*} [Fintype α] [DecidableEq α] (H : SimpleGraph α),
       ∃ c > (0 : ℝ), IsErdosHajnalLowerBound H (fun n : ℕ => (n : ℝ) ^ c) := by
   sorry
 

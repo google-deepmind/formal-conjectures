@@ -41,8 +41,8 @@ noncomputable def fourierPartial {T : ℝ} [hT : Fact (0 < T)] (f : Lp ℂ 2 (@h
 /-- Does there exists a positive constant `C` such that for all `f ∈ L²[0,1]` and all lacunary
 sequences `n`, if `‖f - fₖ‖₂ = O(1 / log log log k ^ C)`, then for almost every `x`,
 `lim ∑ k ∈ Finset.range N, f (n k • x)) / N = ∫ t, f t ∂t`? -/
-@[category research open, AMS 42]
-theorem erdos_996 : answer(sorry) ↔
+@[category research open, question, AMS 42]
+theorem erdos_996 :
     ∃ (C : ℝ), 0 < C ∧ ∀ (f : Lp ℂ 2 (haarAddCircle (T := 1))) (n : ℕ → ℕ),
     IsLacunary n →
     (fun k => (eLpNorm (⇑f - fourierPartial f k) 2 (haarAddCircle (T := 1))).toReal) =O[atTop]

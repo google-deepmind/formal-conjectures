@@ -39,11 +39,10 @@ namespace Green7
 /--
 Does Ulam's sequence have positive density?
 -/
-@[category research open, AMS 11 42]
+@[category research open, question, AMS 11 42]
 theorem green_7.variants.positive_density :
-    answer(sorry) ↔
-      ∀ a : ℕ → ℕ, Erdos342.IsUlamSequence a →
-        Set.upperDensity (Set.range a) > 0 := by
+    ∀ a : ℕ → ℕ, Erdos342.IsUlamSequence a →
+      Set.upperDensity (Set.range a) > 0 := by
   sorry
 
 end Green7

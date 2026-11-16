@@ -34,6 +34,7 @@ open Filter Real
 
 namespace Erdos286
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 2$. Is it true that there exists an interval $I$ of width $(e-1+o(1))k$ and integers
 $n_1<\cdots<n_k\in I$ such that
@@ -41,9 +42,9 @@ $$1=\frac{1}{n_1}+\cdots+\frac{1}{n_k}?$$
 
 The answer is yes, proved by Croot [Cr01].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos286.lean#L163"]
-theorem erdos_286 : answer(True) ↔ ∃ o : ℕ → ℝ, Tendsto o atTop (nhds 0) ∧
+theorem erdos_286 : ∃ o : ℕ → ℝ, Tendsto o atTop (nhds 0) ∧
     ∀ᶠ k : ℕ in atTop, ∃ a b : ℝ, b - a = (exp 1 - 1 + o k) * k ∧
       ∃ S : Finset ℕ, S.card = k ∧ 0 ∉ S ∧ ∑ n ∈ S, (1 : ℝ) / n = 1 ∧
         ∀ n ∈ S, (n : ℝ) ∈ Set.Icc a b := by
