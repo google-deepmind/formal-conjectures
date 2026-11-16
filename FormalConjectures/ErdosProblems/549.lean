@@ -42,9 +42,9 @@ and conjectured that $R(T)=(4.2+o(1))k$.
 
 This problem is #15 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, AMS 5]
-theorem erdos_549 : answer(False) ↔
-    ∀ (k : ℕ) (hk : 2 ≤ k) (T : SimpleGraph (Fin k ⊕ Fin (2 * k))),
+@[category research solved, question, AMS 5]
+theorem erdos_549 :
+    ¬ ∀ (k : ℕ) (hk : 2 ≤ k) (T : SimpleGraph (Fin k ⊕ Fin (2 * k))),
       T.IsTree →
       (∀ x₁ x₂, ¬ T.Adj (Sum.inl x₁) (Sum.inl x₂)) →
       (∀ y₁ y₂, ¬ T.Adj (Sum.inr y₁) (Sum.inr y₂)) →

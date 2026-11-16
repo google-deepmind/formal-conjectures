@@ -38,7 +38,7 @@ the sum $\sum \frac{1}{b_n}$ converges to an irrational number.
 
 Note: erdosproblems.com/263 was corrected on 2026-04-02 to require the sequence
 to be increasing; the pre-correction statement (no monotonicity hypothesis) had a
-counterexample to Q2 that is not increasing (see `erdos_263.parts.ii` below).
+counterexample to Q2 that is not increasing.
 
 Note: This is one of many possible notions of "irrationality sequences". See
 FormalConjectures/ErdosProblems/264.lean for another possible definition.
@@ -63,33 +63,30 @@ def IsWeakIrrationalitySequence (a : ℕ → ℕ) : Prop :=
 /--
 Is $a_n = 2^{2^n}$ an irrationality sequence in the above sense?
 -/
-@[category research open, AMS 11]
-theorem erdos_263.parts.i : answer(sorry) ↔ IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) := by
+@[category research open, question, AMS 11]
+theorem erdos_263.parts.i : IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) := by
   sorry
 
 /--
 Must every irrationality sequence $a_n$ in the above sense
 satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
 
-Note: this was answered **false** for the *pre-correction* statement, which did not
-require monotonicity — the counterexample sequence is not increasing. The problem
-was corrected on erdosproblems.com on 2026-04-02 to require increasing sequences;
-for the corrected statement this question is **open**. The earlier formal proof
-(for the pre-correction definition) is preserved at
-https://github.com/google-deepmind/formal-conjectures/blob/c8cf651906abe91051cf835d4232ad5648412113/FormalConjectures/ErdosProblems/263.lean#L298
+The answer is no. [Liam Price's construction](https://www.erdosproblems.com/forum/thread/263#post-6338)
+gives a strictly increasing irrationality sequence with $\liminf a_n^{1/n} = 1$.
 -/
-@[category research open, AMS 11]
-theorem erdos_263.parts.ii : answer(sorry) ↔
-    ∀ a : ℕ → ℕ,
+@[category research solved, question, AMS 11]
+theorem erdos_263.parts.ii :
+    ¬ (∀ a : ℕ → ℕ,
       IsIrrationalitySequence a →
-        atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop := by
+        atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A folklore result states that any $a_n$ satisfying $\lim_{n \to \infty} a_n^{\frac{1}{2^n}} = \infty$
 has $\sum \frac{1}{a_n}$ converging to an irrational number.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos263_erdos_263_variants_folklore.lean#L399"]
 theorem erdos_263.variants.folklore (a : ℕ -> ℕ)
     (ha : atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (2 ^ n : ℝ))) atTop) :
     Irrational <| ∑' n, (1 : ℝ) / (a n : ℝ) := by
@@ -111,6 +108,7 @@ theorem erdos_263.variants.sub_doubly_exponential (a: ℕ -> ℕ)
     ¬ IsIrrationalitySequence a := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 On the other hand, if there exists some $\varepsilon > 0$ such that $a_n$ satisfies
 $\liminf \frac{a_{n+1}}{a_n^{2+\varepsilon}} > 0$, then $a_n$ is an irrationality sequence
@@ -126,6 +124,7 @@ theorem erdos_263.variants.super_doubly_exponential (a: ℕ -> ℕ)
     IsIrrationalitySequence a := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The same folklore result with the growth hypothesis stated as an eventual lower bound
 $a_{n+1} \geq c\, a_n^{2+\varepsilon}$. Unlike the real-valued `liminf` in
@@ -133,7 +132,7 @@ $a_{n+1} \geq c\, a_n^{2+\varepsilon}$. Unlike the real-valued `liminf` in
 $a_n = 2^{(n+1)!}$, for which the ratio $a_{n+1} / a_n^{2+\varepsilon}$ tends to $+\infty$ and the
 real `liminf` defaults to $0$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos263_erdos_263_variants_super_doubly_exponential_eventual.lean#L515"]
 theorem erdos_263.variants.super_doubly_exponential_eventual (a : ℕ → ℕ)
     (ha : ∀ n : ℕ, a n > 0)
     (ha' : StrictMono a)

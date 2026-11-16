@@ -84,6 +84,7 @@ theorem a_4 : a 4 = some 2 := by
   have h_ex : ∃ m : ℕ, 1 ≤ m ∧ (4 ^ 3 + m ^ 3 + 1).Prime := ⟨2, h.1⟩
   rw [a, if_pos h_ex, h.csInf_eq]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1: For any $k \ge 3$, there are infinitely many primes of the form $n^k + m^k$
 for $n, m \ge 1$.
@@ -92,11 +93,11 @@ for $n, m \ge 1$.
 Answer: No.
 - _Kenta Kitamura_, 2026
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a159829-conjecture1-counterexample/blob/6632e626baa7f28ad14045aa7408a84178ec128d/lean/A159829Conjecture1FC.lean#L52-L61"]
 theorem conjecture1 :
-    answer(False) ↔ ∀ (k : ℕ), 3 ≤ k →
+    ¬ ∀ (k : ℕ), 3 ≤ k →
       Set.Infinite {p : ℕ | ∃ n m : ℕ, 1 ≤ n ∧ 1 ≤ m ∧ p.Prime ∧
         p = n ^ k + m ^ k} := by
   sorry

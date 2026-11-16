@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/690](https://www.erdosproblems.com/690)
 - [Er79e] Erdős, Paul, _Some unconventional problems in number theory_. Astérisque (1979), 73-82.
 - [Ca25] S. Cambie, _Resolution of Erdős' problems about unimodularity_. arXiv:2501.10333 (2025).
+- [WC26] S. Wang and D. Crapis, _A Complete Answer to Erdős Problem 690_. arXiv:2605.08542 (2026).
 -/
 
 @[expose] public section
@@ -43,6 +44,7 @@ def IsUnimodalOnPrimes (f : ℕ → ℝ) : Prop :=
   ∃ m, m.Prime ∧ (∀ p q, p.Prime → q.Prime → p ≤ q → q ≤ m → f p ≤ f q) ∧
     ∀ p q, p.Prime → q.Prime → m ≤ p → p ≤ q → f q ≤ f p
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $d_k(p)$ be the density of those integers whose $k$th smallest prime factor is $p$ (i.e. if
 $p_1<p_2<\cdots$ are the primes dividing $n$ then $p_k=p$).
@@ -56,13 +58,14 @@ $1\leq k\leq 3$ and is not unimodular for $4\leq k\leq 20$.
 The densities $d_k(p)$ exist (see `erdos_690.variants.hasDensity`), so the statement quantifies
 over any function `d` recording them.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos690.lean#L2162"]
-theorem erdos_690 : answer(False) ↔
-    ∀ k ≥ 1, ∀ d : ℕ → ℝ,
+theorem erdos_690 :
+    ¬ ∀ k ≥ 1, ∀ d : ℕ → ℝ,
       (∀ p, p.Prime → (kthPrimeFactorSet k p).HasDensity (d p)) → IsUnimodalOnPrimes d := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every $k\geq 1$ and prime $p$, the set of integers whose $k$th smallest prime factor is
 $p$ has a natural density. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -71,6 +74,7 @@ theorem erdos_690.variants.hasDensity (k p : ℕ) (hk : 1 ≤ k) (hp : p.Prime) 
     ∃ δ : ℝ, (kthPrimeFactorSet k p).HasDensity δ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Cambie [Ca25] has shown that $d_k(p)$ is unimodular for $1\leq k\leq 3$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos690.lean#L2162"]
@@ -79,6 +83,7 @@ theorem erdos_690.variants.cambie_unimodal (k : ℕ) (hk : 1 ≤ k) (hk' : k ≤
     IsUnimodalOnPrimes d := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Cambie [Ca25] has shown that $d_k(p)$ is not unimodular for $4\leq k\leq 20$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos690.lean#L2162"]
@@ -87,10 +92,12 @@ theorem erdos_690.variants.cambie_not_unimodal (k : ℕ) (hk : 4 ≤ k) (hk' : k
     ¬ IsUnimodalOnPrimes d := by
   sorry
 
-/-- Is $d_k(p)$ unimodular for any $k\geq 21$? -/
-@[category research open, AMS 11]
-theorem erdos_690.variants.large_k : answer(sorry) ↔
-    ∃ k ≥ 21, ∀ d : ℕ → ℝ,
+/-- Is $d_k(p)$ unimodular for any $k\geq 21$?
+
+The answer is no: $d_k(p)$ is not unimodal for any $k \geq 4$ [WC26] (arXiv preprint). -/
+@[category research solved, question, AMS 11]
+theorem erdos_690.variants.large_k :
+    ¬ ∃ k ≥ 21, ∀ d : ℕ → ℝ,
       (∀ p, p.Prime → (kthPrimeFactorSet k p).HasDensity (d p)) → IsUnimodalOnPrimes d := by
   sorry
 

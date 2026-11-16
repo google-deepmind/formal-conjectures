@@ -137,6 +137,7 @@ lemma a_5 : a 5 = 6 := by
     interval_cases k <;> decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: It appears that the finite difference of this sequence only contains 1's and 2's.
 

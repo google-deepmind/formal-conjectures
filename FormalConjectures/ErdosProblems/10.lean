@@ -59,8 +59,8 @@ theorem one_not_mem_sumPrimeAndTwoPows (k : ℕ) : 1 ∉ sumPrimeAndTwoPows k :=
 Is there some $k$ such that every large integer is the sum of a prime and at most $k$
 powers of $2$?
 -/
-@[category research open, AMS 5 11]
-theorem erdos_10 : answer(sorry) ↔ ∃ k, ∀ᶠ n : ℕ in atTop, n ∈ sumPrimeAndTwoPows k := by
+@[category research open, question, AMS 5 11]
+theorem erdos_10 : ∃ k, ∀ᶠ n : ℕ in atTop, n ∈ sumPrimeAndTwoPows k := by
   sorry
 
 /--
@@ -88,23 +88,27 @@ theorem erdos_10.variants.granville_soundararajan_odd :
       {n : ℕ | Even n ∧ n ≠ 0} ⊆ sumPrimeAndTwoPows 4 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bogdan Grechuk has observed that `1117175146` is not the sum of a prime
 and at most $3$ powers of $2$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/bed1ae569eaac7109327f644fa149b902b562873/erdos-10/Solution.lean#L36"]
 theorem erdos_10.variants.grechuk_example :
     1117175146 ∉ sumPrimeAndTwoPows 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There are infinitely many even integers not the sum of a prime and $2$ powers of $2$
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Erdos10_erdos_10_variants_two_pows.lean#L340"]
 theorem erdos_10.variants.two_pows :
     Set.Infinite <| {n : ℕ | Even n} \ sumPrimeAndTwoPows 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bogdan Grechuk has observed that $1117175146$ is not the sum of a prime and at most $3$
 powers of $2$, and pointed out that parity considerations, coupled with the fact that there

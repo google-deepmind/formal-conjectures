@@ -454,6 +454,10 @@ theorem voronovskaja_theorem.bernstein_operators
     (𝓝 ((1 / 2) * x * (1 - x) * f'')) := by
   sorry
 
+noncomputable def voronovskaja_theorem.bezier_bernstein_operators.answer : ℝ → (ℝ → ℝ) → ℝ → ℝ :=
+  fun a g y => bezierBias a * Real.sqrt (y * (1 - y)) * iteratedDerivWithin 1 g I y
+
+set_option linter.style.formal_proof_palomar false in
 /--
 Voronovskaja-type formula for Bézier--Bernstein operators with shape parameter
 $\alpha > 0$, $\alpha \neq 1$.
@@ -489,14 +493,14 @@ so multiplying by $\sqrt{n}$ gives the stated limit.
 The linked formal proof is a self-contained Lean 4 formalisation by *Kenta Kitamura*
 ([KitaKen1 on GitHub](https://github.com/KitaKen1)); see [K26].
 -/
-@[category research solved, AMS 26 40 47,
+@[category research solved, question value, AMS 26 40 47,
   formal_proof using lean4 at "https://github.com/KitaKen1/bezier-bernstein-voronovskaja-lean/blob/3f35c631d215b3841242275bf3ed2c59ea153a2d/Voronovskaja.lean"]
 theorem voronovskaja_theorem.bezier_bernstein_operators
     (α : ℝ) (hα_pos : 0 < α) (hα : α ≠ 1)
     (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ I)
     (hf : ContDiffOn ℝ 2 f I) :
     Tendsto (fun n : ℕ => Real.sqrt n * (bezierBernstein n α f x - f x)) atTop
-      (𝓝 ((answer(fun a g y => bezierBias a * Real.sqrt (y * (1 - y)) * iteratedDerivWithin 1 g I y) :
+      (𝓝 ((voronovskaja_theorem.bezier_bernstein_operators.answer :
         ℝ → (ℝ → ℝ) → ℝ → ℝ) α f x)) := by
   sorry
 
@@ -506,8 +510,7 @@ $\mu_\alpha\sqrt{x(1-x)}\,f'(x)$.
 -/
 @[category test, AMS 26 40 47]
 example (α : ℝ) (f : ℝ → ℝ) (x : ℝ) :
-    (answer(fun a g y => bezierBias a * Real.sqrt (y * (1 - y)) * iteratedDerivWithin 1 g I y) :
-        ℝ → (ℝ → ℝ) → ℝ → ℝ) α f x =
+    voronovskaja_theorem.bezier_bernstein_operators.answer α f x =
       bezierBias α * Real.sqrt (x * (1 - x)) * iteratedDerivWithin 1 f I x := by
   rfl
 
