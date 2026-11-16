@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Recurrence with bitwise XOR
@@ -25,6 +26,8 @@ where $\mathrm{XOR}$ is the bitwise exclusive-or operator on integers.
 
 *References:*
 - [A182510](https://oeis.org/A182510)-/
+
+@[expose] public section
 
 namespace OeisA182510
 
@@ -62,13 +65,17 @@ theorem conjecture1 : Set.ncard {n : ℕ | a n = 0} = 8 := by
   sorry
 
 /--
-Conjecture: more positive terms than negative.-/
+Conjecture: more positive terms than negative.
+
+As $n \to \infty$, the count of positive terms is greater than the count of negative terms.
+
+The requirement that $n$ is large enough is needed, since the claim fails for $n = 100$.
+-/
 @[category research open, AMS 11]
 theorem conjecture2 :
-    ∃ d_pos d_neg : ℝ,
-      ({n : ℕ | 0 < a n}).HasDensity d_pos ∧
-      ({n : ℕ | a n < 0}).HasDensity d_neg ∧
-      d_neg < d_pos := by
+    ∀ᶠ n in Filter.atTop,
+      ((Finset.range n).filter (fun k => a k < 0)).card <
+        ((Finset.range n).filter (fun k => 0 < a k)).card := by
   sorry
 
 end OeisA182510

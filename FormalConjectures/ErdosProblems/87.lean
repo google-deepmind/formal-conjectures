@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 87
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er95] Erdős, Paul, Some of my favourite problems in number theory, combinatorics, and geometry.
   Resenhas (1995), 165-186.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -38,8 +41,8 @@ The restriction $\epsilon < 1$ excludes negative bases in $(1-\epsilon)^k$.
 
 This problem is #12 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
-theorem erdos_87.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_87.parts.i :
     ∀ ε > (0 : ℝ), ε < 1 → ∀ᶠ k : ℕ in atTop,
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.chromaticNumber = (k : ℕ∞) →
         (SimpleGraph.diagonalGraphRamsey G : ℝ) >
@@ -53,8 +56,8 @@ for every graph $G$ with chromatic number $\chi(G)=k$?
 
 This problem is #13 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
-theorem erdos_87.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_87.parts.ii :
     ∃ c > (0 : ℝ), ∀ᶠ k : ℕ in atTop,
       ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.chromaticNumber = (k : ℕ∞) →
         (SimpleGraph.diagonalGraphRamsey G : ℝ) > c * (SimpleGraph.diagonalRamsey k : ℝ) := by

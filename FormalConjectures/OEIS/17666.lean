@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.OEIS.«5153»
+public import FormalConjecturesUtil
+public import FormalConjectures.OEIS.«5153»
 
 /-!
 # Denominator of sum of reciprocals of divisors
@@ -27,6 +28,8 @@ in lowest terms.
 *References:*
 - [A017666](https://oeis.org/A017666)
 -/
+
+@[expose] public section
 
 namespace OeisA17666
 

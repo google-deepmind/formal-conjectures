@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Divisibility of $2^n + 1$ by $n$
@@ -27,6 +29,8 @@ well as congruences satisfied by the members of A56777.
 *References:*
 - [A56777](https://oeis.org/A56777)
 -/
+
+@[expose] public section
 
 namespace OeisA56777
 

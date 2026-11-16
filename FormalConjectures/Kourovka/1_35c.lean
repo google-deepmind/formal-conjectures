@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjecture 1.35(c)
@@ -23,6 +24,8 @@ by A. I. Mal'cev and L. Fuchs
 
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v46)
 -/
+
+@[expose] public section
 
 namespace Kourovka.«1.35c»
 
@@ -46,8 +49,8 @@ def ProOrderable (G : Type*) [Group G] : Prop :=
 /--
 Do there exist simple pro-orderable groups?
 -/
-@[category research open, AMS 20]
-theorem kourovka_1_35c : answer(sorry) ↔
+@[category research open, question, AMS 20]
+theorem kourovka_1_35c :
     ∃ (G : Type) (_ : Group G), IsSimpleGroup G ∧ ProOrderable G := by
   sorry
 

@@ -1,0 +1,121 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+public import FormalConjecturesUtil
+
+/-!
+# Erdős Problem 1180
+
+*References:*
+- [erdosproblems.com/1180](https://www.erdosproblems.com/1180)
+- [ErGr80] Erdős, P. and Graham, R., *Old and new problems and results in combinatorial number
+  theory*. Monographies de L'Enseignement Mathematique (1980).
+- [Sh02] Shparlinski, Igor E., *On a question of Erdős and Graham*. Arch. Math. (Basel) (2002),
+  445-448.
+- [Gl06] Glibichuk, A. A., *Combinatorial properties of sets of residues modulo a prime and the
+  Erdős-Graham problem*. Mat. Zametki (2006), 384-395.
+- [PALOMAR-2026-10-12-000005](https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-12-000005&version=1)
+-/
+
+@[expose] public section
+
+open Filter
+
+namespace Erdos1180
+
+/--
+`Represents ε p a s` says that the multiset `s` of denominators `n` with `1 ≤ n ≤ p^ε` and
+`n` coprime to `p` has `∑ n⁻¹ = a` in `ZMod p`.
+-/
+def Represents (ε : ℝ) (p : ℕ) (a : ZMod p) (s : Multiset ℕ) : Prop :=
+  (∀ n ∈ s, 1 ≤ n ∧ (n : ℝ) ≤ (p : ℝ) ^ ε ∧ n.Coprime p) ∧
+    (s.map fun n : ℕ ↦ (n : ZMod p)⁻¹).sum = a
+
+/--
+`C ε` is the least `C` such that, for all primes `p`, every residue modulo `p` is the sum of at
+most `C` elements of `{n⁻¹ : 1 ≤ n ≤ p^ε}` (or `0` if no such `C` exists).
+-/
+noncomputable def C (ε : ℝ) : ℕ :=
+  sInf {C | ∀ p : ℕ, p.Prime → ∀ a : ZMod p, ∃ s : Multiset ℕ, s.card ≤ C ∧ Represents ε p a s}
+
+set_option linter.style.formal_proof_palomar false in
+/--
+Let $\epsilon>0$. Does there exist a constant $C_\epsilon$ such that, for all primes $p$, every
+residue modulo $p$ is the sum of at most $C_\epsilon$ many elements of
+$$\{ n^{-1} : 1\leq n\leq p^\epsilon\}$$
+where $n^{-1}$ denotes the inverse of $n$ modulo $p$?
+
+The original question was answered in the affirmative by Shparlinski [Sh02], who proved that
+$\ll \epsilon^{-3}$ summands suffice for all sufficiently large primes. This was improved to
+$\ll \epsilon^{-2}$ by Glibichuk [Gl06]. It is trivial that at least $\gg \epsilon^{-1}$
+summands are required, and it may be that $C_\epsilon\leq \epsilon^{-1-o(1)}$ is possible.
+
+See also [540](https://www.erdosproblems.com/540).
+-/
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1180.lean#L1249"]
+theorem erdos_1180 : ∀ ε : ℝ, 0 < ε → ∃ C : ℕ, ∀ p : ℕ, p.Prime → ∀ a : ZMod p,
+    ∃ s : Multiset ℕ, s.card ≤ C ∧ Represents ε p a s := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+Shparlinski [Sh02] proved that $\ll \epsilon^{-3}$ summands suffice for every residue modulo
+every sufficiently large prime, where the threshold on $p$ may depend on $\epsilon$. No bound
+polynomial in $\epsilon^{-1}$ can hold for all primes, since when $p^\epsilon < 2$ the only
+admissible denominator is $1$.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ba96303b34a95ac458958c1eb0bbdee54733484a/erdos-1180/Solution.lean#L89"]
+theorem erdos_1180.variants.shparlinski : ∃ K : ℝ, ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
+    ∃ P : ℕ, ∀ p : ℕ, P ≤ p → p.Prime → ∀ a : ZMod p,
+      ∃ s : Multiset ℕ, (s.card : ℝ) ≤ K * ε⁻¹ ^ 3 ∧ Represents ε p a s := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+Glibichuk [Gl06] improved the bound to $\ll \epsilon^{-2}$ summands, again for every
+sufficiently large prime.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ba96303b34a95ac458958c1eb0bbdee54733484a/erdos-1180/Solution.lean#L83"]
+theorem erdos_1180.variants.glibichuk : ∃ K : ℝ, ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
+    ∃ P : ℕ, ∀ p : ℕ, P ≤ p → p.Prime → ∀ a : ZMod p,
+      ∃ s : Multiset ℕ, (s.card : ℝ) ≤ K * ε⁻¹ ^ 2 ∧ Represents ε p a s := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/-- It is trivial that at least $\gg \epsilon^{-1}$ summands are required. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/ba96303b34a95ac458958c1eb0bbdee54733484a/erdos-1180/Solution.lean#L95"]
+theorem erdos_1180.variants.lower_bound : ∃ K : ℝ, 0 < K ∧ ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
+    K * ε⁻¹ ≤ C ε := by
+  sorry
+
+/--
+Is $C_\epsilon\leq \epsilon^{-1-o(1)}$? Here $C_\epsilon$ is the number of summands needed for
+every sufficiently large prime, as in `erdos_1180.variants.shparlinski` and
+`erdos_1180.variants.glibichuk`. For all primes no such bound holds, since when $p^\epsilon < 2$
+the only admissible denominator is $1$.
+-/
+@[category research open, question, AMS 11]
+theorem erdos_1180.variants.optimal : ∀ δ : ℝ, 0 < δ →
+    ∀ᶠ ε : ℝ in nhdsWithin 0 (Set.Ioi 0), ∃ P : ℕ, ∀ p : ℕ, P ≤ p → p.Prime → ∀ a : ZMod p,
+      ∃ s : Multiset ℕ, (s.card : ℝ) ≤ ε⁻¹ ^ (1 + δ) ∧ Represents ε p a s := by
+  sorry
+
+end Erdos1180

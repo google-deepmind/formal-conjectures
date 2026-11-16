@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 58
@@ -27,15 +28,19 @@ import FormalConjecturesUtil
 - [Gy92] Gyárfás, A., *Graphs with k odd cycle lengths*. Discrete Math. (1992), 41-48.
 -/
 
+@[expose] public section
+
 namespace Erdos58
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $G$ is a graph which contains odd cycles of $\leq k$ different lengths then $\chi(G)\leq 2k+2$,
 with equality if and only if $G$ contains $K_{2k+2}$.
 
 Conjectured by Bollobás and Erdős. Proved by Gyárfás [Gy92].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/1f6f15be04f783cf5fabcf7f8477b4d8c03c685c/erdos-58/Proofs/Layer1358.lean#L35"]
 theorem erdos_58 :
     ∀ {V : Type*} (G : SimpleGraph V) (k : ℕ),
       G.oddCycleLengths.Finite →

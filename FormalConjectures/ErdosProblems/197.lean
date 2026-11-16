@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 197
 
 *Reference:* [erdosproblems.com/197](https://www.erdosproblems.com/197)
 -/
+
+@[expose] public section
 
 open Set
 
@@ -30,9 +33,9 @@ namespace Erdos197
 Can $\mathbb{N}$ be partitioned into two sets, each of which can be permuted to avoid monotone
 3-term arithmetic progressions?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_197 :
-    answer(sorry) ↔ ∃ A B : Set ℕ, IsCompl A B ∧
+    ∃ A B : Set ℕ, IsCompl A B ∧
       (∃ f : ℕ ≃ A, ¬HasMonotoneAP (Subtype.val ∘ f) 3) ∧
       (∃ g : ℕ ≃ B, ¬HasMonotoneAP (Subtype.val ∘ g) 3) := by
   sorry

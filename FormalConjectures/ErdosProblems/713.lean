@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 713
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   Ser. A (2021), Paper No. 105517, 9.
 -/
 
+@[expose] public section
+
 open Filter SimpleGraph
 
 namespace Erdos713
@@ -42,8 +45,8 @@ Is it true that, for every bipartite graph $G$, there exists some $\alpha\in [1,
 The condition that $G$ have at least two edges excludes degenerate forbidden graphs whose
 extremal number is eventually zero, for which the displayed asymptotic with $c>0$ is impossible.
 -/
-@[category research open, AMS 5]
-theorem erdos_713.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_713.parts.i :
     ∀ (q : ℕ) (G : SimpleGraph (Fin q)), G.IsBipartite → 2 ≤ G.edgeFinset.card →
       ∃ α c : ℝ, α ∈ Set.Ico 1 2 ∧ 0 < c ∧
         Asymptotics.IsEquivalent atTop
@@ -58,8 +61,8 @@ Must $\alpha$ be rational?
 The same nondegeneracy condition on $G$ is used as in part (i). Rationality means that the real
 number $\alpha$ lies in the image of the canonical embedding $\mathbb{Q}\to\mathbb{R}$.
 -/
-@[category research open, AMS 5]
-theorem erdos_713.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_713.parts.ii :
     ∀ (q : ℕ) (G : SimpleGraph (Fin q)), G.IsBipartite → 2 ≤ G.edgeFinset.card →
       ∀ α c : ℝ, α ∈ Set.Ico 1 2 → 0 < c →
         Asymptotics.IsEquivalent atTop

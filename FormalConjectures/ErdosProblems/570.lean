@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 570
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
   Ramsey number of a cycle versus a graph of a given size. arXiv:2601.10238 (2026).
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace Erdos570
@@ -48,8 +51,8 @@ Morawski, Petrova, and Pokrovskiy [CFMPP26].
 
 This problem is #35 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, AMS 5]
-theorem erdos_570 : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_570 :
     ∀ (k : ℕ) (hk : 3 ≤ k),
       ∀ᶠ (m : ℕ) in atTop,
         ∀ (W : Type) [Fintype W] (H : SimpleGraph W) [DecidableRel H.Adj],

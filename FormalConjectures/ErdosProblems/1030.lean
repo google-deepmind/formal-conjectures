@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1030
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [BEFS89] Burr, S. and Erdős, P. and Faudree, R. J. and Schelp, R. H., On the difference between
   consecutive Ramsey numbers. Utilitas Math. (1989), 115-118.
 -/
+
+@[expose] public section
 
 open Filter
 

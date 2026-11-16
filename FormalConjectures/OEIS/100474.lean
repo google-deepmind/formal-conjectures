@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A100474
@@ -25,6 +26,8 @@ prime factors not used before in this construction.
 *References:*
 - [A100474](https://oeis.org/A100474)
 -/
+
+@[expose] public section
 
 namespace OeisA100474
 
@@ -140,18 +143,22 @@ theorem a_5 : a 5 = 58546472 := by
 /--
 After $a(2) = 5$, is there another prime?
 -/
-@[category research open, AMS 11]
-theorem conjecture : answer(sorry) ↔ ∃ n > 2, (a n).Prime := by
+@[category research open, question, AMS 11]
+theorem conjecture : ∃ n > 2, (a n).Prime := by
   sorry
 
+def next_semiprime.answer : ℕ :=
+  3852669607062814427999374038085094563026983841699038416757537720951140990693348082633155462564082456461927363575765861495986901576629
+
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the next semiprime in the sequence after $a(11)$?
 -/
-@[category research solved, AMS 11,
+@[category research solved, question value, AMS 11,
   formal_proof using lean4 at
     "https://github.com/KitaKen1/oeis-a100474-next-semiprime/blob/d7781751918e63fd1268b15525bf9554c92fdd4d/lean/OeisA100474NextSemiprimeFC.lean#L1285-L1288"]
 theorem next_semiprime :
-    answer(3852669607062814427999374038085094563026983841699038416757537720951140990693348082633155462564082456461927363575765861495986901576629) =
+    next_semiprime.answer =
       a (sInf {n : ℕ | 11 < n ∧ (a n).IsSemiprime}) := by
   sorry
 

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 52
 
 *Reference:* [erdosproblems.com/52](https://www.erdosproblems.com/52)
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 
@@ -30,10 +33,20 @@ namespace Erdos52
 Let $A$ be a finite set of integers. Is it true that for every $\epsilon>0$
 $\max( \lvert A+A\rvert,\lvert AA\rvert)\gg_\epsilon \lvert A\rvert^{2-\epsilon}?$
 -/
-@[category research open, AMS 11]
-theorem erdos_52 : answer(sorry) ↔ ∀ (ε : ℝ), 0 < ε → ε < 1 → ∃ (C : ℝ), 0 < C ∧ ∀ (A : Finset ℤ),
+@[category research open, question, AMS 11]
+theorem erdos_52 : ∀ (ε : ℝ), 0 < ε → ε < 1 → ∃ (C : ℝ), 0 < C ∧ ∀ (A : Finset ℤ),
     (max (A + A).card (A * A).card : ℝ) ≥ C * (A.card : ℝ) ^ (2 - ε) := by
   sorry
+
+open scoped Classical in
+/-- The **sum-product exponent for the reals**: the largest `s` such that
+`max |A + A| |A * A| ≫_ε |A| ^ (s - ε)` for every `ε > 0` and every finite nonempty `A ⊆ ℝ`.
+
+This is the real analogue of `erdos_52`, which concerns finite sets of integers. -/
+@[optimization_constant "84b"]
+noncomputable def sumProductExponentReal : ℝ :=
+  sSup {s : ℝ | ∀ ε > 0, ∃ C > 0, ∀ A : Finset ℝ, A.Nonempty →
+    (max (A + A).card (A * A).card : ℝ) ≥ C * (A.card : ℝ) ^ (s - ε)}
 
 -- TODO(firsching): Add additional material.
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 107
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/107](https://www.erdosproblems.com/107)
 - [Wikipedia](https://en.wikipedia.org/wiki/Happy_ending_problem)
 -/
+
+@[expose] public section
 
 open Filter
 open EuclideanGeometry
@@ -43,13 +46,15 @@ Let $f(n)$ be minimal such that any $f(n)$ points in $ℝ^2$, no three on a line
 contain $n$ points which form the vertices of a convex $n$-gon.
 Prove that $f(n) = 2^{n-2} + 1$.
 -/
-@[category research open, AMS 52]
-theorem erdos_107 : answer(sorry) ↔ ∀ n ≥ 3, f n = 2^(n - 2) + 1 := by
+@[category research open, question, AMS 52]
+theorem erdos_107 : ∀ n ≥ 3, f n = 2^(n - 2) + 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every $n ≥ 3$, there exists $N$ such that any $N$ points, no three on a line,
 contain a convex $n$-gon. -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/cd3cf0b176e95209584bf35555a7c0e501255f6e/erdos-107/Solution.lean#L59"]
 theorem nonempty_cardSet : ∀ n ≥ 3, (cardSet n).Nonempty := by
   sorry
 

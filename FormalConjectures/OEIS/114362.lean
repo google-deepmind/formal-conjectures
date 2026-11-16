@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Numerator of $\zeta(4n)/\zeta(2n)^2$ (with $a(0)=2$ instead of $-2$)
@@ -27,6 +28,8 @@ with $a(0)$ defined as $2$.
 *References:*
 - [A114362](https://oeis.org/A114362)
 -/
+
+@[expose] public section
 
 namespace OeisA114362
 
@@ -91,6 +94,7 @@ theorem conjecture1 (n : ℕ) (hn_gt_one : 1 < n) (hn_odd : Odd n) :
 noncomputable def t (n : ℕ) : ℝ :=
   (riemannZeta (2 * (n : ℂ))).re / ((riemannZeta (n : ℂ)).re ^ 2)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture:
 $\frac{1 - t(n)}{1 + t(n)} = \frac{1}{2^n} + \frac{1}{3^n} + \frac{1}{5^n} + \frac{1}{7^n} +

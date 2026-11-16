@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 66
 
 *Reference:* [erdosproblems.com/66](https://www.erdosproblems.com/66)
 -/
+
+@[expose] public section
 
 
 namespace Erdos66
@@ -33,8 +36,8 @@ Is there and $A \subset \mathbb{N}$ is such that
 $$\lim_{n\to \infty}\frac{1_A\ast 1_A(n)}{\log n}$$
 exists and is $\ne 0$?
 -/
-@[category research open, AMS 11]
-theorem erdos_66 : answer(sorry) ↔ ∃ (A : Set ℕ) (c : ℝ), c ≠ 0 ∧
+@[category research open, question, AMS 11]
+theorem erdos_66 : ∃ (A : Set ℕ) (c : ℝ), c ≠ 0 ∧
     Tendsto (fun n ↦ (sumRep A n : ℝ) / Real.log n) atTop (𝓝 c) := by
   sorry
 

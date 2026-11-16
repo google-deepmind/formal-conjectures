@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1188
 
 *Reference:* [erdosproblems.com/1188](https://www.erdosproblems.com/1188)
 -/
+
+@[expose] public section
 
 namespace Erdos1188
 
@@ -59,6 +62,7 @@ lie in `[1, x]`. -/
 noncomputable def coveringCount (x : ℕ) : ℕ :=
   ((ClassesUpTo x).powerset.filter IsMinimalDistinctCoveringSystem).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Call a set of distinct integers $1<n_1<\cdots<n_k$ with associated congruence
 classes $a_i\pmod{n_i}$ a distinct covering system if every integer satisfies at

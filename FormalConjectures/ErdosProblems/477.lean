@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 477
@@ -26,10 +27,13 @@ import FormalConjecturesUtil
   proof exposition by T. F. Bloom of a construction found independently by several provers.
 -/
 
+@[expose] public section
+
 open Polynomial Set
 
 namespace Erdos477
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a polynomial $f:\mathbb{Z}\to \mathbb{Z}$ of degree at least $2$ and a set
 $A\subset \mathbb{Z}$ such that for any $n\in \mathbb{Z}$ there is exactly one $a\in A$ and
@@ -37,9 +41,14 @@ $b\in \{ f(k) : k\in\mathbb{Z}\}$ such that $n=a+b$?
 
 The answer is yes, contrary to the expectation of Erdős and Graham: such an `A` exists whenever
 $f(n) = n^d$ for even $d \ge 6$.
+
+The linked formal proof (Codex, following Price's exposition) exhibits a complement of
+$\{k^6 : k \in \mathbb{Z}\}$; it states uniqueness as `∃! p : ℤ × ℤ, p.1 ∈ A ∧ p.2 ∈ B ∧ p.1 + p.2 = n`
+and the degree condition as `2 ≤ f.natDegree`.
 -/
-@[category research solved, AMS 12]
-theorem erdos_477 : answer(True) ↔
+@[category research solved, question, AMS 12, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos477.lean#L54"]
+theorem erdos_477 :
     ∃ f : ℤ[X], 2 ≤ f.degree ∧ ∃ A : Set ℤ,
       ∀ z, ∃! ab ∈ A ×ˢ (Set.range f.eval), z = ab.1 + ab.2 := by
   sorry
@@ -76,13 +85,16 @@ theorem erdos_477.variants.X_pow_three :
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (Set.range f.eval), z = a.1 + a.2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Sekanina [Sek59] asked whether there is no such $A$ for $X^k$, for every $k \ge 2$.
-This is false: a complement exists for every even $k \ge 6$.
+This is false: a complement exists for every even $k \ge 6$. The linked formal proof gives the
+case $k = 6$.
 -/
-@[category research solved, AMS 12]
-theorem erdos_477.variants.monomial : answer(False) ↔
-    ∀ (k : ℕ), 2 ≤ k →
+@[category research solved, question, AMS 12, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos477.lean#L42"]
+theorem erdos_477.variants.monomial :
+    ¬ ∀ (k : ℕ), 2 ≤ k →
       letI f := X ^ k
       ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (Set.range f.eval), z = a.1 + a.2 := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 398
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
  - [Wikipedia: Brocard's problem](https://en.wikipedia.org/wiki/Brocard%27s_problem)
 -/
 
+@[expose] public section
+
 open Nat
 
 namespace Erdos398
@@ -32,8 +35,8 @@ namespace Erdos398
 **Brocard's Problem**
 Does $n! + 1 = m^2$ have integer solutions other than $n = 4, 5, 7$?
 -/
-@[category research open, AMS 11]
-theorem erdos_398 : answer(sorry) ↔ {n | ∃ m, n ! + 1 = m ^ 2} = {4, 5, 7} := by
+@[category research open, question, AMS 11]
+theorem erdos_398 : {n | ∃ m, n ! + 1 = m ^ 2} = {4, 5, 7} := by
   sorry
 
 end Erdos398

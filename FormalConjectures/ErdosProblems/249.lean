@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 249
 
 *Reference:* [erdosproblems.com/249](https://www.erdosproblems.com/249)
 -/
+
+@[expose] public section
 
 open scoped Nat
 
@@ -31,8 +34,8 @@ Is
 $$\sum_{n} \frac{\phi(n)}{2^n}$$
 irrational? Here $\phi$ is the Euler totient function.
 -/
-@[category research open, AMS 11]
-theorem erdos_249 : answer(sorry) ↔ Irrational (∑' n : ℕ, (φ n) / (2 ^ n)) := by
+@[category research open, question, AMS 11]
+theorem erdos_249 : Irrational (∑' n : ℕ, (φ n) / (2 ^ n)) := by
   sorry
 
 end Erdos249

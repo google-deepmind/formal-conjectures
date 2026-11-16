@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 264
 
 *Reference:* [erdosproblems.com/264](https://www.erdosproblems.com/264)
 -/
+
+@[expose] public section
 
 namespace Erdos264
 
@@ -55,8 +58,8 @@ theorem erdos_264.parts.i : ¬IsIrrationalitySequence (2 ^ ·) := by sorry
 /--
 Is $n!$ an example of an irrationality sequence?
 -/
-@[category research open, AMS 11]
-theorem erdos_264.parts.ii : answer(sorry) ↔ IsIrrationalitySequence Nat.factorial := by sorry
+@[category research open, question, AMS 11]
+theorem erdos_264.parts.ii : IsIrrationalitySequence Nat.factorial := by sorry
 
 /--
 One example is $2^{2^n}$.

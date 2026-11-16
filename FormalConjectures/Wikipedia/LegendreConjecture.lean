@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Legendre's conjecture
@@ -24,17 +25,21 @@ import FormalConjecturesUtil
 - [Legendre Conjecture Wikipedia Page](https://en.wikipedia.org/wiki/Legendre%27s_conjecture)
 - [Luan Alberto Ferreira, *Real exponential sums over primes and prime gaps*](https://arxiv.org/abs/2307.08725)
 -/
+
+@[expose] public section
+
 open Filter
 namespace LegendreConjecture
 
 /--
 Does there always exist at least one prime between consecutive perfect squares?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem legendre_conjecture :
-    answer(sorry) ↔ ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
+    ∀ n ≥ 1, ∃ p ∈ Set.Ioo (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If there exists a constant `c > 0` such that
 `(n + 1).nth Nat.Prime - n.nth Nat.Prime < (n.nth Nat.Prime) ^ (1 / 2 - c)` for all large `n`,

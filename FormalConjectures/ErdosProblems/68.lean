@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 68
 
 *Reference:* [erdosproblems.com/68](https://www.erdosproblems.com/68)
 -/
+
+@[expose] public section
 
 namespace Erdos68
 
@@ -29,9 +32,9 @@ Is
 $$\sum_{n=2}^\infty \frac{1}{n!-1}$$
 irrational?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_68 :
-    answer(sorry) ↔ Irrational (∑' n : ℕ, 1 / ((n + 2).factorial - 1 : ℝ)) := by
+    Irrational (∑' n : ℕ, 1 / ((n + 2).factorial - 1 : ℝ)) := by
   sorry
 
 /--
