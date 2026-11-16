@@ -29,11 +29,34 @@ Is a locally soluble group periodic if it is a product of two periodic subgroups
 
 @[expose] public section
 
+open Pointwise
+
 namespace Kourovka.«9.65»
 
+/--
+A Group $G$ is locally solvable (locally soluble)
+if every finite generated subgroup $H$ of $G$ is solvable (soluble).
+-/
+def IsLocallySolvable (G : Type*) [Group G] : Prop :=
+  ∀ (H : Subgroup G), Subgroup.FG H → Group.IsSolvable H
+
+/--
+A Group $G$ is a product of two periodic subgroups $H$, $K$
+if $G = H * K$
+-/
+def IsProdOfTwoPeriodicSubgroups (G : Type*) [Group G] : Prop :=
+  ∃ (H K : Subgroup G), IsMulTorsion H ∧ IsMulTorsion K ∧
+    Set.univ = (H : Set G) * (K : Set G)
+
+/--
+Is a locally solvable (soluble) group $G$ periodic if it is a product of two periodic subgroups?
+-/
 @[category research open, question, AMS 20]
 theorem kourovka_9_65 :
-    //TODO: Statement := by
+    ∀ (G : Type) [Group G],
+      IsLocallySolvable G →
+      IsProdOfTwoPeriodicSubgroups G →
+      IsMulTorsion G := by
   sorry
 
 end Kourovka.«9.65»
