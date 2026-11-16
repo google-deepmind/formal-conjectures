@@ -85,7 +85,8 @@ $n = 1$): for every `n`, every endomorphism of the `n`-th Weyl algebra over a fi
 characteristic zero is an automorphism. This is **false**: the Jacobian conjecture fails
 in dimension $3$ [Alp26], and $DC_n \Longrightarrow JC_n$ [BCW82], so $DC_3$ fails.
 -/
-@[category research solved, AMS 16]
+@[category research solved, AMS 16, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-06-000008"]
 theorem dixmier_conjecture : ¬ ∀ n, DixmierConjectureFor K n := by
   sorry
 
@@ -110,7 +111,8 @@ theorem dixmier_conjecture.variants.dimension_two : DixmierConjectureFor K 2 := 
 The Dixmier Conjecture is false in dimension $3$: $DC_3$ implies the Jacobian conjecture in
 dimension $3$ [BCW82], which fails by the counterexample of [Alp26].
 -/
-@[category research solved, AMS 16]
+@[category research solved, AMS 16, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-06-000008"]
 theorem dixmier_conjecture.variants.dimension_three : ¬ DixmierConjectureFor K 3 := by
   sorry
 
@@ -119,7 +121,8 @@ The Dixmier Conjecture is false in every dimension $n ≥ 3$, since the Jacobian
 is false in every dimension $n ≥ 3$ (padding the counterexample of [Alp26] with identity
 coordinates) and $DC_n \Longrightarrow JC_n$ [BCW82].
 -/
-@[category research solved, AMS 16]
+@[category research solved, AMS 16, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-06-000008"]
 theorem dixmier_conjecture.variants.dimension_ge_three (n : ℕ) (hn : 3 ≤ n) :
     ¬ DixmierConjectureFor K n := by
   sorry
@@ -128,7 +131,8 @@ theorem dixmier_conjecture.variants.dimension_ge_three (n : ℕ) (hn : 3 ≤ n) 
 The Dixmier conjecture in dimension `n` implies the Jacobian conjecture in dimension `n`
 ([BCW82]; see also [AvdE07], Theorem 7).
 -/
-@[category research solved, AMS 14 16]
+@[category research solved, AMS 14 16, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-06-000008"]
 theorem dixmier_conjecture.variants.jacobian_implication (n : ℕ)
     (h : DixmierConjectureFor K n) : JacobianConjectureProp K (Fin n) := by
   sorry
