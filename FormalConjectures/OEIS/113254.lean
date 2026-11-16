@@ -68,6 +68,7 @@ lemma a_3 : a 3 = 3136 := by rfl
 lemma a_4 : a 4 = -15616 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(8, 2n+1)$ is a perfect square for all $n$ (see A113249).
 

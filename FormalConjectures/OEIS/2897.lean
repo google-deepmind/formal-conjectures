@@ -83,6 +83,7 @@ lemma a_3 : a 3 = 8000 := by rfl
 lemma a_4 : a 4 = 343000 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n) = [x^n y^n z^n] (1+x+y+z)^{2n} (1+x+y-z)^n (1+x-y+z)^n$. - _Peter Bala_, Apr 10 2022
 

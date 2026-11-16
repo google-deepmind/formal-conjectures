@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos486
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A \subseteq \mathbb{N}$, and for each $n \in A$ choose some
 $X_n \subseteq \mathbb{Z}/n\mathbb{Z}$. Let
@@ -46,13 +47,13 @@ $49/50$. The first linked formal proof establishes this for the real-cutoff norm
 $\frac{1}{\log x}\sum_{m < x, m \in B} \frac{1}{m}$ with the moduli restricted to $A$; the
 second derives the statement below (`Set.HasLogDensity`, all moduli) from it.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos486.lean#L20",
   formal_proof using formal_conjectures at
   "https://github.com/Konamiu/formal-conjectures/blob/c69df0584ca9767090f5a68c8f09f1ff3c93ab80/FormalConjectures/ErdosProblems/486.lean#L39"]
-theorem erdos_486 : answer(False) ↔
-    ∀ X : (n : ℕ) → Set (ZMod n),
+theorem erdos_486 :
+    ¬ ∀ X : (n : ℕ) → Set (ZMod n),
       ∃ d, {m : ℕ | ∀ n, 0 < n → n < m → (m : ZMod n) ∉ X n}.HasLogDensity d := by
   sorry
 

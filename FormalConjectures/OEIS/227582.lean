@@ -110,6 +110,7 @@ theorem baseSeq_recurrence (n : ℕ) :
     show (![1, -2, 1, 0, 0, -1, 2] : Fin 7 → ℤ) 6 = 2 from rfl]
   ring
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture (from A227581): $a(n) = \lfloor 1/(2 H(n) - H(n^2 + n - 1) - \gamma) \rfloor$,
 where $H$ denotes harmonic numbers and $\gamma$ denotes the Euler-Mascheroni constant.

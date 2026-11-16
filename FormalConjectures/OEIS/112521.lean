@@ -75,6 +75,7 @@ def T (n k : ℕ) : ℤ :=
     T n (k - 2) + T n (k - 1) - 2 * T (n - 1) (k - 1) + T (n - 1) k + T (n - 2) k
 termination_by n + k
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: Starting with $n=1$, $a(n)$ is the main diagonal of the array $T(n, k)$.
 -/

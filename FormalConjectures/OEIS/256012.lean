@@ -70,6 +70,7 @@ lemma a_3 : a 3 = 0 := by decide +kernel
 lemma a_4 : a 4 = 1 := by decide +kernel
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n) > 0$ for $n > 23$.
 
