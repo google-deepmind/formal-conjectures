@@ -60,7 +60,7 @@ In both cases the floor of the average plus $l(u)$ is at most $b(G)$.
 -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at
-    "https://github.com/hamsade-google/formal-conjectures/blob/a94666dbdeef42d593a6c1aecf388c396db7c3fb/FormalConjectures/WrittenOnTheWallII/GraphConjecture19.lean"]
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000014"]
 theorem conjecture19 (G : SimpleGraph α) [Nontrivial α] (h_conn : G.Connected) :
     ⌊(∑ v ∈ Finset.univ, ((G.eccent v).toNat : ℝ)) / (Fintype.card α : ℝ) +
       sSup (Set.range (indepNeighbors G))⌋ ≤ b G := by
