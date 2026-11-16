@@ -18,7 +18,7 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# Numbers k such that k^2 + 1 is prime
+# Numbers $k$ such that $k^2 + 1$ is prime
 
 References:
 
