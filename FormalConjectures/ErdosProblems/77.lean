@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 77
@@ -34,9 +35,13 @@ import FormalConjecturesUtil
   Ramsey numbers. arXiv:2407.19026 (2024).
 -/
 
+@[expose] public section
+
 open scoped Topology
 
 namespace Erdos77
+
+def erdos_77.answer : ℝ := sorry
 
 /--
 If $R(k)$ is the Ramsey number for $K_k$, the minimal $n$ such that every $2$-colouring of the edges
@@ -45,10 +50,10 @@ $$\lim_{k\to \infty}R(k)^{1/k}.$$
 
 This problem is #3 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_77 :
     Filter.Tendsto (fun k : ℕ ↦ (SimpleGraph.diagonalRamsey k : ℝ) ^ (1 / (k : ℝ)))
-      Filter.atTop (𝓝 answer(sorry)) := by
+      Filter.atTop (𝓝 erdos_77.answer) := by
   sorry
 
 -- TODO: Add variants of the problem.

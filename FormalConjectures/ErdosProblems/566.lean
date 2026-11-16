@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 566
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [EFRS93] Erdős, Faudree, Rousseau and Schelp, _Ramsey size linear graphs_.
 Combin. Probab. Comput. (1993), 389-399.
 -/
+
+@[expose] public section
 
 namespace Erdos566
 
@@ -36,8 +39,8 @@ Is it true that, if $H$ has $m$ edges and no isolated vertices, then $R(G,H) \ll
 In other words: if $G$ is sparse (every induced subgraph on $k$ vertices has $≤ 2k-3$ edges),
 is $G$ Ramsey size linear?
 -/
-@[category research open, AMS 5]
-theorem erdos_566 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_566 :
     ∀ (p : ℕ) (G : SimpleGraph (Fin p)),
       (∀ S : Finset (Fin p), 2 ≤ S.card → (G.induce S).edgeSet.ncard ≤ 2 * S.card - 3) →
       G.IsRamseySizeLinear := by

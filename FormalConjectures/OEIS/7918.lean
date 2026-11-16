@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least prime $\ge n$
@@ -24,6 +25,8 @@ Least prime $\ge n$ (version 1 of the "next prime" function).
 *References:*
 - [A007918](https://oeis.org/A007918)
 -/
+
+@[expose] public section
 
 namespace OeisA7918
 

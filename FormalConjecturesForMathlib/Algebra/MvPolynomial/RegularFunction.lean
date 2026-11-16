@@ -19,7 +19,7 @@ public import Mathlib.Algebra.MvPolynomial.Monad
 public import Mathlib.Algebra.MvPolynomial.PDeriv
 public import Mathlib.Data.Matrix.Basic
 
-public section
+@[expose] public section
 
 /-!
 # Regular functions between affine spaces

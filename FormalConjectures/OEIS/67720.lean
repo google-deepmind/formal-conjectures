@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A067720
@@ -27,6 +29,8 @@ $k + 1$ is prime. The conjecture states that $k = 8$ is the only exception.
 *References:*
 - [A067720](https://oeis.org/A067720)
 -/
+
+@[expose] public section
 
 namespace OeisA67720
 

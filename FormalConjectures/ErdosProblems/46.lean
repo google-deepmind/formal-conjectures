@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 46
@@ -27,8 +28,11 @@ import FormalConjecturesUtil
   theory*. Monographies de L'Enseignement Mathematique (1980).
 -/
 
+@[expose] public section
+
 namespace Erdos46
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every finite colouring of the integers have a monochromatic solution to
 $1=\sum \frac{1}{n_i}$ with $2\leq n_1<\cdots <n_k$?
@@ -36,9 +40,8 @@ $1=\sum \frac{1}{n_i}$ with $2\leq n_1<\cdots <n_k$?
 The answer is yes, as proved by Croot [Cr03] - indeed, there are infinitely many disjoint such
 monochromatic solutions.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos46.lean"]
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos46.lean"]
 theorem erdos_46 :
-    answer(True) ↔
     -- For any finite colouring of the integers
     ∀ (𝓒 : ℕ → ℕ), (Set.range 𝓒).Finite →
       -- there are integers `2 ≤ n₁ < ⋯ < n_k`
@@ -52,9 +55,8 @@ theorem erdos_46 :
 /--
 Croot [Cr03] proved more: there are infinitely many disjoint such monochromatic solutions.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_46.variants.infinitely_many_disjoint :
-    answer(True) ↔
     ∀ (𝓒 : ℕ → ℕ), (Set.range 𝓒).Finite →
       ∃ S : ℕ → Finset ℕ, (∀ i j, i ≠ j → Disjoint (S i) (S j)) ∧
         ∀ i, (∀ n ∈ S i, 2 ≤ n) ∧ ∑ n ∈ S i, (1 / n : ℚ) = 1 ∧
@@ -64,9 +66,8 @@ theorem erdos_46.variants.infinitely_many_disjoint :
 /--
 In [ErGr80] they also ask for a monochromatic representation of any $\frac{a}{b}>0$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_46.variants.positive_rat :
-    answer(True) ↔
     ∀ (𝓒 : ℕ → ℕ), (Set.range 𝓒).Finite → ∀ q : ℚ, 0 < q →
       ∃ S : Finset ℕ, (∀ n ∈ S, 2 ≤ n) ∧ ∑ n ∈ S, (1 / n : ℚ) = q ∧
         (𝓒 '' (S : Set ℕ)).Subsingleton := by

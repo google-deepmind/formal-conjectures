@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Least positive multiple of $n$ in base 10 with digits 0 and 1
@@ -24,6 +25,8 @@ Least positive multiple of $n$ that when written in base 10 uses only 0's and 1'
 *References:*
 - [A004290](https://oeis.org/A004290)
 -/
+
+@[expose] public section
 
 namespace OeisA4290
 

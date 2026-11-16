@@ -30,6 +30,28 @@ Reference: https://en.wikipedia.org/wiki/Iterated_logarithm -/
 noncomputable def Real.iteratedLog (x : ℝ) : ℕ :=
   sInf { (n : ℕ) | Real.log^[n] x ≤ 1 }
 
+/-- The iterated logarithm of a natural number in base `b`: the number of times `Nat.log b` must
+be iteratively applied to `n` before the result is at most `1`. -/
+def Nat.iteratedLog (b : ℕ) : ℕ → ℕ
+  | 0 => 0
+  | 1 => 0
+  | (n + 2) => Nat.iteratedLog b (Nat.log b (n + 2)) + 1
+termination_by n => n
+decreasing_by exact Nat.log_lt_self b (by omega)
+
+@[simp]
+theorem Nat.iteratedLog_zero (b : ℕ) : Nat.iteratedLog b 0 = 0 := by
+  simp [Nat.iteratedLog]
+
+@[simp]
+theorem Nat.iteratedLog_one (b : ℕ) : Nat.iteratedLog b 1 = 0 := by
+  simp [Nat.iteratedLog]
+
+theorem Nat.iteratedLog_of_two_le (b : ℕ) {n : ℕ} (hn : 2 ≤ n) :
+    Nat.iteratedLog b n = Nat.iteratedLog b (Nat.log b n) + 1 := by
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 2 := ⟨n - 2, by omega⟩
+  simp [Nat.iteratedLog]
+
 theorem Real.iteratedLog_eq_zero_of_le {x : ℝ} (hx : x ≤ 1) :
     Real.iteratedLog x = 0 := by
   simpa [iteratedLog] using Or.inl hx

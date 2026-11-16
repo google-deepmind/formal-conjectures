@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
-import FormalConjectures.Wikipedia.ModularityConjecture
+public import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.ModularityConjecture
 
 /-!
 # Sato–Tate conjecture
@@ -62,6 +63,8 @@ $\overline{\mathbb{Q}}$.
   https://doi.org/10.2977/PRIMS/31
 - [Wikipedia](https://en.wikipedia.org/wiki/Sato%E2%80%93Tate_conjecture)
 -/
+
+@[expose] public section
 
 namespace SatoTateConjecture
 

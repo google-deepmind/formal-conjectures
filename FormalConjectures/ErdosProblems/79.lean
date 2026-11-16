@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 79
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Wi24] Wigderson, Y., Infinitely many minimally non-Ramsey size linear graphs.
   arXiv:2409.05931 (2024).
 -/
+
+@[expose] public section
 
 namespace Erdos79
 
@@ -40,8 +43,8 @@ its proper subgraphs are?
 Asked by Erdős, Faudree, Rousseau, and Schelp [EFRS93]. $K_4$ was long the only known example.
 Wigderson [Wi24] proved that there are infinitely many such graphs.
 -/
-@[category research solved, AMS 5]
-theorem erdos_79 : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_79 :
     ∀ (N : ℕ), ∃ (n : ℕ) (_ : N ≤ n) (G : SimpleGraph (Fin n)),
       ¬ G.IsRamseySizeLinear ∧
       ∀ H : G.Subgraph, H < ⊤ → H.coe.IsRamseySizeLinear := by

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 579
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [EHSS83] P. Erdős, A. Hajnal, V. T. Sós and E. Szemerédi, *More results on Ramsey–Turán
   type problems*, Combinatorica **3** (1983), 69–81.
 -/
+
+@[expose] public section
 
 open Filter SimpleGraph
 
@@ -48,8 +51,8 @@ Here $K_{2,2,2}$ is the complete tripartite graph with all parts of size $2$, en
 `completeMultipartiteGraph (fun _ : Fin 3 => Fin 2)`; "contains no $K_{2,2,2}$" is expressed
 via `SimpleGraph.Free`.
 -/
-@[category research open, AMS 5]
-theorem erdos_579 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_579 :
     ∀ δ : ℝ, 0 < δ → ∃ c : ℝ, 0 < c ∧ ∀ᶠ n : ℕ in atTop,
       ∀ G : SimpleGraph (Fin n), octahedron.Free G →
         δ * (n : ℝ) ^ 2 ≤ G.edgeFinset.card →

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 253
 
 *Reference:* [erdosproblems.com/253](https://www.erdosproblems.com/253)
 -/
+
+@[expose] public section
 
 namespace Erdos253
 
@@ -32,6 +35,7 @@ arithmetic progression contains infinitely many integers that are the sum of dis
 def RepresentsAPs (a : ℕ → ℕ) : Prop :=
     StrictMono a ∧ ∀ l, l.IsAPOfLength ⊤ → (subsetSums (Set.range a) ∩ l).Infinite
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_1 < a_2 < \dotsc$ be an infinite sequence of positive integers such that
 $\frac{a_{i+1}}{a_i} \to 1$. If every arithmetic progression contains infinitely many

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 883
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 - [Sa99] Sárközy, G. N., Complete tripartite subgraphs in the coprime graph of integers.
   Discrete Math. (1999), 227-238.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -47,8 +50,8 @@ then $G(A)$ contains all odd cycles of length $\leq n/3 + 1$?
 
 A problem of Erdős and Sárközy [ErSa97].
 -/
-@[category research open, AMS 5 11]
-theorem erdos_883.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem erdos_883.parts.i :
     ∀ (n : ℕ) (A : Finset ℕ),
       A ⊆ Finset.Icc 1 n →
       n / 2 + n / 3 - n / 6 < A.card →
@@ -65,8 +68,8 @@ then $G(A)$ must contain a complete $(1,\ell,\ell)$ tripartite graph on $2\ell+1
 The second question was solved by Sárközy [Sa99], who proved this with
 $\ell \gg \log n/\log\log n$.
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_883.parts.ii : answer(True) ↔
+@[category research solved, question, AMS 5 11]
+theorem erdos_883.parts.ii :
     ∀ l : ℕ, 1 ≤ l → ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℕ,
       A ⊆ Finset.Icc 1 n →
       n / 2 + n / 3 - n / 6 < A.card →

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 217
@@ -31,6 +32,8 @@ Per the WOWII definitions popup linked from this conjecture:
 [E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture217
 
 open SimpleGraph
@@ -43,6 +46,7 @@ $\chi_{\mathrm{residue}=2}(G)$ indicator appearing in Conjecture 217. -/
 noncomputable def residueEqTwoIndicator (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
   if residue G = 2 then 1 else 0
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 217](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj217):
 

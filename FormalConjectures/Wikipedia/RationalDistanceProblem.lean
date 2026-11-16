@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Rational distance problem
@@ -27,6 +28,8 @@ asked by user [Yuan Yang](https://mathoverflow.net/users/177957/yuan-yang)
 by *Richard K. Guy*
 -/
 
+@[expose] public section
+
 namespace RationalDistanceProblem
 
 open EuclideanGeometry
@@ -37,9 +40,9 @@ def UnitSquareCorners : Fin 4 → ℝ² :=
 /--
 Does there exist a point in the plane at rational distance from all four vertices of the unit square?
 -/
-@[category research open, AMS 11 51]
+@[category research open, question, AMS 11 51]
 theorem rational_distance_problem :
-    answer(sorry) ↔ ∃ P : ℝ² , ∀ i, ¬ Irrational (dist P (UnitSquareCorners i)) := by
+    ∃ P : ℝ² , ∀ i, ¬ Irrational (dist P (UnitSquareCorners i)) := by
   sorry
 
 end RationalDistanceProblem

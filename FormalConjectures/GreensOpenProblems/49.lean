@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 49
@@ -35,6 +36,8 @@ Also known as the *Marton's conjecture* or the *Polynomial Freiman-Ruzsa conject
 - [Ta08] T. C. Tao, A counterexample to a strong polynomial Freiman-Ruzsa conjecture, blog post November 2008, available at http://tinyurl.com/36j6hyxv.
 -/
 
+@[expose] public section
+
 open scoped Pointwise Finset
 
 namespace Green49
@@ -48,8 +51,8 @@ Solved by [GGM25], with at most $2K^{12}$ translates. The factor $2$ cannot be o
 $A = \mathbb{F}_2^n \setminus \{0\}$ one has $K = 2^n / (2^n - 1)$, so $K^C \to 1$ as
 $n \to \infty$, while every subspace of size at most $|A|$ is proper and two translates are needed.
 -/
-@[category research solved, AMS 5 11]
-theorem green_49 : answer(True) ↔
+@[category research solved, question, AMS 5 11]
+theorem green_49 :
     ∃ C > 0,
       ∀ n (A : Finset (𝔽₂ n)), A.Nonempty →
       ∀ K ≥ (1 : ℝ), (#(A + A) : ℝ) ≤ K * #A →

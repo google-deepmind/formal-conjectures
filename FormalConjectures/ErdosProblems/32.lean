@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 32
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
 * [Guy04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437
 * [Ru98c] Ruzsa, Imre Z., On the additive completion of primes. Acta Arith. (1998), 269-275.
 -/
+
+@[expose] public section
 
 
 namespace Erdos32
@@ -67,8 +70,8 @@ open scoped Classical in
 Does there exist a set $A \subseteq \mathbb{N}$ such that $|A \cap \{1, \ldots, N\}| = o((\log N)^2)$
 and every sufficiently large integer can be written as $p + a$ for some prime $p$ and $a \in A$?
 -/
-@[category research open, AMS 11]
-theorem erdos_32 : answer(sorry) ↔ ∃ A : Set ℕ,
+@[category research open, question, AMS 11]
+theorem erdos_32 : ∃ A : Set ℕ,
     IsAdditiveComplementToPrimes A ∧
     (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) =o[atTop]
       fun N => (Real.log N) ^ 2 := by
@@ -79,8 +82,8 @@ open scoped Classical in
 Can the bound $O(\log N)$ be achieved for an additive complement to the primes? [Guy04] writes
 that Erdős offered \$50 for the solution.
 -/
-@[category research open, AMS 11]
-theorem erdos_32.variants.log_bound : answer(sorry) ↔ ∃ A : Set ℕ,
+@[category research open, question, AMS 11]
+theorem erdos_32.variants.log_bound : ∃ A : Set ℕ,
     IsAdditiveComplementToPrimes A ∧
     (fun N => (((Finset.Icc 1 N).filter (· ∈ A)).card : ℝ)) =O[atTop]
       fun N => Real.log N := by

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 462
 
 *Reference:* [erdosproblems.com/462](https://www.erdosproblems.com/462)
 -/
+
+@[expose] public section
 
 namespace Erdos462
 
@@ -32,8 +35,8 @@ Let $p(n)$ denote the least prime factor of $n$. Is there a constant $C>0$ such 
 $$\sum_{x\leq n\leq x+C\sqrt{x}(\log x)^2}\frac{p(n)}{n}\gg 1$$
 for all sufficiently large $x$?
 -/
-@[category research open, AMS 11]
-theorem erdos_462 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_462 :
     ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ᶠ x : ℕ in atTop,
       c ≤ ∑ n ∈ Finset.Icc x
         ⌊(x : ℝ) + C * Real.sqrt x * (Real.log x) ^ 2⌋₊, (n.minFac : ℝ) / n := by

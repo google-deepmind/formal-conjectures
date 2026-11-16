@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 159
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   theory. Proc. Ninth Southeastern Conf. Combinatorics, Graph Theory and Computing (1978), 29-40.
 - [Sp77] Spencer, J., Asymptotic lower bounds for Ramsey functions. Discrete Math. (1977), 69-76.
 -/
+
+@[expose] public section
 
 namespace Erdos159
 

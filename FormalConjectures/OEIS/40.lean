@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # The prime numbers
@@ -24,6 +25,8 @@ The $n$-th prime number $p_n$, where $p_1 = 2$.
 *References:*
 - [A000040](https://oeis.org/A000040)
 -/
+
+@[expose] public section
 
 namespace OeisA40
 

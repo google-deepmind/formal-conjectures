@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Diophantine $m$-tuples
@@ -38,6 +39,8 @@ $i \neq j$.
 - [Gi99] Gibbs, Philip,
   [*Some rational Diophantine sextuples*](https://arxiv.org/abs/math/9902081), (1999).
 -/
+
+@[expose] public section
 
 namespace DiophantineTuple
 
@@ -66,8 +69,8 @@ The property of being a Diophantine tuple is closed under subsets. [Du16]
 -/
 @[category textbook, AMS 11]
 theorem isDiophantineTuple_of_subset (s t : Finset R) (h1 : IsDiophantineTuple t)
-    (h2 : s ⊆ t) : IsDiophantineTuple s := by 
-  sorry
+    (h2 : s ⊆ t) : IsDiophantineTuple s :=
+  ⟨fun x hx => h1.1 x (h2 hx), fun x hx y hy hxy => h1.2 x (h2 hx) y (h2 hy) hxy⟩
 
 /-
 Conjectures / theorems about existence of integral Diophantine m-tuples for various values of m
@@ -92,7 +95,39 @@ There exist infinitely many integral Diophantine 4-tuples. [Du16]
 Proof: many parameterizations exist, e.g. $\{k, k + 2, 4k + 4, 16k^3 + 48k^2 + 44k + 12\}$.
 -/
 @[category textbook, AMS 11]
-example : integralDiophantine4Tuple.encard = ⊤ := by sorry
+example : integralDiophantine4Tuple.encard = ⊤ := by
+  -- The family from the docstring, with `k + 1` in place of `k` so that every element is positive.
+  let s : ℕ → Finset ℕ := fun k =>
+    {k + 1, k + 3, 4 * k + 8, 16 * (k + 1) ^ 3 + 48 * (k + 1) ^ 2 + 44 * (k + 1) + 12}
+  have hmem : ∀ k x, x ∈ s k → k + 1 ≤ x := by
+    intro k x hx
+    simp only [s, Finset.mem_insert, Finset.mem_singleton] at hx
+    rcases hx with rfl | rfl | rfl | rfl <;> omega
+  have hinj : Function.Injective s := by
+    intro k k' h
+    have h1 : k + 1 ∈ s k' := by rw [← h]; simp [s]
+    have h2 : k' + 1 ∈ s k := by rw [h]; simp [s]
+    have := hmem k' _ h1
+    have := hmem k _ h2
+    omega
+  refine Set.encard_eq_top_iff.mpr
+    (Set.infinite_of_injective_forall_mem hinj fun k => ⟨⟨?_, ?_⟩, ?_⟩)
+  · exact fun x hx => by have := hmem k x hx; omega
+  · intro x hx y hy hxy
+    simp only [s, Finset.mem_insert, Finset.mem_singleton] at hx hy
+    rcases hx with rfl | rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl | rfl <;>
+      first
+      | exact absurd rfl hxy
+      | exact ⟨k + 2, by ring1⟩
+      | exact ⟨2 * k + 3, by ring1⟩
+      | exact ⟨2 * k + 5, by ring1⟩
+      | exact ⟨4 * (k + 1) ^ 2 + 6 * (k + 1) + 1, by ring1⟩
+      | exact ⟨4 * (k + 1) ^ 2 + 10 * (k + 1) + 5, by ring1⟩
+      | exact ⟨8 * (k + 1) ^ 2 + 16 * (k + 1) + 7, by ring1⟩
+  · have h : 4 * k + 8 < 16 * (k + 1) ^ 3 + 48 * (k + 1) ^ 2 + 44 * (k + 1) + 12 := by omega
+    rw [Finset.card_insert_of_notMem (by simp; omega),
+      Finset.card_insert_of_notMem (by simp; omega),
+      Finset.card_insert_of_notMem (by simp; omega), Finset.card_singleton]
 
 /--
 The statement that there is no integral Diophantine 5-tuple.
@@ -154,7 +189,33 @@ Proof: suppose a 5-tuple $a < b < c < d_1 < d_2$ exists; then $d_1 = d_2$ by uni
 -/
 @[category textbook, AMS 11]
 theorem noIntegralDiophantineFiveTuple_of_hasUniqueExtensionOfForall :
-    HasUniqueExtensionOfForall → NoIntegralDiophantineFiveTuple := by sorry
+    HasUniqueExtensionOfForall → NoIntegralDiophantineFiveTuple := by
+  rintro h ⟨t, ht, hcard⟩
+  set g := t.orderEmbOfFin hcard with hg
+  have hm : StrictMono g := (t.orderEmbOfFin hcard).strictMono
+  have hmem : ∀ i, g i ∈ t := fun i => t.orderEmbOfFin_mem hcard i
+  have h01 : g 0 < g 1 := hm (by decide)
+  have h12 : g 1 < g 2 := hm (by decide)
+  have h23 : g 2 < g 3 := hm (by decide)
+  have h34 : g 3 < g 4 := hm (by decide)
+  have hs3 : ({g 0, g 1, g 2} : Finset ℕ) ⊆ t := by
+    simp [Finset.insert_subset_iff, hmem]
+  have hs4 : ({g 0, g 1, g 2, g 3} : Finset ℕ) ⊆ t := by
+    simp [Finset.insert_subset_iff, hmem]
+  have hs4' : ({g 0, g 1, g 2, g 4} : Finset ℕ) ⊆ t := by
+    simp [Finset.insert_subset_iff, hmem]
+  have hc3 : ({g 0, g 1, g 2} : Finset ℕ).card = 3 :=
+    Finset.card_eq_three.mpr ⟨_, _, _, h01.ne, (h01.trans h12).ne, h12.ne, rfl⟩
+  obtain ⟨-, hu⟩ := h (g 0) (g 1) (g 2) hc3 (isDiophantineTuple_of_subset (R := ℕ) _ _ ht hs3)
+  have e1 : g 3 = regularExtension (g 0) (g 1) (g 2) := by
+    refine hu _ (isDiophantineTuple_of_subset (R := ℕ) _ _ ht hs4) ?_
+    simp only [max_eq_right h12.le]
+    omega
+  have e2 : g 4 = regularExtension (g 0) (g 1) (g 2) := by
+    refine hu _ (isDiophantineTuple_of_subset (R := ℕ) _ _ ht hs4') ?_
+    simp only [max_eq_right h12.le]
+    omega
+  omega
 
 /--
 `HasUniqueExtension` is known to hold for certain triples, including $\{1, 3, 8\}$: this is
@@ -188,9 +249,9 @@ theorem gibbs_6_tuple :
 /--
 Does there exist a rational Diophantine 7-tuple? [Du16]
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem rational_7_tuple :
-    answer(sorry) ↔ ∃ t, IsRationalDiophantineTuple t ∧ t.card = 7 := by
+    ∃ t, IsRationalDiophantineTuple t ∧ t.card = 7 := by
   sorry
 
 end DiophantineTuple

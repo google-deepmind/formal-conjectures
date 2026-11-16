@@ -110,6 +110,23 @@ protected lemma HasMulVCNDimAtMost.univ : HasMulVCNDimAtMost (.univ : Set G) n d
   simpa [HasMulVCNDimAtMost] using ⟨default, ∅, by simp⟩
 
 @[to_additive (attr := simp)]
+lemma hasMulVCNDimAtMost_zero : HasMulVCNDimAtMost A 0 d ↔ A = ∅ ∨ A = .univ where
+  mp hA := by
+    rw [Set.eq_univ_iff_forall]
+    simp only [HasMulVCNDimAtMost, Finset.univ_eq_empty, Finset.prod_empty, mul_one,
+      Fin.forall_fin_zero_pi, not_forall, forall_const] at hA
+    contrapose! hA
+    obtain ⟨⟨x, hx⟩, y, hy⟩ := hA
+    refine ⟨fun s ↦ if s = ∅ then y else x, fun s ↦ ?_⟩
+    beta_reduce
+    split_ifs with hs
+    · simp_all
+    · rw [← ne_eq, ← Set.nonempty_iff_ne_empty] at hs
+      obtain ⟨z, hz⟩ := hs
+      simp_all [Subsingleton.elim z finZeroElim]
+  mpr := by simp +contextual [or_imp]
+
+@[to_additive (attr := simp) hasAddVCNDimAtMost_one]
 lemma hasMulVCNDimAtMost_one : HasMulVCNDimAtMost A 1 d ↔ HasMulVCDimAtMost A d := by
   symm
   refine (Equiv.funUnique ..).symm.forall_congr fun x ↦
