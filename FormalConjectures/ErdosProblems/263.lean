@@ -38,7 +38,7 @@ the sum $\sum \frac{1}{b_n}$ converges to an irrational number.
 
 Note: erdosproblems.com/263 was corrected on 2026-04-02 to require the sequence
 to be increasing; the pre-correction statement (no monotonicity hypothesis) had a
-counterexample to Q2 that is not increasing (see `erdos_263.parts.ii` below).
+counterexample to Q2 that is not increasing.
 
 Note: This is one of many possible notions of "irrationality sequences". See
 FormalConjectures/ErdosProblems/264.lean for another possible definition.
@@ -71,18 +71,14 @@ theorem erdos_263.parts.i : IsIrrationalitySequence (fun n : ℕ => 2 ^ 2 ^ n) :
 Must every irrationality sequence $a_n$ in the above sense
 satisfy $a_n^{1/n} \to \infty$ as $n \to \infty$?
 
-Note: this was answered **false** for the *pre-correction* statement, which did not
-require monotonicity — the counterexample sequence is not increasing. The problem
-was corrected on erdosproblems.com on 2026-04-02 to require increasing sequences;
-for the corrected statement this question is **open**. The earlier formal proof
-(for the pre-correction definition) is preserved at
-https://github.com/google-deepmind/formal-conjectures/blob/c8cf651906abe91051cf835d4232ad5648412113/FormalConjectures/ErdosProblems/263.lean#L298
+The answer is no. [Liam Price's construction](https://www.erdosproblems.com/forum/thread/263#post-6338)
+gives a strictly increasing irrationality sequence with $\liminf a_n^{1/n} = 1$.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_263.parts.ii :
-    ∀ a : ℕ → ℕ,
+    ¬ (∀ a : ℕ → ℕ,
       IsIrrationalitySequence a →
-        atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop := by
+        atTop.Tendsto (fun n : ℕ => (a n : ℝ) ^ (1 / (n : ℝ))) atTop) := by
   sorry
 
 set_option linter.style.formal_proof_palomar false in
