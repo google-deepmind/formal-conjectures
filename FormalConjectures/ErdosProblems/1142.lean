@@ -51,9 +51,9 @@ Are there infinitely many $n > 2$ such that $n - 2^k$ is prime for all $k \geq 1
 
 The only known such $n$ are $4, 7, 15, 21, 45, 75, 105$ (OEIS [A039669](https://oeis.org/A039669)).
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1142 :
-    answer(sorry) ↔ Infinite { n | Erdos1142Prop n } := by
+    Infinite { n | Erdos1142Prop n } := by
   sorry
 
 /--

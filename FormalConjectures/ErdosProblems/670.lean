@@ -50,8 +50,8 @@ the regime where $d$ is fixed and the $o(1)$ term tends to $0$ as $n \to \infty$
 which may depend on $d$. The case $d = 1$ was proved by Erdős
 (`Erdos670.erdos_670.variants.dim_one`), so the question is open for $d \geq 2$.
 -/
-@[category research open, AMS 52]
-theorem erdos_670 : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_670 :
     ∀ d : ℕ, 1 ≤ d → ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ A : Finset (EuclideanSpace ℝ (Fin d)), A.card = n → HasSeparatedDistances A →
         (1 - ε) * (n : ℝ) ^ 2 ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
@@ -62,8 +62,8 @@ Erdős [Er97f] proved the claim when $d = 1$: if $A\subseteq \mathbb{R}$ is a se
 such that all pairwise distances differ by at least $1$, then the diameter of $A$ is at least
 $(1+o(1))n^2$.
 -/
-@[category research solved, AMS 52]
-theorem erdos_670.variants.dim_one : answer(True) ↔
+@[category research solved, question, AMS 52]
+theorem erdos_670.variants.dim_one :
     ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       ∀ A : Finset (EuclideanSpace ℝ (Fin 1)), A.card = n → HasSeparatedDistances A →
         (1 - ε) * (n : ℝ) ^ 2 ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin 1))) := by
@@ -78,12 +78,14 @@ $1 \leq \lvert d(a, c) - d(b, c)\rvert \leq d(a, b)$, so every distance is at le
 $\binom{n}{2}$ distances are at least $1$ apart, so the largest one is at least $\binom{n}{2}$.
 For $n = 2$ the hypothesis is vacuous, and two points at distance $1/2$ show that the bound fails.
 -/
-@[category textbook, AMS 52]
+@[category textbook, AMS 52, formal_proof using lean4 at
+  "https://github.com/veljjanoski/formal-conjectures-proofs/blob/638a2315428e3a1c2f1a784bcaeffea6580d1cbd/FcProofs/Erdos670.lean#L65"]
 theorem erdos_670.variants.choose_two (d : ℕ) (A : Finset (EuclideanSpace ℝ (Fin d)))
     (hA : HasSeparatedDistances A) (hn : A.card ≠ 2) :
     (A.card.choose 2 : ℝ) ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ho [Ho26] showed that the claim fails if $n$ grows with $d$: there exist infinitely many $n$
 and, with $d = n^2 - n$, a set $A\subset \mathbb{R}^d$ of $n$ points such that all pairwise
@@ -108,9 +110,9 @@ theorem erdos_670.variants.ho :
 The version of the problem where the $o(1)$ term must be uniform in the dimension $d$ has a
 negative answer. This follows from `Erdos670.erdos_670.variants.ho` (Ho [Ho26]).
 -/
-@[category research solved, AMS 52]
-theorem erdos_670.variants.uniform_in_dim : answer(False) ↔
-    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ d : ℕ,
+@[category research solved, question, AMS 52]
+theorem erdos_670.variants.uniform_in_dim :
+    ¬ ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ d : ℕ,
       ∀ A : Finset (EuclideanSpace ℝ (Fin d)), A.card = n → HasSeparatedDistances A →
         (1 - ε) * (n : ℝ) ^ 2 ≤ Metric.diam (A : Set (EuclideanSpace ℝ (Fin d))) := by
   sorry

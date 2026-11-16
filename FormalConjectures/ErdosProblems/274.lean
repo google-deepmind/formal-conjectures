@@ -59,12 +59,13 @@ of different sizes? (i.e. each element is contained in exactly one of the cosets
 The conjectured answer is no: in every such exact covering, two of the subgroups have
 the same cardinality.
 -/
-@[category research open, AMS 20]
-theorem erdos_274 : answer(sorry) ↔ ∃ (G : Type*) (_ : Group G),
+@[category research open, question, AMS 20]
+theorem erdos_274 : ∃ (G : Type*) (_ : Group G),
     1 < ENat.card G ∧ ∃ (ι : Type*) (_ : Fintype ι) (P : Group.ExactCovering G ι),
     1 < Fintype.card ι ∧ ∀ i j, i ≠ j → #(P.parts i) ≠ #(P.parts j) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If `G` is a finite abelian group then there cannot exist an exact covering of `G` by more
 than one cosets of different sizes? (i.e. each element is contained in exactly one

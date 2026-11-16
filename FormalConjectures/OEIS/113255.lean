@@ -60,6 +60,7 @@ theorem a_3 : a 3 = 5329 := by rfl
 @[category test, AMS 11]
 theorem a_4 : a 4 = -26581 := by rfl
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(m, 2n+1)$ is a perfect square for all $m, n$ (see A113249).
 Specialized for $m=9$, which is A113255.

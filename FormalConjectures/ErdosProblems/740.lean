@@ -38,14 +38,13 @@ Let $\mathfrak{m}$ be an infinite cardinal and $G$ be a graph with chromatic num
 Let $r\geq 1$. Must $G$ contain a subgraph of chromatic number $\mathfrak{m}$ which does not contain
 any odd cycle of length $\leq r$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_740 :
-    answer(sorry) ↔
-      ∀ (V : Type*) (G : SimpleGraph V),
-        ℵ₀ ≤ G.chromaticCardinal →
-          ∀ (r : ℕ),
-            ∃ (H : G.Subgraph), H.coe.chromaticCardinal = G.chromaticCardinal ∧
-              NoShortOddCycle H.coe r := by
+    ∀ (V : Type*) (G : SimpleGraph V),
+      ℵ₀ ≤ G.chromaticCardinal →
+        ∀ (r : ℕ),
+          ∃ (H : G.Subgraph), H.coe.chromaticCardinal = G.chromaticCardinal ∧
+            NoShortOddCycle H.coe r := by
   sorry
 
 -- TODO: add the related infinitary chromatic-number statements from erdosproblems.com.

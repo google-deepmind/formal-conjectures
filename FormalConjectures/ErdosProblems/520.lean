@@ -54,6 +54,7 @@ structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
   map_mul_of_coprime a b ω : a.Coprime b → f (a * b) ω = f a ω * f b ω
   map_of_not_squarefree n ω : ¬ Squarefree n → f n ω = 0
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f$ be a Rademacher multiplicative function.
 Does there exist some constant $c > 0$ such that, almost surely,
@@ -69,10 +70,10 @@ proof works with the concrete model `ℕ → Bool` with the product of fair coin
 squarefree-supported Rademacher function is `IsRademacherMultiplicative`; this refutes the
 statement below.
 -/
-@[category research solved, AMS 11 60, formal_proof using lean4 at
+@[category research solved, question, AMS 11 60, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos520.lean#L24"]
 theorem erdos_520 :
-    answer(False) ↔ ∃ c > 0, ∀ (Ω : Type) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
+    ¬ ∃ c > 0, ∀ (Ω : Type) [MeasureSpace Ω] [IsProbabilityMeasure (ℙ : Measure Ω)]
       (f : ℕ → Ω → ℝ), IsRademacherMultiplicative f →
       ∀ᵐ ω, limsup (fun N ↦ ∑ m ≤ N, f m ω / sqrt (N * log (log N))) atTop = c := by
   sorry

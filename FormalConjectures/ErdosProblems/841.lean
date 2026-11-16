@@ -42,6 +42,7 @@ noncomputable def t (n : ℕ) : ℕ :=
   sInf {T | ∃ J ⊆ Finset.Icc 1 T, IsSquare (n * ∏ j ∈ J, (n + j))}
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $t_n$ be minimal such that $\{n+1,\ldots,n+t_n\}$ contains a subset whose product with $n$ is
 a square number (and let $t_n=0$ if $n$ is itself square). Estimate $t_n$.
@@ -65,6 +66,7 @@ theorem erdos_841 (c : ℝ) (hc : c ∈ Set.Ioc 0 1) :
       atTop (𝓝 0) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Selfridge proved that $t_n=P(n)$ if $P(n)>\sqrt{2n}+1$.
 
@@ -75,6 +77,7 @@ theorem erdos_841.variants.selfridge_large_prime (n : ℕ) (hn : 1 < n)
     (h : √(2 * n) + 1 < (n.maxPrimeFac : ℝ)) : t n = n.maxPrimeFac := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Selfridge proved that $t_n \ll n^{1/2}$ if $P(n)\leq\sqrt{2n}+1$.
 
@@ -86,6 +89,7 @@ theorem erdos_841.variants.selfridge_sqrt :
   sorry
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Bui, Pratt, and Zaharescu [BPZ24] proved that for at least $x^{1-o(1)}$ many $n\leq x$ we have
 $$t_n \leq \exp(O(\sqrt{\log n\log\log n})).$$
@@ -99,6 +103,7 @@ theorem erdos_841.variants.many_small_values : ∃ K : ℝ,
         (t n : ℝ) ≤ exp (K * √(log n * log (log n)))).card : ℝ) / log x) atTop (𝓝 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bui, Pratt, and Zaharescu [BPZ24] proved that for all non-square $n$
 $$t_n \gg (\log\log n)^{6/5}(\log\log\log n)^{-1/5}.$$

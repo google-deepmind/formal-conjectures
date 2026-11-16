@@ -41,9 +41,9 @@ namespace Green85
 Suppose that $A$ is an open subset of $[0, 1]^2$ with measure $\alpha$. Are there four points in
 $A$ determining an axis-parallel rectangle with area $\gt c \alpha^2$?
 -/
-@[category research open, AMS 28 52]
+@[category research open, question, AMS 28 52]
 theorem green_85 :
-  answer(sorry) ↔ ∃ c > 0, ∀ A : Set (ℝ × ℝ),
+  ∃ c > 0, ∀ A : Set (ℝ × ℝ),
     IsOpen A →
     A ⊆ Icc 0 1 ×ˢ Icc 0 1 →
     A.Nonempty →

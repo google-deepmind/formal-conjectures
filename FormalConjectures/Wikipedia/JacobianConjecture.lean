@@ -94,7 +94,6 @@ def JacobianConjectureProp (k σ : Type*) [CommRing k] [Fintype σ] [DecidableEq
     ∃ (G : RegularFunction k σ σ), G.comp F = id k σ ∧
     F.comp G = id k σ
 
-set_option linter.style.answer_attribute false in
 /-- The **Jacobian Conjecture**: any regular function
 (i.e. vector valued polynomial function from) `kⁿ → kᵐ`
 whose Jacobian is a non-zero constant has an inverse that
@@ -102,10 +101,9 @@ is given by a regular function, where `k` is a field of characteristic `0`.
 
 This is false: `F` has Jacobian determinant `1` but identifies
 two distinct points, so it admits no inverse. This counterexample works in all characteristics. -/
-@[category research solved, AMS 14]
+@[category research solved, question, AMS 14]
 theorem jacobian_conjecture {k : Type} [CommRing k] [Nontrivial k] :
-    answer(False) ↔ ∀ {σ : Type} [Fintype σ] [DecidableEq σ], JacobianConjectureProp k σ := by
-  rw [false_iff]
+    ¬ ∀ {σ : Type} [Fintype σ] [DecidableEq σ], JacobianConjectureProp k σ := by
   intro h
   obtain ⟨H, -, hGH⟩ := h (G k) (det_jacobian_G k ▸ isUnit_one)
   have hleft : Function.LeftInverse (H.aeval (S₁ := k)) ((G k).aeval) := fun a => by
@@ -116,9 +114,9 @@ theorem jacobian_conjecture {k : Type} [CommRing k] [Nontrivial k] :
   norm_num at h1
 
 /-- Does the Jacobian conjecture hold in the two variable case? -/
-@[category research open, AMS 14]
+@[category research open, question, AMS 14]
 theorem jacobian_conjecture_two_variables :
-    answer(sorry) ↔ ∀ {k : Type} [Field k] [CharZero k], JacobianConjectureProp k (Fin 2) := by
+    ∀ {k : Type} [Field k] [CharZero k], JacobianConjectureProp k (Fin 2) := by
   sorry
 
 end Conjecture
