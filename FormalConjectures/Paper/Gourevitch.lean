@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Gourevitch's series identity
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
  - [G2003] Guillera, Jesús. "About a new kind of Ramanujan-type series." Experimental Mathematics 12.4 (2003): 507-510.
  - [A2025] Au, Kam Cheong. "Wilf-Zeilberger seeds and non-trivial hypergeometric identities." Journal of Symbolic Computation 130 (2025): 102421. [arXiv:2312.14051](https://arxiv.org/abs/2312.14051)
 -/
+
+@[expose] public section
 
 namespace Gourevitch
 

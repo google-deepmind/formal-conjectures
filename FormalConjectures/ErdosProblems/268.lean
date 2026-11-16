@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 268
@@ -24,8 +25,11 @@ import FormalConjecturesUtil
  - [KoTa24] Kova\vC, V. and Tao T., On several irrationality problems for Ahmes series.
 -/
 
+@[expose] public section
+
 namespace Erdos268
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let `X` be the set of points in `Fin d → ℝ` of the shape
 `fun i : Fin d => ∑' n : A, (1 : ℝ) / (n + i)` for some infinite subset `A ⊆ ℕ` such that
 `1 / n` is summable over `A`. `X` has nonempty interior. This is proved in [KoTa24].

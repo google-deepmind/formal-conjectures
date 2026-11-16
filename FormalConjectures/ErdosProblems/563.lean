@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 563
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [Er90b] Erdős, Paul, Problems and results on graphs and hypergraphs: similarities and differences.
   Mathematics of Ramsey theory (1990), 12-28.
 -/
+
+@[expose] public section
 
 open Filter
 

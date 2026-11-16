@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest prime factors of $2^{2^n+2} + 3$
@@ -25,6 +26,8 @@ Smallest prime factor of $2^{2^n+2} + 3$.
 - [A248802](https://oeis.org/A248802)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA248802
 
@@ -62,6 +65,7 @@ lemma a_3 : a 3 = 13 := by native_decide
 lemma a_4 : a 4 = 262147 := by native_decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1: $a(10n+2) = 67$ for $n \ge 0$. - _Chai Wah Wu_, Oct 21 2019
 
@@ -74,6 +78,7 @@ theorem a_ten_mul_add_two_eq (n : ℕ) : a (10 * n + 2) = 67 := by
     sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 4: $a(58n+26) = 1399$ for $n \ge 0$ and when it is not covered by Conjectures 1-3. - _Chai Wah Wu_, Oct 21 2019
 

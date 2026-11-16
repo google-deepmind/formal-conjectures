@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 7
 
 *Reference:* [erdosproblems.com/7](https://www.erdosproblems.com/7)
 -/
+
+@[expose] public section
 
 namespace Erdos7
 
@@ -29,8 +32,8 @@ open Set
 /--
 Is there a covering system all of whose moduli are odd (and greater than 1)?
 -/
-@[category research open, AMS 11]
-theorem erdos_7 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_7 :
     ∃ (C : StrictCoveringSystem ℤ), ∀ i,
       ¬ C.moduli i ≤ Ideal.span {2} ∧ C.moduli i ≠ ⊤ := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 572
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [LUW95] Lazebnik, F., Ustimenko, V. A. and Woldar, A. J., A new series of dense graphs
   of high girth. Bull. Amer. Math. Soc. (N.S.) (1995), 73-79.
 -/
+
+@[expose] public section
 
 open Filter
 

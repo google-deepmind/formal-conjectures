@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Determinant of Hankel matrix of the first $2n-1$ prime numbers
@@ -26,6 +27,8 @@ $a(0)=1$ by convention.
 
 *References:*
 - [A024356](https://oeis.org/A024356)-/
+
+@[expose] public section
 
 namespace OeisA24356
 

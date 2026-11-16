@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mahler's 3/2 Problem
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Mahler%27s_3/2_problem)
 -/
+
+@[expose] public section
 
 namespace Mahler32
 
@@ -46,10 +49,12 @@ theorem mahler_conjecture.variants.consequence (H : 1 / 2 < Ω (3 / 2)) :
     type_of% mahler_conjecture := by
   sorry
 
-/-- It is known that for all rational `p/q > 1` in lowest terms, we have `Ω(p/q) > 1/p`. -/
+/-- Flatto, Lagarias and Pollington proved that for all rational `p/q > 1` in lowest terms with
+`q ≥ 2`, we have `Ω(p/q) ≥ 1/p`: for every `θ > 0`, the limit points of `{θ (p/q)^n}` are not
+contained in any interval of length less than `1/p`. -/
 @[category research solved, AMS 11]
 theorem mahler_conjecture.variants.flatto_lagarias_pollington (p q : ℕ) (hq : 1 < q)
-    (hpq : p.Coprime q) (hpq' : q < p) : 1 / p < Ω (p / q) := by
+    (hpq : p.Coprime q) (hpq' : q < p) : 1 / p ≤ Ω (p / q) := by
   sorry
 
 end Mahler32

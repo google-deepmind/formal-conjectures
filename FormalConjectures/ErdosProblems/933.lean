@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 933
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
   related questions. Proceedings of the Fifth Manitoba Conference on Numerical Mathematics (Univ.
   Manitoba, Winnipeg, Man., 1975) (1976), 25-44.
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -40,11 +43,10 @@ def l (n : ℕ) : ℕ := padicValNat 3 (n * (n + 1))
 If $n(n+1)=2^k3^lm$, where $(m,6)=1$, then is it true that
 $\limsup_{n\to \infty} \frac{2^k3^l}{n\log n}=\infty$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_933 :
-    answer(sorry) ↔
-      atTop.limsup (fun n : ℕ ↦
-        ((((2 ^ k n * 3 ^ l n : ℕ) : ℝ) / ((n : ℝ) * Real.log (n : ℝ))) : EReal)) = ⊤ := by
+    atTop.limsup (fun n : ℕ ↦
+      ((((2 ^ k n * 3 ^ l n : ℕ) : ℝ) / ((n : ℝ) * Real.log (n : ℝ))) : EReal)) = ⊤ := by
   sorry
 
 /--

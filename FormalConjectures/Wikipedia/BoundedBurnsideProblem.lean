@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bounded Burnside problem
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [Ly96] I. G. Lysënok. "Infinite Burnside groups of even exponent."
   _Izv. Ross. Akad. Nauk Ser. Mat._ 60 (1996), 3-224.
 -/
+
+@[expose] public section
 
 namespace BoundedBurnsideProblem
 
@@ -47,9 +50,9 @@ Note this concerns only the universally quantified question stated here, which a
 counterexample closes. The classification of which free Burnside groups $B(m, n)$ are finite
 remains open, with $B(2, 5)$ the best known open case.
 -/
-@[category research solved, AMS 20]
+@[category research solved, question, AMS 20]
 theorem bounded_burnside_problem :
-    answer(False) ↔ ∀ (G : Type) [Group G] (fin_gen : Group.FG G)
+    ¬ ∀ (G : Type) [Group G] (fin_gen : Group.FG G)
       (n : ℕ) (hn : n > 0) (bounded : ∀ g : G, g^n = 1), Finite G := by
   sorry
 

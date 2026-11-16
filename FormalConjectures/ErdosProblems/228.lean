@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 228
 
 *Reference:* [erdosproblems.com/228](https://www.erdosproblems.com/228)
 -/
+
+@[expose] public section
 
 namespace Erdos228
 
@@ -33,9 +36,9 @@ The answer is yes, proved by Balister, Bollobás, Morris, Sahasrabudhe, and Tiba
 
 [BBMST19] Balister, P. and Bollob\'{A}s, B. and Morris, R. and Sahasrabudhe, J. and Tiba, M., _Flat Littlewood Polynomials Exist_. arXiv:1907.09464 (2019).
 -/
-@[category research solved, AMS 5 12 41] -- TODO(lezeau): I'm a little unhappy with the `41` tag
+@[category research solved, question, AMS 5 12 41] -- TODO(lezeau): I'm a little unhappy with the `41` tag
 theorem erdos_228 :
-    answer(True) ↔ ∃ (c₁ : ℝ) (c₂ : ℝ), ∀ᶠ n : ℕ in Filter.atTop,
+    ∃ (c₁ : ℝ) (c₂ : ℝ), ∀ᶠ n : ℕ in Filter.atTop,
     ∃ p : Polynomial ℂ, p.degree = n ∧
     (∀ i ≤ n, p.coeff i = 1 ∨ p.coeff i = -1) ∧
     ∀ z : ℂ, ‖z‖ = 1 →

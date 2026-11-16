@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Period of $p$-th powers modulo $n$
@@ -30,6 +31,8 @@ $a_p(n) = \min \{ T \in \mathbb{N}^+ \mid \forall k \in \mathbb{N}, (k+T)^p \equ
 - [A282779](https://oeis.org/A282779)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA282779
 
@@ -58,6 +61,7 @@ noncomputable def periodOfPowerMod (p n : ℕ) : ℕ :=
 
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: let $a_p(n)$ be the length of the period of the sequence $k^p \bmod n$ where $p$ is a prime, then $a_p(n) = n/p$ if $n \equiv 0 \pmod{p^2}$, else $a_p(n) = n$.
 

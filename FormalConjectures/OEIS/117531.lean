@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes in $n$-th row of triangle $k^2 - k + p_n$
@@ -24,6 +25,8 @@ for $1 \le k \le n$, where $p_n$ is the $n$-th prime ($p_1=2, p_2=3, \dots$).
 
 *References:*
 - [A117531](https://oeis.org/A117531)-/
+
+@[expose] public section
 
 namespace OeisA117531
 

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Beaver Math Olympiad (BMO)
@@ -38,6 +39,8 @@ Turing machine non-termination has been formally proved in Rocq, we indicate it 
 - [Antihydra wiki page](https://wiki.bbchallenge.org/wiki/Antihydra)
 -/
 
+@[expose] public section
+
 namespace BeaverMathOlympiad
 
 /--
@@ -58,15 +61,15 @@ The first 10 values of $(a_n, b_n)$ are $(1, 2), (3, 1), (2, 6), (5, 4), (1, 18)
 [BMO#1](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#1._1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE`](https://wiki.bbchallenge.org/wiki/1RB1RE_1LC0RA_0RD1LB_---1RC_1LF1RE_0LB0LE) halts or not.
 
-There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `answer(sorry) ↔`.
+There is presently no consensus on whether the machine halts or not, hence the problem is tagged
+as a `question`.
 
 The machine was discovered by [bbchallenge.org](https://bbchallenge.org) contributor Jason Yuen on
 June 25th 2024.
 -/
-@[category research open, AMS 5 11 68]
+@[category research open, question, AMS 5 11 68]
 theorem beaver_math_olympiad_problem_1 :
-    answer(sorry) ↔ ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
+    ∀ᵉ (a : ℕ → ℕ) (b : ℕ → ℕ)
     (a_ini : a 0 = 1)
     (a_rec : ∀ n, a (n + 1) = if b n ≤ a n then a n - b n else 2 * a n + 1)
     (b_ini : b 0 = 2)
@@ -115,6 +118,7 @@ theorem beaver_math_olympiad_problem_2_antihydra.variants.set
       2 * ((Finset.Ico 0 n).filter fun x ↦ Even (a x)).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 [BMO#3](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#3._1RB0RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch)_and_1RB1RB3LA4LA2RA_2LB3RA---3RA4RB_(bbch))
 
@@ -134,7 +138,9 @@ some positive integer $k$?
 The machine was found and informally proven not to halt by [bbchallenge.org](https://bbchallenge.org)
 contributor Daniel Yuan on June 18th 2024; see [Discord discussion](https://discord.com/channels/960643023006490684/1084047886494470185/1252634913220591728).
 -/
-@[category research solved, AMS 5 11 68]
+@[category research solved, AMS 5 11 68,
+  formal_proof using lean4 at
+    "https://github.com/gotrevor/collatz-cryptid/blob/62a4b7b0c0af9400098694cb5c5e65120ad4dc67/lean/Collatz/BMO/Problem3.lean#L296"]
 theorem beaver_math_olympiad_problem_3
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
@@ -142,6 +148,7 @@ theorem beaver_math_olympiad_problem_3
     ¬ (∃ n k, a n = 4 ^ k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 [BMO#4](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#4._1RB3RB---1LB0LA_2LA4RA3LA4RB1LB_(bbch))
 
@@ -163,7 +170,9 @@ is equivalent to the non-termination of 2-state 5-symbol Turing machine
 The machine was informally proven not to halt [bbchallenge.org](https://bbchallenge.org)
 contributor Daniel Yuan on July 19th 2024; see [sketched proof](https://wiki.bbchallenge.org/wiki/1RB3RB---1LB0LA_2LA4RA3LA4RB1LB) and [Discord discussion](https://discord.com/channels/960643023006490684/960643023530762343/1263666591900631210).
 -/
-@[category research solved, AMS 5 11 68]
+@[category research solved, AMS 5 11 68,
+  formal_proof using lean4 at
+    "https://github.com/gotrevor/collatz-cryptid/blob/62a4b7b0c0af9400098694cb5c5e65120ad4dc67/lean/Collatz/BMO/Problem4.lean#L106"]
 theorem beaver_math_olympiad_problem_4
     (a : ℕ → ℕ)
     (a_ini : a 0 = 2)
@@ -189,8 +198,8 @@ Does there exist a positive integer $i$ such that $b_i = f(a_i)-1$?
 [BMO#5](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#5._1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE`](https://wiki.bbchallenge.org/wiki/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE) halts or not.
 
-There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `answer(sorry) ↔`.
+There is presently no consensus on whether the machine halts or not, hence the problem is tagged
+as a `question`.
 
 The machine was discovered by [bbchallenge.org](https://bbchallenge.org) contributor mxdys
 on August 7th 2024.
@@ -198,8 +207,8 @@ on August 7th 2024.
 The correspondence between the machine's halting problem and the below reformulation has been proven
 in [Rocq](https://github.com/ccz181078/busycoq/blob/BB6/verify/1RB0LD_1LC0RA_1RA1LB_1LA1LE_1RF0LC_---0RE.v).
 -/
-@[category research open, AMS 5 11 68]
-theorem beaver_math_olympiad_problem_5 : answer(sorry) ↔
+@[category research open, question, AMS 5 11 68]
+theorem beaver_math_olympiad_problem_5 :
     ∀ (a b f : ℕ → ℕ), ∀ᵉ (hf : f = fun x ↦ 10 * 2 ^ x - 1)
     (a_ini : a 0 = 0) (b_ini : b 0 = 5)
     (a_rec : ∀ n, a (n + 1) = if f (a n) ≤ b n then a n + 1 else a n)
@@ -223,11 +232,11 @@ $a_i = \lfloor b_i/2 \rfloor + 1$?
 [BMO#8](https://wiki.bbchallenge.org/wiki/Beaver_Math_Olympiad#8._1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA_(bbch)) is equivalent to asking whether the 6-state Turing machine
 [`1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA`](https://wiki.bbchallenge.org/wiki/1RB0LD_0RC1RB_0RD0RA_1LE0RD_1LF---_0LA1LA) halts or not.
 
-There is presently no consensus on whether the machine halts or not, hence the problem is formulated
-using `answer(sorry) ↔`.
+There is presently no consensus on whether the machine halts or not, hence the problem is tagged
+as a `question`.
 -/
-@[category research open, AMS 5 11 68]
-theorem beaver_math_olympiad_problem_8 : answer(sorry) ↔
+@[category research open, question, AMS 5 11 68]
+theorem beaver_math_olympiad_problem_8 :
     ∀ᵉ (a : ℕ → ℤ) (b : ℕ → ℤ)
     (a_ini : a 0 = 10)
     (a_rec : ∀ n, a (n + 1) =

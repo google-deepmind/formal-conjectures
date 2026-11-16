@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 5
@@ -31,11 +32,15 @@ import FormalConjecturesUtil
   363–387.
 -/
 
+@[expose] public section
+
 open scoped MatrixGroups
 
 local notation "SL₂" p => SL(2, ZMod p)
 
 namespace Green5
+
+def green_5.answer : ℝ := sorry
 
 /--
 Which finite groups have the smallest biggest product-free sets?
@@ -47,12 +52,12 @@ is empty.) Kedlaya [Ke97] showed that $\alpha = 11/14$ is admissible, and Green 
 exponent may well be sharp; the candidate extremal family is the Ree groups ${}^2G_2(q)$,
 $q = 3^{2m+1}$.
 -/
-@[category research open, AMS 5 20]
+@[category research open, question value, AMS 5 20]
 theorem green_5 :
     IsLUB {α : ℝ | ∃ c > (0 : ℝ), ∀ (G : Type) [Group G] [Fintype G], Nontrivial G →
       ∃ S : Finset G, IsProductFree (S : Set G) ∧
         c * (Fintype.card G : ℝ) ^ α ≤ (S.card : ℝ)}
-      answer(sorry) := by
+      green_5.answer := by
   sorry
 
 /--
@@ -69,13 +74,15 @@ theorem green_5.variants.kedlaya :
 
 -- TODO(theebayuser): implement Ree groups variant (candidate sharp example for `green_5`)
 
+def green_5.variants.sl_two.answer (p : ℕ) : Finset SL(2, ZMod p) := sorry
+
 /--
 A good model problem would be to determine the largest product-free subsets of
 $\mathrm{SL}_2(\mathbb{F}_p)$.
 -/
-@[category research open, AMS 5 20]
+@[category research open, question value, AMS 5 20]
 theorem green_5.variants.sl_two (p : ℕ) [Fact p.Prime] :
-    let S : Finset (SL₂ p) := answer(sorry)
+    let S : Finset (SL₂ p) := (green_5.variants.sl_two.answer p)
     MaximalFor (IsProductFree (M := SL₂ p)) Set.ncard (S : Set (SL₂ p)) := by
   sorry
 

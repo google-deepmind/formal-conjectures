@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 168
 
 *Reference:* [erdosproblems.com/168](https://www.erdosproblems.com/168)
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -84,15 +87,17 @@ lemma F_eq_card (N : ℕ) (S : Finset ℕ) (hS : S ⊆ Finset.Icc 1 N) (hS' : No
     omega
   omega
 
+def erdos_168.parts.i.answer : ℝ := sorry
+
 /-- What is the limit $F(N)/N$ as $N \to \infty$? -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_168.parts.i :
-    Filter.Tendsto (fun N => (F N / N : ℝ)) Filter.atTop (𝓝 answer(sorry)) := by
+    Filter.Tendsto (fun N => (F N / N : ℝ)) Filter.atTop (𝓝 erdos_168.parts.i.answer) := by
   sorry
 
 /-- Is the limit $F(N)/N$ as $N \to \infty$ irrational? -/
-@[category research open, AMS 5 11]
-theorem erdos_168.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem erdos_168.parts.ii :
     Irrational (Filter.atTop.limsup (fun N => (F N / N : ℝ))) := by
   sorry
 

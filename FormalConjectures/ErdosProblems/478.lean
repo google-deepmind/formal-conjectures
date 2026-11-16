@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 478
@@ -33,13 +34,15 @@ import FormalConjecturesUtil
 - [Tr13] T. Trudgian, *There are no socialist primes less than $10^9$*. arXiv:1310.6403 (2013).
 -/
 
+@[expose] public section
+
 namespace Erdos478
 
 /--
 Let $p$ be a prime and $$A_p = \{ k! \pmod{p} : 1\leq k<p\}.$$ Is it true that $$\lvert A_p\rvert \sim (1-\tfrac{1}{e})p?$$
 -/
-@[category research open, AMS 11]
-theorem erdos_478 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_478 :
     Filter.Tendsto
       (fun p : ℕ =>
         (((Finset.Ico 1 p).image (fun k => Nat.factorial k % p)).card : ℝ) / p)

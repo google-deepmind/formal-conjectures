@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 707: Embedding Sidon Sets in Perfect Difference Sets
@@ -32,11 +33,14 @@ This problem is related to Erdős Problem 329 about the maximum density of Sidon
 If this conjecture is true, it would imply that the maximum density of Sidon sets is 1.
 -/
 
+@[expose] public section
+
 open Function Set
 
 namespace Erdos707
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 707**: It is false that any finite Sidon set can be embedded in a perfect
 different set modulo some $n$.

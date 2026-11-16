@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Bounds on fractional parts $n r^2 - a(n)$ for $r = (2+\sqrt{5})/2$
@@ -25,6 +26,8 @@ $a(n) = \lfloor r \cdot \lfloor r \cdot n \rfloor \rfloor$, where $r = (2 + \sqr
 - [A341254](https://oeis.org/A341254)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA341254
 
@@ -149,6 +152,7 @@ lemma a_5 : a 5 = 21 := by
   rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $1/4 < n r^2 - a(n) < 3$ for $n \ge 1$, where $r = (2 + \sqrt{5})/2$.
 

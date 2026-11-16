@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Representations as $p + 2^x + 7 \cdot 2^y$ with $p \equiv 5 \pmod 6$
@@ -28,6 +29,8 @@ p \equiv 5 \pmod 6, x, y \in \mathbb{Z}^+\right\}\right|.$$
 - [A157225](https://oeis.org/A157225)
 - Z.-W. Sun, "Mixed sums of primes and other terms", arXiv preprint
   [arXiv:0901.3075](https://arxiv.org/abs/0901.3075) [math.NT], 2009.-/
+
+@[expose] public section
 
 namespace OeisA157225
 
@@ -66,6 +69,7 @@ theorem a_13 : a 13 = 0 := by decide
 @[category test, AMS 11]
 theorem a_14 : a 14 = 2 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 On Feb. 24, 2009, Zhi-Wei Sun conjectured that $a(n) = 0$ if and only if $n < 11$ or
 $n \in \{13, 16, 992\}$; in other words, except for $25, 31, 1983$, any odd integer greater
@@ -79,8 +83,8 @@ See T. Adamczewski, OEIS Open: How many conjectures can language models turn int
 @[category research solved, AMS 11,
   formal_proof using lean4 at
     "https://github.com/epoch-research/LeanOpenProblems-results/blob/main/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_157225_conjecture_0/Submission/Spec.lean"]
-theorem conjecture (n : ℕ) (hn : 0 < n) :
-    a n = 0 ↔ n < 11 ∨ n = 13 ∨ n = 16 ∨ n = 992 := by
+theorem conjecture :
+    ¬ ∀ n : ℕ, 0 < n → (a n = 0 ↔ n < 11 ∨ n = 13 ∨ n = 16 ∨ n = 992) := by
   sorry
 
 end OeisA157225

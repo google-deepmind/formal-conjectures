@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 452
 
 *Reference:* [erdosproblems.com/452](https://www.erdosproblems.com/452)
 -/
+
+@[expose] public section
 
 namespace Erdos452
 
@@ -36,10 +39,12 @@ noncomputable def largeOmegaIntervalLength (x : ℕ) : ℕ := by
         Real.log (Real.log (n : ℝ)) < (ω n : ℝ))
     (x + 1)
 
+def erdos_452.answer : ℕ → ℕ := sorry
+
 /-- Determine the largest length of an interval in $[x,2x]$ on which
 $\omega(n) > \log\log n$ everywhere. -/
-@[category research open, AMS 11]
-theorem erdos_452 : largeOmegaIntervalLength = answer(sorry) := by
+@[category research open, question value, AMS 11]
+theorem erdos_452 : largeOmegaIntervalLength = erdos_452.answer := by
   sorry
 
 end Erdos452

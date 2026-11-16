@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sendov's conjecture
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 Tags: Sendov Conjecture, Ilieff's Conjecture.
 
 -/
+
+@[expose] public section
 
 open Polynomial
 
@@ -49,6 +52,7 @@ def Nat.SatisfiesSendovConjecture (n : ℕ) : Prop :=
   ∀ (f : ℂ[X]), f.IsSendov → f.natDegree = n →
     ∀ z, z ∈ f.rootSet ℂ → Metric.infDist z (f.derivative.rootSet ℂ) ≤ 1
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Sendov's conjecture** states that for a polynomial
 $$f(z)=(z-r_{1})\cdots (z-r_{n}),\qquad (n\geq 2)$$
 with all roots $r_1, ..., r_n$ inside the closed unit disk $|z| ≤ 1$, each of the $n$ roots is at a

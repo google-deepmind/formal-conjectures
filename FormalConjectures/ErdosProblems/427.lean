@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 427
 
 *Reference:* [erdosproblems.com/427](https://www.erdosproblems.com/427)
 -/
+
+@[expose] public section
 
 namespace Erdos427
 
@@ -62,20 +65,18 @@ theorem erdos_427.variants.shiu : ShiuTheorem := by
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 427**: is it true that, for every $n$ and $d$, there exists $k$ such that
 $$
   d \mid p_{n + 1} + \cdots + p_{n + k},
 $$
 where $p_r$ denotes the $r$th prime?
-
-The linked proof is not complete on its own. It declares Shiu's theorem as an axiom and derives
-the result from it, so it is marked `conditional` and names `erdos_427.variants.shiu`.
 -/
-@[category research solved, AMS 11,
-  conditional formal_proof using lean4 at "https://gist.githubusercontent.com/JohnEdwardJennings/e2c6ef0daab55857b7cc9d340de7af84/raw/8ff97800e38582c71246a238e7541a9d69488cbd/Erdos427.lean"
-  assuming erdos_427.variants.shiu]
-theorem erdos_427 : answer(True) ↔ erdos427 := by
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Jayyhk/erdos-lean/blob/main/problems/427/Erdos427.lean"]
+theorem erdos_427 : erdos427 := by
   sorry
 
 
@@ -84,6 +85,30 @@ Cedric Pilatte has observed that a positive solution to Erdős Problem 427 follo
 -/
 @[category research solved, AMS 11]
 theorem erdos_427.variants.of_shiu (H : ShiuTheorem) : erdos427 := by
-  sorry
+  intro n d hd
+  obtain ⟨m, hm, hnm⟩ := (H d 1 d (by omega) (by omega) (by simp)).exists_gt n
+  have hp : ∀ i < d, (m + i).nth Nat.Prime ≡ 1 [MOD d] := fun i hi =>
+    hm _ (Finset.mem_image.2 ⟨m + i, Finset.mem_Ico.2 ⟨by omega, by omega⟩, rfl⟩)
+  set S := ∑ i ∈ Finset.Ico n m, i.nth Nat.Prime
+  set j := d - S % d with hj
+  have hS := Nat.mod_lt S (by omega : 0 < d)
+  refine ⟨m - n + j, by omega, ?_⟩
+  have hsplit : ∑ i ∈ Finset.Ico n (n + (m - n + j)), i.nth Nat.Prime =
+      S + ∑ i ∈ Finset.range j, (m + i).nth Nat.Prime := by
+    rw [show n + (m - n + j) = m + j by omega,
+      ← Finset.sum_Ico_consecutive _ hnm.le (by omega : m ≤ m + j)]
+    congr 1
+    rw [Finset.sum_Ico_eq_sum_range, show m + j - m = j by omega]
+  have hmod : ∑ i ∈ Finset.range j, (m + i).nth Nat.Prime ≡ j [MOD d] := by
+    calc ∑ i ∈ Finset.range j, (m + i).nth Nat.Prime
+        ≡ ∑ i ∈ Finset.range j, 1 [MOD d] :=
+          Nat.ModEq.sum fun i hi => hp i (by have := Finset.mem_range.1 hi; omega)
+      _ = j := by simp
+  rw [hsplit, Nat.dvd_iff_mod_eq_zero, Nat.add_mod, hmod]
+  rcases Nat.eq_zero_or_pos (S % d) with h | h
+  · rw [hj, h, Nat.sub_zero, Nat.mod_self]
+    simp
+  · rw [Nat.mod_eq_of_lt (by omega : j < d), hj, show S % d + (d - S % d) = d by omega,
+      Nat.mod_self]
 
 end Erdos427

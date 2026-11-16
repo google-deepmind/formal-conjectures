@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1088
 
 *Reference:* [erdosproblems.com/1088](https://www.erdosproblems.com/1088)
 -/
+
+@[expose] public section
 
 open Filter
 open scoped EuclideanGeometry
@@ -66,11 +69,10 @@ as $d \to \infty$?
 
 The little-$o$ condition is stated after taking the base-$2$ logarithm.
 -/
-@[category research open, AMS 51]
+@[category research open, question, AMS 51]
 theorem erdos_1088 :
-    answer(sorry) ↔
-      ∀ n ≥ 3,
-        (fun d : ℕ ↦ Real.logb 2 (f d n : ℝ)) =o[atTop] (fun d : ℕ ↦ (d : ℝ)) := by
+    ∀ n ≥ 3,
+      (fun d : ℕ ↦ Real.logb 2 (f d n : ℝ)) =o[atTop] (fun d : ℕ ↦ (d : ℝ)) := by
   sorry
 
 end Erdos1088

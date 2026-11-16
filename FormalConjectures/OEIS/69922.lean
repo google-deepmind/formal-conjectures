@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Number of primes $p$ such that $n^n \le p \le n^n + n^2$
@@ -24,6 +25,8 @@ $$a(n) = |\{p \text{ prime} \mid n^n \le p \le n^n + n^2\}|$$
 
 *References:*
 - [A069922](https://oeis.org/A069922)-/
+
+@[expose] public section
 
 namespace OeisA69922
 

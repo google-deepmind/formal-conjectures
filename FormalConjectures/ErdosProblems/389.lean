@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 389
 
 *Reference:* [erdosproblems.com/389](https://www.erdosproblems.com/389)
 -/
+
+@[expose] public section
 
 namespace Erdos389
 
@@ -30,8 +33,8 @@ $$
   n(n + 1) \cdots (n + k - 1) \mid (n + k) \cdots (n + 2k - 1)?
 $$
 -/
-@[category research open, AMS 11]
-theorem erdos_389 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_389 :
     ∀ n ≥ 1, ∃ k ≥ 1, ∏ i ∈ Finset.range k, (n + i) ∣ ∏ i ∈ Finset.range k, (n + k + i) := by
   sorry
 

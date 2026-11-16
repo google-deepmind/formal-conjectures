@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 476
@@ -30,8 +31,11 @@ import FormalConjecturesUtil
   derivatives and additive theory*. Bull. London Math. Soc. (1994), 140-146.
 -/
 
+@[expose] public section
+
 namespace Erdos476
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{F}_p$. Let
 $$
@@ -44,8 +48,8 @@ $$
 
 This is the Erdős-Heilbronn inequality, proved by Dias da Silva and Hamidoune.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos476.lean"]
-theorem erdos_476 : answer(True) ↔
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos476.lean"]
+theorem erdos_476 :
     ∀ p : ℕ, Fact p.Prime → ∀ A : Finset (ZMod p),
       A.restrictedSumset.card ≥ min (2 * A.card - 3) p := by
   sorry

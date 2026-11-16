@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # First Proof, Theorem 6
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 **First Proof**
 by *Mohammed Abouzaid, Andrew J. Blumberg, Martin Hairer, Joe Kileel, Tamara G. Kolda, Paul D. Nelson, Daniel Spielman, Nikhil Srivastava, Rachel Ward, Shmuel Weinberger, Lauren Williams*
 -/
+
+@[expose] public section
 
 namespace Arxiv.«2602.05192»
 
@@ -47,14 +50,15 @@ def IsEpsilonLight (G : SimpleGraph V) (ε : ℝ) (S : Finset V) : Prop :=
   letI L_S := lapMatrix ℝ (G_S)
   PosSemidef (ε • L - L_S)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a constant $c > 0$ so that for every graph $G$ and every $\epsilon$ between
 $0$ and $1$, $V$ contains an $\epsilon$-light subset $S$ of size at least $c \epsilon |V|$?
 
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/frenzymath/Archon-FirstProof-Results/blob/main/FirstProof/FirstProof6/Problem6.lean"]
-theorem epsilon_light_subset_exists : answer(True) ↔
+theorem epsilon_light_subset_exists :
     ∃ (c : ℝ), c > 0 ∧ ∀ (n : ℕ) (G : SimpleGraph (Fin n)) (ε : ℝ),
     0 < ε → ε < 1 →
     ∃ (S : Finset (Fin n)), IsEpsilonLight G ε S ∧ (S.card : ℝ) ≥ c * ε * n := by

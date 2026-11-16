@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Serre's uniformity conjecture over the rationals
@@ -36,6 +37,8 @@ of rational CM $j$-invariants.
 - [Lem17] P. Lemos, *Serre's uniformity conjecture for elliptic curves with rational
   cyclic isogenies*, introduction. https://arxiv.org/abs/1702.01985
 -/
+
+@[expose] public section
 
 namespace SerreUniformity
 
@@ -61,11 +64,10 @@ def HasFullTorsionAction (E : WeierstrassCurve ℚ) (p : ℕ) : Prop :=
 $C$ such that every non-CM elliptic curve over $\mathbb{Q}$ has surjective mod-$p$
 Galois representation for every prime $p > C$?
 -/
-@[category research open, AMS 11 14]
+@[category research open, question, AMS 11 14]
 theorem serre_uniformity :
-    answer(sorry) ↔
-      ∃ C : ℕ, ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], E.j ∉ cmJInvariants →
-        ∀ p : ℕ, p.Prime → C < p → HasFullTorsionAction E p := by
+    ∃ C : ℕ, ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], E.j ∉ cmJInvariants →
+      ∀ p : ℕ, p.Prime → C < p → HasFullTorsionAction E p := by
   sorry
 
 /--
@@ -75,11 +77,10 @@ representation for every prime $p > 37$. From the introduction of [Lem17]: "This
 remains open today, but, over the last forty years, there has been a lot of progress towards
 a proof for $K = \mathbb{Q}$ — it is believed that, in this case, $p_K = 37$."
 -/
-@[category research open, AMS 11 14]
+@[category research open, question, AMS 11 14]
 theorem serre_uniformity.variants.bound_37 :
-    answer(sorry) ↔
-      ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], E.j ∉ cmJInvariants →
-        ∀ p : ℕ, p.Prime → 37 < p → HasFullTorsionAction E p := by
+    ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], E.j ∉ cmJInvariants →
+      ∀ p : ℕ, p.Prime → 37 < p → HasFullTorsionAction E p := by
   sorry
 
 end SerreUniformity

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Conjectures associated with A110854
@@ -25,6 +26,8 @@ where $\mathrm{prime}(k)$ is the $k$-th prime number.
 *References:*
 - [A110854](https://oeis.org/A110854)
 -/
+
+@[expose] public section
 
 namespace OeisA110854
 
