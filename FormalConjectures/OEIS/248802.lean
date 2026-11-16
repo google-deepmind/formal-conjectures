@@ -65,6 +65,7 @@ lemma a_3 : a 3 = 13 := by native_decide
 lemma a_4 : a 4 = 262147 := by native_decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1: $a(10n+2) = 67$ for $n \ge 0$. - _Chai Wah Wu_, Oct 21 2019
 
@@ -77,6 +78,7 @@ theorem a_ten_mul_add_two_eq (n : ℕ) : a (10 * n + 2) = 67 := by
     sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 4: $a(58n+26) = 1399$ for $n \ge 0$ and when it is not covered by Conjectures 1-3. - _Chai Wah Wu_, Oct 21 2019
 

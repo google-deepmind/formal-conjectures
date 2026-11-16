@@ -100,6 +100,7 @@ theorem a_3 : a 3 = 5 := by
       · exact (by decide : ¬ Nat.Prime 4) hp_prime
   exact h_least.csInf_eq
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: if a(k) = 0 then k is an even square.
 

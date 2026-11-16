@@ -37,8 +37,8 @@ hypergraph on $n$ vertices.
 Is there some constant $c>0$ such that
 $$ R_3(n) \geq 2^{2^{cn}}? $$
 -/
-@[category research open, AMS 5]
-theorem erdos_564 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_564 :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (2 : ℝ) ^ (2 : ℝ) ^ (c * n) ≤ hypergraphRamsey 3 n := by
   sorry
 

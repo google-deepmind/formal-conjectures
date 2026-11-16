@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos435
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n\in\mathbb{N}$ with $n\neq p^k$ for any prime $p$ and $k\geq 0$. What is the largest
 integer not of the form

@@ -51,6 +51,8 @@ $\frac{1}{a} = \frac{1}{b} + \frac{1}{c}$ with distinct $a, b, c ∈ A$.
 def IsMaxNoTripleCard (N m : ℕ) : Prop :=
   IsGreatest {k | ∃ A ⊆ Finset.Icc 1 N, NoUnitFractionTriple A ∧ A.card = k} m
 
+def erdos_302.parts.i.answer : ℝ := sorry
+
 /--
 Let $f(N)$ be the size of the largest $A\subseteq \{1,\ldots,N\}$ such that there are no
 solutions to
@@ -59,9 +61,9 @@ with distinct $a,b,c\in A$? Estimate $f(N)$.
 
 The colouring version of this is [303], which was solved by Brown and Rödl [BrRo91].
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem erdos_302.parts.i (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTripleCard N (f N)) :
-    Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 answer(sorry)) := by
+    Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 erdos_302.parts.i.answer) := by
   sorry
 
 /--
@@ -83,7 +85,38 @@ $f(N)\geq (1/2+o(1))N$.
 theorem erdos_302.variants.lower_half (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTripleCard N (f N))
     (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ N : ℕ in atTop, ((1 : ℝ) / 2 - ε) * N ≤ f N := by
-  sorry
+  refine Filter.Eventually.of_forall fun N => ?_
+  set A : Finset ℕ := (Finset.range ((N + 1) / 2)).image (fun x => 2 * x + 1) with hA
+  have hsub : A ⊆ Finset.Icc 1 N := by
+    intro a ha
+    obtain ⟨x, hx, rfl⟩ := Finset.mem_image.1 ha
+    rw [Finset.mem_range] at hx
+    rw [Finset.mem_Icc]
+    omega
+  have hno : NoUnitFractionTriple A := by
+    intro a ha b hb c hc _ _ _ h
+    obtain ⟨x, -, rfl⟩ := Finset.mem_image.1 ha
+    obtain ⟨y, -, rfl⟩ := Finset.mem_image.1 hb
+    obtain ⟨z, -, rfl⟩ := Finset.mem_image.1 hc
+    have hx : ((2 * x + 1 : ℕ) : ℚ) ≠ 0 := by positivity
+    have hy : ((2 * y + 1 : ℕ) : ℚ) ≠ 0 := by positivity
+    have hz : ((2 * z + 1 : ℕ) : ℚ) ≠ 0 := by positivity
+    field_simp at h
+    have h' : (2 * y + 1) * (2 * z + 1) = (2 * x + 1) * (2 * z + 1 + (2 * y + 1)) := by
+      exact_mod_cast h
+    have := congrArg (· % 2) h'
+    simp [Nat.mul_mod, Nat.add_mod] at this
+  have hcard : A.card = (N + 1) / 2 := by
+    rw [hA, Finset.card_image_of_injective _ (fun x y hxy => by simpa using hxy),
+      Finset.card_range]
+  have hle : (N + 1) / 2 ≤ f N := by
+    rw [← hcard]
+    exact (hf N).2 ⟨A, hsub, hno, rfl⟩
+  have h1 : (N : ℝ) ≤ 2 * ((N + 1) / 2 : ℕ) := by
+    exact_mod_cast (by omega : N ≤ 2 * ((N + 1) / 2))
+  have h2 : (((N + 1) / 2 : ℕ) : ℝ) ≤ f N := by exact_mod_cast hle
+  have hN : (0 : ℝ) ≤ N := Nat.cast_nonneg N
+  nlinarith
 
 /--
 Stijn Cambie has observed that
@@ -106,6 +139,7 @@ theorem erdos_302.variants.upper_nine_tenths (f : ℕ → ℕ) (hf : ∀ N, IsMa
     ∀ᶠ N : ℕ in atTop, (f N : ℝ) ≤ ((9 : ℝ) / 10 + ε) * N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Kenta Kitamura (KitaKen1 on GitHub) has given a Lean proof
 ([erdos-302-upper-bound](https://github.com/KitaKen1/erdos-302-upper-bound)) that
