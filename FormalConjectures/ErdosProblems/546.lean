@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos546
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph with no isolated vertices and $m$ edges. Is it true that
 $$R(G) \leq 2^{O(m^{1/2})}?$$
@@ -40,8 +41,8 @@ This is true, and was proved by Sudakov [Su11].
 
 This problem is #11 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/7caa4144741e10f96cf79d6f7313a0efd9a18b67/erdos-546/Proofs/OriginalStatement546.lean#L33"]
-theorem erdos_546 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/7caa4144741e10f96cf79d6f7313a0efd9a18b67/erdos-546/Proofs/OriginalStatement546.lean#L33"]
+theorem erdos_546 :
     ∃ C > (0 : ℝ), ∀ (m : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
       (∀ v, 0 < G.degree v) →
       G.edgeSet.ncard = m →

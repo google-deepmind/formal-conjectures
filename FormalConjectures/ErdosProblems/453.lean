@@ -47,6 +47,7 @@ def EventuallyHasPrimeWitness : Prop :=
       (Nat.nth Nat.Prime n) ^ (2 : ℕ) <
         Nat.nth Nat.Prime (n + i) * Nat.nth Nat.Prime (n - i)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for all sufficiently large $n$, there exists some $i<n$ such that
 $$
@@ -56,8 +57,8 @@ where $p_k$ is the $k$th prime?
 
 Pomerance proved that the answer is no.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos453.lean"]
-theorem erdos_453 : answer(False) ↔ EventuallyHasPrimeWitness := by
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos453.lean"]
+theorem erdos_453 : ¬ EventuallyHasPrimeWitness := by
   sorry
 
 end Erdos453

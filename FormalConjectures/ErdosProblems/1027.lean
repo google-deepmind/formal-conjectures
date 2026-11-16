@@ -44,6 +44,7 @@ open scoped Classical in
 def goodSets (F : Finset (Finset α)) : Finset (Finset α) :=
   (groundSet F).powerset.filter fun B ↦ ∀ A ∈ F, (A ∩ B).Nonempty ∧ ¬ A ⊆ B
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $c>0$, and let $n$ be sufficiently large depending on $c$. Suppose that $\mathcal{F}$ is a
 family of at most $c2^n$ many finite sets of size $n$. Let $X=\cup_{A\in \mathcal{F}}A$.
@@ -56,9 +57,9 @@ property B), see [901](https://www.erdosproblems.com/901).
 
 This is true, and a proof was given in the comment section by Koishi Chan.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1027.lean#L209"]
-theorem erdos_1027 : answer(True) ↔ ∀ c : ℝ, 0 < c → ∃ δ : ℝ, 0 < δ ∧
+theorem erdos_1027 : ∀ c : ℝ, 0 < c → ∃ δ : ℝ, 0 < δ ∧
     ∀ᶠ n : ℕ in atTop, ∀ (α : Type) [DecidableEq α] (F : Finset (Finset α)),
       (∀ A ∈ F, A.card = n) → (F.card : ℝ) ≤ c * 2 ^ n →
         δ * 2 ^ (groundSet F).card ≤ (goodSets F).card := by

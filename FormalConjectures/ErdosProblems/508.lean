@@ -42,6 +42,8 @@ namespace Erdos508
 
 scoped notation "χ(ℝ²)" => SimpleGraph.chromaticNumber (UnitDistancePlaneGraph Set.univ)
 
+def HadwigerNelsonProblem.answer : ℕ∞ := sorry
+
 /--
 The Hadwiger–Nelson problem asks: How many colors are required to color the plane
 such that no two points at distance 1 from each other have the same color?
@@ -49,9 +51,9 @@ such that no two points at distance 1 from each other have the same color?
 It is known that $6 \leq \chi(\mathbb{R}^2) \leq 7$; see `HadwigerNelsonAtLeastSix` and
 `HadwigerNelsonAtMostSeven`.
 -/
-@[category research open, AMS 52]
+@[category research open, question value, AMS 52]
 theorem HadwigerNelsonProblem :
-    χ(ℝ²) = answer(sorry) := by
+    χ(ℝ²) = HadwigerNelsonProblem.answer := by
   sorry
 
 /--
@@ -66,6 +68,7 @@ theorem HadwigerNelsonAtLeastFive :
     5 ≤ χ(ℝ²) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The chromatic number of the plane is at least 6: there is no proper 5-colouring of the plane.
 
@@ -77,6 +80,7 @@ theorem HadwigerNelsonAtLeastSix :
     6 ≤ χ(ℝ²) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The "chromatic number of the plane" is at least 4. This can be
 proven by considering the [Moser-Spindel graph](https://de.wikipedia.org/wiki/Moser-Spindel)

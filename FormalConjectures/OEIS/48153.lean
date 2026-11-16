@@ -56,6 +56,7 @@ theorem a_4 : a 4 = 2 := by
 theorem a_5 : a 5 = 10 := by
   decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: $a(n) <= \frac{n^2-1}{2}$. - _Aspen A.M. Meissner_, Mar 06 2025"-/
 @[category research solved, AMS 11,

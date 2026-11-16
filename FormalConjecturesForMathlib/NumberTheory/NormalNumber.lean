@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Algebra.Order.Archimedean.Real.Basic
-public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Topology.MetricSpace.Basic
 
 /-!
 # Normal numbers
@@ -27,7 +27,8 @@ in the base-$b$ expansion of $x$. It is *normal in base* $b$ if, for every
 $k \ge 1$, every string of $k$ digits appears with asymptotic frequency $1/b^k$.
 
 A number that is normal in every integer base $b \ge 2$
-is called *absolutely normal*.
+is called *absolutely normal*. A number is *rich* (or *disjunctive*) in base $b$ if every
+finite string of digits $< b$ occurs in its base-$b$ expansion.
 
 Despite extensive empirical evidence, it remains unknown whether
 classical constants such as $\pi$, $e$, or $\sqrt{2}$ are normal in any base.
@@ -42,6 +43,7 @@ classical constants such as $\pi$, $e$, or $\sqrt{2}$ are normal in any base.
 * `IsSimplyNormalInBase`: a real number is simply normal in base `b`.
 * `IsNormalInBase`: a real number is normal in base `b`.
 * `IsAbsolutelyNormal`: a real number is normal in every base `b ≥ 2`.
+* `IsRichInBase`: every finite string of base-`b` digits occurs in the expansion.
 -/
 
 @[expose] public section
@@ -92,5 +94,27 @@ theorem IsNormalInBase.isSimplyNormalInBase {b : ℕ} {x : ℝ} (h : IsNormalInB
 if it is normal in every integer base `b ≥ 2`. -/
 noncomputable def IsAbsolutelyNormal (x : ℝ) : Prop :=
   ∀ b : ℕ, 2 ≤ b → IsNormalInBase b x
+
+/-- A real number `x` is *rich* (or *disjunctive*) in base `b`
+if every string `w` of `k` digits `< b` occurs at least once
+in the base-`b` fractional expansion of `x`. -/
+def IsRichInBase (b : ℕ) (x : ℝ) : Prop :=
+  ∀ (k : ℕ) (w : Fin k → ℕ), (∀ j, w j < b) → ∃ i, ∀ j : Fin k, digitSeq b x (i + j) = w j
+
+/-- A number that is normal in base `b` is rich in base `b`: every string has positive
+asymptotic frequency, so it occurs. -/
+theorem IsNormalInBase.isRichInBase {b : ℕ} {x : ℝ} (h : IsNormalInBase b x) :
+    IsRichInBase b x := by
+  intro k w hw
+  by_contra hne
+  push Not at hne
+  have hb : 0 < b := (hne 0).elim fun j _ => Nat.zero_lt_of_lt (hw j)
+  have hfil (n : ℕ) :
+      ((Finset.range n).filter fun i => ∀ j : Fin k, digitSeq b x (i + j) = w j) = ∅ :=
+    Finset.filter_eq_empty_iff.2 fun i _ hi => (hne i).elim fun j hj => hj (hi j)
+  have key := h k w hw
+  simp only [hfil, Finset.card_empty, Nat.cast_zero, zero_div] at key
+  exact one_div_ne_zero (pow_ne_zero _ (Nat.cast_ne_zero.2 hb.ne'))
+    (tendsto_nhds_unique key tendsto_const_nhds)
 
 end NormalNumber

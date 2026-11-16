@@ -106,8 +106,8 @@ Let $a(1) = 1$, $a(2) = 2$, and for $k \ge 3$ let $a(k)$ be the least integer gr
 than $a(k-1)$ that is a sum of at least two consecutive terms of the sequence.
 What is the asymptotic behaviour of this sequence? It seems likely that $a_n = n + o(n)$.
 -/
-@[category research open, AMS 5 11]
-theorem erdos_423 : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem erdos_423 :
     ∀ a : ℕ → ℕ, IsHofstadterSeq a →
     (fun n : ℕ => (a n : ℝ) - n) =o[atTop] (fun n : ℕ => (n : ℝ)) := by
   sorry
@@ -119,7 +119,27 @@ Bolan and Tang [Ta26] independently proved that $a_n-n$ is nondecreasing.
 theorem erdos_423.variants.nondecreasing :
     ∀ a : ℕ → ℕ, IsHofstadterSeq a →
     ∀ n m : ℕ, 1 ≤ n → n ≤ m → a n - n ≤ a m - m := by
-  sorry
+  intro a ⟨ha1, ha2, hk⟩ n m hn hnm
+  have step : ∀ k, 1 ≤ k → a k + 1 ≤ a (k + 1) := by
+    intro k hk1
+    rcases Nat.lt_or_ge k 2 with h | h
+    · obtain rfl : k = 1 := by omega
+      rw [ha1, ha2]
+    · simpa using (hk (k + 1) (by omega)).2.1
+  have ge : ∀ k, 1 ≤ k → k ≤ a k := by
+    intro k hk1
+    induction k with
+    | zero => omega
+    | succ j ih =>
+      rcases Nat.eq_zero_or_pos j with rfl | hj
+      · simp [ha1]
+      · have := step j hj; have := ih hj; omega
+  induction m, hnm using Nat.le_induction with
+  | base => exact le_rfl
+  | succ m hnm ih =>
+    have h1 := step m (by omega)
+    have h2 := ge m (by omega)
+    omega
 
 /--
 Bolan and Tang [Ta26] independently proved that $a_n-n\to\infty$.

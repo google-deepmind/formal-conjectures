@@ -102,6 +102,7 @@ lemma a_4 : a 4 = 1 := by native_decide
 lemma a_5 : a 5 = 2 := by native_decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 2: "a(n) is the number of 2-dense sublists of divisors of n.
 We call '2-dense sublists of divisors of n' to the maximal sublists of divisors of n whose terms
@@ -122,6 +123,7 @@ def A001227 (n : ℕ) : ℕ := (n.divisors.filter Odd).card
 def A239657 (n : ℕ) : ℕ :=
   (n.divisors.filter fun m => Odd m ∧ ∃ d ∈ n.divisors, d < m ∧ m < 2 * d).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1 / Theorem: "a(n) is the number of odd divisors of n except the 'e' odd
 divisors described in A005279." - _Omar E. Pol_, Dec 21 2024.
@@ -133,6 +135,7 @@ theorem conjecture_1 (n : ℕ) (hn : 0 < n) :
     a n = A001227 n - A239657 n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Theorem: "a(p^k) = k + 1, where p is an odd prime and k >= 0."
 - _Hartmut F. W. Hoft_, Dec 26 2016
@@ -157,6 +160,7 @@ theorem conjecture_3 (n : ℕ) :
       fun pair => pair.snd > 2 * pair.fst :=
   conjecture_2 n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 4: "a(A000290(n)) is odd." - _Omar E. Pol_, Oct 21 2025
 
@@ -168,6 +172,7 @@ That is, the number of parts in the symmetric representation of $\sigma(n^2)$ is
 theorem conjecture_4 (n : ℕ) (hn : 0 < n) : Odd (a (n ^ 2)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 5: "a(A000384(n)) is odd." - _Omar E. Pol_, Oct 21 2025
 
@@ -180,6 +185,7 @@ where $n(2n-1)$ is the $n$-th hexagonal number.
 theorem conjecture_5 (n : ℕ) (hn : 0 < n) : Odd (a (n * (2 * n - 1))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Observation: "a(A002997(n)) >= 3, at least for 1 <= n <= 10000."
 - _Omar E. Pol_, Oct 21 2025

@@ -33,6 +33,7 @@ open scoped Polynomial
 
 namespace Erdos1150
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there some constant $c > 0$ such that, for all large enough $n$ and all polynomials $P$ of
 degree $n$ with coefficients in $\{-1, 1\}$,
@@ -41,10 +42,10 @@ $$\max_{|z|=1} |P(z)| > (1 + c) \sqrt{n}?$$
 No. This was disproved by an internal OpenAI model in September 2026 [OAI26a]; see the linked
 Lean proof.
 -/
-@[category research solved, AMS 12 30, formal_proof using lean4 at
+@[category research solved, question, AMS 12 30, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Analysis/Littlewood/Main.lean#L187"]
 theorem erdos_1150 :
-    answer(False) ↔ ∃ c > 0, ∀ᶠ n in Filter.atTop,
+    ¬ ∃ c > 0, ∀ᶠ n in Filter.atTop,
       ∀ P : ℂ[X],  (∀ i ≤ P.natDegree, P.coeff i = - 1 ∨ P.coeff i = 1) → P.natDegree = n →
         ⨆ z : Metric.sphere (0 : ℂ) 1, ‖P.eval (z : ℂ)‖ > (1 + c) * Real.sqrt n := by
   sorry

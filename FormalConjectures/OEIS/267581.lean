@@ -93,6 +93,7 @@ lemma a_3 : a 3 = 13 := by rfl
 lemma a_4 : a 4 = 26 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n) = 2 a(n-1) + 1 - \lfloor (1/2)^{2^{n+1} \bmod n} \rfloor$ for $n \ge 2$. - _Andres Cicuttin_, Mar 29 2016
 

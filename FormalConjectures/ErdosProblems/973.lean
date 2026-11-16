@@ -39,6 +39,7 @@ open Finset Filter
 
 namespace Erdos973
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a constant $C>1$ such that, for every $n\geq 2$, there exists a sequence
 $z_i\in \mathbb{C}$ with $z_1=1$ and $\lvert z_i\rvert \geq 1$ for all $1\leq i\leq n$ with
@@ -51,16 +52,16 @@ Wang, Huang and Chen [TWHC26]): the maximum exceeds $e^{-\lambda n}$ for every f
 once $n$ is large, so it decays subexponentially and no such $C$ exists. See
 `erdos_973.variants.luo_yang_zhu` below.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/1571a487465fb6a87f92dcc46f1bd71b0846c413/erdos-973/Solution.lean#L47"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/1571a487465fb6a87f92dcc46f1bd71b0846c413/erdos-973/Solution.lean#L47"]
 theorem erdos_973 :
-    answer(False) ↔
-      ∃ C : ℝ, C > 1 ∧
-        ∀ n : ℕ, n ≥ 2 → ∃ z : ℕ → ℂ,
-          z 1 = 1 ∧
-          (∀ i ∈ Icc 1 n, 1 ≤ ‖z i‖) ∧
-          (∀ k ∈ Icc 2 (n + 1), ‖∑ i ∈ Icc 1 n, z i ^ k‖ < C ^ (-(n : ℝ))) := by
+    ¬ ∃ C : ℝ, C > 1 ∧
+      ∀ n : ℕ, n ≥ 2 → ∃ z : ℕ → ℂ,
+        z 1 = 1 ∧
+        (∀ i ∈ Icc 1 n, 1 ≤ ‖z i‖) ∧
+        (∀ k ∈ Icc 2 (n + 1), ‖∑ i ∈ Icc 1 n, z i ^ k‖ < C ^ (-(n : ℝ))) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The result of [LYZ26] that settles the problem: for every fixed $\lambda>0$ and all large enough
 $n$, any $z_1,\dots,z_n$ with $\lvert z_j\rvert\geq 1$ satisfy

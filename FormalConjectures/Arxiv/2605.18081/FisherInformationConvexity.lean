@@ -76,24 +76,24 @@ def IsWeaklyAdmissible {d : ℕ} (f : EuclideanSpace ℝ (Fin d) → ℝ) : Prop
   ContDiff ℝ ∞ f ∧ (∀ x, 0 < f x) ∧ ∫ x, f x = 1 ∧
     Integrable (fun x => ‖fderiv ℝ (fun y => log (f y)) x‖ ^ 2 * f x)
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is the Fisher information convex along the heat flow for every admissible density
 [ZFGW26, Section 7.3, Problem (iii)]? The answer is no [Ki26]. -/
-@[category research solved, AMS 35 60,
+@[category research solved, question, AMS 35 60,
     formal_proof using lean4 at "https://github.com/KitaKen1/fisher-information-nonconvexity/blob/fe6ade9846c53e5cb0dcbc00eca359c83f8d0f55/lean/Fisher41/FC/Main.lean#L37"]
 theorem fisherInformationConvexity :
-    answer(False) ↔
-      ∀ (d : ℕ) (f : EuclideanSpace ℝ (Fin d) → ℝ), IsAdmissible f →
-        ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
+    ¬ ∀ (d : ℕ) (f : EuclideanSpace ℝ (Fin d) → ℝ), IsAdmissible f →
+      ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The same question for every smooth positive probability density with finite Fisher
 information. The answer is no [Ki26]. -/
-@[category research solved, AMS 35 60,
+@[category research solved, question, AMS 35 60,
     formal_proof using lean4 at "https://github.com/KitaKen1/fisher-information-nonconvexity/blob/fe6ade9846c53e5cb0dcbc00eca359c83f8d0f55/lean/Fisher41/FC/Main.lean#L48"]
 theorem fisherInformationConvexity.variants.smooth :
-    answer(False) ↔
-      ∀ (d : ℕ) (f : EuclideanSpace ℝ (Fin d) → ℝ), IsWeaklyAdmissible f →
-        ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
+    ¬ ∀ (d : ℕ) (f : EuclideanSpace ℝ (Fin d) → ℝ), IsWeaklyAdmissible f →
+      ConvexOn ℝ (Set.Ioi 0) (fun t => fisherInformation (heatFlow f t)) := by
   sorry
 
 end Arxiv.«2605.18081»

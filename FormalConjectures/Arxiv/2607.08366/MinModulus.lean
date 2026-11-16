@@ -81,12 +81,13 @@ valid modulus, which is `minModulus n`.
 `0 < N` excludes `N = 0`, where `ZMod 0` is `ℤ` rather than a finite modulus and `{1, 2}` is
 valid, which would make the statement false for a reason unrelated to the question.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem min_modulus :
-    answer(sorry) ↔ ∀ n N : ℕ, 2 ≤ n → 0 < N → N < minModulus n →
+    ∀ n N : ℕ, 2 ≤ n → 0 < N → N < minModulus n →
       ∀ A : Finset (ZMod N), #A = n → ¬ IsValidMod A := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Theorem A (Fonollosa, 2026).** `minModulus n` admits a valid set of `n` residues, the
 super-increasing set $\{2^k - 1 : 0 \leq k \leq n - 1\}$. This bounds the least valid modulus
