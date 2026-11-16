@@ -66,15 +66,16 @@ theorem collatz_conjecture_of_le_two_pow_71 (n : ℕ) (hn : 0 < n) (hle : n ≤ 
 
 /--
 Conditional on Bařina's $2^{71}$ verification, every positive integer $n > 0$ whose trajectory
-has not yet reached $1$ after $s$ steps passes through some iterate strictly exceeding $2^{71}$.
+has not yet reached $1$ passes through some iterate strictly exceeding $2^{71}$.
 -/
-@[category research solved, AMS 11 37,
-  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-15-000008"]
+@[category research solved, AMS 11 37]
 theorem two_pow_71_lt_iterate
     (hB : ∀ k : ℕ, 0 < k → k ≤ 2 ^ 71 → ∃ s, (collatzStep^[s]) k = 1)
     {n : ℕ} (hn : 0 < n) (h1 : ∀ s, (collatzStep^[s]) n ≠ 1) :
     ∃ t, 2 ^ 71 < (collatzStep^[t]) n := by
-  sorry
+  by_contra! h
+  obtain ⟨s, hs⟩ := hB n hn (h 0)
+  exact h1 s hs
 
 /--
 The shortcut Collatz map $T(n)$, sending even $n$ to $n / 2$ and odd $n$ to $(3n + 1) / 2$.
@@ -103,10 +104,9 @@ def IsMCycle (m n : ℕ) : Prop :=
       collatzShortcut^[i + 1] n < collatzShortcut^[i + 2] n).card = m
 
 /-- Every point on a Collatz $m$-cycle is strictly positive. -/
-@[category API, AMS 11 37,
-  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-15-000008"]
-theorem IsMCycle.ne_zero {m n : ℕ} (h : IsMCycle m n) : n ≠ 0 := by
-  sorry
+@[category API, AMS 11 37]
+theorem IsMCycle.ne_zero {m n : ℕ} (h : IsMCycle m n) : n ≠ 0 :=
+  ne_of_gt h.1
 
 /-- The trivial cycle $1 \to 2 \to 1$ is a $1$-cycle through $1$. -/
 @[category test, AMS 11 37,
@@ -121,7 +121,8 @@ theorem isMCycle_one_two : IsMCycle 1 2 := by
   sorry
 
 /--
-Effective irrationality measure for $\log_2 3$ via Rhin's (1987) [Rh87] Padé approximants:
+Effective linear-form bound for $\log_2 3$ proved from Mathlib alone in the linked development,
+replacing Rhin's (1987) [Rh87] effective irrationality measure in the Collatz $m$-cycle argument:
 for $K \ge 2438425051595107335801557824$, the linear form $(K + L)\log 2 - K\log 3$ cannot lie
 strictly between $0$ and $100 \cdot 2^{1 - K / 2^{68}}$.
 -/
