@@ -59,8 +59,8 @@ $$A(N)/2^{f(N)}\to \infty?$$
 A problem of Cameron and Erdős. While $A(N)$ has not been completely determined, this question is
 settled in the affirmative.
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_861.parts.i : answer(True) ↔
+@[category research solved, question, AMS 5 11]
+theorem erdos_861.parts.i :
     Tendsto (fun N : ℕ ↦ (Acount N : ℝ) / (2 : ℝ) ^ f N) atTop atTop := by
   sorry
 
@@ -71,9 +71,9 @@ $$A(N) = 2^{(1+o(1))f(N)}?$$
 This is false: the lower bound $A(N)\ge 2^{(1.16+o(1)) f(N)}$ of Saxton and Thomason [SaTh15]
 already prevents the exponent $1+o(1)$.
 -/
-@[category research solved, AMS 5 11]
-theorem erdos_861.parts.ii : answer(False) ↔
-    ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
+@[category research solved, question, AMS 5 11]
+theorem erdos_861.parts.ii :
+    ¬ ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
       ∀ᶠ N : ℕ in atTop, (Acount N : ℝ) = (2 : ℝ) ^ ((1 + o N) * f N) := by
   sorry
 
