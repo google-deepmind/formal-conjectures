@@ -34,7 +34,6 @@ open CategoryTheory
 def Irr₁ (G : Type) [Group G]: Set (G → ℂ)
   := {χ:  G → ℂ  | ∃ V :  FDRep ℂ G, Simple V ∧ χ = V.character }
 
-
 /-- The irreducible complex characters of $G$ and $H$ have the same degrees, with multiplicities.
 The bijection matches characters and preserves their values at the identity. -/
 def SameDegrees (G : Type) [Group G] (H: Type) [Group H] :=
@@ -44,18 +43,22 @@ def SameDegrees (G : Type) [Group G] (H: Type) [Group H] :=
 character degrees.
 Is $H$ soluble whenever $G$ is soluble? -/
 @[category research open, question, AMS 20]
-theorem kourovka_11_8b: ∀  (G : Type) [Group G] [Finite G] (H: Type) [Group H] [Finite H],
-  SameDegrees G H →
-  Group.IsSolvable G → Group.IsSolvable H := by sorry
+theorem kourovka_11_8b : ∀ (G : Type) [Group G] [Finite G] (H : Type) [Group H] [Finite H],
+  SameDegrees G H → Group.IsSolvable G → Group.IsSolvable H := by sorry
 
 /-- Let $G$ and $H$ be finite groups whose complex group algebras are isomorphic as
 $\mathbb{C}$-algebras. Is $H$ soluble whenever $G$ is soluble?
 This is the group-algebra formulation of Kourovka Problem 11.8(b). -/
 @[category research open, question, AMS 20]
 theorem kourovka_11_8b': ∀  (G : Type) [Group G] [Finite G] (H: Type) [Group H] [Finite H],
-  Nonempty (MonoidAlgebra ℂ G≃ₐ[ℂ] MonoidAlgebra ℂ H)→
-  Group.IsSolvable G → Group.IsSolvable H := by
-     sorry
+  Nonempty (MonoidAlgebra ℂ G≃ₐ[ℂ] MonoidAlgebra ℂ H) →
+  Group.IsSolvable G → Group.IsSolvable H := by sorry
+
+/-
+## Equivalence of the two formulations
+
+We aim to prove that the statements of `kourovka_11_8b` and `kourovka_11_8b'` are equivalent.
+-/
 
 /-- In a decomposition of $\mathbb{C}[G]$ into nonzero full matrix algebras, the block indices
 correspond bijectively to the irreducible complex characters of $G$.
@@ -113,4 +116,8 @@ theorem sameDegrees_iff_algEquiv (G : Type) [Group G] [Finite G]
         rw [hG]
         exact hH
 
+/-- The statements of `kourovka_11_8b` and `kourovka_11_8b'` are equivalent. -/
+@[category test, AMS 20]
+example : (type_of% kourovka_11_8b) ↔ (type_of% kourovka_11_8b') := by
+  simp_rw +contextual [sameDegrees_iff_algEquiv]
 end Kourovka.«11.8b»
