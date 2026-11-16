@@ -53,7 +53,7 @@ def IsCompleteGroup (G : Type*) [G : Group] : Prop :=
 Does there exist a countable infinite locally finite group that is complete,
 in the sense that it has trivial centre and no outer automorphisms?.
 
-The answer is "Yes", if one assumes the group to be uncountable. See
+The answer is "Yes", if one assumes that the group is uncountable. See
 [K.K. Hickin, Trans. Amer. Math. Soc., 239 (1978), 213-227].
 
 -/
