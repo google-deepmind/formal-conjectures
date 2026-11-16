@@ -99,6 +99,7 @@ lemma a_4 : a 4 = 23 := by
   intro k hk; interval_cases k <;> decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n) \ge 0$, i.e., for every $n$ there exists $k$ such that $\sqrt{k^2 \oplus (k+1)^2} = 2n+1$.
 

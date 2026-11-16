@@ -259,18 +259,22 @@ efficient for large $n$.
 theorem M_eq_kisielewiczFormula : M = kisielewiczFormula := by
   sorry
 
+def M_eq.answer : ℕ → ℕ := sorry
+
 /--
   No closed-form expression that allows efficient computation of Dedekind numbers is
   currently known.
 -/
-@[category research open, AMS 5 6]
-theorem M_eq : M = answer(sorry) := by
+@[category research open, question value, AMS 5 6]
+theorem M_eq : M = M_eq.answer := by
   sorry
+
+def Dedekind_10.answer : ℕ := sorry
 
 /--
   In particular, the Dedekind number for `n = 10` is currently unknown.
 -/
-@[category research open, AMS 5 6]
-theorem Dedekind_10 : M 10 = answer(sorry) := by sorry
+@[category research open, question value, AMS 5 6]
+theorem Dedekind_10 : M 10 = Dedekind_10.answer := by sorry
 
 end DedekindNumber

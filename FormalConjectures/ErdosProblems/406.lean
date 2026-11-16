@@ -31,8 +31,8 @@ namespace Erdos406
 Is it true that there are only finitely many powers of $2$ which have only the digits $0$
 and $1$ when written in base $3$?
 -/
-@[category research open, AMS 11]
-theorem erdos_406 : answer(sorry) ↔ { n | n.isPowerOfTwo ∧ Nat.digits 3 n ⊆ [0, 1] }.Finite := by
+@[category research open, question, AMS 11]
+theorem erdos_406 : { n | n.isPowerOfTwo ∧ Nat.digits 3 n ⊆ [0, 1] }.Finite := by
   sorry
 
 /--

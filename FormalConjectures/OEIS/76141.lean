@@ -72,6 +72,7 @@ theorem a_4 : a 4 = 1 := by
 theorem a_5 : a 5 = 0 := by
   decide +kernel
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is $a(n) \le 1$ for all $n$?-/
 @[category research solved, AMS 11,

@@ -47,15 +47,16 @@ def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
 /-- The predicate that the rational polynomial `P` has a complete image. -/
 def HasCompleteImage (P : ℚ[X]) : Prop := IsStronglyComplete (imageSet P)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $p(x) \in \mathbb{Q}[x]$ be a non-constant rational polynomial with positive leading
 coefficient. Is it true that $$A=\{ p(n)+1/n : n \in \mathbb{N}\}$$ is strongly complete,
 in the sense that, for any finite set $B$,
 $$\left\{\sum_{a \in X} a : X \subseteq A \setminus B, X \textrm{ is finite}\right\}$$
 contains all sufficiently large integers? -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos351.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos351.lean"]
 theorem erdos_351 :
-    answer(True) ↔ ∀ P : ℚ[X], 0 < P.natDegree → 0 < P.leadingCoeff → HasCompleteImage P := by
+    ∀ P : ℚ[X], 0 < P.natDegree → 0 < P.leadingCoeff → HasCompleteImage P := by
   sorry
 
 /--

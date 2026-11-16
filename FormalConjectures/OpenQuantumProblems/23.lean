@@ -316,55 +316,55 @@ theorem bb84Family_not_isSICFamily : ¬ IsSICFamily 2 bb84Family := by
 /- ## Smallest open special cases (all d<=75) -/
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $56$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_56 : answer(sorry) ↔ HasSICPOVM 56 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_56 : HasSICPOVM 56 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $58$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_58 : answer(sorry) ↔ HasSICPOVM 58 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_58 : HasSICPOVM 58 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $59$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_59 : answer(sorry) ↔ HasSICPOVM 59 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_59 : HasSICPOVM 59 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $60$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_60 : answer(sorry) ↔ HasSICPOVM 60 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_60 : HasSICPOVM 60 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $64$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_64 : answer(sorry) ↔ HasSICPOVM 64 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_64 : HasSICPOVM 64 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $68$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_68 : answer(sorry) ↔ HasSICPOVM 68 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_68 : HasSICPOVM 68 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $69$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_69 : answer(sorry) ↔ HasSICPOVM 69 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_69 : HasSICPOVM 69 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $70$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_70 : answer(sorry) ↔ HasSICPOVM 70 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_70 : HasSICPOVM 70 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $71$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_71 : answer(sorry) ↔ HasSICPOVM 71 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_71 : HasSICPOVM 71 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $72$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_72 : answer(sorry) ↔ HasSICPOVM 72 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_72 : HasSICPOVM 72 := by sorry
 
 /-- Benchmark open subproblem: existence of a SIC-POVM in dimension $75$. -/
-@[category research open, AMS 15 47 81]
-theorem hasSICPOVM_75 : answer(sorry) ↔ HasSICPOVM 75 := by sorry
+@[category research open, question, AMS 15 47 81]
+theorem hasSICPOVM_75 : HasSICPOVM 75 := by sorry
 
 /- ## Full conjecture -/
 
 /-- Do SIC-POVMs exist in every finite dimension? -/
-@[category research open, AMS 15 47 81]
+@[category research open, question, AMS 15 47 81]
 theorem sicPOVMs :
-    answer(sorry) ↔ ∀ d : ℕ, 1 ≤ d → HasSICPOVM d := by
+    ∀ d : ℕ, 1 ≤ d → HasSICPOVM d := by
   sorry
 
 end OpenQuantumProblem23

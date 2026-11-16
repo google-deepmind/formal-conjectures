@@ -39,14 +39,13 @@ namespace Green33
 Are there infinitely many $q$ for which there is a set $A \subset \mathbb{Z}/q\mathbb{Z}$,
 $|A| = (\sqrt{2} + o(1))q^{1/2}$, with $A + A = \mathbb{Z}/q\mathbb{Z}$? [Gr24]
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_33 :
-    answer(sorry) ↔
-      ∀ ε : ℝ, 0 < ε →
-        ∃ᶠ q : ℕ+ in atTop,
-          ∃ A : Finset (ZMod q),
-            A + A = Finset.univ ∧
-            |((A.card : ℝ) / Real.sqrt q - Real.sqrt 2)| < ε := by
+    ∀ ε : ℝ, 0 < ε →
+      ∃ᶠ q : ℕ+ in atTop,
+        ∃ A : Finset (ZMod q),
+          A + A = Finset.univ ∧
+          |((A.card : ℝ) / Real.sqrt q - Real.sqrt 2)| < ε := by
   sorry
 
 /-- Trivial lower bound: if $A + A = \mathbb{Z}/q\mathbb{Z}$, then $|A|^2 \geq q$,
