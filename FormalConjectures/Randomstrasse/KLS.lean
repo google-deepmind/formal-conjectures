@@ -20,11 +20,13 @@ public import FormalConjecturesUtil
 /-!
 # The Kannan--Lovász--Simonovits inequality
 
-The dimension-free Poincaré bound for isotropic log-concave probability densities,
-on the locally Lipschitz $L^2$ test class of Bizeul–Klartag–Lehec, Theorem 1.1.
+This file states the Poincaré formulation of Problem 30 for isotropic log-concave
+probability densities, using the locally Lipschitz $L^2$ test class of
+Bizeul–Klartag–Lehec, Theorem 1.1.
 The squared-gradient energy is an extended nonnegative integral and may be infinite.
 
 *References:*
+- [Randomstrasse 101, Problem 30](https://randomstrasse101.math.ethz.ch/posts/KLSConjecture/).
 - [BKL26] Pierre Bizeul, Boaz Klartag and Joseph Lehec,
   *Presenting a proof of the Kannan-Lovász-Simonovits conjecture*,
   [arXiv:2610.05474v1](https://arxiv.org/abs/2610.05474v1), Theorem 1.1.
