@@ -60,6 +60,7 @@ theorem a_5 : a 5 = 10 := by decide
 @[category test, AMS 11]
 theorem a_6 : a 6 = 18 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: $a(n)$ is odd iff the sum of totatives of $n$ (A023896) is odd."
 - OEIS A280246, entry by Jaroslav Krizek, Dec 30 2016.
