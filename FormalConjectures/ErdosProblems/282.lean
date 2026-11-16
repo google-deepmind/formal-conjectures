@@ -68,10 +68,12 @@ theorem erdos_282 {x : ℚ} (hx : x ∈ Set.Ioo 0 1) (hx_den : Odd x.den) :
     greedyUnitFractionRem { n | Odd n } x =ᶠ[atTop] 0 := by
   sorry
 
+def erdos_282.variants.general.answer : Set (ℚ × Set ℕ) := sorry
+
 /-- More generally, for which pairs $x$ and $A$ does this process terminate? -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_282.variants.general (x : ℚ) (A : Set ℕ) :
-      greedyUnitFractionRem A x =ᶠ[atTop] 0 ↔ (x, A) ∈ (answer(sorry) : Set (ℚ × Set ℕ)) := by
+      greedyUnitFractionRem A x =ᶠ[atTop] 0 ↔ (x, A) ∈ erdos_282.variants.general.answer := by
   sorry
 
 /-- In 1202 Fibonacci observed that this process terminates for any $x$ when $A=\mathbb{N}$. -/
@@ -87,9 +89,9 @@ $$\left(\frac{n}{(n,a,d)},\frac{d}{(a,d)}\right)=1.$$
 Does the greedy algorithm always
 terminate in such cases?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_282.variants.graham :
-    answer(sorry) ↔ ∀ x : ℚ, x ∈ Set.Ioo 0 1 → ∀ a d : ℕ, 1 < d →
+    ∀ x : ℚ, x ∈ Set.Ioo 0 1 → ∀ a d : ℕ, 1 < d →
       (x.den / x.den.gcd (a.gcd d)).gcd (d / a.gcd d) = 1 →
       greedyUnitFractionRem { n | n ≡ a [MOD d] } x =ᶠ[atTop] 0 := by
   sorry
@@ -105,9 +107,9 @@ square denominators if and only if $x\in [0,\pi^2/6-1)\cup [1,\pi^2/6)$. Does th
 greedy algorithm for this always terminate? Erdős and Graham believe not - indeed, perhaps it
 fails to terminate almost always.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_282.variants.sq :
-    answer(sorry) ↔ ∀ x : ℚ, (x : ℝ) ∈ Set.Ico 0 (π ^ 2 / 6 - 1) ∪ Set.Ico 1 (π ^ 2 / 6) →
+    ∀ x : ℚ, (x : ℝ) ∈ Set.Ico 0 (π ^ 2 / 6 - 1) ∪ Set.Ico 1 (π ^ 2 / 6) →
       greedyUnitFractionRem { n | IsSquare n } x =ᶠ[atTop] 0 := by
   sorry
 

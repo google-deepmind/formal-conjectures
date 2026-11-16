@@ -87,6 +87,7 @@ lemma a_3 : a 3 = 39002646528 := by decide +kernel
 lemma a_4 : a 4 = 674708032182398976 := by decide +kernel
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: if $A(x) = 1 + 48x + 161856 x^2 + \cdots$ denotes the o.g.f. then $A(x/3)^{1/8}$ has integer coefficients. - _Peter Bala_, Apr 22 2018
 

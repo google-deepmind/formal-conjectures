@@ -47,6 +47,7 @@ noncomputable def h2 {n : ℕ} (G : SimpleGraph (Fin n)) : ℕ :=
     (H.edgeFinset \ G.edgeFinset).card = k}
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 For a triangle-free graph $G$ let $h_2(G)$ be the smallest number of edges that need to be
 added to $G$ so that it has diameter $2$ and is still triangle-free. Is it true that if $G$
@@ -58,8 +59,8 @@ essentially identical to [134], and his solution in
 [this note](https://web.math.princeton.edu/~nalon/PDFS/remark1901.pdf) also solves this
 problem in the affirmative.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos618.lean"]
-theorem erdos_618 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1d7b3f00780b85ed0462e79a1cd5650ee9055655/src/v4.29.1/ErdosProblems/Erdos618.lean"]
+theorem erdos_618 :
     ∀ (G : ∀ n : ℕ, SimpleGraph (Fin n)),
       (∀ n, (G n).CliqueFree 3) →
       (fun n => ((G n).maxDegree : ℝ)) =o[atTop] (fun n => (n : ℝ) ^ ((1 : ℝ) / 2)) →

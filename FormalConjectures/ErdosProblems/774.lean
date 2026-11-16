@@ -47,8 +47,8 @@ namespace Erdos774
 
 /-- Is every proportionately dissociated (infinite) set the union of a finite
 number of dissociated sets?-/
-@[category research open, AMS 5]
-theorem erdos_774 : answer(sorry) ↔ ∀ (A : Set ℕ), A.Infinite → A.IsProportionatelyDissociated →
+@[category research open, question, AMS 5]
+theorem erdos_774 : ∀ (A : Set ℕ), A.Infinite → A.IsProportionatelyDissociated →
     ∃ (T : Set (Set ℕ)), (∀ S ∈ T, S.IsDissociated) ∧ T.Finite ∧ A = ⋃₀ T := by
   sorry
 

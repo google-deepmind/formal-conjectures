@@ -39,6 +39,7 @@ indices `i` with `lcm(aᵢ, aᵢ₊₁) ≤ x`. -/
 noncomputable def count (a : ℕ → ℕ) (x : ℕ) : ℕ :=
   {i | Nat.lcm (a i) (a (i + 1)) ≤ x}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{a_1<a_2<\cdots\}\subseteq \mathbb{N}$ be infinite and let $A(x)$ count the number of
 indices for which $\mathrm{lcm}(a_i,a_{i+1})\leq x$. Is it true that $A(x) \ll x^{1/2}$?
@@ -46,13 +47,16 @@ indices for which $\mathrm{lcm}(a_i,a_{i+1})\leq x$. Is it true that $A(x) \ll x
 The answer is yes: Tao has given a simple proof, and Erdős and Szemerédi [ErSz80] proved the
 sharp bound $A(x)\leq (c+o(1))x^{1/2}$ (see `erdos_440.variants.erdos_szemeredi`).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos440.lean#L602"]
-theorem erdos_440.parts.i : answer(True) ↔
+theorem erdos_440.parts.i :
     ∀ a : ℕ → ℕ, StrictMono a → (∀ i, 0 < a i) →
       (fun x : ℕ ↦ (count a x : ℝ)) =O[atTop] fun x : ℕ ↦ √x := by
   sorry
 
+def erdos_440.parts.ii.answer : ℝ := 1
+
+set_option linter.style.formal_proof_palomar false in
 /--
 How large can
 $$\liminf \frac{A(x)}{x^{1/2}}$$
@@ -61,17 +65,18 @@ be?
 Taking $A=\mathbb{N}$ shows that $\liminf A(x)/x^{1/2}=1$ is possible. Erdős and Szemerédi
 [ErSz80] proved that it is always $\leq 1$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question value, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos440.lean#L602"]
 theorem erdos_440.parts.ii :
     IsGreatest {l : ℝ | ∃ a : ℕ → ℕ, StrictMono a ∧ (∀ i, 0 < a i) ∧
-      l = liminf (fun x : ℕ ↦ (count a x : ℝ) / √x) atTop} answer(1) := by
+      l = liminf (fun x : ℕ ↦ (count a x : ℝ) / √x) atTop} erdos_440.parts.ii.answer := by
   sorry
 
 /-- The Erdős–Szemerédi constant $c=\sum_{n\geq 1}\frac{1}{n^{1/2}(n+1)}\approx 1.86$
 (summed here over $n = m + 1$, $m \geq 0$). -/
 noncomputable def erdosSzemerediConstant : ℝ := ∑' m : ℕ, 1 / (√(m + 1 : ℝ) * (m + 2))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Szemerédi [ErSz80] proved that $A(x)\leq (c+o(1))x^{1/2}$ where
 $$c=\sum_{n\geq 1}\frac{1}{n^{1/2}(n+1)}\approx 1.86,$$

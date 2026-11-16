@@ -44,9 +44,9 @@ a pairwise balanced design such that
 $$\lvert A_i\rvert > n^{1/2}-C$$
 for all $1\leq i\leq m$?
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_665 :
-    answer(sorry) ↔ ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop,
+    ∃ C : ℝ, 0 < C ∧ ∀ᶠ n : ℕ in atTop,
     ∃ H : Finset (Finset (Fin n)), H.IsPairwiseBalancedDesign ∧
       ∀ e ∈ H, e.card < n ∧ Real.sqrt n - C < e.card := by
   sorry

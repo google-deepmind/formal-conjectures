@@ -38,11 +38,12 @@ of length $k ≥ 4$, with $(n, d) = 1$, be a perfect power?
 
 Erdős believed not, i.e. that `Erdos672With k l` holds for all $k ≥ 4$ and $l > 1$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_672 :
-    answer(sorry) ↔ ∃ᵉ (k ≥ 4) (l > 1), ¬ Erdos672With k l := by
+    ∃ᵉ (k ≥ 4) (l > 1), ¬ Erdos672With k l := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- According to https://www.erdosproblems.com/672, Euler proved this. -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/herakles-dev/erdos672-four-squares-lean/blob/68adec55180c6103ac5511a5c91c84b25a5044f9/Erdos672/Statement.lean#L41"]
 lemma erdos_672.variants.euler :
