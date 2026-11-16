@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 247
 
 *Reference:* [erdosproblems.com/247](https://www.erdosproblems.com/247)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -37,8 +40,8 @@ $$
 $$
 transcendental?
 -/
-@[category research open, AMS 11]
-theorem erdos_247 : answer(sorry) ↔ ∀ (n : ℕ → ℕ), (StrictMono n) →
+@[category research open, question, AMS 11]
+theorem erdos_247 : ∀ (n : ℕ → ℕ), (StrictMono n) →
     atTop.limsup (fun k => (n k / k.succ : EReal)) = ⊤ →
     Transcendental ℚ (∑' k, (1 : ℝ) / 2 ^ n k) := by
   sorry

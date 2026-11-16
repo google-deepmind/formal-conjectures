@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 85
@@ -22,7 +23,9 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/85](https://www.erdosproblems.com/85)
 -/
 
-open Classical SimpleGraph Finset Filter
+@[expose] public section
+
+open SimpleGraph Finset Filter
 
 namespace Erdos85
 
@@ -31,13 +34,14 @@ Let $f(n)$ be the smallest integer for which every graph on $n$ vertices with mi
 f(n)$ contains a $C_4$.
 -/
 noncomputable def f (n : ℕ) : ℕ :=
+  open scoped Classical in
   sInf {k : ℕ | ∀ (G : SimpleGraph (Fin n)), G.minDegree ≥ k → (cycleGraph 4) ⊑ G}
 
 /--
 Is it true that, for all large $n$, $f(n + 1) \ge f(n)$?
 -/
-@[category research open, AMS 5]
-theorem erdos_85 : answer(sorry) ↔ ∀ᶠ n in atTop, f n ≤ f (n + 1) := by
+@[category research open, question, AMS 5]
+theorem erdos_85 : ∀ᶠ n in atTop, f n ≤ f (n + 1) := by
   sorry
 
 -- TODO: add connection to Ramsey number, weaker version and implied bounds from additional material.

@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 962
@@ -26,7 +28,9 @@ import FormalConjectures.Util.ProblemImports
 - [Tao](https://www.erdosproblems.com/forum/thread/962)
 -/
 
-open Classical Filter Real
+@[expose] public section
+
+open Filter Real
 
 namespace Erdos962
 
@@ -43,6 +47,7 @@ Let $k(n)$ be the maximal $k$ such that there exists $m \le n$ with
 $m+1, \ldots, m+k$ each divisible by a prime $> k$.
 -/
 noncomputable def k (n : ℕ) : ℕ :=
+  open scoped Classical in
   Nat.findGreatest (fun k => Erdos962Prop n k) n
 
 /--
@@ -50,14 +55,13 @@ Main conjecture:
 
 $\log k(n) \le (\log n)^{(1/2 + o(1))}$
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_962 :
-    answer(sorry) ↔
-      ∃ ε : ℕ → ℝ,
-        (∀ δ > 0, ∀ᶠ n in atTop, |ε n| < δ) ∧
-        ∀ᶠ n : ℕ in atTop,
-          log (k n : ℝ)
-            ≤ rpow (log n) ((1 : ℝ) / 2 + ε n) := by
+    ∃ ε : ℕ → ℝ,
+      (∀ δ > 0, ∀ᶠ n in atTop, |ε n| < δ) ∧
+      ∀ᶠ n : ℕ in atTop,
+        log (k n : ℝ)
+          ≤ rpow (log n) ((1 : ℝ) / 2 + ε n) := by
   sorry
 
 /--

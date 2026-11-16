@@ -37,7 +37,7 @@ lemma nth_divisors_zero {n : ℕ} (hn : n ≠ 0) : Nat.nth (· ∈ n.divisors) 0
 /-- Every divisor enumerated after index `0` is at least `2`. -/
 lemma two_le_nth_divisors {n : ℕ} (hn : n ≠ 0) {i : ℕ} (hi : i ≠ 0)
     (h : Nat.nth (· ∈ n.divisors) i ≠ 0) : 2 ≤ Nat.nth (· ∈ n.divisors) i := by
-  have hfin : (setOf (· ∈ n.divisors)).Finite := Set.toFinite _
+  have hfin : (Set.ofPred (· ∈ n.divisors)).Finite := n.divisors.finite_toSet
   have hpos : 1 ≤ Nat.nth (· ∈ n.divisors) i := Nat.pos_of_mem_divisors (Nat.nth_mem_of_ne_zero h)
   rcases hpos.lt_or_eq with h2 | h1
   · omega
@@ -46,5 +46,8 @@ lemma two_le_nth_divisors {n : ℕ} (hn : n ≠ 0) {i : ℕ} (hi : i ≠ 0)
       (Set.mem_Iio.mpr (Nat.lt_card_toFinset_of_nth_ne_zero
         (show Nat.nth (· ∈ n.divisors) 0 ≠ 0 by rw [nth_divisors_zero hn]; omega) hfin))
       (by rw [nth_divisors_zero hn]; omega)) hi
+
+instance instDecidablePerfect (n : ℕ) : Decidable n.Perfect :=
+  inferInstanceAs (Decidable (_ ∧ _))
 
 end Nat

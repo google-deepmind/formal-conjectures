@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1057
@@ -33,6 +34,8 @@ import FormalConjectures.Util.ProblemImports
 - [Po89] Pomerance, Carl, Two methods in elementary analytic number theory. (1989), 135--161.
 -/
 
+@[expose] public section
+
 open Nat Real Filter Set
 open scoped Topology Asymptotics
 
@@ -50,9 +53,9 @@ Is it true that $C(x)=x^{1-o(1)}$?
 
 This is discussed in problem A13 of Guy's collection [Gu04].
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1057 :
-    answer(sorry) ↔ Tendsto (fun x ↦ Real.log (carmichaelCounting x) / Real.log x) atTop (𝓝 1) := by
+    Tendsto (fun x ↦ Real.log (carmichaelCounting x) / Real.log x) atTop (𝓝 1) := by
   sorry
 
 /--
@@ -70,9 +73,9 @@ theorem erdos_1057.variants.upper_bound :
 Pomerance [Po89] gave a heuristic suggesting that this is the true order of growth, and in fact
 $C(x)= x \exp\left(-(1+o(1))\frac{\log x\log\log\log x}{\log\log x}\right)$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1057.variants.pomerance :
-    answer(sorry) ↔ Tendsto (fun x ↦
+    Tendsto (fun x ↦
       -(Real.log (carmichaelCounting x / x) * Real.log (Real.log x)) /
       (Real.log x * Real.log (Real.log (Real.log x)))) atTop (𝓝 1) := by
   sorry

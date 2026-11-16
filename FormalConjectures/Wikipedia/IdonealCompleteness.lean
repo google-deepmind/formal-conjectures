@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Idoneal numbers completeness conjecture
@@ -33,6 +33,8 @@ The Idoneal Numbers Completeness Conjecture asserts that the following list of
 - [Wikipedia: Idoneal number](https://en.wikipedia.org/wiki/Idoneal_number)
 - [OEIS A000926](https://oeis.org/A000926)
 -/
+
+@[expose] public section
 
 namespace Idoneal
 
@@ -96,10 +98,9 @@ theorem knownIdonealNumbers_are_idoneal : ∀ n ∈ knownIdonealNumbers, IsIdone
 /--
 Idoneal numbers completeness conjecture.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem idoneal_numbers_completeness :
-    answer(sorry) ↔
-      ∀ n : ℕ, IsIdoneal n → n ∈ knownIdonealNumbers := by
+    ∀ n : ℕ, IsIdoneal n → n ∈ knownIdonealNumbers := by
   sorry
 
 end Idoneal

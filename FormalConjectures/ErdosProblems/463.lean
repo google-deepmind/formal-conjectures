@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 463
 
 *Reference:* [erdosproblems.com/463](https://www.erdosproblems.com/463)
 -/
+
+@[expose] public section
 
 open Filter
 
@@ -34,8 +37,8 @@ n + f(n) < m < n + p(m)
 $$
 Here $p(m)$ is the least prime factor of $m$.
 -/
-@[category research open, AMS 11]
-theorem erdos_463 : answer(sorry) ↔ ∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
+@[category research open, question, AMS 11]
+theorem erdos_463 : ∃ (f : ℕ → ℕ) (_ : Tendsto f atTop atTop),
     ∀ᶠ n in atTop,
       ∃ m, m.Composite ∧
         n + f n < m ∧ m < n + m.minFac := by

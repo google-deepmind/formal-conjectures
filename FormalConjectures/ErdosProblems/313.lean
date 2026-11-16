@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 313
@@ -23,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 - [erdosproblems.com/313](https://www.erdosproblems.com/313)
 - [A54377](https://oeis.org/A54377) (Primary pseudoperfect numbers)
 -/
+
+@[expose] public section
 
 namespace Erdos313
 
@@ -39,8 +42,8 @@ Are there infinitely many pairs `(m, P)` where `m ≥ 2` is an integer
 and `P` is a set of distinct primes such that the following equation holds:
 $\sum_{p \in P} \frac{1}{p} = 1 - \frac{1}{m}$?
 -/
-@[category research open, AMS 11]
-theorem erdos_313 : answer(sorry) ↔ erdos313Solutions.Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_313 : erdos313Solutions.Infinite := by
   sorry
 
 @[category test, AMS 11]

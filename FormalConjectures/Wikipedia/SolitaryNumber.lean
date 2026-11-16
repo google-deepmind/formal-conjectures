@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Solitary Numbers
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Solitary number (Wikipedia)](https://en.wikipedia.org/wiki/Solitary_number)
 - [Solitary number large clubs (Wikipedia)](https://en.wikipedia.org/wiki/Solitary_number#Large_clubs)
 -/
+
+@[expose] public section
 
 open ArithmeticFunction.sigma
 
@@ -45,8 +48,8 @@ def IsSolitary (n : ℕ) : Prop := 0 < n ∧ ∀ m, Friendly m n → m = n
 **Is 10 a solitary number?**  The smallest positive integer whose solitary status is
 currently unresolved is $10$, with abundancy index $\sigma(10) / 10 = 9/5$.
 -/
-@[category research open, AMS 11]
-theorem is_ten_solitary : answer(sorry) ↔ IsSolitary 10 := by
+@[category research open, question, AMS 11]
+theorem is_ten_solitary : IsSolitary 10 := by
   sorry
 
 /--
@@ -54,9 +57,9 @@ theorem is_ten_solitary : answer(sorry) ↔ IsSolitary 10 := by
 the set of all positive integers friendly with a given $n$.  It is unknown whether any club
 is infinite.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinite_club_exists :
-    answer(sorry) ↔ ∃ n, 0 < n ∧ {m : ℕ | Friendly m n}.Infinite := by
+    ∃ n, 0 < n ∧ {m : ℕ | Friendly m n}.Infinite := by
   sorry
 
 end SolitaryNumber

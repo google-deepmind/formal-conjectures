@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 132
@@ -27,6 +28,8 @@ import FormalConjectures.Util.ProblemImports
 - [ErFi95] Erdős, Paul and Fishburn, Peter C., Multiplicities of interpoint distances in finite planar sets. Discrete Appl. Math. (1995), 141--147.
 - [HoPa34] Hopf, H. and Pannwitz, E., Aufgabe 167. Jber. Deutsch. Math. Verein. (1934), 114.
 -/
+
+@[expose] public section
 
 open Filter EuclideanGeometry
 open scoped EuclideanGeometry
@@ -60,8 +63,8 @@ Note: we restrict to $n \geq 5$ following [Er84c]; the statement is false for $n
 witnessed by two equilateral triangles of the same side-length glued together (see
 `erdos_132.variants.four_points`).
 -/
-@[category research open, AMS 52]
-theorem erdos_132.parts.i : answer(sorry) ↔ ∀ P : Finset ℝ², 5 ≤ P.card →
+@[category research open, question, AMS 52]
+theorem erdos_132.parts.i : ∀ P : Finset ℝ², 5 ≤ P.card →
     2 ≤ (lowMultiplicityDistances P).ncard := by
   sorry
 
@@ -69,8 +72,8 @@ theorem erdos_132.parts.i : answer(sorry) ↔ ∀ P : Finset ℝ², 5 ≤ P.card
 Must the number of such distances (occurring at least once but between at most $n$ pairs of
 points) $\to \infty$ as $n\to \infty$?
 -/
-@[category research open, AMS 52]
-theorem erdos_132.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_132.parts.ii :
     Tendsto minLowMultiplicityDistances atTop atTop := by
   sorry
 
@@ -89,8 +92,8 @@ By [HoPa34] the diameter always occurs at least once but at most $n$ times, so
 besides the diameter, some other distance occurring at least once but between at most $n$
 pairs of points.
 -/
-@[category research open, AMS 52]
-theorem erdos_132.variants.second_distance : answer(sorry) ↔ ∀ P : Finset ℝ², 5 ≤ P.card →
+@[category research open, question, AMS 52]
+theorem erdos_132.variants.second_distance : ∀ P : Finset ℝ², 5 ≤ P.card →
     ∃ d ∈ lowMultiplicityDistances P, d ≠ Metric.diam (P : Set ℝ²) := by
   sorry
 
@@ -130,8 +133,8 @@ theorem erdos_132.variants.convex_position (P : Finset ℝ²) (hcard : 5 ≤ P.c
 /--
 It may be true that there are at least $n^{1-o(1)}$ many such distances. In [Er97e] Erdős offers \$100 for 'any nontrivial result'.
 -/
-@[category research open, AMS 52]
-theorem erdos_132.variants.polynomial_count : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_132.variants.polynomial_count :
     ∃ E : ℕ → ℝ, E =o[atTop] (fun _ => (1 : ℝ)) ∧
       ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ (1 - E n) ≤ (minLowMultiplicityDistances n : ℝ) := by
   sorry

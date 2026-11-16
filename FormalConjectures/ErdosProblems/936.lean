@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 936
 
 *Reference:* [erdosproblems.com/936](https://www.erdosproblems.com/936)
 -/
+
+@[expose] public section
+
 open Filter Nat
 
 namespace Erdos936
@@ -31,27 +35,27 @@ The predicate that `a n` is only powerful for finitely many `n`.
 def EventuallyNotPowerful (a : ℕ → ℕ) : Prop := atTop.Eventually (fun n => ¬ (a n).Powerful)
 
 /-- Is $2^n + 1$ powerful for finitely many $n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_936.variants.two_pow_add_one :
-   answer(sorry) ↔ EventuallyNotPowerful (2 ^ · + 1) := by
+   EventuallyNotPowerful (2 ^ · + 1) := by
   sorry
 
 /-- Is $2^n - 1$ powerful for finitely many $n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_936.variants.two_pow_sub_one :
-   answer(sorry) ↔ EventuallyNotPowerful (2 ^ · - 1) := by
+   EventuallyNotPowerful (2 ^ · - 1) := by
   sorry
 
 /-- Is $n! + 1$ powerful for finitely many $n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_936.variants.factorial_add_one :
-   answer(sorry) ↔ EventuallyNotPowerful (·! + 1) := by
+   EventuallyNotPowerful (·! + 1) := by
   sorry
 
 /-- Is $n! - 1$ powerful for finitely many $n$? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_936.variants.factorial_sub_one :
-   answer(sorry) ↔ EventuallyNotPowerful (·! - 1) := by
+   EventuallyNotPowerful (·! - 1) := by
   sorry
 
 end Erdos936

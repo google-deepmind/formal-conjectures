@@ -22,8 +22,6 @@ import Mathlib.Tactic.IntervalCases
 
 @[expose] public section
 
-open scoped Classical
-
 /-! # Arithmetic Progressions
 
 Main definitions:
@@ -253,4 +251,5 @@ Define the largest possible size of a subset of a finset `s` that does not conta
 any non-trivial `k`-term arithmetic progression.
 -/
 noncomputable def Finset.maxAPFreeCard (k : ℕ) (s : Finset α) : ℕ :=
+  open scoped Classical in
   (s.powerset.filter fun t : Finset α ↦ (t : Set α).IsAPOfLengthFree k).sup Finset.card

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1146
@@ -24,7 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [Ru99] Ruzsa, I., Erdős and the Integers. Journal of Number Theory (1999), 115-163.
 -/
 
-open Classical
+@[expose] public section
+
 open scoped Pointwise
 
 namespace Erdos1146
@@ -36,6 +38,7 @@ Here, the sumset is the appropriate one for Schnirelmann density, $A \oplus B = 
 This avoids the trivial case where the sumset misses $1$ simply because neither $A$ nor $B$ contains $0$.
 -/
 def IsEssentialComponent (A : Set ℕ) : Prop :=
+  open scoped Classical in
   ∀ B : Set ℕ,
     let b := schnirelmannDensity B;
     0 < b → b < 1 → schnirelmannDensity ((A ∪ {0}) + (B ∪ {0})) > b
@@ -47,9 +50,9 @@ In [Ru99] Ruzsa states "The simplest set with a chance to be an essential compon
 collection of numbers in the form $2^m3^n$ and Erdős often asked whether it is an essential
 component or not; I do not even have a plausible guess."
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1146 :
-    answer(sorry) ↔ IsEssentialComponent { k | ∃ m n : ℕ, k = 2 ^ m * 3 ^ n } := by
+    IsEssentialComponent { k | ∃ m n : ℕ, k = 2 ^ m * 3 ^ n } := by
   sorry
 
 end Erdos1146

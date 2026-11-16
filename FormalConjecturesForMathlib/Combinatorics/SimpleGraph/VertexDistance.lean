@@ -16,19 +16,20 @@ limitations under the License.
 module
 
 public import Mathlib.Analysis.RCLike.Basic
-public import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
 public import Mathlib.Combinatorics.SimpleGraph.Metric
 public import Mathlib.Tactic.IntervalCases
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
 
 @[expose] public section
 
 namespace SimpleGraph
-open Classical
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- Distance from a vertex to a finite set. -/
 noncomputable def distToSet (G : SimpleGraph α) (v : α) (S : Set α) : ℕ :=
+  open scoped Classical in
   if h : S.toFinset.Nonempty then
     (S.toFinset.image (fun s => G.dist v s)).min' (Finset.Nonempty.image h _)
   else 0
@@ -47,27 +48,92 @@ def isInducedPath (G : SimpleGraph α) (l : List α) : Prop :=
 
 /-- The path number of a graph: The number of vertices of a largest induced path of the graph. -/
 noncomputable def path (G : SimpleGraph α) : ℕ :=
+  open scoped Classical in
   let induced_paths := Finset.univ.filter (fun s : Finset α =>
     ∃ l : List α, l.toFinset = s ∧ isInducedPath G l)
   (induced_paths.image Finset.card).max.getD 0
 
+/-- An explicit induced path witnesses a lower bound for `path`. -/
+theorem length_le_path_of_isInducedPath (G : SimpleGraph α) (l : List α)
+    (hl : G.isInducedPath l) : l.length ≤ path G := by
+  classical
+  unfold path
+  let inducedPaths := Finset.univ.filter (fun s : Finset α ↦
+    ∃ vertices : List α, vertices.toFinset = s ∧ G.isInducedPath vertices)
+  have hmem : l.toFinset ∈ inducedPaths := by
+    simp [inducedPaths]
+    exact ⟨l, rfl, hl⟩
+  have hcard : l.toFinset.card ∈ inducedPaths.image Finset.card :=
+    Finset.mem_image.mpr ⟨l.toFinset, hmem, rfl⟩
+  change l.length ≤ (inducedPaths.image Finset.card).max.getD 0
+  rw [← List.toFinset_card_of_nodup hl.1]
+  have hle := Finset.le_max hcard
+  cases hmaximum : (inducedPaths.image Finset.card).max with
+  | bot => simp [hmaximum] at hle
+  | coe maximum =>
+      rw [hmaximum] at hle
+      have hleNat : l.toFinset.card ≤ maximum := WithBot.coe_le_coe.mp hle
+      simpa [hmaximum, Option.getD] using hleNat
+
+/-- A uniform upper bound on the lengths of induced paths bounds `path`. -/
+theorem path_le_of_isInducedPath_length_le (G : SimpleGraph α) (k : ℕ)
+    (h : ∀ l : List α, G.isInducedPath l → l.length ≤ k) : path G ≤ k := by
+  classical
+  unfold path
+  let inducedPaths := Finset.univ.filter (fun s : Finset α ↦
+    ∃ vertices : List α, vertices.toFinset = s ∧ G.isInducedPath vertices)
+  change (inducedPaths.image Finset.card).max.getD 0 ≤ k
+  have hmax : (inducedPaths.image Finset.card).max ≤ (k : WithBot ℕ) := by
+    apply Finset.max_le
+    intro cardinality hcardinality
+    obtain ⟨s, hs, rfl⟩ := Finset.mem_image.mp hcardinality
+    obtain ⟨_, vertices, rfl, hvertices⟩ := Finset.mem_filter.mp hs
+    rw [List.toFinset_card_of_nodup hvertices.1]
+    exact WithBot.coe_le_coe.mpr (h vertices hvertices)
+  cases hmaximum : (inducedPaths.image Finset.card).max with
+  | bot => exact Nat.zero_le k
+  | coe maximum =>
+      have : maximum ≤ k := by
+        rw [hmaximum] at hmax
+        exact WithBot.coe_le_coe.mp hmax
+      simpa [hmaximum, Option.getD] using this
+
+/-- If `G` has no induced path on `k + 1` vertices, then `path G ≤ k`. -/
+theorem path_le_of_not_exists_inducedPath_succ (G : SimpleGraph α) (k : ℕ)
+    (h : ¬ ∃ e : Fin (k + 1) → α, Function.Injective e ∧
+      ∀ i j : Fin (k + 1), G.Adj (e i) (e j) ↔
+        i.val + 1 = j.val ∨ j.val + 1 = i.val) : path G ≤ k := by
+  classical
+  apply path_le_of_isInducedPath_length_le G k
+  intro l hl
+  by_contra hlength
+  have hprefix : k + 1 ≤ l.length := by omega
+  apply h
+  let e : Fin (k + 1) → α := fun i ↦ l.get ⟨i.val, lt_of_lt_of_le i.isLt hprefix⟩
+  refine ⟨e, ?_, ?_⟩
+  · intro i j hij
+    apply Fin.ext
+    exact congrArg (fun n : Fin l.length ↦ n.val) (hl.1.injective_get hij)
+  · intro i j
+    simpa only [e] using
+      hl.2 ⟨i.val, lt_of_lt_of_le i.isLt hprefix⟩ ⟨j.val, lt_of_lt_of_le j.isLt hprefix⟩
+
 /-- Auxiliary quantity `ecc` used in conjecture 34. -/
 noncomputable def ecc (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
   let s_comp := Finset.univ.filter (fun v => v ∉ S)
   if h : s_comp.Nonempty then
     (s_comp.image (fun v => distToSet G v S)).max' (Finset.Nonempty.image h _)
   else 0
 
-/-- The minimum, over all vertices $v \notin S$, of the distance from $v$ to the set $S$:
-$\min_{v \notin S} \operatorname{dist}(v, S)$. Returns `0` when $S = \mathrm{univ}$ (no
-vertex outside $S$).
-
-Counterpart to `ecc`: the outer minimum (instead of maximum) of the
-distance-to-set function, restricted to vertices outside $S$. -/
+/-- The minimum distance between distinct vertices of $S$:
+$\min \{\operatorname{dist}_G(u, v) \mid u, v \in S, u \ne v\}$. Returns `0` when $S$
+contains fewer than two vertices. -/
 noncomputable def distMin (G : SimpleGraph α) (S : Set α) : ℕ :=
-  let outside := Finset.univ.filter (fun v : α => v ∉ S)
-  if h : outside.Nonempty then
-    (outside.image (fun v => distToSet G v S)).min' (Finset.Nonempty.image h _)
+  open scoped Classical in
+  let pairs := (S.toFinset ×ˢ S.toFinset).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => G.dist p.1 p.2)).min' (Finset.Nonempty.image h _)
   else 0
 
 /-- The **eccentricity of a set** `S`: the maximum, over all vertices `v` of `G`, of the
@@ -76,11 +142,38 @@ which contribute distance `0`.) Returns `0` when `S` is empty.
 
 Unlike `ecc`, which restricts the outer maximum to vertices `v ∉ S`, `eccSet` does
 not exclude any vertex; it is the conventional definition of "set eccentricity"
-used in DeLaVina's WOWII conjectures 18, 145 and 146.
+used in DeLaVina's WOWII conjectures 142, 145 and 146.
 -/
 noncomputable def eccSet (G : SimpleGraph α) (S : Set α) : ℕ :=
   let dists := Finset.univ.image (fun v => distToSet G v S)
   if h : dists.Nonempty then dists.max' h else 0
+
+/-- The maximum distance between two vertices of a set `S`:
+$\operatorname{dist}_{\max}(S) = \max\{\operatorname{dist}_G(u,v) \mid u, v \in S\}$.
+Returns `0` when `S` is empty or a singleton.
+
+This is DeLaVina's `dist_max(S)` invariant ("distance between maximum degree
+vertices" when `S = M`), used in WOWII conjecture 18. It is distinct from
+`eccSet`, which measures distances from arbitrary vertices *to* the set. -/
+noncomputable def distMaxSet (G : SimpleGraph α) (S : Set α) : ℕ :=
+  open scoped Classical in
+  let members := Finset.univ.filter (fun v : α => v ∈ S)
+  (members ×ˢ members).sup (fun p => G.dist p.1 p.2)
+
+/-- The average distance between distinct vertices of a set `S`:
+$\operatorname{dist}_{\operatorname{avg}}(S)$ is the mean of $\operatorname{dist}_G(u, v)$ over
+all ordered pairs $(u, v)$ of distinct vertices of $S$. Returns `0` when $S$ contains fewer than
+two vertices.
+
+This is DeLaVina's `dist_avg(S)` invariant ("average distance between maximum degree
+vertices" when `S = M`), used in WOWII conjecture 23. It is distinct from `distavg`,
+which averages the distances from *all* vertices of `G` to the set. -/
+noncomputable def distAvgSet (G : SimpleGraph α) (S : Set α) : ℝ :=
+  open scoped Classical in
+  let pairs := (S.toFinset ×ˢ S.toFinset).filter (fun p => p.1 ≠ p.2)
+  if pairs.Nonempty then
+    (∑ p ∈ pairs, (G.dist p.1 p.2 : ℝ)) / (pairs.card : ℝ)
+  else 0
 
 /-- Average distance from all vertices to a given set. -/
 noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
@@ -90,11 +183,16 @@ noncomputable def distavg (G : SimpleGraph α) (S : Set α) : ℝ :=
     0
 
 /-- The **square** of a graph `G`, denoted `G²`: two distinct vertices are adjacent
-iff their distance in `G` is at most 2. -/
+iff their distance in `G` is at most 2.
+
+The bound uses the extended distance `SimpleGraph.edist`, which is `⊤` for unreachable
+vertices. The natural-valued `SimpleGraph.dist` is `0` there, so it would make distinct
+vertices in different components adjacent: the square of the edgeless graph on two vertices
+would be the complete graph. -/
 def graphSquare (G : SimpleGraph α) : SimpleGraph α where
-  Adj u v := u ≠ v ∧ G.dist u v ≤ 2
-  symm _ _ := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [dist_comm]⟩
-  loopless v := by simp
+  Adj u v := u ≠ v ∧ G.edist u v ≤ 2
+  symm.symm _ _ := fun ⟨hne, hd⟩ => ⟨hne.symm, by rwa [edist_comm]⟩
+  loopless.irrefl v := by simp
 
 /-- Check whether four distinct vertices form an induced 4-cycle in `G`.
 We test all three perfect-matching pairings of the four vertices to find
@@ -122,23 +220,24 @@ noncomputable def countInducedC4 (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ
     if a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d ∧
        isInducedC4 G a b c d = true then 1 else 0) / 24
 
-/-- BFS expansion: add all neighbors of S to S. -/
-def bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Finset α :=
-  S ∪ S.biUnion (fun v => Finset.univ.filter (G.Adj v))
-
-def bfs_dist_aux [DecidableEq α] [Fintype α]
-    (G : SimpleGraph α) [DecidableRel G.Adj] (target : α) :
-    ℕ → ℕ → Finset α → ℕ
+def bfs_dist_aux (G : SimpleGraph α) [DecidableRel G.Adj] (target : α) : ℕ → ℕ → Finset α → ℕ
   | 0, _, _ => 0
   | fuel + 1, depth, reached =>
     if target ∈ reached then depth
-    else bfs_dist_aux G target fuel (depth + 1) (bfs_expand G reached)
+    else bfs_dist_aux G target fuel (depth + 1) (G.bfsStep reached)
 
 /-- Computable graph distance via BFS.
 Returns 0 if u = v or if v is unreachable from u. -/
 def computable_dist (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) : ℕ :=
   if u = v then 0
-  else bfs_dist_aux G v (Fintype.card α) 1 (bfs_expand G {u})
+  else bfs_dist_aux G v (Fintype.card α) 1 (G.bfsStep {u})
+
+/-- A computable version of `distMin` for a `Finset` of vertices. -/
+def computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : ℕ :=
+  let pairs := (S ×ˢ S).filter (fun p => p.1 ≠ p.2)
+  if h : pairs.Nonempty then
+    (pairs.image (fun p => computable_dist G p.1 p.2)).min' (Finset.Nonempty.image h _)
+  else 0
 
 /-- Computable average distance as a rational. -/
 def computable_avg_dist (G : SimpleGraph α) [DecidableRel G.Adj] : ℚ :=
@@ -148,14 +247,14 @@ def computable_avg_dist (G : SimpleGraph α) [DecidableRel G.Adj] : ℚ :=
   else 0
 
 
-private lemma mem_iterate_bfs_expand_dist_le (G : SimpleGraph α) [DecidableRel G.Adj]
-    (u w : α) (n : ℕ) (hw : w ∈ (G.bfs_expand)^[n] {u}) : G.dist u w ≤ n := by
+private lemma mem_iterate_bfsStep_dist_le (G : SimpleGraph α) [DecidableRel G.Adj]
+    (u w : α) (n : ℕ) (hw : w ∈ G.bfsStep^[n] {u}) : G.dist u w ≤ n := by
   induction n generalizing w with
   | zero => simp at hw; subst hw; simp
   | succ n ih =>
     rw [Function.iterate_succ', Function.comp] at hw
-    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter] at hw
-    rcases hw with hw | ⟨a, ha_mem, _, hadj⟩
+    simp only [mem_bfsStep] at hw
+    rcases hw with hw | ⟨a, ha_mem, hadj⟩
     · exact Nat.le_succ_of_le (ih w hw)
     · by_cases ha : a = u
       · subst ha
@@ -173,23 +272,9 @@ private lemma mem_iterate_bfs_expand_dist_le (G : SimpleGraph α) [DecidableRel 
           exact le_trans (dist_le (p.append (.cons hadj .nil)))
             (by simp [Walk.length_append, Walk.length_cons, Walk.length_nil, hp]; omega)
 
-private lemma reachable_of_mem_iterate_bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj]
-    (u w : α) (n : ℕ) (hw : w ∈ (G.bfs_expand)^[n] {u}) : w = u ∨ G.Reachable u w := by
-  induction n generalizing w with
-  | zero => simp at hw; exact Or.inl hw
-  | succ n ih =>
-    rw [Function.iterate_succ', Function.comp] at hw
-    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter] at hw
-    rcases hw with hw | ⟨a, ha_mem, _, hadj⟩
-    · exact ih w hw
-    · right
-      rcases ih a ha_mem with rfl | hr
-      · exact hadj.reachable
-      · exact hr.elim fun p => (p.append (.cons hadj .nil)).reachable
-
-private lemma dist_le_mem_iterate_bfs_expand (G : SimpleGraph α) [DecidableRel G.Adj]
+private lemma dist_le_mem_iterate_bfsStep (G : SimpleGraph α) [DecidableRel G.Adj]
     (u w : α) (n : ℕ) (hdist : G.dist u w ≤ n) (hreach : w = u ∨ G.Reachable u w) :
-    w ∈ (G.bfs_expand)^[n] {u} := by
+    w ∈ G.bfsStep^[n] {u} := by
   induction n generalizing w with
   | zero =>
     rcases hreach with rfl | hr
@@ -201,14 +286,14 @@ private lemma dist_le_mem_iterate_bfs_expand (G : SimpleGraph α) [DecidableRel 
       · exact absurd hr h0
   | succ n ih =>
     rw [Function.iterate_succ', Function.comp]
-    simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion, Finset.mem_filter]
+    simp only [mem_bfsStep]
     by_cases hle : G.dist u w ≤ n
     · left; exact ih w hle hreach
     · right
       have hdist_eq : G.dist u w = n + 1 := by omega
       obtain ⟨p, hp⟩ := exists_walk_of_dist_ne_zero (by omega : G.dist u w ≠ 0)
       have hlen : p.length = n + 1 := by omega
-      refine ⟨p.getVert n, ?_, Finset.mem_univ _, ?_⟩
+      refine ⟨p.getVert n, ?_, ?_⟩
       · exact ih _ (le_trans (dist_le (p.take n))
           (by rw [Walk.take_length]; omega)) (Or.inr (p.take n).reachable)
       · have := p.adj_getVert_succ (show n < p.length from by omega)
@@ -221,11 +306,11 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
   · subst h; simp [dist_self]
   · symm
     suffices hsuff : ∀ (fuel depth : ℕ) (reached : Finset α),
-        (∀ w, w ∈ reached ↔ w ∈ (G.bfs_expand)^[depth] {u}) →
-        (∀ d, d < depth → v ∉ (G.bfs_expand)^[d] {u}) →
+        (∀ w, w ∈ reached ↔ w ∈ G.bfsStep^[depth] {u}) →
+        (∀ d, d < depth → v ∉ G.bfsStep^[d] {u}) →
         fuel + depth ≥ Fintype.card α + 1 →
         G.bfs_dist_aux v fuel depth reached = G.dist u v by
-      exact hsuff (Fintype.card α) 1 (G.bfs_expand {u})
+      exact hsuff (Fintype.card α) 1 (G.bfsStep {u})
         (fun w => by simp)
         (fun d hd => by
           have := Nat.lt_of_lt_of_le hd (Nat.le_refl 1)
@@ -245,36 +330,48 @@ theorem dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] (u v : α) 
           _ < Fintype.card α := hp_path.length_lt
           _ < depth := by omega
       exact h_not_found (G.dist u v) this
-        (dist_le_mem_iterate_bfs_expand G u v _ (le_refl _) (Or.inr hr))
+        (dist_le_mem_iterate_bfsStep G u v _ (le_refl _) (Or.inr hr))
     | succ fuel ih =>
       intro depth reached h_inv h_not_found h_fuel
       simp only [bfs_dist_aux]
       split_ifs with hv
       · -- v ∈ reached = iterate^depth {u}. Show depth = dist u v.
-        have hle := mem_iterate_bfs_expand_dist_le G u v depth ((h_inv v).mp hv)
+        have hle := mem_iterate_bfsStep_dist_le G u v depth ((h_inv v).mp hv)
         -- dist u v ≥ depth: if dist < depth, v ∈ iterate^(dist u v), contradicts h_not_found
         by_contra hne
         have hlt : G.dist u v < depth := by omega
-        have hreach : G.Reachable u v := by
-          rcases reachable_of_mem_iterate_bfs_expand G u v depth ((h_inv v).mp hv) with rfl | hr
-          · exact absurd rfl h
-          · exact hr
+        have hreach : G.Reachable u v := G.reachable_of_mem_iterate_bfsStep ((h_inv v).mp hv)
         exact h_not_found (G.dist u v) hlt
-          (dist_le_mem_iterate_bfs_expand G u v _ (le_refl _) (Or.inr hreach))
+          (dist_le_mem_iterate_bfsStep G u v _ le_rfl (Or.inr hreach))
       · -- v ∉ reached. Recurse.
-        have h_inv' : ∀ w, w ∈ G.bfs_expand reached ↔
-            w ∈ (G.bfs_expand)^[depth + 1] {u} := by
+        have h_inv' : ∀ w, w ∈ G.bfsStep reached ↔
+            w ∈ G.bfsStep^[depth + 1] {u} := by
           intro w
-          have heq : G.bfs_expand reached = G.bfs_expand ((G.bfs_expand)^[depth] {u}) := by
-            ext x; simp only [bfs_expand, Finset.mem_union, Finset.mem_biUnion,
-              Finset.mem_filter, h_inv]
+          have heq : G.bfsStep reached = G.bfsStep (G.bfsStep^[depth] {u}) := by
+            ext x; simp only [mem_bfsStep, h_inv]
           rw [heq, Function.iterate_succ', Function.comp]
-        exact ih (depth + 1) (G.bfs_expand reached) h_inv'
+        exact ih (depth + 1) (G.bfsStep reached) h_inv'
           (fun d hd => by
             rcases Nat.lt_succ_iff_lt_or_eq.mp hd with hd | hd
             · exact h_not_found d (by omega)
             · subst hd; rwa [h_inv] at hv)
           (by omega)
+
+/-- `computableDistMin` agrees with `distMin` on a finite vertex set. -/
+theorem distMin_eq_computableDistMin (G : SimpleGraph α) [DecidableRel G.Adj]
+    (S : Finset α) : distMin G (S : Set α) = computableDistMin G S := by
+  unfold distMin computableDistMin
+  simp only [Finset.toFinset_coe]
+  split_ifs
+  · congr 1
+    ext n
+    simp only [Finset.mem_image]
+    constructor
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, (dist_eq_computable G p.1 p.2).symm⟩
+    · rintro ⟨p, hp, rfl⟩
+      exact ⟨p, hp, dist_eq_computable G p.1 p.2⟩
+  · rfl
 
 theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     averageDistance G = (computable_avg_dist G : ℝ) := by
@@ -292,6 +389,12 @@ theorem avg_dist_eq_computable (G : SimpleGraph α) [DecidableRel G.Adj] :
     ring
   · simp
 
+
+/-- `distEven G v` counts the vertices at even distance from `v` in `G`. This is
+DeLaVina's `dist_even(v)` invariant appearing in several WOWII conjectures.
+Distance zero is even, so `v` itself is always counted. -/
+noncomputable def distEven (G : SimpleGraph α) (v : α) : ℕ :=
+  (Finset.univ.filter fun w => Even (G.dist v w)).card
 
 /-- The set of pairs of distinct vertices with even distance > 0. -/
 noncomputable def evenDistancePairs (G : SimpleGraph α) : Finset (α × α) :=

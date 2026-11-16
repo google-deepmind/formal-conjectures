@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 12
@@ -22,6 +23,8 @@ import FormalConjectures.Util.ProblemImports
 References:
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.12)
 -/
+
+@[expose] public section
 
 namespace Green12
 
@@ -34,8 +37,8 @@ such that $x_i + y_j \in A$ whenever $j \in \{i, i+1, i+2\}$?
 
 Note: We interpret indices modulo 5.
 -/
-@[category research open, AMS 5 11]
-theorem green_12 : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem green_12 :
     ∀ {G : Type*} [AddCommGroup G] [Fintype G] [DecidableEq G],
     ∀ (A : Finset G),
     let N := Fintype.card G

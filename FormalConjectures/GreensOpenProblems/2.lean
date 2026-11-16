@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 2
@@ -32,6 +33,8 @@ References:
   sum-free sets via large Sidon sets. Colloq. Math., 86(2):171–176, 2000.
   doi:10.4064/cm-86-2-171-176.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
@@ -51,8 +54,8 @@ def maxRestrictedSumAvoidingSubsetSize (A : Finset ℤ) : ℕ :=
 Let $A \subset \mathbf{Z}$ be a set of $n$ integers. Is there a set $S \subset A$ of size
 $(\log n)^{100}$ such that the restricted sumset$S \hat{+} S$ is disjoint from $A$?
 -/
-@[category research open, AMS 11]
-theorem green_2 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem green_2 :
     ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℤ, A.card = n →
       (maxRestrictedSumAvoidingSubsetSize A : ℝ) ≥ (Real.log n) ^ 100 := by
   sorry

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 329: Maximum Density of Sidon Sets
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [AlMi25] B. Alexeev and D. G. Mixon, Forbidden Sidon subsets of perfect difference sets, featuring a human-assisted proof. [arXiv:2510.19804](https://arxiv.org/abs/2510.19804) (2025).
 - [Ha47] Hall, Jr., Marshall, Cyclic projective planes. Duke Math. J. (1947), 1079--1090.
 -/
+
+@[expose] public section
 
 open Function Set Filter
 
@@ -40,15 +43,17 @@ noncomputable def sqrtPartialDensity (A : Set ℕ) (N : ℕ) : ℝ :=
 noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
   limsup (fun N => sqrtPartialDensity A N) atTop
 
+def erdos_329.answer : ℝ := sorry
+
 /--
 **Erdős Problem 329.**
 Let `A ⊆ ℕ` be a Sidon set. How large can
 `lim sup_{N → ∞} |A ∩ {1,…,N}| / N^{1/2}`
 be?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
-    answer(sorry) := by
+    erdos_329.answer := by
   sorry
 
 /--

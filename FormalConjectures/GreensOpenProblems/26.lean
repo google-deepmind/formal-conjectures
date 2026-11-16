@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Green's Open Problem 26
@@ -27,6 +28,8 @@ References:
   fields." Journal of Combinatorial Theory, Series A 57.2 (1991): 203-210.
 - [Yu25] Yu, Yang. "Note on the Additive Basis Conjecture." arXiv preprint arXiv:2510.01300 (2025).
 -/
+
+@[expose] public section
 
 open Set
 open scoped Pointwise
@@ -78,9 +81,9 @@ theorem green_26.variants.alm91 :
   sorry
 
 /-- The analogous problem in $\mathbb{F}^n_p$ remains open. [Gr24] -/
-@[category research open, AMS 5 11 15]
+@[category research open, question, AMS 5 11 15]
 theorem green_26.variants.open :
-    answer(sorry) ↔ ∀ (p : ℕ) [Fact p.Prime],
+    ∀ (p : ℕ) [Fact p.Prime],
       (∃ C, ∀ n, ∀ A : Fin C → Set (𝔽 p n), (∀ i, IsCube (A i)) →
       ∑ i, A i = univ) := by
   sorry

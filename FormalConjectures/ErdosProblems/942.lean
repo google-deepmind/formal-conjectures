@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 942
 
 *Reference:* [erdosproblems.com/942](https://www.erdosproblems.com/942)
 -/
+
+@[expose] public section
 
 open Nat Filter Topology
 
@@ -35,8 +38,8 @@ def erdos_942.h (n : ℕ) : ℕ := ((Finset.Ico (n ^ 2) ((n + 1) ^ 2)).filter Po
 Is there some constant $c > 0$ such that $h(n) < (\log n)^{c + o(1)}$ and, for infinitely many $n$,
 $h(n) > (\log n)^{c - o(1)}$.
 -/
-@[category research open, AMS 11]
-theorem erdos_942 : answer(sorry) ↔ ∃ c > 0, ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
+@[category research open, question, AMS 11]
+theorem erdos_942 : ∃ c > 0, ∃ (o : ℕ → ℝ), o =o[atTop] (1 : ℕ → ℝ) ∧
     (∀ᶠ n in atTop, erdos_942.h n < (Real.log n) ^ (c + o n)) ∧
     {n | erdos_942.h n > (Real.log n) ^ (c - o n)}.Infinite := by
   sorry

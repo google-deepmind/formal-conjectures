@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Gourevitch's series identity
@@ -25,11 +26,13 @@ import FormalConjectures.Util.ProblemImports
  - [A2025] Au, Kam Cheong. "Wilf-Zeilberger seeds and non-trivial hypergeometric identities." Journal of Symbolic Computation 130 (2025): 102421. [arXiv:2312.14051](https://arxiv.org/abs/2312.14051)
 -/
 
+@[expose] public section
+
 namespace Gourevitch
-  
+
 
 /-- The Gourevitch series identity:
-The following idenitity holds:
+The following identity holds:
 $\sum_{n=0}^{\infty} \frac{1 + 14 n + 76 n^2 + 168 n^3}{2^{20 n}} \binom{2n}{n}^7 = \frac{32}{\pi^3}.$
 This was originally conjectured in [G2003] by Guillera and proven in [A2025] by Au.
 -/

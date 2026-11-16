@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Pierce–Birkhoff conjecture
@@ -29,16 +30,18 @@ Melvin Henriksen and John R. Isbell.
 The conjecture has been proved for `n = 1` and `n = 2` by Louis Mahé.
 -/
 
+@[expose] public section
+
 namespace PierceBirkhoff
 
 /--
-A set is semi-algebraic in `ℝⁿ` if it can be described by a finite union of sets defined by
-multivariate polynomial equations and inequalities.
+A set is semi-algebraic in `ℝⁿ` if it can be described by a finite union of sets, each defined by
+finitely many simultaneous multivariate polynomial equations and strict inequalities.
 -/
 def IsSemiAlgebraic {n : ℕ} (S : Set (Fin n → ℝ)) : Prop :=
-  ∃ (ι₀ ι₁ : Type) (p₀ : ι₀ → MvPolynomial (Fin n) ℝ) (p₁ : ι₁ → MvPolynomial (Fin n) ℝ),
-    Finite ι₀ ∧ Finite ι₁ ∧
-    S = (⋃ i, {x | MvPolynomial.eval x (p₀ i) = 0}) ∪ ⋃ i, {x | MvPolynomial.eval x (p₁ i) > 0}
+  ∃ (ι : Type) (p₀ p₁ : ι → Finset (MvPolynomial (Fin n) ℝ)), Finite ι ∧
+    S = ⋃ i, {x | (∀ p ∈ p₀ i, MvPolynomial.eval x p = 0) ∧
+      ∀ p ∈ p₁ i, MvPolynomial.eval x p > 0}
 
 /--
 A set is semi-algebraic in `ℝ` if it can be described by a finite boolean combination

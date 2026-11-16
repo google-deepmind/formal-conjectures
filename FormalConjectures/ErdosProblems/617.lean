@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 617
@@ -24,6 +25,8 @@ import FormalConjectures.Util.ProblemImports
 - [ErGy99] Erdős, Paul and Gyárfás, András, Split and balanced colorings of complete graphs.
   Discrete Math. (1999), 79-86.
 -/
+
+@[expose] public section
 
 namespace Erdos617
 

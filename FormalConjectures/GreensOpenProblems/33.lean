@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 33
@@ -27,6 +28,8 @@ import FormalConjectures.Util.ProblemImports
   Additive combinatorics 43.207-233 (2007): 1.
 -/
 
+@[expose] public section
+
 open Filter
 open scoped Pointwise
 
@@ -36,14 +39,13 @@ namespace Green33
 Are there infinitely many $q$ for which there is a set $A \subset \mathbb{Z}/q\mathbb{Z}$,
 $|A| = (\sqrt{2} + o(1))q^{1/2}$, with $A + A = \mathbb{Z}/q\mathbb{Z}$? [Gr24]
 -/
-@[category research open, AMS 5 11]
+@[category research open, question, AMS 5 11]
 theorem green_33 :
-    answer(sorry) ↔
-      ∀ ε : ℝ, 0 < ε →
-        ∃ᶠ q : ℕ+ in atTop,
-          ∃ A : Finset (ZMod q),
-            A + A = Finset.univ ∧
-            |((A.card : ℝ) / Real.sqrt q - Real.sqrt 2)| < ε := by
+    ∀ ε : ℝ, 0 < ε →
+      ∃ᶠ q : ℕ+ in atTop,
+        ∃ A : Finset (ZMod q),
+          A + A = Finset.univ ∧
+          |((A.card : ℝ) / Real.sqrt q - Real.sqrt 2)| < ε := by
   sorry
 
 /-- Trivial lower bound: if $A + A = \mathbb{Z}/q\mathbb{Z}$, then $|A|^2 \geq q$,

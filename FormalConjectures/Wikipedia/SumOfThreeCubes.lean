@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Sum of three cubes
@@ -27,6 +28,8 @@ An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and
  - [mathoverflow/100324](https://mathoverflow.net/a/100324)
 asked by user [*David Feldman*](https://mathoverflow.net/users/10909/david-feldman)
 -/
+
+@[expose] public section
 
 namespace SumOfThreeCubes
 
@@ -86,9 +89,9 @@ theorem isSumOfThreeCubesRat_any (r : ℚ) : IsSumOfThreeCubes r := by
 
 /-- An integer `n : ℤ` can be written as a sum of three cubes (of integers) if and only if
 `n` is not `4` or `5` mod `9`. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem isSumOfThreeCubes_iff_mod_9 :
-    answer(sorry) ↔ ∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9]) := by
+    ∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9]) := by
   sorry
 
 end SumOfThreeCubes

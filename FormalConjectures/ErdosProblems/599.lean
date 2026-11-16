@@ -13,17 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 599
 
-*References:* 
+*References:*
 - [erdosproblems.com/599](https://www.erdosproblems.com/599)
 - [AhBe09] Aharoni, Ron and Berger, Eli, *Menger's theorem for infinite graphs*,
   *Invent. Math.* **176** (2009), 1--62.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
@@ -40,8 +43,8 @@ every path from $A$ to $B$ contains at least one vertex of $S$?
 For finite $G$ this is equivalent to Menger's theorem. The answer is **yes**, proved by
 Aharoni and Berger [AhBe09].
 -/
-@[category research solved, AMS 5]
-theorem erdos_599 : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_599 :
     ∀ (V : Type) (G : SimpleGraph V) (A B : Set V),
       Disjoint A B → G.IsIndepSet A → G.IsIndepSet B →
       ∃ (ι : Type) (a b : ι → V) (p : ∀ i, G.Walk (a i) (b i)) (S : Set V),

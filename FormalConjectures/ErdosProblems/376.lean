@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 376
@@ -22,13 +23,15 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [erdosproblems.com/376](https://www.erdosproblems.com/376)
 -/
 
+@[expose] public section
+
 namespace Erdos376
 
 /--
 Are there infinitely many $n$ such that ${2n\choose n}$ is coprime to $105$?
 -/
-@[category research open, AMS 11]
-theorem erdos_376 : answer(sorry) ↔ { (n : ℕ) | n.centralBinom.Coprime 105 }.Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_376 : { (n : ℕ) | n.centralBinom.Coprime 105 }.Infinite := by
   sorry
 
 /--

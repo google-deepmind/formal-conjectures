@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Dedekind Numbers
@@ -45,6 +46,8 @@ In particular, the value of $M(10)$ is currently unknown.
 - [Oeis/A372](https://oeis.org/A000372)
 
 -/
+
+@[expose] public section
 
 namespace DedekindNumber
 
@@ -134,12 +137,7 @@ lemma supp_χ {n : ℕ} (s : Finset (Fin n)) : supp (χ s) = s := by
 
 @[category API, AMS 6]
 lemma χ_le_iff {n : ℕ} (s t : Finset (Fin n)) : χ s ≤ χ t ↔ s ⊆ t := by
-  constructor
-  · intro h i hi
-    contrapose! h
-    exact fun H => by have := H i; simp_all +decide [ χ ]
-  · intro h i; simp [χ];
-    by_cases hi : i ∈ s <;> simp_all +decide [ Finset.subset_iff ]
+  simp [χ, Pi.le_def, Finset.subset_iff, Bool.le_iff_imp]
 
 @[category API, AMS 6]
 lemma mem_supp_iff {n : ℕ} (v : Fin n → Bool) (i : Fin n) : i ∈ supp v ↔ v i = true := by
@@ -261,18 +259,22 @@ efficient for large $n$.
 theorem M_eq_kisielewiczFormula : M = kisielewiczFormula := by
   sorry
 
+def M_eq.answer : ℕ → ℕ := sorry
+
 /--
   No closed-form expression that allows efficient computation of Dedekind numbers is
   currently known.
 -/
-@[category research open, AMS 5 6]
-theorem M_eq : M = answer(sorry) := by
+@[category research open, question value, AMS 5 6]
+theorem M_eq : M = M_eq.answer := by
   sorry
+
+def Dedekind_10.answer : ℕ := sorry
 
 /--
   In particular, the Dedekind number for `n = 10` is currently unknown.
 -/
-@[category research open, AMS 5 6]
-theorem Dedekind_10 : M 10 = answer(sorry) := by sorry
+@[category research open, question value, AMS 5 6]
+theorem Dedekind_10 : M 10 = Dedekind_10.answer := by sorry
 
 end DedekindNumber

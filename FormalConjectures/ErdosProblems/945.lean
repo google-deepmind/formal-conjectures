@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjectures.Util.ProblemImports
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 945
@@ -22,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
  - [erdosproblems.com/945](https://www.erdosproblems.com/945)
  - [ErMi52] Erdős, P. and Mirsky, L., The distribution of values of the divisor function {$d(n)$}. Proc. London Math. Soc. (3) (1952), 257--271.
 -/
+
+@[expose] public section
 
 open Filter Real
 
@@ -36,15 +40,15 @@ noncomputable def F (x : ℝ) : ℕ :=
   sSup {k | ∃ (n : ℕ), n + k ≤ x ∧ (Set.Ioc n (n + k)).InjOn τ}
 
 -- Implementation note: we define a Prop here and below to be able to easily formulate
--- the equivalence between the two variants. Because the theorems require `answer(sorry)` we
+-- the equivalence between the two variants. Because the theorems have an unknown `answer` we
 -- can't handle this with `type_of%`.
 def Erdos945Prop : Prop := ∃ O : ℝ → ℝ, O =O[atTop] (1 : ℝ → ℝ) ∧ ∀ᶠ x in atTop, F x ≤ log x ^ O x
 
 /--
 Is it true that $F(x) \leq (\log x)^{O(1)}$?
 -/
-@[category research open, AMS 11]
-theorem erdos_945 : answer(sorry) ↔ Erdos945Prop := by
+@[category research open, question, AMS 11]
+theorem erdos_945 : Erdos945Prop := by
   sorry
 
 def Erdos945Constant : Prop :=
@@ -58,8 +62,8 @@ def Erdos945Constant : Prop :=
 Is there a constant $C > 0$ such that, for all large $x$, every interval $[x, x+(\log x)C]$
 contains two integers with the same number of divisors?
 -/
-@[category research open, AMS 11]
-theorem erdos_945.variants.constant : answer(sorry) ↔ Erdos945Constant := by
+@[category research open, question, AMS 11]
+theorem erdos_945.variants.constant : Erdos945Constant := by
   sorry
 
 -- TODO(firsching): show equivalence

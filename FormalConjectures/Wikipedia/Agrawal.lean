@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Agrawal's conjecture
@@ -32,6 +33,8 @@ $(X-1)^n \equiv X^n-1 \pmod{n, X^r-1}$ holds, then $n$ is either prime or $n^2 \
 - [Paper](https://eprint.iacr.org/2009/008.pdf)
 -/
 
+@[expose] public section
+
 open Polynomial
 
 namespace AgrawalConjecture
@@ -45,9 +48,8 @@ $n$ is prime (with a specific exception for $n^2 \equiv 1 \pmod{r}$)?
 While the "if" direction is a known theorem, the "only if" direction
 remains a conjecture.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem agrawal_conjecture :
-  answer(sorry) ↔
     ∀ (n r : ℕ), n > 1 → r > 0 → n.gcd r = 1 →
       let R := Polynomial (ZMod n)
       let X : R := Polynomial.X

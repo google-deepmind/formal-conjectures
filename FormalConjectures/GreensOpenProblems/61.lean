@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 61
@@ -23,6 +24,8 @@ import FormalConjectures.Util.ProblemImports
 
 This problem was originally considered by Erdős and Newman.
 -/
+
+@[expose] public section
 
 open scoped Pointwise Topology
 open Filter
@@ -35,13 +38,12 @@ Suppose that $A + A$ contains the first $n$ squares. Is $|A| \geq n^{1 - o(1)}$?
 It is known that necessarily $|A| \geq n^{2/3 - o(1)}$, whilst in the other direction there do
 exist such $A$ with $|A| \ll_C n / \log^C n$ for any $C$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_61 :
-    answer(sorry) ↔
-      ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
-        ∀ n : ℕ, n ≥ 1 → ∀ (A : Finset ℕ),
-          (Finset.Icc 1 n).image (· ^ 2) ⊆ A + A →
-            (n : ℝ) ^ (1 - f n) ≤ A.card := by
+    ∃ f : ℕ → ℝ, Tendsto f atTop (𝓝 0) ∧
+      ∀ n : ℕ, n ≥ 1 → ∀ (A : Finset ℕ),
+        (Finset.Icc 1 n).image (· ^ 2) ⊆ A + A →
+          (n : ℝ) ^ (1 - f n) ≤ A.card := by
   sorry
 
 end Green61

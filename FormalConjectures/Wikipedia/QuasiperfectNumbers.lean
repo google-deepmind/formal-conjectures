@@ -13,15 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Quasiperfect Numbers
 
-*Reference:* 
+*Reference:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Quasiperfect_number)
 -/
+
+@[expose] public section
 
 namespace QuasiperfectNumbers
 
@@ -29,8 +32,8 @@ open Nat
 
 open scoped ArithmeticFunction.sigma
 
-/-- 
-A number is quasiperfect if the sum of its divisors is equal to $2n + 1$. 
+/--
+A number is quasiperfect if the sum of its divisors is equal to $2n + 1$.
 -/
 def Quasiperfect (n : ℕ) : Prop :=
   σ 1 n = 2 * n + 1
@@ -39,9 +42,9 @@ def Quasiperfect (n : ℕ) : Prop :=
 **Quasiperfect Numbers Conjecture.**
 Do quasiperfect numbers exist?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem exists_quasiperfect :
-    answer(sorry) ↔ ∃ n, Quasiperfect n := by
+    ∃ n, Quasiperfect n := by
   sorry
 
 end QuasiperfectNumbers

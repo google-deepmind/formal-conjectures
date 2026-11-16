@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 18
@@ -28,6 +29,8 @@ import FormalConjectures.Util.ProblemImports
 - [Go01] Gowers, William T. "A new proof of Szemerédi's theorem." Geometric & Functional Analysis
   GAFA 11.3 (2001): 465-588.
 -/
+
+@[expose] public section
 
 open Finset
 
@@ -53,8 +56,8 @@ all lie in $A$?
 
 Note: A is taken as $\alpha$-dense, i.e. $|A| \ge \alpha |G|^2$ [Au16, Question 2]
 -/
-@[category research open, AMS 5 11 20]
-theorem green_18 : answer(sorry) ↔
+@[category research open, question, AMS 5 11 20]
+theorem green_18 :
     ∀ α > 0, ∃ c > 0, ∃ m₀ : ℕ,
       ∀ (G : Type*) [Group G] [Fintype G] [DecidableEq G] (A : Finset (G × G)),
       Fintype.card G ≥ m₀ →

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 826
 
 *Reference:* [erdosproblems.com/826](https://www.erdosproblems.com/826)
 -/
+
+@[expose] public section
 
 open scoped ArithmeticFunction.sigma
 
@@ -32,8 +35,8 @@ $$
   \tau(n + k) \ll k?
 $$
 -/
-@[category research open, AMS 11]
-theorem erdos_826 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_826 :
     ∃ C > (0 : ℝ), { n | ∀ k ≥ 1, σ 0 (n + k) ≤ C * k }.Infinite := by
   sorry
 

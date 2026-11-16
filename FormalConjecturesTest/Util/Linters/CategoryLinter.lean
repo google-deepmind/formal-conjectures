@@ -13,8 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.Linters.CategoryLinter
+public meta import FormalConjecturesUtil.Linters.CategoryLinter
+
+@[expose] public section
+
+-- Off by default; on here because this file is what tests it.
+set_option linter.style.category_attribute true
 
 namespace CategoryLinter
 
@@ -71,12 +77,56 @@ Note: This linter can be disabled with `set_option linter.style.category_attribu
 example : 1 + 1 = 2 := by
   rfl
 
-/-- warning: If a problem has a sorry-free proof, it should not be categorised as `open`. -/
+/--
+warning: If a problem has a sorry-free proof, it should not be categorised as `open`.
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
 #guard_msgs in
 /-- A highly non-trivial theorem with a helpful hypothesis -/
 @[category research open]
 theorem test_theorem_with_docstring : 1 + 1 = 2 := by
   rfl
+
+/--
+warning: If a problem has a sorry-free proof, it should not be categorised as `open`.
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
+#guard_msgs in
+@[category research open]
+lemma test_lemma_sorry_free : 1 + 1 = 2 := by
+  rfl
+
+-- The `category` attribute on an `example` records no tag, and an `example` leaves no
+-- declaration to look a proof up under, so the sorry-free check cannot reach it. The
+-- attribute check above still applies.
+#guard_msgs in
+@[category research open]
+example : 1 + 1 = 2 := by
+  rfl
+
+/--
+warning: If a problem has a sorry-free proof, it should not be categorised as `open`.
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
+#guard_msgs in
+@[category research open]
+private theorem test_private_sorry_free : 1 + 1 = 2 := by
+  rfl
+
+-- A proof given by match alternatives rather than `:=` is still a `declVal`.
+/--
+warning: Missing problem category attribute
+
+Note: This linter can be disabled with `set_option linter.style.category_attribute false`
+-/
+#guard_msgs in
+/-- A highly non-trivial theorem proved by cases -/
+theorem test_theorem_match : ∀ l : List Nat, l = l
+  | [] => rfl
+  | _ :: _ => rfl
 
 #guard_msgs in
 @[category research open]

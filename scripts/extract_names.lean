@@ -13,34 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Lean
-import FormalConjectures.Util.Attributes.Basic
-import FormalConjectures.Util.Answer
+public import Lean
+public meta import FormalConjecturesUtil.Metadata
+public import FormalConjecturesUtil.Attributes.Basic
 
 /-!
 # Extract Names
 
 This script extracts metadata (theorem names, statements, categories, subjects,
-formal proof links, and answer kinds) from formalized mathematical conjectures
-in the repository.
+formal proof links, and whether the source poses the statement as a question) from
+formalized mathematical conjectures in the repository.
 
 ### Usage
+
+The script reads the compiled `.olean` files, so build the problems first.
 ```bash
-# Compile with postpone setting for answerKind extraction
-lake build FormalConjecturesAnswerPostpone
+lake build
 lake exe extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]
 ```
-
-**IMPORTANT NOTE**: Make sure to build with `lake build FormalConjecturesAnswerPostpone`
-before running this script. This compiles the library under `weak.google.answer = "postpone"`
-mode, allowing `extract_names` to correctly locate and extract `answerKinds` (Prop vs
-non-Prop answer metadata). Otherwise, `answer(sorry)` simplifies to `True` during
-default elaboration, and `answerKinds` will always be extracted as `[]` for `Prop`
-valued answers.
 -/
 
-open Lean ProblemAttributes Google
+@[expose] public meta section
+
+open Lean ProblemAttributes
 
 def getModuleNameFromFile (file : System.FilePath) : IO Name := do
   let components := file.withExtension "" |>.components
@@ -69,28 +66,6 @@ def formalProofKindToString : FormalProofKind → String
   | .lean4 => "lean4"
   | .otherSystem => "other_system"
 
-def nameAny (n : Name) (p : String → Bool) : Bool :=
-  match n with
-  | .anonymous => false
-  | .str p' s => p s || nameAny p' p
-  | .num p' _ => nameAny p' p
-
-def isInternal (n : Name) : Bool :=
-  nameAny n (fun s => s.startsWith "_" || s.startsWith "match_" || s.startsWith "proof_")
-
-/-- Determine the `answerKinds` for a theorem's type expression.
-
-For each `answer(...)` occurrence found in the type,
-returns `"Prop"` or `"non-Prop"` depending on the type
-of the annotated subexpression. -/
-def getAnswerKinds (type : Expr) : MetaM (List String) := do
-  let ansExprs := findAnswerExprs type
-  ansExprs.toList.mapM fun ansExpr => do
-    if ← Meta.isProp ansExpr then
-      return "Prop"
-    else
-      return "non-Prop"
-
 /-- Run a git command and return its stdout, trimmed. Returns `none` on failure. -/
 def gitOutput (args : Array String) : IO (Option String) := do
   try
@@ -112,9 +87,13 @@ def getFileLastModified (file : System.FilePath) : IO (Option String) :=
 
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
-  ["docstring", "statement", "subjects", "formalProofKind", "formalProofLink",
-   "hasSorryFreeProof", "moduleDocstrings", "answerKinds", "fileFirstAdded",
-   "fileLastModified"]
+  ["docstring", "statement", "subjects", "formalProofs",
+   "hasSorryFreeProof", "moduleDocstrings", "question",
+   "fileFirstAdded", "fileLastModified"]
+
+-- `FormalProofInfo` and its ordering live in `FormalConjecturesUtil.Metadata`,
+-- the shared home for facts more than one tool consumes.
+open FormalConjectures.Metadata
 
 structure TheoremInfo where
   «theorem» : String
@@ -123,11 +102,12 @@ structure TheoremInfo where
   subjects : List String
   statement : String
   docstring : Option String
-  formalProofKind : Option String
-  formalProofLink : Option String
+  formalProofs : List FormalProofInfo
   hasSorryFreeProof : Bool
   subsets : List String
-  answerKinds : List String
+  /-- The kind of question (`"yes_no"` or `"value"`) if the declaration carries the
+  `question` attribute. -/
+  question : Option String
   fileFirstAdded : Option String
   fileLastModified : Option String
 
@@ -141,15 +121,14 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
     ++ (if exclude.contains "subjects" then [] else [("subjects", toJson info.subjects)])
     ++ (if exclude.contains "statement" then [] else [("statement", toJson info.statement)])
     ++ (if exclude.contains "docstring" then [] else [("docstring", toJson info.docstring)])
-    ++ (if exclude.contains "formalProofKind" then [] else
-        [("formalProofKind", toJson info.formalProofKind)])
-    ++ (if exclude.contains "formalProofLink" then [] else
-        [("formalProofLink", toJson info.formalProofLink)])
+    ++ (if exclude.contains "formalProofs" || info.formalProofs.isEmpty then [] else
+        [("formalProofs", Json.arr (info.formalProofs.map FormalProofInfo.toJson).toArray)])
     ++ (if exclude.contains "hasSorryFreeProof" then [] else
         [("hasSorryFreeProof", toJson info.hasSorryFreeProof)])
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
-    ++ (if exclude.contains "answerKinds" then [] else
-        [("answerKinds", toJson info.answerKinds)])
+    ++ (match info.question with
+        | some kind => if exclude.contains "question" then [] else [("question", toJson kind)]
+        | none => [])
     ++ (if exclude.contains "fileFirstAdded" then [] else
         [("fileFirstAdded", toJson info.fileFirstAdded)])
     ++ (if exclude.contains "fileLastModified" then [] else
@@ -160,7 +139,7 @@ instance : ToJson TheoremInfo where
   toJson info := info.toFilteredJson
 
 unsafe def runWithImports {α : Type} (moduleNames : Array Name) (actionToRun : CoreM α) : IO α := do
-  initSearchPath (← findSysroot)
+  initSearchPath (← getBuildDir)
   let imports := moduleNames.map fun n => { module := n }
   let currentCtx := { fileName := "", fileMap := default }
   Lean.enableInitializersExecution
@@ -207,20 +186,23 @@ unsafe def main (args : List String) : IO Unit := do
     | _ =>
       let usageMsg :=
         "Usage: extract_names [directory-or-file] [--exclude=key1,key2] [--no-docstrings]\n\n" ++
-        "Note: Make sure to run `lake build FormalConjecturesAnswerPostpone` before running " ++
-        "this script so that `answerKind` metadata is extracted correctly."
+        "Note: Build first."
       throw <| IO.userError usageMsg
 
-  -- Pre-compute git timestamps for each file and build module name array
+  -- Pre-compute git timestamps for each file and build module name array (only when not excluded)
+  let needFirstAdded := !excludeSet.contains "fileFirstAdded"
+  let needLastModified := !excludeSet.contains "fileLastModified"
+  let needGitInfo := needFirstAdded || needLastModified
   let mut moduleNames := #[]
   let mut fileTimestamps : Std.HashMap Name (Option String × Option String) := {}
   for file in leanFiles do
     try
       let modName ← getModuleNameFromFile file
       moduleNames := moduleNames.push modName
-      let firstAdded ← getFileFirstAdded file
-      let lastModified ← getFileLastModified file
-      fileTimestamps := fileTimestamps.insert modName (firstAdded, lastModified)
+      if needGitInfo then
+        let firstAdded ← if needFirstAdded then getFileFirstAdded file else pure none
+        let lastModified ← if needLastModified then getFileLastModified file else pure none
+        fileTimestamps := fileTimestamps.insert modName (firstAdded, lastModified)
     catch _ => pure ()
 
   runWithImports moduleNames do
@@ -236,10 +218,12 @@ unsafe def main (args : List String) : IO Unit := do
       categoryMap := categoryMap.insert tag.declName (categoryToString tag.category :: categoryMap.getD tag.declName [])
       categoryFullMap := categoryFullMap.insert tag.declName tag
 
-    -- Create formal proof map
-    let mut formalProofMap : Std.HashMap Name FormalProofTag := {}
+    -- Create formal proof map. A declaration may carry several `formal_proof` annotations,
+    -- so collect them all rather than keeping whichever arrives last.
+    let mut formalProofMap : Std.HashMap Name (List FormalProofTag) := {}
     for tag in formalProofTags do
-      formalProofMap := formalProofMap.insert tag.declName tag
+      formalProofMap :=
+        formalProofMap.insert tag.declName (tag :: formalProofMap.getD tag.declName [])
 
     let mut subjectMap : Std.HashMap Name (List String) := {}
     for tag in subjectTags do
@@ -255,7 +239,7 @@ unsafe def main (args : List String) : IO Unit := do
           if let some val := info.value? then
             try
               let problemsList ← Lean.Meta.MetaM.run' <|
-                unsafe Lean.Meta.evalExpr (List Name) (mkApp (mkConst ``List [levelZero]) (mkConst ``Name)) val
+                unsafe Lean.Meta.evalExpr (List Name) (mkApp (mkConst ``List [.zero]) (mkConst ``Name)) val
               for p in problemsList do
                 theoremToSubsets := theoremToSubsets.insert p (subsetName :: theoremToSubsets.getD p [])
             catch e =>
@@ -271,7 +255,7 @@ unsafe def main (args : List String) : IO Unit := do
         let name := info.name
         match info with
         | ConstantInfo.thmInfo .. =>
-          if !isInternal name then
+          if !isPrivateName name then
             let cats := categoryMap.getD name []
             let subjs := subjectMap.getD name []
             if !cats.isEmpty || !subjs.isEmpty then
@@ -281,15 +265,18 @@ unsafe def main (args : List String) : IO Unit := do
               let docstring ← findDocString? env name
               if docstring.isNone then
                 IO.eprintln s!"WARNING: Theorem {name} (category: {cats.head!}) is missing a docstring"
-              -- Extract formal proof info from the separate formal_proof attribute
-              let (formalProofKind, formalProofLink) :=
-                if let some tag := formalProofMap.get? name then
-                  (some (formalProofKindToString tag.proofKind), some tag.proofLink)
-                else
-                  (none, none)
+              -- Extract formal proof info from the separate formal_proof attributes. Each
+              -- carries its own `conditions`, since one proof can be conditional while
+              -- another of the same statement is not.
+              let formalProofs :=
+                ((formalProofMap.getD name []).map fun tag =>
+                  { kind := formalProofKindToString tag.proofKind,
+                    link := tag.proofLink,
+                    conditions := tag.conditions.map Name.toString : FormalProofInfo })
+                |>.toArray.qsort (fun a b => a.sortKey < b.sortKey) |>.toList
               -- Check whether the proof term is sorry-free
               let hasSorryFreeProof :=
-                info.value? |>.any (!·.hasSorry)
+                info.value? (allowOpaque := true) |>.any (!·.hasSorry)
               -- Warn about suspicious category / sorry combinations
               if let some catTag := categoryFullMap.get? name then
                 match catTag.category, hasSorryFreeProof with
@@ -301,9 +288,6 @@ unsafe def main (args : List String) : IO Unit := do
                   IO.eprintln s!"WARNING: Theorem {name} is categorised as `API` but has no sorry-free proof"
                 | _, _ => pure ()
               let subsets := (theoremToSubsets.getD name []).toArray.qsort (· < ·) |>.toList
-              -- Determine answerKinds from the elaborated type
-              let answerKinds ← Meta.MetaM.run'
-                (getAnswerKinds info.type)
               let (fileFirstAdded, fileLastModified) :=
                 fileTimestamps.getD modName (none, none)
               allResults := {
@@ -313,11 +297,10 @@ unsafe def main (args : List String) : IO Unit := do
                 subjects := subjs,
                 statement := statement,
                 docstring := docstring,
-                formalProofKind := formalProofKind,
-                formalProofLink := formalProofLink,
+                formalProofs := formalProofs,
                 hasSorryFreeProof := hasSorryFreeProof,
                 subsets := subsets
-                answerKinds := answerKinds
+                question := (← getQuestionKind? name).map toString
                 fileFirstAdded := fileFirstAdded
                 fileLastModified := fileLastModified
               } :: allResults
@@ -336,7 +319,10 @@ unsafe def main (args : List String) : IO Unit := do
 
     -- Build structured output: { problems: [...], moduleDocstrings: {...} }
     let problemsJson := toJson (allResults.reverse.map (·.toFilteredJson excludeSet))
-    let mut outputFields : List (String × Json) := [("problems", problemsJson)]
+    -- Consumers should not have to guess whether they are reading the old
+    -- `formalProofKind` shape or the `formalProofs` list; say so.
+    let mut outputFields : List (String × Json) :=
+      [("schemaVersion", Lean.toJson (2 : Nat)), ("problems", problemsJson)]
     if !excludeSet.contains "moduleDocstrings" then
       let moduleDocJson := Json.mkObj (moduleDocstrings.reverse.map fun (k, v) => (k, toJson v))
       outputFields := outputFields ++ [("moduleDocstrings", moduleDocJson)]

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Util.ProblemImports
+public import FormalConjecturesUtil
 
 /-!
 # Lehmer's totient problem
@@ -22,15 +23,17 @@ import FormalConjectures.Util.ProblemImports
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_totient_problem)
 -/
 
+@[expose] public section
+
 namespace LehmerTotient
 
 /--
 Does there exist a composite number $n > 1$ such that Euler’s totient function
 $\varphi(n)$ divides $n - 1$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem lehmer_totient :
-    answer(sorry) ↔ ∃ n > 1, ¬Prime n ∧ Nat.totient n ∣ n - 1 := by
+    ∃ n > 1, ¬Prime n ∧ Nat.totient n ∣ n - 1 := by
   sorry
 
 end LehmerTotient
