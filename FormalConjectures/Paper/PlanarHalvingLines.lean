@@ -52,6 +52,7 @@ noncomputable def halvingCount {n : ℕ} (P : Fin n → ℝ × ℝ) : ℕ :=
 theorem orient_self (p q : ℝ × ℝ) : orient p q p = 0 := by
   simp [orient]
 
+set_option linter.style.formal_proof_palomar false in
 /-- There is an absolute $\varepsilon > 0$ such that every sufficiently large even
 set of $n$ planar points in general position has at most $Cn^{4/3-\varepsilon}$ halving pairs.
 The even-order restriction makes the two side counts equal. -/
