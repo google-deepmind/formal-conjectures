@@ -37,7 +37,7 @@ The auxiliary lemmas `f_le_card_I` and `admissible_singleton`,
 the four finite examples `admissible_repeated_summand`,
 `not_admissible_distinct_sum`, `not_admissible_endpoint`, and
 `endpoint_notMem_J`, and the small-value results `f_zero`,
-`f_one`, `f_two`, and `f_three` do not appear in the cited
+`f_one`, `f_two`, `f_three`, and `f_five` do not appear in the cited
 `Definitions.lean` and are not covered by the preceding
 copied-from attribution.
 
@@ -222,6 +222,31 @@ theorem f_three : f 3 = 2 := by
   have h₂ : f 3 ≤ 2 := (f_le_card_I 3).trans_eq (by decide)
   exact le_antisymm h₂ h₁
 
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 0 in
+/-- For `n = 5`, the sharp threshold is `3`, attained by `B = {15}`. -/
+@[category test, AMS 5 11]
+theorem f_five : f 5 = 3 := by
+  have lower : 3 ≤ f 5 := by
+    apply le_f
+    intro B hB
+    have check :
+        ∀ B ∈ (J 5).powerset, ∃ C ∈ (I 5).powerset,
+          Admissible 5 B C ∧ 3 ≤ B.card + C.card := by
+      unfold Admissible
+      decide
+    obtain ⟨C, _, hC, hscore⟩ := check B (Finset.mem_powerset.mpr hB)
+    exact ⟨C, hC, hscore⟩
+  have upper : f 5 ≤ 3 := by
+    obtain ⟨C, hC, hscore⟩ := f_guarantees 5 {15} (by decide)
+    have check :
+        ∀ C ∈ (I 5).powerset, Admissible 5 {15} C → C.card ≤ 2 := by
+      unfold Admissible
+      decide
+    have hcard := check C (Finset.mem_powerset.mpr hC.1) hC
+    have h : f 5 ≤ 1 + C.card := by simpa using hscore
+    omega
+  exact le_antisymm upper lower
 /--
 Let $f(n)$ be maximal such that if $B\subset (2n,4n)\cap \mathbb{N}$ there exists some
 $C\subset (n,2n)\cap \mathbb{N}$ such that $c_1+c_2\not\in B$ for all $c_1\neq c_2\in C$ and
@@ -233,7 +258,7 @@ This formalizes only the upper-bound question: for every $\varepsilon > 0$,
 $f(n) \leq n^{1/2+\varepsilon}$ for all sufficiently large $n$.
 The lower bound and the broader estimation question are not formalized here.
 -/
-@[category research open, question, AMS 5 11]
+@[category research open, AMS 5 11]
 theorem erdos_788.upper_bound :
     ∀ ε : ℝ, 0 < ε →
       ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n →
