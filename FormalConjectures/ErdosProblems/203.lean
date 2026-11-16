@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 203
@@ -22,14 +23,16 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/203](https://www.erdosproblems.com/203)
 -/
 
+@[expose] public section
+
 namespace Erdos203
 
 /--
 Is there an integer $m$ with $(m, 6) = 1$ such that none of $2^k \cdot 3^\ell \cdot m + 1$ are prime,
 for any $k, \ell \ge 0$?
 -/
-@[category research open, AMS 5]
-theorem erdos_203 : answer(sorry) ↔ ∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 3^l * m + 1).Prime := by
+@[category research open, question, AMS 5]
+theorem erdos_203 : ∃ m, m.Coprime 6 ∧ ∀ k l, ¬ (2^k * 3^l * m + 1).Prime := by
   sorry
 
 -- TODO(rdivyanshu): add statements about covering system and odd integers `m` such that none of 2^k*m + 1 is prime

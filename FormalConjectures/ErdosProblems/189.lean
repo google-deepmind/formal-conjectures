@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 189
 
 *Reference:* [erdosproblems.com/189](https://www.erdosproblems.com/189)
 -/
+
+@[expose] public section
 
 open Affine EuclideanGeometry
 
@@ -34,6 +37,7 @@ def Erdos189For (P : ℝ² → ℝ² → ℝ² → ℝ² → Prop) (A : ℝ² �
       A a b c d = area ∧
       P a b c d
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\mathbb{R}^2$ is finitely coloured then must there exist some colour class which contains the
 vertices of a rectangle of every area?
@@ -49,9 +53,9 @@ monochromatic region is Lebesgue measurable and has measure zero).
 
 This was formalized in Lean by Alexeev and Kovac using Aristotle.
 -/
-@[category research solved, AMS 5 51, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos189.lean"]
+@[category research solved, question, AMS 5 51, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos189.lean"]
 theorem erdos_189 :
-    answer(False) ↔ Erdos189For
+    ¬ Erdos189For
       (fun a b c d ↦
         line[ℝ, a, b].direction ⟂ line[ℝ, b, c].direction ∧
         line[ℝ, b, c].direction ⟂ line[ℝ, c, d].direction ∧

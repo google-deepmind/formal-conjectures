@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 272
 
 *Reference:* [erdosproblems.com/272](https://www.erdosproblems.com/272)
 -/
+
+@[expose] public section
 
 open Filter Asymptotics Finset
 
@@ -39,14 +42,16 @@ intersection set. -/
 noncomputable def maxArithInterCard (N : ℕ) : ℕ :=
   sSup {#A | (A : _) (_ : IsArithInterSet N A)}
 
+def erdos_272.answer : ℕ → ℕ := sorry
+
 /--
 Let $N\geq 1$. What is the largest $t$ such that there are
 $A_1,\ldots,A_t\subseteq \{1,\ldots,N\}$ with $A_i\cap A_j$ a non-empty
 arithmetic progression for all $i\neq j$?
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_272 :
-    (fun N ↦ (maxArithInterCard N : ℝ)) ~[atTop] (answer(sorry) : ℕ → ℝ) := by
+    ∀ N ≥ 1, maxArithInterCard N = erdos_272.answer N := by
   sorry
 
 /--

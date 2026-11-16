@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 383
 
 *Reference:* [erdosproblems.com/383](https://www.erdosproblems.com/383)
 -/
+
+@[expose] public section
 
 namespace Erdos383
 
@@ -32,8 +35,8 @@ $$
 $$
 is $p$?
 -/
-@[category research open, AMS 11]
-theorem erdos_383 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_383 :
     ∀ k, {p : ℕ | p.Prime ∧ Nat.maxPrimeFac (∏ i ∈ Finset.Icc 0 k, (p ^ 2 + i)) = p}.Infinite := by
   sorry
 

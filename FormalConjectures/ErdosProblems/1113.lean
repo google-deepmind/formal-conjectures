@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1113
@@ -47,6 +48,8 @@ See also Erdős Problems [203](https://www.erdosproblems.com/203) and
 [276](https://www.erdosproblems.com/276).
 -/
 
+@[expose] public section
+
 namespace Erdos1113
 
 /--
@@ -56,6 +59,7 @@ number of the form $k \cdot 2^n + 1$ is divisible by at least one prime in $P$.
 def HasFinitePrimeCoveringSet (k : ℕ) : Prop :=
   ∃ P : Finset ℕ, (∀ p ∈ P, p.Prime) ∧ ∀ n, ∃ p ∈ P, p ∣ (k * 2 ^ n + 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Sierpiński [Si60] proved that there are infinitely many Sierpiński numbers, using covering
 systems to construct suitable covering sets for any $k$ satisfying a certain congruence.
@@ -73,10 +77,9 @@ of primes?
 Erdős and Graham [ErGr80] conjectured that the answer is yes. A negative answer would imply
 that there are infinitely many Fermat primes.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1113 :
-    answer(sorry) ↔
-      ∃ k, k.IsSierpinskiNumber ∧ ¬ HasFinitePrimeCoveringSet k := by
+    ∃ k, k.IsSierpinskiNumber ∧ ¬ HasFinitePrimeCoveringSet k := by
   sorry
 
 /--

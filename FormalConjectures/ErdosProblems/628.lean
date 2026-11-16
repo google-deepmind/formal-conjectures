@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 628
@@ -29,6 +30,8 @@ import FormalConjecturesUtil
 - [So22] Song, Zi-Xia, *A survey on the Erdős-Lovász Tihany conjecture*. Adv. Math. (China)
   (2022), 259--274.
 -/
+
+@[expose] public section
 
 namespace Erdos628
 

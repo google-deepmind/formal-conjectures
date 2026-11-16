@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Realization of primes $p \equiv \pm 1 \pmod{10}$ by continued fraction denominators
@@ -26,6 +27,8 @@ $$\frac{1}{2 - \frac{3}{3 - \frac{4}{4 - \frac{5}{\dots - \frac{n-1}{(n-1) - \fr
 - [A363347](https://oeis.org/A363347)
 - [arxiv/2605.22763](https://arxiv.org/abs/2605.22763) *Advancing Mathematics Research with AI-Driven Formal Proof Search* by George Tsoukalas et al.
 -/
+
+@[expose] public section
 
 namespace OeisA363347
 
@@ -85,6 +88,7 @@ lemma a_6 : a 6 = 11 := by delta a; repeat rw [continuedFractionDenominator]; no
 lemma a_7 : a 7 = 59 := by delta a; repeat rw [continuedFractionDenominator]; norm_num
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: The sequence contains all prime numbers which end with a 1 or 9 (i.e., primes $p \equiv 1$ or $9 \pmod{10}$).
 

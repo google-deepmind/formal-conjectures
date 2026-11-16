@@ -13,8 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+meta import Mathlib.Data.ZMod.Basic
+
 
 /-!
 # Green's Open Problem 39
@@ -24,6 +27,8 @@ import FormalConjecturesUtil
 - [BJR11] Bollobás, Béla, Svante Janson, and Oliver Riordan. "On covering by translates of a set."
   Random Structures & Algorithms 38.1‐2 (2011): 33-67.
 -/
+
+@[expose] public section
 
 open Filter Topology
 open scoped Pointwise
@@ -46,24 +51,24 @@ def proportionCoverable (p k c : ℕ) : ℚ :=
     (coverable.card : ℚ) / (S.card : ℚ)
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_p_p_1 : proportionCoverable 3 3 1 = 1 := by native_decide
+theorem proportionCoverable_p_p_1 : proportionCoverable 3 3 1 = 1 := by decide +kernel
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_t_0 : proportionCoverable 5 2 0 = 0 := by native_decide
+theorem proportionCoverable_t_0 : proportionCoverable 5 2 0 = 0 := by decide +kernel
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_2_1_2 : proportionCoverable 2 1 2 = 1 := by native_decide
+theorem proportionCoverable_2_1_2 : proportionCoverable 2 1 2 = 1 := by decide +kernel
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_3_1_2 : proportionCoverable 3 1 2 = 0 := by native_decide
+theorem proportionCoverable_3_1_2 : proportionCoverable 3 1 2 = 0 := by decide +kernel
 
 @[category test, AMS 5 60]
-theorem proportionCoverable_a_gt_p : proportionCoverable 3 4 2 = 0 := by native_decide
+theorem proportionCoverable_a_gt_p : proportionCoverable 3 4 2 = 0 := by decide +kernel
 
 @[category test, AMS 5 60]
 theorem proportionCoverable_7_4_2 :
     proportionCoverable 7 4 2 = (3 : ℚ) / 5 := by
-  native_decide
+  decide +kernel
 
 @[category test, AMS 5 60]
 theorem proportionCoverable_11_3_4 :
@@ -79,8 +84,8 @@ theorem proportionCoverable_11_4_3 :
 If $A \subset \mathbb{Z}/p\mathbb{Z}$ is random, $|A| = \sqrt{p}$, can we almost surely cover
 $\mathbb{Z}/p\mathbb{Z}$ with $100\sqrt{p}$ translates of $A$? [Gr24]
 -/
-@[category research open, AMS 5 60]
-theorem green_39 : answer(sorry) ↔
+@[category research open, question, AMS 5 60]
+theorem green_39 :
     Tendsto
       (fun p : {q : ℕ // q.Prime} ↦
         let k := Nat.sqrt p
@@ -92,8 +97,8 @@ theorem green_39 : answer(sorry) ↔
 /--
 "I do not know how to answer this even with 100 replaced by 1.01." [Gr24]"
 -/
-@[category research open, AMS 5 60]
-theorem green_39.variant_101 : answer(sorry) ↔
+@[category research open, question, AMS 5 60]
+theorem green_39.variant_101 :
     Tendsto
       (fun p : {q : ℕ // q.Prime} ↦
         let k := Nat.sqrt p
@@ -111,8 +116,8 @@ strictly less than $p$ for $\theta < 1/2$. We interpret the question as asking w
 $O(p^{1-\theta})$ translates suffice. This generalizes the main conjecture where
 $\sqrt{p} = p^{1-1/2}$.
 -/
-@[category research open, AMS 5 60]
-theorem green_39.variant_theta : answer(sorry) ↔
+@[category research open, question, AMS 5 60]
+theorem green_39.variant_theta :
     ∀ (θ : ℝ), 0 < θ → θ ≤ 1/2 →
     ∃ C > 1, Tendsto
       (fun p : {q : ℕ // q.Prime} ↦

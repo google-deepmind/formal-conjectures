@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Rowland-style prime-generating recurrence
@@ -30,6 +31,8 @@ $a(n) = a(n-1) + \gcd(n-2, a(n-1))$ if $n$ is odd.
 - V. Shevelev, "An infinite set of generators of primes based on the Rowland idea and
   conjectures concerning twin primes", arXiv preprint
   [arXiv:0910.4676](https://arxiv.org/abs/0910.4676) [math.NT], 2009.-/
+
+@[expose] public section
 
 namespace OeisA166944
 

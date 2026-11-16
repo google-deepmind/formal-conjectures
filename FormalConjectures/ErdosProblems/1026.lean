@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1026
@@ -32,6 +33,8 @@ import FormalConjecturesUtil
 - [Wa17] Wagner, Adam Zsolt, *Large subgraphs in rainbow-triangle free colorings*. J. Graph
   Theory (2017), 141-148.
 -/
+
+@[expose] public section
 
 namespace Erdos1026
 
@@ -120,6 +123,7 @@ theorem erdos_1026.variants.hanani (ε : ℝ) (hε : 0 < ε) :
         (m : ℝ) ≤ (Real.sqrt 2 + ε) * Real.sqrt (n : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Cambie makes the stronger conjecture that if $x_1,\ldots,x_{k^2}$ are distinct positive real
 numbers with $\sum x_i=1$ then there is always a monotonic subsequence with sum at least $1/k$.

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 851
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/851](https://www.erdosproblems.com/851)
 - [Pr26] D. Price and GPT-5.2 Pro, [Erdős problem 851](https://www.overleaf.com/read/svgbjzpxxppv#4eea7e) (2026)
 -/
+
+@[expose] public section
 
 namespace Erdos851
 
@@ -42,15 +45,17 @@ The set of integers of the form `2^k+p` (where `p` is prime) has positive lower 
 theorem erdos_851.variants.romanoff : 0 < Set.lowerDensity twoPowAddPrimeSet := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon > 0$. Is there some $r \ll_\epsilon 1$ such that the density of integers of the
 form $2^k+n$, where $k \geq 0$ and $n$ has at most $r$ prime divisors, is at least $1-\epsilon$?
 
 This was proved affirmatively by Price and GPT-5.2 Pro [Pr26].
 -/
-@[category research solved, AMS 11]
-theorem erdos_851 (ε : ℝ) (hε : ε ∈ Set.Ioo 0 1) : ∃ r d,
-    (TwoPowAddSet r).HasDensity d ∧ 1 - ε ≤ d := by
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos851.lean#L37"]
+theorem erdos_851 (ε : ℝ) (hε : ε ∈ Set.Ioo 0 1) : ∃ r,
+    1 - ε ≤ (TwoPowAddSet r).lowerDensity := by
   sorry
 
 end Erdos851

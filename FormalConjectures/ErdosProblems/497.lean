@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjectures.Wikipedia.DedekindNumber
-import FormalConjecturesUtil
+public import FormalConjectures.Wikipedia.DedekindNumber
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 497
@@ -28,10 +29,13 @@ import FormalConjecturesUtil
   Proc. Amer. Math. Soc. (1969), 677-682.
 -/
 
+@[expose] public section
+
 open Filter
 
 namespace Erdos497
 
+set_option linter.style.formal_proof_palomar false in
 /--
 How many antichains in $[n]$ are there? That is, how many families of subsets of $[n]$ are
 there such that, if $\mathcal{F}$ is such a family and $A,B\in \mathcal{F}$, then

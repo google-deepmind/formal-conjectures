@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1083
@@ -31,6 +32,8 @@ import FormalConjecturesUtil
   problem in high dimensions*. Combinatorica (2008), 113--125.
 -/
 
+@[expose] public section
+
 open Filter
 open scoped EuclideanGeometry
 
@@ -39,8 +42,8 @@ namespace Erdos1083
 /--
 Let $d\geq 3$, and let $f_d(n)$ be the minimal $m$ such that every set of $n$ points in $\mathbb{R}^d$ determines at least $m$ distinct distances. Estimate $f_d(n)$ - in particular, is it true that $$f_d(n)=n^{\frac{2}{d}-o(1)}?$$
 -/
-@[category research open, AMS 52]
-theorem erdos_1083 : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_1083 :
     ∀ d : ℕ, 3 ≤ d → ∃ o : ℕ → ℝ, o =o[atTop] (1 : ℕ → ℝ) ∧
       ∀ᶠ n : ℕ in atTop,
         (minimalDistinctDistances (ℝ^d) n : ℝ) = (n : ℝ) ^ ((2 : ℝ) / (d : ℝ) - o n) := by

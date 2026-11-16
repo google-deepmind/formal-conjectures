@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Ben Green's Open Problem 72
@@ -37,6 +39,8 @@ the question above is yes.
 - [GK2025] Grebennikov, A. Kwan, M. No $(k + 1)$-in-line problem for large constant $k$.
   https://arxiv.org/abs/2510.17743
 -/
+
+@[expose] public section
 
 namespace Green72
 
@@ -80,23 +84,25 @@ theorem allowedSetSize_le {k : ℕ} {N : ℕ} :
 def NoKInLineFor (k : ℕ) (N : ℕ) : Prop :=
   AllowedSetSize k N = (k - 1) * N
 
-/-- The **no-k-in-line problem**:
-For $N \geq k$ and $k > 2$, the AllowedSetSize is $(k - 1) N$, i. e. on an $N \times N$ subset,
-there is a set of $(k - 1) N$ points for which no $k$ lie on a line (and not such a set of bigger size).
+def NoKInLine.answer : Set ℕ := sorry
 
-Note the range. [GK2025] proves this for $k > 10^{37}$, which is `no_k_in_line_big` below. At
-$k = 3$ it is the claim Green expects to fail for large $N$, so this statement is not a
-conjecture anyone has made across the whole range $k > 2$.
+/-- The **no-k-in-line problem**:
+For which $k > 2$ does every $N \times N$ grid with $N \geq k$ contain a set of $(k - 1) N$ points
+with no $k$ on a line, so that `AllowedSetSize k N` is the pigeonhole bound $(k - 1) N$?
+
+[GK2025] proves that every $k > 10^{37}$ has this property, which is `no_k_in_line_big` below,
+and does not optimise this constant. At $k = 3$ it is the property that Green expects to fail
+for large $N$, see `green_72`.
 -/
-@[category research open, AMS 5 52]
-theorem NoKInLine {k : ℕ} {N : ℕ} (hk : 2 < k) (h : k ≤ N) : NoKInLineFor k N := by
+@[category research open, question value, AMS 5 52]
+theorem NoKInLine : NoKInLine.answer = {k | 2 < k ∧ ∀ N, k ≤ N → NoKInLineFor k N} := by
   sorry
 
 /-- **Green's Open Problem 72 / No-three-in-line problem**:
 For $N$ sufficiently large, is it impossible to have $2N$ points in $[N]^2$ with no three in a
 line? Green suspects the answer is yes, and that $(3/2 + o(1))N$ is optimal. -/
-@[category research open, AMS 5 52]
-theorem green_72 : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, ¬ NoKInLineFor 3 N := by
+@[category research open, question, AMS 5 52]
+theorem green_72 : ∀ᶠ N in Filter.atTop, ¬ NoKInLineFor 3 N := by
   sorry
 
 alias no_three_in_line := green_72
@@ -106,8 +112,8 @@ alias no_three_in_line := green_72
 This is not the negation of `green_72`. Negating that one gives $\exists^f N$ where this asks
 $\forall^f N$, so both can be answered `False` if the behaviour oscillates. Green asks his
 question in the `green_72` form. -/
-@[category research open, AMS 5 52]
-theorem green_72.variants.eventually : answer(sorry) ↔ ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
+@[category research open, question, AMS 5 52]
+theorem green_72.variants.eventually : ∀ᶠ N in Filter.atTop, NoKInLineFor 3 N := by
   sorry
 
 /-- For $N \leq 60$, this has been verified with computers. -/
@@ -116,8 +122,8 @@ theorem no_three_in_line_le {N : ℕ} (hN : 3 ≤ N) (hN' : N ≤ 60) :
     NoKInLineFor 3 N := by
   sorry
 
-/-- In [GK2025] Grebennikov and Kwan prove the no-k-in-line conjecture for $k > 10 ^ 37$
-and $N \geq k$. -/
+/-- In [GK2025] Grebennikov and Kwan prove that the pigeonhole bound $(k - 1) N$ is attained
+for $k > 10 ^ {37}$ and $N \geq k$. -/
 @[category research solved, AMS 5 52]
 theorem no_k_in_line_big {k : ℕ} (N : ℕ) (h : 10 ^ 37 < k) (hN : k ≤ N) :
     NoKInLineFor k N := by

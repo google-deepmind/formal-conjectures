@@ -98,5 +98,31 @@ noncomputable def minLocalIndependence (G : SimpleGraph α) : ℕ :=
   let locals := Finset.univ.image (fun v => (G.induce (G.neighborSet v)).indepNum)
   (locals.min).getD 0
 
+/-- Edges of `G` whose two endpoints lie in `S`. -/
+def internalEdges (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) :
+    Finset (Sym2 α) :=
+  G.edgeFinset.filter fun e => e.toFinset ⊆ S
+
+/-- A vertex set is 2-independent when its induced graph has maximum degree
+at most one. -/
+def IsTwoIndependent (G : SimpleGraph α) [DecidableRel G.Adj] (S : Finset α) : Prop :=
+  ∀ v ∈ S, (S.filter fun w => G.Adj v w).card ≤ 1
+
+/-- Maximum cardinality of an independent subset contained in `B`. -/
+noncomputable def indepNumOn (G : SimpleGraph α) [DecidableRel G.Adj]
+    (B : Finset α) : ℕ :=
+  by
+    classical
+    exact (B.powerset.filter fun (A : Finset α) => G.IsIndepSet (A : Set α)).sup card
+
+/-- Maximum cardinality of a 2-independent vertex set. -/
+noncomputable def alphaTwo (G : SimpleGraph α) [DecidableRel G.Adj] : ℕ :=
+  by
+    classical
+    exact (Finset.univ.powerset.filter fun S => IsTwoIndependent G S).sup card
+
+/-- The set of vertices of degree at most two. -/
+def lowDegreeLayer (G : SimpleGraph α) [DecidableRel G.Adj] : Finset α :=
+  Finset.univ.filter fun v => G.degree v ≤ 2
 
 end SimpleGraph

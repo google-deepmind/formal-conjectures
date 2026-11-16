@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n) = \operatorname{lcm}\{1,2,\dots,n\}/\operatorname{denom}(H(n))$
@@ -22,6 +23,8 @@ import FormalConjecturesUtil
 *References:*
 - [A110566](https://oeis.org/A110566)
 -/
+
+@[expose] public section
 
 namespace OeisA110566
 
@@ -36,23 +39,36 @@ def a (n : ℕ) : ℕ :=
 
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
-theorem a_1 : a 1 = 1 := by native_decide
+theorem a_1 : a 1 = 1 := by simp [a]
 
 @[category test, AMS 11]
-theorem a_2 : a 2 = 1 := by native_decide
+theorem a_2 : a 2 = 1 := by
+  simp [a]
+  decide
 
 @[category test, AMS 11]
-theorem a_3 : a 3 = 1 := by native_decide
+theorem a_3 : a 3 = 1 := by
+  simp [a]
+  norm_num
+  decide
 
 @[category test, AMS 11]
-theorem a_4 : a 4 = 1 := by native_decide
+theorem a_4 : a 4 = 1 := by
+  simp [a]
+  norm_num
+  decide
 
 @[category test, AMS 11]
-theorem a_5 : a 5 = 1 := by native_decide
+theorem a_5 : a 5 = 1 := by
+  simp [a]
+  norm_num
+  decide
 
 @[category test, AMS 11]
-theorem a_6 : a 6 = 3 := by native_decide
-
+theorem a_6 : a 6 = 3 := by
+  simp [a]
+  norm_num
+  decide
 
 
 /--

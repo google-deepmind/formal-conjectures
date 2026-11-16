@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Wieferich primes
@@ -36,6 +37,8 @@ whether there is any Wieferich prime besides $1093$ and $3511$.
 * [PrimeGrid, Wieferich and Wall–Sun–Sun Prime Search](https://www.primegrid.com/stats_ww.php)
 -/
 
+@[expose] public section
+
 namespace WieferichPrime
 
 /-- There are infinitely many Wieferich primes. -/
@@ -49,9 +52,9 @@ completed in 2022, shows that any other Wieferich prime exceeds $2^{64}$. On the
 heuristic count of $\log \log x$ Wieferich primes up to $x$ predicts that there are infinitely
 many, see `infinite_isWieferichPrime`.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem isWieferichPrime_iff :
-    answer(sorry) ↔ ∀ p, IsWieferichPrime p ↔ p = 1093 ∨ p = 3511 := by
+    ∀ p, IsWieferichPrime p ↔ p = 1093 ∨ p = 3511 := by
   sorry
 
 /--
@@ -60,14 +63,14 @@ $a^{p-1} \equiv 1 \pmod{p^2}$? The case $a = 1$ is trivial, since every prime qu
 (`isWieferichPrimeBase_one_iff`). So is the case $a = 0$ under our definition
 (`isWieferichPrimeBase_zero_iff`), which is why the source's restriction to $a > 0$ is dropped.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinite_isWieferichPrimeBase :
-    answer(sorry) ↔ ∀ a : ℕ, {p : ℕ | IsWieferichPrimeBase a p}.Infinite := by
+    ∀ a : ℕ, {p : ℕ | IsWieferichPrimeBase a p}.Infinite := by
   sorry
 
 /-- Are there any Wieferich primes to base $47$? None is currently known. -/
-@[category research open, AMS 11]
-theorem exists_isWieferichPrimeBase_47 : answer(sorry) ↔ ∃ p, IsWieferichPrimeBase 47 p := by
+@[category research open, question, AMS 11]
+theorem exists_isWieferichPrimeBase_47 : ∃ p, IsWieferichPrimeBase 47 p := by
   sorry
 
 /-- The prime $1093$ is a Wieferich prime: $2^{1092} \equiv 1 \pmod{1093^2}$. -/

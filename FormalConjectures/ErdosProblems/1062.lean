@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1062
 
 *Reference:* [erdosproblems.com/1062](https://www.erdosproblems.com/1062)
 -/
+
+@[expose] public section
 
 open Filter
 open scoped Topology
@@ -42,9 +45,9 @@ noncomputable def f (n : ℕ) : ℕ :=
 
 /-- Erdős asked whether the limiting density `f n / n` exists and, if so, whether it is
 irrational. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1062.parts.ii :
-    (∃ l, Tendsto (fun n => (f n : ℝ) / n) atTop (𝓝 l) ∧ Irrational l) ↔ answer(sorry) := by
+    ∃ l, Tendsto (fun n => (f n : ℝ) / n) atTop (𝓝 l) ∧ Irrational l := by
   sorry
 
 /-- The interval `[⌊n/3⌋, n]` is fork-free, and therefore `f n` is at least `⌈2n / 3⌉`. -/

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 569
@@ -25,7 +26,11 @@ import FormalConjecturesUtil
   graphs. Combin. Probab. Comput. (1993), 389-399.
 -/
 
+@[expose] public section
+
 namespace Erdos569
+
+def erdos_569.answer : ℕ → ℝ := sorry
 
 /--
 Let $k\geq 1$. What is the best possible $c_k$ such that
@@ -34,16 +39,15 @@ for any graph $H$ on $m$ edges without isolated vertices?
 
 This problem is #34 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_569 :
-    let c : ℕ → ℝ := answer(sorry)
     ∀ (k : ℕ) (hk : 1 ≤ k),
       sInf {C : ℝ | 0 < C ∧
         ∀ (m : ℕ) (W : Type) [Fintype W] (H : SimpleGraph W) [DecidableRel H.Adj],
           (∀ v, 0 < H.degree v) →
           H.edgeSet.ncard = m →
           (SimpleGraph.graphRamsey (SimpleGraph.cycleGraph (2 * k + 1)) H : ℝ) ≤ C * m} =
-            c k := by
+            erdos_569.answer k := by
   sorry
 
 end Erdos569

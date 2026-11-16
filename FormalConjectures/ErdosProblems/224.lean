@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 224
@@ -26,6 +27,8 @@ import FormalConjecturesUtil
   Math. Z. (1962), 95-99.
 -/
 
+@[expose] public section
+
 namespace Erdos224
 
 open scoped EuclideanGeometry
@@ -34,6 +37,7 @@ open scoped EuclideanGeometry
 def ObtuseAt {d : ℕ} (x y z : ℝ^d) : Prop :=
   inner ℝ (y - x) (z - x) < 0
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $A\subseteq \mathbb{R}^d$ is any set of $2^d+1$ points then some three points in $A$ determine an obtuse angle.
 

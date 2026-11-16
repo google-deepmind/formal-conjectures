@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Expansion of g.f. $(1+x)(3+x)/(1+6x^2+x^4)$
@@ -26,6 +27,8 @@ with initial values $a(0)=3$, $a(1)=4$, $a(2)=-17$, $a(3)=-24$.
 *References:*
 - [A100434](https://oeis.org/A100434)
 -/
+
+@[expose] public section
 
 namespace OeisA100434
 
@@ -146,6 +149,7 @@ theorem a_odd (n : ℕ) : a (2 * n + 1) = d (2 * n + 1) := by
       exact ih2
     rw [ih1, ih2']
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
@@ -162,6 +166,7 @@ plus linear arithmetic. (Numerically verified for $n < 600$ before formalization
 theorem conjecture1 (n : ℕ) : c n + d n = b n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.
@@ -178,6 +183,7 @@ plus linear arithmetic. (Numerically verified for $n < 600$ before formalization
 theorem conjecture2 (n : ℕ) : e n + f n = b n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture from Creighton Dement (A100434)**:
 Let the auxiliary sequences c, d, e, f, g, b be defined as specified.

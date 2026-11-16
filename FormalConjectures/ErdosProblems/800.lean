@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 800
@@ -23,6 +24,8 @@ import FormalConjecturesUtil
 - [erdosproblems.com/800](https://www.erdosproblems.com/800)
 - [Al94] Alon, N., Subdivided graphs have linear Ramsey numbers. J. Graph Theory (1994), 343-347.
 -/
+
+@[expose] public section
 
 namespace Erdos800
 
@@ -33,8 +36,8 @@ where the implied constant is absolute.
 
 A problem of Burr and Erdős. Solved in the affirmative by Alon [Al94].
 -/
-@[category research solved, AMS 5]
-theorem erdos_800 : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_800 :
     ∃ C > (0 : ℝ), ∀ (n : ℕ) (V : Type) [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
       Fintype.card V = n →
       (∀ u v, G.Adj u v → ¬(3 ≤ G.degree u ∧ 3 ≤ G.degree v)) →

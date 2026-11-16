@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Mills' Theorem
@@ -37,6 +38,8 @@ Riemann hypothesis it is approximately $1.3063778838\ldots$.
   by *Chris K. Caldwell and Yuanyou Cheng*, J. Integer Seq. **8** (2005), Article 05.4.1.
 - [OEIS A051021](https://oeis.org/A051021) (decimal expansion of Mills' constant)
 -/
+
+@[expose] public section
 
 namespace Mills
 

@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Determinantal conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Determinantal_conjecture)
 -/
+
+@[expose] public section
 
 /- Formalisation note: Here, we represent the two normal matrices as $U_1 D_1 U_1^*$ and
 $U_2 D_2 U_2^*$ respectively, where $U_1, U_2$ are unitary and $D_1, D_2$

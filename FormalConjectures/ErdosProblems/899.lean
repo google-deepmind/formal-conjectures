@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 899
 
 *Reference:* [erdosproblems.com/899](https://www.erdosproblems.com/899)
 -/
+
+@[expose] public section
 
 open Filter Set
 
@@ -30,6 +33,7 @@ namespace Erdos899
 
 open Erdos899
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
 Is it true that
@@ -41,9 +45,9 @@ The answer is yes, proved by Ruzsa [Ru78].
 
 [Ru78] Ruzsa, I. Z., _On the cardinality of {$A+A$}\ and {$A-A$}_. (1978), 933--938.
 -/
-@[category research solved, AMS 5,
+@[category research solved, question, AMS 5,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos899.lean#L793"]
-theorem erdos_899 : answer(True) ↔ ∀ (A : Set ℕ), A.Infinite →
+theorem erdos_899 : ∀ (A : Set ℕ), A.Infinite →
     Tendsto (fun N => (A ∩ Icc 1 N |>.ncard : ℝ) / N) atTop (𝓝 0) →
     atTop.limsup (fun N => ((A - A : Set ℕ) ∩ Icc 1 N |>.ncard : EReal) /
       (A ∩ Icc 1 N).ncard) = ⊤ := by

@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 695
 *Reference:* [erdosproblems.com/695](https://www.erdosproblems.com/695)
 -/
+
+@[expose] public section
 
 open Filter Finset Real
 
@@ -32,8 +35,8 @@ $$
 \lim_{k \to \infty} q_k^{1/k} = \infty?
 $$
 -/
-@[category research open, AMS 11]
-theorem erdos_695 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_695 :
     ∀ {q : ℕ → ℕ},
       StrictMono q →
       (∀ i, (q i).Prime) →
@@ -47,8 +50,8 @@ $$
 q(k) \leq \exp(k (\log k)^{1 + o(1)})?
 $$
 -/
-@[category research open, AMS 11]
-theorem erdos_695.variants.upperBound : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_695.variants.upperBound :
     ∃ q : ℕ → ℕ,
       StrictMono q ∧
       (∀ i, (q i).Prime) ∧

@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 990
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
 - [Ha72b] Hayman, W. K., *Angular value distribution of power series with gaps*. Proc. London Math.
   Soc. (3) (1972), 590-624.
 -/
+
+@[expose] public section
 
 open Polynomial
 
@@ -52,6 +55,7 @@ noncomputable def M (f : ℂ[X]) : ℝ :=
   (∑ i ∈ Finset.range (f.natDegree + 1), ‖f.coeff i‖) /
     Real.sqrt (‖f.coeff 0‖ * ‖f.leadingCoeff‖)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f=a_0+\cdots+a_dx^d\in \mathbb{C}[x]$ be a polynomial. Is it true that, if $f$ has roots
 $z_1,\ldots,z_d$ with corresponding arguments $\theta_1,\ldots,\theta_d\in [0,2\pi]$, then for all
@@ -72,9 +76,9 @@ $$
 \left\lvert (\# \theta_i \in I) - \frac{\lvert I\rvert}{2\pi}d\right\rvert \geq n-1.
 $$
 -/
-@[category research solved, AMS 12 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos990.lean"]
-theorem erdos_990 : answer(False) ↔
-    ∃ C : ℝ, ∀ f : ℂ[X], f.coeff 0 ≠ 0 → ∀ α β : ℝ, 0 ≤ α → α ≤ β → β ≤ 2 * π →
+@[category research solved, question, AMS 12 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos990.lean"]
+theorem erdos_990 :
+    ¬ ∃ C : ℝ, ∀ f : ℂ[X], f.coeff 0 ≠ 0 → ∀ α β : ℝ, 0 ≤ α → α ≤ β → β ≤ 2 * π →
       |(rootArgCount f (Set.Icc α β) : ℝ) - (β - α) / (2 * π) * (f.natDegree : ℝ)| ≤
         C * Real.sqrt ((f.support.card : ℝ) * Real.log (M f)) := by
   sorry

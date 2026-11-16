@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Written on the Wall II - Conjecture 146
@@ -32,6 +33,8 @@ The **radius of $G^2$** is the minimum eccentricity of any vertex in $G^2$, i.e.
 $$\mathrm{rad}(G^2) = \min_{v \in V} \max_{u \in V} \mathrm{dist}_{G^2}(u, v).$$
 -/
 
+@[expose] public section
+
 namespace WrittenOnTheWallII.GraphConjecture146
 
 open SimpleGraph
@@ -43,6 +46,7 @@ of `graphSquare G`. -/
 noncomputable def graphSquareRadius (G : SimpleGraph α) : ℕ :=
   (graphSquare G).radius.toNat
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 146](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 

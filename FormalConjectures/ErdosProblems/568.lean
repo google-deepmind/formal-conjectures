@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 568
@@ -24,6 +25,8 @@ import FormalConjecturesUtil
 - [EFRS93] Erdős, P. and Faudree, R. J. and Rousseau, C. C. and Schelp, R. H., Ramsey size linear
   graphs. Combin. Probab. Comput. (1993), 389-399.
 -/
+
+@[expose] public section
 
 namespace Erdos568
 
@@ -36,8 +39,8 @@ In other words, is $G$ Ramsey size linear?
 
 This problem is #33 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research open, AMS 5]
-theorem erdos_568 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_568 :
     ∀ (V : Type) [Fintype V] (G : SimpleGraph V),
       (∃ c₁ > (0 : ℝ), ∀ (n : ℕ) (T : SimpleGraph (Fin n)),
         T.IsTree → (SimpleGraph.graphRamsey G T : ℝ) ≤ c₁ * n) →
