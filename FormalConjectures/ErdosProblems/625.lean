@@ -50,12 +50,12 @@ $n\to\infty$?
 
 Here "almost surely $\chi(G)-\zeta(G)\to\infty$" is read in the usual random-graph sense: for
 every fixed real threshold $K$, the probability that $\chi(G)-\zeta(G)\ge K$ tends to one along
-the full sequence of natural numbers. Heckel [He24c] proved this along a subsequence of density
+the full sequence of natural numbers. The answer is yes. Heckel [He24c] proved this along a subsequence of density
 about $0.95$; Petkov [Pe26] proves it along all $n$, with the quantitative bound below.
 -/
-@[category research solved, AMS 5 60, formal_proof using lean4 at
+@[category research solved, question, AMS 5 60, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-02-000006"]
-theorem erdos_625 : answer(True) ↔
+theorem erdos_625 :
     ∀ K : ℝ, Tendsto
       (fun n : ℕ ↦ binomialRandom (Fin n) ⟨1 / 2, by norm_num⟩
         {G | K ≤ (G.chromaticNumber.toNat : ℝ) - G.cochromaticNumber.toNat})
