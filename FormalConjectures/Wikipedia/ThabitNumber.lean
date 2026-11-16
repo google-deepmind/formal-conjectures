@@ -24,20 +24,26 @@ For $n \ge 0$, the $n$-th *Thabit number* (of the first kind) is $K_n = 3 \cdot 
 ninth century, Thābit ibn Qurra proved that whenever $n \ge 2$ makes $p = K_{n-1}$, $q = K_n$, and
 $r = 9 \cdot 2^{2n - 1} - 1$ simultaneously prime, the integers $2^n p q$ and $2^n r$ form an
 amicable pair (`IsAmicable`). Whether infinitely many Thabit primes exist, and whether Thābit ibn
-Qurra's rule generates infinitely many amicable pairs (only $n = 2, 4, 7$ are known), remain open.
+Qurra's rule produces any amicable pair beyond the three known exponents $n = 2, 4, 7$ [Bo72, Gu04],
+remain open.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Thabit_number)
+- [OEIS A055010](https://oeis.org/A055010)
 - [OEIS A007505](https://oeis.org/A007505)
+- [OEIS A002235](https://oeis.org/A002235)
 - [Bo72] Borho, W. (1972). *On Thabit ibn Kurrah's formula for amicable numbers*, Math. Comp. 26
   (118), 571--578.
+- [Gu04] Guy, R. K. (2004). *Unsolved Problems in Number Theory*, 3rd ed., Problem B4, Springer,
+  New York. https://doi.org/10.1007/978-0-387-26677-0
 -/
 
 @[expose] public section
 
 namespace ThabitNumber
 
-/-- The $n$-th **Thabit number** of the first kind, $K_n = 3 \cdot 2^n - 1$. -/
+/-- The $n$-th **Thabit number** of the first kind, $K_n = 3 \cdot 2^n - 1$
+([OEIS A055010](https://oeis.org/A055010)). -/
 def thabitNumber (n : ℕ) : ℕ := 3 * 2 ^ n - 1
 
 /-- The Thabit numbers $K_n$ are prime for $n = 0, 1, 2, 3, 4$ ($2, 5, 11, 23, 47$) and composite at
@@ -66,7 +72,7 @@ form an amicable pair.
 
 The hypothesis $n \ge 2$ excludes $n = 1$, where $K_0 = 2$ is not coprime to $2^n$.
 -/
-@[category research solved, AMS 11]
+@[category textbook, AMS 11]
 theorem thabit_amicable_rule {n : ℕ} (hn : 2 ≤ n) (hp : (thabitNumber (n - 1)).Prime)
     (hq : (thabitNumber n).Prime) (hr : (9 * 2 ^ (2 * n - 1) - 1).Prime) :
     IsAmicable (2 ^ n * thabitNumber (n - 1) * thabitNumber n)
@@ -74,22 +80,26 @@ theorem thabit_amicable_rule {n : ℕ} (hn : 2 ≤ n) (hp : (thabitNumber (n - 1
   sorry
 
 /--
-There are infinitely many exponents $n \in \mathbb{N}$ for which the Thabit number
-$3 \cdot 2^n - 1$ is prime ([OEIS A007505](https://oeis.org/A007505)).
+There are infinitely many exponents $n \in \mathbb{N}$ ([OEIS A002235](https://oeis.org/A002235))
+for which the Thabit number $K_n = 3 \cdot 2^n - 1$ is prime
+([OEIS A007505](https://oeis.org/A007505)); since `thabitNumber` is injective, this is equivalent to
+the infinitude of Thabit primes themselves.
+
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Thabit_number)
 -/
 @[category research open, AMS 11]
 theorem infinitely_many_thabit_primes : {n : ℕ | (thabitNumber n).Prime}.Infinite := by
   sorry
 
 /--
-Are there infinitely many integers $n \ge 2$ for which $K_{n-1}$, $K_n$, and
-$9 \cdot 2^{2n - 1} - 1$ are simultaneously prime, yielding an amicable pair via Thābit ibn
-Qurra's rule? Only $n = 2, 4, 7$ are currently known [Bo72].
+Does there exist an integer $n > 7$ for which $K_{n-1}$, $K_n$, and $9 \cdot 2^{2n - 1} - 1$ are
+simultaneously prime, yielding an amicable pair via Thābit ibn Qurra's rule [Bo72, Gu04]? Only
+$n = 2, 4, 7$ are currently known.
 -/
 @[category research open, question, AMS 11]
-theorem infinitely_many_thabit_amicable_exponents :
-    {n : ℕ | 2 ≤ n ∧ (thabitNumber (n - 1)).Prime ∧ (thabitNumber n).Prime ∧
-      (9 * 2 ^ (2 * n - 1) - 1).Prime}.Infinite := by
+theorem exists_thabit_amicable_exponent_gt_seven :
+    ∃ n > 7, (thabitNumber (n - 1)).Prime ∧ (thabitNumber n).Prime ∧
+      (9 * 2 ^ (2 * n - 1) - 1).Prime := by
   sorry
 
 end ThabitNumber

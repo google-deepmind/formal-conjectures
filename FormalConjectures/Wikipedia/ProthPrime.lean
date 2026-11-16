@@ -27,7 +27,8 @@ infinitely many Proth primes exist, and in particular whether any fixed odd mult
 $k = 3$ produces infinitely many primes $3 \cdot 2^n + 1$.
 
 *References:*
-- [Wikipedia](https://en.wikipedia.org/wiki/Proth_prime)
+- [Wikipedia: Proth prime](https://en.wikipedia.org/wiki/Proth_prime)
+- [Wikipedia: Thabit number](https://en.wikipedia.org/wiki/Thabit_number)
 - [OEIS A080076](https://oeis.org/A080076)
 - [OEIS A002253](https://oeis.org/A002253)
 - [Pr1878] Proth, F. (1878). *Théorèmes sur les nombres premiers*, C. R. Acad. Sci. Paris 87, 926.
@@ -75,27 +76,38 @@ theorem not_isProthNumber_seven : ¬ IsProthNumber 7 := by
   interval_cases n <;> omega
 
 /-- If an odd multiplier $k$ is a Sierpiński number (`Nat.IsSierpinskiNumber`), then
-$k \cdot 2^n + 1$ is never prime for any $n \in \mathbb{N}$. -/
+$k \cdot 2^n + 1$ is never a Proth prime for any $n \in \mathbb{N}$. -/
 @[category API, AMS 11]
-theorem not_prime_proth_of_isSierpinskiNumber {k : ℕ} (hk : k.IsSierpinskiNumber) (n : ℕ) :
-    ¬ (k * 2 ^ n + 1).Prime :=
-  (hk.2 n).2
+theorem not_isProthPrime_of_isSierpinskiNumber {k : ℕ} (hk : k.IsSierpinskiNumber) (n : ℕ) :
+    ¬ IsProthPrime (k * 2 ^ n + 1) :=
+  fun h => (hk.2 n).2 h.1
 
 /--
 **Proth's primality theorem** [Pr1878, CP05]: a Proth number $N = k \cdot 2^n + 1$ ($k$ odd,
-$k < 2^n$) is prime if and only if there exists $a \in \mathbb{Z}/N\mathbb{Z}$ with
+$k < 2^n$) is prime precisely when some residue $a \in \mathbb{Z}/N\mathbb{Z}$ satisfies
 $a^{(N - 1) / 2} = -1$.
 -/
-@[category research solved, AMS 11]
+@[category textbook, AMS 11]
 theorem proth_primality_criterion (N : ℕ) (hN : IsProthNumber N) :
     N.Prime ↔ ∃ a : ZMod N, a ^ ((N - 1) / 2) = -1 := by
   sorry
 
 /--
-There are infinitely many integers $n \ge 2$ such that $3 \cdot 2^n + 1$ is a Proth prime
-([OEIS A002253](https://oeis.org/A002253)).
+There are infinitely many Proth primes ([OEIS A080076](https://oeis.org/A080076)).
 
-The bound $n \ge 2$ ensures $3 < 2^n$, so that $3 \cdot 2^n + 1$ is a Proth number.
+*Reference:* [Wikipedia: Proth prime](https://en.wikipedia.org/wiki/Proth_prime)
+-/
+@[category research open, AMS 11]
+theorem infinitely_many_proth_primes : {N : ℕ | IsProthPrime N}.Infinite := by
+  sorry
+
+/--
+There are infinitely many integers $n \ge 2$ such that $3 \cdot 2^n + 1$ is a Proth prime.
+
+Primes of the form $3 \cdot 2^n + 1$ are also called *Thabit primes of the second kind*
+([Wikipedia: Thabit number](https://en.wikipedia.org/wiki/Thabit_number)). Their exponents are
+listed in [OEIS A002253](https://oeis.org/A002253), which also includes $n = 1$ ($3 \cdot 2^1 + 1 =
+7$ is prime, whereas $n \ge 2$ ensures $3 < 2^n$).
 -/
 @[category research open, AMS 11]
 theorem infinitely_many_proth_primes_multiplier_three :
