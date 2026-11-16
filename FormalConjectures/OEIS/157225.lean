@@ -69,6 +69,7 @@ theorem a_13 : a 13 = 0 := by decide
 @[category test, AMS 11]
 theorem a_14 : a 14 = 2 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 On Feb. 24, 2009, Zhi-Wei Sun conjectured that $a(n) = 0$ if and only if $n < 11$ or
 $n \in \{13, 16, 992\}$; in other words, except for $25, 31, 1983$, any odd integer greater

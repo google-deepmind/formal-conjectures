@@ -64,17 +64,18 @@ open scoped Asymptotics
 /-- The upper bound function from [GrSa25]. -/
 noncomputable def GreenSawhneyBound (r : ℕ) : ℝ := Real.exp (Real.exp (r ^ 50))
 
+def green_22.answer : ℕ → ℝ := sorry
+
 /--
 If $\{1, \ldots, N\}$ is $r$-coloured then, for $N \geqslant N_0(r)$, there are integers
 $x, y \geqslant 3$ such that $x + y, xy$ have the same colour.
 
 Find reasonable bounds for $N_0(r)$. The goal is to improve upon the Green-Sawhney bound.
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem green_22 :
-    let ans := (answer(sorry) : ℕ → ℝ)
-    ∀ᶠ r in atTop, N₀ r ≤ ans r ∧
-    ans =o[atTop] GreenSawhneyBound := by
+    ∀ᶠ r in atTop, N₀ r ≤ green_22.answer r ∧
+    green_22.answer =o[atTop] GreenSawhneyBound := by
   sorry
 
 /--
@@ -103,11 +104,16 @@ theorem green_22.variants.moreira_infinite :
   sorry
 
 /--
-Since $x, y \geq 3$, we must have $xy \geq 9$, so $N_0(r) \geq 9$
-(assuming $N_0(r)$ is well-defined, which follows from [Mo17]).
+Since $x, y \geq 3$, we must have $xy \geq 9$, so every $N$ such that all $r$-colourings of
+$\{1, \ldots, N\}$ have the monochromatic sum-product property is at least $9$. In particular
+$N_0(r) \geq 9$ once $N_0(r)$ is well-defined, which follows from [Mo17].
+
+The bound is stated for every such $N$ and not as `9 ≤ N₀ r`: since `sInf ∅ = 0` in `ℕ`, the
+latter is equivalent to the existence of such an $N$.
 -/
 @[category research solved, AMS 5 11]
-theorem green_22.variants.lower_nine : ∀ r : ℕ, r ≠ 0 → 9 ≤ N₀ r := by
+theorem green_22.variants.lower_nine : ∀ r : ℕ, r ≠ 0 →
+    ∀ N : ℕ, (∀ c : Icc 1 N → Fin r, HasMonochromaticSumProduct N r c) → 9 ≤ N := by
   sorry
 
 -- TODO(jeangud) Add Hindman's problem versions mentioned in [Gr26].

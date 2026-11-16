@@ -36,6 +36,7 @@ namespace Erdos290
 $\sum_{a \leq n \leq b}\frac{1}{n}$. -/
 noncomputable def harmonicDen (a b : ℕ) : ℕ := (harmonicBlock a b).den
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a\geq 1$. Must there exist some $b>a$ such that
 $$\sum_{a\leq n\leq b}\frac{1}{n}=\frac{r_1}{s_1}\textrm{ and }
@@ -47,8 +48,8 @@ fact $b(a) \ll a$. Indeed, if $a\in (3^k,3^{k+1}]$ then one can take $b=2\cdot 3
 also proves that $b(a)>a+(1/2-o(1))\log a$, and considers various generalisations of the original
 problem.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem290.lean"]
-theorem erdos_290 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/Woett/Lean-files/blob/main/ErdosProblem290.lean"]
+theorem erdos_290 :
     (∀ a : ℕ, 1 ≤ a → ∃ b : ℕ, a < b ∧ harmonicDen a (b + 1) < harmonicDen a b) := by
   sorry
 

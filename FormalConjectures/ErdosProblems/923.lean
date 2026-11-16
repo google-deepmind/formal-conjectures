@@ -32,14 +32,15 @@ namespace Erdos923
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $k$, there is some $f(k)$ such that if $G$ has chromatic number
 $\geq f(k)$ then $G$ contains a triangle-free subgraph with chromatic number $\geq k$?
 
 This is true, as shown by Rödl [Ro77].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos923.lean"]
-theorem erdos_923 : answer(True) ↔ ∀ (V : Type*) (n : ℕ),
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos923.lean"]
+theorem erdos_923 : ∀ (V : Type*) (n : ℕ),
     ∃ k : ℕ, ∀ G : SimpleGraph V, k ≤ G.chromaticNumber →
     ∃ H ≤ G, n ≤ H.chromaticNumber ∧ H.CliqueFree 3 := by
   sorry

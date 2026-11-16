@@ -84,32 +84,32 @@ theorem a_3 : a 3 = 1 := by
 
 /--
 Is the score $a(n) > 0$ for some $n > 250000$?-/
-@[category research open, AMS 11]
-theorem conjecture1 : answer(sorry) ↔ ∃ n > 250000, a n > 0 := by
+@[category research open, question, AMS 11]
+theorem conjecture1 : ∃ n > 250000, a n > 0 := by
   sorry
 
 /--
 Is the score $a(n)$ bounded from below?-/
-@[category research open, AMS 11]
-theorem conjecture2 : answer(sorry) ↔ ∃ B : ℤ, ∀ n : ℕ, B ≤ a n := by
+@[category research open, question, AMS 11]
+theorem conjecture2 : ∃ B : ℤ, ∀ n : ℕ, B ≤ a n := by
   sorry
 
 /--
 Is the score $a(n)$ bounded from above?-/
-@[category research open, AMS 11]
-theorem conjecture3 : answer(sorry) ↔ ∃ B : ℤ, ∀ n : ℕ, a n ≤ B := by
+@[category research open, question, AMS 11]
+theorem conjecture3 : ∃ B : ℤ, ∀ n : ℕ, a n ≤ B := by
   sorry
 
 /--
 Is the score $a(n) > 0$ for infinitely many values of $n$?-/
-@[category research open, AMS 11]
-theorem conjecture4 : answer(sorry) ↔ Set.Infinite {n : ℕ | a n > 0} := by
+@[category research open, question, AMS 11]
+theorem conjecture4 : Set.Infinite {n : ℕ | a n > 0} := by
   sorry
 
 /--
 Is the score $a(n) < 0$ for infinitely many values of $n$?-/
-@[category research open, AMS 11]
-theorem conjecture5 : answer(sorry) ↔ Set.Infinite {n : ℕ | a n < 0} := by
+@[category research open, question, AMS 11]
+theorem conjecture5 : Set.Infinite {n : ℕ | a n < 0} := by
   sorry
 
 end OeisA92243

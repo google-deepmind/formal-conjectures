@@ -47,14 +47,15 @@ namespace Erdos47
 open Filter
 open scoped BigOperators
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $\delta>0$ and $N$ is sufficiently large in terms of $\delta$, and $A\subseteq\{1,\ldots,N\}$ is such that $\sum_{a\in A}\frac{1}{a}>\delta \log N$ then must there exist $S\subseteq A$ such that $\sum_{n\in S}\frac{1}{n}=1$?
 
 Bloom [Bl21] proved this in the affirmative.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos47.lean"]
-theorem erdos_47 : answer(True) ↔
+theorem erdos_47 :
     ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℕ in atTop, ∀ A : Finset ℕ,
       A ⊆ Finset.Icc 1 N →
       δ * Real.log (N : ℝ) < A.reciprocalSum →

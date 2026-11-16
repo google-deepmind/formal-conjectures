@@ -54,9 +54,9 @@ to hold for the complete balanced bipartite graph $K_{\lceil n/2 \rceil, \lfloor
 The conjecture is resolved up to a finite check: Fan [Fa87] verified it for $n \leq 24$ and
 $n = 26$, and Füredi [Fü92] proved it for all sufficiently large $n$.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_742 :
-    answer(sorry) ↔ ∀ (V : Type*) [Fintype V] [DecidableEq V]
+    ∀ (V : Type*) [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj], IsDiameter2Critical G →
     G.edgeFinset.card ≤ (Fintype.card V) ^ 2 / 4 := by
   sorry
@@ -113,6 +113,7 @@ theorem fan_bound (G : SimpleGraph V) [DecidableRel G.Adj]
     G.edgeFinset.card ≤ (Fintype.card V) ^ 2 / 4 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Füredi [Fü92] proved the Murty-Simon conjecture for all sufficiently large $n$, that is, there
 exists $n_0$ such that every diameter-$2$-critical graph on $n \geq n_0$ vertices has at most

@@ -32,6 +32,7 @@ namespace Erdos705
 open scoped EuclideanGeometry
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a finite unit distance graph in $\mamthbb{R}^2$.
 Is there some $k$ such that if $G$ has girth $≥ k$, then $\chi(G) ≤ 3$?
@@ -39,10 +40,10 @@ Is there some $k$ such that if $G$ has girth $≥ k$, then $\chi(G) ≤ 3$?
 The general case was solved by O'Donnell [OD99], who constructed finite unit distance graphs with
 chromatic number $4$ and arbitrarily large girth.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos705.lean#L8323"]
 theorem erdos_705:
-  answer(False) ↔ ∃ k, ∀ V : Set ℝ², V.Finite →
+  ¬ ∃ k, ∀ V : Set ℝ², V.Finite →
     (UnitDistancePlaneGraph V).girth ≥ k → (UnitDistancePlaneGraph V).chromaticNumber ≤ 3 := by
   sorry
 
