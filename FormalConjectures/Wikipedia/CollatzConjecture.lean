@@ -86,31 +86,21 @@ def collatzShortcut (n : ℕ) : ℕ :=
 Any non-trivial cycle of the shortcut Collatz map `collatzShortcut` has period at least
 $217976794617$.
 -/
-@[category research open, AMS 11 37]
+@[category research solved, AMS 11 37]
 theorem le_period_collatzShortcut (n : ℕ) (hn : 2 < n) (p : ℕ) (hp : 0 < p)
     (hcycle : (collatzShortcut^[p]) n = n) : 217976794617 ≤ p := by
   sorry
 
 /--
-A positive integer $n$ lies on a Collatz $m$-cycle if the orbit of $n$ under `collatzStep` is
-periodic with some positive period $p$ containing $m$ local minima, meaning there exists a strictly
-increasing sequence of step indices $0 = t_0 < t_1 < \dots < t_m = p$ such that for each
-$i < m$, starting from $x_i = \text{collatzStep}^{[t_i]}(n)$, the trajectory rises through odd
-steps of `collatzShortcut` (`collatzStep` followed by division by $2$) for $k_i \ge 1$ steps and
-then falls through division by $2$ for $l_i \ge 1$ steps until reaching $x_{i+1}$.
+A positive integer $n$ lies on a Collatz $m$-cycle if the orbit of $n$ under `collatzShortcut` is
+periodic with some positive period $p$ containing $p$ distinct elements and exactly $m$ local minima.
 -/
-def IsMCycle (m : ℕ) (n : ℕ) : Prop :=
-  0 < m ∧ ∃ p > 0, (collatzStep^[p]) n = n ∧
-    ∃ (t : Fin (m + 1) → ℕ),
-      t 0 = 0 ∧ t (Fin.last m) = p ∧ StrictMono t ∧
-      ∀ i : Fin m,
-        let a := t i.castSucc
-        let b := t i.succ
-        ∃ c, a < c ∧ c < b ∧
-          (∀ s, a ≤ s → s < c →
-            Odd ((collatzStep^[s]) n) ∧ (collatzStep^[s + 1]) n < (collatzStep^[s + 2]) n) ∧
-          (∀ s, c ≤ s → s < b → Even ((collatzStep^[s]) n)) ∧
-          Odd ((collatzStep^[b]) n)
+def IsMCycle (m n : ℕ) : Prop :=
+  0 < n ∧ ∃ p > 0, collatzShortcut^[p] n = n ∧
+    ((List.range p).map (collatzShortcut^[·] n)).Nodup ∧
+    ((Finset.range p).filter fun i =>
+      collatzShortcut^[i + 1] n < collatzShortcut^[i] n ∧
+      collatzShortcut^[i + 1] n < collatzShortcut^[i + 2] n).card = m
 
 /-- Every point on a Collatz $m$-cycle is strictly positive. -/
 @[category API, AMS 11 37,
@@ -118,13 +108,13 @@ def IsMCycle (m : ℕ) (n : ℕ) : Prop :=
 theorem IsMCycle.ne_zero {m n : ℕ} (h : IsMCycle m n) : n ≠ 0 := by
   sorry
 
-/-- The trivial cycle $1 \to 4 \to 2 \to 1$ is a $1$-cycle starting at $1$. -/
+/-- The trivial cycle $1 \to 2 \to 1$ is a $1$-cycle through $1$. -/
 @[category test, AMS 11 37,
   formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-15-000008"]
 theorem isMCycle_one_one : IsMCycle 1 1 := by
   sorry
 
-/-- The trivial cycle $2 \to 1 \to 4 \to 2$ is a $1$-cycle starting at $2$. -/
+/-- The trivial cycle $1 \to 2 \to 1$ is a $1$-cycle through $2$. -/
 @[category test, AMS 11 37,
   formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-15-000008"]
 theorem isMCycle_one_two : IsMCycle 1 2 := by
@@ -132,14 +122,16 @@ theorem isMCycle_one_two : IsMCycle 1 2 := by
 
 /--
 Effective irrationality measure for $\log_2 3$ via Rhin's (1987) [Rh87] Padé approximants:
-there is no positive integer solution $(K, L)$ with $K \ge 135147$ to the Diophantine inequality
-$0 < 2^L - 3^K$ and $(2^L - 3^K) \cdot K^{14} < 3^K$.
+for $K \ge 2438425051595107335801557824$, the linear form $(K + L)\log 2 - K\log 3$ cannot lie
+strictly between $0$ and $100 \cdot 2^{1 - K / 2^{68}}$.
 -/
 @[category research solved, AMS 11 37,
   formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-15-000008"]
-theorem diophantine_terminal (K L : ℕ) (hK : 135147 ≤ K) :
-    ¬(0 < (2 : ℤ) ^ L - (3 : ℤ) ^ K ∧
-      ((2 : ℤ) ^ L - (3 : ℤ) ^ K) * (K : ℤ) ^ 14 < (3 : ℤ) ^ K) := by
+theorem diophantine_terminal (K L : ℕ) (hK : 2438425051595107335801557824 ≤ K)
+    (h0 : 0 < ((K : ℝ) + L) * Real.log 2 - K * Real.log 3)
+    (h1 : ((K : ℝ) + L) * Real.log 2 - K * Real.log 3 <
+      100 * (2 : ℝ) ^ (1 - (K : ℝ) / 2 ^ 68)) :
+    False := by
   sorry
 
 /--
