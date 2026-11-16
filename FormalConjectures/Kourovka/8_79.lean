@@ -38,17 +38,17 @@ def IsLocallyFiniteGroup (G : Type*) [Group G] : Prop :=
 
 /--
 The notion of a group having no outer automorphism is equivalent
-to every automorphisms being inner.
+to every automorphism being inner.
 -/
 def NoOuterAutomorph (G : Type*) [Group G] : Prop :=
-  ∀ φ : G ≃* G → ∃ (g : G), ∀ (x : G), φ x = g * x  * g⁻¹
+  ∀ φ : G ≃* G, ∃ (g : G), ∀ (x : G), φ x = g * x  * g⁻¹
 
 /--
 A group is "complete" if it has no outer automorphisms
-and a trivial centre.
+and a trivial center.
 -/
 def IsCompleteGroup (G : Type*) [Group G] : Prop :=
-  Subgroup.Centre G = ⊥ ∧ NoOuterAutomorph G
+  Subgroup.center G = ⊥ ∧ NoOuterAutomorph G
 
 /--
 Does there exist a countable infinite locally finite group that is complete,
@@ -58,7 +58,7 @@ The answer is "Yes", if one assumes that the group is uncountable. See
 [K.K. Hickin, Trans. Amer. Math. Soc., 239 (1978), 213-227].
 
 -/
-@[category research open, question, AMS20]
+@[category research open, question, AMS 20]
 theorem Kourovka_8_79 :
    ∃ (G : Type) (_ : Group G), Countable G ∧ Infinite G ∧
    IsLocallyFiniteGroup G ∧ IsCompleteGroup G := by
