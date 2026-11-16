@@ -48,6 +48,19 @@ def ecliqueNum {V : Type} (G : SimpleGraph V) : ℕ∞ := ⨆ (s : Finset V) (_ 
 def cliqueSizes {V : Type} (G : SimpleGraph V) : Set ℕ :=
   { k | ∃ S : Finset V, Maximal (fun T : Finset V => G.IsClique (T : Set V)) S ∧ S.card = k }
 
+/-- `s` is a maximal clique of `G` with at least two vertices. -/
+def IsBigMaximalClique (G : SimpleGraph V) (s : Finset V) : Prop :=
+  Maximal (fun t : Finset V ↦ G.IsClique (t : Set V)) s ∧ 2 ≤ s.card
+
+/-- `T` meets every maximal clique of `G` with at least two vertices. -/
+def IsCliqueTransversal (G : SimpleGraph V) (T : Finset V) : Prop :=
+  ∀ s, G.IsBigMaximalClique s → ∃ v ∈ s, v ∈ T
+
+/-- The clique transversal number $\tau(G)$: the minimal number of vertices that meet every
+maximal clique of `G` with at least two vertices, so isolated vertices are not counted. -/
+noncomputable def cliqueTransversalNumber (G : SimpleGraph V) : ℕ :=
+  sInf {k | ∃ T : Finset V, G.IsCliqueTransversal T ∧ T.card = k}
+
 open scoped Classical in
 /-- The triangles of `G` containing the edge `uv`, that is, the `3`-cliques of `G` whose vertex
 set contains both endpoints of `uv`. -/

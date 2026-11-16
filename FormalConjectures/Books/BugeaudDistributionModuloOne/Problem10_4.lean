@@ -67,6 +67,7 @@ def Spectrum (x : ℕ → ℝ) : Set ℝ :=
   {θ | θ ∈ Set.Ioo (0 : ℝ) 1 ∧ Irrational θ ∧
     ¬ IsEquidistributedModuloOne (fun n => x n - n * θ)}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Problem 10.4. Let $\xi$ be a non-zero real number and $\alpha > 1$ be a real
 number. Is the spectrum of the sequence $(\xi \alpha^n)_{n \ge 1}$ at most
@@ -76,10 +77,10 @@ The answer is no. Özcan [Özc26] disproved this for every $\alpha > 1$; the cou
 formalised here takes $\alpha = 64$ and the real number $\xi = $ `xiVal`, whose spectrum
 contains the uncountable set of irrational numbers of the form `thetaSeq u`.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/8e2413a849b19822431772684d41cdc31637a409/FormalConjectures/Books/BugeaudDistributionModuloOne/Problem10_4.lean#L682"]
-theorem spectrum_xi_alpha_pow_countable : answer(False) ↔
-    ∀ (ξ : ℝ), ξ ≠ 0 → ∀ (α : ℝ), 1 < α → (Spectrum (fun n => ξ * α ^ n)).Countable := by
+theorem spectrum_xi_alpha_pow_countable :
+    ¬ ∀ (ξ : ℝ), ξ ≠ 0 → ∀ (α : ℝ), 1 < α → (Spectrum (fun n => ξ * α ^ n)).Countable := by
   sorry
 
 end Bugeaud04

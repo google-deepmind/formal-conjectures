@@ -55,6 +55,7 @@ theorem a_1 : a 1 = 2 := by rfl
 @[category test, AMS 11]
 theorem a_2 : a 2 = 181 := by decide +native
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Each term $a(n)$ is a positive integer.
 - _Zhi-Wei Sun_, Apr 06 2010
@@ -67,6 +68,7 @@ language models turn into theorems?, [arXiv:2608.11941](https://arxiv.org/abs/26
 theorem conjecture1 (n : ℕ) (hn : 1 ≤ n) : (a n).den = 1 ∧ 0 < a n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 $a(n)$ is odd if and only if $n = 2, 2^2, 2^3, \dots$.
 - _Zhi-Wei Sun_, Apr 06 2010

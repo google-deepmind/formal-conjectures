@@ -29,6 +29,7 @@ public import FormalConjecturesUtil
 
 namespace Catalan
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The only natural number solution to the equation $x^a - y^b = 1$ such that $a, b > 1$ and
 $x, y > 0$ is given by $a = 2$, $b = 3$, $x = 3$, and $y = 2$.
