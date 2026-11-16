@@ -40,6 +40,7 @@ open Filter Set Asymptotics
 
 open scoped Pointwise
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be an additive basis (of any finite order) such that
 $\lvert A\cap \{1,\ldots,N\}\rvert=o(N)$. Is it true that
@@ -60,9 +61,9 @@ The linked file states the basis hypothesis as `∃ N₀, Set.Ici N₀ ⊆ itera
 indexes both counting functions by a real $x$ through $\lfloor x\rfloor$, where the counting
 functions here are indexed by $N : \mathbb{N}$.
 -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos337.lean"]
-theorem erdos_337 : answer(False) ↔
-    ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos337.lean"]
+theorem erdos_337 :
+    ¬ ∀ A : Set ℕ, A.IsAsymptoticAddBasis →
       (fun N : ℕ ↦ ((A ∩ Icc 1 N).ncard : ℝ)) =o[atTop] (fun N : ℕ ↦ (N : ℝ)) →
       Tendsto (fun N : ℕ ↦ (((A + A) ∩ Icc 1 N).ncard : ℝ) / ((A ∩ Icc 1 N).ncard : ℝ))
         atTop atTop := by
@@ -81,6 +82,7 @@ theorem erdos_337.variants.h_fold : ∀ h : ℕ, 2 ≤ h →
         atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ruzsa and Turjányi do prove (under the same hypotheses) that
 $$
@@ -104,6 +106,7 @@ theorem erdos_337.variants.ruzsa_turjanyi :
         atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Ruzsa and Turjányi do prove (under the same hypotheses) that
 $$

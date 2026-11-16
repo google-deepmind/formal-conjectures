@@ -38,6 +38,7 @@ open Filter
 
 namespace Erdos171
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that for every $\epsilon>0$ and integer $t\geq 1$, if $N$ is sufficiently large and
 $A$ is a subset of $[t]^N$ of size at least $\epsilon t^N$ then $A$ must contain a combinatorial
@@ -51,9 +52,9 @@ new elementary proof, which gives quantitative bounds, was proved by the Polymat
 Combinatorial lines are Mathlib's `Combinatorics.Line (Fin t) (Fin N)` (which have at least one
 non-constant coordinate).
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos171.lean#L42"]
-theorem erdos_171 : answer(True) ↔ ∀ ε : ℝ, 0 < ε → ∀ t : ℕ, 1 ≤ t → ∀ᶠ N : ℕ in atTop,
+theorem erdos_171 : ∀ ε : ℝ, 0 < ε → ∀ t : ℕ, 1 ≤ t → ∀ᶠ N : ℕ in atTop,
     ∀ A : Finset (Fin N → Fin t), ε * t ^ N ≤ A.card →
       ∃ l : Combinatorics.Line (Fin t) (Fin N), ∀ i : Fin t, l i ∈ A := by
   sorry

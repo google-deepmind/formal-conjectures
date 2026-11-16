@@ -38,8 +38,8 @@ def IsClusterPrime (p : ℕ) : Prop :=
         q₁ ≤ p ∧ q₂ ≤ p ∧ n = (q₁ - q₂ : ℤ)
 
 /-- **Erdős Problem 17.** Are there infinitely many cluster primes? -/
-@[category research open, AMS 11]
-theorem erdos_17 : answer(sorry) ↔ {p : ℕ | IsClusterPrime p}.Infinite := by
+@[category research open, question, AMS 11]
+theorem erdos_17 : {p : ℕ | IsClusterPrime p}.Infinite := by
   sorry
 
 /-- The counting function of cluster primes $\le n$. -/

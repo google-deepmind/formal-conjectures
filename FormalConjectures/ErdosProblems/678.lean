@@ -64,6 +64,7 @@ Cambie [Ca24] found the example $M(36, 8) > M(48, 9)$.
 @[category test, AMS 11]
 lemma lcmInterval_lt_example4 : lcmInterval 47 9 < lcmInterval 36 8 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Write $M(n, k)$ be the least common multiple of $\{n+1, \dotsc, n+k\}$.
 Let $k$ be sufficiently large. Are there infinitely many $m, n$ with $m \geq n + k$ such that
@@ -81,11 +82,12 @@ See `erdos_678.variants.infinitely_many_triples` for the reading in which the in
 stated directly, and `erdos_678.variants.not_infinitely_many_pairs` for why it cannot be asked
 of a single $k$.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
-theorem erdos_678 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/68da20b96673899166e94638f5a7fffeb7231d35/src/latest/ErdosProblems/Erdos678.lean"]
+theorem erdos_678 :
     ∀ᶠ k in atTop, {(m, n) | n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Nonempty := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The pairs $(m, n)$ with $m \geq n + k$ and $M(n, k) > M(m, k + 1)$ are infinite in number once
 $k$ is allowed to vary, which is the sense in which Cambie's result answers the question.
@@ -95,6 +97,7 @@ theorem erdos_678.variants.infinitely_many_triples :
     {(k, m, n) | 3 ≤ k ∧ n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For a fixed sufficiently large $k$ only finitely many pairs occur: $M(m, k + 1) \geq m + 1$
 bounds $m$ by $M(n, k)$, and for large $n$ the inequality reverses. So the question cannot be
