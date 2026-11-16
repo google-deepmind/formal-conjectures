@@ -30,13 +30,14 @@ namespace LinearListHadwiger
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /-- There is a universal integer $C \geq 1$ such that every finite nonempty graph satisfies
 $\chi_{\mathrm{list}}(G) \leq C h(G)$, where $h(G)$ is its Hadwiger number. -/
 @[category research solved, AMS 5,
   formal_proof using lean4 at "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/ListHadwiger/Main.lean#L58"]
 theorem linear_list_hadwiger :
     ∃ C : ℕ, 1 ≤ C ∧ ∀ (V : Type) [Fintype V] [Nonempty V] (G : SimpleGraph V),
-      listChromaticNumber G ≤ C * hadwigerNumber G := by
+      arbitraryListChromaticNumber G ≤ C * hadwigerNumber G := by
   sorry
 
 end LinearListHadwiger

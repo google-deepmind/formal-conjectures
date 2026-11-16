@@ -48,7 +48,7 @@ def Choosable {V : Type} (G : SimpleGraph V) (k : ℕ) : Prop :=
 
 /-- The infimum of the list sizes that guarantee a list colouring.
 For finite graphs this is the list chromatic number. -/
-noncomputable def listChromaticNumber {V : Type} (G : SimpleGraph V) : ℕ :=
+noncomputable def arbitraryListChromaticNumber {V : Type} (G : SimpleGraph V) : ℕ :=
   sInf {k : ℕ | G.Choosable k}
 
 /-- A clique minor represented by disjoint connected branch sets. -/
@@ -86,8 +86,8 @@ theorem choosable_card {V : Type} [Fintype V] (G : SimpleGraph V) :
     (Finset.all_card_le_biUnion_card_iff_exists_injective L).mp hall
   exact ⟨c, hmem, fun _ _ hvw heq => hvw.ne (hc heq)⟩
 
-theorem choosable_listChromaticNumber {V : Type} [Fintype V] (G : SimpleGraph V) :
-    G.Choosable G.listChromaticNumber := by
+theorem choosable_arbitraryListChromaticNumber {V : Type} [Fintype V] (G : SimpleGraph V) :
+    G.Choosable G.arbitraryListChromaticNumber := by
   exact Nat.sInf_mem (s := {k : ℕ | G.Choosable k})
     ⟨Fintype.card V, choosable_card G⟩
 
