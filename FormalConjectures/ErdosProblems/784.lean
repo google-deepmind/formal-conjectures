@@ -23,10 +23,10 @@ public import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/784](https://www.erdosproblems.com/784)
 - [Er72] Erdős, Paul, *Extremal problems in number theory*. Proceedings of the 1972 Number Theory
-  Conference (Univ. Colorado, Boulder, Colo.) (1972), 80-86.
+  Conference (Univ. Colorado, Boulder, Colo.) (1972), 80-86. The problem is in §VI, pp. 84–85.
 - [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
   combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971)
-  (1973), 117-138.
+  (1973), 117-138. The problem is in §14.1, p. 135.
 - [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
   (1980), 89-115.
 - [ErRu80] Erdős, P. and Ruzsa, I. Z., *On the small sieve. I. Sifting by primes*. J. Number Theory
@@ -218,18 +218,38 @@ theorem erdos_784.variants.card_singleton_sieve (a x : ℕ) :
     (avoidsDivisors {a} x).card = x - x / a :=
   card_avoidsDivisors_singleton a x
 
+/-- The $H_C$ question has a positive answer precisely when $C \le 1$. -/
+def erdos_784.answer (C : ℝ) : Prop := C ≤ 1
+
 /--
-Let $C>0$. Does there exist a $c>0$ (depending on $C$) such that, for all sufficiently large $x$,
-if $A\subseteq [1,x]$ has $\sum_{n\in A}\frac{1}{n}\leq C$ then
-$$\#\{ m\leq x : a\nmid m\textrm{ for all }a\in A\}\gg\frac{x}{(\log x)^c}?$$
+Let $C>0$. With $1$ excluded from the sieve, does there exist $c = c(C) > 0$ such that
+$H_C(x) \gg x/(\log x)^c$ for all sufficiently large $x$?
 
-In the comments jif has noted that the answer is trivially no for every $C\geq 1$ with $A=\{1\}$.
-Presumably (as is usual in these kind of questions) the assumption that $1\not\in A$ is intended.
+Here $H_C(x)$ is the minimum of
+$\#\{m \le x : a \nmid m \text{ for all } a \in A\}$
+as $A$ ranges over subsets of $\{2, \ldots, \lfloor x \rfloor\}$ with
+$\sum_{n \in A} 1/n \le C$. This lower bound is `BoundHolds`. The answer is recorded as
+`erdos_784.answer`: yes when $0 < C \le 1$ and no when $C > 1$.
 
-Together these answer the given question (positively for $0<C\leq 1$ and negatively for $C>1$).
+The boxed text on erdosproblems.com/784 quantifies over $A \subseteq [1, x]$. Under that
+literal reading the answer is no for every $C \ge 1$, since $A = \{1\}$ has reciprocal sum $1$
+and sieves out every $m \le x$ (`erdos_784.variants.sieving_by_one`). The same page says
+$1 \notin A$ is the intended hypothesis, and defines $H_C$ by excluding $1$.
+
+For $0 < C < 1$ the union bound $(1 - C)x$ is enough. For $C = 1$,
+$H_1(x) \asymp x/\log x$ (Ruzsa's lower bound, Saias's upper bound; also the case $z = 1$ of
+Weingartner, Theorem 5). For fixed $C > 1$, Weingartner, Theorem 5, gives
+$H_C(x) \asymp x^{e^{1 - C}}/\log x$, which is $o\bigl(x/(\log x)^c\bigr)$ for every $c > 0$.
+Ruzsa had already shown $H_C(x) = x^{e^{1 - C} + o(1)}$.
+
+Erdős stated the claim as a conjecture for every bound $T$, including $T > 1$, in
+[Er72, §VI, pp. 84–85] (strict inequality $\sum 1/a_i < T$) and as a question in
+[Er73, §14.1, p. 135] (strict inequality $\sum 1/a_i < c_1$). The formal statement follows
+the $H_C$ convention of erdosproblems.com/784: non-strict reciprocal sum, and $1$ excluded.
 -/
-@[category research solved, AMS 11]
-theorem erdos_784 (C : ℝ) (hC : 0 < C) : BoundHolds C ↔ C ≤ 1 := by
+@[category research solved, question value, AMS 11]
+theorem erdos_784 (C : ℝ) (hC : 0 < C) :
+    BoundHolds C ↔ erdos_784.answer C := by
   sorry
 
 /--
