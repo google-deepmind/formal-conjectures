@@ -35,11 +35,14 @@ public import FormalConjecturesUtil
 namespace Arxiv.«2107.12475»
 
 /--
-For $n > 8$, $2^n$ is not the the sum of distinct powers of $3$. Expressed here in terms of the base $3$ digits of $n$.
+For $n > 8$, $2^n$ is not the sum of distinct powers of $3$. Expressed here in terms of the base $3$ digits of $2^n$.
 
-This conjecture is equivalent to the halting of a $15$-state $2$-symbol Turing Machine.
-
-TODO(lezeau): Formalize the Turing Machine version of this problem.
+This conjecture is equivalent to the non-halting of a $15$-state $2$-symbol Turing Machine.
+The Turing Machine version is formalized in
+[cryptids](https://github.com/google-deepmind/cryptids/blob/main/Cryptids/Semantics/ErdosTernary15.lean):
+`ConjectureMachines.ErdosTernary15.halts_erdosTernary15_iff_exists_counterexample` proves that
+this machine halts on the blank tape if and only if some $2^n$ with $n > 8$ has no digit $2$ in
+base $3$. The repository also proves this for Tristan Stérin's $14$-state machine.
 
 Source: *Hardness of Busy Beaver Value BB(15)*: https://link.springer.com/chapter/10.1007/978-3-031-72621-7_9
 This is also https://arxiv.org/abs/2107.12475.
@@ -49,7 +52,7 @@ theorem CollatzLike (n : ℕ) (hn : 8 < n) : 2 ∈ Nat.digits 3 (2^n) := by
   sorry
 
 /--
-For $n = 8$, $2$ is not contained in the base $3$ digits of $n$.
+For $n = 8$, $2$ is not contained in the base $3$ digits of $2^n$.
 -/
 @[category test, AMS 5 11]
 theorem two_not_in_digits_three_pow_eight : 2 ∉ Nat.digits 3 (2^8) := by norm_num

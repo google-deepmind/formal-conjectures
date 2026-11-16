@@ -56,14 +56,13 @@ For every lacunary sequence $(n_k)$ of integers and every $f \in L^2([0,1])$ wit
 $\int_0^1 f = 0$, is it true that for almost all $\alpha$,
 $$\sum_{k < N} f(\{\alpha n_k\}) = o\!\left(N \sqrt{\log\log N}\right)?$$
 -/
-@[category research open, AMS 11 42]
+@[category research open, question, AMS 11 42]
 theorem erdos_995 :
-    answer(sorry) ↔
-      ∀ (n : ℕ → ℕ), IsLacunary n → ∀ (f : ℝ → ℝ),
-        MemLp f 2 (volume.restrict (Icc (0 : ℝ) 1)) →
-        ∫ x in (0 : ℝ)..1, f x = 0 →
-        ∀ᵐ α ∂(volume.restrict (Icc (0 : ℝ) 1)),
-          partialSum n f α =o[atTop] fun N => (N : ℝ) * Real.sqrt (Real.log (Real.log N)) := by
+    ∀ (n : ℕ → ℕ), IsLacunary n → ∀ (f : ℝ → ℝ),
+      MemLp f 2 (volume.restrict (Icc (0 : ℝ) 1)) →
+      ∫ x in (0 : ℝ)..1, f x = 0 →
+      ∀ᵐ α ∂(volume.restrict (Icc (0 : ℝ) 1)),
+        partialSum n f α =o[atTop] fun N => (N : ℝ) * Real.sqrt (Real.log (Real.log N)) := by
   sorry
 
 /--

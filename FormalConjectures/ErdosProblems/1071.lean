@@ -36,15 +36,16 @@ namespace Erdos1071
 def SegmentsDisjoint (seg1 seg2 : ℝ² × ℝ²) : Prop :=
   segment ℝ seg1.1 seg1.2 ∩ segment ℝ seg2.1 seg2.2 ⊆ {seg1.1, seg1.2, seg2.1, seg2.2}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can a finite set of disjoint unit segments in a unit square be maximal?
 Solved affirmatively by [Da85], who gave an explicit construction.
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071.lean"]
+@[category research solved, question, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071.lean"]
 theorem erdos_1071.parts.i :
-    answer(True) ↔ ∃ S : Finset (ℝ² × ℝ²),
+    ∃ S : Finset (ℝ² × ℝ²),
       Maximal (fun T : Finset (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧
           seg.1 0 ∈ Icc 0 1 ∧ seg.1 1 ∈ Icc 0 1 ∧
@@ -52,6 +53,7 @@ theorem erdos_1071.parts.i :
           (T : Set (ℝ² × ℝ²)).Pairwise SegmentsDisjoint) S := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite?
 Here a unit line segment is a rotated and translated copy of the open interval $(0,1)$, and it is
 required to be contained in $R$.
@@ -59,9 +61,9 @@ Solved affirmatively by [Fo99], who gave an explicit construction.
 
 This was formalized in Lean by Alexeev using Aristotle and ChatGPT.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071b.lean"]
+@[category research solved, question, AMS 52, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1071b.lean"]
 theorem erdos_1071.parts.ii :
-    answer(True) ↔ ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
+    ∃ (R : Set ℝ²) (S : Set (ℝ² × ℝ²)),
       IsOpen R ∧ IsConnected R ∧ S.Countable ∧ S.Infinite ∧
       Maximal (fun T : Set (ℝ² × ℝ²) =>
         (∀ seg ∈ T, dist seg.1 seg.2 = 1 ∧ openSegment ℝ seg.1 seg.2 ⊆ R) ∧

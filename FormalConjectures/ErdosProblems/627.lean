@@ -28,6 +28,8 @@ public import FormalConjecturesUtil
 - [Er67c] Erdős, P., *Some remarks on chromatic graphs*. Colloq. Math. (1967), 253-256.
 - [Er69b] Erdős, P., *Problems and results in chromatic graph theory*. Proof Techniques in Graph
   Theory (Proc. Second Ann Arbor Graph Theory Conf., Ann Arbor, Mich., 1968) (1969), 27-35.
+- [My55] Mycielski, J., *Sur le coloriage des graphs*. Colloquium Mathematicum 3 (1955), 161–162.
+  [doi:10.4064/cm-3-2-161-162](https://doi.org/10.4064/cm-3-2-161-162)
 - [Zy52] Zykov, A. A., *On some properties of linear complexes*. Amer. Math. Soc. Translation
   (1952), 33.
 -/
@@ -61,8 +63,8 @@ exist?
 Since $f(n) \asymp n/(\log_2 n)^2$ (see `Erdos627.erdos_627.variants.theta`), the limit, if it
 exists, is a finite real number.
 -/
-@[category research open, AMS 5]
-theorem erdos_627 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_627 :
     ∃ L : ℝ, Tendsto (fun n : ℕ ↦ maxChromaticCliqueRatio n / ((n : ℝ) / Real.logb 2 n ^ 2))
       atTop (𝓝 L) := by
   sorry
@@ -141,12 +143,13 @@ Tutte and Zykov [Zy52] independently proved that for every $k$ there is a graph 
 $\omega(G) = 2$ and $\chi(G) = k$.
 
 We require $k \geq 2$: a graph with $\omega(G) = 2$ has an edge, so $\chi(G) \geq 2$.
+The proof here uses Mycielski's construction [My55].
 -/
 @[category research solved, AMS 5]
 theorem erdos_627.variants.tutte_zykov :
     ∀ k : ℕ, 2 ≤ k → ∃ (n : ℕ) (G : SimpleGraph (Fin n)),
       G.cliqueNum = 2 ∧ G.chromaticNumber = (k : ℕ∞) := by
-  sorry
+  exact exists_cliqueNum_eq_two_chromaticNumber_eq
 
 /--
 Erdős [Er61d] proved that for every (large) $n$ there is a graph on $n$ vertices with

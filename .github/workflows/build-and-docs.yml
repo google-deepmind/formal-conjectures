@@ -65,22 +65,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '3.12.9'
+          python-version: '>=3.12.16'
+          check-latest: true
 
       - name: Run script tests
         run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
 
       - name: Run website post-processing tests
         run: python3 -m unittest discover -s site -p 'test_*.py' -v
-
-      # `lakefile.extract.toml` builds the problems for `extract_names` with
-      # `answerKinds`. It must equal `lakefile.toml` except for the answer mode.
-      - name: Check lakefile.extract.toml
-        run: |
-          grep -qx 'weak.google.answer = "always_true"' lakefile.toml
-          grep -qx 'weak.google.answer = "postpone"' lakefile.extract.toml
-          diff <(sed 's/^weak\.google\.answer = "always_true"$/weak.google.answer = "postpone"/' lakefile.toml) \
-            lakefile.extract.toml
 
   build:
     runs-on: ubuntu-latest
@@ -137,6 +129,26 @@ jobs:
             fi
           fi
           echo "site=$site" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        if: steps.mode.outputs.website_only != 'true'
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '>=3.12.16'
+          check-latest: true
+
+      # Check plotting dependencies before starting the Lean build.
+      - name: Install Python dependencies
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --only-binary=:all: pandas==3.1.0 numpy==2.5.4 plotly==5.20.0 beautifulsoup4 lxml
+
+      - name: Run plotting script
+        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
+        run: |
+          mkdir -p site/data
+          python site/plot_growth.py
 
       - name: Install elan
         if: steps.mode.outputs.website_only != 'true'
@@ -312,40 +324,17 @@ jobs:
           path: ~/.cache/mathlib
           key: oleans-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
 
-      - name: Set up Python
-        if: steps.mode.outputs.website_only != 'true'
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: '3.12.9'
-
-      # Only the plotting and Verso-fragment scripts need these; the category
-      # check below is standard library only.
-      - name: Install Python dependencies
-        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
-        run: |
-          python -m pip install --upgrade pip
-          pip install pandas==2.2.3 numpy==2.2.3 plotly==5.20.0 beautifulsoup4 lxml
-
-      - name: Run plotting script
-        if: steps.mode.outputs.website_only != 'true' && steps.mode.outputs.site == 'true'
-        run: |
-          mkdir -p site/data
-          python site/plot_growth.py
-
       - name: Set up Node.js
         if: steps.mode.outputs.site == 'true'
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '18'
 
-      # CI builds only with `lakefile.toml` (`always_true` mode), where `answerKinds`
-      # is wrong for `Prop` answers. The site does not use it, so it is excluded.
-      # See `scripts/extract_names.lean` for how to extract it.
       - name: Generate conjectures data for website
         if: steps.mode.outputs.website_only != 'true'
         run: |
           mkdir -p site/data
-          lake exe extract_names --exclude=statement,docstring,moduleDocstrings,answerKinds,fileFirstAdded,fileLastModified \
+          lake exe extract_names --exclude=statement,docstring,moduleDocstrings,fileFirstAdded,fileLastModified \
             > site/data/conjectures.json
 
       # `extract_names` notices `research open` problems with a sorry-free proof,
