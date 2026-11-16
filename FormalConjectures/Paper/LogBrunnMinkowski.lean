@@ -35,6 +35,7 @@ local notation "E" n => EuclideanSpace ℝ (Fin n)
 
 open ConvexGeometry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For origin-symmetric convex bodies in $\mathbb{R}^n$ and $0 \leq t \leq 1$,
 the logarithmic combination has volume at least $|K|^{1-t}|L|^t$.
 No boundary regularity is assumed. -/
