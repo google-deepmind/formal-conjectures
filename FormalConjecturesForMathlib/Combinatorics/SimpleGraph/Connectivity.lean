@@ -18,7 +18,6 @@ module
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Combinatorics.SimpleGraph.Paths
 public import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
-public import Mathlib.SetTheory.Cardinal.Basic
 
 @[expose] public section
 
@@ -178,9 +177,21 @@ instance decidableConnected : Decidable G.Connected :=
 
 end BFS
 
-/-- A cut vertex of `G` is a vertex whose deletion strictly increases the number of connected
-components. -/
+/-- A cut vertex of `G` is a vertex `v` that separates two other vertices of its connected
+component. There exist `u` and `w`, both different from `v`, such that `G.Reachable u w`,
+but `u` and `w` are not reachable in `G.induce {v}ᶜ`.
+
+Every `u`–`w` walk in `G` then meets `v`, so `u` and `w` lie in the component of `v`.
+On a finite graph this agrees with the counting definition: deleting `v` strictly increases
+the number of connected components. That comparison fails when there are already infinitely
+many components. For example, a disjoint union of countably many copies of `P₃` has `ℵ₀`
+components, and deleting the middle vertex of one copy still leaves `ℵ₀` components.
+
+Mathlib states the edge analogue `SimpleGraph.IsBridge` as non-reachability after deletion,
+rather than as a comparison of component counts. -/
 def IsCutVertex (G : SimpleGraph V) (v : V) : Prop :=
-  Cardinal.mk G.ConnectedComponent < Cardinal.mk (G.induce ({v}ᶜ : Set V)).ConnectedComponent
+  ∃ (u w : V) (hu : u ≠ v) (hw : w ≠ v),
+    G.Reachable u w ∧
+      ¬ (G.induce ({v}ᶜ : Set V)).Reachable ⟨u, hu⟩ ⟨w, hw⟩
 
 end SimpleGraph
