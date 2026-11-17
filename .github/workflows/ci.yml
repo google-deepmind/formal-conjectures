@@ -1,0 +1,66 @@
+# Copyright 2026 The Formal Conjectures Authors.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     https://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - palomar_prepare
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build and test Lean libraries
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Check Lean source requirements
+        run: |
+          if [ -f comparator.json ]; then
+            python3 scripts/check-lean-sources.py --submission
+          else
+            python3 scripts/check-lean-sources.py
+          fi
+
+      - name: Build and test with Lean
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          build: false
+
+      - name: Verify ForMathlib index, build, and run tests
+        run: |
+          ./scripts/mk_all_formathlib.sh
+          git diff --exit-code FormalConjecturesForMathlib.lean
+          lake --wfail build
+          lake --wfail test
+
+      - name: Verify Comparator submission (when comparator.json is present)
+        if: hashFiles('comparator.json') != ''
+        run: |
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq bubblewrap >/dev/null
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          ./scripts/verify-comparator.sh

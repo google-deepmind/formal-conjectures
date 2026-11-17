@@ -1,113 +1,76 @@
-# Formal Conjectures
+# Formal Conjectures — Palomar Submission Base (`palomar_prepare`)
 
-[![.github/workflows/push_master.yml](https://github.com/google-deepmind/formal-conjectures/actions/workflows/build-and-docs.yml/badge.svg)](https://github.com/google-deepmind/formal-conjectures/actions/workflows/build-and-docs.yml)
-[![arXiv](https://img.shields.io/badge/arXiv-2605.13171-b31b1b.svg)](https://arxiv.org/abs/2605.13171)
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/google-deepmind/formal-conjectures)
-[![project chat](https://img.shields.io/badge/zulip-join_chat-brightgreen.svg)](https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures)
+[![CI](https://github.com/google-deepmind/formal-conjectures/actions/workflows/ci.yml/badge.svg)](https://github.com/google-deepmind/formal-conjectures/actions/workflows/ci.yml)
 
-A collection of formalised statements of conjectures in
-[Lean](https://leanprover.github.io/lean4/doc/whatIsLean.html), using
-[mathlib](https://github.com/leanprover-community/mathlib4).
+This branch (`palomar_prepare`) is a minimal, pre-bumped template derived from
+[Formal Conjectures](https://github.com/google-deepmind/formal-conjectures) for packaging a newly
+found formal proof into a [Palomar Registry](https://palomar-registry.org/) submission.
 
-Explore the docs: [Formal Conjectures Documentation](https://google-deepmind.github.io/formal-conjectures/)
+All open-problem directories (`FormalConjectures/`), website assets, and problem-tracking scripts
+have been stripped so that you only need to port the single solved problem and its proof.
 
-Join our [channel on the leanprover Zulip](https://leanprover.zulipchat.com/#narrow/channel/524981-Formal-conjectures)
+## What is included
 
-## Goals
+- **`FormalConjecturesForMathlib/`**: Reusable mathematical definitions and proved lemmas from
+  Formal Conjectures, already bumped to the current Lean / Mathlib release (`v4.36.0`). Contains
+  no `sorry`.
+- **`FormalConjecturesUtil/`**: Shared attributes, metadata helpers, and style linters.
+- **`FormalConjecturesTest/`**: Tests for `FormalConjecturesUtil`.
+- **[`formalization.yaml`](formalization.yaml)**: Placeholder metadata file (`v0.4`) ready to be
+  filled in for Palomar.
+- **`scripts/check-lean-sources.py` & `scripts/verify-comparator.sh`**: Local preflight checks for
+  Palomar's module/line-limit rules, `Challenge.lean` import boundaries, metadata placeholders,
+  and `lake comparator` dual-kernel verification (`nanoda_bin` and `con-ron`).
 
-While there is a growing corpus of formalised theorems including proofs, there
-is a lack of open conjectures where only the statement has been formalised. This
-would be useful for a few reasons. It could
+## Quick start
 
-*   Become a great benchmark for automated theorem provers and automated
-    formalisation tools.
-*   Help clarify the precise meaning of conjectures through formalisation.
-*   Encourage the expansion of `mathlib` by highlighting needed definitions.
+1. **Fetch Mathlib cache and verify the base build:**
+   ```bash
+   lake exe cache get
+   lake --wfail build
+   lake --wfail test
+   ```
+2. **Add the solved problem statement in `Challenge.lean`:**
+   - Import **only** `Mathlib` (never `FormalConjecturesUtil` or `FormalConjecturesForMathlib`;
+     Palomar requires `Challenge.lean`'s transitive import closure to stay within Lean core and
+     Mathlib).
+   - Strip `@[category ...]`, `@[AMS ...]`, and `@[question ...]` attributes; inline any minimal
+     non-Mathlib definitions needed by the statement with clear docstrings; leave proofs as
+     `:= by sorry`.
+3. **Add the proof in `Solution.lean` (and optional `Solution/*.lean` submodules):**
+   - You may freely import `FormalConjecturesForMathlib` and `FormalConjecturesUtil` here.
+   - Prove the exact same fully-qualified declaration names and types declared in `Challenge.lean`
+     using only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+4. **Configure Comparator and Lake:**
+   - Uncomment the `Challenge` and `Solution` targets in [`lakefile.toml`](lakefile.toml) and add
+     them to `defaultTargets`.
+   - Create `comparator.json` naming `Challenge`, `Solution`, and your `theorem_names`.
+5. **Complete metadata and narrative:**
+   - Replace every `TEMPLATE:` entry in [`formalization.yaml`](formalization.yaml).
+   - Rewrite this `README.md` to give a clear mathematical overview of your theorem, sources, and
+     proof for human readers and Palomar's editorial review.
+6. **Verify and submit:**
+   ```bash
+   python3 scripts/check-lean-sources.py --submission
+   lake --wfail build
+   ./scripts/verify-comparator.sh
+   ```
+   Push to a public GitHub repository and submit the full 40-character commit SHA (`git rev-parse HEAD`)
+   at <https://submit.palomar-registry.org/>.
 
-It is our hope that this initiative will form the seed of a much richer dataset of
-formalised conjectures.
+## Detailed documentation
 
-### Note on Formalisation Accuracy
+- **For humans:** See [`PALOMAR.md`](PALOMAR.md) for full details on dependency boundaries, value
+  questions (`answer(...)`), `formalization.yaml` provenance rules, and submission steps.
+- **For AI agents:** See [`AGENTS.md`](AGENTS.md) for end-to-end operational instructions,
+  statement-fidelity checks, and Palomar agent-protocol safety rules.
 
-Formalizing mathematical statements without proofs is inherently challenging.
-Subtle inaccuracies can arise where the formal statement might not perfectly
-capture the nuances of the original conjecture. To mitigate this issue, we will
-rely on careful human review of contributions, and plan to periodically leverage
-AlphaProof to help identify potential misformalisations.
+## Citing Formal Conjectures
 
-## Contributing
+If your formalization builds on a statement from Formal Conjectures, please keep the
+`related_formalizations` entry in `formalization.yaml` and consider citing:
 
-Contributions are most welcome — consider adding (or even just opening an issue
-describing) your favourite conjecture. See [CONTRIBUTING.md](./CONTRIBUTING.md)
-for the full contribution guide, including ways to contribute, the
-step-by-step process, file structure conventions, attribute usage, and style
-guidelines.
-
-## Usage, Structure & Features
-
-This is a Lean 4 project managed with `lake` and a dependency `mathlib`. You
-first need to
-[install elan, lake, lean and if you want vscode](https://leanprover-community.github.io/get_started.html)
-and then run
-
-```bash
-lake exe cache get
-lake build
-```
-
-### Directory structure
-
-The directory structure is organised by the type of sources of the conjectures.
-There are two special directories:
-
--   `FormalConjecturesUtil` contains utilities like the
-    [`category` attribute](./FormalConjecturesUtil/Attributes/Basic.lean), the
-    [`question` attribute](./FormalConjecturesUtil/Attributes/Basic.lean) and some
-    linters.
--   `FormalConjecturesForMathlib` contains code potentially suitable to be upstreamed to
-    [mathlib](https://github.com/leanprover-community/mathlib4). Here we follow
-    mathlib's directory structure.
-
-For details on the `@[category]`, `@[formal_proof]`, `@[AMS]`, `@[question]` attributes
-that statements in this repository use, see
-[CONTRIBUTING.md](./CONTRIBUTING.md).
-
-## Versioning
-
-This repo will track the monthly tagged releases of mathlib (which correspond to
-Lean releases), rather than tracking mathlib master.
-
-To minimize friction when adding problem statements that need definitions that
-are not yet in mathlib, such definitions can be added to the `FormalConjecturesForMathlib`
-directory. This ensures that the addition of these problems to
-formal-conjectures is not locked to the mathlib release cadence.
-
-When `lean-toolchain` is updated on `main`, a GitHub Actions workflow
-automatically adds a git tag of the form `v4.{X}.{Y}`, following mathlib's
-tagging convention.
-
-Stable benchmark snapshots are tagged using the format
-`bench-v{N}-lean4.{X}.{Y}`, where:
-
--   **`v{N}` (Benchmark version):** Identifies the set of problems included in
-    the benchmark. The benchmark version is bumped whenever problems are added,
-    removed, or when misformalizations are corrected.
--   **`lean4.{X}.{Y}` (Lean version):** Identifies the Lean 4 toolchain
-    version used for that snapshot.
-
-Tags are immutable: fixes to misformalizations are never patched into an existing
-benchmark version but instead go into `v{N+1}`.
-
-## Citing formal-conjectures
-If your work has used formal-conjectures, please consider citing it via
-```
-@misc{FormalConjectures,
-  author       = {{The Formal Conjectures Authors}},
-  title        = {{T}he {F}ormal {C}onjectures {R}epository},
-  year         = {2025},
-  url          = {https://github.com/google-deepmind/formal-conjectures},
-}
-
+```bibtex
 @article{FormalConjecturesPaper,
   authors = {Firsching, Moritz and Lezeau, Paul and Mercuri, Salvatore
     and Horv{\'a}th, Mikl{\'o}s Z and Dillies, Ya{\"e}l and S{\"o}nne, Calle and Wieser, Eric and
@@ -120,32 +83,6 @@ If your work has used formal-conjectures, please consider citing it via
 
 ## Licensing
 
-Copyright 2025 The Formal Conjectures Authors. All software is licensed under the Apache License,
-Version 2.0 (Apache 2.0); you may not use this file except in compliance with
-the Apache 2.0 license. You may obtain a copy of the Apache 2.0 license at:
-https://www.apache.org/licenses/LICENSE-2.0
-
-All other materials are licensed under the Creative Commons Attribution 4.0
-International License (CC-BY). You may obtain a copy of the CC-BY license at:
-https://creativecommons.org/licenses/by/4.0/legalcode.
-
-The content may be based on third party sources and may in some cases include
-third party content. The original source for each conjecture is indicated by a
-URL within the source file. Third party content may be subject to different
-licensing requirements. In particular:
-
--   Material from Wikipedia articles, MathOverflow and the OEIS is released under the
-    Creative Commons Attribution-Share-Alike License 4.0.
--   Material from bbchallenge.org is used under the Creative Commons Attribution
-    4.0 International License.
--   Material from the Equational Theories Project is used under Apache-2.0.
--   Material from arXiv is used under the licence applicable to the relevant
-    paper, as indicated at the URL within the source file.
-
-Unless required by applicable law or agreed to in writing, all software and
-materials distributed here under the Apache 2.0 or CC-BY license are distributed
-on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied. See the licenses for the specific language governing
-permissions and limitations under those licenses.
-
-This is not an official Google product.
+Copyright 2025–2026 The Formal Conjectures Authors. Licensed under the Apache License, Version 2.0
+(see [`LICENSE`](LICENSE)). Keep `project.license: "Apache-2.0"` in `formalization.yaml` aligned
+with the root `LICENSE` file.

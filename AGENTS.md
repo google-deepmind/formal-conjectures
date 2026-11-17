@@ -1,107 +1,159 @@
-# Agent guidelines
+# Agent guidelines (`palomar_prepare`)
 
-Formal Conjectures states open mathematical problems in Lean 4. It is a statement
-repository, not a proof repository: almost every problem is `sorry`.
+This branch is a clean base for turning a solved problem from
+[Formal Conjectures](https://github.com/google-deepmind/formal-conjectures) into a verified
+submission for the [Palomar Registry](https://palomar-registry.org/).
 
-[CONTRIBUTING.md](CONTRIBUTING.md) is the reference for conventions, folders, and attributes.
-Also follow any `README.md` in the directory that you change.
+`FormalConjectures/` (the open-problem collection) has been removed. Only the shared libraries
+(`FormalConjecturesForMathlib`, `FormalConjecturesUtil`, and `FormalConjecturesTest`), bumped to
+Lean / Mathlib `v4.36.0`, plus a placeholder [`formalization.yaml`](formalization.yaml) and
+verification scripts in `scripts/`, are present here.
 
-Use these detailed guides when the task needs them:
+Read [`PALOMAR.md`](PALOMAR.md) and the upstream
+[Palomar submission policy](https://github.com/PalomarRegistry/PalomarPolicy/blob/main/CONTRIBUTING.md)
+when handling edge cases.
 
-- [PROOFS.md](PROOFS.md) for proofs and `formal_proof` claims
-- [STATEMENTS.md](STATEMENTS.md) for adding and reviewing statements
+---
 
-## Start with existing code
+## End-to-end workflow for creating a Palomar submission
 
-Follow the style of an existing file. Start by copying one from the same directory.
+When asked to package a Formal Conjectures problem and its proof for Palomar, execute these steps
+in order:
 
-Search Mathlib, `FormalConjecturesForMathlib/`, and nearby problem files before you add a
-definition, API, or notation. Search names and documentation with `rg`. Use `#check` to confirm
-the type of a candidate declaration.
+### 1. Locate and audit the original statement
 
-Put each problem in `FormalConjectures/<Source>/`. Keep closely related variants in the same
-file. Put reusable mathematics in `FormalConjecturesForMathlib/`. That directory must not
-contain `sorry`.
+- Retrieve the original problem file (for example via
+  `git show origin/main:FormalConjectures/<Source>/<Problem>.lean` if `origin/main` is available)
+  and record its commit SHA for `formalization.yaml` (`related_formalizations`).
+- Read the cited mathematical source and verify statement fidelity before freezing `Challenge.lean`:
+  - Check quantifier order and scope (`∃ x, P x ∧ Q`, never unintended `∃ x, P x → Q`), strict vs
+    non-strict bounds, implications, and domain restrictions.
+  - Check Lean boundary semantics on empty/smallest inputs (`x / 0 = 0`, `Nat` subtraction
+    truncation, `ZMod 0 ≃ ℤ`, `sInf ∅`, sums over empty sets).
+  - Document any adaptation, specialization, or divergence honestly in `formalization.yaml`
+    (`fidelity.divergences` and `status.scope`) and in `Challenge.lean`.
 
-`FormalConjecturesTest/` tests only the repository tooling in `FormalConjecturesUtil/`. Do not
-add tests for `FormalConjecturesForMathlib/` there. Put lemmas and sanity checks for a shared
-definition in the `FormalConjecturesForMathlib/` file that defines it.
+### 2. Construct `Challenge.lean`
 
-Problem files normally import only `FormalConjecturesUtil`.
-`FormalConjecturesForMathlib/` files import only the required Mathlib modules.
+`Challenge.lean` is the small, human-auditable statement contract. Enforce every rule below:
 
-## State the source faithfully
+- **Transitive import rule (CRITICAL):** Every file in `Challenge.lean`'s transitive import
+  closure **must** belong to Lean core or canonical Mathlib (Tau Ceti / CSLib are flagged as
+  qualified dependencies). **Never import `FormalConjecturesUtil` or
+  `FormalConjecturesForMathlib` in `Challenge.lean`.**
+- **Module header & visibility:** Start the file with `module`, use `public import Mathlib` (or
+  targeted `public import Mathlib...` modules), place the `/-! ... -/` module docstring *after*
+  the imports, and open `@[expose] public section`.
+- **Strip Formal Conjectures attributes:** Remove `@[category ...]`, `@[AMS ...]`,
+  `@[formal_proof ...]`, and `@[question ...]`. Translate `@[AMS ...]` codes into
+  `classification.msc2020` and `classification.arxiv` in `formalization.yaml`.
+- **Inline minimal non-Mathlib definitions:** If the theorem signature uses a definition from
+  `FormalConjecturesForMathlib`, copy only that definition (with a precise LaTeX-aware mathematical
+  docstring) into `Challenge.lean`. Do not put proof lemmas in `Challenge.lean`.
+- **Proof placeholders & size limits:** Write theorem bodies in `Challenge.lean` as `:= by sorry`.
+  Keep `Challenge.lean` well within the **1,000-line / 100 KiB** hard limit (target **<= 300 lines
+  and <= 32 KiB**; **<= 100 lines** for single-declaration inline rendering).
+- **Value questions:** If the problem determines an unknown `<theorem>.answer`, declare
+  `def <Namespace>.<theorem>.answer : <Type> := sorry` in `Challenge.lean`, provide the concrete
+  definition in `Solution.lean`, list `<Namespace>.<theorem>.answer` in `comparator.json`'s
+  `"definition_names"`, and confirm the theorem does not hold vacuously for trivial answers.
 
-Read the cited source. Make the Lean statement, its docstring, and the source agree. Check the
-order and scope of quantifiers, bounds, hypotheses, and all variants. Test empty and smallest
-inputs. See [STATEMENTS.md](STATEMENTS.md) for the detailed checks.
+### 3. Port the proof into `Solution.lean` (and `Solution/*.lean`)
 
-State the unknown of a value question as a definition `<theorem>.answer := sorry` before the
-theorem, and refer to it by that name in the statement. A tautological value is not a
-mathematical solution.
-Tag a theorem with `@[question]` when the source asks a yes-or-no question, and with
-`@[question value]` when it asks for a value, rather than makes a claim.
+- **Imports:** `Solution.lean` and submodules under `Solution/` **may** freely `public import`
+  from `FormalConjecturesForMathlib`, `FormalConjecturesUtil`, and Mathlib. Do **not** import
+  `Challenge` into `Solution.lean`.
+- **Exact declaration match:** Every theorem and definition named in `comparator.json` must have
+  the **exact same fully-qualified name and kernel type** in `Solution.lean` and `Challenge.lean`.
+  If a definition was inlined into `Challenge.lean`, define it identically in `Solution.lean` so
+  their types match definitionally; connect it to `FormalConjecturesForMathlib` lemmas by `rfl` if
+  helpful.
+- **Lean module & file caps:** Every `.lean` file in the repository (except `lakefile.lean`) must
+  begin with `module` and have **<= 10,000 physical lines**. Split large proof developments or
+  certificates across `Solution/*.lean`. Never create `.lean` symlinks or commit `.olean`/`.ilean`
+  files.
+- **Axiom hygiene:** Proved declarations may depend **only** on `propext`, `Classical.choice`,
+  and `Quot.sound`.
+  - Eliminate all `sorry` (`sorryAx`).
+  - Replace any `native_decide` (`Lean.ofReduceBool`) with `decide`, `norm_num`, or a
+    kernel-checked proof.
+  - Never add `axiom`, `opaque`, or `constant`. State unproven mathematical assumptions as
+    explicit hypotheses on the theorem in both `Challenge.lean` and `Solution.lean`.
+- **Shared library rule:** `FormalConjecturesForMathlib/` must never contain `sorry` or
+  `native_decide`. If you add reusable proved lemmas there, run `./scripts/mk_all_formathlib.sh`.
 
-## Write clear documentation
+### 4. Update `lakefile.toml` and write `comparator.json`
 
-Write documentation in simple, concise technical English. Prefer short sentences, common
-words, and one instruction or claim per sentence. Remove repetition and details that do not
-help a contributor complete the task.
+1. In [`lakefile.toml`](lakefile.toml), add `"Challenge"` and `"Solution"` to `defaultTargets`
+   and uncomment the `Challenge` (`warn.sorry = false`) and `Solution` (`globs = ["Solution.*"]`)
+   `[[lean_lib]]` sections.
+2. If you bump Lean/Mathlib further, ensure `lean-toolchain` matches Mathlib's `lean-toolchain`
+   verbatim, verify the Mathlib commit in `lake-manifest.json` is an **ancestor of
+   `refs/heads/master`** (never an isolated release-branch patch tag), and commit the updated
+   `lake-manifest.json`.
+3. Write `comparator.json` at the repository root:
+   ```json
+   {
+     "challenge_module": "Challenge",
+     "solution_module": "Solution",
+     "theorem_names": ["<Namespace>.<main_theorem>"],
+     "definition_names": [],
+     "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
+   }
+   ```
+   Never include `external_kernels` in `comparator.json`.
 
-Use the same style for all repository communication. This includes issues, pull requests,
-reviews, and comments.
+### 5. Populate `formalization.yaml` and `README.md`
 
-Give each module a docstring with its sources. Give each `research open`, `research solved`,
-and `textbook` theorem a concise docstring that states the problem. Explain a non-obvious domain
-restriction when it is needed to exclude a degenerate case.
+- Replace **every** `TEMPLATE:` sentinel in [`formalization.yaml`](formalization.yaml).
+- **Human-only authorship rule:** `project.authors` and `project.responsible_maintainers` are
+  strictly for human contributors. Never put an AI model, agent, or tool name in either list.
+  Record all AI models, agent frameworks, and prover harnesses accurately under
+  `automation.methods`.
+- Keep `project.license: "Apache-2.0"` matching the root [`LICENSE`](LICENSE) file.
+- Ensure `sources` satisfies Palomar's provenance rule:
+  - *Original proof first presented here:* include an entry with `type: original-proof` and
+    `relationship: other`, and mark all context/problem sources as `background` or `other`.
+  - *Source-based formalization:* omit `type: original-proof` and give at least one source a
+    `formalizes`, `adapts`, or `independently-proves` relationship.
+  - Allowed `sources[].type` values: `paper`, `book`, `web discussion`, `folklore`,
+    `original-proof`, or `other`.
+- Rewrite `README.md` into a clear, accurate mathematical summary of the submitted theorem,
+  sources, proof structure, and any limitations, suitable for mathematicians and Palomar's
+  automated editorial review. Keep the link to `https://submit.palomar-registry.org/` if retaining
+  submission instructions.
 
-Use LaTeX for mathematics in problem docstrings. Use code formatting for Lean and Mathlib API
-names. Do not put review notes or a proposed proof of an open problem in a Lean file.
+### 6. Run mechanical verification
 
-## Keep the Lean simple
-
-- Follow Mathlib naming conventions.
-- Use local notation for notation that is specific to one problem.
-- Omit type annotations that Lean can infer.
-- Write placeholders as `by sorry`.
-- Keep AMS tags in ascending order, such as `AMS 15 51`.
-- Do not use a global `open Classical`. Use `open scoped Classical in` or provide a local
-  `Decidable` instance.
-- Do not add placeholder definitions, incomplete types, unused imports, debug code, or commented
-  out code.
-
-## Build the changed scope
-
-Build every module that you change. Do not build the whole project locally for a problem-file
-change.
+Run all checks locally and fix every error and warning before declaring the task complete:
 
 ```bash
-lake --wfail build 'FormalConjectures.ErdosProblems.«361»'
+python3 scripts/check-lean-sources.py --submission
+./scripts/mk_all_formathlib.sh
+lake --wfail build
+lake --wfail test
+./scripts/verify-comparator.sh
 ```
 
-Use the wider target only when the changed scope requires it:
+`./scripts/verify-comparator.sh` runs `lake comparator` in `bwrap` and replays the exported proof
+through Lean's kernel plus the toolchain's bundled `nanoda_bin` and `con-ron` kernels.
 
-```bash
-lake --wfail build FormalConjecturesForMathlib  # shared definitions
-lake --wfail test                               # repository utilities
-```
+---
 
-`--wfail` turns warnings into failures, as CI does. Fix every warning in the changed scope.
+## Submitting to Palomar as an agent
 
-## Write a readable pull request
+If the user explicitly asks you to submit the prepared repository to Palomar, read
+<https://submit.palomar-registry.org/llms.txt> first and obey these rules without exception:
 
-Keep the pull request description concise and easy to scan. State what changed, why it changed,
-and how you checked it. Include only formalisation choices, limitations, or reviewer notes that
-affect the change. Remove narration, repetition, and unrelated detail.
-
-Put reviewer notes in the pull request, not in Lean comments. To close several issues, repeat
-the keyword: `Fixes #1, fixes #2`.
-
-Before requesting review, check that:
-
-- each changed module builds with `--wfail`
-- each problem theorem has one `category` and at least one AMS tag
-- module and theorem docstrings follow the source and cite it
-- the statement handles its boundary cases
-- `FormalConjecturesForMathlib/` contains no `sorry`
-- the diff contains only intended files and changes
+1. **Preflight first:** Before calling `POST /api/submit`, run Palomar's complete reusable
+   workflow (`PalomarRegistry/PalomarSubmission/.github/workflows/submission.yml` with
+   `mode: full` and `execution_profile: palomar-standard-v1`) on the exact 40-character commit SHA
+   until the mechanical report returns `status: pass`.
+2. **Never drive browser OAuth:** Do not automate the browser form or reuse human web sessions.
+   Use only the documented agent protocol (`POST /api/submit` → temporary lightweight git tag
+   `palomar-verify-{challenge}` at the commit + secret GitHub gist → `POST /api/verify` → delete
+   temporary tag and gist).
+3. **Never register without explicit human consent:** Registration on Palomar is permanent and
+   append-only. After `GET /api/review` completes, show the full review outcome and findings to
+   the user, explain what `POST /register` permanently publishes, and call `POST /register`
+   **only** after receiving the user's explicit instruction to register that review.

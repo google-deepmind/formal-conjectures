@@ -1,0 +1,130 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4 — Metadata template for a Palomar submission built from Formal Conjectures.
+#
+# Replace every `TEMPLATE:` placeholder before submitting to Palomar.
+# Replace a placeholder list with `[]` only where its adjacent comment permits it;
+# fields marked required by Palomar policy must remain nonempty.
+# See https://github.com/PalomarRegistry/PalomarPolicy/blob/main/CONTRIBUTING.md
+# and https://github.com/mathlib-initiative/formalization.yaml for the full specification.
+
+version: "v0.4"
+
+project:
+  name: "TEMPLATE: concise public title of the formalized result"
+  description: >-
+    TEMPLATE: concise public abstract of the mathematical content and principal
+    results of this formalization (at most 10,000 characters).
+  # Required nonempty list of HUMAN author names (strings).
+  # Do NOT list AI models, agents, or tools here; credit those under `automation.methods`.
+  authors:
+    - "TEMPLATE: human formalizer name"
+  # Must match the root Apache-2.0 `LICENSE` file exactly.
+  license: "Apache-2.0"
+  # Required nonempty list of HUMAN maintainer names (strings).
+  responsible_maintainers:
+    - "TEMPLATE: human maintainer responsible for this formalization"
+
+# Omit `repository` when this repository contains the substantive proof development
+# (the standard case when working directly on a branch/fork of `palomar_prepare`).
+# Uncomment ONLY if this repository is a thin Comparator wrapper around another repo:
+# repository:
+#   substantive_formalization:
+#     id: "TEMPLATE: owner/repository or https://github.com/owner/repository"
+#     revision: "TEMPLATE: full 40-character lowercase commit SHA"
+
+classification:
+  # Required: 1 to 8 official arXiv subject identifiers (e.g. "math.NT", "math.CO").
+  arxiv:
+    - "TEMPLATE: official arXiv category such as math.NT"
+  # Optional (recommended): up to 8 MSC2020 codes (e.g. "11B25", "05C35").
+  # Tip: map the `@[AMS ...]` tags from the original Formal Conjectures file to 2- or 5-char MSC2020 codes.
+  msc2020:
+    - "TEMPLATE: MSC2020 code such as 11B25"
+
+sources:
+  # Required nonempty list. Every entry needs `title` and `relationship`
+  # (`formalizes`, `adapts`, `independently-proves`, `background`, or `other`).
+  # If `type` is included, Palomar requires one of:
+  #   `paper`, `book`, `web discussion`, `folklore`, `original-proof`, or `other`.
+  #
+  # Choose ONE result origin:
+  # 1. Original proof first presented by this formalization:
+  #    Include an entry with `type: original-proof` and `relationship: other`, and use
+  #    `background` or `other` for all additional context/problem-statement sources
+  #    (such as Erdős Problems, an open-problem paper, OEIS, or MathOverflow).
+  # 2. Source-based formalization (formalizing or adapting an existing paper/preprint, or
+  #    giving a new proof of an already published theorem):
+  #    Omit `type: original-proof`, and give at least one mathematical source a
+  #    `formalizes`, `adapts`, or `independently-proves` relationship.
+  #
+  # Use `authors` strictly for bibliographic authors; use `contributors` (with `name` and
+  # `role`, e.g. `problem-proposer` or `editor`) for other roles.
+  - title: "TEMPLATE: title of the mathematical source (or description of original proof)"
+    authors:
+      - "TEMPLATE: bibliographic author name (or remove `authors` if inapplicable)"
+    # contributors:
+    #   - name: "TEMPLATE: contributor name"
+    #     role: "TEMPLATE: role, e.g. problem-proposer or editor"
+    id: "TEMPLATE: arXiv ID, DOI, URL, or citation (remove if original-proof)"
+    type: "TEMPLATE: paper | book | web discussion | folklore | original-proof | other"
+    location: "TEMPLATE: theorem/problem number, section, or URL"
+    relationship: "TEMPLATE: formalizes | adapts | independently-proves | background | other"
+    note: "TEMPLATE: optional detail explaining relationship or nuances (or remove)"
+    author_endorsement: "TEMPLATE: participated | endorsed | no-response | not-contacted | declined | n/a | other"
+
+related_formalizations:
+  # Link back to the Formal Conjectures repository and commit where the problem statement originated.
+  - id: "https://github.com/google-deepmind/formal-conjectures"
+    relationship: "builds-on"
+    note: "TEMPLATE: Proves `<declaration>` from `FormalConjectures/<Source>/<File>.lean` (commit `<sha>`)."
+
+status:
+  scope: >-
+    TEMPLATE: state clearly what is proved in `Solution.lean` vs `Challenge.lean`,
+    including any adaptations, domain restrictions, or omitted variants.
+  # Count unresolved sorries in the proof development ONLY (excluding deliberate `sorry` in `Challenge.lean`).
+  # Must be 0 for a complete Palomar proof submission.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  # List all axioms used by the proved declarations (check with `#print axioms <decl>`).
+  # Palomar permits only `propext`, `Classical.choice`, and `Quot.sound`.
+  axioms:
+    - "TEMPLATE: list axioms from `#print axioms`, e.g. propext, Classical.choice, Quot.sound, or []"
+
+automation:
+  # Required nonempty list. Record every material human/AI phase honestly.
+  methods:
+    - method: "TEMPLATE: manual | copilot | agent | autonomous | other"
+      models:
+        - "TEMPLATE: model identifier(s) used, or replace this list with [] for manual work"
+      framework: "TEMPLATE: agent/prover harness or tool name, or remove if manual"
+      tool_setup: "TEMPLATE: details on prover, tactics, editors, or orchestration used"
+      cost:
+        wall_time: "TEMPLATE: approximate elapsed time (optional)"
+        spend_usd: "TEMPLATE: approximate compute/API spend or not tracked (optional)"
+        hardware: "TEMPLATE: hardware used (optional)"
+      prompting_notes: "TEMPLATE: brief notes on task specification or prompting (optional)"
+  notes: "TEMPLATE: concise summary of how human authors and automated tools collaborated"
+
+fidelity:
+  divergences: >-
+    TEMPLATE: document any differences between `Challenge.lean`, the original Formal Conjectures
+    statement, and the informal source (or state "None known").
+
+review:
+  # Review completed BEFORE submitting to Palomar (`unchecked`, `self-assessed`, `agent-reviewed`,
+  # `peer-reviewed`, `author-verified`, etc.).
+  status: "TEMPLATE: pre-submission review status, e.g. self-assessed"
+  reviewers: []
+  notes: "TEMPLATE: describe statement and boundary-case audits performed before submission"
+
+alignment:
+  namespace: "TEMPLATE: root namespace of the problem/proof, e.g. Erdos123"
+  statements:
+    - source: "TEMPLATE: informal problem/theorem identifier in the cited source"
+      lean: "TEMPLATE: fully qualified Lean declaration name in Challenge.lean and Solution.lean"
+      module: "Challenge"
+      status: "proved"
+      note: "TEMPLATE: correspondence notes and boundary-case verification"
+
+acknowledgements: "TEMPLATE: optional credits for libraries (Mathlib, Formal Conjectures), tools, and discussions"
