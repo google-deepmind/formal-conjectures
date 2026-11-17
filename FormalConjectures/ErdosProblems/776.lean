@@ -186,4 +186,18 @@ theorem erdos_776.variants.upper_bound (r : ℕ) (hr : 2 ≤ r) :
         Real.logb 2 (Real.logb 2 (r : ℝ)) + 15 := by
   sorry
 
+/-- The r = 4 case of the He–Tang lower bound [HeTa26]. -/
+@[category research solved, AMS 5]
+theorem erdos_776.variants.lower_bound_r4 :
+    10 ≤ n0 4 := by
+  sorry
+
+/-- The general lower bound implies its r = 4 special case. -/
+@[category test, AMS 5]
+theorem erdos_776.variants.lower_bound_implies_r4 :
+    type_of% erdos_776.variants.lower_bound →
+    type_of% erdos_776.variants.lower_bound_r4 := by
+  intro h
+  simpa using h 4 (by decide)
+
 end Erdos776
