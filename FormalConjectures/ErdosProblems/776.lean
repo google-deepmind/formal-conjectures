@@ -25,7 +25,7 @@ public import FormalConjecturesUtil
 - T. F. Bloom, *Erdős Problem #776*, https://www.erdosproblems.com/776.
 - [HeTa26] He, Y. and Tang, Q., *An Erdős–Trotter problem on antichains with multiplicity
   $r$ on each occurring level*. [arXiv:2602.09803v2](https://arxiv.org/abs/2602.09803v2)
-  (2026).
+  (2026). Results obtained with assistance from ChatGPT.
 -/
 
 @[expose] public section
