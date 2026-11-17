@@ -75,9 +75,6 @@ theorem erdos_176_l_equals_2 : ∃ C : ℕ, 1 < C ∧ ∀ k, (hk : 2 ≤ k) →
   ≤ C ^ k := by
   sorry
 
-#check Nat.sqrt_le
-#check Nat.sqrt_le_self
-
 -- Exponential upper bound for N(k, √k) (for k ≥ 1)
 @[category research open, question, AMS 11]
 theorem erdos_176_l_equals_sqrtk : ∃ C : ℕ, 1 < C ∧ ∀ k, (hk : 1 ≤ k) →
