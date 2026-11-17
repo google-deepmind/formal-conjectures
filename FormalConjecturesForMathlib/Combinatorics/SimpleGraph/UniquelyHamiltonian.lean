@@ -23,16 +23,18 @@ public import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
 /-!
 # Uniquely Hamiltonian
 
-A simple Graph `G` is *uniquely Hamiltonian* if it contains a Hamiltonian Cycle p, but there is no second Hamiltonian Cylce q with p!= q. This file defines `SimpleGraph.IsUniquelyHamiltonian`.
+A simple Graph `G` is *uniquely Hamiltonian* if it contains exactly one Hamiltonian cycle.
+This file defines `SimpleGraph.IsUniquelyHamiltonian` in terms of edge deletion: `G` has a
+Hamiltonian cycle `p`, and deleting any single edge of `p` destroys all Hamiltonian cycles of `G`.
 -/
 namespace SimpleGraph
 variable {V: Type*} [DecidableEq V] (G : SimpleGraph V)
 
-/-`G` has a Hamiltonian cycle `p`, and deleting any edge of `p`
+/-- `G` is uniquely Hamiltonian: it has a Hamiltonian cycle `p`, and deleting any edge of `p`
 destroys all Hamiltonian cycles. -/
 def IsUniquelyHamiltonian : Prop :=
   ∃ (a : V) (p : G.Walk a a), p.IsHamiltonianCycle ∧
-    ∀ e ∈ p.edges, ¬ (∃ (a : V) (q : (G.deleteEdges {e}).Walk a a),
+    ∀ e ∈ p.edges, ¬ (∃ (b : V) (q : (G.deleteEdges {e}).Walk b b),
     q.IsHamiltonianCycle)
 
 end SimpleGraph
