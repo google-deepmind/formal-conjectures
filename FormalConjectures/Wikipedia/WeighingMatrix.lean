@@ -25,6 +25,8 @@ $\{-1, 0, 1\}$ satisfying $W W^{\mathsf{T}} = w I_n$. At $w = n$, this recovers 
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Weighing_matrix)
+- [Ea76] Eades, P. (1976). *Some asymptotic existence results for orthogonal designs*, Ars Combin.
+  1, 109--118.
 - [GS79] Geramita, A. V. and Seberry, J. (1979). *Orthogonal Designs: Quadratic Forms and Hadamard
   Matrices*, Lecture Notes in Pure and Applied Mathematics 45, Marcel Dekker, New York.
 -/
@@ -34,27 +36,30 @@ $\{-1, 0, 1\}$ satisfying $W W^{\mathsf{T}} = w I_n$. At $w = n$, this recovers 
 namespace WeighingMatrix
 
 /-- `W` is a **weighing matrix** $W(n, w)$ of order $n$ and weight $w$ if its entries lie in
-$\{-1, 0, 1\}$ and $W W^{\mathsf{T}} = w I_n$. -/
-def IsWeighingMatrix (n w : ℕ) (W : Matrix (Fin n) (Fin n) ℤ) : Prop :=
+$\{-1, 0, 1\}$ and $W W^{\mathsf{T}} = w I_n$.
+
+At $n = 0$, `Matrix (Fin 0) (Fin 0) ℤ` is a subsingleton, so the empty matrix trivially satisfies
+`IsWeighingMatrix (n := 0) w 0` for every $w$; existence statements below restrict to $n \ge 1$. -/
+def IsWeighingMatrix {n : ℕ} (w : ℕ) (W : Matrix (Fin n) (Fin n) ℤ) : Prop :=
   (∀ i j, W i j = -1 ∨ W i j = 0 ∨ W i j = 1) ∧
     W * W.transpose = (w : ℤ) • 1
 
 /-- For every order $n$, the zero matrix is a weighing matrix $W(n, 0)$ of weight $0$. -/
 @[category API, AMS 5 15]
-theorem isWeighingMatrix_zero (n : ℕ) : IsWeighingMatrix n 0 0 :=
+theorem isWeighingMatrix_zero (n : ℕ) : IsWeighingMatrix (n := n) 0 0 :=
   ⟨fun _ _ => .inr (.inl rfl), by simp⟩
 
 /-- For every order $n$, the identity matrix is a weighing matrix $W(n, 1)$ of weight $1$. -/
 @[category API, AMS 5 15]
-theorem isWeighingMatrix_one (n : ℕ) : IsWeighingMatrix n 1 1 := by
+theorem isWeighingMatrix_one (n : ℕ) : IsWeighingMatrix (n := n) 1 1 := by
   refine ⟨fun i j => ?_, by simp⟩
   by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
 
 /-- Negating a weighing matrix $W(n, w)$ yields a weighing matrix of the same order and weight. -/
 @[category API, AMS 5 15]
 theorem IsWeighingMatrix.neg {n w : ℕ} {W : Matrix (Fin n) (Fin n) ℤ}
-    (hW : IsWeighingMatrix n w W) :
-    IsWeighingMatrix n w (-W) := by
+    (hW : IsWeighingMatrix w W) :
+    IsWeighingMatrix w (-W) := by
   refine ⟨fun i j => ?_, ?_⟩
   · rcases hW.1 i j with h | h | h <;> simp [h]
   · rw [Matrix.transpose_neg, neg_mul_neg, hW.2]
@@ -62,7 +67,7 @@ theorem IsWeighingMatrix.neg {n w : ℕ} {W : Matrix (Fin n) (Fin n) ℤ}
 /-- The $2 \times 2$ Sylvester matrix $\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$ is a weighing
 matrix $W(2, 2)$. -/
 @[category test, AMS 5 15]
-theorem isWeighingMatrix_two_two : IsWeighingMatrix 2 2 !![1, 1; 1, -1] := by
+theorem isWeighingMatrix_two_two : IsWeighingMatrix (n := 2) 2 !![1, 1; 1, -1] := by
   refine ⟨fun i j => ?_, ?_⟩
   · fin_cases i <;> fin_cases j <;> decide
   · ext i j
@@ -71,7 +76,7 @@ theorem isWeighingMatrix_two_two : IsWeighingMatrix 2 2 !![1, 1; 1, -1] := by
 /-- No weighing matrix $W(2, 3)$ exists because each row of length $2$ over $\{-1, 0, 1\}$ has
 squared norm at most $2$. -/
 @[category test, AMS 5 15]
-theorem not_exists_isWeighingMatrix_two_three : ¬ ∃ W, IsWeighingMatrix 2 3 W := by
+theorem not_exists_isWeighingMatrix_two_three : ¬ ∃ W, IsWeighingMatrix (n := 2) 3 W := by
   rintro ⟨W, hent, hmul⟩
   have h00 := congrArg (fun M => M 0 0) hmul
   simp [Matrix.mul_apply, Fin.sum_univ_two] at h00
@@ -90,16 +95,17 @@ At $w = 4m$, this specializes to Hadamard's conjecture.
 -/
 @[category research open, AMS 5 15]
 theorem weighing_matrix_conjecture (m w : ℕ) (hm : 1 ≤ m) (hw : w ≤ 4 * m) :
-    ∃ W, IsWeighingMatrix (4 * m) w W := by
+    ∃ W, IsWeighingMatrix (n := 4 * m) w W := by
   sorry
 
 /--
-**Asymptotic existence of weighing matrices** (Geramita–Seberry [GS79]): for every fixed weight
-$w$, a weighing matrix $W(4m, w)$ exists for all sufficiently large multiples $4m$.
+**Asymptotic existence of weighing matrices** (Eades [Ea76]; Geramita–Seberry [GS79], Thm. 7.17):
+for every fixed weight $w$, a weighing matrix $W(4m, w)$ exists for all sufficiently large multiples
+$4m$.
 -/
 @[category research solved, AMS 5 15]
 theorem weighing_matrix_conjecture.variants.asymptotic (w : ℕ) :
-    ∀ᶠ m in Filter.atTop, ∃ W, IsWeighingMatrix (4 * m) w W := by
+    ∀ᶠ m in Filter.atTop, ∃ W, IsWeighingMatrix (n := 4 * m) w W := by
   sorry
 
 end WeighingMatrix
