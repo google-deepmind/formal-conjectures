@@ -28,10 +28,11 @@ public import FormalConjecturesUtil
 
 namespace Kourovka.«4.74b»
 
-/-A group G is binary finite if it is periodic and any two elements of G generate a finite subgroup-/
+/-- A group G is binary finite if it is periodic and any two elements of G generate a finite subgroup. -/
 def BinaryFinite (G : Type*) [Group G] : Prop :=
   (∀ x : G, IsOfFinOrder x) ∧ (∀ x y : G, (Subgroup.closure ({x, y} : Set G)).carrier.Finite)
 
+/-- A group G is N-finite if for any subset of the underlying set of G the generated subgroup is finite. -/
 def NFinite (G : Type*) [Group G] (N : ℕ): Prop :=
   (∀ x : G, IsOfFinOrder x) ∧ (∀ (S : Set G), Nat.card S ≤ N → (Subgroup.closure (S : Set G)).carrier.Finite)
 
