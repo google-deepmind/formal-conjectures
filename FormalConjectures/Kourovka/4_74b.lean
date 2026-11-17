@@ -34,7 +34,7 @@ def BinaryFinite (G : Type*) [Group G] : Prop :=
 
 /-- A group G is N-finite if for any subset of the underlying set of G the generated subgroup is finite. -/
 def NFinite (G : Type*) [Group G] (N : ℕ): Prop :=
-  (∀ x : G, IsOfFinOrder x) ∧ (∀ (S : Set G), Nat.card S ≤ N → (Subgroup.closure (S : Set G)).carrier.Finite)
+  ∀ (S : Set G), Nat.card S ≤ N → (Subgroup.closure (S : Set G)).carrier.Finite
 
 /-- Kourovka 4.74b: Is every binary-finite 2-group of order greater than 2 non-simple? -/
 @[category research open, question, AMS 20]
