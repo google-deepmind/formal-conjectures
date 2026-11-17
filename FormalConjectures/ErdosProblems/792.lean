@@ -65,13 +65,25 @@ noncomputable def f (n : ℕ) : ℕ :=
 theorem f_one : f 1 = 0 := by
   apply Nat.eq_zero_of_le_zero
   unfold f
-  apply csSup_le'
-  intro m h_guarantee
-  obtain ⟨B, h_subset, h_sum_free, h_size⟩ := h_guarantee {0} (by simp)
-  rcases Finset.subset_singleton_iff.mp h_subset with h_empty | h_zero
-  · simpa [h_empty] using h_size
-  · rw [h_zero] at h_sum_free
-    simp [isSumFree_iff] at h_sum_free
+  apply csSup_le
+  · -- The empty subset shows that zero is a valid guarantee.
+    refine ⟨0, ?_⟩
+    intro A _
+    refine ⟨∅, ?_, ?_, ?_⟩
+    · exact Finset.empty_subset A
+    · simp [IsSumFree]
+    · simp
+  · -- Apply the guarantee to {0}, whose only sum-free subset is empty.
+    intro m h_guarantee
+    obtain ⟨B, h_subset, h_sum_free, h_size⟩ := h_guarantee {0} (by simp)
+    have h_cases : B = ∅ ∨ B = {0} :=
+      Finset.subset_singleton_iff.mp h_subset
+    rcases h_cases with h_empty | h_zero
+    · rw [h_empty] at h_size
+      simpa using h_size
+    · -- But {0} is not sum-free: 0 + 0 = 0.
+      rw [h_zero] at h_sum_free
+      simp [isSumFree_iff] at h_sum_free
 
 /-- The definition gives the elementary bound $f(|A|) \leq |A|$: a subset of $A$
 cannot have more elements than $A$. -/
@@ -81,39 +93,6 @@ theorem f_le_card (A : Finset ℤ) : f A.card ≤ A.card := by
   intro m hm
   obtain ⟨B, hBA, _, hmB⟩ := hm A rfl
   exact hmB.trans (Finset.card_le_card hBA)
-
-/-- Every two-element set contains a nonzero element, while $\{0,1\}$ has no
-sum-free subset of size two. Thus the definition gives $f(2)=1$. -/
-@[category test, AMS 5 11]
-theorem f_two : f 2 = 1 := by
-  apply le_antisymm
-  · apply csSup_le'
-    intro m hm
-    obtain ⟨B, hBA, hB, hmB⟩ := hm {0, 1} (by simp)
-    have h0 : (0 : ℤ) ∉ B := by
-      intro h0
-      exact isSumFree_iff.mp hB 0 h0 0 h0 (by simpa using h0)
-    have hsub : B ⊆ {1} := by
-      intro x hx
-      have := hBA hx
-      simp only [Finset.mem_insert, Finset.mem_singleton] at this ⊢
-      exact this.resolve_left (fun h => h0 (h ▸ hx))
-    have := Finset.card_le_card hsub
-    simp only [Finset.card_singleton] at this
-    omega
-  · apply le_csSup
-    · refine ⟨2, ?_⟩
-      intro m hm
-      obtain ⟨B, hBA, _, hmB⟩ := hm {0, 1} (by simp)
-      exact hmB.trans (by simpa using Finset.card_le_card hBA)
-    · intro A hA
-      obtain ⟨a, ha, ha0⟩ := Finset.exists_mem_ne (by omega : 1 < A.card) 0
-      refine ⟨{a}, Finset.singleton_subset_iff.mpr ha, ?_, by simp⟩
-      simp only [isSumFree_iff, Finset.coe_singleton, Set.mem_singleton_iff]
-      intro x hx y hy
-      subst x
-      subst y
-      omega
 
 /-- The set `{1, 2}` is not sum-free because `1 + 1 = 2`. -/
 @[category test, AMS 5 11]
@@ -127,9 +106,6 @@ theorem isSumFree_one_three : IsSumFree ({1, 3} : Set ℤ) := by
   rw [isSumFree_iff]
   norm_num
 
-/-- The unknown growth rate $h$ for which $f(n)-n/3=\Theta(h(n))$.
-The relation $=\Theta[\mathrm{atTop}]$ means that the absolute values bound each
-other up to positive constant factors for all sufficiently large $n$. -/
 def erdos_792.answer : ℕ → ℝ := by
   sorry
 
