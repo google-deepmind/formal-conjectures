@@ -36,7 +36,7 @@ Schur product theorem.
   for permanents*. Linear Algebra Appl. 94 (1987), 109–112.
 - [Rod24] K. Rodtes, *Chollet's permanent conjecture for $4 \times 4$ matrices*.
   Linear Multilinear Algebra 72 (2024), no. 16, 2633–2638.
-  https://doi.org/10.1080/03081087.2023.2279150
+  https://doi.org/10.1080/03081087.2023.2279150, [arXiv:2211.02839](https://arxiv.org/abs/2211.02839)
 - [arXiv:1608.02844](https://arxiv.org/abs/1608.02844), F. Zhang,
   *An update on a few permanent conjectures*, Section 6.
 -/
