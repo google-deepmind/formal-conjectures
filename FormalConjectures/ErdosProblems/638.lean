@@ -33,9 +33,12 @@ A graph edge-coloring contains at least one monochromatic triangle.
 -/
 def HasMonochromaticTriangle {V : Type*} (G : SimpleGraph V)
   {C : Type*} (coloring : G.EdgeLabeling C) : Prop :=
-  ∃ s : Finset V, G.IsNClique 3 s ∧
-    ∃ k : C, ∀ e ∈ s.sym2, ∃ h : e ∈ G.edgeSet,
-      coloring ⟨e, h⟩ = k
+  ∃ u v w : V, u ≠ v ∧ u ≠ w ∧ v ≠ w ∧
+    ∃ (huv : G.Adj u v) (huw : G.Adj u w) (hvw : G.Adj v w),
+      ∃ k : C,
+        coloring ⟨s(u, v), huv⟩ = k ∧
+        coloring ⟨s(u, w), huw⟩ = k ∧
+        coloring ⟨s(v, w), hvw⟩ = k
 
 /--
 A family of graphs is closed under taking finite subgraphs.
@@ -67,15 +70,16 @@ Note: The intended question likely requires that $S$ be closed under taking fini
 as a counterexample is otherwise reasonably easy to construct.
 -/
 @[category research open, question, AMS 5]
-theorem erdos_638 {V : Type*} (S : Set (SimpleGraph V)) :
+theorem erdos_638 (S : Set (SimpleGraph ℕ)) :
   ClosedUnderFiniteSubgraphs S ∧
   IsFiniteGraphFamily S ∧
   (∀ n : ℕ, ∃ G ∈ S,
     ∀ coloring : G.EdgeLabeling (Fin n),
       HasMonochromaticTriangle G coloring) →
   (∀ k : Cardinal, Cardinal.aleph0 ≤ k →
-    ∃ G : SimpleGraph V,
-      (∀ H : SimpleGraph V, H ≤ G → H.support.Finite → H ∈ S) ∧
+    ∃ (W: Type*) (G : SimpleGraph W),
+      (∀ H : SimpleGraph W, H ≤ G → H.support.Finite →
+      ∃ H' : SimpleGraph ℕ, H' ∈ S ∧ Nonempty (SimpleGraph.Iso H H')) ∧
       (∀ coloring : G.EdgeLabeling (Quotient.out k),
         HasMonochromaticTriangle G coloring)) := by
   sorry
