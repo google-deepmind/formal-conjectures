@@ -14,17 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Dittert conjecture
 
-*Reference:*
-- [D. K. U. and K. Somasundaram, *Lih Wang and Dittert Conjectures on Permanents*]
+*References:*
+- [Divya, K. U. and Somasundaram, K., *Lih Wang and Dittert Conjectures on Permanents*]
   (https://arxiv.org/abs/2312.00464)
+- [Wikipedia: Dittert conjecture](https://en.wikipedia.org/wiki/Dittert_conjecture)
 -/
 
-open scoped BigOperators
+@[expose] public section
 
 noncomputable section
 
