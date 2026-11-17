@@ -32,9 +32,9 @@ public import FormalConjecturesUtil
   trigonometric series*. [arXiv:2502.08624](https://arxiv.org/abs/2502.08624) (2025).
 - [Bo97] Bourgain, Jean, *Estimates related to sumfree subsets of sets of integers*. Israel J.
   Math. 97 (1997), 71-92.
+  [DOI](https://doi.org/10.1007/BF02774027)
 - [EGM14] Eberhard, Sean and Green, Ben and Manners, Freddie, *Sets of integers with no large
   sum-free subset*. Ann. of Math. (2) 180 (2014), 621-652.
-  [arXiv:1301.4579](https://arxiv.org/abs/1301.4579)
 - [Er65] Erdős, P., *Extremal problems in number theory*. Proc. Sympos. Pure Math., Vol. VIII
   (1965), 181-189. [PDF](https://www.renyi.hu/~p_erdos/1965-02.pdf)
 - [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
@@ -85,15 +85,6 @@ theorem f_one : f 1 = 0 := by
       rw [h_zero] at h_sum_free
       simp [isSumFree_iff] at h_sum_free
 
-/-- The definition gives the elementary bound $f(|A|) \leq |A|$: a subset of $A$
-cannot have more elements than $A$. -/
-@[category API, AMS 5 11]
-theorem f_le_card (A : Finset ℤ) : f A.card ≤ A.card := by
-  apply csSup_le'
-  intro m hm
-  obtain ⟨B, hBA, _, hmB⟩ := hm A rfl
-  exact hmB.trans (Finset.card_le_card hBA)
-
 /-- The set `{1, 2}` is not sum-free because `1 + 1 = 2`. -/
 @[category test, AMS 5 11]
 theorem not_isSumFree_one_two : ¬ IsSumFree ({1, 2} : Set ℤ) := by
@@ -125,77 +116,34 @@ theorem erdos_792 :
   sorry
 
 /--
-Erdős [Er65, Theorem 2] gave a simple proof that shows $f(n) \geq n/3$.
-
-For the literal integer domain, which allows zero, assume $n \geq 2$.
-The case $A=\{0\}$ would otherwise be a counterexample.
+Alon and Kleitman [AlKl90, Proposition 1.1] improved the lower bound to $(n+1)/3$.
+Here we restrict to sets of $n \geq 3$ positive integers, to match Bourgain's bound below.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_792.variants.erdos :
-    ∀ A : Finset ℤ, 2 ≤ A.card →
-      ∃ B ⊆ A, IsSumFree (B : Set ℤ) ∧ A.card ≤ 3 * B.card := by
+theorem erdos_792.variants.alon_kleitman (A : Finset ℤ)
+    (h_positive : ∀ a ∈ A, 0 < a) (h_card : 3 ≤ A.card) :
+    ∃ B ⊆ A, IsSumFree (B : Set ℤ) ∧ A.card + 1 ≤ 3 * B.card := by
   sorry
 
 /--
-Alon and Kleitman [AlKl90, Proposition 1.1] improved this to $f(n)\geq (n+1)/3$.
-
-Their result concerns nonempty sets of nonzero integers. For the function `f`,
-which allows zero, apply this to the set after removing zero.
+Bourgain [Bo97, Proposition 1.3] further improved the lower bound to $(n+2)/3$
+for sets of $n \geq 3$ positive integers. The size restriction appears in the proof on p. 76;
+the set $\{1,2\}$ shows why it cannot be omitted.
 -/
 @[category research solved, AMS 5 11]
-theorem erdos_792.variants.alon_kleitman :
-    ∀ A : Finset ℤ, 0 ∉ A → A.Nonempty →
-      ∃ B ⊆ A, IsSumFree (B : Set ℤ) ∧ A.card + 1 ≤ 3 * B.card := by
+theorem erdos_792.variants.bourgain (A : Finset ℤ)
+    (h_positive : ∀ a ∈ A, 0 < a) (h_card : 3 ≤ A.card) :
+    ∃ B ⊆ A, IsSumFree (B : Set ℤ) ∧ A.card + 2 ≤ 3 * B.card := by
   sorry
 
-/--
-Bourgain [Bo97] further improved this to $(n+2)/3$.
-
-As recorded in [EGM14, Introduction], this holds for sets of nonzero integers
-of size at least three. The restriction is necessary: $\{1,2\}$ has no
-sum-free subset of size two.
--/
-@[category research solved, AMS 5 11]
-theorem erdos_792.variants.bourgain :
-    ∀ A : Finset ℤ, 0 ∉ A → 3 ≤ A.card →
-      ∃ B ⊆ A, IsSumFree (B : Set ℤ) ∧ A.card + 2 ≤ 3 * B.card := by
-  sorry
-
-/--
-The best lower bound known is $f(n)\geq n/3+c\log\log n$ for some constant
-$c>0$, due to Bedert [Be25b, Theorem 1.2]. We state this for sufficiently
-large $n$, avoiding the undefined logarithms in the paper's small cases.
--/
-@[category research solved, AMS 5 11]
-theorem erdos_792.variants.bedert :
-    ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
-      (n : ℝ) / 3 + c * Real.log (Real.log n) ≤ (f n : ℝ) := by
-  sorry
-
-/--
-The best upper bound known is $f(n) \leq n/3+o(n)$, due to Eberhard, Green,
-and Manners [EGM14, Theorem 1.1]. Equivalently, for every $\varepsilon>0$,
-eventually $f(n)\leq (1/3+\varepsilon)n$.
--/
-@[category research solved, AMS 5 11]
-theorem erdos_792.variants.eberhard_green_manners :
-    ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
-      (f n : ℝ) ≤ (1 / 3 + ε) * n := by
-  sorry
-
-/-- Alon and Kleitman's bound [AlKl90] implies the classical bound [Er65]
-even when the ambient set contains zero: remove it before applying the improvement. -/
+/-- Bourgain's bound [Bo97] implies Alon and Kleitman's bound [AlKl90] on this domain. -/
 @[category test, AMS 5 11]
-theorem erdos_792.variants.alon_kleitman_implies_erdos :
-    type_of% erdos_792.variants.alon_kleitman →
-    type_of% erdos_792.variants.erdos := by
-  intro h A hA
-  by_cases h0 : 0 ∈ A
-  · have hcard := Finset.card_erase_add_one h0
-    have hne : (A.erase 0).Nonempty := Finset.card_pos.mp (by omega)
-    obtain ⟨B, hBA, hB, hcardB⟩ := h (A.erase 0) (Finset.notMem_erase _ _) hne
-    exact ⟨B, hBA.trans (Finset.erase_subset _ _), hB, by omega⟩
-  · obtain ⟨B, hBA, hB, hcardB⟩ := h A h0 (Finset.card_pos.mp (by omega))
-    exact ⟨B, hBA, hB, by omega⟩
+theorem erdos_792.variants.bourgain_implies_alon_kleitman :
+    type_of% erdos_792.variants.bourgain →
+    type_of% erdos_792.variants.alon_kleitman := by
+  intro h A h_positive h_card
+  obtain ⟨B, h_subset, h_sum_free, h_size⟩ := h A h_positive h_card
+  refine ⟨B, h_subset, h_sum_free, ?_⟩
+  omega
 
 end Erdos792
