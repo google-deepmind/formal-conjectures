@@ -79,7 +79,7 @@ theorem erdos_638 (S : Set (SimpleGraph ℕ)) :
   (∀ k : Cardinal, Cardinal.aleph0 ≤ k →
     ∃ (W: Type*) (G : SimpleGraph W),
       (∀ H : SimpleGraph W, H ≤ G → H.support.Finite →
-      ∃ H' : SimpleGraph ℕ, H' ∈ S ∧ Nonempty (SimpleGraph.Iso H H')) ∧
+        ∃ H' : SimpleGraph ℕ, H' ∈ S ∧ Nonempty (SimpleGraph.Iso H H')) ∧
       (∀ coloring : G.EdgeLabeling (Quotient.out k),
         HasMonochromaticTriangle G coloring)) := by
   sorry
