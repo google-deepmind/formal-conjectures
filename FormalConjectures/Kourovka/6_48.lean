@@ -28,14 +28,14 @@ public import FormalConjecturesUtil
 
 namespace Kourovka.«6.48»
 
-/-A group G is binary finite if it is periodic and any two elements of G generate a finite subgroup-/
-def BinaryFinite (G : Type*) [Group G] : Prop :=
-  (∀ x : G, IsOfFinOrder x) ∧ (∀ x y : G, (Subgroup.closure ({x, y} : Set G)).carrier.Finite)
+/-- A group G is N-finite if for any subset of the underlying set of G the generated subgroup is finite. -/
+def NFinite (G : Type*) [Group G] (N : ℕ): Prop :=
+  ∀ (S : Finset G), S.card ≤ N → (Subgroup.closure (S : Set G)).carrier.Finite
 
 /-- Kourovka 6.48: Is every infinite binary finite p-group non-simple? Here p is a prime number -/
 @[category research open, question, AMS 20]
 theorem kourovka_6_48 :
   ∀ (G : Type*) [Group G] [Infinite G], ∀ p : ℕ,
-    Nat.Prime p → BinaryFinite G → IsPGroup p G  → ¬ IsSimpleGroup G := by sorry
+    Nat.Prime p → NFinite G 2 → IsPGroup p G  → ¬ IsSimpleGroup G := by sorry
 
 end Kourovka.«6.48»
