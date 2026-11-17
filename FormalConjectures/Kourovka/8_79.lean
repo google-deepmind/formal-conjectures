@@ -27,7 +27,7 @@ by B. Hartley
 
 @[expose] public section
 
-namespace Kourovka«8.79»
+namespace Kourovka.«8.79»
 
 /--
 A group is locally finite if all finitely generated subgroups
@@ -44,7 +44,7 @@ def NoOuterAutomorph (G : Type*) [Group G] : Prop :=
   ∀ φ : G ≃* G, ∃ (g : G), ∀ (x : G), φ x = g * x  * g⁻¹
 
 /--
-A group is "complete" if it has no outer automorphisms
+A group is complete if it has no outer automorphisms
 and a trivial center.
 -/
 def IsCompleteGroup (G : Type*) [Group G] : Prop :=
@@ -64,4 +64,4 @@ theorem Kourovka_8_79 :
    IsLocallyFiniteGroup G ∧ IsCompleteGroup G := by
   sorry
 
-end Kourovka«8.79»
+end Kourovka.«8.79»
