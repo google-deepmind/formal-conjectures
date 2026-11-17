@@ -53,16 +53,9 @@ open scoped InnerProductSpace
 open Matrix
 
 /--
-The type of complex valued `m×m` square matrices.
-
-Abbreviation of `Matrix (Fin m) (Fin m) ℂ`.
--/
-abbrev CSqMat (m : ℕ) : Type := Matrix (Fin m) (Fin m) ℂ
-
-/--
 The matrix property that appears in the complex Grothendieck inequality.
 -/
-def HasMatrixProperty {m : ℕ} (A : CSqMat m) : Prop :=
+def HasMatrixProperty {m : ℕ} (A : Matrix (Fin m) (Fin m) ℂ) : Prop :=
   ∀ s t : Fin m → ℂ,
     ((∀ i, ‖s i‖ ≤ 1) ∧ (∀ j, ‖t j‖ ≤ 1)) →
       ‖∑ i, ∑ j, A i j * s i * t j‖ ≤ 1
@@ -71,7 +64,7 @@ def HasMatrixProperty {m : ℕ} (A : CSqMat m) : Prop :=
 The statement that `K` satisfies the complex Grothendieck inequality in every dimension.
 -/
 def IsUniversalConstant (K : ℝ) : Prop :=
-  ∀ m n : ℕ, ∀ A : CSqMat m, HasMatrixProperty A →
+  ∀ m n : ℕ, ∀ A : Matrix (Fin m) (Fin m) ℂ, HasMatrixProperty A →
     ∀ x y : Fin m → EuclideanSpace ℂ (Fin n),
       ((∀ i, ‖x i‖ ≤ 1) ∧ (∀ j, ‖y j‖ ≤ 1)) →
         ‖∑ i, ∑ j, A i j * ⟪x i, y j⟫_ℂ‖ ≤ K
