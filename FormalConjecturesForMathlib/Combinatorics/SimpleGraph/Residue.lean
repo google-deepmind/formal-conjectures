@@ -73,7 +73,6 @@ termination_by l => l.length
 decreasing_by
   simp_wf
   rw [havelHakimiStep_length_cons]
-  omega
 
 /--
 Computes the residue of a graph `G`, i.e. the number of zeros remaining after iteratively

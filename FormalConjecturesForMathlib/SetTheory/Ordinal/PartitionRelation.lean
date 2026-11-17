@@ -131,7 +131,7 @@ theorem ordinalMultiColorRamsey_one_iff_ordinalCardinalRamsey
       have hcol := hmono x hx y hy hne
       simp only [Sym2.lift_mk] at hcol
       by_contra hadj
-      rw [if_neg hadj] at hcol
+      rw [ite_eq_right hadj] at hcol
       exact absurd hcol (by decide)
     · obtain rfl : i = 0 := Subsingleton.elim i 0
       refine Or.inr ⟨A, fun x hx y hy hne => ?_, hcard⟩
@@ -139,7 +139,7 @@ theorem ordinalMultiColorRamsey_one_iff_ordinalCardinalRamsey
       simp only [Sym2.lift_mk] at hcol
       have hnred : ¬ red.Adj x y := by
         intro hadj
-        rw [if_pos hadj] at hcol
+        rw [ite_eq_left hadj] at hcol
         exact absurd hcol (by decide)
       have hsup : (red ⊔ blue).Adj x y := by
         rw [hcompl.sup_eq_top]

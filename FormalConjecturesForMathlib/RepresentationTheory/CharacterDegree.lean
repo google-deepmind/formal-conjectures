@@ -15,7 +15,7 @@ limitations under the License.
 -/
 module
 
-public import Mathlib.Data.Complex.Basic
+public import Mathlib.Basic.Complex.Basic
 public import Mathlib.RepresentationTheory.FDRep
 
 @[expose] public section

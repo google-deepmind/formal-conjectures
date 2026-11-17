@@ -36,11 +36,11 @@ noncomputable def nthRoot (n : ℕ) (r : ℝ) : ℝ :=
   if Even n then r ^ (n⁻¹ : ℝ) else SignType.sign r ^ n * abs r ^ (n⁻¹ : ℝ)
 
 theorem nthRoot_of_even {n : ℕ} (hn : Even n) (r : ℝ) : nthRoot n r = r ^ (n⁻¹ : ℝ) :=
-  if_pos hn
+  ite_eq_left hn
 
 theorem nthRoot_of_odd {n : ℕ} (hn : Odd n) (r : ℝ) :
     nthRoot n r = SignType.sign r ^ n * abs r ^ (n⁻¹ : ℝ) :=
-  if_neg <| Nat.not_even_iff_odd.mpr hn
+  ite_eq_right <| Nat.not_even_iff_odd.mpr hn
 
 theorem nthRoot_of_odd_of_nonpos {n : ℕ} (hn : Odd n) {r : ℝ} (hr : r ≤ 0) :
     nthRoot n r = (-1) ^ n * (-r) ^ (n⁻¹ : ℝ) := by

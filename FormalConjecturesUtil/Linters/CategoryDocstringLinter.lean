@@ -41,18 +41,22 @@ def categoryNeedsDocstring : ProblemAttributes.Category → Bool
   | _ => false
 
 /-- Whether the declaration modifiers contain a docstring. -/
-def hasDocstring (stx : TSyntax ``Command.declModifiers) : Bool :=
-  let docstring := stx.raw[0]!
-  !(Syntax.getAtomVal (docstring[0]![1]!)).isEmpty
+def hasDocstring (stx : TSyntax ``Command.declModifiers) : CommandElabM Bool := do
+  let docStx := stx.raw[0][0]
+  if docStx.getKind == ``Parser.Command.docComment then
+    let text ← try getDocStringText ⟨docStx⟩ catch _ => pure ""
+    return !text.trimAscii.isEmpty
+  else
+    return false
 
 /-- The linter checking for docstrings on research statements. -/
 def categoryDocstringLinter : Linter where
   run := withSetOptionIn fun stx => do
     match stx with
-    | `(command| $mods:declModifiers theorem $name:declId $sig:declSig $val:declVal)
-    | `(command| $mods:declModifiers lemma $name:declId $sig:declSig $val:declVal) =>
+    | `(command| $mods:declModifiers theorem $name:declId $_sig:declSig $_val:declVal)
+    | `(command| $mods:declModifiers lemma $name:declId $_sig:declSig $_val:declVal) =>
       let cats ← toCategories mods
-      if cats.any categoryNeedsDocstring && !hasDocstring mods then
+      if cats.any categoryNeedsDocstring && !(← hasDocstring mods) then
         logLintIf linter.style.category_docstring name
           "Declarations tagged `@[category research open]`, `@[category research solved]`, or `@[category textbook]` must have a docstring."
     | _ => return

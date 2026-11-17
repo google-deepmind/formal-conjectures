@@ -180,13 +180,13 @@ noncomputable def extendGL (φ : GL n ℝ → ℂ) : Matrix n n ℝ → ℂ :=
 
 lemma contDiffOn_extendGL {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) :
     ContDiffOn ℝ ∞ (extendGL φ) {M : Matrix n n ℝ | IsUnit M} := by
-  rw [extendGL, dif_pos hφ]
+  rw [extendGL, dite_eq_left hφ]
   exact hφ.choose_spec.1
 
 @[simp]
 lemma extendGL_coe {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (y : GL n ℝ) :
     extendGL φ (y : Matrix n n ℝ) = φ y := by
-  rw [extendGL, dif_pos hφ]
+  rw [extendGL, dite_eq_left hφ]
   exact hφ.choose_spec.2 y
 
 lemma contDiffAt_extendGL {φ : GL n ℝ → ℂ} (hφ : IsSmoothOnGL φ) (y : GL n ℝ) :
@@ -465,9 +465,8 @@ lemma lieDerivC_smul (c : ℂ) (Z : Matrix n n ℂ) : lieDerivC (c • Z) = c �
       lieDeriv_real_smul, Complex.add_re, Complex.add_im, Complex.ofReal_re, Complex.ofReal_im,
       Complex.mul_re, Complex.mul_im, Complex.I_re, Complex.I_im]
     match_scalars
-    all_goals ring_nf
-    all_goals (try simp only [Complex.I_sq])
-    all_goals ring
+    · ring
+    · ring_nf; simp only [Complex.I_sq]; ring
   simpa [Complex.re_add_im] using key c.re c.im Z
 
 lemma lieDerivC_bracket (Z W : Matrix n n ℂ) :
@@ -479,9 +478,14 @@ lemma lieDerivC_bracket (Z W : Matrix n n ℂ) :
   simp only [lieDeriv_bracket, mul_add, add_mul, smul_mul_assoc,
     mul_smul_comm, smul_smul, smul_add]
   match_scalars
-  all_goals ring_nf
-  all_goals (try simp only [Complex.I_sq])
-  all_goals ring
+  · ring
+  · ring
+  · ring_nf; simp
+  · ring_nf; simp
+  · rfl
+  · ring
+  · rfl
+  · ring
 
 end Smooth
 

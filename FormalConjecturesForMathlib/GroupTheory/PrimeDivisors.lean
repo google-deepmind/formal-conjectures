@@ -16,10 +16,10 @@ limitations under the License.
 module
 
 public import Mathlib.Algebra.Group.Defs
+public import Mathlib.Data.Nat.MaxPrimeFac
 public import Mathlib.Data.Nat.PrimeFin
-public import Mathlib.SetTheory.Cardinal.Finite
 public import Mathlib.NumberTheory.ArithmeticFunction.Misc
-public import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
+public import Mathlib.SetTheory.Cardinal.Finite
 
 @[expose] public section
 

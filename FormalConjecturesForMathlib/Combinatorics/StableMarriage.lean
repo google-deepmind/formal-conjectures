@@ -77,7 +77,8 @@ instance {n : ℕ} : MeasurableSpace (Profile n) := ⊤
 
 /-- The uniform probability mass function on preference profiles. -/
 noncomputable def uniformProfile (n : ℕ) : PMF (Profile n) :=
-  PMF.uniformOfFintype (Profile n)
+  PMF.ofFintype (fun _ ↦ (Fintype.card (Profile n) : ENNReal)⁻¹)
+    (by simp [ENNReal.mul_inv_cancel])
 
 /-- The expected number of stable matchings under the uniform profile distribution. -/
 noncomputable def expectedNumStableMatchings (n : ℕ) : ℝ :=

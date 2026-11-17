@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-public import Mathlib.Data.Finite.Sum
+public import Mathlib.Basic.Finite.Sum
 public import Mathlib.Data.Fintype.Option
 public import Mathlib.Tactic.SplitIfs
 
@@ -185,9 +185,7 @@ theorem exists_cliqueNum_eq_two_chromaticNumber_eq (k : ℕ) (hk : 2 ≤ k) :
       · apply Nat.le_antisymm
         · exact (cliqueFree_of_chromaticNumber_lt (by simp; decide) :
             (⊤ : SimpleGraph (Fin 2)).CliqueFree 3).cliqueNum_le_two
-        · have h : (⊤ : SimpleGraph (Fin 2)).IsClique (Finset.univ : Finset (Fin 2)) :=
-            by simp
-          simpa using h.card_le_cliqueNum
+        · simp
     | succ j ih =>
       obtain ⟨V, hV, hne, G, htri, _, hχ⟩ := ih
       let := hV

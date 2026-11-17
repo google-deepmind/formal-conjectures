@@ -180,7 +180,7 @@ theorem hasDensity_even : {n : ℕ | Even n}.HasDensity (1 / 2) := by
     · rw [← image_mul_two_Iio_even h, ncard_image_of_injective _
           (mul_right_injective₀ (by simp)), ncard_Iio,
         cast_div_charZero (even_iff_two_dvd.mp h), cast_ofNat,
-        div_div_cancel_left' <| cast_ne_zero.2 (by linarith)]
+        div_div_cancel_left₀ <| cast_ne_zero.2 (by linarith)]
     · replace h : Even (n + 1) := by simpa [Nat.even_add', ← Nat.not_even_iff_odd]
       rw [← image_mul_two_Iio n, ncard_image_of_injective _
           (mul_right_injective₀ (by simp)), ncard_Iio,

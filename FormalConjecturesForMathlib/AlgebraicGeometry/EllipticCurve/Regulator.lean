@@ -22,7 +22,7 @@ public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 public import Mathlib.Analysis.InnerProductSpace.GramMatrix
 public import Mathlib.LinearAlgebra.Dimension.Free
 public import Mathlib.LinearAlgebra.FreeModule.PID
-public import Mathlib.NumberTheory.Height.Basic
+public import Mathlib.NumberTheory.Height.EllipticCurve
 public import Mathlib.Topology.Order.Basic
 
 @[expose] public noncomputable section
@@ -37,8 +37,9 @@ logarithm of the maximum of the absolute numerator and denominator of the `x`-co
 the absolute determinant of the Gram matrix of the *Néron--Tate pairing* on `E(K)` modulo torsion.
 
 These definitions are adapted from the Apache-2.0-licensed Tau Ceti files
-`MordellWeil/NaiveHeight.lean`, `CanonicalHeight.lean`, `MordellWeil/PointModTorsion.lean`,
-and `MordellWeil/Regulator.lean`. Over `ℚ`, the canonical height here is twice Tau Ceti's height,
+`CanonicalHeight.lean`, `MordellWeil/PointModTorsion.lean`,
+and `MordellWeil/Regulator.lean` (built on `WeierstrassCurve.Affine.Point.naiveHeight` from
+Mathlib). Over `ℚ`, the canonical height here is twice Tau Ceti's height,
 so a rank-`r` regulator is `2ʳ` times Tau Ceti's regulator.
 
 ## References
@@ -57,11 +58,6 @@ namespace WeierstrassCurve.Affine.Point
 
 variable {K : Type*} [DecidableEq K] [Field K] [Height.AdmissibleAbsValues K] {W : Affine K}
   (P Q : W.Point)
-
-/-- The logarithmic height `hₓ` of the `x`-coordinate with value zero at infinity. -/
-def naiveHeight : W.Point → ℝ
-  | .zero => 0
-  | .some x .. => Height.logHeight₁ x
 
 /-- The canonical height `lim_n 4⁻ⁿhₓ(2ⁿP)` in terms of the logarithmic height `hₓ`. -/
 def canonicalHeight : ℝ := Filter.atTop.limUnder fun n : ℕ ↦ (2 ^ n • P).naiveHeight / 4 ^ n

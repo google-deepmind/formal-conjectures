@@ -43,9 +43,12 @@ def containsLatex (s : String) : Bool :=
 def containsLegacyUrlLink (s : String) : Bool :=
   (s.splitOn "][http://").length > 1 || (s.splitOn "][https://").length > 1
 
-def getDocstringText (stx : TSyntax ``Command.declModifiers) : String :=
-  let docstring := stx.raw[0]!
-  Syntax.getAtomVal (docstring[0]![1]!)
+def getDocstringText (stx : TSyntax ``Command.declModifiers) : CommandElabM String := do
+  let docStx := stx.raw[0][0]
+  if docStx.getKind == ``Parser.Command.docComment then
+    try getDocStringText ⟨docStx⟩ catch _ => pure ""
+  else
+    pure ""
 
 def lintDocstring (location : Syntax) (text : String) : CommandElabM Unit := do
   if containsLatex text then
@@ -59,12 +62,12 @@ def lintDocstring (location : Syntax) (text : String) : CommandElabM Unit := do
 def latexDocstringLinter : Linter where
   run := withSetOptionIn fun stx => do
     if stx.getKind == ``Lean.Parser.Command.moduleDoc then
-      let text := Syntax.getAtomVal stx[1]!
+      let text ← try getDocStringText ⟨stx⟩ catch _ => pure ""
       lintDocstring stx text
       return
     match stx with
-    | `(command| $mods:declModifiers theorem $name:declId $sig:declSig $val:declVal) =>
-      let text := getDocstringText mods
+    | `(command| $mods:declModifiers theorem $name:declId $_sig:declSig $_val:declVal) =>
+      let text ← getDocstringText mods
       if text != "" then
         lintDocstring name text
     | _ => return

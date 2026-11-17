@@ -20,7 +20,7 @@ public import FormalConjecturesForMathlib.Lean.Elab.InfoTree.Util
 public import Lean.Elab.Command
 public import Lean.Linter.Basic
 public import Lean.Meta.Basic
-public import Lean.Server.InfoUtils
+public import Lean.Elab.InfoTree.Util
 
 open Lean Meta Elab Command
 

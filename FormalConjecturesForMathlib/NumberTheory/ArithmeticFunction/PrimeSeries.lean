@@ -36,10 +36,6 @@ open scoped ArithmeticFunction.omega
 
 namespace ArithmeticFunction
 
-/-- The number of distinct prime factors is the cardinality of `Nat.primeFactors`. -/
-lemma cardDistinctFactors_eq_card_primeFactors (m : ℕ) : (ω m) = m.primeFactors.card := by
-  rw [ArithmeticFunction.cardDistinctFactors_apply, Nat.primeFactors, List.card_toFinset]
-
 /-- The term `primeDivTerm m p` is `(1 / 2) ^ m` when `p` is a prime dividing the positive
 integer `m`, and `0` otherwise. -/
 private noncomputable def primeDivTerm (m p : ℕ) : ℝ :=
@@ -56,7 +52,7 @@ private lemma tsum_primeDivTerm_right (m : ℕ) : ∑' p, primeDivTerm m p = (ω
     have : ¬ (p.Prime ∧ p ∣ m) := fun ⟨h1, h2⟩ =>
       h (Finset.mem_coe.mpr (Nat.mem_primeFactors.mpr ⟨h1, h2, hm⟩))
     unfold primeDivTerm
-    rw [if_neg (fun ⟨h1, h2, _⟩ => this ⟨h1, h2⟩)]
+    rw [ite_eq_right (fun ⟨h1, h2, _⟩ => this ⟨h1, h2⟩)]
   rw [tsum_eq_sum (s := m.primeFactors) (fun p hp => by
     by_contra h
     exact hp (hsupp (by simpa using h)))]

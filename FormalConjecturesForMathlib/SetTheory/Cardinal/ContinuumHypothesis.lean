@@ -79,6 +79,6 @@ theorem GCH_iff_beth_eq_aleph : GCH ↔ ∀ o : Ordinal.{0}, ℶ_ o = ℵ_ o := 
       rw [beth_limit ho, aleph_limit ho]
       exact iSup_congr fun i => ih i i.2
   · intro h o
-    rw [← h o, ← beth_succ, h (Order.succ o)]
+    rw [← h o, Order.succ_eq_add_one, ← beth_add_one, h (o + 1)]
 
 end Cardinal

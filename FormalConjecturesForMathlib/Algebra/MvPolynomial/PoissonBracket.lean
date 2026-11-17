@@ -85,7 +85,7 @@ theorem poissonBracket_X_inl_inr [DecidableEq σ] (i j : σ) :
     rcases eq_or_ne i j with rfl | h
     · simp
     · rw [pderiv_X_of_ne (show (Sum.inr j : σ ⊕ σ) ≠ Sum.inr i from by simpa using Ne.symm h),
-        if_neg h]
+        ite_eq_right h]
   · intro k _ hk
     rw [pderiv_X_of_ne (show (Sum.inl i : σ ⊕ σ) ≠ Sum.inl k from by simpa using Ne.symm hk),
       pderiv_X_of_ne (show (Sum.inl i : σ ⊕ σ) ≠ Sum.inr k from by simp)]

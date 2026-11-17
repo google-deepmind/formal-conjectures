@@ -15,20 +15,13 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Algebra.QuadraticAlgebra.IsQuadraticExtension
 public import Mathlib.NumberTheory.NumberField.Basic
-public import FormalConjecturesForMathlib.Algebra.QuadraticAlgebra.Instances
 
 public section
 
 open Algebra (IsQuadraticExtension)
 open Module NumberField
-
-/-- Any `QuadraticAlgebra ℚ a b` that is a field is automatically a quadratic extension
-of `ℚ`, i.e., a degree-2 extension. Combined with `IsQuadraticField.instNumberField`,
-this gives `NumberField (QuadraticAlgebra ℚ a b)` for free. -/
-instance QuadraticAlgebra.instIsQuadraticExtension (a b : ℚ) [Fact (∀ r : ℚ, r ^ 2 ≠ a + b * r)] :
-    IsQuadraticExtension ℚ (QuadraticAlgebra ℚ a b) where
-  finrank_eq_two' := QuadraticAlgebra.finrank_eq_two a b
 
 /-- A quadratic field is a number field: it has characteristic zero
 and is finite-dimensional over `ℚ`. -/

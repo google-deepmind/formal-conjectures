@@ -97,7 +97,7 @@ theorem isPerfectPower_iff_factorization_gcd (n : ℕ) :
         Nat.div_pos (Nat.le_of_dvd hp_pos h_div) hg_pos
       have h_ge_p : k ≥ f p := by
         rw [hk_def]
-        exact Finset.single_le_prod' (f := f)
+        exact Finset.single_le_prod (f := f)
           (fun q hq => Nat.one_le_pow _ _ (Prime.one_le (prime_of_mem_primeFactors hq))) hp
       have h_ge_2 : f p ≥ 2 := by
         show p ^ (n.factorization p / g) ≥ 2

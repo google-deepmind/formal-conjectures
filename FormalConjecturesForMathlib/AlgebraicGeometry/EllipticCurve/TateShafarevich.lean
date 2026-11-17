@@ -15,10 +15,10 @@ limitations under the License.
 -/
 module
 
-public import FormalConjecturesForMathlib.RepresentationTheory.Homological.ContCohomology.Sha
 public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
+public import Mathlib.RepresentationTheory.Homological.ContCohomology.Sha
 
 /-!
 # The Tate–-Shafarevich group of an elliptic curve over a number field

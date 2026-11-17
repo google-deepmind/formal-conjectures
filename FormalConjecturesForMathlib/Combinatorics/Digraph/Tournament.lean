@@ -20,7 +20,7 @@ public import Mathlib.Combinatorics.Digraph.Orientation
 public import Mathlib.Combinatorics.SimpleGraph.Basic
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.Fintype.Card
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Basic.Real.Basic
 
 @[expose] public section
 

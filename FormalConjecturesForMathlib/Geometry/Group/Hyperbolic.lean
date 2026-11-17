@@ -16,8 +16,8 @@ limitations under the License.
 /- Original Mathlib authors: Hang Lu Su, Katerina Hristova. -/
 module
 
-public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
 public import FormalConjecturesForMathlib.Topology.MetricSpace.Hyperbolic
+public import Mathlib.Geometry.Group.WordMetric
 
 /-!
 # Hyperbolic groups

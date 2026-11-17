@@ -130,7 +130,7 @@ lemma hasMulVCNDimAtMost_zero : HasMulVCNDimAtMost A 0 d ↔ A = ∅ ∨ A = .un
 lemma hasMulVCNDimAtMost_one : HasMulVCNDimAtMost A 1 d ↔ HasMulVCDimAtMost A d := by
   symm
   refine (Equiv.funUnique ..).symm.forall_congr fun x ↦
-    ((Equiv.Set.congr <| Equiv.funUnique ..).arrowCongr <| .refl _).symm.forall_congr fun y ↦
+    ((Equiv.funUnique ..).setCongr.arrowCongr <| .refl _).symm.forall_congr fun y ↦
     not_congr <| (Equiv.funUnique ..).symm.forall_congr fun i ↦
-    (Equiv.Set.congr <| Equiv.funUnique ..).symm.forall_congr fun s ↦ ?_
+    (Equiv.funUnique ..).setCongr.symm.forall_congr fun s ↦ ?_
   simp [Set.image_image, funext_iff]

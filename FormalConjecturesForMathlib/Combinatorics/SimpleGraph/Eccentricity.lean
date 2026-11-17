@@ -16,7 +16,7 @@ limitations under the License.
 module
 
 public import Mathlib.Combinatorics.SimpleGraph.Diam
-public import Mathlib.Data.Real.Basic
+public import Mathlib.Basic.Real.Basic
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
 
 @[expose] public section

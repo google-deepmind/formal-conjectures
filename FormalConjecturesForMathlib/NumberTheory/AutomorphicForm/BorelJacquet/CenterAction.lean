@@ -147,7 +147,7 @@ lemma envelopingAction_mem_span_oneSmoothGL (u : universalEnveloping n) :
     simp [envelopingAction, UniversalEnvelopingAlgebra.lift_ι_apply',
       show lieDerivHom X = lieDerivC X from rfl, hone]
   | mul a b ha hb =>
-    exact fun φ hφ => by simpa [Module.End.mul_apply] using ha _ (hb _ hφ)
+    exact fun φ hφ => by simpa [mul_apply_eq_comp] using ha _ (hb _ hφ)
   | add a b ha hb =>
     exact fun φ hφ => by simpa using Submodule.add_mem _ (ha _ hφ) (hb _ hφ)
 

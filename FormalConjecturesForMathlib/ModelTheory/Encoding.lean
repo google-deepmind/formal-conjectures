@@ -120,7 +120,7 @@ instance encodableSigma : Encodable (Σ n, L.BoundedFormula α n) :=
 formulas (`n = 0`) and sentences (`n = 0` and `α = Empty`). -/
 instance encodable (n : ℕ) : Encodable (L.BoundedFormula α n) :=
   ofLeftInjection (fun φ => (⟨n, φ⟩ : Σ n, L.BoundedFormula α n))
-    (fun ψ => if h : ψ.1 = n then some (h ▸ ψ.2) else none) fun _ => dif_pos rfl
+    (fun ψ => if h : ψ.1 = n then some (h ▸ ψ.2) else none) fun _ => dite_eq_left rfl
 
 end BoundedFormula
 

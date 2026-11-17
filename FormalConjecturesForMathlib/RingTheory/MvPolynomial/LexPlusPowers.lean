@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Data.Finsupp.Lex
 public import Mathlib.LinearAlgebra.Dimension.Finite
 public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 

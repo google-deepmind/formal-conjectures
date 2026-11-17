@@ -50,7 +50,7 @@ lemma johnson_adj_iff_ge {s t : {s : Finset (Fin n) // #s = k}} :
   · rintro hst
     rw [Nat.add_one_le_iff, ← hs, card_lt_card_iff_of_subset inter_subset_left]
     simp only [ne_eq, inter_eq_left]
-    contrapose! hst
+    contrapose hst
     exact eq_of_subset_of_card_le hst (by simp [*])
 
 lemma not_johnson_adj_iff_lt {s t : {s : Finset (Fin n) // #s = k}} :

@@ -70,7 +70,8 @@ instance {n m : ℕ} : MeasurableSpace (Profile n m) := ⊤
 
 /-- The joint law of independent uniform rankings on both sides. -/
 noncomputable def uniformProfile (n m : ℕ) : PMF (Profile n m) :=
-  PMF.uniformOfFintype (Profile n m)
+  PMF.ofFintype (fun _ ↦ (Fintype.card (Profile n m) : ENNReal)⁻¹)
+    (by simp [ENNReal.mul_inv_cancel])
 
 /-- The first moment of the number of stable matchings. -/
 noncomputable def expectedNumStableMatchings (n m : ℕ) : ℝ :=

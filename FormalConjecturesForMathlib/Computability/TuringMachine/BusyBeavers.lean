@@ -220,11 +220,17 @@ noncomputable def haltingNumber : ENat :=
 theorem haltingNumber_def (n : ℕ) (hn : ∃ a, M.multiStep (init []) n = some a)
     (ha' : M.multiStep (init []) (n + 1) = none) :
     M.haltingNumber = n := by
-  refine IsGLB.sInf_eq (IsLeast.isGLB ⟨⟨n, by rwa [HaltsAfter], rfl⟩, fun m ⟨k, _, _⟩ ↦ ?_⟩)
-  cases m
-  · exact le_top
-  · by_contra! hc
-    simp_all [multiStep_eq_none_mono ‹_› (show k + 1 ≤ n by aesop)]
+  refine IsGLB.sInf_eq (IsLeast.isGLB ⟨⟨n, by rwa [HaltsAfter], rfl⟩, fun m ⟨k, hk, hmk⟩ ↦ ?_⟩)
+  cases m with
+  | top => exact le_top
+  | coe a =>
+    by_contra! hc
+    have hka : k = a := WithTop.coe_inj.mp hmk
+    have han : a < n := WithTop.coe_lt_coe.mp hc
+    have hkn : k + 1 ≤ n := by omega
+    rw [HaltsAfter] at hk
+    obtain ⟨c, hc'⟩ := hn
+    simp [multiStep_eq_none_mono hk hkn] at hc'
 
 end Machine
 
