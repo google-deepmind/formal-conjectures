@@ -30,7 +30,7 @@ variable {V: Type*} [DecidableEq V] (G : SimpleGraph V)
 
 /-`G` has a Hamiltonian cycle `p`, and deleting any edge of `p`
 destroys all Hamiltonian cycles. -/
-def IsUniquelyHamiltonian'' : Prop :=
+def IsUniquelyHamiltonian : Prop :=
   ∃ (a : V) (p : G.Walk a a), p.IsHamiltonianCycle ∧
     ∀ e ∈ p.edges, ¬ (∃ (a : V) (q : (G.deleteEdges {e}).Walk a a),
     q.IsHamiltonianCycle)
