@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # Talagrand's Convexity Problem
@@ -28,6 +30,8 @@ import FormalConjecturesUtil
   "On Talagrand's Convexity Conjecture." https://arxiv.org/abs/2605.10908
 -/
 
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory
 open scoped ENNReal Pointwise
 
@@ -36,11 +40,6 @@ namespace TalagrandConvexity
 /-- The standard Gaussian measure on the Euclidean space `Fin n → ℝ`. -/
 noncomputable def standardGaussianMeasure (n : ℕ) : Measure (Fin n → ℝ) :=
   Measure.pi fun _ ↦ gaussianReal 0 1
-
-/-- The `q`-fold Minkowski sum of a set with itself. The zeroth sum is `{0}`. -/
-def minkowskiNSum {E : Type*} [AddMonoid E] : ℕ → Set E → Set E
-  | 0, _ => {0}
-  | q + 1, A => minkowskiNSum q A + A
 
 /-- [Talagrand's convexity problem](https://michel.talagrand.net/prizes/convexity.pdf),
 solved affirmatively by Hua, Song, and Tudose in 2026: there is a dimension-independent
@@ -53,7 +52,7 @@ theorem talagrand_convexity_problem :
       IsCompact A → Balanced ℝ A →
         (1 / 2 : ℝ≥0∞) ≤ standardGaussianMeasure n A →
           ∃ C : Set (Fin n → ℝ), IsCompact C ∧ Convex ℝ C ∧
-            C ⊆ minkowskiNSum q A ∧
+            C ⊆ q • A ∧
               (1 / 2 : ℝ≥0∞) ≤ standardGaussianMeasure n C := by
   sorry
 
