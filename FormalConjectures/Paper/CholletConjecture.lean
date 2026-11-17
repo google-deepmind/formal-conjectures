@@ -46,9 +46,36 @@ theorem chollet_conjecture (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℂ)
     (A.hadamard B).permanent ≤ A.permanent * B.permanent := by
   sorry
 
+/-- Chollet's conjecture holds for $n \le 3$.
+
+[GH87](https://doi.org/10.1016/0024-3795%2887%2990082-6) R. J. Gregorac, I. R. Hentzel,
+A note on the analogue of Oppenheim's inequality for permanents,
+Linear Algebra Appl. 94 (1987), 109–112.
+-/
+@[category research solved, AMS 15]
+theorem chollet_conjecture.variants.le_three (n : ℕ)
+    (hn : n ≤ 3)
+    (A B : Matrix (Fin n) (Fin n) ℂ)
+    (hApos : A.PosSemidef) (hBpos : B.PosSemidef) :
+    (A.hadamard B).permanent ≤ A.permanent * B.permanent := by
+  sorry
+
+/-- Chollet's conjecture holds for $4 \times 4$ real matrices.
+
+[Hu21](https://doi.org/10.1515/spma-2020-0126) G. Hutchinson,
+An elementary proof of Chollet's permanent conjecture for 4 × 4 real matrices,
+Special Matrices 9 (2021), 83–102.
+-/
+@[category research solved, AMS 15]
+theorem chollet_conjecture.variants.real.four (A B : Matrix (Fin 4) (Fin 4) ℝ)
+    (hApos : A.PosSemidef) (hBpos : B.PosSemidef) :
+    (A.hadamard B).permanent ≤ A.permanent * B.permanent := by
+  sorry
+
 /-- Chollet's conjecture holds for $4 \times 4$ matrices.
 
-[Ro24](https://doi.org/10.1080/03081087.2023.2279150) K. Rodtes, Chollet's permanent conjecture for $4 \times 4$ matrices,
+[Ro24](https://doi.org/10.1080/03081087.2023.2279150) K. Rodtes,
+Chollet's permanent conjecture for 4 × 4 matrices,
 Linear Multilinear Algebra 72(16) (2024), 2633–2638.
 -/
 @[category research solved, AMS 15]
