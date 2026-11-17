@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+--import Mathlib.GroupTheory.Perm.Basic
 
 /-!
 # Conjecture 16.95
@@ -30,10 +31,19 @@ namespace Kourovka.«16.95»
 description
 -/
 @[category research open, AMS 20]
-theorem kourovka_16_95 {F:Type*} [Field F] {n: Type*} [Fintype n]:
-∀(A: Matrix n n F), A.rank = Fintype.card n,
-  ∃(σ :Perm n ∧ P = σ.permMatrix ℝ), AP.circulant
+theorem kourovka_16_95 {n: Type*} [Fintype n] [DecidableEq n]:
+    ∀ (A: Matrix n n ℝ), A.rank = Fintype.card n →
+    (∃(σ :Equiv.Perm n), minpoly ℝ (A * (σ.permMatrix ℝ))=(A * (σ.permMatrix ℝ)).charpoly)
  := by
   sorry
+
+
+/-@[category research open, AMS 20]
+theorem kourovka_16_95 {F:Type*} [Field F] {n: Type*} [Fintype n]:
+    ∀ (A: Matrix n n F), A.rank = Fintype.card n →
+    (∃(σ :Equiv.Perm n), A*(σ.permMatrix F).circulant)
+ := by
+  sorry
+-/
 
 end Kourovka.«16.95»
