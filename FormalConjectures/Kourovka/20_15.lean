@@ -19,12 +19,21 @@ public import FormalConjecturesUtil
 
 /-!
 # Conjecture 20.15
-by T. Müller, J. Xu
+by G.M.Bergman
 *Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300)
 !-/
 
 @[expose] public section
 namespace Kourovka.«20.15»
+-- define the residually finite group G
+
+
+/--
+A group $G$ is residually finite if for every element $g$ that is not the identity in $G$ there is a homomorphism $φ$ from $G$ to a finite group, such that $φ(g) ≠ 1$.
+-/
+class ResiduallyFinite (G : Type*) extends Group G where
+  fin_sep_one (g : G) : g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
+
 /--
 Let $κ$ be an infinite cardinal. If residually finite group $G$ is embeddable in the full permutation group of a set of cardinality $κ$, must it be embeddable in the direct product of $κ$ finite groups?
 
@@ -32,19 +41,10 @@ The converse is true: any such direct product is residually finite and embeddabl
 
 See (G.M. Bergman, Indag. Math., 18 (2007), 349-403)
 -/
-
-
--- define the residually finite group G
---def Residually_Finite (G : Type*) [Group G] : Prop := ∀ g : G, g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
-
-class ResiduallyFinite (G : Type*) extends Group G where
-  fin_sep_one (g : G) : g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
-
-
 @[category research open, question, AMS 20]
-theorem kourovka_20_15 (G : Type*) [Group G] (s : Type) (h_inf : Infinite s) (h_res_fin : ResiduallyFinite G) (h_emb : ∃ f : G →* Equiv.Perm s, Function.Injective f) : ∃ ι : s → FiniteGrp , ∃ ψ : G →* ((i:s)→ ι i), Function.Injective ψ
-    := by
-  sorry
+theorem kourovka_20_15 : ∀ (G : Type*) (s : Type), [Group G] → Infinite s → ResiduallyFinite G
+    → (∃ f : G →* Equiv.Perm s, Function.Injective f) →
+    ∃ H : s → FiniteGrp, ∃ ψ : G →* Π ι, H ι, Function.Injective ψ := by sorry
 
 
 end Kourovka.«20.15»
