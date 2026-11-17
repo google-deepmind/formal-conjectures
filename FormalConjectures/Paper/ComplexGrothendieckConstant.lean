@@ -38,10 +38,10 @@ The formulation in [Grothendieck's Constant] asks for `m` and `n` to be positive
 
 ## References
 
-- [Gro53] A. Grothendieck, Résumé de la théorie métrique des produits tensoriels topologiques, Bol. Soc. Mat. São Paulo 8 (1953), 1-79
+- [Gro53] A. Grothendieck, Résumé de la théorie métrique des produits tensoriels topologiques, Bol. Soc. Mat. São Paulo 8 (1953), 1-79.
 - [Haa87] U. Haagerup, A new upper bound for the complex Grothendieck constant, Israel J. Math. 60 (1987), 199–224.
-- [HJM26] Sharper Bounds for the Complex Grothendieck Constant, arXiv:2609.25462 [math.FA]
-- [Pis12] G. Pisier, Grothendieck’s theorem, past and present, Bull. Amer. Math. Soc. 49 (2012), 237-323
+- [HJM26] Sharper Bounds for the Complex Grothendieck Constant, arXiv:2609.25462 [math.FA].
+- [Pis12] G. Pisier, Grothendieck’s theorem, past and present, Bull. Amer. Math. Soc. 49 (2012), 237-323.
 -/
 
 @[expose] public section
