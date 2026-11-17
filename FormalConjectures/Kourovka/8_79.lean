@@ -37,11 +37,17 @@ def IsLocallyFiniteGroup (G : Type*) [Group G] : Prop :=
   ∀ (H : Subgroup G), H.FG → Finite H
 
 /--
+An automorphism is inner if it is a conjugation of all *x ∈ G* by some *g ∈ G*
+-/
+def IsInnerAutomorphism (G : Type*) [Group G] (φ : G ≃* G) : Prop :=
+  ∃ (g : G), ∀ (x : G), φ x = g * x  * g⁻¹
+
+/--
 The notion of a group having no outer automorphism is equivalent
 to every automorphism being inner.
 -/
 def NoOuterAutomorph (G : Type*) [Group G] : Prop :=
-  ∀ φ : G ≃* G, ∃ (g : G), ∀ (x : G), φ x = g * x  * g⁻¹
+  ∀ φ : G ≃* G, IsInnerAutomorphism G φ
 
 /--
 A group is complete if it has no outer automorphisms
