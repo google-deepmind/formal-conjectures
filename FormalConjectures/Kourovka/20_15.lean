@@ -20,7 +20,7 @@ public import FormalConjecturesUtil
 /-!
 # Conjecture 20.15
 by G.M.Bergman
-*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300)
+*Reference:* [The Kourovka Notebook](https://arxiv.org/abs/1401.0300v50)
 !-/
 
 @[expose] public section
@@ -29,15 +29,15 @@ namespace Kourovka.«20.15»
 
 
 /--
-A group $G$ is residually finite if for every element $g$ that is not the identity in $G$ there is a homomorphism $φ$ from $G$ to a finite group, such that $φ(g) ≠ 1$.
+A group $G$ is residually finite if for every element $g$ that is not the identity in $G$ there is a homomorphism $\phi$ from $G$ to a finite group, such that $\phi(g) ≠ 1$.
 -/
 class ResiduallyFinite (G : Type*) extends Group G where
   fin_sep_one (g : G) : g ≠ 1 → ∃ F : FiniteGrp.{u_1}, ∃ (φ : G →* F), φ g ≠ 1
 
 /--
-Let $κ$ be an infinite cardinal. If residually finite group $G$ is embeddable in the full permutation group of a set of cardinality $κ$, must it be embeddable in the direct product of $κ$ finite groups?
+Let $\kappa$ be an infinite cardinal. If residually finite group $G$ is embeddable in the full permutation group of a set of cardinality $\kappa$, must it be embeddable in the direct product of $\kappa$ finite groups?
 
-The converse is true: any such direct product is residually finite and embeddable in the indicated permutation group. Also, the statement asked for becomes true if one replaces "direct product of 2^κ finite groups", since $G$ has cardinality at most $2^κ$, hence homomorphisms to that many finite groups can be chosen which, together, separate each element of $G$ from $e$.
+The converse is true: any such direct product is residually finite and embeddable in the indicated permutation group. Also, the statement asked for becomes true if one replaces "direct product of 2^\kappa finite groups", since $G$ has cardinality at most $2^\kappa$, hence homomorphisms to that many finite groups can be chosen which, together, separate each element of $G$ from $e$.
 
 See (G.M. Bergman, Indag. Math., 18 (2007), 349-403)
 -/
