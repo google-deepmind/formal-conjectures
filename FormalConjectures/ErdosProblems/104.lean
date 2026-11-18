@@ -74,12 +74,15 @@ def erdos_104.variants.unitCircumradiusTriples.answer (n : ℕ) : ℕ :=
   else (n - 1).choose 3 + (n - 2) + (if (n - 1) % 3 = 0 then 1 else 0)
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /-- Let $g(n)$ be the maximum number of unordered triples with circumradius $1$
 among $n \ge 2$ distinct planar points such that no unit circle contains all
 of them. Estimate or determine $g(n)$ [Er75h, p. 3].
 
 The answer is given in [Ki26], together with a Lean 4 proof. -/
-@[category research solved, question value, AMS 52]
+@[category research solved, question value, AMS 52,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos104-variant-unit-circumradius-triples/blob/dd3f6c1eb92a44017f4b48bedd0a29b6e894178e/leanWithComparator/Solution.lean#L53-L63"]
 theorem erdos_104.variants.unitCircumradiusTriples (n : ℕ) (hn : 2 ≤ n) :
     sSup {k | ∃ P : Finset ℝ²,
       P.card = n ∧ ¬ LiesOnUnitCircle P ∧
