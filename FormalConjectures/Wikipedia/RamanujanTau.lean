@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Ramanujan τ-function
@@ -30,6 +31,8 @@ There are two conjectures related to the Ramanujan τ-function:
 - [Lehmer's conjecture](https://en.wikipedia.org/wiki/Ramanujan_tau_function#Conjectures_on_the_tau_function)
 -/
 
+@[expose] public section
+
 namespace RamanujanTau
 
 open PowerSeries PowerSeries.WithPiTopology
@@ -40,8 +43,9 @@ noncomputable def τ (n : ℕ) : ℤ := PowerSeries.coeff n Δ
 
 
 @[category API, AMS 11]
-lemma multipliable : Multipliable fun n : ℕ+ ↦ ((1 - X ^ (n : ℕ)) ^ 24 : PowerSeries ℤ) := by
-  sorry
+lemma multipliable : Multipliable fun n : ℕ+ ↦ ((1 - X ^ (n : ℕ)) ^ 24 : PowerSeries ℤ) :=
+  multipliable_pnat_iff_multipliable_succ (f := fun n : ℕ ↦ ((1 - X ^ n) ^ 24 : PowerSeries ℤ))
+    |>.mpr ((multipliable_one_sub_X_pow ℤ).pow 24)
 
 @[category test, AMS 11]
 lemma τ_zero : τ 0 = 0 := by simp [τ, Δ]

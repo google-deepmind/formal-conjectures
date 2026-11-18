@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 97
 
 *Reference:* [erdosproblems.com/97](https://www.erdosproblems.com/97)
 -/
+
+@[expose] public section
 
 open EuclideanGeometry
 open Real
@@ -72,9 +75,9 @@ def HasNUnitDistanceProperty (n : ℕ) (A : Finset ℝ²) : Prop :=
 /--
 Does every convex polygon have a vertex with no other 4 vertices equidistant from it?
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_97 :
-    answer(sorry) ↔ ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A := by
+    ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A := by
   sorry
 
 /--
@@ -93,7 +96,7 @@ theorem erdos_97.variants.three_equidistant :
   let A₂ : ℝ² := !₂[(√3), -1]
   let A₃ : ℝ² := !₂[0, 2]
   let B₁ : ℝ² := !₂[(-8991 / 10927 * √3), -26503 / 10927]
-  let B₂ : ℝ² := !₂[(-17747 / 10947 * √3), -235 / 10927]
+  let B₂ : ℝ² := !₂[(17747 / 10927 * √3), -235 / 10927]
   let B₃ : ℝ² := !₂[(-8756 / 10927 * √3), 26738 / 10927]
   let C₁ : ℝ² := !₂[(-10753 / 18529 * √3), -44665 / 18529]
   let C₂ : ℝ² := !₂[(27709 / 18529 * √3), 6203 / 18529]
@@ -105,8 +108,8 @@ theorem erdos_97.variants.three_equidistant :
 Erdős also conjectured that there is a $k$ for which every convex polygon has a vertex
 with no other $k$ vertices equidistant from it.
 -/
-@[category research open, AMS 52]
-theorem erdos_97.variants.k_equidistant : answer(sorry) ↔
+@[category research open, question, AMS 52]
+theorem erdos_97.variants.k_equidistant :
     ∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty k A := by
   sorry
 

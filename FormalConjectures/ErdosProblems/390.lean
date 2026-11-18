@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 390
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
     questions." Congr. Numer. 34 (1982): 243-257.
  -
 -/
+
+@[expose] public section
 
 open scoped Nat
 open Filter Asymptotics Real
@@ -43,9 +46,9 @@ theorem erdos_390.variants.theta :
   sorry
 
 /-- Does there exists a constant `c` such that `f n - 2 * n ~ c * (n / log n)`? -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_390 :
-    answer(sorry) ↔ ∃ c,
+    ∃ c,
       (fun n => f n - 2 * n : ℕ → ℝ) ~[atTop] (fun n => c * n / log (n : ℝ)) := by
   sorry
 

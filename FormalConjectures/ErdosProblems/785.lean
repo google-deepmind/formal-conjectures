@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 785
@@ -41,6 +42,8 @@ import FormalConjecturesUtil
   Acta Math. Hungar. (1994), 237-245.
 -/
 
+@[expose] public section
+
 open Filter Pointwise
 open scoped Topology
 
@@ -61,9 +64,10 @@ def IsExactAdditiveComplement (A B : Set ℕ) : Prop :=
   IsAdditiveComplement A B ∧
     Tendsto (fun x : ℕ => (counting A x * counting B x : ℝ) / (x : ℝ)) atTop (𝓝 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
-Let $A,B\subseteq \mathbb{N}$ be infinite sets such that $A+B$ contains all large integers.
-Let $A(x)=\lvert A\cap [1,x]\rvert$ and similarly for $B(x)$. Is it true that if
+Let $A,B\subseteq \mathbb{N}$ be infinite sets of positive integers such that $A+B$ contains all
+large integers. Let $A(x)=\lvert A\cap [1,x]\rvert$ and similarly for $B(x)$. Is it true that if
 $A(x)B(x)\sim x$ then
 $$A(x)B(x)-x\to \infty$$
 as $x\to \infty$?
@@ -74,10 +78,10 @@ $$A(x)B(x)-x=o(A(x)).$$
 
 This was formalized in Lean by van Doorn using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
 "https://github.com/Woett/Lean-files/blob/main/ErdosProblem785.lean"]
-theorem erdos_785 : answer(True) ↔
-    ∀ A B : Set ℕ, A.Infinite → B.Infinite → IsExactAdditiveComplement A B →
+theorem erdos_785 :
+    ∀ A B : Set ℕ, A.Infinite → B.Infinite → 0 ∉ A → 0 ∉ B → IsExactAdditiveComplement A B →
       Tendsto (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) atTop atTop := by
   sorry
 
@@ -87,28 +91,36 @@ do not exist, as reported in [Er57] and [Er61]).
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.danzer :
-    ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ IsExactAdditiveComplement A B := by
+    ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ 0 ∉ A ∧ 0 ∉ B ∧ IsExactAdditiveComplement A B := by
   sorry
 
 /--
-Sárközy and Szemerédi [SaSz94] proved that it is impossible for
-$$A(x)B(x)-x=o(A(x)).$$
+Sárközy and Szemerédi [SaSz94, pp. 244–245] stated that the global estimate
+$A(x)B(x) - x = o(\min(A(x), B(x)))$ is impossible. The stronger eventual bound stated here,
+$$A(x)B(x) - x \ge c \min(A(x), B(x))$$
+for some $c > 0$ and all sufficiently large $x$, follows as a later consequence of Chen and Fang
+[ChFa15, Theorem 0.2] (for instance, taking $M = 2$).
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.sarkozy_szemeredi (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
-    (h : IsExactAdditiveComplement A B) :
-    ¬ (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) =o[atTop]
-      (fun x : ℕ => (counting A x : ℝ)) := by
+    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B) :
+    ∃ c > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
+      c * (min (counting A x) (counting B x) : ℝ) ≤
+        (counting A x * counting B x : ℝ) - (x : ℝ) := by
   sorry
 
 /--
-Chen and Fang [ChFa15] proved $A(x)B(x)-x\ll A(x)^c$ cannot hold for any constant $c>0$.
+Chen and Fang [ChFa15, Theorem 0.2] proved that for any $M > 1$,
+$$A(x)B(x) - x \ge \min(A(x), B(x))^M$$
+for all sufficiently large $x$. In particular $A(x)B(x)-x\ll A(x)^c$ cannot hold for any constant
+$c>0$ when $A$ is the sparser of the two sets.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.chen_fang (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
-    (h : IsExactAdditiveComplement A B) (c : ℝ) (hc : 0 < c) :
-    ¬ (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) =O[atTop]
-      (fun x : ℕ => (counting A x : ℝ) ^ c) := by
+    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B) (M : ℝ) (hM : 1 < M) :
+    ∀ᶠ x : ℕ in atTop,
+      (min (counting A x) (counting B x) : ℝ) ^ M ≤
+        (counting A x * counting B x : ℝ) - (x : ℝ) := by
   sorry
 
 /--
@@ -117,7 +129,7 @@ we must have $A(2x)/A(x)\to 1$ and $B(2x)/B(x)\to 2$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.narkiewicz (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
-    (h : IsExactAdditiveComplement A B) :
+    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B) :
     (Tendsto (fun x : ℕ => (counting A (2 * x) : ℝ) / (counting A x : ℝ)) atTop (𝓝 1) ∧
       Tendsto (fun x : ℕ => (counting B (2 * x) : ℝ) / (counting B x : ℝ)) atTop (𝓝 2)) ∨
     (Tendsto (fun x : ℕ => (counting B (2 * x) : ℝ) / (counting B x : ℝ)) atTop (𝓝 1) ∧
@@ -132,24 +144,23 @@ for infinitely many $x$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.ruzsa_upper_bound (w : ℕ → ℝ) (hw : Tendsto w atTop atTop) :
-    ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ IsExactAdditiveComplement A B ∧
+    ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ 0 ∉ A ∧ 0 ∉ B ∧ IsExactAdditiveComplement A B ∧
       ∃ᶠ x : ℕ in atTop, (counting A x * counting B x : ℝ) - (x : ℝ) < w x := by
   sorry
 
 /--
-Ruzsa [Ru17] proves that, if $a^*(x)=\max A \cap [1,x]$ and $A$ and $B$ satisfy the conditions
-in the problem then (after possibly changing the roles of $A$ and $B$)
+Ruzsa [Ru17, Theorem 1.2] proves that, if $a^*(x)=\max A \cap [1,x]$, $A$ and $B$ satisfy the
+conditions in the problem, and $A$ is the sparser set with $A(2x)/A(x) \to 1$ (which holds after
+possibly swapping the roles of $A$ and $B$ by Narkiewicz's theorem), then
 $$A(x)B(x)-x > (1-o(1))\frac{a^*(x)}{A(x)}.$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.ruzsa_lower_bound (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
-    (h : IsExactAdditiveComplement A B) :
-    (∀ ε > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
-        (1 - ε) * (aStar A x : ℝ) / (counting A x : ℝ)
-          < (counting A x * counting B x : ℝ) - (x : ℝ)) ∨
-    (∀ ε > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
-        (1 - ε) * (aStar B x : ℝ) / (counting B x : ℝ)
-          < (counting A x * counting B x : ℝ) - (x : ℝ)) := by
+    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsExactAdditiveComplement A B)
+    (hsmall : Tendsto (fun x : ℕ => (counting A (2 * x) : ℝ) / (counting A x : ℝ)) atTop (𝓝 1)) :
+    ∀ ε > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
+      (1 - ε) * (aStar A x : ℝ) / (counting A x : ℝ)
+        < (counting A x * counting B x : ℝ) - (x : ℝ) := by
   sorry
 
 /--
@@ -160,7 +171,7 @@ They later [ChFa14] improved $5/4$ to $3-\sqrt{3}\approx 1.268$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.chen_fang_limsup (A B : Set ℕ) (hA : A.Infinite) (hB : B.Infinite)
-    (h : IsAdditiveComplement A B)
+    (hA₀ : 0 ∉ A) (hB₀ : 0 ∉ B) (h : IsAdditiveComplement A B)
     (hlim : limsup (fun x : ℕ => ((counting A x * counting B x : ℝ) / (x : ℝ) : EReal)) atTop
       < ((3 - Real.sqrt 3 : ℝ) : EReal)) :
     Tendsto (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) atTop atTop := by
@@ -169,9 +180,9 @@ theorem erdos_785.variants.chen_fang_limsup (A B : Set ℕ) (hA : A.Infinite) (h
 /--
 Chen conjectures that this should be true with $3/2$.
 -/
-@[category research open, AMS 11]
-theorem erdos_785.variants.chen_conjecture : answer(sorry) ↔
-    ∀ A B : Set ℕ, A.Infinite → B.Infinite → IsAdditiveComplement A B →
+@[category research open, question, AMS 11]
+theorem erdos_785.variants.chen_conjecture :
+    ∀ A B : Set ℕ, A.Infinite → B.Infinite → 0 ∉ A → 0 ∉ B → IsAdditiveComplement A B →
       limsup (fun x : ℕ => ((counting A x * counting B x : ℝ) / (x : ℝ) : EReal)) atTop
           < ((3 / 2 : ℝ) : EReal) →
         Tendsto (fun x : ℕ => (counting A x * counting B x : ℝ) - (x : ℝ)) atTop atTop := by
@@ -184,7 +195,7 @@ for which $A(x)B(x)-x=1$ for infinitely many $x$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_785.variants.chen_fang_sharp :
-    ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ IsAdditiveComplement A B ∧
+    ∃ A B : Set ℕ, A.Infinite ∧ B.Infinite ∧ 0 ∉ A ∧ 0 ∉ B ∧ IsAdditiveComplement A B ∧
       limsup (fun x : ℕ => ((counting A x * counting B x : ℝ) / (x : ℝ) : EReal)) atTop
           = ((3 / 2 : ℝ) : EReal) ∧
       ∃ᶠ x : ℕ in atTop, (counting A x * counting B x : ℝ) - (x : ℝ) = 1 := by

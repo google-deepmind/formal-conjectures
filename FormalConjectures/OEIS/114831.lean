@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Each term is previous term plus floor of harmonic mean of two previous terms.
@@ -25,6 +26,8 @@ $a(n) = a(n-1) + \lfloor \frac{2 a(n-1) a(n-2)}{a(n-1) + a(n-2)} \rfloor$ for $n
 *References:*
 - [A114831](https://oeis.org/A114831)
 -/
+
+@[expose] public section
 
 namespace OeisA114831
 
@@ -60,6 +63,7 @@ theorem a_3 : a 3 = 3 := by
 theorem a_4 : a 4 = 5 := by
   norm_num [a, Rat.floor, Int.toNat]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture based on OEIS A114831: What is this sequence, asymptotically?
 If the limit exists, the ratio of consecutive terms must tend to $\sqrt{3}$:
@@ -70,7 +74,9 @@ So $a(n)$ grows exponentially, at least as fast as the Fibonnaci numbers.
 Assuming $\frac{a(n+1)}{a(n)}$ tend to a limit L, solving for L in the definition of $a(n)$
 gives $L=\sqrt{3}$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/oeis-a114831-asymptotic/blob/54cdeeed2ef5838e3aa61a3a228e6867802d20df/lean/OeisA114831FC.lean#L252-L285"]
 theorem conjecture3 :
     Tendsto (fun n ↦ (a (n + 1) : ℝ) / (a n : ℝ)) atTop (nhds (Real.sqrt 3)) := by
   sorry

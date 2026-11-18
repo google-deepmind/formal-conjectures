@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 277
@@ -25,19 +26,22 @@ import FormalConjecturesUtil
   53--61.
 -/
 
+@[expose] public section
+
 open scoped ArithmeticFunction.sigma
 
 namespace Erdos277
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every $c$, there exists an $n$ such that $\sigma(n)>cn$ but there is no
 covering system whose moduli all divide $n$?
 
 This was answered affirmatively by Haight [Ha79].
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos277.lean#L1294"]
 theorem erdos_277 :
-   answer(True) ↔ ∀ c : ℝ, ∃ n : ℕ, (σ 1 n : ℝ) > c * n ∧
+   ∀ c : ℝ, ∃ n : ℕ, (σ 1 n : ℝ) > c * n ∧
       ∀ (m : StrictCoveringSystem ℤ), ∃ i, (n : ℤ) ∉ m.moduli i  := by
   sorry
 

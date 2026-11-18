@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 681
 
 *Reference:* [erdosproblems.com/681](https://www.erdosproblems.com/681)
 -/
+
+@[expose] public section
 
 namespace Erdos681
 
@@ -33,8 +36,8 @@ Is it true that for all large $n$ there exists $k$
 such that $n + k$ is composite and $p(n+k) > k^2$,
 where $p(m)$ is the least prime factor of $m$ ?
 -/
-@[category research open, AMS 11]
-theorem erdos_681 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_681 :
     ∀ᶠ n in .atTop, ∃ k > 0, (n + k).Composite ∧ ∀ p, IsLPF p (n + k) → p > k ^ 2 := by
   sorry
 

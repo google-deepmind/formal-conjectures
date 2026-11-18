@@ -13,8 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Domination
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Petersen
+meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
+meta import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 
 /-!
 # Testing Graph Invariants
@@ -31,6 +37,8 @@ independence_number, dominationNumber, average_distance, diameter, radius,
 girth, order, size, szeged_index, wiener_index, min_degree, max_degree,
 average_degree, matching_number, residue, annihilation_number, cvetkovic.
 -/
+
+@[expose] public section
 
 open SimpleGraph
 
@@ -53,16 +61,9 @@ abbrev HouseGraph : SimpleGraph (Fin 5) :=
 /-- K4: Complete graph on 4 vertices. -/
 abbrev K4 : SimpleGraph (Fin 4) := completeGraph (Fin 4)
 
-/-- Petersen Graph on 10 vertices. -/
-abbrev PetersenGraph : SimpleGraph (Fin 10) :=
-  SimpleGraph.fromEdgeSet {
-    -- Outer Cycle
-    s(0, 1), s(1, 2), s(2, 3), s(3, 4), s(4, 0),
-    -- Spokes
-    s(0, 5), s(1, 6), s(2, 7), s(3, 8), s(4, 9),
-    -- Inner Star
-    s(5, 7), s(7, 9), s(9, 6), s(6, 8), s(8, 5)
-  }
+/-- Petersen Graph on 10 vertices (the Kneser graph `K(5,2)` from
+`FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Petersen`). -/
+abbrev PetersenGraph : SimpleGraph PetersenVertex := petersenGraph
 
 /-- C6: Cycle graph on 6 vertices. -/
 abbrev C6 : SimpleGraph (Fin 6) := cycleGraph 6
@@ -77,26 +78,28 @@ instance : DecidableRel Star5.Adj := by unfold Star5 completeBipartiteGraph; inf
 
 @[category test, AMS 5]
 theorem house_indep : α(HouseGraph) = 2 := by
-  rw [indep_num_eq_computable]; decide +native
+  rw [indep_num_eq_computable]
+  decide
 
 @[category test, AMS 5]
 theorem house_dom : dominationNumber HouseGraph = 2 := by
-  rw [dom_num_eq_computable]; decide +native
+  rw [dom_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem house_avg_dist : averageDistance HouseGraph = 7/5 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist HouseGraph = (7 / 5 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable,
+    show computable_avg_dist HouseGraph = (7 / 5 : ℚ) by decide +kernel]
   norm_num
 
 @[category test, AMS 5]
 theorem house_diameter : ediam HouseGraph = 2 := by
   rw [ediam_eq_computable HouseGraph (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam HouseGraph = 2)
+  exact_mod_cast (by decide +kernel : computable_ediam HouseGraph = 2)
 
 @[category test, AMS 5]
 theorem house_radius : radius HouseGraph = 2 := by
   rw [radius_eq_computable HouseGraph (by decide)]
-  exact_mod_cast (by decide +native : computable_radius HouseGraph = 2)
+  exact_mod_cast (by decide +kernel : computable_radius HouseGraph = 2)
 
 @[category test, AMS 5]
 theorem house_girth : HouseGraph.girth = 3 := by
@@ -111,6 +114,7 @@ theorem house_girth : HouseGraph.girth = 3 := by
   refine le_antisymm ?_ (three_le_girth (fun hac => hac _ hcyc))
   simpa using girth_le_length hcyc
 
+open scoped Classical in
 @[category test, AMS 5]
 theorem house_order : Fintype.card ↥(⊤ : Subgraph HouseGraph).verts = 5 := by
   rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
@@ -122,23 +126,23 @@ theorem house_size : HouseGraph.edgeFinset.card = 6 := by
 
 @[category test, AMS 5]
 theorem house_szeged : szegedIndex HouseGraph = 24 := by
-  rw [szeged_eq_computable]; decide +native
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem house_wiener : wienerIndex HouseGraph = 14 := by
-  rw [wiener_eq_computable]; decide +native
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem house_min_deg : HouseGraph.minDegree = 2 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem house_max_deg : HouseGraph.maxDegree = 3 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem house_avg_deg : averageDegree HouseGraph = 12/5 := by
-  unfold averageDegree; simp [Fintype.card_fin]; decide +native
+  unfold averageDegree; simp [Fintype.card_fin]; decide +kernel
 
 @[category test, AMS 5]
 theorem house_matching : matchingNumber HouseGraph = 2 := by
@@ -169,7 +173,7 @@ theorem house_residue : residue HouseGraph = 2 := by
 
 @[category test, AMS 5]
 theorem house_annihilation : annihilationNumber HouseGraph = 3 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
@@ -180,26 +184,26 @@ theorem house_cvetkovic : cvetkovic HouseGraph = 3 := by
 
 @[category test, AMS 5]
 theorem K4_indep : α(K4) = 1 := by
-  rw [indep_num_eq_computable]; decide +native
+  rw [indep_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem K4_dom : dominationNumber K4 = 1 := by
-  rw [dom_num_eq_computable]; decide +native
+  rw [dom_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem K4_avg_dist : averageDistance K4 = 1 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist K4 = (1 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable, show computable_avg_dist K4 = (1 : ℚ) from by decide +kernel]
   norm_num
 
 @[category test, AMS 5]
 theorem K4_diameter : ediam K4 = 1 := by
   rw [ediam_eq_computable K4 (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam K4 = 1)
+  exact_mod_cast (by decide +kernel : computable_ediam K4 = 1)
 
 @[category test, AMS 5]
 theorem K4_radius : radius K4 = 1 := by
   rw [radius_eq_computable K4 (by decide)]
-  exact_mod_cast (by decide +native : computable_radius K4 = 1)
+  exact_mod_cast (by decide +kernel : computable_radius K4 = 1)
 
 @[category test, AMS 5]
 theorem K4_girth : K4.girth = 3 := by
@@ -214,6 +218,7 @@ theorem K4_girth : K4.girth = 3 := by
   refine le_antisymm ?_ (three_le_girth (fun hac => hac _ hcyc))
   simpa using girth_le_length hcyc
 
+open scoped Classical in
 @[category test, AMS 5]
 theorem K4_order : Fintype.card ↥(⊤ : Subgraph K4).verts = 4 := by
   rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
@@ -221,27 +226,28 @@ theorem K4_order : Fintype.card ↥(⊤ : Subgraph K4).verts = 4 := by
 
 @[category test, AMS 5]
 theorem K4_size : K4.edgeFinset.card = 6 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem K4_szeged : szegedIndex K4 = 6 := by
-  rw [szeged_eq_computable]; decide +native
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem K4_wiener : wienerIndex K4 = 6 := by
-  rw [wiener_eq_computable]; decide +native
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem K4_min_deg : K4.minDegree = 3 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem K4_max_deg : K4.maxDegree = 3 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem K4_avg_deg : averageDegree K4 = 3 := by
-  unfold averageDegree; simp [Fintype.card_fin]
+  unfold averageDegree
+  simp [Fintype.card_fin]
 
 @[category test, AMS 5]
 theorem K4_matching : matchingNumber K4 = 2 := by
@@ -272,7 +278,7 @@ theorem K4_residue : residue K4 = 1 := by
 
 @[category test, AMS 5]
 theorem K4_annihilation : annihilationNumber K4 = 2 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem K4_cvetkovic : cvetkovic K4 = 1 := by
@@ -283,7 +289,7 @@ theorem K4_cvetkovic : cvetkovic K4 = 1 := by
 
 @[category test, AMS 5]
 theorem petersen_indep : α(PetersenGraph) = 4 := by
-  rw [indep_num_eq_computable]; decide +native
+  rw [indep_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_dom : dominationNumber PetersenGraph = 3 := by
@@ -291,7 +297,8 @@ theorem petersen_dom : dominationNumber PetersenGraph = 3 := by
 
 @[category test, AMS 5]
 theorem petersen_avg_dist : averageDistance PetersenGraph = 5/3 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist PetersenGraph = (5 / 3 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable,
+    show computable_avg_dist PetersenGraph = (5 / 3 : ℚ) from by decide +kernel]
   norm_num
 
 @[category test, AMS 5]
@@ -302,12 +309,13 @@ theorem petersen_diameter : ediam PetersenGraph = 2 := by
 @[category test, AMS 5]
 theorem petersen_radius : radius PetersenGraph = 2 := by
   rw [radius_eq_computable PetersenGraph (by decide)]
-  exact_mod_cast (by decide +native : computable_radius PetersenGraph = 2)
+  exact_mod_cast (by decide +kernel : computable_radius PetersenGraph = 2)
 
 @[category test, AMS 5]
 theorem petersen_girth : PetersenGraph.girth = 5 := by
   sorry
 
+open scoped Classical in
 @[category test, AMS 5]
 theorem petersen_order : Fintype.card ↥(⊤ : Subgraph PetersenGraph).verts = 10 := by
   rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
@@ -319,58 +327,58 @@ theorem petersen_size : PetersenGraph.edgeFinset.card = 15 := by
 
 @[category test, AMS 5]
 theorem petersen_szeged : szegedIndex PetersenGraph = 135 := by
-  rw [szeged_eq_computable]; decide +native
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_wiener : wienerIndex PetersenGraph = 75 := by
-  rw [wiener_eq_computable]; decide +native
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_min_deg : PetersenGraph.minDegree = 3 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_max_deg : PetersenGraph.maxDegree = 3 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_avg_deg : averageDegree PetersenGraph = 3 := by
-  unfold averageDegree; simp [Fintype.card_fin]; decide +native
+  unfold averageDegree; simp [Fintype.card_fin]; decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_matching : matchingNumber PetersenGraph = 5 := by
   classical
   have hbdd : BddAbove (Set.image (fun M : Subgraph PetersenGraph => (M.edgeSet.toFinset.card : ℝ)) {M | M.IsMatching}) := by
-    refine ⟨(Fintype.card (Fin 10) : ℝ), ?_⟩
+    refine ⟨(Fintype.card PetersenVertex : ℝ), ?_⟩
     rintro x ⟨M, hM, rfl⟩
-    show (M.edgeSet.toFinset.card : ℝ) ≤ Fintype.card (Fin 10)
+    show (M.edgeSet.toFinset.card : ℝ) ≤ Fintype.card PetersenVertex
     have hb := matching_card_bound PetersenGraph M hM
-    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ Fintype.card (Fin 10))
+    exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ Fintype.card PetersenVertex)
   unfold matchingNumber
   apply le_antisymm
   · apply csSup_le (Set.Nonempty.image _ ⟨⊥, by simp [Subgraph.IsMatching]⟩)
     rintro x ⟨M, hM, rfl⟩
     show (M.edgeSet.toFinset.card : ℝ) ≤ 5
     have hb := matching_card_bound PetersenGraph M hM
-    simp only [Fintype.card_fin] at hb
+    simp only [card_petersenVertex] at hb
     exact_mod_cast (by omega : M.edgeSet.toFinset.card ≤ 5)
   · apply le_csSup hbdd
-    refine ⟨PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 0 5 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 1 6 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 2 7 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 3 8 by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj 4 9 by decide), ?_, ?_⟩
+    refine ⟨PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{0, 1}, by decide⟩ : PetersenVertex) (⟨{2, 3}, by decide⟩ : PetersenVertex) by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{0, 2}, by decide⟩ : PetersenVertex) (⟨{3, 4}, by decide⟩ : PetersenVertex) by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{0, 3}, by decide⟩ : PetersenVertex) (⟨{1, 4}, by decide⟩ : PetersenVertex) by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{0, 4}, by decide⟩ : PetersenVertex) (⟨{1, 2}, by decide⟩ : PetersenVertex) by decide) ⊔ PetersenGraph.subgraphOfAdj (show PetersenGraph.Adj (⟨{1, 3}, by decide⟩ : PetersenVertex) (⟨{2, 4}, by decide⟩ : PetersenVertex) by decide), ?_, ?_⟩
     · apply Subgraph.IsMatching.sup
       · apply Subgraph.IsMatching.sup
         · apply Subgraph.IsMatching.sup
           · exact (Subgraph.IsMatching.subgraphOfAdj _).sup (Subgraph.IsMatching.subgraphOfAdj _)
-              (by rw [support_subgraphOfAdj, support_subgraphOfAdj]; simp [Set.disjoint_left])
+              (by rw [support_subgraphOfAdj, support_subgraphOfAdj]; (simp [Set.disjoint_left]; decide))
           · exact Subgraph.IsMatching.subgraphOfAdj _
           · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
-            simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
+            (simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]; decide)
         · exact Subgraph.IsMatching.subgraphOfAdj _
         · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
-          simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
+          (simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]; decide)
       · exact Subgraph.IsMatching.subgraphOfAdj _
       · apply Set.disjoint_of_subset (Subgraph.support_subset_verts _) (Subgraph.support_subset_verts _)
-        simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]
-    · simp
+        (simp [Subgraph.verts_sup, subgraphOfAdj_verts, Set.disjoint_left]; decide)
+    · simp; norm_cast
 
 @[category test, AMS 5]
 theorem petersen_residue : residue PetersenGraph = 3 := by
@@ -378,7 +386,7 @@ theorem petersen_residue : residue PetersenGraph = 3 := by
 
 @[category test, AMS 5]
 theorem petersen_annihilation : annihilationNumber PetersenGraph = 5 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem petersen_cvetkovic : cvetkovic PetersenGraph = 4 := by
@@ -389,31 +397,32 @@ theorem petersen_cvetkovic : cvetkovic PetersenGraph = 4 := by
 
 @[category test, AMS 5]
 theorem C6_indep : α(C6) = 3 := by
-  rw [indep_num_eq_computable]; decide +native
+  rw [indep_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_dom : dominationNumber C6 = 2 := by
-  rw [dom_num_eq_computable]; decide +native
+  rw [dom_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_avg_dist : averageDistance C6 = 9/5 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist C6 = (9 / 5 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable, show computable_avg_dist C6 = (9 / 5 : ℚ) from by decide +kernel]
   norm_num
 
 @[category test, AMS 5]
 theorem C6_diameter : ediam C6 = 3 := by
   rw [ediam_eq_computable C6 (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam C6 = 3)
+  exact_mod_cast (by decide +kernel : computable_ediam C6 = 3)
 
 @[category test, AMS 5]
 theorem C6_radius : radius C6 = 3 := by
   rw [radius_eq_computable C6 (by decide)]
-  exact_mod_cast (by decide +native : computable_radius C6 = 3)
+  exact_mod_cast (by decide +kernel : computable_radius C6 = 3)
 
 @[category test, AMS 5]
 theorem C6_girth : C6.girth = 6 := by
   sorry
 
+open scoped Classical in
 @[category test, AMS 5]
 theorem C6_order : Fintype.card ↥(⊤ : Subgraph C6).verts = 6 := by
   rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
@@ -421,27 +430,27 @@ theorem C6_order : Fintype.card ↥(⊤ : Subgraph C6).verts = 6 := by
 
 @[category test, AMS 5]
 theorem C6_size : C6.edgeFinset.card = 6 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem C6_szeged : szegedIndex C6 = 54 := by
-  rw [szeged_eq_computable]; decide +native
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_wiener : wienerIndex C6 = 27 := by
-  rw [wiener_eq_computable]; decide +native
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_min_deg : C6.minDegree = 2 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem C6_max_deg : C6.maxDegree = 2 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem C6_avg_deg : averageDegree C6 = 2 := by
-  unfold averageDegree; simp [Fintype.card_fin]; decide +native
+  unfold averageDegree; simp [Fintype.card_fin]; decide +kernel
 
 @[category test, AMS 5]
 theorem C6_matching : matchingNumber C6 = 3 := by
@@ -476,7 +485,7 @@ theorem C6_residue : residue C6 = 2 := by
 
 @[category test, AMS 5]
 theorem C6_annihilation : annihilationNumber C6 = 3 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem C6_cvetkovic : cvetkovic C6 = 3 := by
@@ -486,26 +495,27 @@ theorem C6_cvetkovic : cvetkovic C6 = 3 := by
 
 @[category test, AMS 5]
 theorem Star5_indep : α(Star5) = 5 := by
-  rw [indep_num_eq_computable]; decide +native
+  rw [indep_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_dom : dominationNumber Star5 = 1 := by
-  rw [dom_num_eq_computable]; decide +native
+  rw [dom_num_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_avg_dist : averageDistance Star5 = 5/3 := by
-  rw [avg_dist_eq_computable, show computable_avg_dist Star5 = (5 / 3 : ℚ) from by decide +native]
+  rw [avg_dist_eq_computable,
+    show computable_avg_dist Star5 = (5 / 3 : ℚ) from by decide +kernel]
   norm_num
 
 @[category test, AMS 5]
 theorem Star5_diameter : ediam Star5 = 2 := by
   rw [ediam_eq_computable Star5 (by decide)]
-  exact_mod_cast (by decide +native : computable_ediam Star5 = 2)
+  exact_mod_cast (by decide +kernel : computable_ediam Star5 = 2)
 
 @[category test, AMS 5]
 theorem Star5_radius : radius Star5 = 1 := by
   rw [radius_eq_computable Star5 (by decide)]
-  exact_mod_cast (by decide +native : computable_radius Star5 = 1)
+  exact_mod_cast (by decide +kernel : computable_radius Star5 = 1)
 
 @[category test, AMS 5]
 theorem Star5_girth : Star5.egirth = ⊤ := by
@@ -534,8 +544,9 @@ theorem Star5_girth : Star5.egirth = ⊤ := by
       · rw [hsnd] at h1; simp [Star5, completeBipartiteGraph] at h1
       · exact ⟨y, rfl⟩
     have hmem : Sum.inr b ∈ c.support := hb ▸ List.mem_of_mem_tail (c.snd_mem_tail_support hc.not_nil)
-    exact key b (c.rotate hmem) (hc.rotate hmem)
+    exact key b (c.rotate _ hmem) (hc.rotate hmem)
 
+open scoped Classical in
 @[category test, AMS 5]
 theorem Star5_order : Fintype.card ↥(⊤ : Subgraph Star5).verts = 6 := by
   rw [Fintype.card_congr SimpleGraph.Subgraph.topIso.toEquiv]
@@ -543,27 +554,27 @@ theorem Star5_order : Fintype.card ↥(⊤ : Subgraph Star5).verts = 6 := by
 
 @[category test, AMS 5]
 theorem Star5_size : Star5.edgeFinset.card = 5 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_szeged : szegedIndex Star5 = 25 := by
-  rw [szeged_eq_computable]; decide +native
+  rw [szeged_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_wiener : wienerIndex Star5 = 25 := by
-  rw [wiener_eq_computable]; decide +native
+  rw [wiener_eq_computable]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_min_deg : Star5.minDegree = 1 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_max_deg : Star5.maxDegree = 5 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_avg_deg : averageDegree Star5 = 5/3 := by
-  unfold averageDegree; simp [Fintype.card_sum, Fintype.card_fin]; decide +native
+  unfold averageDegree; simp [Fintype.card_sum, Fintype.card_fin]; decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_matching : matchingNumber Star5 = 1 := by
@@ -609,7 +620,7 @@ theorem Star5_residue : residue Star5 = 5 := by
 
 @[category test, AMS 5]
 theorem Star5_annihilation : annihilationNumber Star5 = 5 := by
-  decide +native
+  decide +kernel
 
 @[category test, AMS 5]
 theorem Star5_cvetkovic : cvetkovic Star5 = 5 := by

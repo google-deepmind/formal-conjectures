@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of four squares with square conditions
@@ -22,7 +23,7 @@ import FormalConjecturesUtil
 Any integer $n \geq 0$ can be written as $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative
 integers and $z \leq w$, such that both $x$ and $x + 24y$ are squares.
 
-Zhi-Wei Sun has offered a $2,400 prize for the first proof.
+Zhi-Wei Sun has offered a \$2,400 prize for the first proof.
 
 *References:*
 - [A281976](https://oeis.org/A281976)
@@ -31,6 +32,8 @@ Zhi-Wei Sun has offered a $2,400 prize for the first proof.
 - Z.-W. Sun, "Restricted sums of four squares," *arXiv:1701.05868* [math.NT], 2017.
   https://arxiv.org/abs/1701.05868
 -/
+
+@[expose] public section
 
 namespace OeisA281976
 

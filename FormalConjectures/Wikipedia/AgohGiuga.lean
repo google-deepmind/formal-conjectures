@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Agoh-Giuga conjecture
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Agoh-Giuga_conjecture)
 -/
+
+@[expose] public section
+
 open scoped Nat
 /-
 
@@ -88,6 +92,7 @@ $$\sum_{i=1}^{n - 1}i^{n - 1} \equiv -1\pmod{n}$$-/
 def IsStrongGiuga (n : ℕ) : Prop :=
     n.Composite ∧ n ∣ 1 + ∑ i ∈ Finset.Ioo 0 n, i ^ (n - 1)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A composite number $n$ is weak Giuga if and only if $p \mid (\frac{n}{p} - 1)$ for all
 prime divisors $p$ of $n$.
@@ -120,7 +125,7 @@ theorem squarefree_of_isCarmichael {a : ℕ} (ha₁ : a.Composite) (ha₂ : IsCa
   have : Fact p.Prime := ⟨hp⟩
   rw [mul_assoc] at ha₁
   rw [mul_assoc, ← geom_sum_mul_of_one_le ((1).le_add_left (p * N)), p.coprime_mul_iff_left]
-  simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero']).not.mpr
+  simpa using (mul_dvd_mul_iff_right fun _ ↦ by simp_all only [mul_zero, not_lt_zero]).not.mpr
     ((ZMod.natCast_eq_zero_iff _ _).not.mp (by simp [le_of_lt ha₁.1]))
 
 -- Wikipedia URL: https://en.wikipedia.org/wiki/Carmichael_number
@@ -203,10 +208,11 @@ theorem isStrongGiuga_iff {a : ℕ} (ha : a.Composite) :
     IsStrongGiuga a ↔ IsCarmichael a ∧ ∃ n : ℕ, ∑ p ∈ a.primeFactors, (1 / p : ℚ) - 1 / a = n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every strong Giuga number is a Carmichael number.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/394ec1c1ff92bdf2fa10f30d62ae9d0455d3ce20/Proofs/T_AgohGiuga_agoh_giuga_variants_isStrongGiuga_implies_isCarmichael.lean#L283"]
 theorem agoh_giuga.variants.isStrongGiuga_implies_isCarmichael
     (a : ℕ) (ha : IsStrongGiuga a) : IsCarmichael a := by
   sorry

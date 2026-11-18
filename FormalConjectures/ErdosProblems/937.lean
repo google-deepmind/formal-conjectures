@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 937
@@ -25,6 +26,8 @@ import FormalConjecturesUtil
  * [BBC24] Bajpai, P., Bennett, M. A. and Chan, T. H., _Arithmetic progressions in squarefull /
    powerful numbers_, Int. J. Number Theory 20 (2024), 19-45.
 -/
+
+@[expose] public section
 
 namespace Erdos937
 
@@ -38,6 +41,7 @@ def IsCoprimePowerfulAP4 (a d : ℕ) : Prop :=
   a.Coprime (a + d) ∧ a.Coprime (a + 2 * d) ∧ a.Coprime (a + 3 * d) ∧
   (a + d).Coprime (a + 2 * d) ∧ (a + d).Coprime (a + 3 * d) ∧ (a + 2 * d).Coprime (a + 3 * d)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many four-term arithmetic progressions of coprime powerful numbers?
 (A number $n$ is *powerful* if $p \mid n \to p^2 \mid n$; `Nat.Powerful`.)
@@ -47,9 +51,10 @@ there are infinitely many four-term arithmetic progressions of pairwise coprime 
 (Without coprimality this is easy, and by a theorem of Fermat there are no four *squares* in
 arithmetic progression.)
 -/
-@[category research solved, AMS 11]
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/dfe2d78128b493c572cf525b1b8edf4897fb7664/src/latest/ErdosProblems/Erdos937.lean#L1031"]
 theorem erdos_937 :
-    answer(True) ↔ {p : ℕ × ℕ | IsCoprimePowerfulAP4 p.1 p.2}.Infinite := by
+    {p : ℕ × ℕ | IsCoprimePowerfulAP4 p.1 p.2}.Infinite := by
   sorry
 
 /-- Sanity check for `IsCoprimePowerfulAP4`: the progression $0, 1, 2, 3$ is not a valid

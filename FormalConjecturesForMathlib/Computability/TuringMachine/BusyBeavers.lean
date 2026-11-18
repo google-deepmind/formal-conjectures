@@ -16,9 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesForMathlib.Computability.TuringMachine.PostTuringMachine
-public import Mathlib.Computability.TuringMachine
-public import Mathlib.Data.Nat.Lattice
-public import Mathlib.Data.Nat.PartENat
+public import Mathlib.Computability.TuringMachine.StackTuringMachine
+public import Mathlib.Data.ENat.Lattice
 
 @[expose] public section
 
@@ -40,7 +39,7 @@ these objects.
 namespace Turing
 
 open Mathlib
-open Relation
+open Relation StateTransition
 
 open Nat
 
@@ -118,7 +117,7 @@ def init (l : List Γ) : Cfg Γ Λ := ⟨some default, Tape.mk₁ l⟩
 /-- Evaluate a Turing machine on initial input to a final state,
   if it terminates. -/
 def eval (M : Machine Γ Λ) (l : List Γ) : Part (ListBlank Γ) :=
-  (Turing.eval (step M) (init l)).map fun c ↦ c.tape.right₀
+  (StateTransition.eval (step M) (init l)).map fun c ↦ c.tape.right₀
 
 def multiStep (M : Machine Γ Λ) (config : Cfg Γ Λ) (n : ℕ) : Option (Cfg Γ Λ) :=
     (Option.bind · (step M))^[n] config
@@ -196,7 +195,7 @@ lemma exists_of_not_haltsAfter (s : Cfg Γ Λ) (n : ℕ) (H : ¬M.HaltsAfter s n
 lemma not_isHalting_iff_forall_isSome_multiStep :
     ¬ IsHalting M ↔ ∀ n, M.multiStep (init []) (n + 1) |>.isSome := by
   simp_rw [isHalting_iff_exists_haltsAt, HaltsAfter, Option.isSome_iff_ne_none]
-  push_neg
+  push Not
   rfl
 
 lemma not_isHalting_of_forall_isSome (H : ∀ l s, ∃ a b, M l s = some (some a, b)) :

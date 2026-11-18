@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # $a(n)$ = the number of values of $k <= 10^n$ such that $\sqrt{k(k+1)(k+2)(k+3)+1}$ is prime
@@ -25,6 +26,8 @@ $a(n) = \#\{k \in \mathbb{N} \mid 1 \le k \le 10^n \land (k^2 + 3k + 1) \text{ i
 *References:*
 - [A115366](https://oeis.org/A115366)
 -/
+
+@[expose] public section
 
 namespace OeisA115366
 
@@ -53,7 +56,7 @@ theorem a_2 : a 2 = 50 := by native_decide
 theorem a_3 : a 3 = 313 := by native_decide
 
 /--
-Conjecture: $a(n)$A006880(n) \rightarrow 1.77...$
+Conjecture: $a(n)/A006880(n) \rightarrow 1.77...$
 where A006880(n) is the number of primes $\le 10^n$.
 -/
 @[category research open, AMS 11]

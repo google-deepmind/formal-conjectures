@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!
 # Erdős Problem 340
 
 *Reference:* [erdosproblems.com/340](https://www.erdosproblems.com/340)
 -/
+
+@[expose] public section
 
 open Filter Finset
 open scoped Real Pointwise
@@ -29,18 +33,22 @@ namespace Erdos340
 
 @[category test, AMS 5]
 theorem greedySidon_go_singleton_two : (greedySidon.go {1} (by simp [IsSidon]) 2).val = 2 := by
-  decide +native
+  norm_num [greedySidon, greedySidon.aux, greedySidon.go, Nat.find_eq_iff, IsSidon]
+  lia
 
 @[category test, AMS 5]
 theorem greedySidon_go_pair_three : (greedySidon.go {1, 2} (by simp [IsSidon]) 3).val = 4 := by
-  decide +native
+  norm_num [greedySidon, greedySidon.aux, greedySidon.go, Nat.find_eq_iff, IsSidon]
+  lia
 
 @[category test, AMS 5]
 theorem greedySidon_zero : greedySidon 0 = 1 := rfl
 
 @[category test, AMS 5]
 theorem greedySidon_one : greedySidon 1 = 2 := by
-  decide +native
+  simp [greedySidon, greedySidon.aux, greedySidon.go]
+  norm_num [Nat.find_eq_iff, IsSidon]
+  lia
 
 @[category test, AMS 5]
 theorem greedySidon_two : greedySidon 2 = 4 := by
@@ -74,6 +82,8 @@ theorem erdos_340 (ε : ℝ) (hε : ε > 0) :
       fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ) := by
   sorry
 
+def erdos_340.variants.isTheta.answer : ℕ → ℝ := sorry
+
 /--
 Let $A = \{1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, \ldots\}$ be the greedy Sidon sequence:
 we begin with $1$ and iteratively include the next smallest integer that preserves the
@@ -81,10 +91,10 @@ Sidon property (i.e. there are no non-trivial solutions to $a + b = c + d$). Wha
 order of growth of $A$? Is it true that $|A \cap \{1, \ldots, N\}| \gg N^{1/2 - \varepsilon}$
 for all $\varepsilon > 0$ and large $N$?
 -/
-@[category research open, AMS 5]
+@[category research open, question value, AMS 5]
 theorem erdos_340.variants.isTheta (ε : ℝ) (hε : ε > 0) :
     (fun n : ℕ ↦ ((Set.range greedySidon ∩ Set.Icc 1 n).ncard : ℝ)) =Θ[atTop]
-      (answer(sorry) : ℕ → ℝ) := by
+      erdos_340.variants.isTheta.answer := by
   sorry
 
 /--
@@ -125,8 +135,8 @@ theorem erdos_340.variants._22_mem_sub :
 /--
 The smallest integer which is unknown to be in $A - A$ is $33$.
  -/
-@[category research open, AMS 5]
-theorem erdos_340.variants._33_mem_sub : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_340.variants._33_mem_sub :
     33 ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
@@ -137,16 +147,16 @@ theorem erdos_340.variants._33_mem_sub : answer(sorry) ↔
 /--
 It may be true that all or almost all integers are in $A - A$.
 -/
-@[category research open, AMS 5]
-theorem erdos_340.variants.cofinite_sub : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_340.variants.cofinite_sub :
     ∀ᶠ n in cofinite, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 
 /--
 It may be true that all or almost all integers are in $A - A$.
 -/
-@[category research open, AMS 5]
-theorem erdos_340.variants.co_density_zero_sub : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_340.variants.co_density_zero_sub :
     ∃ S : Set ℕ, S.HasDensity 0 ∧ ∀ n ∈ Sᶜ, n ∈ Set.range greedySidon - Set.range greedySidon := by
   sorry
 

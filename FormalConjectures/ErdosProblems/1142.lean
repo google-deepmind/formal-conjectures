@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1142
@@ -28,6 +29,8 @@ import FormalConjecturesUtil
   Combinatorial Theory, Volume 7, Issue 4, December 1969, pages 374-377.
 
 -/
+
+@[expose] public section
 
 open Nat Set
 
@@ -48,9 +51,9 @@ Are there infinitely many $n > 2$ such that $n - 2^k$ is prime for all $k \geq 1
 
 The only known such $n$ are $4, 7, 15, 21, 45, 75, 105$ (OEIS [A039669](https://oeis.org/A039669)).
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_1142 :
-    answer(sorry) ↔ Infinite { n | Erdos1142Prop n } := by
+    Infinite { n | Erdos1142Prop n } := by
   sorry
 
 /--
@@ -66,7 +69,7 @@ local macro "prove_erdos_1142_prop" bound:num : tactic =>
   `(tactic| (
     refine ⟨by omega, fun k hk hlt => ?_⟩
     have : k ≤ $bound := by
-      by_contra h; push_neg at h
+      by_contra! h
       exact absurd (Nat.pow_le_pow_right (by omega : 1 ≤ 2) h) (by omega)
     interval_cases k <;> simp_all (config := { decide := true })))
 

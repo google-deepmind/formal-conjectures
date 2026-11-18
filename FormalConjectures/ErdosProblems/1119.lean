@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1119
@@ -30,6 +31,8 @@ import FormalConjecturesUtil
   J. Lond. Math. Soc. (2) (2024), Paper No. e12918, 27.
 -/
 
+@[expose] public section
+
 open Cardinal Order
 open scoped Cardinal
 
@@ -42,8 +45,8 @@ $z_0 \in \mathbb{C}$, there are at most $\mathfrak{m}$ distinct values of $f_\al
 Must $\{f_\alpha\}$ have cardinality at most $\mathfrak{m}$?
 
 This is Problem 2.46 in [Ha74], where it is attributed to Erdős. The question is
-**independent of ZFC**, so the headline statement carries `answer(sorry)`: it is neither
-provable nor refutable from the usual axioms of set theory.
+**independent of ZFC**: the headline statement is neither provable nor refutable from the
+usual axioms of set theory, so its `sorry` cannot be filled either way.
 
 The answer is yes if $\mathfrak{m}^+ < \mathfrak{c}$ (see
 `erdos_1119.variants.easy_case`), so the question reduces to the case
@@ -52,8 +55,8 @@ produced a model of $\mathfrak{c} = \aleph_2$ in which the answer is yes (with
 $\mathfrak{m} = \aleph_1$), while Schilhan and Weinert [ScWe24] produced a different
 model of $\mathfrak{c} = \aleph_2$ in which the answer is no.
 -/
-@[category research solved, AMS 3 30]
-theorem erdos_1119 : answer(sorry) ↔
+@[category research solved, question, AMS 3 30]
+theorem erdos_1119 :
     ∀ (m : Cardinal.{0}), ℵ₀ < m → m < 𝔠 →
     ∀ F : Set (ℂ → ℂ), (∀ f ∈ F, Differentiable ℂ f) →
       (∀ z₀ : ℂ, #{y : ℂ | ∃ f ∈ F, f z₀ = y} ≤ m) →
@@ -77,13 +80,15 @@ problem is independent of ZFC, with the only undecidable case being
 $\mathfrak{m}^+ = \mathfrak{c}$.
 -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The 'easy' case of Erdős Problem 1119: if moreover $\mathfrak{m}^+ < \mathfrak{c}$, then
 any family of entire functions taking at most $\mathfrak{m}$ distinct values at each
 point has cardinality at most $\mathfrak{m}$. In [Ha74] it is written that this is
 'easy to see'.
 -/
-@[category research solved, AMS 3 30]
+@[category research solved, AMS 3 30, formal_proof using lean4 at
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos1119.lean#L203"]
 theorem erdos_1119.variants.easy_case (m : Cardinal.{0}) (hm : ℵ₀ < m)
     (hsucc : succ m < 𝔠) (F : Set (ℂ → ℂ))
     (hF : ∀ f ∈ F, Differentiable ℂ f)

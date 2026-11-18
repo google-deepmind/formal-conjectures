@@ -13,14 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 1176
 
 *Reference:* [erdosproblems.com/1176](https://www.erdosproblems.com/1176)
 -/
+
+@[expose] public section
 
 open Cardinal
 
@@ -33,9 +36,9 @@ exists a vertex colour containing all edge colours?
 
 A problem of Erdős, Galvin, and Hajnal. The consistency of this was proved by Hajnal and Komjáth.
 -/
-@[category research open, AMS 3 5]
+@[category research open, question, AMS 3 5]
 theorem erdos_1176 :
-    answer(sorry) ↔ ∀ {V : Type*} (G : SimpleGraph V), G.chromaticCardinal = aleph 1 →
+    ∀ {V : Type*} (G : SimpleGraph V), G.chromaticCardinal = aleph 1 →
       ∃ (EColor : Type) (_ : mk EColor = aleph 1) (c_edge : G.edgeSet → EColor),
         ∀ (VColor : Type) (_ : mk VColor ≤ aleph 0) (c_vert : V → VColor),
           ∃ (vc : VColor),

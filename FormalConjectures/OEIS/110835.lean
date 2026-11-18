@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Smallest $m > 0$ such that there are no primes between $nm$ and $n(m+1)$ inclusive.
@@ -24,6 +25,8 @@ Sierpinski's conjecture (1958) is precisely that a(n) >= n for all n.
 *References:*
 - [A110835](https://oeis.org/A110835)
 -/
+
+@[expose] public section
 
 namespace OeisA110835
 
@@ -46,7 +49,7 @@ theorem a_1 : a 1 = 8 := by
   dsimp [a]
   have hleast : IsLeast {m : ℕ | m > 0 ∧ ∀ p : ℕ, p.Prime → ¬ (1 * m ≤ p ∧ p ≤ 1 * (m + 1))} 8 := by
     constructor
-    · simp only [mem_setOf_eq, one_mul]
+    · simp only [mem_ofPred_eq, one_mul]
       refine ⟨by decide, ?_⟩
       intro p hp ⟨hge, hle⟩
       interval_cases p <;> revert hp <;> decide
@@ -68,7 +71,7 @@ theorem a_2 : a 2 = 4 := by
   dsimp [a]
   have hleast : IsLeast {m : ℕ | m > 0 ∧ ∀ p : ℕ, p.Prime → ¬ (2 * m ≤ p ∧ p ≤ 2 * (m + 1))} 4 := by
     constructor
-    · simp only [mem_setOf_eq]
+    · simp only [mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       intro p hp ⟨hge, hle⟩
       interval_cases p <;> revert hp <;> decide
@@ -85,7 +88,7 @@ theorem a_3 : a 3 = 8 := by
   dsimp [a]
   have hleast : IsLeast {m : ℕ | m > 0 ∧ ∀ p : ℕ, p.Prime → ¬ (3 * m ≤ p ∧ p ≤ 3 * (m + 1))} 8 := by
     constructor
-    · simp only [mem_setOf_eq]
+    · simp only [mem_ofPred_eq]
       refine ⟨by decide, ?_⟩
       intro p hp ⟨hge, hle⟩
       interval_cases p <;> revert hp <;> decide

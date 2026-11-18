@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Sum of two squares, a power of 3, and a power of 5
@@ -22,7 +23,7 @@ import FormalConjecturesUtil
 Any integer $n > 1$ can be written as $a^2 + b^2 + 3^c + 5^d$ where $a, b, c, d$ are
 nonnegative integers.
 
-Zhi-Wei Sun has offered a $3,500 prize for the first proof.
+Zhi-Wei Sun has offered a \$3,500 prize for the first proof.
 
 *References:*
 - [A303656](https://oeis.org/A303656)
@@ -35,6 +36,8 @@ Zhi-Wei Sun has offered a $3,500 prize for the first proof.
 - Zhi-Wei Sun's 1-3-5 conjecture and variations:
   https://www.aimspress.com/aimspress-data/era/2020/2/PDF/1935-9179_2020_2_589.pdf
 -/
+
+@[expose] public section
 
 namespace OeisA303656
 

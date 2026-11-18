@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Erdős Problem 592
@@ -22,19 +23,23 @@ import FormalConjecturesUtil
 *Reference:* [erdosproblems.com/592](https://www.erdosproblems.com/592)
 -/
 
+@[expose] public section
+
 open Cardinal Ordinal
 
 namespace Erdos592
 
 universe u
 
+def erdos_592.answer : Ordinal.{u} → Prop := sorry
+
 /--
 Determine which countable ordinals $β$ have the property that, if $α = \omega^β$, then in any
 red/blue colouring of the edges of $K_α$ there is either a red $K_α$ or a blue $K_3$.
 -/
-@[category research open, AMS 3]
+@[category research open, question value, AMS 3]
 theorem erdos_592 (β : Ordinal.{u}) : β.card ≤ ℵ₀ →
-    OrdinalCardinalRamsey (ω ^ β) (ω ^ β) 3 ↔ (answer(sorry) : Ordinal.{u} → Prop) β := by
+    (OrdinalCardinalRamsey (ω ^ β) (ω ^ β) 3 ↔ erdos_592.answer β) := by
   sorry
 
 -- TODO(firsching): add condition by Galvin and Larson.

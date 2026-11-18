@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Wilson primes
@@ -28,6 +29,8 @@ $5$, $13$, and $563$. It is conjectured that infinitely many Wilson primes exist
 * E. Costa, R. Gerbicz, and D. Harvey,
   [A search for Wilson primes](https://arxiv.org/abs/1209.3436)
 -/
+
+@[expose] public section
 
 namespace WilsonPrime
 

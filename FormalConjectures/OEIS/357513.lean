@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import FormalConjecturesUtil
+public import FormalConjecturesUtil
 
 /-!
 # Numerator of a sum involving binomial coefficients
@@ -26,6 +27,8 @@ with $a(0) = 0$.
 *References:*
 - [A357513](https://oeis.org/A357513)
 -/
+
+@[expose] public section
 namespace OeisA357513
 
 open Nat
@@ -66,6 +69,7 @@ theorem a_5 : a 5 = 1335793103 := by
   unfold a
   norm_num only [Nat.choose, Finset.sum_Icc_succ_top, Finset.Icc_self, Finset.sum_singleton]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 We have  $a(p-1) \equiv 0 \pmod{p^4}$ for all primes $p \ge 3$ except $p=7$.
 
@@ -73,13 +77,13 @@ proved by AlphaProof
 -/
 @[category research solved, AMS 11,
   formal_proof using formal_conjectures at
-    "https://github.com/google-deepmind/formal-conjectures/commit/9c7f21e7d4445637538bc1817b058b9b3f31bd2b"]
+    "https://github.com/google-deepmind/formal-conjectures/blob/9c7f21e7d4445637538bc1817b058b9b3f31bd2b/FormalConjectures/OEIS/357513.lean#L232"]
 theorem a357513_supercongruence (p : ℕ) (hp : p.Prime) (h_ge3 : p ≥ 3) (h_neq7 : p ≠ 7) :
     (a (p - 1) : ℤ) ≡ 0 [ZMOD (p : ℤ) ^ 4] := by
   sorry
 
 /--
-Let m be a nonnegative integer and set $u(n) = $$the numerator of
+Let m be a nonnegative integer and set $u(n)$ = the numerator of
 $$\sum{k=1}^{n} \frac{1}{k^{2m+1}} \binom{n}{k}^2 \binom{n+k}{k}^2$$
 (seems like a typo in the OEIS entry: the sum starts with $k=0$ there. In order
 to avoid a division by zero, we replace start the sum at $k=1$.)
