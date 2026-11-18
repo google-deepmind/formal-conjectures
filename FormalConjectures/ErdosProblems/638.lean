@@ -78,8 +78,8 @@ theorem erdos_638 (S : Set (SimpleGraph ℕ)) :
       HasMonochromaticTriangle G coloring) →
   (∀ k : Cardinal, Cardinal.aleph0 ≤ k →
     ∃ (W: Type*) (G : SimpleGraph W),
-      (∀ H : SimpleGraph W, H ≤ G → H.support.Finite →
-        ∃ H' : SimpleGraph ℕ, H' ∈ S ∧ Nonempty (SimpleGraph.Iso H H')) ∧
+      (∀ H : SimpleGraph ℕ, Nonempty (SimpleGraph.Embedding H G) →
+        H.support.Finite → H ∈ S) ∧
       (∀ coloring : G.EdgeLabeling (Quotient.out k),
         HasMonochromaticTriangle G coloring)) := by
   sorry
