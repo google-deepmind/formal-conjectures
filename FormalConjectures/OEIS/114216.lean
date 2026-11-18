@@ -80,10 +80,14 @@ theorem a_5 : a 5 = 1 := by
 
 /--
 Is $a(33900)$ the last term equal to $1$?
+
+Answer: No. $a(78493252) = 1$: the $78493252$nd prime is $1579691809$ and
+$a(78493251) + 1579691809 = 2^{31}$. This term is listed in
+[A114217](https://oeis.org/A114217) (Donovan Johnson, 2010).
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem conjecture :
-  ∀ n > 33900, a n ≠ 1 := by
+  ¬ ∀ n > 33900, a n ≠ 1 := by
   sorry
 
 end OeisA114216
