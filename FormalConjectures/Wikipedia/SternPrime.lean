@@ -20,11 +20,11 @@ public import FormalConjecturesUtil
 /-!
 # Stern Primes
 
-In 1752 Christian Goldbach wrote to Euler proposing that every odd integer greater than $1$ equals
-$p + 2 b^2$ with $b \ge 0$ (counting $1$ as prime); for modern primes, its nontrivial content is
-the *Goldbach–Stern conjecture* that every odd composite equals $p + 2 b^2$ with $p$ prime and
-$b \ge 1$. Moritz Abraham Stern (1856) refuted this via the counterexamples $5777$ and $5993$
-(`OEIS A060003`).
+As recounted by Laurent Hodges (1993), Christian Goldbach proposed in a 1752 letter to Euler that
+every odd integer greater than $1$ equals $p + 2 b^2$ with $b \ge 0$ (counting $1$ as prime); for
+modern primes, its nontrivial content is the *Goldbach–Stern conjecture* that every odd composite
+equals $p + 2 b^2$ with $p$ prime and $b \ge 1$. Moritz Abraham Stern (1856) refuted this via the
+counterexamples $5777$ and $5993$ (`OEIS A060003`).
 
 A prime $q$ admitting no decomposition $q = p + 2 b^2$ with $p$ prime and $b \ge 1$ is called a
 *Stern prime* (`OEIS A042978`). Only eight examples are known ($2, 3, 17, 137, 227, 977, 1187$, and
@@ -51,28 +51,26 @@ def HasPrimePlusTwiceSquare (n : ℕ) : Prop :=
 def IsSternPrime (q : ℕ) : Prop :=
   q.Prime ∧ ¬ HasPrimePlusTwiceSquare q
 
-/-- Verifies that $2$, $3$, and $17$ are Stern primes. -/
+instance (n : ℕ) : Decidable (HasPrimePlusTwiceSquare n) :=
+  decidable_of_iff (∃ b < n.sqrt + 1, 1 ≤ b ∧ 2 * b ^ 2 < n ∧ (n - 2 * b ^ 2).Prime) <| by
+    unfold HasPrimePlusTwiceSquare
+    constructor
+    · rintro ⟨b, _, hb, hlt, hp⟩
+      exact ⟨n - 2 * b ^ 2, b, hp, hb, by omega⟩
+    · rintro ⟨p, b, hp, hb, rfl⟩
+      have hp_pos : 0 < p := hp.pos
+      have hb_sqrt : b ≤ (p + 2 * b ^ 2).sqrt := Nat.le_sqrt.mpr (by nlinarith)
+      exact ⟨b, by omega, hb, by omega, by simpa using hp⟩
+
+instance (q : ℕ) : Decidable (IsSternPrime q) :=
+  inferInstanceAs (Decidable (q.Prime ∧ ¬ HasPrimePlusTwiceSquare q))
+
+/-- Verifies that all eight known examples $2, 3, 17, 137, 227, 977, 1187, 1493$ are Stern
+primes. -/
 @[category test, AMS 11]
-theorem isSternPrime_two_three_seventeen :
-    IsSternPrime 2 ∧ IsSternPrime 3 ∧ IsSternPrime 17 := by
-  refine ⟨⟨by norm_num, ?_⟩, ⟨by norm_num, ?_⟩, ⟨by norm_num, ?_⟩⟩
-  · rintro ⟨p, b, hp, hb, heq⟩
-    have hp2 : 2 ≤ p := hp.two_le
-    have hb2 : 1 ≤ b ^ 2 := by nlinarith
-    omega
-  · rintro ⟨p, b, hp, hb, heq⟩
-    have hp2 : 2 ≤ p := hp.two_le
-    have hb2 : 1 ≤ b ^ 2 := by nlinarith
-    omega
-  · rintro ⟨p, b, hp, hb, heq⟩
-    have hb_le : b ≤ 2 := by nlinarith
-    interval_cases b
-    · have hp_eq : p = 15 := by omega
-      rw [hp_eq] at hp
-      norm_num at hp
-    · have hp_eq : p = 9 := by omega
-      rw [hp_eq] at hp
-      norm_num at hp
+theorem isSternPrime_known_examples :
+    ∀ q ∈ ([2, 3, 17, 137, 227, 977, 1187, 1493] : List ℕ), IsSternPrime q := by
+  decide +kernel
 
 /-- Checks that $5 = 3 + 2 \cdot 1^2$ and $11 = 3 + 2 \cdot 2^2$ satisfy `HasPrimePlusTwiceSquare`
 and hence are not Stern primes. -/

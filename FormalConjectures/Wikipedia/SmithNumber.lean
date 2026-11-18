@@ -81,13 +81,17 @@ theorem smith_number_zero_one_and_four_sums :
       primeFactorsDigitSum 10 4 = 4 := by
   decide +kernel
 
-/-- Every prime $p$ satisfies `primeFactorsDigitSum b p = digitSum b p` trivially and is excluded
-from `IsSmithNumber` by `Nat.Composite`. -/
+/-- Every prime $p$ satisfies `primeFactorsDigitSum b p = digitSum b p`. -/
 @[category API, AMS 11]
 theorem primeFactorsDigitSum_of_prime (b : ℕ) {p : ℕ} (hp : p.Prime) :
-    primeFactorsDigitSum b p = digitSum b p ∧ ¬ IsSmithNumber b p := by
-  refine ⟨?_, fun h => h.2.1.2 hp⟩
+    primeFactorsDigitSum b p = digitSum b p := by
   rw [primeFactorsDigitSum, Nat.primeFactorsList_prime hp, List.map_singleton, List.sum_singleton]
+
+/-- No prime $p$ satisfies `IsSmithNumber b p`, since Smith numbers must be composite. -/
+@[category API, AMS 11]
+theorem not_isSmithNumber_of_prime (b : ℕ) {p : ℕ} (hp : p.Prime) :
+    ¬ IsSmithNumber b p :=
+  fun h => h.2.1.2 hp
 
 /--
 **McDaniel's Theorem (1987)**: Infinitely many base-$10$ Smith numbers exist.

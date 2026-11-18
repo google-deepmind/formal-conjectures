@@ -26,13 +26,11 @@ $n \ge 1$). Eric S. Rowland established in 2008 that every $d(n)$ with $n \ge 2$
 odd prime, and conjectured that every odd prime arises as $d(n)$ for some $n \ge 2$.
 
 *References:*
-- [Wikipedia][1]
+- [Wikipedia](https://en.wikipedia.org/wiki/Formula_for_primes#Rowland%27s_prime-generating_sequence)
 - [OEIS A106108](https://oeis.org/A106108)
 - [OEIS A132199](https://oeis.org/A132199)
 - E. S. Rowland, *A natural prime-generating recurrence*, J. Integer Seq. **11** (2008),
   Article 08.2.8.
-
-[1]: https://en.wikipedia.org/wiki/Formula_for_primes#Rowland%27s_prime-generating_sequence
 -/
 
 @[expose] public section

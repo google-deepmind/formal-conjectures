@@ -33,19 +33,13 @@ public import FormalConjecturesUtil
 namespace ElliottHalberstamConjecture
 
 /--
-$\pi(x; q, a)$: the number of primes $p \le x$ with $p \equiv a \pmod q$.
--/
-def primesInAPCount (x q : ℕ) (a : ZMod q) : ℕ :=
-  ((Finset.range (x + 1)).filter fun p : ℕ => p.Prime ∧ (p : ZMod q) = a).card
-
-/--
 The error term
 $$E(x; q) = \max_{\gcd(a,q)=1} \left|\pi(x;q,a) - \frac{\pi(x)}{\varphi(q)}\right|,$$
 measuring the deviation of the primes in the arithmetic progressions modulo $q$ from
 uniform distribution among the $\varphi(q)$ coprime residue classes.
 -/
 noncomputable def E (x q : ℕ) : ℝ :=
-  ⨆ a : (ZMod q)ˣ, |(primesInAPCount x q a : ℝ) - (x.primeCounting : ℝ) / (q.totient : ℝ)|
+  ⨆ a : (ZMod q)ˣ, |(x.primeCountingMod q a : ℝ) - (x.primeCounting : ℝ) / (q.totient : ℝ)|
 
 /--
 The Elliott–Halberstam conjecture: for every $\theta < 1$ and $A > 0$ there exists a

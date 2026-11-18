@@ -24,14 +24,15 @@ Fix an integer base $b \ge 2$. A prime $p$ is *minimal in base $b$* if no proper
 necessarily contiguous) of its canonical base-$b$ expansion represents a prime—equivalently, no
 prime $q \neq p$ has its canonical base-$b$ digit list as a sublist of `Nat.digits b p`. By
 Higman's lemma, the set of minimal primes in base $b$ is finite for every $b \ge 2$. Jeffrey
-Shallit (2000) classified all $26$ base-$10$ minimal primes (up to $66600049$), and Curtis Bright,
-Raymond Devillers, and Shallit (2016) extended minimal-prime classifications to larger bases;
-subsequent searches in base $17$ have narrowed the classification to $1279$ known minimal probable
-primes together with the single unresolved candidate family $\mathrm{F}1\{9\}$ (base-$17$ digits
-$15, 1, 9, \dots, 9$).
+Shallit (2000) classified all $26$ base-$10$ minimal primes (`OEIS A071062`, up to $66600049$).
+Curtis Bright, Raymond Devillers, and Shallit (2016) extended minimal-prime classifications to
+larger bases; in base $17$, they already reduced the classification to $1279$ minimal probable
+primes (not all certified prime) together with the single unresolved candidate family
+$\mathrm{F}1\{9\}$ (base-$17$ digits $15, 1, 9, \dots, 9$).
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Minimal_prime_(recreational_mathematics))
+- [OEIS A071062](https://oeis.org/A071062)
 - J. Shallit, *Minimal primes*, J. Recreational Math. **30** (1999–2000), 113–117.
 - C. Bright, R. Devillers, and J. Shallit, *Minimal elements for the prime numbers*, Exp. Math.
   **25** (2016), 321–331.
@@ -113,10 +114,10 @@ theorem binary_two_minimal_and_base_ten_nonminimal :
   · rintro ⟨_, _, hno⟩
     exact hno ⟨7, by decide, by decide, by decide⟩
 
-/-- Finiteness of minimal primes (via Higman's lemma): for every radix base $b \ge 2$, the set of
-primes satisfying `IsMinimalPrimeInBase b p` is finite. -/
+/-- Finiteness of minimal primes (empty for $b < 2$, and finite by Higman's lemma for $b \ge 2$):
+for every $b \in \mathbb{N}$, the set of primes satisfying `IsMinimalPrimeInBase b p` is finite. -/
 @[category textbook, AMS 11 68]
-theorem minimal_primes_finite_in_every_base (b : ℕ) (hb : 2 ≤ b) :
+theorem minimal_primes_finite_in_every_base (b : ℕ) :
     {p : ℕ | IsMinimalPrimeInBase b p}.Finite := by
   sorry
 
@@ -125,6 +126,15 @@ theorem minimal_primes_finite_in_every_base (b : ℕ) (hb : 2 ≤ b) :
 @[category research solved, AMS 11 68]
 theorem base_ten_minimal_primes_card :
     {p : ℕ | IsMinimalPrimeInBase 10 p}.ncard = 26 := by
+  sorry
+
+/-- Explicit base-$10$ minimal prime set (Shallit 2000, `OEIS A071062`): the primes satisfying
+`IsMinimalPrimeInBase 10 p` are precisely the $26$ integers listed below. -/
+@[category research solved, AMS 11 68]
+theorem base_ten_minimal_primes_eq :
+    {p : ℕ | IsMinimalPrimeInBase 10 p} =
+      {2, 3, 5, 7, 11, 19, 41, 61, 89, 409, 449, 499, 881, 991, 6469, 6949, 9001, 9049, 9649,
+        9949, 60649, 666649, 946669, 60000049, 66000049, 66600049} := by
   sorry
 
 /-- Unresolved base-$17$ candidate family $\mathrm{F}1\{9\}$: does there exist $k \in \mathbb{N}$

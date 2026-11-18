@@ -53,7 +53,7 @@ def nontrivialZeros (f : ℂ → ℂ) (T₁ T₂ : ℝ) : Set ℂ :=
 /-- `N(T₁, T₂)`: the nontrivial zeros of `f` with imaginary part in `(T₁, T₂]`, counted with
 multiplicity. -/
 noncomputable def N (f : ℂ → ℂ) (T₁ T₂ : ℝ) : ℕ :=
-  ∑ᶠ s ∈ nontrivialZeros f T₁ T₂, (analyticOrderAt f s).toNat
+  Complex.zeroCountOn f (nontrivialZeros f T₁ T₂)
 
 /-- `N_d(T₁, T₂)`: the number of distinct nontrivial zeros of `f` with imaginary part in
 `(T₁, T₂]`. -/
