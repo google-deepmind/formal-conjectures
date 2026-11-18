@@ -54,7 +54,6 @@ public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Coset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.DifferenceBasis
-public import FormalConjecturesForMathlib.Combinatorics.Additive.GowersNorm
 public import FormalConjecturesForMathlib.Combinatorics.Additive.RestrictedSumset
 public import FormalConjecturesForMathlib.Combinatorics.Additive.VCDim
 public import FormalConjecturesForMathlib.Combinatorics.Basic
@@ -168,6 +167,7 @@ public import FormalConjecturesForMathlib.Dynamics.SymbolicDynamics.BlockComplex
 public import FormalConjecturesForMathlib.FieldTheory.AbsoluteGaloisGroup
 public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
+public import FormalConjecturesForMathlib.Geometry.«CAT(0)»
 public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Group.Hyperbolic
 public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
