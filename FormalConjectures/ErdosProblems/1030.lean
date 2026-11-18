@@ -42,11 +42,10 @@ coloured red and blue then there exists either a red $K_k$ or a blue $K_l$.
 Prove the existence of some $c>0$ such that, for all sufficiently large $k$,
 $$R(k+1,k) > (1+c)R(k,k).$$
 
-This is the form in which Burr and Erdős conjectured it in [Er81, p. 11]:
-$r(n+1,n) > (1+c)r(n,n)$. erdosproblems.com writes it with a $\lim$; for the literal reading,
-which additionally requires the ratio to converge, see `erdos_1030.variants.tendsto`.
-
-A problem of Erdős and Sós.
+In [Er81, p. 11] Erdős states this as a conjecture of Burr and himself, in the form
+$r(n+1,n) > (1+c)r(n,n)$. erdosproblems.com describes it as a problem of Erdős and Sós and
+writes it with a $\lim$; for the literal reading, which additionally requires the ratio to
+converge, see `erdos_1030.variants.tendsto`.
 -/
 @[category research open, AMS 5]
 theorem erdos_1030 :
