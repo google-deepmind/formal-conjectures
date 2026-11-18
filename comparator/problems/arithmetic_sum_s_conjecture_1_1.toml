@@ -1,0 +1,3 @@
+id = "arithmetic_sum_s_conjecture_1_1"
+declaration = "conjecture_1_1"
+module = "FormalConjectures/Arxiv/2501.03234/ArithmeticSumS.lean"

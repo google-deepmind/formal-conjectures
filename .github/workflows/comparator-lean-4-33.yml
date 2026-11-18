@@ -1,0 +1,303 @@
+# Copyright 2026 The Formal Conjectures Authors.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     https://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Generated workspace at LeanEval pins
+
+# Everything that crosses the adapter's boundaries, in one job:
+#
+#   1. the elaborator to the importer, over a smoke set that covers each
+#      defect class the whole-set audit found;
+#   2. the importer to the generator, by feeding the emitted request bytes
+#      back through the pinned binary and comparing the file map;
+#   3. the generated workspace to Comparator, built at LeanEval's pins.
+#
+# Nothing here is checked in. A workspace that lives in the tree is a copy of
+# generator output that drifts from the generator and says nothing about the
+# importer, because a human wrote it; this job says the importer, the
+# generator and Comparator work together, which is what
+# `leanprover/lean-eval#536` needs before FC opens problem pull requests.
+#
+# These checks live here rather than beside the corpus build because they are
+# about the adapter, not the corpus. A pull request that only edits a
+# statement should not pay for them, and could not pass them: `pins()` refuses
+# a source file that differs from the merge base, which is exactly what such a
+# pull request changes.
+#
+# The two toolchains in this job are the point, not an accident. The importer
+# reads the declaration's source range, binders and `answer(sorry)` slot types
+# from an environment elaborated at this repository's Lean 4.33.1; the workspace
+# is built and checked at LeanEval's Lean 4.33. If those two disagree about a
+# statement or a slot type, this job is where it shows.
+
+# Two Mathlib builds make this the most expensive job in the repository, so a
+# new push supersedes the run it replaces rather than queueing behind it.
+concurrency:
+  group: comparator-lean-4-33-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    # Not the imported statement's source file: `pins()` refuses to generate
+    # from a file that differs from the merge-base with upstream main, so a
+    # pull request editing it could never pass this job; the whole-set audit
+    # covers statement drift once the edit lands.
+    paths:
+      - 'comparator/**'
+      - '.github/workflows/comparator-lean-4-33.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate-build-and-compare:
+    runs-on: ubuntu-latest
+    name: Import, generate, build and run Comparator
+    steps:
+      - name: Checkout Formal Conjectures
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          # The importer pins each workspace to the merge base with upstream
+          # main, so that ref has to be present.
+          fetch-depth: 0
+          # This job only reads the tree and builds; nothing here pushes, so
+          # the checkout token has no reason to stay in .git/config where a
+          # later step or a build script could reach it.
+          persist-credentials: false
+
+      - name: Read the target pins
+        id: target
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import tomllib
+
+          with open("comparator/tools.toml", "rb") as handle:
+              target = tomllib.load(handle)["target"]
+          for key in (
+              "comparator",
+              "comparator_repository",
+              "lean4export",
+              "lean_toolchain",
+          ):
+              print(f"{key}={target[key]}")
+          PY
+
+      # At this repository's toolchain. The facts the importer reads come
+      # from an elaborated environment, not from the text, so every module a
+      # step below imports from has to be built first.
+      - name: Prepare the extractor and the source modules
+        uses: ./.github/actions/prepare-extractor
+        with:
+          modules: >-
+            FormalConjectures.Wikipedia.SumOfThreeCubes
+            FormalConjectures.Wikipedia.Hadamard
+            FormalConjectures.Wikipedia.Koethe
+            FormalConjectures.ErdosProblems.«100»
+            FormalConjectures.ErdosProblems.«940»
+            FormalConjectures.ErdosProblems.«1038»
+            FormalConjectures.OEIS.«303656»
+            FormalConjectures.OEIS.«308734»
+            FormalConjectures.Arxiv.«0912.2382».CurlingNumberConjecture
+
+      - name: Build the pinned lean-eval-generator
+        uses: ./.github/actions/build-lean-eval-generator
+
+      # The elaborator-to-importer boundary, exercised on the oleans the
+      # build above produced: one plain theorem, a Prop answer slot, a
+      # non-Prop answer slot, a forall-conclusion (whose binder must not be
+      # applied), explicit parameters (which must be), and the qualified-id
+      # collision pair. The comparator run itself needs landrun and stays in
+      # a separate Linux job.
+      - name: Comparator generation smoke test
+        run: |
+          # The command prints the directory it wrote. Asking it removes the
+          # only other place that would have to know how a qualified name
+          # becomes a workspace id, and a change to that rule then fails in
+          # the code that owns it rather than in twenty lines of YAML.
+          ws() {
+            python3 comparator/adapter/make_comparator_workspace.py "$1" --out .comparator
+          }
+          hadamard=$(ws exists_hadamard_zero)
+          large_integers=$(ws erdos_940.variants.large_integers)
+          parts_i=$(ws erdos_1038.parts.i)
+          strong=$(ws erdos_100.variants.strong)
+          koethe=$(ws KotherConjecture.variants.le_KotherRadical)
+          oeis_a=$(ws OeisA303656.conjecture)
+          oeis_b=$(ws OeisA308734.conjecture)
+          curling=$(ws curling_number_conjecture)
+          echo "PARTS_I=$parts_i" >> "$GITHUB_ENV"
+          test -d "$hadamard"
+          grep -q "large_integers_answer : Prop" "$large_integers/Challenge.lean"
+          grep -q "i_answer : ENNReal" "$parts_i/Challenge.lean"
+          grep -q "Submission.erdos_100_variants_strong$" "$strong/Solution.lean"
+          grep -q "le_KotherRadical hI" "$koethe/Solution.lean"
+          # Two modules declare `conjecture`; qualified default ids keep the
+          # workspaces apart, and a guillemet module path decodes correctly.
+          test "$oeis_a" != "$oeis_b"
+          test -d "$oeis_a" && test -d "$oeis_b"
+          case "$curling" in *0912_2382*) ;; *) echo "guillemet module lost its digits: $curling"; exit 1 ;; esac
+
+      # The importer-to-generator seam, on a real declaration.
+      # `--emit-import` writes the exact bytes that cross it — the v1
+      # request and its context directory — and running the pinned binary on
+      # those bytes from inside the emitted directory has to reproduce the
+      # workspace exactly; if it does not, the emitted artifact is not the
+      # whole interface. See comparator/OWNERSHIP.md.
+      - name: Importer to generator seam
+        env:
+          WORKSPACE: ${{ env.PARTS_I }}
+        run: |
+          HANDED_OVER=$(python3 comparator/adapter/make_comparator_workspace.py \
+            erdos_1038.parts.i --emit-import .comparator-import)
+          export HANDED_OVER
+          python3 - <<'PY'
+          import glob
+          import os
+          import pathlib
+          import sys
+
+          sys.path.insert(0, "comparator/adapter")
+          import leaneval_generator_cli as generator_cli
+          from leaneval_interface import ProblemManifest
+
+          handed_over = pathlib.Path(os.environ["HANDED_OVER"]).resolve()
+          workspace = pathlib.Path(os.environ["WORKSPACE"]).resolve()
+          problem_id = handed_over.name
+
+          # One sidecar, named by the command, found rather than spelled.
+          (sidecar,) = glob.glob(str(handed_over / "fc-provenance-*.json"))
+          manifest = ProblemManifest.from_json(
+              pathlib.Path(sidecar).read_text(encoding="utf-8")
+          )
+          assert len(manifest.source.commit) == 40, manifest.source.commit
+          assert manifest.source.declaration, "no FC declaration id"
+
+          # The emitted request is fed back as its exact bytes — no reparse,
+          # no reserialise — which is the claim the seam test exists to check.
+          request_text = (handed_over / "request.json").read_text(encoding="utf-8")
+          regenerated = generator_cli.generate(
+              request_text, cwd=handed_over, expected_ids=[problem_id]
+          )
+          files = regenerated[problem_id]
+          for name, content in files.items():
+              expected = (workspace / name).read_text(encoding="utf-8")
+              assert content == expected, name
+          print(f"{len(files)} files reproduced from the emitted request")
+          PY
+
+      # `--verify` elaborates the marked-up module here, at 4.33.1. It is not a
+      # substitute for the 4.33 build below; it is what keeps an FC-side
+      # copying defect from being reported as a LeanEval build failure.
+      - name: Import and generate two workspaces
+        # The target toolchain arrives as an environment variable rather than a
+        # `${{ }}` expansion inside the script, so the shell never has workflow
+        # syntax substituted into it before it runs.
+        env:
+          TARGET_TOOLCHAIN: ${{ steps.target.outputs.lean_toolchain }}
+        run: |
+          gen() {
+            python3 comparator/adapter/make_comparator_workspace.py "$1" \
+              --out .comparator --verify
+          }
+          PLAIN=$(gen isSumOfThreeCubes_2)
+          HOLED=$(gen isSumOfThreeCubes_iff_mod_9)
+          echo "PLAIN=$PLAIN" >> "$GITHUB_ENV"
+          echo "HOLED=$HOLED" >> "$GITHUB_ENV"
+          # One plain theorem and one `answer(sorry)` slot typed at 4.33.1.
+          grep -q "isSumOfThreeCubes_iff_mod_9_answer : Prop" "$HOLED/Challenge.lean"
+          # Generated for LeanEval, not for here.
+          grep -q "$TARGET_TOOLCHAIN" "$PLAIN/lean-toolchain"
+
+      - name: Build both workspaces at Lean 4.33
+        run: |
+          for ws in "$PLAIN" "$HOLED"; do
+            (cd "$ws" && lake update && lake exe cache get && lake build)
+          done
+
+      - name: Build the pinned Lean 4.33 verifier stack
+        env:
+          COMPARATOR_REV: ${{ steps.target.outputs.comparator }}
+          COMPARATOR_REPOSITORY: ${{ steps.target.outputs.comparator_repository }}
+          LEAN4EXPORT_REV: ${{ steps.target.outputs.lean4export }}
+        run: |
+          git clone "$COMPARATOR_REPOSITORY" "$RUNNER_TEMP/comparator"
+          git -C "$RUNNER_TEMP/comparator" checkout "$COMPARATOR_REV"
+          (cd "$RUNNER_TEMP/comparator" && lake build comparator lean4export)
+          # The lean4export this stack bundles must be the one tools.toml
+          # declares, or a green run certifies a different exporter.
+          BUNDLED="$(git -C "$RUNNER_TEMP/comparator/.lake/packages/lean4export" rev-parse HEAD)"
+          test "$BUNDLED" = "$LEAN4EXPORT_REV"
+
+      # Three Comparator verdicts, each of which has to come out the stated way.
+      # A run that only ever accepts proves nothing about the gate.
+      - name: Run Comparator on the generated workspaces
+        run: |
+          export COMPARATOR_BIN="$RUNNER_TEMP/comparator/.lake/build/bin/comparator"
+          export COMPARATOR_LANDRUN="$RUNNER_TEMP/comparator/scripts/fake-landrun.sh"
+          export COMPARATOR_LEAN4EXPORT="$RUNNER_TEMP/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export"
+
+          # 1. The workspace as generated. Its Submission is `sorry`, which
+          #    adds `sorryAx`, which `permitted_axioms` does not allow. A
+          #    generated workspace that passed before anyone proved anything
+          #    would be worthless.
+          if (cd "$PLAIN" && lake test); then
+            echo "::error::Comparator accepted an unproved generated workspace"
+            exit 1
+          fi
+
+          # 2. The same workspace with the statement actually proved. The
+          #    witness is the one this repository's own source gives.
+          python3 - <<'PY'
+          import os
+          import pathlib
+
+          submission = pathlib.Path(os.environ["PLAIN"]) / "Submission.lean"
+          text = submission.read_text(encoding="utf-8")
+          filled = text.replace(":= by\n  sorry", ":= by\n  exact ⟨1, 1, 0, by norm_num⟩")
+          assert filled != text, "nothing to fill in the generated submission"
+          submission.write_text(filled, encoding="utf-8")
+          PY
+          (cd "$PLAIN" && lake build && lake test)
+
+          # 3. The `answer(sorry)` workspace, with the hole filled by the
+          #    proposition on the other side of the iff and the bridge closed
+          #    by `Iff.rfl`. Comparator accepts this, and it resolves nothing:
+          #    the definition hole is a place where a machine check cannot
+          #    stand in for a human reading the answer. The generated README
+          #    tells the solver so; this asserts it.
+          python3 - <<'PY'
+          import os
+          import pathlib
+
+          root = pathlib.Path(os.environ["HOLED"])
+          submission = root / "Submission.lean"
+          text = submission.read_text(encoding="utf-8")
+          answer = (
+              "noncomputable def isSumOfThreeCubes_iff_mod_9_answer : Prop :=\n"
+              "  ∀ n : ℤ, IsSumOfThreeCubes n ↔ ¬(n ≡ 4 [ZMOD 9] ∨ n ≡ 5 [ZMOD 9])"
+          )
+          # Each replacement must actually fire: a generated shape change
+          # that made either a no-op would let this verdict pass vacuously.
+          filled = text.replace(
+              "noncomputable def isSumOfThreeCubes_iff_mod_9_answer : Prop := sorry",
+              answer,
+          )
+          assert filled != text, "the answer hole was not where this step expects"
+          text = filled
+          filled = text.replace(":= by\n  sorry", ":=\n  Iff.rfl")
+          assert filled != text, "the proof hole was not where this step expects"
+          submission.write_text(filled, encoding="utf-8")
+          PY
+          (cd "$HOLED" && lake build && lake test)
+          echo "Comparator accepted a gamed definition hole; hole values need a human."

@@ -1,0 +1,10 @@
+# Declarations the whole-set audit is expected to fail on, each with the
+# reason and the stage it fails at. `--known-failures` asserts this list
+# exactly: an unexpected failure and a silently fixed one both fail the run,
+# because a gate that only ever passes proves nothing.
+#
+#   declaration  the qualified FC declaration name
+#   workspace    the workspace id, for the target-stage compile report
+#   stage        "source" (import or --verify at FC pins) or
+#                "target" (compile at LeanEval pins)
+#   reason       what fails and why it is not fixed here
