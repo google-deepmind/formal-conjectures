@@ -20,14 +20,15 @@ public import FormalConjecturesUtil
 /-!
 # Descartes Numbers
 
-A *Descartes number* (or spoof odd perfect integer) is an odd integer $n = m \cdot w$ where
-$m > 1$, $w$ is composite (`Nat.Composite`), $\gcd(m, w) = 1$, and $\sigma_1(m)(w + 1) = 2 m w$,
-so treating $w$ as a prime factor would yield $\sigma_1(n) = 2n$. René Descartes (1638) found
+A *Descartes number* (or spoof odd perfect integer) is an odd integer $n = m \cdot w$ where $w$ is
+composite (`Nat.Composite`), $\gcd(m, w) = 1$, and $\sigma_1(m)(w + 1) = 2 m w$, so treating $w$ as
+a prime factor would yield $\sigma_1(n) = 2n$. René Descartes (1638) found
 $$D = 3^2 \cdot 7^2 \cdot 11^2 \cdot 13^2 \cdot 22021 = 198{,}585{,}576{,}189,$$
 with composite spoof factor $22021 = 19^2 \cdot 61$; no further example is known [KW91]. Banks,
-Güloğlu, Nevans, and Saidak [BGNS08] proved that every cube-free Descartes integer coprime to $3$
-has over $10^6$ distinct prime divisors, and Tóth [To21] showed that any other Descartes
-factorization $n = m \cdot w \ne D$ satisfies $m > 10^{12}$.
+Güloğlu, Nevans, and Saidak [BGNS08] proved that $D$ is the unique cube-free Descartes integer with
+fewer than seven distinct prime divisors and that every cube-free Descartes integer coprime to $3$
+has over $10^6$ distinct prime divisors; Tóth [To21] showed that any other Descartes factorization
+$n = m \cdot w \ne D$ satisfies $m > 10^{12}$.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Descartes_number)
@@ -47,10 +48,10 @@ open scoped ArithmeticFunction.sigma
 198{,}585{,}576{,}189$. -/
 def descartesExample : ℕ := 198585576189
 
-/-- `(m, w)` is a Descartes factorization if $m > 1$, $w$ is composite (`Nat.Composite`),
-$m \cdot w$ is odd, $\gcd(m, w) = 1$, and $\sigma_1(m)(w + 1) = 2 m w$. -/
+/-- `(m, w)` is a Descartes factorization if $w$ is composite (`Nat.Composite`), $m \cdot w$ is odd,
+$\gcd(m, w) = 1$, and $\sigma_1(m)(w + 1) = 2 m w$ (which together force $m > 1$). -/
 def IsDescartesFactorization (m w : ℕ) : Prop :=
-  1 < m ∧ w.Composite ∧ Odd (m * w) ∧ Nat.Coprime m w ∧ σ 1 m * (w + 1) = 2 * m * w
+  w.Composite ∧ Odd (m * w) ∧ Nat.Coprime m w ∧ σ 1 m * (w + 1) = 2 * m * w
 
 /-- `IsDescartesNumber n` holds when $n = m \cdot w$ for some `IsDescartesFactorization m w`. -/
 def IsDescartesNumber (n : ℕ) : Prop :=
@@ -60,17 +61,19 @@ def IsDescartesNumber (n : ℕ) : Prop :=
 @[category API, AMS 11]
 theorem isDescartesNumber_odd_and_gt_one {n : ℕ} (h : IsDescartesNumber n) :
     Odd n ∧ 1 < n := by
-  rcases h with ⟨m, w, rfl, hm, ⟨hw1, _⟩, hodd, _⟩
+  rcases h with ⟨m, w, rfl, ⟨hw1, _⟩, hodd, _⟩
+  have hm0 : 0 < m := Nat.pos_of_ne_zero fun hm => by simp [hm] at hodd
   exact ⟨hodd, by nlinarith⟩
 
-/-- For any odd integer $m > 1$ satisfying $\sigma_1(m) = 2m - 1$ (almost perfect, cf.
+/-- For any odd integer $m$ satisfying $\sigma_1(m) = 2m - 1$ (almost perfect, cf.
 `AlmostPerfectNumbers`) such that $2m - 1$ is composite, the product $m(2m - 1)$ satisfies
 `IsDescartesNumber`. -/
 @[category API, AMS 11]
-theorem isDescartesNumber_of_odd_almostPerfect {m : ℕ} (hm1 : 1 < m) (hodd : Odd m)
+theorem isDescartesNumber_of_odd_almostPerfect {m : ℕ} (hodd : Odd m)
     (hap : σ 1 m = 2 * m - 1) (hcomp : (2 * m - 1).Composite) :
     IsDescartesNumber (m * (2 * m - 1)) := by
-  refine ⟨m, 2 * m - 1, rfl, hm1, hcomp, ?_, ?_, ?_⟩
+  have hm1 : 1 < m := by have := hcomp.1; omega
+  refine ⟨m, 2 * m - 1, rfl, hcomp, ?_, ?_, ?_⟩
   · refine hodd.mul ?_
     rcases hodd with ⟨k, rfl⟩
     exact ⟨2 * k, by omega⟩
@@ -92,7 +95,7 @@ theorem isDescartesNumber_of_odd_almostPerfect {m : ℕ} (hm1 : 1 < m) (hodd : O
 @[category test, AMS 11]
 theorem isDescartesNumber_descartesExample : IsDescartesNumber descartesExample := by
   refine ⟨3 ^ 2 * 7 ^ 2 * 11 ^ 2 * 13 ^ 2, 22021, by norm_num [descartesExample],
-    by norm_num, ⟨by norm_num, ?_⟩, ⟨99292788094, by norm_num⟩, by norm_num, ?_⟩
+    ⟨by norm_num, ?_⟩, ⟨99292788094, by norm_num⟩, by norm_num, ?_⟩
   · intro hp
     rcases hp.eq_one_or_self_of_dvd 361 ⟨61, by norm_num⟩ with h | h <;> omega
   · have hmul := ArithmeticFunction.isMultiplicative_sigma (k := 1)
@@ -151,16 +154,19 @@ theorem descartes_non_example_factor_gt_ten_pow_twelve (m w : ℕ)
     10 ^ 12 < m := by
   sorry
 
+/-- **Banks–Güloğlu–Nevans–Saidak Uniqueness Theorem** [BGNS08] (see also [To21, §1]):
+$198{,}585{,}576{,}189$ is the unique cube-free Descartes integer with fewer than seven distinct
+prime divisors. -/
+@[category research solved, AMS 11]
+theorem descartes_cubeFree_lt_seven_primeFactors_unique (n : ℕ)
+    (hd : IsDescartesNumber n) (hcf : Powerfree 3 n) (hcard : n.primeFactors.card < 7) :
+    n = descartesExample := by
+  sorry
+
 /-- Is $198{,}585{,}576{,}189$ the only Descartes number? -/
 @[category research open, question, AMS 11]
 theorem descartes_number_unique :
     ∀ n : ℕ, IsDescartesNumber n → n = descartesExample := by
-  sorry
-
-/-- Is $198{,}585{,}576{,}189$ the only cube-free Descartes number? -/
-@[category research open, question, AMS 11]
-theorem descartes_number_unique.variants.cube_free :
-    ∀ n : ℕ, IsDescartesNumber n → Powerfree 3 n → n = descartesExample := by
   sorry
 
 end DescartesNumber

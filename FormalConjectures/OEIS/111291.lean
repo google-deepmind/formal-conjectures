@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+meta import FormalConjecturesForMathlib.NumberTheory.Refactorable
 meta import Mathlib.NumberTheory.PrimeCounting
 
 /-!
@@ -41,7 +42,7 @@ open Nat Finset Real
 
 /-- Helper function: number of refactorable numbers $\le m$. -/
 def countRefactorableNat (m : ℕ) : ℕ :=
-  (Icc 1 m).filter (fun k => k.divisors.card ∣ k) |>.card
+  (Icc 1 m).filter IsRefactorable |>.card
 
 /--
 `a n` is the number of refactorable numbers $\le 10^n$.

@@ -22,14 +22,17 @@ public import FormalConjecturesUtil
 
 An integer $n > 1$ is called $k$-hyperperfect ($k \ge 1$, Minoli and Bear 1975) when
 $n = 1 + k \cdot (\sigma_1(n) - n - 1)$, or equivalently $n + k(n + 1) = 1 + k \sigma_1(n)$;
-setting $k = 1$ recovers `Nat.Perfect`. Judson S. McCranie (2000) conjectured that every
-$k$-hyperperfect integer with odd $k > 1$ has the form $p^2 q$ for primes $p = (3k + 1) / 2$ and
-$q = 3k + 4$. At $k = 2$ (`OEIS A007593`), Alexander Violette (June 2026) disproved the
-characterization $n = 3^m(3^{m+1} - 2)$ via a four-prime-factor example. Richard K. Guy (§B2)
-posed the open questions of whether infinitely many hyperperfect or $2$-hyperperfect integers exist.
+setting $k = 1$ recovers `Nat.Perfect` (cf. `PerfectNumbers.infinitely_many_perfect`). Judson S.
+McCranie (2000) conjectured that every $k$-hyperperfect integer with odd $k > 1$ has the form
+$p^2 q$ for primes $p = (3k + 1) / 2$ and $q = 3k + 4$. At $k = 2$ (`OEIS A007593`), Alexander
+Violette (June 2026) found a four-prime-factor $2$-hyperperfect counterexample outside the family
+$n = 3^m(3^{m+1} - 2)$. Beyond Wikipedia's overview, Guy (2004, §B2) and the OEIS entries
+`A007592` ($k \ge 2$) and `A007593` ($k = 2$) discuss whether infinitely many non-perfect
+hyperperfect or $2$-hyperperfect integers exist.
 
 *References:*
 - [Wikipedia: Hyperperfect number](https://en.wikipedia.org/wiki/Hyperperfect_number)
+- [OEIS A007592](https://oeis.org/A007592) (non-perfect hyperperfect integers, $k \ge 2$)
 - [OEIS A007593](https://oeis.org/A007593) ($2$-hyperperfect integers, including A. Violette's June
   2026 counterexample)
 - D. Minoli and R. Bear (1975), Pi Mu Epsilon J. **6**, no. 3, 153–157.
@@ -41,8 +44,6 @@ posed the open questions of whether infinitely many hyperperfect or $2$-hyperper
 @[expose] public section
 
 namespace HyperperfectNumber
-
-open scoped ArithmeticFunction.sigma
 
 /-- Predicate asserting that $n > 1$ is $k$-hyperperfect ($k \ge 1$):
 $n = 1 + k \cdot (s(n) - 1)$ where $s(n)$ sums the proper divisors of $n$. -/
@@ -92,27 +93,30 @@ theorem mccranie_odd_hyperperfect_conjecture {k n : ℕ} (hk_odd : Odd k) (hk : 
   sorry
 
 /--
-Must every $2$-hyperperfect integer equal $3^m(3^{m+1} - 2)$ with $m \ge 1$ and $3^{m+1} - 2$
-prime? Disproved by Alexander Violette (June 2026, [OEIS A007593](https://oeis.org/A007593)) via
+Not every $2$-hyperperfect integer has the form $3^m(3^{m+1} - 2)$ with $m \ge 1$ and $3^{m+1} - 2$
+prime: Alexander Violette (June 2026, [OEIS A007593](https://oeis.org/A007593)) found the
+four-prime-factor $2$-hyperperfect counterexample
 $n = 3^{16} \cdot 129140227 \cdot 256572153302107 \cdot 225205396855537107298933866373$.
 -/
-@[category research solved, question, AMS 11]
+@[category research solved, AMS 11]
 theorem two_hyperperfect_characterization :
     ¬ ∀ n : ℕ, IsHyperperfect 2 n →
       ∃ m ≥ 1, (3 ^ (m + 1) - 2).Prime ∧ n = 3 ^ m * (3 ^ (m + 1) - 2) := by
   sorry
 
 /--
-Do infinitely many hyperperfect integers exist (Guy 2004, §B2)?
+Do infinitely many non-perfect hyperperfect integers ($k \ge 2$) exist (Guy 2004, §B2;
+[OEIS A007592](https://oeis.org/A007592), not stated on Wikipedia; see
+`PerfectNumbers.infinitely_many_perfect` for $k = 1$)?
 -/
 @[category research open, question, AMS 11]
 theorem infinitely_many_hyperperfect_numbers :
-    {n : ℕ | ∃ k : ℕ, IsHyperperfect k n}.Infinite := by
+    {n : ℕ | ∃ k ≥ 2, IsHyperperfect k n}.Infinite := by
   sorry
 
 /--
 Do infinitely many $2$-hyperperfect integers exist (Guy 2004, §B2;
-[OEIS A007593](https://oeis.org/A007593))?
+[OEIS A007593](https://oeis.org/A007593), not stated on Wikipedia)?
 -/
 @[category research open, question, AMS 11]
 theorem infinitely_many_hyperperfect_numbers.variants.two :

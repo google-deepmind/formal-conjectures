@@ -28,9 +28,10 @@ David W. Boyd (1981) conjectured—and Wayne M. Lawton (1983) proved—that $m(P
 specialized univariate measures $m(P(t^{r_0}, \dots, t^{r_{n-1}}))$ once the shortest nonzero
 integer relation norm $q(r) = \min \{ \max_j |s_j| : s \in \mathbb{Z}^n \setminus \{0\},
 \sum_j s_j r_j = 0 \}$ grows unboundedly. Writing $L_n$ for the values $m(P)$ over nonzero
-$P \in \mathbb{Z}[X_0, \dots, X_{n-1}]$ ($n \ge 1$) and $L_\infty = \bigcup_{n \ge 1} L_n$, Boyd
-conjectured both that $L_\infty$ is closed in $\mathbb{R}$ (which implies Lehmer's conjecture) and
-that $L_1 \subsetneq L_2 \subsetneq L_3 \subsetneq \cdots$. Christopher J. Smyth (1981) established
+$P \in \mathbb{Z}[X_0, \dots, X_{n-1}]$ and $L_\infty = \bigcup_n L_n$, Boyd conjectured both that
+$L_\infty$ is closed in $\mathbb{R}$ (which implies
+`LehmerMahlerMeasureProblem.lehmer_mahler_measure_problem`) and that
+$L_1 \subsetneq L_2 \subsetneq L_3 \subsetneq \cdots$. Christopher J. Smyth (1981) established
 $m(1 + X_0 + X_1 + X_2) = \frac{7}{2\pi^2} \zeta(3)$.
 
 *References:*
@@ -45,18 +46,7 @@ $m(1 + X_0 + X_1 + X_2) = \frac{7}{2\pi^2} \zeta(3)$.
 
 namespace MultivariableMahlerMeasure
 
-open MeasureTheory
-
-/-- Torus map $\theta \mapsto (e^{2\pi i \theta_0}, \dots, e^{2\pi i \theta_{n-1}})$ sending
-$[0, 1]^n$ onto $\mathbb{T}^n \subseteq \mathbb{C}^n$. -/
-noncomputable def torusPoint {n : ℕ} (θ : Fin n → ℝ) : Fin n → ℂ :=
-  fun j ↦ Complex.exp (2 * Real.pi * θ j * Complex.I)
-
-/-- Multivariable logarithmic Mahler integral
-$m(P) = \int_{[0, 1]^n} \log \|P(e^{2\pi i \theta})\| \, d\theta$ for
-$P \in \mathbb{C}[X_0, \dots, X_{n-1}]$ (extending univariate `Polynomial.logMahlerMeasure`). -/
-noncomputable def logMahlerMeasure {n : ℕ} (P : MvPolynomial (Fin n) ℂ) : ℝ :=
-  ∫ θ in Set.Icc (0 : Fin n → ℝ) 1, Real.log ‖MvPolynomial.eval (torusPoint θ) P‖
+open MeasureTheory MvPolynomial
 
 /-- Univariate circle integral
 $\int_0^1 \log \|P(e^{2\pi i r_0 t}, \dots, e^{2\pi i r_{n-1} t})\| \, dt$
@@ -75,69 +65,47 @@ def intLogMahlerSet (n : ℕ) : Set ℝ :=
   {m : ℝ | ∃ P : MvPolynomial (Fin n) ℤ,
     P ≠ 0 ∧ m = logMahlerMeasure (MvPolynomial.map (Int.castRingHom ℂ) P)}
 
-/-- Every coordinate of `torusPoint θ` has norm $1$, and on constant polynomials both
-`logMahlerMeasure` and `univariateSpecLogMahler` agree with univariate
-`(Polynomial.C c).logMahlerMeasure = Real.log ‖c‖`. -/
+/-- On constant polynomials, `univariateSpecLogMahler` agrees with univariate
+`(Polynomial.C c).logMahlerMeasure`. -/
 @[category API, AMS 11]
-theorem norm_torusPoint_and_logMahlerMeasure_const {n : ℕ} (θ : Fin n → ℝ) (c : ℂ)
-    (r : Fin n → ℤ) :
-    (∀ j : Fin n, ‖torusPoint θ j‖ = 1) ∧
-      logMahlerMeasure (MvPolynomial.C c : MvPolynomial (Fin n) ℂ) = Real.log ‖c‖ ∧
-      univariateSpecLogMahler (MvPolynomial.C c : MvPolynomial (Fin n) ℂ) r =
-        (Polynomial.C c).logMahlerMeasure := by
-  refine ⟨fun j ↦ ?_, ?_, ?_⟩
-  · unfold torusPoint
-    have h := Complex.norm_exp_ofReal_mul_I (2 * Real.pi * θ j)
-    push_cast at h
-    exact h
-  · unfold logMahlerMeasure
-    have h01 : (0 : Fin n → ℝ) ≤ 1 := fun _ ↦ zero_le_one
-    simp [Measure.real, Real.volume_Icc_pi_toReal h01]
-  · unfold univariateSpecLogMahler
-    simp [Measure.real, Polynomial.logMahlerMeasure_const]
+theorem univariateSpecLogMahler_const {n : ℕ} (c : ℂ) (r : Fin n → ℤ) :
+    univariateSpecLogMahler (MvPolynomial.C c : MvPolynomial (Fin n) ℂ) r =
+      (Polynomial.C c).logMahlerMeasure := by
+  unfold univariateSpecLogMahler
+  simp [Measure.real, Polynomial.logMahlerMeasure_const]
 
-/-- Every monic monomial $\prod_j X_j^{d_j}$ satisfies `logMahlerMeasure = 0`, and $0 \in L_n$. -/
+/-- Every value set $L_n$ contains $0$, witnessed by the constant polynomial $1$. -/
 @[category test, AMS 11]
-theorem logMahlerMeasure_monic_monomial_and_zero_mem {n : ℕ} (d : Fin n →₀ ℕ) :
-    logMahlerMeasure (MvPolynomial.monomial d (1 : ℂ)) = 0 ∧ 0 ∈ intLogMahlerSet n := by
-  have hmon : ∀ {m : ℕ} (e : Fin m →₀ ℕ),
-      logMahlerMeasure (MvPolynomial.monomial e (1 : ℂ)) = 0 := by
-    intro m e
-    unfold logMahlerMeasure
-    have hnorm : ∀ θ : Fin m → ℝ,
-        ‖MvPolynomial.eval (torusPoint θ) (MvPolynomial.monomial e 1)‖ = 1 := by
-      intro θ
-      rw [MvPolynomial.eval_monomial, one_mul, Finsupp.prod, norm_prod]
-      apply Finset.prod_eq_one
-      intro j _
-      rw [norm_pow, (norm_torusPoint_and_logMahlerMeasure_const θ 0 0).1 j, one_pow]
-    simp [hnorm]
-  refine ⟨hmon d, ⟨1, one_ne_zero, ?_⟩⟩
-  simpa using (hmon (0 : Fin n →₀ ℕ)).symm
+theorem zero_mem_intLogMahlerSet (n : ℕ) : 0 ∈ intLogMahlerSet n :=
+  ⟨1, one_ne_zero, by simpa using (logMahlerMeasure_monomial_one (0 : Fin n →₀ ℕ)).symm⟩
 
-/-- Boyd's pair $(1, N)$ satisfies `HasNoShortRelation B` when $N > B$, while $(1, 0)$ fails
-`HasNoShortRelation 1`. -/
+/-- Boyd's pair $(1, N)$ satisfies `HasNoShortRelation B` whenever $N > B$. -/
 @[category test, AMS 11]
 theorem hasNoShortRelation_boyd_pair (B : ℕ) (N : ℤ) (hBN : (B : ℤ) < N) :
-    HasNoShortRelation B ![1, N] ∧ ¬ HasNoShortRelation 1 ![1, 0] := by
-  refine ⟨fun s hs hsum ↦ ?_, fun h ↦ ?_⟩
-  · rw [Fin.sum_univ_two] at hsum
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one, mul_one] at hsum
-    by_cases hs1 : s 1 = 0
-    · exact False.elim <| hs <| by ext i; fin_cases i <;> simp_all
-    · refine ⟨0, ?_⟩
-      have h0 : s 0 = -(s 1 * N) := by linarith
-      have habs1 : 1 ≤ |s 1| := Int.one_le_abs hs1
-      have hNpos : 0 ≤ N := by linarith
-      have habs0 : |s 0| = |s 1| * N := by
-        rw [h0, abs_neg, abs_mul, abs_of_nonneg hNpos]
-      nlinarith
-  · have hs : (![(0 : ℤ), 1] : Fin 2 → ℤ) ≠ 0 := by
-      intro h0
-      have h1 := congr_fun h0 1
-      norm_num at h1
-    rcases h ![0, 1] hs (by simp [Fin.sum_univ_two]) with ⟨j, hj⟩
-    fin_cases j <;> norm_num at hj
+    HasNoShortRelation B ![1, N] := by
+  intro s hs hsum
+  rw [Fin.sum_univ_two] at hsum
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one, mul_one] at hsum
+  by_cases hs1 : s 1 = 0
+  · exact False.elim <| hs <| by ext i; fin_cases i <;> simp_all
+  · refine ⟨0, ?_⟩
+    have h0 : s 0 = -(s 1 * N) := by linarith
+    have habs1 : 1 ≤ |s 1| := Int.one_le_abs hs1
+    have hNpos : 0 ≤ N := by linarith
+    have habs0 : |s 0| = |s 1| * N := by
+      rw [h0, abs_neg, abs_mul, abs_of_nonneg hNpos]
+    nlinarith
+
+/-- The degenerate tuple $(1, 0)$ fails `HasNoShortRelation 1`. -/
+@[category test, AMS 11]
+theorem not_hasNoShortRelation_one_zero : ¬ HasNoShortRelation 1 ![1, 0] := by
+  intro h
+  have hs : (![(0 : ℤ), 1] : Fin 2 → ℤ) ≠ 0 := by
+    intro h0
+    have h1 := congr_fun h0 1
+    norm_num at h1
+  rcases h ![0, 1] hs (by simp [Fin.sum_univ_two]) with ⟨j, hj⟩
+  fin_cases j <;> norm_num at hj
 
 /-- **Lawton's Multivariable Limit Theorem** (conjectured by Boyd 1981, proved by Lawton 1983):
 for every nonzero $P \in \mathbb{C}[X_0, \dots, X_{n-1}]$ and $\varepsilon > 0$, some threshold
@@ -159,11 +127,12 @@ theorem smyth_three_variable_linear_mahler_measure :
       7 / (2 * Real.pi ^ 2) * (riemannZeta 3).re := by
   sorry
 
-/-- **Boyd's Closedness Conjecture** (1981): $L_\infty = \bigcup_{n \ge 1} L_n$ is closed inside
-$\mathbb{R}$. -/
+/-- **Boyd's Closedness Conjecture** (1981): $L_\infty = \bigcup_{n \in \mathbb{N}} L_n$ (which
+equals $\bigcup_{n \ge 1} L_n$ since $L_0 \subseteq L_1$ via constant polynomials) is closed inside
+$\mathbb{R}$. This implies `LehmerMahlerMeasureProblem.lehmer_mahler_measure_problem`. -/
 @[category research open, AMS 11]
 theorem boyd_mahler_measure_set_closed_conjecture :
-    IsClosed (⋃ n ∈ Set.Ici 1, intLogMahlerSet n) := by
+    IsClosed (⋃ n, intLogMahlerSet n) := by
   sorry
 
 /-- **Boyd's Strict Hierarchy Conjecture** (1981): every dimension $n \ge 1$ satisfies the strict

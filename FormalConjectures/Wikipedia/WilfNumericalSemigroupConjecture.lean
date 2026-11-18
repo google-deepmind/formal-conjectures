@@ -27,83 +27,43 @@ for its conductor, $n(S) = |S \cap [0, c(S))| = c(S) - |G(S)|$ for the count of 
 below $c(S)$, and $e(S) = |S_{>0} \setminus (S_{>0} + S_{>0})|$ for its embedding dimension (the
 size of its unique minimal generating set).
 
-Herbert S. Wilf (1978) conjectured that $c(S) \le e(S) \cdot n(S)$ holds for all numerical
+Herbert S. Wilf [Wi78] conjectured that $c(S) \le e(S) \cdot n(S)$ holds for all numerical
 semigroups $S$ (equivalently $e(S) \ge (F(S) + 1) / (F(S) + 1 - |G(S)|)$ when $S \subsetneq
-\mathbb{N}$ has largest gap $F(S) = c(S) - 1$). Fröberg, Gottlieb, and Häggkvist (1987) proved the
-bound whenever $e(S) \le 3$; the general case remains open.
+\mathbb{N}$ has largest gap $F(S) = c(S) - 1$, as stated on Wikipedia's Coin problem page).
+Fröberg, Gottlieb, and Häggkvist [FGH87, Theorem 20] proved the inequality whenever $e(S) \le 3$
+(sourced directly from [FGH87]); the general case remains open.
 
 *References:*
-- [Wikipedia: Numerical semigroup](https://en.wikipedia.org/wiki/Numerical_semigroup)
-- [Wikipedia: Coin problem](https://en.wikipedia.org/wiki/Coin_problem#Wilf%27s_conjecture)
-- H. S. Wilf (1978), *Amer. Math. Monthly* **85**(7), 562–565.
-- R. Fröberg, C. Gottlieb, and R. Häggkvist (1987), *Semigroup Forum* **35**(1), 63–83.
+- [Wi78] H. S. Wilf, *A circle-of-lights algorithm for the "money-changing problem"*, Amer. Math.
+  Monthly **85** (1978), no. 7, 562–565, DOI: `10.1080/00029890.1978.11994639`.
+- [FGH87] R. Fröberg, C. Gottlieb, and R. Häggkvist, *On numerical semigroups*, Semigroup Forum
+  **35** (1987), no. 1, 63–83, DOI: `10.1007/BF02573091`.
+- [Wikipedia: Coin problem — Wilf's conjecture](https://en.wikipedia.org/wiki/Coin_problem#Wilf%27s_conjecture)
 -/
 
 @[expose] public section
 
 namespace WilfNumericalSemigroupConjecture
 
-/-- An additive submonoid `S : AddSubmonoid ℕ` is a numerical semigroup when `ℕ \ S` is finite. -/
-def IsNumericalSemigroup (S : AddSubmonoid ℕ) : Prop :=
-  (S : Set ℕ)ᶜ.Finite
-
-/-- Conductor $c(S) = \min\{c \in \mathbb{N} : \forall m \ge c,\, m \in S\}$. -/
-noncomputable def conductor (S : AddSubmonoid ℕ) : ℕ :=
-  sInf {c : ℕ | ∀ m : ℕ, c ≤ m → m ∈ S}
+open AddSubmonoid
 
 /-- Count $n(S)$ of elements in $S$ strictly below `conductor S`. -/
 noncomputable def sporadicCount (S : AddSubmonoid ℕ) : ℕ :=
   open scoped Classical in
   ((Finset.range (conductor S)).filter (fun x => x ∈ S)).card
 
-/-- Embedding dimension $e(S) = |S_{>0} \setminus (S_{>0} + S_{>0})|$, counting minimal positive
-generators of $S$. -/
-noncomputable def embeddingDim (S : AddSubmonoid ℕ) : ℕ :=
-  {x : ℕ | 0 < x ∧ x ∈ S ∧ ¬ ∃ a b : ℕ, 0 < a ∧ 0 < b ∧ a ∈ S ∧ b ∈ S ∧ x = a + b}.ncard
-
 /-- On `⊤ : AddSubmonoid ℕ`, `conductor ⊤ = 0`, `sporadicCount ⊤ = 0`, and `embeddingDim ⊤ = 1`,
-satisfying `0 ≤ 1 * 0`. -/
+satisfying $0 \le 1 \cdot 0$. -/
 @[category test, AMS 11 20]
 theorem top_numericalSemigroup_invariants :
     IsNumericalSemigroup ⊤ ∧
       conductor ⊤ = 0 ∧
       sporadicCount ⊤ = 0 ∧
       embeddingDim ⊤ = 1 := by
-  have hc : conductor ⊤ = 0 := by
-    unfold conductor
-    exact Nat.sInf_eq_zero.mpr (Or.inl (fun _ _ => trivial))
-  refine ⟨by simp [IsNumericalSemigroup], hc, by simp [sporadicCount, hc], ?_⟩
-  unfold embeddingDim
-  have hset : {x : ℕ | 0 < x ∧ x ∈ (⊤ : AddSubmonoid ℕ) ∧
-      ¬ ∃ a b : ℕ, 0 < a ∧ 0 < b ∧
-        a ∈ (⊤ : AddSubmonoid ℕ) ∧ b ∈ (⊤ : AddSubmonoid ℕ) ∧ x = a + b} = {1} := by
-    ext x
-    simp only [Set.mem_ofPred_eq, AddSubmonoid.mem_top, true_and, Set.mem_singleton_iff]
-    constructor
-    · rintro ⟨hx, hmin⟩
-      by_contra hx1
-      exact hmin ⟨1, x - 1, by omega, by omega, by omega⟩
-    · rintro rfl
-      refine ⟨by omega, ?_⟩
-      rintro ⟨a, b, ha, hb, hsum⟩
-      omega
-  rw [hset, Set.ncard_singleton]
-
-/-- Every integer $m \ge \operatorname{conductor}(S)$ belongs to a numerical semigroup $S$. -/
-@[category API, AMS 11 20]
-theorem mem_of_conductor_le {S : AddSubmonoid ℕ} (hS : IsNumericalSemigroup S) {m : ℕ}
-    (hm : conductor S ≤ m) : m ∈ S := by
-  let A : Set ℕ := {c : ℕ | ∀ k : ℕ, c ≤ k → k ∈ S}
-  have hA_ne : A.Nonempty := by
-    refine ⟨hS.toFinset.sup id + 1, fun k hk => ?_⟩
-    by_contra hkS
-    have hkF : k ∈ hS.toFinset := hS.mem_toFinset.mpr hkS
-    have hle : k ≤ hS.toFinset.sup id := Finset.le_sup (f := id) hkF
-    omega
-  exact Nat.sInf_mem hA_ne m hm
+  simp [sporadicCount]
 
 /-- On $S_{2,3} = \langle 2, 3 \rangle = \mathbb{N} \setminus \{1\}$, `conductor = 2`,
-`sporadicCount = 1`, and `embeddingDim = 2`, attaining equality `2 = 2 * 1`. -/
+`sporadicCount = 1`, and `embeddingDim = 2`, attaining equality $2 = 2 \cdot 1$. -/
 @[category test, AMS 11 20]
 theorem numericalSemigroup_two_three_wilf_tight :
     let S₂₃ : AddSubmonoid ℕ :=
@@ -131,15 +91,15 @@ theorem numericalSemigroup_two_three_wilf_tight :
       hmin ⟨2, x - 2, by omega, by omega, by omega, by omega, by omega⟩).elim
   rw [embeddingDim, hset, Set.ncard_pair (by decide)]
 
-/-- **Wilf's Conjecture (1978):** Each numerical semigroup $S \le \mathbb{N}$ obeys
-`conductor S ≤ embeddingDim S * sporadicCount S`. -/
+/-- **Wilf's Conjecture** [Wi78]: Every numerical semigroup $S \le \mathbb{N}$ obeys
+$c(S) \le e(S) \cdot n(S)$. -/
 @[category research open, AMS 11 20]
 theorem wilf_numerical_semigroup_conjecture {S : AddSubmonoid ℕ} (hS : IsNumericalSemigroup S) :
     conductor S ≤ embeddingDim S * sporadicCount S := by
   sorry
 
-/-- **Fröberg–Gottlieb–Häggkvist Theorem (1987):** Wilf's inequality holds whenever a numerical
-semigroup $S$ has `embeddingDim S ≤ 3`. -/
+/-- **Fröberg–Gottlieb–Häggkvist Theorem** [FGH87, Theorem 20]: Every numerical semigroup
+$S \le \mathbb{N}$ with embedding dimension $e(S) \le 3$ satisfies $c(S) \le e(S) \cdot n(S)$. -/
 @[category research solved, AMS 11 20]
 theorem wilf_conjecture_embedding_dim_le_three {S : AddSubmonoid ℕ} (hS : IsNumericalSemigroup S)
     (he : embeddingDim S ≤ 3) :

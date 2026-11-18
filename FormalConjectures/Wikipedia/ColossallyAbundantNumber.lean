@@ -20,19 +20,25 @@ public import FormalConjecturesUtil
 /-!
 # Alaoglu–Erdős Conjectures on Colossally Abundant Numbers
 
-An integer $n > 1$ is *colossally abundant* ([OEIS A004490](https://oeis.org/A004490):
-$2, 6, 12, 60, 120, 360, \dots$) if some $\varepsilon > 0$ satisfies
-$\sigma_1(n) / n^{1+\varepsilon} \ge \sigma_1(k) / k^{1+\varepsilon}$ for every $k > 1$. Alaoglu
-and Erdős [AE44] predicted in 1944 that successive terms always differ by a prime factor, reducing
+On Wikipedia and in [OEIS A004490](https://oeis.org/A004490) ($2, 6, 12, 60, 120, 360, \dots$), an
+integer $n > 1$ is called *colossally abundant* when some $\varepsilon > 0$ satisfies
+$\sigma_1(n) / n^{1+\varepsilon} \ge \sigma_1(k) / k^{1+\varepsilon}$ for every $k > 1$. In their
+1944 paper [AE44, p. 455], Alaoglu and Erdős used the slightly stricter condition requiring
+$\sigma_1(n) / n^{1+\varepsilon} > \sigma_1(m) / m^{1+\varepsilon}$ for $1 \le m < n$ and $\ge$ for
+$m > n$, picking out the unique least maximizer at each $\varepsilon > 0$. Alaoglu and Erdős [AE44]
+predicted that consecutive colossally abundant integers always differ by a prime factor, reducing
 this claim to showing that $p^x, q^x \in \mathbb{Q}$ with distinct primes $p \ne q$ forces
-$x \in \mathbb{Z}$ (cf. `Exponentials.four_exponentials_conjecture`). Combined with the
-six-exponentials theorem of Lang and Ramachandra, [AE44] implies unconditionally that each
-consecutive ratio is prime or squarefree semiprime and at most four integers $n > 1$ share any
-given maximizer exponent $\varepsilon > 0$ (studied further by Erdős and Nicolas [EN75]).
+$x \in \mathbb{Z}$ (cf. `Exponentials.four_exponentials_conjecture`). Combined with the six
+exponentials theorem of Lang [La66] and Ramachandra [Ra68] (communicated for prime bases by Siegel
+in [AE44, p. 455]), [AE44] yields unconditionally that consecutive [AE44] colossally abundant
+integers have prime or squarefree-semiprime ratio, and that at most four integers $n > 1$ share any
+maximizer exponent $\varepsilon > 0$ (studied further by Erdős and Nicolas [EN75]).
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Colossally_abundant_number)
 - [AE44] L. Alaoglu and P. Erdős (1944), Trans. Amer. Math. Soc. **56**, 448–469.
+- [La66] S. Lang (1966), *Introduction to Transcendental Numbers*, Addison-Wesley, Reading, Mass.
+- [Ra68] K. Ramachandra (1968), Acta Arith. **14**, 65–72, 73–88.
 - [EN75] P. Erdős and J.-L. Nicolas (1975), Bull. Soc. Math. France **103**, 65–90.
 -/
 
@@ -56,6 +62,37 @@ and no integer strictly between them does. -/
 def AreConsecutiveColossallyAbundant (m n : ℕ) : Prop :=
   m < n ∧ IsColossallyAbundant m ∧ IsColossallyAbundant n ∧
     ∀ k : ℕ, m < k → k < n → ¬ IsColossallyAbundant k
+
+/-- `IsAlaogluErdosColossallyAbundant n` formalizes Alaoglu and Erdős's original definition
+[AE44, p. 455]: $n > 1$ satisfies
+$\sigma_1(m) / m^{1+\varepsilon} < \sigma_1(n) / n^{1+\varepsilon}$ for $1 \le m < n$ and
+$\sigma_1(m) / m^{1+\varepsilon} \le \sigma_1(n) / n^{1+\varepsilon}$ for $m > n$ at some
+$\varepsilon > 0$. Unlike Wikipedia's non-strict `IsColossallyAbundant` (which includes all tied
+maximizers), this condition picks the unique smallest maximizer at $\varepsilon$. -/
+def IsAlaogluErdosColossallyAbundant (n : ℕ) : Prop :=
+  1 < n ∧ ∃ ε : ℝ, 0 < ε ∧
+    (∀ m : ℕ, 1 ≤ m → m < n →
+      (σ 1 m : ℝ) / (m : ℝ) ^ (1 + ε) < (σ 1 n : ℝ) / (n : ℝ) ^ (1 + ε)) ∧
+    (∀ m : ℕ, n < m →
+      (σ 1 m : ℝ) / (m : ℝ) ^ (1 + ε) ≤ (σ 1 n : ℝ) / (n : ℝ) ^ (1 + ε))
+
+/-- `AreConsecutiveAlaogluErdosColossallyAbundant m n` holds when $m < n$ both satisfy
+`IsAlaogluErdosColossallyAbundant` and no integer strictly between them does. -/
+def AreConsecutiveAlaogluErdosColossallyAbundant (m n : ℕ) : Prop :=
+  m < n ∧ IsAlaogluErdosColossallyAbundant m ∧ IsAlaogluErdosColossallyAbundant n ∧
+    ∀ k : ℕ, m < k → k < n → ¬ IsAlaogluErdosColossallyAbundant k
+
+/-- Every integer satisfying [AE44, p. 455]'s `IsAlaogluErdosColossallyAbundant` also satisfies
+Wikipedia's non-strict `IsColossallyAbundant`. -/
+@[category API, AMS 11]
+theorem IsAlaogluErdosColossallyAbundant.isColossallyAbundant {n : ℕ}
+    (h : IsAlaogluErdosColossallyAbundant n) : IsColossallyAbundant n := by
+  rcases h with ⟨hn, ε, hε, hlt, hgt⟩
+  refine ⟨hn, ε, hε, fun k hk => ?_⟩
+  rcases lt_trichotomy k n with hkn | rfl | hnk
+  · exact (hlt k (by omega) hkn).le
+  · exact le_rfl
+  · exact hgt k hnk
 
 /-- $2$ is the least colossally abundant integer, witnessed at $\varepsilon = 1$. -/
 @[category test, AMS 11]
@@ -138,18 +175,21 @@ theorem infinite_colossallyAbundant :
     {n : ℕ | IsColossallyAbundant n}.Infinite := by
   sorry
 
-/-- Unconditional prime-or-squarefree-semiprime ratio theorem [AE44]: if $m < n$ satisfy
-`AreConsecutiveColossallyAbundant m n`, then $n / m$ is either prime or a product of two distinct
-primes. -/
+/-- Unconditional prime-or-squarefree-semiprime ratio theorem [AE44, p. 455]: if $m < n$ satisfy
+`AreConsecutiveAlaogluErdosColossallyAbundant m n`, then $n / m$ is either prime or a product of two
+distinct primes (proved via the six exponentials theorem [La66, Ra68]; note that [AE44]'s
+strict-on-smaller definition is essential here, as a four-way tie $n, np, nq, npq$ with primes
+$p < q$ under non-strict `IsColossallyAbundant` would give consecutive terms $np, nq$ of ratio
+$q / p$). -/
 @[category research solved, AMS 11]
 theorem alaoglu_erdos_prime_or_semiprime_ratio (m n : ℕ)
-    (h : AreConsecutiveColossallyAbundant m n) :
+    (h : AreConsecutiveAlaogluErdosColossallyAbundant m n) :
     (∃ p : ℕ, p.Prime ∧ n = p * m) ∨
       ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ p ≠ q ∧ n = p * q * m := by
   sorry
 
-/-- For each $\varepsilon > 0$, at most four integers $n > 1$ simultaneously maximize
-$\sigma_1(n) / n^{1+\varepsilon}$ [AE44, EN75]. -/
+/-- By the six exponentials theorem [La66, Ra68], for each $\varepsilon > 0$, at most four integers
+$n > 1$ simultaneously maximize $\sigma_1(n) / n^{1+\varepsilon}$ [AE44, EN75]. -/
 @[category research solved, AMS 11]
 theorem encard_colossallyAbundant_maximizers_le_four (ε : ℝ) (hε : 0 < ε) :
     Set.encard {n : ℕ | 1 < n ∧ ∀ k : ℕ, 1 < k →

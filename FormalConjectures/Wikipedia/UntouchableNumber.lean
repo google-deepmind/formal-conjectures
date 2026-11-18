@@ -20,15 +20,16 @@ public import FormalConjecturesUtil
 /-!
 # Untouchable Numbers
 
-An integer $m \ge 1$ is *untouchable* (or *nonaliquot*, OEIS A005114) when it lies outside the
-range of the proper-divisor sum $s(n) = \sigma(n) - n = \sum_{d \mid n,\, d < n} d$ on integers
-$n \ge 1$; examples begin at $2, 5$, and $52$.
+A natural number $m$ is *untouchable* (or *nonaliquot*, OEIS A005114) when it lies outside the
+range of the proper-divisor sum $s(n) = \sigma(n) - n = \sum_{d \mid n,\, d < n} d$; examples begin
+at $2, 5$, and $52$.
 
 Erdős (1973) proved that untouchable integers have positive lower asymptotic density (see also
 `Erdos418.erdos_418.variants.sigma` in `FormalConjectures.ErdosProblems.«418»`), and Chen and Zhao
-(2011) proved a lower bound exceeding $0.06$. Meanwhile, $5$ is conjectured to be the sole odd
-untouchable integer: writing an even integer $2k > 6$ as $p + q$ for distinct primes $p \ne q$
-gives $s(p q) = 1 + p + q = 2k + 1$, ruling out every odd integer above $7$.
+(2011) proved that at least $0.06 x + o(x)$ even integers below $x$ are untouchable, giving lower
+asymptotic density at least $0.06$. Meanwhile, $5$ is conjectured to be the sole odd untouchable
+integer: writing an even integer $2k > 6$ as $p + q$ for distinct primes $p \ne q$ gives
+$s(p q) = 1 + p + q = 2k + 1$, ruling out every odd integer above $7$.
 
 *References:*
 - [Wikipedia: Untouchable number](https://en.wikipedia.org/wiki/Untouchable_number)
@@ -41,11 +42,6 @@ gives $s(p q) = 1 + p + q = 2k + 1$, ruling out every odd integer above $7$.
 @[expose] public section
 
 namespace UntouchableNumber
-
-/-- An integer $m \ge 1$ is untouchable when no integer $n \ge 1$ satisfies
-$\sum_{d \in \mathrm{properDivisors}(n)} d = m$. -/
-def IsUntouchable (m : ℕ) : Prop :=
-  1 ≤ m ∧ ¬ ∃ n : ℕ, 1 ≤ n ∧ ∑ d ∈ n.properDivisors, d = m
 
 /-- Every integer $n \ge 30$ is either prime (proper-divisor sum $1$) or composite with a proper
 divisor at least $6$ (proper-divisor sum at least $6$). -/
@@ -73,28 +69,19 @@ theorem properDivisors_sum_eq_one_or_ge_six_of_ge_thirty {n : ℕ} (hn : 30 ≤ 
       · exact ⟨⟨p, by linarith⟩, by nlinarith⟩
     exact hmax.trans (Finset.single_le_sum (f := id) (fun _ _ => Nat.zero_le _) hmem)
 
-/-- None of $0, 1, 3, 4, 7$ is untouchable ($1 = s(2)$, $3 = s(4)$, $4 = s(9)$, $7 = s(8)$). -/
+/-- None of $0, 1, 3, 4, 7$ is untouchable ($0 = s(1)$, $1 = s(2)$, $3 = s(4)$, $4 = s(9)$,
+$7 = s(8)$). -/
 @[category test, AMS 11]
 theorem not_isUntouchable_small_values :
-    ¬ IsUntouchable 0 ∧ ¬ IsUntouchable 1 ∧ ¬ IsUntouchable 3 ∧
-      ¬ IsUntouchable 4 ∧ ¬ IsUntouchable 7 := by
-  refine ⟨?_, ?_, ?_, ?_, ?_⟩
-  · rintro ⟨h, _⟩
-    omega
-  · rintro ⟨_, h⟩
-    exact h ⟨2, by omega, by decide⟩
-  · rintro ⟨_, h⟩
-    exact h ⟨4, by omega, by decide⟩
-  · rintro ⟨_, h⟩
-    exact h ⟨9, by omega, by decide⟩
-  · rintro ⟨_, h⟩
-    exact h ⟨8, by omega, by decide⟩
+    ¬ Nat.IsUntouchable 0 ∧ ¬ Nat.IsUntouchable 1 ∧ ¬ Nat.IsUntouchable 3 ∧
+      ¬ Nat.IsUntouchable 4 ∧ ¬ Nat.IsUntouchable 7 :=
+  ⟨Nat.not_isUntouchable_zero, Nat.not_isUntouchable_one,
+    fun h => h ⟨4, by decide⟩, fun h => h ⟨9, by decide⟩, fun h => h ⟨8, by decide⟩⟩
 
 /-- $2$ is untouchable. -/
 @[category test, AMS 11]
-theorem isUntouchable_two : IsUntouchable 2 := by
-  refine ⟨by omega, ?_⟩
-  rintro ⟨n, hn1, hsum⟩
+theorem isUntouchable_two : Nat.IsUntouchable 2 := by
+  rintro ⟨n, hsum⟩
   by_cases hn30 : n < 30
   · interval_cases n <;> revert hsum <;> decide
   · rcases properDivisors_sum_eq_one_or_ge_six_of_ge_thirty (Nat.not_lt.mp hn30) with h1 | h6 <;>
@@ -102,26 +89,26 @@ theorem isUntouchable_two : IsUntouchable 2 := by
 
 /-- $5$ is untouchable. -/
 @[category test, AMS 11]
-theorem isUntouchable_five : IsUntouchable 5 := by
-  refine ⟨by omega, ?_⟩
-  rintro ⟨n, hn1, hsum⟩
+theorem isUntouchable_five : Nat.IsUntouchable 5 := by
+  rintro ⟨n, hsum⟩
   by_cases hn30 : n < 30
   · interval_cases n <;> revert hsum <;> decide
   · rcases properDivisors_sum_eq_one_or_ge_six_of_ge_thirty (Nat.not_lt.mp hn30) with h1 | h6 <;>
       omega
 
-/-- **Erdős (1973); Chen–Zhao (2011):** Untouchable integers have lower asymptotic density strictly
-above $0.06$ (compare `Erdos418.erdos_418.variants.sigma`). -/
+/-- **Erdős (1973); Chen–Zhao (2011):** Untouchable integers have lower asymptotic density at least
+$0.06$ (Chen and Zhao prove that at least $0.06 x + o(x)$ even integers below $x$ are nonaliquot;
+compare `Erdos418.erdos_418.variants.sigma`). -/
 @[category research solved, AMS 11]
 theorem chen_zhao_untouchable_lower_density :
-    (6 / 100 : ℝ) < Set.lowerDensity {m : ℕ | IsUntouchable m} := by
+    (6 / 100 : ℝ) ≤ Set.lowerDensity {m : ℕ | m.IsUntouchable} := by
   sorry
 
 /-- **Unique Odd Untouchable Conjecture:** Among odd integers, $5$ is the unique untouchable
 value. -/
 @[category research open, AMS 11]
 theorem unique_odd_untouchable_conjecture {m : ℕ} (hodd : Odd m) :
-    IsUntouchable m ↔ m = 5 := by
+    m.IsUntouchable ↔ m = 5 := by
   sorry
 
 end UntouchableNumber
