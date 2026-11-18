@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import FormalConjecturesUtil
+module
+
+public import FormalConjecturesUtil
 
 /-!
 # The Property B Number
@@ -32,6 +34,8 @@ hypergraph without Property B.
   https://arxiv.org/abs/2403.05674
 - [Erdős Problems: Property B](https://mathweb.ucsd.edu/~erdosproblems/erdos/newproblems/PropertyB.html)
 -/
+
+@[expose] public section
 
 open Filter Set
 
@@ -80,9 +84,8 @@ theorem propertyBNumber_five_bounds :
 /-- Erdős and Lovász conjectured that `m(n) = Θ(n * 2^n)`. -/
 @[category research open, AMS 5]
 theorem erdos_lovasz_conjecture :
-    answer(sorry) ↔
-      (fun n : ℕ ↦ (propertyBNumber n : ℝ)) =Θ[atTop]
-        (fun n : ℕ ↦ (n : ℝ) * 2 ^ n) := by
+    (fun n : ℕ ↦ (propertyBNumber n : ℝ)) =Θ[atTop]
+      (fun n : ℕ ↦ (n : ℝ) * 2 ^ n) := by
   sorry
 
 end PropertyBNumber
