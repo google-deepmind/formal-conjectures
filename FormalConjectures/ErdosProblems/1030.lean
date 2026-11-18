@@ -27,6 +27,8 @@ public import FormalConjecturesUtil
 - [Er81] Erdős, P., Some new problems and results in graph theory and other branches of
   combinatorial mathematics. Combinatorics and graph theory (Calcutta, 1980), Lecture Notes in
   Math. 885 (1981), 9-17.
+- [Er93] Erdős, Paul, Some of my favorite solved and unsolved problems in graph theory.
+  Quaestiones Math. 16 (1993), 333-350.
 -/
 
 @[expose] public section
@@ -44,7 +46,8 @@ $$R(k+1,k) > (1+c)R(k,k).$$
 
 In [Er81, p. 11] Erdős states this as a conjecture of Burr and himself, in the form
 $r(n+1,n) > (1+c)r(n,n)$. erdosproblems.com describes it as a problem of Erdős and Sós and
-writes it with a $\lim$; for the literal reading, which additionally requires the ratio to
+writes it with a $\lim$. In [Er93, p. 339, Eq. (10)] Erdős attributes the conjecture to Vera Sós
+and himself and states the same ratio bound. For the literal reading, which additionally requires the ratio to
 converge, see `erdos_1030.variants.tendsto`.
 -/
 @[category research open, AMS 5]
