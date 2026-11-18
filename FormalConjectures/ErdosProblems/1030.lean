@@ -24,6 +24,9 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/1030](https://www.erdosproblems.com/1030)
 - [BEFS89] Burr, S. and Erdős, P. and Faudree, R. J. and Schelp, R. H., On the difference between
   consecutive Ramsey numbers. Utilitas Math. (1989), 115-118.
+- [Er81] Erdős, P., Some new problems and results in graph theory and other branches of
+  combinatorial mathematics. Combinatorics and graph theory (Calcutta, 1980), Lecture Notes in
+  Math. 885 (1981), 9-17.
 -/
 
 @[expose] public section
@@ -36,13 +39,29 @@ namespace Erdos1030
 Let $R(k,l)$ be the usual Ramsey number: the smallest $n$ such that if the edges of $K_n$ are
 coloured red and blue then there exists either a red $K_k$ or a blue $K_l$.
 
-Prove the existence of some $c>0$ such that
-$$\lim_{k\to \infty}\frac{R(k+1,k)}{R(k,k)}> 1+c.$$
+Prove the existence of some $c>0$ such that, for all sufficiently large $k$,
+$$R(k+1,k) > (1+c)R(k,k).$$
+
+This is the form in which Burr and Erdős conjectured it in [Er81, p. 11]:
+$r(n+1,n) > (1+c)r(n,n)$. erdosproblems.com writes it with a $\lim$; for the literal reading,
+which additionally requires the ratio to converge, see `erdos_1030.variants.tendsto`.
 
 A problem of Erdős and Sós.
 -/
 @[category research open, AMS 5]
 theorem erdos_1030 :
+    ∃ c > (0 : ℝ), ∀ᶠ k : ℕ in atTop,
+      (SimpleGraph.classicalRamsey (k + 1) k : ℝ) >
+        (1 + c) * (SimpleGraph.classicalRamsey k k : ℝ) := by
+  sorry
+
+/--
+The literal reading of the "$\lim$" on erdosproblems.com, which additionally asserts that the
+ratio $R(k+1,k)/R(k,k)$ converges. This implies `erdos_1030`, but the converse is not clear:
+the eventual bound $R(k+1,k) > (1+c)R(k,k)$ does not by itself give convergence of the ratio.
+-/
+@[category research open, AMS 5]
+theorem erdos_1030.variants.tendsto :
     ∃ c > (0 : ℝ), ∃ L : ℝ,
       Tendsto (fun k : ℕ ↦
         (SimpleGraph.classicalRamsey (k + 1) k : ℝ) /
