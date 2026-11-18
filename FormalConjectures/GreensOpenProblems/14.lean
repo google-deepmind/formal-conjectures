@@ -40,6 +40,8 @@ public import FormalConjecturesUtil
   On the Road to Exascale (2015): 525-532.
 - [CCH23] Chowdhury, Md Solimul, Cayden R. Codel, and Marijn J. H. Heule. "A linear weight
   transfer rule for local search." NASA Formal Methods (NFM 2023), Springer (2023).
+- [Ki26] Kitamura, K., *Green 14 — An explicit colouring in Lean* (2026),
+  [GitHub repository](https://github.com/KitaKen1/green14-explicit-coloring/tree/05845144e51d7c10eeda31e64cc1239f534992f6).
 -/
 
 @[expose] public section
@@ -137,11 +139,15 @@ theorem green_14_upper_bound_kelley_meka :
 
 def green_14_variant_2r2.answer : (r : ℕ) × (↑(Icc 1 (2 * r ^ 2 - 1)) → Fin 2) := sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
-It remains an interesting open problem to actually write down a colouring showing (say)
-$W(3, r) \ge 2r^2$ for some $r$. [Gr24]
+Give an explicit colouring showing $W(3, r) \ge 2r^2$ for some $r$. [Gr24]
+
+A Lean proof with $r = 520822699705116213452472320$ is given in [Ki26].
 -/
-@[category research open, question value, AMS 5 11]
+@[category research solved, question value, AMS 5 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/green14-explicit-coloring/blob/05845144e51d7c10eeda31e64cc1239f534992f6/lean/Comparator/Candidate.lean#L18"]
 theorem green_14_variant_2r2 :
     -- Provide a pair (r, associated coloring) that avoids the monochromatic APs
     -- To show $W(3, r) > 2r^2 - 1$, we need a coloring of $\{1, \ldots, 2r^2 - 1\}$
