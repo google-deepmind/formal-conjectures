@@ -26,19 +26,21 @@ setting $k = 1$ recovers `Nat.Perfect` (cf. `PerfectNumbers.infinitely_many_perf
 McCranie (2000) conjectured that every $k$-hyperperfect integer with odd $k > 1$ has the form
 $p^2 q$ for primes $p = (3k + 1) / 2$ and $q = 3k + 4$. At $k = 2$ (`OEIS A007593`), Alexander
 Violette (June 2026) found a four-prime-factor $2$-hyperperfect counterexample outside the family
-$n = 3^m(3^{m+1} - 2)$. Beyond Wikipedia's overview, Guy (2004, §B2) and the OEIS entries
-`A007592` ($k \ge 2$) and `A007593` ($k = 2$) discuss whether infinitely many non-perfect
-hyperperfect or $2$-hyperperfect integers exist.
+$n = 3^m(3^{m+1} - 2)$. Guy (2004, §B2, pp. 74–75) also cites Minoli and Bear's (1975)
+conjecture that every $k \ge 1$ admits at least one $k$-hyperperfect integer; because
+$n - 1 = k(\sigma_1(n) - n - 1)$ fixes $k$ uniquely for $n > 1$, this conjecture entails infinitely
+many non-perfect hyperperfect integers ($k \ge 2$, `OEIS A007592`).
 
 *References:*
 - [Wikipedia: Hyperperfect number](https://en.wikipedia.org/wiki/Hyperperfect_number)
 - [OEIS A007592](https://oeis.org/A007592) (non-perfect hyperperfect integers, $k \ge 2$)
 - [OEIS A007593](https://oeis.org/A007593) ($2$-hyperperfect integers, including A. Violette's June
   2026 counterexample)
-- D. Minoli and R. Bear (1975), Pi Mu Epsilon J. **6**, no. 3, 153–157.
+- D. Minoli and R. Bear (1975), *Hyperperfect numbers*, Pi Mu Epsilon J. **6**, no. 3, 153–157.
 - [J. S. McCranie (2000)](https://cs.uwaterloo.ca/journals/JIS/VOL3/mccranie.html), J. Integer Seq.
   **3**, Article 00.1.3.
-- Guy, R. K. (2004), Springer Problem Books in Math., §B2 (ISBN `978-0-387-20860-2`).
+- R. K. Guy (2004), *Unsolved Problems in Number Theory*, 3rd ed., Springer, §B2, pp. 74–75
+  (ISBN `978-0-387-20860-2`).
 -/
 
 @[expose] public section
@@ -105,22 +107,24 @@ theorem two_hyperperfect_characterization :
   sorry
 
 /--
-Do infinitely many non-perfect hyperperfect integers ($k \ge 2$) exist (Guy 2004, §B2;
-[OEIS A007592](https://oeis.org/A007592), not stated on Wikipedia; see
-`PerfectNumbers.infinitely_many_perfect` for $k = 1$)?
+Minoli and Bear's conjecture (1975; Guy 2004, §B2, pp. 74–75): for every integer $k \ge 1$, at
+least one $k$-hyperperfect integer exists.
 -/
-@[category research open, question, AMS 11]
-theorem infinitely_many_hyperperfect_numbers :
-    {n : ℕ | ∃ k ≥ 2, IsHyperperfect k n}.Infinite := by
+@[category research open, AMS 11]
+theorem minoli_bear_hyperperfect_conjecture :
+    ∀ k ≥ 1, ∃ n, IsHyperperfect k n := by
   sorry
 
 /--
-Do infinitely many $2$-hyperperfect integers exist (Guy 2004, §B2;
-[OEIS A007593](https://oeis.org/A007593), not stated on Wikipedia)?
+Infinitely many non-perfect hyperperfect integers ($k \ge 2$, listed in
+[OEIS A007592](https://oeis.org/A007592)) exist. This follows from
+`minoli_bear_hyperperfect_conjecture` (Guy 2004, §B2, pp. 74–75), because
+$n - 1 = k(\sigma_1(n) - n - 1)$ uniquely fixes $k$ for any $n > 1$ (for $k = 1$, cf.
+`PerfectNumbers.infinitely_many_perfect`).
 -/
-@[category research open, question, AMS 11]
-theorem infinitely_many_hyperperfect_numbers.variants.two :
-    {n : ℕ | IsHyperperfect 2 n}.Infinite := by
+@[category research open, AMS 11]
+theorem infinitely_many_hyperperfect_numbers :
+    {n : ℕ | ∃ k ≥ 2, IsHyperperfect k n}.Infinite := by
   sorry
 
 end HyperperfectNumber
