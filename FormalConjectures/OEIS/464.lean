@@ -71,7 +71,7 @@ exponential of a series $L$ with zero constant term is `subst L (exp ℚ)`.
 
 @[expose] public section
 
-namespace OeisA000464
+namespace OeisA464
 
 open PowerSeries
 
@@ -244,6 +244,6 @@ theorem conjecture4 :
           b ((2 * m + 1) * n) ≡ b n ^ (2 * m + 1) [ZMOD 2 ^ (m.factorization 2 + 4)] := by
   sorry
 
-end OeisA000464
+end OeisA464
 
 end
