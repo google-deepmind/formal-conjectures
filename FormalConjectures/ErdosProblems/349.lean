@@ -36,7 +36,7 @@ open Set Filter Real Nat Function
 
 /-- Completeness of the set of values of $\lfloor t\alpha^n\rfloor$ for $n \ge 0$,
 with each distinct value usable at most once. The auxiliary statements below use this
-value-set predicate, not the indexed-sequence predicate \`IsGoodPairIndexed\`. -/
+value-set predicate, not the indexed-sequence predicate `IsGoodPairIndexed`. -/
 def IsGoodPair (t α : ℝ) : Prop :=
   IsAddComplete (range (fun n ↦ ⌊t * α ^ n⌋))
 
@@ -45,7 +45,6 @@ indexed sense of [Gr64e, §§1–2]: a finite sum may use each index at most onc
 including equal-valued terms at different indices. -/
 def IsGoodPairIndexed (t α : ℝ) : Prop :=
   IsAddCompleteNatSeq' (fun n : ℕ ↦ (⌊t * α ^ (n + 1)⌋ : ℤ))
-
 
 /-- Repeated values at distinct indices can be used separately in the source sequence. -/
 @[category test, AMS 11]
