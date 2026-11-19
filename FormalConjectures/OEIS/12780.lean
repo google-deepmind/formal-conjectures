@@ -44,7 +44,7 @@ $a(n)$ is an integer: it provides an integer sequence `b` with `b n = a n` for a
 
 @[expose] public section
 
-namespace OeisA012780
+namespace OeisA12780
 
 open PowerSeries
 
@@ -105,6 +105,6 @@ theorem not_period_two_mod_eight :
     ∃ b : ℕ → ℤ, (∀ n, (b n : ℚ) = a n) ∧ ∀ n, ¬ b (n + 2) ≡ b n [ZMOD 8] := by
   sorry
 
-end OeisA012780
+end OeisA12780
 
 end
