@@ -35,23 +35,52 @@ This difference is $a(n)$.
 
 namespace OeisA249241
 
-/-- The $n$-th prime. $0$-indexed here, $1$-indexed in OEIS. -/
-noncomputable abbrev nthPrime (n : ℕ) := Nat.nth Nat.Prime n
+/-- The smallest prime $\ge n$. -/
+def nextPrime (n : ℕ) : ℕ :=
+  Nat.find (Nat.exists_infinite_primes n)
 
 /--
-The smallest prime $\ge n$.
-
-Modeled after `7918.lean`. -/
-noncomputable def nextPrime (n : ℕ) : ℕ :=
-  sInf { p : ℕ | p.Prime ∧ n ≤ p }
-
-/-- The sequence $a$ -/
+The sequence $a_n = p - \frac{p_n !}{p_n \#}$, where $p_n$ is the $n$-th prime ($0$-indexed here, $1$-indexed in OEIS) and $p$ is the smallest prime with $p > \frac{p_n !}{p_n \#} + 1$.
+-/
 noncomputable def a (n : ℕ) : ℕ :=
-  let pn := nthPrime n
-  let frac := Nat.factorial pn / primorial pn
+  letI frac := Nat.factorial (Nat.nth Nat.Prime n) / primorial (Nat.nth Nat.Prime n)
   nextPrime (frac + 2) - frac
 
-/-- Conjecture: All terms are prime. -/
+@[category test, AMS 11]
+theorem a_0 : a 0 = 2 := by
+  simp [a]
+  rw [Nat.le_antisymm_iff]
+  constructor <;> simp [nextPrime]
+  · use 3
+    norm_num
+  · intros
+    omega
+
+@[category test, AMS 11]
+theorem a_1 : a 1 = 2 := by
+  simp [a]
+  norm_num [show primorial 3 = 6 by rfl]
+  rw [Nat.le_antisymm_iff]
+  constructor <;> simp [nextPrime]
+  · use 3
+    norm_num
+  · intros
+    omega
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 3 := by
+  simp [a]
+  norm_num [show primorial 5 = 30 by rfl]
+  suffices nextPrime 6 = 7 by lia
+  rw [Nat.le_antisymm_iff]
+  constructor <;> simp [nextPrime]
+  · use 7
+    norm_num
+  · intro m _ _
+    rw [show m = 6 by omega]
+    norm_num
+
+/-- Conjecture: All terms of A249241 are prime. -/
 @[category research open, AMS 11]
 theorem conjecture : ∀ n, Nat.Prime (a n) := by
   sorry
