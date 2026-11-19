@@ -83,7 +83,7 @@ theorem erdos_945.variants.lower_bound :
   sorry
 
 /--
-Erdős and Mirsky [ErMi52] proved that $\log F(x) \ll \frac{(\log x)^{1/2}}$.
+Erdős and Mirsky [ErMi52] proved that $\log F(x) \ll \frac{(\log x)^{1/2}}{\log\log x}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_945.variants.upper_bound :

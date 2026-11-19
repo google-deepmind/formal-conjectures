@@ -28,7 +28,7 @@ with $xy > 1$ and $k > 2$?
 - [Br32] Breusch, Robert, Zur Verallgemeinerung des Bertrandschen Postulates, da\ss zwischen $x$
   und 2 $x$ stets Primzahlen liegen. Math. Z. (1932), 505--526.
 - [ErOb37] Erdős, P. and Obláth, R., \"Über diophantische Gleichungen der Form $n!=x^p+y^p$ und
-  $n!\pmd m!=x^p$. Acta Litt. ac Sci. Reg. Univ. Hung. Fr.-Jos., Sect. Sci. Math. (1937), 241-255.
+  $n!\pm m!=x^p$. Acta Litt. ac Sci. Reg. Univ. Hung. Fr.-Jos., Sect. Sci. Math. (1937), 241-255.
 - [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
 - [PoSh73] Pollack, Richard M. and Shapiro, Harold N., The next to last case of a factorial
   diophantine equation. Comm. Pure Appl. Math. (1973), 313-325.

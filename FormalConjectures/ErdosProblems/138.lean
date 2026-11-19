@@ -108,7 +108,7 @@ theorem erdos_138.variants.prime (p : ℕ) (hp : p.Prime) : p * (2 ^ p) ≤ W (p
   sorry
 
 /--
-Gowers [Go01] has proved $$W(k) \leq 2^{2^{2^{2^{2^{k+9}}}}.$$
+Gowers [Go01] has proved $$W(k) \leq 2^{2^{2^{2^{2^{k+9}}}}}.$$
 -/
 @[category research solved, AMS 11]
 theorem erdos_138.variants.upper (k : ℕ) : W k ≤ 2 ^ (2 ^ (2 ^ 2 ^ 2 ^ (k + 9))) := by
