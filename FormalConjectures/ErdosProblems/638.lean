@@ -46,16 +46,9 @@ This condition is not part of the original formulation,
 however as pointed out on [erdosproblems.com/638],
 it is a necessary addition to make the problem relevant.
 -/
-def ClosedUnderFiniteSubgraphs {V : Type*} (S : Set (SimpleGraph V)) : Prop :=
-  ∀ (G H : SimpleGraph V), G ∈ S → H ≤ G →
-    H.support.Finite → H ∈ S
-
-/--
-A family of graphs is finite.
--/
-def IsFiniteGraphFamily {V : Type*} (S : Set (SimpleGraph V)) : Prop :=
-  ∀ G : SimpleGraph V, G ∈ S → G.support.Finite
-
+def ClosedUnderFiniteSubgraphs (S : ∀ n : ℕ, Set (SimpleGraph (Fin n))) : Prop :=
+  ∀ (n m : ℕ) (G : SimpleGraph (Fin n)) (H : SimpleGraph (Fin m)),
+    G ∈ S n → Nonempty (SimpleGraph.Copy H G) → H ∈ S m
 
 /--
 Original wording:
@@ -70,16 +63,17 @@ Note: The intended question likely requires that $S$ be closed under taking fini
 as a counterexample is otherwise reasonably easy to construct.
 -/
 @[category research open, question, AMS 5]
-theorem erdos_638 (S : Set (SimpleGraph ℕ)) :
+theorem erdos_638 (S : ∀ n : ℕ, Set (SimpleGraph (Fin n))) :
   ClosedUnderFiniteSubgraphs S ∧
-  IsFiniteGraphFamily S ∧
-  (∀ n : ℕ, ∃ G ∈ S,
-    ∀ coloring : G.EdgeLabeling (Fin n),
+  (∀ c : ℕ, 0 < c →
+    ∃ (n : ℕ) (G : SimpleGraph (Fin n)),
+      G ∈ S n ∧
+    ∀ coloring : G.EdgeLabeling (Fin c),
       HasMonochromaticTriangle G coloring) →
   (∀ k : Cardinal, Cardinal.aleph0 ≤ k →
     ∃ (W: Type*) (G : SimpleGraph W),
-      (∀ H : SimpleGraph ℕ, Nonempty (SimpleGraph.Embedding H G) →
-        H.support.Finite → H ∈ S) ∧
+      (∀ (n : ℕ) (H : SimpleGraph (Fin n)),
+        Nonempty (SimpleGraph.Copy H G) → H ∈ S n) ∧
       (∀ coloring : G.EdgeLabeling (Quotient.out k),
         HasMonochromaticTriangle G coloring)) := by
   sorry
