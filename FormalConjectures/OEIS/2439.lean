@@ -70,7 +70,7 @@ $a(n)$ is an integer: it provides an integer sequence `b` with `b n = a n` for a
 
 @[expose] public section
 
-namespace OeisA002439
+namespace OeisA2439
 
 open PowerSeries
 
@@ -227,6 +227,6 @@ theorem conjecture5_strong :
           b ((3 * m + 1) * n) ≡ b n ^ (3 * m + 1) [ZMOD 3 ^ (m.factorization 3 + 3)] := by
   sorry
 
-end OeisA002439
+end OeisA2439
 
 end
