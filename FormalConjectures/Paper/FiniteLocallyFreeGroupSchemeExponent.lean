@@ -23,8 +23,8 @@ public import FormalConjecturesUtil
 A finite locally free group scheme of rank `n` is the group scheme analogue of a finite group of
 order `n`. Lagrange's theorem gives `g ^ n = 1` in a finite group of order `n`, and Grothendieck
 asked whether the `n`-th power map of such a group scheme is trivial. The answer is affirmative
-over a reduced base and for commutative group schemes, and negative in general. Which exponents
-kill every group scheme of a given rank is open.
+over a reduced base and for commutative group schemes, and negative in general. A terminating
+Lean-verified algorithm for the least universal killing exponent is given in [Ki26].
 
 A group scheme is represented here by its coordinate Hopf algebra `A` over the base ring `R`.
 `A` is not assumed to be cocommutative, so the group scheme is not assumed to be commutative.
@@ -44,6 +44,8 @@ base, and being killed by `m` is local on the base, so nothing is lost.
 - [Mathlib, *A finite free group scheme of rank four that is not killed by
   four*](https://leanprover-community.github.io/mathlib4_docs/Counterexamples/GrothendieckPower.html),
   the counterexample
+- [Ki26] Kitamura, K., *Optimal exponents of finite locally free group schemes* (2026),
+  [GitHub repository](https://github.com/KitaKen1/finite-locally-free-group-scheme-exponent/tree/43c2dc4556089111b5dc736513ebb38898b1803f).
 -/
 
 @[expose] public section
@@ -195,6 +197,7 @@ theorem killed_by_rank.variants.commutative (n : ℕ+) (R : Type*) [CommRing R] 
 
 def optimal_exponent.answer : ℕ+ → ℕ := sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Determine the function assigning to each positive integer $n$ the least positive integer $m$
 such that every finite locally free group scheme of rank $n$, over every commutative ring, is
@@ -204,8 +207,13 @@ killed by $m$. The value is $0$ if there is no such $m$, since `sInf ∅ = 0` in
 Grothendieck asked whether this least exponent is $n$ itself. It is not, already for $n = 4$.
 If some positive exponent kills every group scheme of rank $n$, then these exponents are the
 multiples of the least one, so minimality for $\le$ agrees with minimality for divisibility.
+
+A terminating algorithm computing the least exponent for every positive rank, with a Lean proof
+of correctness, is given in [Ki26].
 -/
-@[category research open, question value, AMS 14 16]
+@[category research solved, question value, AMS 14 16,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/finite-locally-free-group-scheme-exponent/blob/43c2dc4556089111b5dc736513ebb38898b1803f/leanWithComparator/Solution.lean#L5-L11"]
 theorem optimal_exponent :
     ∀ n, sInf ((↑) '' {m | IsUniversalKillingExponent.{0, 0} n m} : Set ℕ) = optimal_exponent.answer
       n := by
