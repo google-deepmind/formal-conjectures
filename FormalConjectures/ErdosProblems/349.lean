@@ -29,22 +29,27 @@ namespace Erdos349
 open Set Filter Real Nat Function
 
 
-/--
-This defines the core property of the problem: For what values of $t,\alpha \in (0,\infty)$
-is the sequence $\lfloor t\alpha^n\rfloor$ complete?
--/
+/-- Historical zero-based, value-set predicate. It discards repeated values and is NOT
+the indexed-sequence meaning of Erdős 349. Existing auxiliary theorem statements
+and external proof links below retain this original meaning pending requalification. -/
 def IsGoodPair (t α : ℝ) : Prop :=
   IsAddComplete (range (fun n ↦ ⌊t * α ^ n⌋))
+
+/-- Source-faithful meaning of Erdős 349 (ErGr80, §6, p. 57): sequence indices
+are 1, 2, ... and each index may be used at most once in a finite sum. Equal
+values at two different indices may both be used. -/
+def IsGoodPairIndexed (t α : ℝ) : Prop :=
+  IsAddCompleteNatSeq' (fun n : ℕ ↦ (⌊t * α ^ (n + 1)⌋ : ℤ))
 
 def erdos_349.answer : Set (ℝ × ℝ) := sorry
 
 /--
-For what values of $t,\alpha \in (0,\infty)$ is the sequence $\lfloor t\alpha^n\rfloor$ complete
-(that is, all sufficiently large integers are the sum of distinct integers of the form $\lfloor t\alpha^n\rfloor$)?
+For what values of $t,\alpha \in (0,\infty)$ is the sequence $\lfloor t\alpha^n\rfloor$ complete?
+Here distinct refers to indices $n \ge 1$, not distinct numerical term values.
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_349 :
-    {(t, α) | 0 < t ∧ 0 < α ∧ IsGoodPair t α} = erdos_349.answer := by
+    {(t, α) | 0 < t ∧ 0 < α ∧ IsGoodPairIndexed t α} = erdos_349.answer := by
   sorry
 
 /--
