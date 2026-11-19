@@ -49,7 +49,7 @@ with zero constant term as `subst L (exp ℚ)`.
 
 @[expose] public section
 
-namespace OeisA003024
+namespace OeisA3024
 
 open PowerSeries
 
@@ -101,6 +101,6 @@ theorem a188457_exp_integral (n : ℕ) :
     ∃ z : ℤ, coeff n (subst (logSeries 3) (exp ℚ)) = z := by
   sorry
 
-end OeisA003024
+end OeisA3024
 
 end
