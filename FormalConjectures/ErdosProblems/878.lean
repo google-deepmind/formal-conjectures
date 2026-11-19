@@ -159,8 +159,12 @@ noncomputable def cofactorAnswer (x : ℕ) : ℝ :=
 /-- The explicit sum of logarithmic integrals for the equality count. -/
 noncomputable def erdos_878.parts.iv.answer : ℕ → ℝ := cofactorAnswer
 
-/-- Find an asymptotic formula for the number of $n<x$ such that $f(n)=F(n)$. -/
-@[category research open, question value, AMS 11]
+/-- Find an asymptotic formula for the number of $n<x$ such that $f(n)=F(n)$.
+
+The asymptotic equivalent is a sum of logarithmic integrals over the real sets determined
+by the cofactors of the largest prime factor. -/
+@[category research solved, question value, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-19-000035&version=1"]
 theorem erdos_878.parts.iv :
     (fun x : ℕ ↦
       (((Finset.Ico 1 x).filter fun n ↦ f n = F n).card : ℝ))
@@ -173,8 +177,12 @@ noncomputable def erdos_878.parts.v.answer (x : ℕ) : ℝ :=
     let r := Real.log x - (Nat.log p x : ℝ) * Real.log p
     Real.exp (-r) / p * (r + Real.log p / ((p : ℝ) - 1))
 
-/-- Find an asymptotic formula for $H(x)=\sum_{n<x}f(n)/n$. -/
-@[category research open, question value, AMS 11]
+/-- Find an asymptotic formula for $H(x)=\sum_{n<x}f(n)/n$.
+
+The asymptotic equivalent is a sum over primes up to $(\log x)^2$, weighted by the
+remainder of $\log x$ modulo $\log p$. -/
+@[category research solved, question value, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-19-000034&version=1"]
 theorem erdos_878.parts.v :
     H ~[atTop] erdos_878.parts.v.answer := by
   sorry
