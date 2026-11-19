@@ -1,0 +1,2 @@
+Authored rereview scenario, not a verbatim GitHub conversation.
+Earlier review: Finset excludes repeated summands. Contributor reply: the current version uses Multiset; please check whether the finding still applies.

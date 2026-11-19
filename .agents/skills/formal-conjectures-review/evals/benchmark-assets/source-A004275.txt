@@ -1,0 +1,37 @@
+# Greetings from The On-Line Encyclopedia of Integer Sequences! http://oeis.org/
+
+Search: id:a004275
+Showing 1-1 of 1
+
+%I A004275 #54 Jun 17 2024 15:49:36
+%S A004275 0,1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,
+%T A004275 48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,
+%U A004275 94,96,98,100,102,104,106,108,110,112,114,116,118,120,122,124
+%N A004275 1 together with nonnegative even numbers.
+%C A004275 A091090(a(n)) = 1. - _Reinhard Zumkeller_, Mar 13 2011
+%C A004275 Base-4 analog of A031149: floor(n^2/4) is a square. - _M. F. Hasler_, Jan 15 2012
+%C A004275 From _Eric M. Schmidt_, Jul 17 2017: (Start)
+%C A004275 Number of sequences (e(1), ..., e(n)), 0 <= e(i) < i, such that there is no triple i < j < k with e(i) != e(j) and e(i) != e(k). [Martinez and Savage, 2.2]
+%C A004275 Number of sequences (e(1), ..., e(n)), 0 <= e(i) < i, such that there is no triple i < j < k with e(i) >= e(j) and e(i) != e(k). [Martinez and Savage, 2.2]
+%C A004275 (End)
+%H A004275 Vincenzo Librandi, <a href="/A004275/b004275.txt">Table of n, a(n) for n = 0..10000</a>
+%H A004275 Megan A. Martinez and Carla D. Savage, <a href="https://arxiv.org/abs/1609.08106">Patterns in Inversion Sequences II: Inversion Sequences Avoiding Triples of Relations</a>, arXiv:1609.08106 [math.CO], 2016.
+%H A004275 <a href="/index/Rec#order_02">Index entries for linear recurrences with constant coefficients</a>, signature (2,-1).
+%F A004275 G.f.: x*(1+x^2)/(1-x)^2. - _Paul Barry_, Feb 28 2003
+%F A004275 a(n) = floor((2*n^2)/(1 + n)). - _Enrique Pérez Herrero_, Apr 05 2010
+%F A004275 a(n) = 2n - 2 + floor(2/(n+1)) = max(n, 2n-2) = 2n - 1 + sgn(1-n). Also, a(0)=0, a(1)=1, a(n) = 2n-2 for n > 1. - _Wesley Ivan Hurt_, Nov 05 2013
+%F A004275 E.g.f.: 2 + 2*exp(x)*(x - 1) + x. - _Stefano Spezia_, Jun 16 2024
+%p A004275 A004275:= n-> 2*n - 2 + floor(2/(n+1)); seq(A004275(k), k=0..100); # _Wesley Ivan Hurt_, Nov 05 2013
+%t A004275 A004275[n_]:=Floor[(2 n^2)/(1 + n)]; (* _Enrique Pérez Herrero_, Apr 05 2010 *)
+%t A004275 Insert[Range[0,110,2],1,2] (* _Harvey P. Dale_, Feb 27 2015 *)
+%o A004275 (Magma) [Floor((2*n^2)/(1 + n)): n in [0..60] ]; // _Vincenzo Librandi_, Aug 19 2011
+%o A004275 (Haskell)
+%o A004275 a004275 n = 2 * n - 1 + signum (1 - n)
+%o A004275 a004275_list = 0 : 1 : [2, 4 ..]  -- _Reinhard Zumkeller_, Dec 18 2013
+%Y A004275 Cf. A004277.
+%Y A004275 Range of A007457.
+%K A004275 easy,nonn
+%O A004275 0,3
+%A A004275 _N. J. A. Sloane_
+
+# Content is available under The OEIS End-User License Agreement: http://oeis.org/LICENSE
