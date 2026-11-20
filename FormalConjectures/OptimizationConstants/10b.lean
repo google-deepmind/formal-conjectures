@@ -135,6 +135,30 @@ constant, since the supremum is bounded as established in `grothendieck_set_boun
 @[optimization_constant "10b"]
 noncomputable def C10b : ℝ := sSup grothendieckSet
 
+/-- A lower bound, proven by Steven Heilman, Chris Jones, Giulio Malavolta in [HJM26]. -/
+@[category research solved, AMS 42 46 47]
+theorem c10b_lower_bound : 1.4 < C10b := by
+  sorry
+
+/-- An upper bound, proven by Steven Heilman, Chris Jones, Giulio Malavolta in [HJM26]. -/
+@[category research solved, AMS 42 46 47]
+theorem c10b_upper_bound : C10b < 1.404898554746 := by
+  sorry
+
+def mem_Ico_c10b.answer : ℝ := sorry
+
+/-- How can the upper bound `1.404898554746` of [HJM26] be improved? -/
+@[category research open, question value, AMS 42 46 47]
+theorem mem_Ico_c10b : mem_Ico_c10b.answer ∈ Set.Ico C10b 1.404898554746 := by
+  sorry
+
+def mem_Ioc_c10b.answer : ℝ := sorry
+
+/-- How can the lower bound $1.4$ of [HJM26] be improved? -/
+@[category research open, question value, AMS 42 46 47]
+theorem mem_Ioc_c10b : mem_Ioc_c10b.answer ∈ Set.Ioc 1.4 C10b := by
+  sorry
+
 /--
 Haagerups "sensible candidate" conjectured as complex Grothendieck Constant in [Haa87], defined as
 `1/(∫_0^(π/2) (cos^2 θ)/√(1+sin^2 θ) dθ) ≈ 1.40458`
