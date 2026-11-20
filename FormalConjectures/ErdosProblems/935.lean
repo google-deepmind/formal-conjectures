@@ -68,7 +68,8 @@ many $n$. The answer is yes, by the Pell equation construction of `erdos_935.var
 (the case $\ell = 2$); for larger $\ell$ the product for $\ell = 2$ divides the product for $\ell$,
 and $Q_2$ does not decrease under divisibility.
 -/
-@[category research solved, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000027"]
 theorem erdos_935.parts.ii :
     ∀ ℓ : ℕ, 2 ≤ ℓ → ∀ C : ℝ, ∃ᶠ n : ℕ in atTop,
       C * (n : ℝ) ^ 2 < ((Erdos367.B 2 (∏ m ∈ Finset.Icc n (n + ℓ), m) : ℕ) : ℝ) := by
@@ -98,7 +99,8 @@ Erdős [Er76d, pp. 31-32] derives this from the infinitely many solutions of $x^
 give consecutive powerful numbers. We write $\limsup \geq 1$ as: for every $\varepsilon > 0$,
 $(1-\varepsilon) n^2 < Q_2(\cdots)$ for infinitely many $n$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000027"]
 theorem erdos_935.variants.mahler :
     ∀ ℓ : ℕ, 1 ≤ ℓ → ∀ ε : ℝ, 0 < ε → ∃ᶠ n : ℕ in atTop,
       (1 - ε) * (n : ℝ) ^ 2 < ((Erdos367.B 2 (∏ m ∈ Finset.Icc n (n + ℓ), m) : ℕ) : ℝ) := by
@@ -111,7 +113,8 @@ $$\limsup_{n\to \infty}\frac{Q_2(n(n+1)(n+2))}{n^2}=\infty.$$
 
 This is the case $\ell = 2$, stated as in `erdos_935.parts.ii`.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000027"]
 theorem erdos_935.variants.ell_two :
     ∀ C : ℝ, ∃ᶠ n : ℕ in atTop,
       C * (n : ℝ) ^ 2 < ((Erdos367.B 2 (∏ m ∈ Finset.Icc n (n + 2), m) : ℕ) : ℝ) := by

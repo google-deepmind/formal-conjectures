@@ -61,7 +61,8 @@ A **linear** scale $y \le C(\epsilon) n$ is known to suffice for fixed $\epsilon
 and all large $n$ (see `erdos_450.linear_scale_suffices`).
 -/
 @[category research open, question value, AMS 11]
-theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) : windowThreshold ε n = erdos_450.answer ε n := by
+theorem erdos_450 (ε : ℝ) (hε : 0 < ε) (n : ℕ) :
+    windowThreshold ε n = erdos_450.answer ε n := by
   sorry
 
 set_option linter.style.formal_proof_palomar false in
