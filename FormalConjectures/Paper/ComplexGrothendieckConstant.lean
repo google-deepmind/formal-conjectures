@@ -29,7 +29,7 @@ by *U. Haagerup* (1987)
 Let `m ∈ ℕ` and `A` be a complex `m × m` matrix such that for all complex numbers `s 1,...,s m`
 and `t 1,...,t m` satisfying `|s i|, |t j|≤ 1` it holds `|∑ (A i j) * (s i) * (t j)| ≤ 1`.
 Let `n ∈ ℕ` and `x 1,...,x m` and `y 1,...,y m` be complex vectors in `ℂ ^ n` with
-`‖x i‖ , ‖y j‖ ≤ 1`. The complex Grothendieck constant `KGC` is the smallest number independent
+`‖x i‖, ‖y j‖ ≤ 1`. The complex Grothendieck constant `KGC` is the smallest number independent
 of `n` and `m` for which  `|∑ (A i j) * ⟪x i, y j⟫_ℂ| ≤ KGC` for every such matrix `A` and all
 such vectors `x i, y j`.
 
@@ -69,16 +69,16 @@ Let `m ∈ ℕ` and `A` be a complex `m × m` matrix. Then it has the matrix pro
 complex numbers `s 1,...,s m` and `t 1,...,t m` satisfying `|s i|, |t j|≤ 1` it holds
 `|∑ (A i j) * (s i) * (t j)| ≤ 1`.
 -/
-def HasMatrixProperty {m : ℕ} (A : Matrix (Fin m) (Fin m) ℂ) : Prop :=
+def hasMatrixProperty {m : ℕ} (A : Matrix (Fin m) (Fin m) ℂ) : Prop :=
   ∀ s t : Fin m → ℂ,
     ((∀ i, ‖s i‖ ≤ 1) ∧ (∀ j, ‖t j‖ ≤ 1)) →
       ‖∑ i, ∑ j, A i j * s i * t j‖ ≤ 1
 
 /--
-Example: the zero matrix satisfies the matrix property.
+The zero matrix satisfies `hasMatrixProperty`.
 -/
 @[category test, AMS 42]
-example {m : ℕ} : HasMatrixProperty (0 : Matrix (Fin m) (Fin m) ℂ) := by
+lemma zero_has_matrix_property {m : ℕ} : hasMatrixProperty (0 : Matrix (Fin m) (Fin m) ℂ) := by
   intro s t ⟨hs, ht⟩
   calc
     ‖∑ i, ∑ j, (0 : Matrix (Fin m) (Fin m) ℂ) i j * s i * t j‖
@@ -86,10 +86,10 @@ example {m : ℕ} : HasMatrixProperty (0 : Matrix (Fin m) (Fin m) ℂ) := by
     _ ≤ 1 := zero_le_one
 
 /--
-Example: the identity matrix does not satisfy the matrix property for dimension `m ≥ 2`.
+Example: the identity matrix does not satisfy `hasMatrixProperty` for dimension `m ≥ 2`.
 -/
 @[category test, AMS 42]
-example {m : ℕ} (hm : m ≥ 2) : ¬HasMatrixProperty (1 : Matrix (Fin m) (Fin m) ℂ) := by
+example {m : ℕ} (hm : m ≥ 2) : ¬hasMatrixProperty (1 : Matrix (Fin m) (Fin m) ℂ) := by
   let s : Fin m → ℂ := fun i => 1
   have hs : ∀ i, ‖s i‖ ≤ 1 := by
     unfold s
@@ -103,28 +103,38 @@ example {m : ℕ} (hm : m ≥ 2) : ¬HasMatrixProperty (1 : Matrix (Fin m) (Fin 
   exact absurd this (by norm_num)
 
 /--
-The statement that `K` satisfies the complex Grothendieck inequality in every dimension.
+The set of all values `‖∑ i, ∑ j, A i j * ⟪x i, y j⟫_ℂ‖` for arbitrary dimensions, complex `m × m`
+matrices `A` with `hasMatrixProperty A` and complex vectors `x 1,...,x m` and `y 1,...,y m` in
+`ℂ ^ n` with `‖x i‖, ‖y j‖ ≤ 1`.
+
+The complex Grothendieck constant `KGC` is the supremum of this set.
 -/
-def IsUniversalConstant (K : ℝ) : Prop :=
-  ∀ m n : ℕ, ∀ A : Matrix (Fin m) (Fin m) ℂ, HasMatrixProperty A →
-    ∀ x y : Fin m → EuclideanSpace ℂ (Fin n),
-      ((∀ i, ‖x i‖ ≤ 1) ∧ (∀ j, ‖y j‖ ≤ 1)) →
-        ‖∑ i, ∑ j, A i j * ⟪x i, y j⟫_ℂ‖ ≤ K
+def grothendieckSet : Set ℝ :=
+  {value | ∃ (m n : ℕ) (A : Matrix (Fin m) (Fin m) ℂ)
+      (x y : Fin m → EuclideanSpace ℂ (Fin n)),
+    hasMatrixProperty A ∧ (∀ i, ‖x i‖ ≤ 1) ∧ (∀ j, ‖y j‖ ≤ 1) ∧
+    value = ‖∑ i, ∑ j, A i j * ⟪x i, y j⟫_ℂ‖}
+
+/--
+The set `grothendieckSet` is nonempty.
+-/
+@[category test, AMS 42]
+lemma grothendieck_set_nonempty : grothendieckSet.Nonempty :=
+  ⟨0, 0, 0, 0, 0, 0, zero_has_matrix_property, by simp, by simp, by simp⟩
 
 /--
 There exists a finite bound in the Grothendieck inequality that is universal in dimension.
 This can be quickly deduced from the real bound established in [Gro53], see [Pis12].
 -/
 @[category research solved, AMS 42 46 47]
-theorem exists_universal_constant :
-  ∃ K : ℝ, IsUniversalConstant K := by sorry
+theorem grothendieck_set_bounded : BddAbove grothendieckSet := by
+  sorry
 
 /--
-The statement that `KGC`is exactly the complex Grothendieck Constant. There exists a unique such
-constant, since the supremum is bounded by the constant established in `exists_universal_constant`.
+The complex Grothendieck Constant. There exists a unique such
+constant, since the supremum is bounded as established in `grothendieck_set_bounded`.
 -/
-def IsKGC (KGC : ℝ) : Prop :=
-  IsUniversalConstant KGC ∧ ∀ K, IsUniversalConstant K → KGC ≤ K
+noncomputable def KGC : ℝ := sSup grothendieckSet
 
 /--
 Haagerups "sensible candidate" conjectured as complex Grothendieck Constant in [Haa87], defined as
@@ -140,7 +150,7 @@ The conjecture that the complex Grothendieck Constant equals `1/(∫_0^(π/2) (c
 This was proposed as "sensible candidate" by Haagerup in [Haa87].
 -/
 @[category research open, question value, AMS 42 46 47]
-theorem haagerup_candidate : IsKGC haagerup_candidate.answer := by
+theorem haagerup_candidate : KGC = haagerup_candidate.answer := by
   sorry
 
 end ComplexGrothendieckConstant
