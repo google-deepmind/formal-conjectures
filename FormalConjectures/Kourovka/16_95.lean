@@ -16,7 +16,6 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
---import Mathlib.GroupTheory.Perm.Basic
 
 /-!
 # Conjecture 16.95
