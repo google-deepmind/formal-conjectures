@@ -37,7 +37,7 @@ or equal to 29 and all integers greater than or equal to 83 (and many below 83).
 -/
 @[category research open, AMS 11]
 theorem conjecture (k : ℕ) (hk : (29 ≤ k ∧ k.Prime) ∨ (83 ≤ k)) :
-  ∃ m n : ({n | n.IsSemiprime ∧ Squarefree n} : Set ℕ), k = m + n := by
+    ∃ m n : ({n | n.IsSemiprime ∧ Squarefree n} : Set ℕ), k = m + n := by
   sorry
 
 end OeisA6881
