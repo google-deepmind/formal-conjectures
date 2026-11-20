@@ -18,29 +18,27 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# Haagerup Candidate for Complex Grothendieck Constant
+# Tao's Optimization Constant 10b / Complex Grothendieck Constant
 
-*Reference:* [A NEW UPPER BOUND FOR
-THE COMPLEX GROTHENDIECK CONSTANT](https://www.isibang.ac.in/~soumyashant/misc/collected-works-of-haagerup/1980s/1987_A_new_upper_bound_for_the_complex_Grothendieck_constant.pdf)
-by *U. Haagerup* (1987)
-[Grothendieck's Constant](https://mathworld.wolfram.com/GrothendiecksConstant.html)
-
+*Reference:* [Tao's optimization constant 10b](https://teorth.github.io/optimizationproblems/constants/10b.html)
 
 Let `m ∈ ℕ` and `A` be a complex `m × m` matrix such that for all complex numbers `s 1,...,s m`
 and `t 1,...,t m` satisfying `|s i|, |t j|≤ 1` it holds `|∑ (A i j) * (s i) * (t j)| ≤ 1`.
 Let `n ∈ ℕ` and `x 1,...,x m` and `y 1,...,y m` be complex vectors in `ℂ ^ n` with
-`‖x i‖, ‖y j‖ ≤ 1`. The complex Grothendieck constant `KGC` is the smallest number independent
-of `n` and `m` for which  `|∑ (A i j) * ⟪x i, y j⟫_ℂ| ≤ KGC` for every such matrix `A` and all
+`‖x i‖, ‖y j‖ ≤ 1`. The complex Grothendieck constant `C10b` is the smallest number independent
+of `n` and `m` for which  `|∑ (A i j) * ⟪x i, y j⟫_ℂ| ≤ C10b` for every such matrix `A` and all
 such vectors `x i, y j`.
 
-In the reference paper [Haa87] Haagerup doubted that his upper bound is the exact value of `KGC`
+In [Haa87] Haagerup doubted that his upper bound is the exact value of `C10b`
 and proposed the smaller candidate `1/(∫_0^(π/2) (cos^2 θ)/√(1+sin^2 θ) dθ) ≈ 1.40458`
 
-Recent progress [HJM26] showed `1.4 < KGC < 1.404898554746`. Haagerup's candidate lies in between
+Recent progress [HJM26] showed `1.4 < C10b < 1.404898554746`. Haagerup's candidate lies in between
 these bounds.
 
-*Remark:* Shifting to 0 indexing in this formalization to follow lean conventions.
-The formulation in [Grothendieck's Constant] asks for `m` and `n` to be positive integers.
+*Remarks:* Shifting to 0 indexing in this formalization to follow lean conventions.
+By zero padding, the square matrix formulation used in this file immediately generalizes to a
+rectangular matrix formulation.
+[Tao's optimization constant 10b] asks for `m` and `n` to be positive integers.
 However, them being zero leads to trivial cases, so allowing `m n : ℕ` is an equivalent
 formulation, which is used here for simplicity.
 
@@ -57,7 +55,7 @@ formulation, which is used here for simplicity.
 
 @[expose] public section
 
-namespace ComplexGrothendieckConstant
+namespace Constant10b
 
 open Complex Matrix
 open scoped InnerProductSpace
@@ -107,7 +105,7 @@ The set of all values `‖∑ i, ∑ j, A i j * ⟪x i, y j⟫_ℂ‖` for arbit
 matrices `A` with `hasMatrixProperty A` and complex vectors `x 1,...,x m` and `y 1,...,y m` in
 `ℂ ^ n` with `‖x i‖, ‖y j‖ ≤ 1`.
 
-The complex Grothendieck constant `KGC` is the supremum of this set.
+The complex Grothendieck constant `C10b` is the supremum of this set.
 -/
 def grothendieckSet : Set ℝ :=
   {value | ∃ (m n : ℕ) (A : Matrix (Fin m) (Fin m) ℂ)
@@ -134,7 +132,8 @@ theorem grothendieck_set_bounded : BddAbove grothendieckSet := by
 The complex Grothendieck Constant. There exists a unique such
 constant, since the supremum is bounded as established in `grothendieck_set_bounded`.
 -/
-noncomputable def KGC : ℝ := sSup grothendieckSet
+@[optimization_constant "10b"]
+noncomputable def C10b : ℝ := sSup grothendieckSet
 
 /--
 Haagerups "sensible candidate" conjectured as complex Grothendieck Constant in [Haa87], defined as
@@ -150,7 +149,7 @@ The conjecture that the complex Grothendieck Constant equals `1/(∫_0^(π/2) (c
 This was proposed as "sensible candidate" by Haagerup in [Haa87].
 -/
 @[category research open, question value, AMS 42 46 47]
-theorem haagerup_candidate : KGC = haagerup_candidate.answer := by
+theorem haagerup_candidate : C10b = haagerup_candidate.answer := by
   sorry
 
-end ComplexGrothendieckConstant
+end Constant10b
