@@ -56,7 +56,7 @@ abbrev Plane := EuclideanSpace ℝ (Fin 2)
 def HasUnitArea (C : Set Plane) : Prop := MeasureTheory.volume C = 1
 
 /-- The set `S` is convex and has area one. -/
-def ConvexRegion (S : Set Plane) : Prop :=
+def ConvexUnitRegion (S : Set Plane) : Prop :=
   Convex ℝ S ∧ HasUnitArea S
 
 /-- The set `S` meets every convex region of area one. -/
