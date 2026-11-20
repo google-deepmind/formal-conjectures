@@ -81,8 +81,7 @@ def ArbitrarilyClosePoints (S : Set Plane) : Prop :=
 must it have pairs of points at arbitrarily small distances? -/
 @[category research open, question, AMS 52]
 lemma dead_fly_problem :
-    ∀ S : Set DeadFly.Plane,
-      DeadFly.MeetsEveryConvexRegion S → DeadFly.ArbitrarilyClosePoints S := by
+    ∀ S : Set Plane, MeetsEveryConvexRegion S → ArbitrarilyClosePoints S := by
   sorry
 
 end DeadFly
