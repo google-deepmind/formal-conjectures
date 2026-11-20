@@ -24,7 +24,9 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/1144](https://www.erdosproblems.com/1144)
 - [520](https://www.erdosproblems.com/520)
 - [At25] Atherfold, C., *Almost sure bounds for weighted sums of Rademacher random multiplicative
-  functions *. [arXiv:2501.11076](https://arxiv.org/abs/2501.11076) (2025).
+  functions*. [arXiv:2501.11076](https://arxiv.org/abs/2501.11076) (2025).
+- [GoXu26] Gou, H. and Xu, M. W., *Large fluctuations of extended Rademacher random multiplicative
+  functions*. [arXiv:2609.12940](https://arxiv.org/abs/2609.12940) (2026).
 -/
 
 @[expose] public section
@@ -60,8 +62,11 @@ Let `f` be a random completely multiplicative function, where for each prime $p$
 choose `f $p$` in {−1,1} uniformly at random. Is it true that
 $$\limsup_{N \to \infty} \frac{\sum_{m \leq N} f(m)}{\sqrt{N}} = \infty$$
 with probability 1?
+
+Gou and Xu [GoXu26] proved this holds almost surely in Theorem 1.1 using independent uniform prime
+signs extended completely multiplicatively.
 -/
-@[category research open, question, AMS 11 60]
+@[category research solved, question, AMS 11 60]
 theorem erdos_1144 {Ω : Type*} [MeasureSpace Ω] {f : Ω → ℕ → ℝ}
     (hf : RandomMultiplicative f) :
     ∀ᵐ ω ∂volume,
