@@ -33,13 +33,13 @@ abbrev Triangle := Affine.Triangle ℝ (EuclideanSpace ℝ (Fin 2))
 namespace Triangle
 
 /--
-Checks whether two triangles are interior disjoint.
+Two triangles are called interior disjoint, if their interiors (as sets) are disjoint.
 -/
 def InteriorDisjoint (t₁ t₂ : Triangle) : Prop :=
   t₁.interior ∩ t₂.interior = ∅
 
 /--
-Checks whether two triangles are congruent via sss argument.
+Two triangles are called congruent, if the lengths of their edges are equal.
 -/
 def Congruent (t₁ t₂ : Triangle) : Prop :=
   ({dist (t₁.points 0) (t₁.points 1), dist (t₁.points 1) (t₁.points 2),
