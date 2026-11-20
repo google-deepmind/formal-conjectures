@@ -102,7 +102,9 @@ The pebbling number of the complete graph on a nonempty finite vertex type is it
 -/
 @[category API, AMS 5]
 theorem PebblingNumber_completeGraph [Fintype V] [Nonempty V] :
-    PebblingNumber (SimpleGraph.completeGraph V) (by simp) = Fintype.card V := by
+    PebblingNumber (SimpleGraph.completeGraph V)
+      (SimpleGraph.connected_top_iff.mpr (inferInstance : Nonempty V)) =
+      Fintype.card V := by
   refine IsLeast.csInf_eq ⟨fun D hD v => ?_, fun a ha => not_lt.1 fun ha_lt => ?_⟩
   · by_cases h : ∃ w, 2 ≤ D w
     · obtain ⟨w, hw⟩ := h
