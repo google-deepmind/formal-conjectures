@@ -75,6 +75,34 @@ def HasMatrixProperty {m : ℕ} (A : Matrix (Fin m) (Fin m) ℂ) : Prop :=
       ‖∑ i, ∑ j, A i j * s i * t j‖ ≤ 1
 
 /--
+Example: the zero matrix satisfies the matrix property.
+-/
+@[category test, AMS 42]
+example {m : ℕ} : HasMatrixProperty (0 : Matrix (Fin m) (Fin m) ℂ) := by
+  intro s t ⟨hs, ht⟩
+  calc
+    ‖∑ i, ∑ j, (0 : Matrix (Fin m) (Fin m) ℂ) i j * s i * t j‖
+      = 0 := by simp
+    _ ≤ 1 := zero_le_one
+
+/--
+Example: the identity matrix does not satisfy the matrix property for dimension `m ≥ 2`.
+-/
+@[category test, AMS 42]
+example {m : ℕ} (hm : m ≥ 2) : ¬HasMatrixProperty (1 : Matrix (Fin m) (Fin m) ℂ) := by
+  let s : Fin m → ℂ := fun i => 1
+  have hs : ∀ i, ‖s i‖ ≤ 1 := by
+    unfold s
+    norm_num
+  intro h
+  specialize h s s ⟨hs, hs⟩
+  have : (2 : ℝ) ≤ (1 : ℝ) := by calc
+    (2 : ℝ) ≤ (m : ℝ) := by norm_cast -- hm
+    _ = ‖∑ i, ∑ j, (1 : Matrix (Fin m) (Fin m) ℂ) i j * s i * s j‖ := by unfold s; simp [one_apply]
+    _ ≤ (1 : ℝ) := h
+  exact absurd this (by norm_num)
+
+/--
 The statement that `K` satisfies the complex Grothendieck inequality in every dimension.
 -/
 def IsUniversalConstant (K : ℝ) : Prop :=
