@@ -93,6 +93,106 @@ theorem implies_riemannHypothesis :
   aesop (add simp [DirichletCharacter.isPrimitive_one_level_one, trivialZeros,
     RiemannHypothesis, riemannZeta_one_ne_zero])
 
+/-- The completed $L$-function of a primitive Dirichlet character does not vanish for
+$\operatorname{Re}(s) \le 0$ (away from the pole at $s = 0$ when $q = 1$). This follows from the
+functional equation and the non-vanishing of $L(\chi^{-1}, s)$ on $\operatorname{Re}(s) \ge 1$. -/
+@[category API, AMS 11]
+theorem completedLFunction_ne_zero_of_re_nonpos {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}
+    (hχ : χ.IsPrimitive) {s : ℂ} (hs : s.re ≤ 0) (h : s ≠ 0 ∨ q ≠ 1) :
+    χ.completedLFunction s ≠ 0 := by
+  intro h0
+  have hχ' : χ⁻¹.IsPrimitive := by
+    rw [DirichletCharacter.isPrimitive_def, DirichletCharacter.conductor_inv]
+    exact hχ
+  have hFE := hχ'.completedLFunction_one_sub s
+  rw [inv_inv, h0, mul_zero] at hFE
+  have hre : 1 ≤ (1 - s).re := by simpa using hs
+  have hne : (1 - s) ≠ 0 := fun h1 ↦ by
+    rw [h1, Complex.zero_re] at hre
+    linarith
+  have hL : χ⁻¹.LFunction (1 - s) = 0 := by
+    rw [DirichletCharacter.LFunction_eq_completed_div_gammaFactor _ _ (Or.inl hne), hFE, zero_div]
+  refine DirichletCharacter.LFunction_ne_zero_of_one_le_re χ⁻¹ ?_ hre hL
+  rcases h with h | h
+  · exact Or.inr fun h1 ↦ h (by simpa using h1)
+  · refine Or.inl fun h1 ↦ h ?_
+    rw [inv_eq_one] at h1
+    rw [DirichletCharacter.isPrimitive_def, h1, DirichletCharacter.conductor_one] at hχ
+    exact hχ.symm
+
+/-- The Generalized Riemann Hypothesis, as stated in `generalized_riemann_hypothesis` by excluding
+the trivial zeros, is equivalent to the statement restricted to the critical strip: every zero of
+$L(\chi, s)$ with $0 < \operatorname{Re}(s) < 1$, for $\chi$ primitive, has real part
+$\frac{1}{2}$.
+
+The forward direction says that every zero outside the critical strip is one of `trivialZeros`. -/
+@[category test, AMS 11]
+theorem generalized_riemann_hypothesis_iff_critical_strip :
+    (∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q), χ.IsPrimitive → ∀ s : ℂ,
+      0 < s.re → s.re < 1 → χ.LFunction s = 0 → s.re = 1 / 2) ↔
+    (∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q), χ.IsPrimitive → ∀ s : ℂ,
+      χ.LFunction s = 0 → s ∉ Int.cast '' trivialZeros χ → s.re = 1 / 2) := by
+  constructor
+  · intro H q _ χ hχ s hs hnt
+    by_contra hre
+    -- the zero is outside the open critical strip
+    have hstrip : ¬ (0 < s.re ∧ s.re < 1) := fun h ↦ hre (H q χ hχ s h.1 h.2 hs)
+    -- it is not to the right of the strip
+    have hlt : s.re < 1 := by
+      by_contra hge
+      rw [not_lt] at hge
+      by_cases h1 : χ ≠ 1 ∨ s ≠ 1
+      · exact DirichletCharacter.LFunction_ne_zero_of_one_le_re χ h1 hge hs
+      · rw [not_or, not_not, not_not] at h1
+        obtain ⟨rfl, rfl⟩ := h1
+        have hq : q = 1 := by
+          rw [DirichletCharacter.isPrimitive_def, DirichletCharacter.conductor_one] at hχ
+          exact hχ.symm
+        subst hq
+        rw [DirichletCharacter.LFunction_modOne_eq] at hs
+        exact riemannZeta_one_ne_zero hs
+    have hle : s.re ≤ 0 := by
+      by_contra hpos
+      exact hstrip ⟨not_le.mp hpos, hlt⟩
+    -- so it is a zero of the gamma factor
+    by_cases h0 : s ≠ 0 ∨ q ≠ 1
+    · have hΛ := completedLFunction_ne_zero_of_re_nonpos hχ hle h0
+      rw [DirichletCharacter.LFunction_eq_completed_div_gammaFactor _ _ h0, div_eq_zero_iff] at hs
+      have hγ : χ.gammaFactor s = 0 := hs.resolve_left hΛ
+      apply hnt
+      rcases χ.even_or_odd with he | ho
+      · rw [he.gammaFactor_def, Complex.Gammaℝ_eq_zero_iff] at hγ
+        obtain ⟨n, rfl⟩ := hγ
+        by_cases hq : q = 1
+        · have hn : n ≠ 0 := by
+            rintro rfl
+            simp [hq] at h0
+          obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hn
+          exact ⟨-2 * (m + 1), by simp [trivialZeros, hq], by push_cast; ring⟩
+        · have hodd : ¬ χ.Odd := fun ho ↦ χ.not_even_and_odd ⟨he, ho⟩
+          exact ⟨-2 * n, by simp [trivialZeros, hq, hodd], by push_cast; ring⟩
+      · rw [ho.gammaFactor_def, Complex.Gammaℝ_eq_zero_iff] at hγ
+        obtain ⟨n, hn⟩ := hγ
+        have hq : q ≠ 1 := by
+          rintro rfl
+          rw [DirichletCharacter.level_one χ] at ho
+          exact (1 : DirichletCharacter ℂ 1).not_even_and_odd ⟨map_one _, ho⟩
+        refine ⟨-2 * n - 1, by simp [trivialZeros, hq, ho], ?_⟩
+        push_cast
+        linear_combination -hn
+    · rw [not_or, not_not, not_not] at h0
+      obtain ⟨rfl, rfl⟩ := h0
+      rw [DirichletCharacter.LFunction_modOne_eq, riemannZeta_zero] at hs
+      norm_num at hs
+  · intro H q _ χ hχ s hpos _ hs
+    refine H q χ hχ s hs ?_
+    rintro ⟨z, hz, rfl⟩
+    have hz' : z ≤ 0 := by
+      simp only [trivialZeros] at hz
+      split_ifs at hz <;> obtain ⟨n, rfl⟩ := hz <;> omega
+    have : ((z : ℂ)).re ≤ 0 := by simpa using hz'
+    linarith
+
 end GRH
 
 /- NOTE: Extended Riemann Hypothesis
