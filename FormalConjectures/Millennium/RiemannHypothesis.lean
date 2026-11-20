@@ -37,6 +37,8 @@ continuation of the Dedekind zeta function.
 
 *References:*
 - [The Clay Institute](https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf)
+- L. Alpöge, [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf), 2026. Announces a
+  Lean proof of the Riemann Hypothesis and the Generalized Riemann Hypothesis.
 - [Wikipedia: Riemann hypothesis](https://en.wikipedia.org/wiki/Riemann_hypothesis)
 - [Wikipedia: Generalized Riemann hypothesis](https://en.wikipedia.org/wiki/Generalized_Riemann_hypothesis)
 - [Wikipedia: Dedekind zeta function](https://en.wikipedia.org/wiki/Dedekind_zeta_function)
@@ -48,6 +50,7 @@ continuation of the Dedekind zeta function.
 
 namespace RiemannHypothesis
 
+set_option linter.style.formal_proof_palomar false in
 /-- The **Riemann Hypothesis**: all non-trivial zeros of the Riemann zeta function have real
 part $\frac{1}{2}$. That is, if $\zeta(s) = 0$, $s \neq 1$, and $s$ is not a trivial zero
 $-2(n+1)$ for some $n \in \mathbb{N}$, then $\operatorname{Re}(s) = \frac{1}{2}$.
@@ -57,7 +60,8 @@ This is the official Millennium Prize Problem as posed by the
 
 This uses the `RiemannHypothesis` type from Mathlib, which is defined as
 `∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n : ℕ, s = -2 * (n + 1)) → s ≠ 1 → s.re = 1 / 2`. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/TomasOrtega/RH"]
 theorem riemannHypothesis : RiemannHypothesis := by
   sorry
 
@@ -76,10 +80,12 @@ def trivialZeros {q : ℕ} (χ : DirichletCharacter ℂ q) : Set ℤ :=
     if χ.Odd then { -2 * n - 1 | (n : ℕ) } else
       { - 2 * n | (n : ℕ) }
 
+set_option linter.style.formal_proof_palomar false in
 /-- The **Generalized Riemann Hypothesis** asserts that all the non-trivial zeros of the
 Dirichlet $L$-function $L(\chi, s)$ of a primitive Dirichlet character $\chi$ have real part
 $\frac{1}{2}$. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/TomasOrtega/RH"]
 theorem generalized_riemann_hypothesis (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q)
     (hχ : χ.IsPrimitive) (s : ℂ) (hs : χ.LFunction s = 0)
     (hs_nontrivial : s ∉ Int.cast '' trivialZeros χ) :

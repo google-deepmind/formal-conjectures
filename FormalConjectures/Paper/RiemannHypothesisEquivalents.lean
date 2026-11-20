@@ -48,7 +48,7 @@ theorem robin_criterion :
   sorry
 
 /-- The statement that Robin's criterion holds. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem robin_criterion_rhs {n : ℕ} (hn : n > 5040) :
     σ 1 n < exp eulerMascheroniConstant * n * log (log n) := by
   sorry
@@ -69,7 +69,7 @@ theorem lagarias_criterion : RiemannHypothesis ↔
   sorry
 
 /-- The statement that Lagarias' criterion holds. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem lagarias_criterion_rhs {n : ℕ} (hn : 1 < n) :
     σ 1 n < harmonic n + exp (harmonic n) * log (harmonic n) := by
   sorry
@@ -103,7 +103,7 @@ theorem li_criterion : RiemannHypothesis ↔ ∀ n > 0, 0 < lambda n := by
   sorry
 
 /-- The statement that Li's criterion holds. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem li_criterion_rhs {n : ℕ} (hn : 0 < n) : 0 < lambda n := by sorry
 
 /-- The function $\rho_{\theta} := \left\{\frac{\theta}{x}\right\}$ appearing in the
@@ -139,7 +139,7 @@ theorem beurling_nyman_criterion : RiemannHypothesis ↔
   sorry
 
 /-- The statement that the Beurling-Nyman criterion holds. -/
-@[category research open, AMS 11 28]
+@[category research solved, AMS 11 28]
 theorem beurling_nyman_criterion_rhs :
     Dense { fractScalarInvSumL2 n c θ | (n) (c) (θ)
       (hθ : ∀ ν, θ ν ∈ Set.Ioc 0 1) (h : ∑ ν, c ν * θ ν = 0) } := by
@@ -177,7 +177,7 @@ theorem weil_positivity_criterion :
   sorry
 
 /-- The statement that the Weil criterion holds. -/
-@[category research open, AMS 11 46]
+@[category research solved, AMS 11 46]
 theorem weil_positivity_criterion_rhs {g : C_c(ℝ, ℝ)} (hg : ContDiff ℝ ∞ g)
     (h : IsTestFunction g) :
     weilArchimedean (g ⋆ fun x ↦ g (-x)) +
