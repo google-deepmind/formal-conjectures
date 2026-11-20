@@ -5,6 +5,11 @@ on:
     - cron: '37 * * * *' # once an hour, 37 min past the hour
   workflow_dispatch: # Allow manual trigger
 
+# Two overlapping runs would each see no issue for a new mismatch and both open one.
+concurrency:
+  group: check-erdos-status
+  cancel-in-progress: false
+
 jobs:
   check:
     runs-on: ubuntu-latest

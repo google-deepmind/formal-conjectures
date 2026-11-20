@@ -18,7 +18,12 @@ import contextlib
 import io
 import unittest
 
-from check_erdos_status import issues_to_close, problem_status, yaml_status_to_category
+from check_erdos_status import (
+    issues_to_close,
+    plan_issue_sync,
+    problem_status,
+    yaml_status_to_category,
+)
 
 
 def issue(number, problem, repo="solved", site="formally solved"):
@@ -176,6 +181,53 @@ class IssuesToCloseTest(unittest.TestCase):
         issues = [issue(1, "71"), issue(2, "209"), issue(3, "353")]
         self.assertEqual(
             issues_to_close(issues, still_open={"209"}, known={"71", "209"}), [1])
+
+
+def mismatch(problem, repo="solved", site="formally solved"):
+    return {"number": problem, "lean_status": repo, "yaml_status": site}
+
+
+class PlanIssueSyncTest(unittest.TestCase):
+
+    def test_creates_an_issue_for_a_new_mismatch(self):
+        m = mismatch("71")
+        self.assertEqual(plan_issue_sync([m], []), ([m], [], []))
+
+    def test_an_open_issue_with_the_current_title_needs_nothing(self):
+        self.assertEqual(plan_issue_sync([mismatch("71")], [issue(100, "71")]), ([], [], []))
+
+    def test_does_not_match_a_problem_by_prefix(self):
+        # "Erdős Problem 4" is a prefix of "Erdős Problem 43". The issue for 43 must not
+        # count as an issue for 4.
+        m = mismatch("4")
+        self.assertEqual(plan_issue_sync([m], [issue(100, "43")]), ([m], [], []))
+
+    def test_retitles_an_issue_whose_sides_changed(self):
+        # Erdős 848: the issue says erdosproblems.com=solved, but the script now reads open.
+        m = mismatch("848", repo="formally solved", site="open")
+        old = issue(4053, "848", repo="formally solved", site="solved")
+        self.assertEqual(plan_issue_sync([m], [old]), ([], [(4053, m)], []))
+
+    def test_closes_newer_duplicates_and_keeps_the_oldest(self):
+        # Erdős 43 had #5119 and #7544 open together.
+        m = mismatch("43")
+        issues = [issue(7544, "43"), issue(5119, "43")]
+        self.assertEqual(plan_issue_sync([m], issues), ([], [], [(7544, 5119)]))
+
+    def test_retitles_only_the_kept_issue_of_a_duplicate_pair(self):
+        m = mismatch("43", site="open")
+        issues = [issue(5119, "43"), issue(7544, "43")]
+        self.assertEqual(plan_issue_sync([m], issues), ([], [(5119, m)], [(7544, 5119)]))
+
+    def test_leaves_issues_for_resolved_problems_to_issues_to_close(self):
+        self.assertEqual(
+            plan_issue_sync([], [issue(5119, "43"), issue(7544, "43")]), ([], [], []))
+
+    def test_ignores_issues_with_an_unrelated_title(self):
+        m = mismatch("71")
+        self.assertEqual(
+            plan_issue_sync([m], [{"number": 100, "title": "Something else entirely"}]),
+            ([m], [], []))
 
 
 if __name__ == "__main__":
