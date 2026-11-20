@@ -27,7 +27,7 @@ by *U. Haagerup* (1987)
 
 
 Let `m ∈ ℕ` and `A` be a complex `m × m` matrix such that for all complex numbers `s 1,...,s m`
-and `t 1,...,t m` satisfying `|s i|, |t j|≤ 1` it holds `|∑ (A i j) * (s j) * (t j)| ≤ 1`.
+and `t 1,...,t m` satisfying `|s i|, |t j|≤ 1` it holds `|∑ (A i j) * (s i) * (t j)| ≤ 1`.
 Let `n ∈ ℕ` and `x 1,...,x m` and `y 1,...,y m` be complex vectors in `ℂ ^ n` with
 `‖x i‖ , ‖y j‖ ≤ 1`. The complex Grothendieck constant `KGC` is the smallest number independent
 of `n` and `m` for which  `|∑ (A i j) * ⟪x i, y j⟫_ℂ| ≤ KGC` for every such matrix `A` and all
@@ -59,12 +59,15 @@ formulation, which is used here for simplicity.
 
 namespace ComplexGrothendieckConstant
 
-open Complex
+open Complex Matrix
 open scoped InnerProductSpace
-open Matrix
 
 /--
 The matrix property that appears in the complex Grothendieck inequality.
+
+Let `m ∈ ℕ` and `A` be a complex `m × m` matrix. Then it has the matrix property iff for all
+complex numbers `s 1,...,s m` and `t 1,...,t m` satisfying `|s i|, |t j|≤ 1` it holds
+`|∑ (A i j) * (s i) * (t j)| ≤ 1`.
 -/
 def HasMatrixProperty {m : ℕ} (A : Matrix (Fin m) (Fin m) ℂ) : Prop :=
   ∀ s t : Fin m → ℂ,
@@ -95,13 +98,16 @@ constant, since the supremum is bounded by the constant established in `exists_u
 def IsKGC (KGC : ℝ) : Prop :=
   IsUniversalConstant KGC ∧ ∀ K, IsUniversalConstant K → KGC ≤ K
 
-
+/--
+Haagerups "sensible candidate" conjectured as complex Grothendieck Constant in [Haa87], defined as
+`1/(∫_0^(π/2) (cos^2 θ)/√(1+sin^2 θ) dθ) ≈ 1.40458`
+-/
 noncomputable def haagerup_candidate.answer : ℝ :=
   (∫ θ in (0:ℝ)..(Real.pi / 2),
     Real.cos θ ^ 2 / √(1 + Real.sin θ ^ 2))⁻¹
 
 /--
-The complex Grothendieck Constant equals `1/(∫_0^(π/2) (cos^2 θ)/√(1+sin^2 θ) dθ) ≈ 1.40458`.
+The conjecture that the complex Grothendieck Constant equals `1/(∫_0^(π/2) (cos^2 θ)/√(1+sin^2 θ) dθ) ≈ 1.40458`.
 
 This was proposed as "sensible candidate" by Haagerup in [Haa87].
 -/
