@@ -32,6 +32,8 @@ public import FormalConjecturesUtil
   progressions and sumsets of squares_. Additive combinatorics (2007), 241-262.
 - [DiEl12] Dietmann, R. and Elsholtz, C., _Hilbert cubes in progression-free sets and in the set
   of squares II_. [arXiv:1207.1461](https://arxiv.org/abs/1207.1461) (2012).
+- [Ki26] Kitamura, K., *Erdős 782(i) — Quasi-progressions of squares have bounded length*
+  (2026), [Lean formalization](https://github.com/KitaKen1/erdos782-square-quasiprogressions/tree/35347ced7bf1513acec9044e4ebf4b540c66ce38).
 - [So07] Solymosi, J., _Elementary additive combinatorics_. Additive combinatorics (2007), 29-38.
 -/
 
@@ -74,6 +76,7 @@ theorem containsQuasiProgression_squares_three :
     show 1 + 24 * i + 24 ≤ 1 + 24 * (i + 1) ∧ 1 + 24 * (i + 1) ≤ 1 + 24 * i + 24 + 0
     omega
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Do the squares contain arbitrarily long quasi-progressions? That is, does there exist some
 constant $C>0$ such that, for any $k$, the squares contain a sequence $x_1,\ldots,x_k$ where, for
@@ -82,10 +85,14 @@ $$x_i+d\leq x_{i+1}\leq x_i+d+C.$$
 
 A question of Brown, Erdős, and Freedman [BEF90]. This is the first question. Here $C$ and $d$ are
 positive integers; $d\geq 1$ excludes constant sequences.
+
+The answer is no. See [Ki26] for a Lean proof.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/KitaKen1/erdos782-square-quasiprogressions/blob/35347ced7bf1513acec9044e4ebf4b540c66ce38/lean/Comparator/Candidate.lean#L11-L14"]
 theorem erdos_782.parts.i :
-    ∃ C : ℕ, 0 < C ∧ ∀ k : ℕ, ContainsQuasiProgression {n : ℕ | IsSquare n} C k := by
+    ¬ (∃ C : ℕ, 0 < C ∧ ∀ k : ℕ, ContainsQuasiProgression {n : ℕ | IsSquare n} C k) := by
   sorry
 
 /--
