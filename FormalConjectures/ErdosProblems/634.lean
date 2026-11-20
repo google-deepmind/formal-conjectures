@@ -32,19 +32,28 @@ abbrev Triangle := Affine.Triangle ℝ (EuclideanSpace ℝ (Fin 2))
 
 namespace Triangle
 
+/--
+Checks whether two triangles are interior disjoint.
+-/
 def InteriorDisjoint (t₁ t₂ : Triangle) : Prop :=
   t₁.interior ∩ t₂.interior = ∅
 
+/--
+Checks whether two triangles are congruent via sss argument.
+-/
 def Congruent (t₁ t₂ : Triangle) : Prop :=
   ({dist (t₁.points 0) (t₁.points 1), dist (t₁.points 1) (t₁.points 2),
     dist (t₁.points 2) (t₁.points 0)} : Multiset ℝ) =
   ({dist (t₂.points 0) (t₂.points 1), dist (t₂.points 1) (t₂.points 2),
     dist (t₂.points 2) (t₂.points 0)} : Multiset ℝ)
 
+/--
+Checks whether a triangle t is covered by a collection of triangles C
+-/
 def IsCoveredBy (t : Triangle) (C : Finset Triangle) : Prop :=
   (⋃ c ∈ C, c.closedInterior) = t.closedInterior
 
-/-
+/--
 Condition from Erdős Problem 634, `n` is congruent_triangle tileable, if
 there exists a triangle which can be cut into `n` congruent triangles.
 -/
