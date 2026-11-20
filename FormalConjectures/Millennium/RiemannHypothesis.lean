@@ -107,17 +107,18 @@ instead. -/
 def IsDedekindZeta (K : Type*) [Field K] [NumberField K] (Z : ℂ → ℂ) : Prop :=
   DifferentiableOn ℂ Z {1}ᶜ ∧ ∀ s : ℂ, 1 < s.re → Z s = NumberField.dedekindZeta K s
 
-/-- The **Riemann hypothesis for the Dedekind zeta function** $\zeta_K$ of a number field $K$:
-every zero of (the analytic continuation of) $\zeta_K$ in the critical strip
+/-- The **Extended Riemann Hypothesis** for a number field $K$: every zero of (the analytic
+continuation of) the Dedekind zeta function $\zeta_K$ in the critical strip
 $0 < \operatorname{Re} s < 1$ has real part $\frac{1}{2}$. -/
-def DedekindZetaRH (K : Type*) [Field K] [NumberField K] : Prop :=
+def ExtendedRiemannHypothesis (K : Type*) [Field K] [NumberField K] : Prop :=
   ∀ Z : ℂ → ℂ, IsDedekindZeta K Z → ∀ s : ℂ, 0 < s.re → s.re < 1 → Z s = 0 → s.re = 1 / 2
 
 /-- The **Extended Riemann Hypothesis**: for every number field $K$, all zeros of the Dedekind
 zeta function $\zeta_K$ in the critical strip $0 < \operatorname{Re} s < 1$ have real part
 $\frac{1}{2}$. -/
 @[category research open, AMS 11]
-theorem extended_riemann_hypothesis (K : Type*) [Field K] [NumberField K] : DedekindZetaRH K := by
+theorem extended_riemann_hypothesis (K : Type*) [Field K] [NumberField K] :
+    ExtendedRiemannHypothesis K := by
   sorry
 
 end ERH

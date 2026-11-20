@@ -64,7 +64,7 @@ Artin's conjecture. It is a special case of `ERH.extended_riemann_hypothesis`. -
 def HooleyHypothesis (a : ℤ) : Prop :=
   ∀ k : ℕ, Squarefree k →
     letI := NumberField.of_module_finite ℚ (X ^ k - C (a : ℚ)).SplittingField
-    DedekindZetaRH (X ^ k - C (a : ℚ)).SplittingField
+    ExtendedRiemannHypothesis (X ^ k - C (a : ℚ)).SplittingField
 
 /-- Let $S(a)$ be the set of primes such that $a$ is a primitive root modulo $p$. -/
 abbrev S (a : ℤ) : Set ℕ :=
