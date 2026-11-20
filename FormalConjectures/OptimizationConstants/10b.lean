@@ -159,11 +159,18 @@ def mem_Ioc_c10b.answer : ℝ := sorry
 theorem mem_Ioc_c10b : mem_Ioc_c10b.answer ∈ Set.Ioc 1.4 C10b := by
   sorry
 
+def c10b_eq.answer : ℝ := sorry
+
+/-- What is the exact value of the complex Grothendieck constant? -/
+@[category research open, question value, AMS 42 46 47]
+theorem c10b_eq : C10b = c10b_eq.answer := by
+  sorry
+
 /--
 Haagerups "sensible candidate" conjectured as complex Grothendieck Constant in [Haa87], defined as
 `1/(∫_0^(π/2) (cos^2 θ)/√(1+sin^2 θ) dθ) ≈ 1.40458`
 -/
-noncomputable def haagerup_candidate.answer : ℝ :=
+noncomputable def c10b_eq_haagerup.answer : ℝ :=
   (∫ θ in (0:ℝ)..(Real.pi / 2),
     Real.cos θ ^ 2 / √(1 + Real.sin θ ^ 2))⁻¹
 
@@ -173,7 +180,7 @@ The conjecture that the complex Grothendieck Constant equals `1/(∫_0^(π/2) (c
 This was proposed as "sensible candidate" by Haagerup in [Haa87].
 -/
 @[category research open, question value, AMS 42 46 47]
-theorem haagerup_candidate : C10b = haagerup_candidate.answer := by
+theorem c10b_eq_haagerup : C10b = c10b_eq_haagerup.answer := by
   sorry
 
 end Constant10b
