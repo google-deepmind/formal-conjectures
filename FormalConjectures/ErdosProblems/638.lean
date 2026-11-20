@@ -63,15 +63,15 @@ Note: The intended question likely requires that $S$ be closed under taking fini
 as a counterexample is otherwise reasonably easy to construct.
 -/
 @[category research open, question, AMS 5]
-theorem erdos_638 (S : ∀ n : ℕ, Set (SimpleGraph (Fin n))) :
+theorem erdos_638.{u} (S : ∀ n : ℕ, Set (SimpleGraph (Fin n))) :
   ClosedUnderFiniteSubgraphs S ∧
   (∀ c : ℕ, 0 < c →
     ∃ (n : ℕ) (G : SimpleGraph (Fin n)),
       G ∈ S n ∧
     ∀ coloring : G.EdgeLabeling (Fin c),
       HasMonochromaticTriangle G coloring) →
-  (∀ k : Cardinal, Cardinal.aleph0 ≤ k →
-    ∃ (W: Type*) (G : SimpleGraph W),
+  (∀ k : Cardinal.{u}, Cardinal.aleph0 ≤ k →
+    ∃ (W: Type (u + 1)) (G : SimpleGraph W),
       (∀ (n : ℕ) (H : SimpleGraph (Fin n)),
         Nonempty (SimpleGraph.Copy H G) → H ∈ S n) ∧
       (∀ coloring : G.EdgeLabeling (Quotient.out k),
