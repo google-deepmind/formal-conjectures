@@ -32,8 +32,8 @@ If $ is a field and $A$ is in $GL(n,F)$, then there is a permutation matrix $P$ 
 that is, the minimal polynomial of $AP$ is also its characteristic polynomial.
 -/
 @[category research open, AMS 20]
-theorem kourovka_16_95 {n: Type*} [Fintype n] [DecidableEq n]:
-    ∀ (A: Matrix n n ℝ), A.rank = Fintype.card n →
+theorem kourovka_16_95 {F : Type*} [Field F] {n: Type*} [Fintype n] [DecidableEq n]:
+    ∀ (A: Matrix n n F), A.rank = Fintype.card n →
     (∃(σ :Equiv.Perm n), minpoly ℝ (A * (σ.permMatrix ℝ))=(A * (σ.permMatrix ℝ)).charpoly)
  := by
   sorry
