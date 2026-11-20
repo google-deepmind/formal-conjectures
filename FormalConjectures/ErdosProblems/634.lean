@@ -20,7 +20,8 @@ public import FormalConjecturesUtil
 /-!
 Erdős Problem 634
 
-*Reference:* [erdosproblems.com/634](https://www.erdosproblems.com/634)
+*References:*
+- [erdosproblems.com/634](https://www.erdosproblems.com/634)
 -/
 
 @[expose] public section
@@ -36,24 +37,22 @@ def InteriorDisjoint (t₁ t₂ : Triangle) : Prop :=
 
 def Congruent (t₁ t₂ : Triangle) : Prop :=
   ({dist (t₁.points 0) (t₁.points 1), dist (t₁.points 1) (t₁.points 2),
-    dist (t₁.points 2) (t₁.points 0)} : Multiset ℝ ) =
+    dist (t₁.points 2) (t₁.points 0)} : Multiset ℝ) =
   ({dist (t₂.points 0) (t₂.points 1), dist (t₂.points 1) (t₂.points 2),
-    dist (t₂.points 2) (t₂.points 0)} : Multiset ℝ )
+    dist (t₂.points 2) (t₂.points 0)} : Multiset ℝ)
 
-def IsCoveredBy (t : Triangle)
-    (C : Finset Triangle) : Prop :=
+def IsCoveredBy (t : Triangle) (C : Finset Triangle) : Prop :=
   (⋃ c ∈ C, c.closedInterior) = t.closedInterior
 
 /-
-Condition from Erdős Problem 634,
-'n' is congruent_triangle tileable, if
-there exists a triagle which can be cut into 'n' congruent triangles.
+Condition from Erdős Problem 634, `n` is congruent_triangle tileable, if
+there exists a triangle which can be cut into `n` congruent triangles.
 -/
 def IsCongruentTriangleTileable (n : ℕ) : Prop :=
   ∃ t : Triangle,
     ∃ C : Finset Triangle,
       C.card = n ∧
-      (∀ t₁ t₂ : C, t₁≠ t₂ → InteriorDisjoint t₁ t₂) ∧
+      (∀ t₁ t₂ : C, t₁ ≠ t₂ → InteriorDisjoint t₁ t₂) ∧
       (∀ t₁ t₂ : C, Congruent t₁ t₂) ∧
       IsCoveredBy t C
 
@@ -62,7 +61,8 @@ end Triangle
 def erdos_634.answer : Set ℕ := sorry
 
 /--
-Find all positive integers 'n' such that there exists a triangle which can be cut into 'n' congruent triangles.
+Find all positive integers `n` such that
+there exists a triangle that can be cut into `n` congruent triangles.
 -/
 @[category research open, question value, AMS 52]
 theorem erdos_634 : erdos_634.answer = {n : ℕ | Triangle.IsCongruentTriangleTileable n} := by
