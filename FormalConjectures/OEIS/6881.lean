@@ -31,7 +31,7 @@ References:
 namespace OeisA6881
 
 /--
-"Conjecture: The sums of two elements of a(n) forms a set that includes all primes greater than
+"Conjecture: The sums of two elements of [the sequence of squarefree semiprimes] forms a set that includes all primes greater than
 or equal to 29 and all integers greater than or equal to 83 (and many below 83)."
 - Richard R. Forberg, Mar 04 2015, [A006881](https://oeis.org/A006881)
 -/
