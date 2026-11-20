@@ -32,7 +32,7 @@ open Filter Finset
 
 namespace Constant4a
 /-- **Tao's Optimization constant 4a / The cap set constant**:
-The largest constant $C$ such that $r(n) \leq C^{(1+o(1)) n}$, where $r(n)$ is the size of the largest cap set in $\mathbb{F}_{3}^{n}$, i.e., a set that does not contain any lines (length three progressions).
+The smallest constant $C$ such that $r(n) \leq C^{(1+o(1)) n}$, where $r(n)$ is the size of the largest cap set in $\mathbb{F}_{3}^{n}$, i.e., a set that does not contain any lines (length three progressions).
 -/
 
 @[optimization_constant "4a"]
@@ -42,7 +42,7 @@ noncomputable def C4a : ℝ :=
 
 set_option linter.style.formal_proof_palomar false in
 /-- The best known upper bound, $3/8 \sqrt[3]{207+33\sqrt{33}}$, proved in [EG2016]. -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/lean-forward/cap_set_problem"]
+@[category research solved, AMS 5, formal_proof using other_system at "https://github.com/lean-forward/cap_set_problem/blob/095a2f18f81c551a0053f2e65806de751e438fc4/src/section_13b.lean#L786"]
 theorem c4a_upper_bound : C4a ≤ 3 / 8 * (207 + 33 * √ 33) ^ (1 / (3 : ℝ)) := by
   sorry
 
