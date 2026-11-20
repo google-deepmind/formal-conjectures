@@ -24,17 +24,18 @@ On Wikipedia and in [OEIS A004490](https://oeis.org/A004490) ($2, 6, 12, 60, 120
 integer $n > 1$ is called *colossally abundant* when some $\varepsilon > 0$ satisfies
 $\sigma_1(n) / n^{1+\varepsilon} \ge \sigma_1(k) / k^{1+\varepsilon}$ for every $k > 1$. In their
 1944 introduction [AE44, p. 448], Alaoglu and Erdős instead required $\ge$ for $1 \le m < n$ and
-strict $>$ for $m > n$, selecting the greatest maximizer at $\varepsilon$ in accordance with the
-floor formula of [AE44, Theorem 10, p. 455]; `IsAlaogluErdosColossallyAbundant` below uses the
-dual least-maximizer condition ($>$ for $1 \le m < n$ and $\ge$ for $m > n$, printed at the top of
-[AE44, p. 455]), which yields the same set as $\varepsilon > 0$ varies. Alaoglu and Erdős [AE44]
-predicted that consecutive colossally abundant integers always differ by a prime factor, reducing
-this claim to showing that $p^x, q^x \in \mathbb{Q}$ with distinct primes $p \ne q$ forces
-$x \in \mathbb{Z}$ (cf. `Exponentials.four_exponentials_conjecture`). Combined with the six
-exponentials theorem of Lang [La66] and Ramachandra [Ra68] (communicated for prime bases by Siegel
-in [AE44, p. 455]), [AE44] yields unconditionally that consecutive [AE44] colossally abundant
-integers have prime or squarefree-semiprime ratio, and that at most four integers $n > 1$ share any
-maximizer exponent $\varepsilon > 0$ (studied further by Erdős and Nicolas [EN75]).
+strict $>$ for $m > n$, selecting the greatest maximizer at $\varepsilon$. By contrast, the
+inequalities on [AE44, p. 455] and the prime-exponent formula of [AE44, Theorem 10, p. 455] (where
+$[x]$ denotes the largest integer $< x$) select the least maximizer ($>$ for $1 \le m < n$ and
+$\ge$ for $m > n$, formalized as `IsAlaogluErdosColossallyAbundant` below), which defines the same
+set as $\varepsilon > 0$ varies. Alaoglu and Erdős [AE44] predicted that consecutive colossally
+abundant integers always differ by a prime factor, reducing this claim to showing that
+$p^x, q^x \in \mathbb{Q}$ with distinct primes $p \ne q$ forces $x \in \mathbb{Z}$ (cf.
+`Exponentials.four_exponentials_conjecture`). Combined with the six exponentials theorem of Lang
+[La66] and Ramachandra [Ra68] (communicated for prime bases by Siegel in [AE44, p. 455]), [AE44]
+yields unconditionally that consecutive [AE44] colossally abundant integers have prime or
+squarefree-semiprime ratio, and that at most four integers $n > 1$ share any maximizer exponent
+$\varepsilon > 0$ (studied further by Erdős and Nicolas [EN75]).
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Colossally_abundant_number)
@@ -68,11 +69,14 @@ def AreConsecutiveColossallyAbundant (m n : ℕ) : Prop :=
 /-- `IsAlaogluErdosColossallyAbundant n` holds when $n > 1$ is the least maximizer of
 $\sigma_1(m) / m^{1+\varepsilon}$ at some $\varepsilon > 0$:
 $\sigma_1(m) / m^{1+\varepsilon} < \sigma_1(n) / n^{1+\varepsilon}$ for $1 \le m < n$ and
-$\sigma_1(m) / m^{1+\varepsilon} \le \sigma_1(n) / n^{1+\varepsilon}$ for $m > n$ (as printed at
-the top of [AE44, p. 455]). By contrast, [AE44, p. 448] imposes $\le$ on $1 \le m < n$ and $<$ on
-$m > n$, picking the greatest maximizer in agreement with the prime-exponent floor formula of
-[AE44, Theorem 10, p. 455], whereas Wikipedia's `IsColossallyAbundant` uses $\le$ on both sides.
-Since $\sigma_1(m) / m^{1+\varepsilon} \to 0$ as $m \to \infty$ uniformly on compact subsets of
+$\sigma_1(m) / m^{1+\varepsilon} \le \sigma_1(n) / n^{1+\varepsilon}$ for $m > n$, matching the
+inequalities on [AE44, p. 455] and the prime-exponent formula
+$k_q(\varepsilon) = [\log((q^{1+\varepsilon} - 1) / (q^\varepsilon - 1)) / \log q] - 1$ of
+[AE44, Theorem 10, p. 455], where $[x]$ denotes the largest integer $< x$ (giving $j - 2$ rather
+than $\lfloor j \rfloor - 1 = j - 1$ at an integer $j$, thus choosing $q^{j-2}$ over $q^{j-1}$). By
+contrast, [AE44, p. 448] imposes $\le$ on $1 \le m < n$ and $<$ on $m > n$ (picking the greatest
+maximizer), whereas Wikipedia's `IsColossallyAbundant` uses $\le$ on both sides. Since
+$\sigma_1(m) / m^{1+\varepsilon} \to 0$ as $m \to \infty$ uniformly on compact subsets of
 $(0, \infty)$, only finitely many $m$ can contend near a given $\varepsilon$: nudging
 $\varepsilon$ upward turns any least maximizer into the sole maximizer, while nudging
 $\varepsilon$ downward isolates any greatest maximizer, so both one-sided definitions yield the
@@ -85,9 +89,10 @@ def IsAlaogluErdosColossallyAbundant (n : ℕ) : Prop :=
       (σ 1 m : ℝ) / (m : ℝ) ^ (1 + ε) ≤ (σ 1 n : ℝ) / (n : ℝ) ^ (1 + ε))
 
 /-- `AreConsecutiveAlaogluErdosColossallyAbundant m n` holds when $m < n$ both satisfy
-`IsAlaogluErdosColossallyAbundant` and no integer strictly between them does; because the least-
-and greatest-maximizer conventions produce the same set across $\varepsilon > 0$, this matches
-consecutiveness in [AE44, pp. 448, 455]. -/
+`IsAlaogluErdosColossallyAbundant` and no integer strictly between them does; because the
+least-maximizer convention of [AE44, p. 455] and the greatest-maximizer convention of
+[AE44, p. 448] define the same set across $\varepsilon > 0$, both notions of consecutiveness
+coincide. -/
 def AreConsecutiveAlaogluErdosColossallyAbundant (m n : ℕ) : Prop :=
   m < n ∧ IsAlaogluErdosColossallyAbundant m ∧ IsAlaogluErdosColossallyAbundant n ∧
     ∀ k : ℕ, m < k → k < n → ¬ IsAlaogluErdosColossallyAbundant k
@@ -187,12 +192,11 @@ theorem infinite_colossallyAbundant :
 
 /-- Unconditional prime-or-squarefree-semiprime ratio theorem [AE44, p. 455]: if $m < n$ satisfy
 `AreConsecutiveAlaogluErdosColossallyAbundant m n`, then $n / m$ is either prime or a product of two
-distinct primes (proved via the six exponentials theorem [La66, Ra68]). Because varying
-$\varepsilon > 0$ yields the same set of integers under `IsAlaogluErdosColossallyAbundant` as under
-[AE44, pp. 448, 455]'s greatest-maximizer convention, the theorem applies unchanged; some one-sided
-strict tie-breaker is needed, since a four-way tie $n, np, nq, npq$ with primes $p < q$ under
-two-sided non-strict `IsColossallyAbundant` would include consecutive terms $np, nq$ of ratio
-$q / p$. -/
+distinct primes (proved via the six exponentials theorem [La66, Ra68]). Varying $\varepsilon > 0$
+yields the same set of integers under `IsAlaogluErdosColossallyAbundant` as under [AE44, p. 448]'s
+greatest-maximizer convention, so both give the same consecutive pairs; some one-sided strict
+tie-breaker is needed, since a four-way tie $n, np, nq, npq$ with primes $p < q$ under two-sided
+non-strict `IsColossallyAbundant` would include consecutive terms $np, nq$ of ratio $q / p$. -/
 @[category research solved, AMS 11]
 theorem alaoglu_erdos_prime_or_semiprime_ratio (m n : ℕ)
     (h : AreConsecutiveAlaogluErdosColossallyAbundant m n) :
