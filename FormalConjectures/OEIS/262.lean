@@ -19,16 +19,13 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# $\exp(x/(1-x))$ and $\exp(x/(1-x)^2)$ modulo $k$
+# Sets of lists
 
-Peter Bala conjectured that the e.g.f. coefficients $a(n)$ of $\exp(x/(1-x))$ (A000262) and of
-$\exp(x/(1-x)^2)$ (A082579) satisfy $k \mid a(n+k) - a(n)$ for all $n$ and all $k \ge 2$, and proved
-it in his note: if $\sum a(n) x^n/n! = F(x)\exp(x G(x))$ with $F, G \in \mathbb{Z}[[x]]$ and $G(0) =
-1$, then $a(n + k) \equiv a(n) \pmod k$.
+$a(n)$ is the number of partitions of $\{1, \ldots, n\}$ into any number of lists, where a list
+is an ordered subset. Its e.g.f. is $\sum_{n \ge 0} a(n) x^n/n! = \exp(x/(1-x))$.
 
 *References:*
-- [A000262](https://oeis.org/A000262) and [A082579](https://oeis.org/A082579): conjecture by Peter
-  Bala, Nov 14 2017; proved by him, Jan 20 2018.
+- [A000262](https://oeis.org/A000262), N. J. A. Sloane.
 - [Ba17] P. Bala, [Integer sequences that become periodic on reduction modulo k for all
   k](https://oeis.org/A047974/a047974_1.pdf), Dec 03 2017, Theorem 1.
 -/
@@ -47,9 +44,31 @@ noncomputable def egf (a : ℕ → ℤ) : ℚ⟦X⟧ :=
 def PeriodicModAll (a : ℕ → ℤ) : Prop :=
   ∀ n k : ℕ, 2 ≤ k → a (n + k) ≡ a n [ZMOD k]
 
+@[category test, AMS 11]
+theorem a_0 (a : ℕ → ℤ) (h : egf a = (exp ℚ).subst (X * (1 - X)⁻¹)) : a 0 = 1 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_1 (a : ℕ → ℤ) (h : egf a = (exp ℚ).subst (X * (1 - X)⁻¹)) : a 1 = 1 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_2 (a : ℕ → ℤ) (h : egf a = (exp ℚ).subst (X * (1 - X)⁻¹)) : a 2 = 3 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_3 (a : ℕ → ℤ) (h : egf a = (exp ℚ).subst (X * (1 - X)⁻¹)) : a 3 = 13 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_4 (a : ℕ → ℤ) (h : egf a = (exp ℚ).subst (X * (1 - X)⁻¹)) : a 4 = 73 := by
+  sorry
+
 /--
 Bala's Theorem 1 [Ba17]: if $\sum a(n) x^n/n! = F(x)\exp(x G(x))$ with $F, G \in \mathbb{Z}[[x]]$
 and $G(0) = 1$, then $a(n + k) \equiv a(n) \pmod k$ for all $n$ and $k$.
+
+Formal proof by Wentao Li, with AI assistance. It follows Bala's recurrence argument [Ba17].
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000009"]
@@ -60,26 +79,21 @@ theorem bala_theorem1 :
   sorry
 
 /--
-"We conjecture that for k = 2,3,4,..., the difference a(n+k) - a(n) is divisible by k." - Peter
-Bala, Nov 14 2017; "The above conjecture is true." - Peter Bala, Jan 20 2018 (A000262).
+"We conjecture that for k = 2,3,4,..., the difference a(n+k) - a(n) is divisible by k: if true,
+then for each k the sequence a(n) taken modulo k is periodic with period dividing k."
+- Peter Bala, Nov 14 2017.
 
-The e.g.f. $\exp(x/(1-x))$ has a unique integer coefficient sequence, and it satisfies the claim.
+The theorem states that $\exp(x/(1-x))$ has a unique integer coefficient sequence and that this
+sequence satisfies the conjecture. Bala proved the conjecture [Ba17]. Formal proof by Wentao Li,
+with AI assistance, from Bala's Theorem 1 with $F = 1$ and $G = 1/(1-x)$. Ahaan Kallat gave an
+independent Lean proof of the congruence by a different route, in
+[ahaankallat/congruence-phenomena-higher-order-lean](https://github.com/ahaankallat/congruence-phenomena-higher-order-lean/tree/8ca3c4250c58f47eadabd82bcd5650f3d0632d7b).
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000009"]
-theorem a000262 :
+theorem conjecture :
     (∃! a : ℕ → ℤ, egf a = (exp ℚ).subst (X * (1 - X)⁻¹)) ∧
       ∀ a : ℕ → ℤ, egf a = (exp ℚ).subst (X * (1 - X)⁻¹) → PeriodicModAll a := by
-  sorry
-
-/--
-The same claim for A082579, with e.g.f. $\exp(x/(1-x)^2)$ (Peter Bala, 2017–2018).
--/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000009"]
-theorem a082579 :
-    (∃! a : ℕ → ℤ, egf a = (exp ℚ).subst (X * ((1 - X) ^ 2)⁻¹)) ∧
-      ∀ a : ℕ → ℤ, egf a = (exp ℚ).subst (X * ((1 - X) ^ 2)⁻¹) → PeriodicModAll a := by
   sorry
 
 end OeisA262
