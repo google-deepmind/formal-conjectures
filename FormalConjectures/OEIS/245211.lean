@@ -192,4 +192,20 @@ theorem conjecture.variants.omega_le_five (n : ℕ) (hn : 0 < n) (hΩ : Ω n ≤
     a n = n ↔ n = 21 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
+/--
+Unconditional confirmation of `conjecture` for all positive integers $n$ with at most six
+prime factors counted with multiplicity ($\Omega(n) \le 6$): $a(n) = n \iff n = 21$.
+Proved across all 11 partitions of $6$ by combining the General Parity Obstruction Theorem,
+modular and divisibility exclusions for $p^5 q$, $p^4 q^2$, $p^2 q^2 r^2$, and $p^4 q r$,
+the 6-prime growth bound ($p \ge 181$), and Cunningham prime-factor forced closure across
+$37 \le p \le 179$.
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/mariyaholic/lean-fc-proofs/blob/b014d8dea23f9a186467478ed63928cea115181c/lean/oeis-a245211/OeisA245211/OmegaSix.lean#L1721"]
+theorem conjecture.variants.omega_le_six (n : ℕ) (hn : 0 < n) (hΩ : Ω n ≤ 6) :
+    a n = n ↔ n = 21 := by
+  sorry
+
 end OeisA245211
