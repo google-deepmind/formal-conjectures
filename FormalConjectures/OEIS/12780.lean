@@ -18,28 +18,13 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# OEIS A012780, Bala's periodicity conjecture for $\arcsin(\tan x)$
+# Expansion of $\arcsin(\tan x)$
 
-OEIS A012780 is "Expansion of e.g.f. arcsin(tan(x)) (odd powers only)", with offset 0:
-$a(n) = (2n+1)!\,[x^{2n+1}] \arcsin(\tan x)$, so $a = 1, 3, 45, 1743, 133305, \dots$.
-Peter Bala conjectured (February 15, 2026): "the sequence {a(n)} reduced modulo a positive integer
-k is eventually periodic with the period dividing phi(k)." It is stated here as: for every
-$k \ge 1$ there is $N$ with $a(n + \varphi(k)) \equiv a(n) \pmod k$ for all $n \ge N$. Then
-$\varphi(k)$ is an eventual period, and the least eventual period divides every eventual period.
-
-The file also states the results behind the conjecture: the congruences modulo $2^e$ and modulo
-odd prime powers $p^e$, with their pre-periods, and the conjecture with an explicit pre-period.
-It also states that $\lambda(8) = 2$ is not an eventual period modulo $8$, so $\varphi(k)$
-cannot be replaced by the Carmichael function $\lambda(k)$ in general.
-
-In Lean, $\arcsin$ is its Maclaurin series
-$\sum_{k \ge 0} \binom{2k}{k} u^{2k+1} / (4^k (2k+1))$, $\tan$ is `sin ℚ * (cos ℚ)⁻¹`, and
-$\arcsin(\tan x)$ is the substitution `arcsin.subst tan`. Each theorem also states that every
-$a(n)$ is an integer: it provides an integer sequence `b` with `b n = a n` for all `n`.
+The sequence lists the coefficients of the odd powers in the exponential generating function
+$\arcsin(\tan x)$: $a(n) = (2n+1)!\,[x^{2n+1}] \arcsin(\tan x)$ for $n \ge 0$.
 
 *References:*
-- Patrick Demichel, [A012780](https://oeis.org/A012780); the conjecture is Peter Bala's comment
-  of February 15, 2026.
+- [A012780](https://oeis.org/A012780), Patrick Demichel.
 -/
 
 @[expose] public section
@@ -56,30 +41,68 @@ noncomputable def arcsin : ℚ⟦X⟧ :=
 /-- The Maclaurin series $\tan x = \sin x / \cos x$. -/
 noncomputable def tan : ℚ⟦X⟧ := sin ℚ * (cos ℚ)⁻¹
 
-/-- OEIS A012780: $a(n) = (2n+1)!\,[x^{2n+1}] \arcsin(\tan x)$. -/
+/-- $a(n) = (2n+1)!\,[x^{2n+1}] \arcsin(\tan x)$, where `arcsin.subst tan` is the composition
+$\arcsin(\tan x)$. The values lie in $\mathbb{Q}$, so the theorems below state integrality with
+an integer sequence $b$ such that $b(n) = a(n)$ for all $n$. -/
 noncomputable def a (n : ℕ) : ℚ := (2 * n + 1).factorial * coeff (2 * n + 1) (arcsin.subst tan)
 
-/-- Bala's conjecture for OEIS A012780: every $a(n)$ is an integer, and for every $k \ge 1$ the
-sequence $a(n) \bmod k$ is eventually periodic with period dividing $\varphi(k)$. -/
+@[category test, AMS 11]
+theorem a_0 : a 0 = 1 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_1 : a 1 = 3 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_2 : a 2 = 45 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 1743 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 133305 := by
+  sorry
+
+/--
+"Conjecture: the sequence {a(n)} reduced modulo a positive integer k is eventually periodic
+with the period dividing phi(k)."
+- Peter Bala, Feb 15 2026.
+
+The theorem states that for every $k \ge 1$ there is $N$ with
+$a(n + \varphi(k)) \equiv a(n) \pmod k$ for all $n \ge N$. This is equivalent, since the least
+eventual period divides every eventual period. The theorem also states that every $a(n)$ is an
+integer.
+
+Proved by Wentao Li, with AI assistance, using known methods of Y. Nishibuchi, A. Kallat and
+R. Blanco Gómez.
+-/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000023"]
-theorem bala_conjecture :
+theorem conjecture :
     ∃ b : ℕ → ℤ, (∀ n, (b n : ℚ) = a n) ∧
       ∀ k : ℕ, 1 ≤ k → ∃ N : ℕ, ∀ n ≥ N, b (n + k.totient) ≡ b n [ZMOD k] := by
   sorry
 
 /-- The conjecture with an explicit pre-period: $a(n + \varphi(k)) \equiv a(n) \pmod k$ for every
-$k \ge 1$ and every $n$ such that $2n$ is at least the exponent of each odd prime in $k$. -/
+$k \ge 1$ and every $n$ such that $2n$ is at least the exponent of each odd prime in $k$.
+
+Proved by Wentao Li, with AI assistance, using known methods of Y. Nishibuchi, A. Kallat and
+R. Blanco Gómez. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000023"]
-theorem bala_explicit :
+theorem conjecture_explicit :
     ∃ b : ℕ → ℤ, (∀ n, (b n : ℚ) = a n) ∧
       ∀ k n : ℕ, 1 ≤ k →
         (∀ p : ℕ, p.Prime → p ≠ 2 → k.factorization p ≤ 2 * n) →
         b (n + k.totient) ≡ b n [ZMOD k] := by
   sorry
 
-/-- The prime $2$: $a(n + 2^{e-1}) \equiv a(n) \pmod{2^e}$ for every $e \ge 1$ and every $n$. -/
+/-- The prime $2$: $a(n + 2^{e-1}) \equiv a(n) \pmod{2^e}$ for every $e \ge 1$ and every $n$.
+
+Proved by Wentao Li, with AI assistance, using a form of Y. Nishibuchi's criterion. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000023"]
 theorem period_two_pow :
@@ -88,7 +111,10 @@ theorem period_two_pow :
   sorry
 
 /-- Odd primes: $a(n + \varphi(p^e)) \equiv a(n) \pmod{p^e}$ for every odd prime $p$, every
-$e \ge 1$ and every $n \ge e/2$. -/
+$e \ge 1$ and every $n \ge e/2$.
+
+Proved by Wentao Li, with AI assistance, using the $p$-local form of the method of A. Kallat and
+R. Blanco Gómez. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000023"]
 theorem period_odd_prime_pow :
@@ -98,7 +124,10 @@ theorem period_odd_prime_pow :
   sorry
 
 /-- Modulo $8$, the shift $2 = \lambda(8)$ is not an eventual period:
-$a(n + 2) \not\equiv a(n) \pmod 8$ for every $n$. -/
+$a(n + 2) \not\equiv a(n) \pmod 8$ for every $n$. So the Carmichael function $\lambda(k)$ cannot
+replace $\varphi(k)$ in `conjecture`.
+
+Proved by Wentao Li, with AI assistance. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000023"]
 theorem not_period_two_mod_eight :
