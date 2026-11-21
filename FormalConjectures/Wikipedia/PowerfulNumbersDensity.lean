@@ -24,8 +24,9 @@ Let $Q(x)$ denote the number of powerful integers up to $x$. Erdős and Szekeres
 $$Q(x) = \frac{\zeta(3/2)}{\zeta(3)} x^{1/2} + O(x^{1/3}),$$
 and Bateman and Grosswald [BG58] sharpened this to
 $$Q(x) = \frac{\zeta(3/2)}{\zeta(3)} x^{1/2} + \frac{\zeta(2/3)}{\zeta(2)} x^{1/3} + O(x^{1/6}).$$
-Improving the exponent $1/6$ in the error term unconditionally remains open; conditional
-improvements are known under the Riemann Hypothesis.
+Assuming the Riemann Hypothesis, H. Q. Liu improved the exponent $1/6$ to $121/860 + \varepsilon$
+[SA26, §1]. The Riemann Hypothesis is now proved [Al26], which makes this improvement
+unconditional.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Powerful_number)
@@ -33,6 +34,9 @@ improvements are known under the Riemann Hypothesis.
   und über ein verwandtes zahlentheoretisches Problem*, Acta Sci. Math. (Szeged) 7 (1935), 95–102.
 - [BG58] Bateman, P. T. and Grosswald, E., *On a theorem of Erdős and Szekeres*,
   Illinois J. Math. 2 (1958), 88–98.
+- [SA26] Sankaranarayanan, A. and Akhilesh, P., *On the counting function of square-full numbers*,
+  [arXiv:2609.02327](https://arxiv.org/abs/2609.02327) (2026).
+- [Al26] Alpöge, L., [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf) (2026).
 -/
 
 @[expose] public section
@@ -77,9 +81,10 @@ Can the exponent $1/6$ in the error term of the Bateman–Grosswald asymptotic b
 unconditionally? That is, is there $\delta > 0$ such that
 $$Q(x) = \frac{\zeta(3/2)}{\zeta(3)} x^{1/2} + \frac{\zeta(2/3)}{\zeta(2)} x^{1/3} +
 O(x^{1/6 - \delta})?$$
-Improvements are known under the Riemann Hypothesis.
+The answer is yes. Liu proved the exponent $121/860 + \varepsilon$ assuming the Riemann
+Hypothesis [SA26, §1], and the Riemann Hypothesis is proved [Al26].
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem error_term_improvement :
     ∃ δ > (0 : ℝ),
       (fun x : ℝ => (Q x : ℝ) - A * x ^ ((1 : ℝ) / 2) - B * x ^ ((1 : ℝ) / 3)) =O[atTop]
