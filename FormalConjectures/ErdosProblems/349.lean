@@ -19,7 +19,12 @@ public import FormalConjecturesUtil
 
 /-! # Erdős Problem 349
 
-*Reference:* [erdosproblems.com/349](https://www.erdosproblems.com/349)
+*References:*
+- [erdosproblems.com/349](https://www.erdosproblems.com/349)
+- [ErGr80] Erdős, P., and Graham, R. L., *Old and new problems and results in combinatorial
+  number theory*, Monographies de L'Enseignement Mathématique **28** (1980), §6, p. 57.
+- [Gr64e] Graham, R. L., *On a conjecture of Erdős in additive number theory*,
+  Acta Arith. **10** (1964), 63–70. [doi:10.4064/aa-10-1-63-70](https://doi.org/10.4064/aa-10-1-63-70)
 -/
 
 @[expose] public section
@@ -29,12 +34,28 @@ namespace Erdos349
 open Set Filter Real Nat Function
 
 
-/--
-This defines the core property of the problem: For what values of $t,\alpha \in (0,\infty)$
-is the sequence $\lfloor t\alpha^n\rfloor$ complete?
--/
+/-- Completeness of the set of values of $\lfloor t\alpha^n\rfloor$ for $n \ge 0$,
+with each distinct value usable at most once. The auxiliary statements below use this
+value-set predicate, not the indexed-sequence predicate `IsGoodPairIndexed`. -/
 def IsGoodPair (t α : ℝ) : Prop :=
   IsAddComplete (range (fun n ↦ ⌊t * α ^ n⌋))
+
+/-- Completeness of the sequence $(\lfloor t\alpha^n\rfloor)_{n \ge 1}$ in the
+indexed sense of [Gr64e, §§1–2]: a finite sum may use each index at most once,
+including equal-valued terms at different indices. -/
+def IsGoodPairIndexed (t α : ℝ) : Prop :=
+  IsAddCompleteNatSeq' (fun n : ℕ ↦ (⌊t * α ^ (n + 1)⌋ : ℤ))
+
+/-- Repeated values at distinct indices can be used separately in the source sequence. -/
+@[category test, AMS 11]
+theorem isGoodPairIndexed_one_one : IsGoodPairIndexed 1 1 := by
+  change ∀ᶠ k : ℤ in Filter.atTop,
+    ∃ B : Finset ℕ, k = ∑ i ∈ B, (⌊(1 : ℝ) * 1 ^ (i + 1)⌋ : ℤ)
+  refine Filter.eventually_atTop.2 ⟨0, ?_⟩
+  intro k hk
+  refine ⟨Finset.range k.toNat, ?_⟩
+  have hcast : (k.toNat : ℤ) = k := by omega
+  simpa using hcast.symm
 
 def erdos_349.answer : Set (ℝ × ℝ) := sorry
 
@@ -44,7 +65,7 @@ For what values of $t,\alpha \in (0,\infty)$ is the sequence $\lfloor t\alpha^n\
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_349 :
-    {(t, α) | 0 < t ∧ 0 < α ∧ IsGoodPair t α} = erdos_349.answer := by
+    {(t, α) | 0 < t ∧ 0 < α ∧ IsGoodPairIndexed t α} = erdos_349.answer := by
   sorry
 
 /--
@@ -156,7 +177,7 @@ theorem int_coeff_ge_two_not_isGoodPair (t : ℤ) (ht : 2 ≤ t) (α : ℤ) :
   sorry
 
 set_option linter.style.formal_proof_palomar false in
-/-- **Erdős Problem 349, complete characterization on positive integer pairs.** For integers
+/-- **Value-set variant: characterization on positive integer pairs.** For integers
 $t \ge 1$, $\alpha \ge 1$, the pair $(t, \alpha)$ is good (i.e. $\lfloor t\alpha^n\rfloor$ is
 additively complete) iff $(t, \alpha) = (1, 2)$. Assembles the four partial results: $(1,2)$ is
 good, $\alpha \le 1$ fails, $2 < \alpha$ fails (`alpha_gt_two_not_isGoodPair`), and integer
