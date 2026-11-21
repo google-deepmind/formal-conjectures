@@ -61,6 +61,32 @@ theorem erdos_367.parts.ii : ¬ ∀ k : ℕ, 1 ≤ k →
       fun n ↦ (n : ℝ) ^ (2 : ℝ) := by
   sorry
 
+/-- $B_r(m)$ divides $m$ for $m \neq 0$. -/
+@[category API, AMS 11]
+private lemma B_dvd (r : ℕ) {m : ℕ} (hm : m ≠ 0) : B r m ∣ m := by
+  conv_rhs => rw [← Nat.prod_factorization_pow_eq_self hm]
+  exact Finset.prod_dvd_prod_of_subset _ _ _ (Finset.filter_subset _ _)
+
+/-- $B_r(m) \le m + 1$ for every $m$. -/
+@[category API, AMS 11]
+private lemma B_le_succ (r m : ℕ) : B r m ≤ m + 1 := by
+  rcases eq_or_ne m 0 with rfl | hm
+  · simp [B]
+  · exact (Nat.le_of_dvd (Nat.pos_of_ne_zero hm) (B_dvd r hm)).trans (Nat.le_succ m)
+
+/-- For $k \le 2$, $\prod_{n \le m < n+k} B_2(m) \le (n + 2)^2$. -/
+@[category API, AMS 11]
+private lemma prod_B_le {k : ℕ} (hk : k ≤ 2) (n : ℕ) :
+    ∏ m ∈ .Ico n (n + k), B 2 m ≤ (n + 2) ^ 2 := by
+  calc ∏ m ∈ .Ico n (n + k), B 2 m ≤ (n + 2) ^ (Finset.Ico n (n + k)).card :=
+        Finset.prod_le_pow_card _ _ _ fun m hm => by
+          have := (Finset.mem_Ico.mp hm).2
+          have := B_le_succ 2 m
+          omega
+    _ ≤ (n + 2) ^ 2 := by
+        rw [Nat.card_Ico, Nat.add_sub_cancel_left]
+        exact Nat.pow_le_pow_right (by omega) hk
+
 /--
 van Doorn notes in the comments that for $k \leq 2$ we trivially have
 $\prod_{n \leq m < n+k} B_2(m) \ll n^2$.
@@ -69,7 +95,14 @@ $\prod_{n \leq m < n+k} B_2(m) \ll n^2$.
 theorem erdos_367.variants.k_le_two : ∀ k : ℕ, k ≤ 2 →
     (fun n ↦ ((∏ m ∈ .Ico n (n + k), B 2 m : ℕ) : ℝ)) =O[atTop]
       fun n ↦ (n : ℝ) ^ (2 : ℝ) := by
-  sorry
+  intro k hk
+  refine IsBigO.of_bound 4 ?_
+  filter_upwards [eventually_ge_atTop 2] with n hn
+  have h1 := prod_B_le hk n
+  have h2 : ((n + 2) ^ 2 : ℕ) ≤ 4 * n ^ 2 := by nlinarith
+  rw [Real.norm_of_nonneg (by positivity), Real.norm_of_nonneg (by positivity),
+    show (2 : ℝ) = ((2 : ℕ) : ℝ) by norm_num, Real.rpow_natCast]
+  exact_mod_cast h1.trans h2
 
 /--
 But this fails for all $k \geq 3$, and in fact
