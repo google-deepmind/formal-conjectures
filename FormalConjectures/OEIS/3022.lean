@@ -142,33 +142,31 @@ theorem a_3 : a 3 = 3 := by
   · intro m hm
     interval_cases m <;> decide
 
-set_option maxRecDepth 100000 in
 @[category test, AMS 5 11]
 theorem a_4 : a 4 = 6 := by
-  apply a_eq_of_minimal
+  apply a_eq_of_witness 4 6 (by decide) {0, 1, 4, 6}
   · decide
-  · intro m hm
-    interval_cases m <;> decide
+  · decide
+  · decide
+  · exact sidon_exclusion_of_check 4 6 (by decide +native)
 
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 500000 in
 @[category test, AMS 5 11]
 theorem a_5 : a 5 = 11 := by
   apply a_eq_of_witness 5 11 (by decide) {0, 1, 4, 9, 11}
   · decide
   · decide
   · decide
-  · exact sidon_exclusion_of_check 5 11 (by decide +kernel)
+  · exact sidon_exclusion_of_check 5 11 (by decide +native)
 
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 4000000 in
 @[category test, AMS 5 11]
 theorem a_6 : a 6 = 17 := by
   apply a_eq_of_witness 6 17 (by decide) {0, 1, 4, 10, 12, 17}
   · decide
   · decide
   · decide
-  · exact sidon_exclusion_of_check 6 17 (by decide +kernel)
+  · exact sidon_exclusion_of_check 6 17 (by decide +native)
+
+def a_29.answer : ℕ := sorry
 
 /--
 OEIS A003022: “Length of shortest (or optimal) Golomb ruler with n marks.”
@@ -176,8 +174,8 @@ OEIS A003022: “Length of shortest (or optimal) Golomb ruler with n marks.”
 What is the exact length of an optimal Golomb ruler with $29$ marks? The OEIS table currently
 records exact values through $28$ marks.
 -/
-@[category research open, AMS 5 11]
-theorem a_29 : a 29 = answer(sorry) := by
+@[category research open, question value, AMS 5 11]
+theorem a_29 : a 29 = a_29.answer := by
   sorry
 
 end OeisA3022
