@@ -18,40 +18,14 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# OEIS A183128 and A183129, Hanna's binomial-power exponentials
+# Hanna's exponential series for $\binom{n+k-1}{k}^{k^2+1}$
 
-For $f : \mathbb{N} \times \mathbb{N} \to \mathbb{Z}$, Paul D. Hanna's series have the form
-$$\exp\Bigl(\sum_{n \ge 1} \Bigl[\sum_{k \ge 0} f(n,k)\,x^k\Bigr] \frac{x^n}{n}\Bigr).$$
-The coefficient of $x^m$ in the logarithm is $\sum_{n=1}^{m} f(n, m-n)/n$. `hannaLog f` is the
-power series over $\mathbb{Q}$ with these coefficients, and `hannaExp f` is its exponential.
-
-Hanna (2010) conjectured that the following series have integer coefficients ("Conjecture: this
-sequence consists entirely of integers"). Each entry defines its sequence (offset 0) as the
-coefficients of the series.
-
-| Entry | $f(n,k)$ | inner sum |
-| --- | --- | --- |
-| A183128 | $\binom{n+k-1}{k}^{k^2+1}$ | $k \ge 0$ |
-| A183129 | $\binom{n+k-1}{k}^{k^2+k}$ | $k \ge 0$ |
-| A181076 | $\binom{n+k-1}{k}^{n}$ | $k \ge 0$ |
-| A181078 | $\binom{n+k-1}{k}^{n+k-1}$ | $k \ge 0$ |
-| A181082 | $\binom{n}{k}^{n+k}$ | $0 \le k \le n$ |
-| A181084 | $\binom{n}{k}^{n+k+1}$ | $0 \le k \le n$ |
-
-He also notes that three related series do NOT have integer coefficients: the exponent $k^2$
-(in A183128), the exponent $k^2+k-1$ (in A183129), and $\binom{n}{k}^{k}$ for $0 \le k \le n$
-(in A181070). In Lean, `k ^ 2 + k - 1` is $0$ at $k = 0$, where the source has $-1$; both give
-the term $1$, because $\binom{n-1}{0} = 1$.
-
-Integer coefficients are stated as `∃ z : ℤ, coeff m F = z`, and $\exp$ of a series $L$ with zero
-constant term as `subst L (exp ℚ)`.
+The sequence lists the coefficients of
+$$\exp\Bigl(\sum_{n \ge 1} \Bigl[\sum_{k \ge 0} \binom{n+k-1}{k}^{k^2+1} x^k\Bigr]
+  \frac{x^n}{n}\Bigr).$$
 
 *References:*
-- Paul D. Hanna, [A183128](https://oeis.org/A183128) and [A183129](https://oeis.org/A183129),
-  2010.
-- Paul D. Hanna, [A181076](https://oeis.org/A181076), [A181078](https://oeis.org/A181078),
-  [A181082](https://oeis.org/A181082), [A181084](https://oeis.org/A181084) and
-  [A181070](https://oeis.org/A181070), 2010.
+- [A183128](https://oeis.org/A183128), Paul D. Hanna, 2010.
 -/
 
 @[expose] public section
@@ -60,108 +34,67 @@ namespace OeisA183128
 
 open PowerSeries
 
-/-- Hanna's logarithm $\sum_{n \ge 1} \bigl[\sum_{k \ge 0} f(n,k)\,x^k\bigr] \frac{x^n}{n}$ over
-$\mathbb{Q}$: its coefficient of $x^m$ is $\sum_{n=1}^{m} f(n, m-n)/n$. -/
+/-- The series $\sum_{n \ge 1} \bigl[\sum_{k \ge 0} f(n,k)\,x^k\bigr] \frac{x^n}{n}$ over
+$\mathbb{Q}$. Its coefficient of $x^m$ is $\sum_{n=1}^{m} f(n, m-n)/n$. -/
 noncomputable def hannaLog (f : ℕ → ℕ → ℤ) : ℚ⟦X⟧ :=
   mk fun m => ∑ n ∈ Finset.Icc 1 m, (f n (m - n) : ℚ) / n
 
-/-- Hanna's series $\exp\Bigl(\sum_{n \ge 1} \bigl[\sum_{k \ge 0} f(n,k)\,x^k\bigr]
+/-- The series $\exp\Bigl(\sum_{n \ge 1} \bigl[\sum_{k \ge 0} f(n,k)\,x^k\bigr]
 \frac{x^n}{n}\Bigr)$ over $\mathbb{Q}$. -/
 noncomputable def hannaExp (f : ℕ → ℕ → ℤ) : ℚ⟦X⟧ := subst (hannaLog f) (exp ℚ)
 
-/-- OEIS A183128: the coefficients of
+/-- The coefficients of
 $\exp\bigl(\sum_{n \ge 1} [\sum_{k \ge 0} \binom{n+k-1}{k}^{k^2+1} x^k] x^n/n\bigr)$. -/
-noncomputable def a183128 (m : ℕ) : ℚ :=
+noncomputable def a (m : ℕ) : ℚ :=
   coeff m (hannaExp fun n k => ((n + k - 1).choose k : ℤ) ^ (k ^ 2 + 1))
 
-/-- OEIS A183129: the coefficients of
-$\exp\bigl(\sum_{n \ge 1} [\sum_{k \ge 0} \binom{n+k-1}{k}^{k^2+k} x^k] x^n/n\bigr)$. -/
-noncomputable def a183129 (m : ℕ) : ℚ :=
-  coeff m (hannaExp fun n k => ((n + k - 1).choose k : ℤ) ^ (k ^ 2 + k))
+@[category test, AMS 11]
+theorem a_0 : a 0 = 1 := by
+  sorry
 
-/-- OEIS A181076: the coefficients of
-$\exp\bigl(\sum_{n \ge 1} [\sum_{k \ge 0} \binom{n+k-1}{k}^{n} x^k] x^n/n\bigr)$. -/
-noncomputable def a181076 (m : ℕ) : ℚ :=
-  coeff m (hannaExp fun n k => ((n + k - 1).choose k : ℤ) ^ n)
+@[category test, AMS 11]
+theorem a_1 : a 1 = 1 := by
+  sorry
 
-/-- OEIS A181078: the coefficients of
-$\exp\bigl(\sum_{n \ge 1} [\sum_{k \ge 0} \binom{n+k-1}{k}^{n+k-1} x^k] x^n/n\bigr)$. -/
-noncomputable def a181078 (m : ℕ) : ℚ :=
-  coeff m (hannaExp fun n k => ((n + k - 1).choose k : ℤ) ^ (n + k - 1))
+@[category test, AMS 11]
+theorem a_2 : a 2 = 2 := by
+  sorry
 
-/-- OEIS A181082: the coefficients of
-$\exp\bigl(\sum_{n \ge 1} [\sum_{k=0}^{n} \binom{n}{k}^{n+k} x^k] x^n/n\bigr)$. -/
-noncomputable def a181082 (m : ℕ) : ℚ :=
-  coeff m (hannaExp fun n k => if k ≤ n then (n.choose k : ℤ) ^ (n + k) else 0)
+@[category test, AMS 11]
+theorem a_3 : a 3 = 5 := by
+  sorry
 
-/-- OEIS A181084: the coefficients of
-$\exp\bigl(\sum_{n \ge 1} [\sum_{k=0}^{n} \binom{n}{k}^{n+k+1} x^k] x^n/n\bigr)$. -/
-noncomputable def a181084 (m : ℕ) : ℚ :=
-  coeff m (hannaExp fun n k => if k ≤ n then (n.choose k : ℤ) ^ (n + k + 1) else 0)
+@[category test, AMS 11]
+theorem a_4 : a 4 = 131 := by
+  sorry
 
-/-- **Hanna's conjecture in A183128.** Every term of A183128 is an integer. -/
+/--
+"Conjecture: this sequence consists entirely of integers."
+- Paul D. Hanna, Dec 25 2010.
+
+Proved by Wentao Li, with AI assistance, by checking Dold's integrality congruences along
+the rays $(n, k) \to (pn, pk)$. This pairing of terms is from trureturing issues
+[#22220](https://github.com/the-omega-institute/trureturing/issues/22220),
+[#22221](https://github.com/the-omega-institute/trureturing/issues/22221) and
+[#22222](https://github.com/the-omega-institute/trureturing/issues/22222).
+-/
 @[category research solved, AMS 5 11 13, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a183128_integral (m : ℕ) : ∃ z : ℤ, a183128 m = z := by
+theorem conjecture (m : ℕ) : ∃ z : ℤ, a m = z := by
   sorry
 
-/-- **Hanna's conjecture in A183129.** Every term of A183129 is an integer. -/
-@[category research solved, AMS 5 11 13, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a183129_integral (m : ℕ) : ∃ z : ℤ, a183129 m = z := by
-  sorry
+/--
+"Note that the following g.f. does NOT yield an integer series:
+exp( Sum_{n>=1} [Sum_{k>=0} C(n+k-1,k)^(k^2) * x^k] * x^n/n )."
+- Paul D. Hanna, Dec 25 2010.
 
-/-- **Hanna's note in A183128.** The series
-$\exp\bigl(\sum_{n \ge 1} [\sum_{k \ge 0} \binom{n+k-1}{k}^{k^2} x^k] x^n/n\bigr)$ does not have
-integer coefficients. -/
+The coefficient of $x^6$ is $153254825495/2$. Formal proof by Wentao Li, with AI assistance.
+-/
 @[category test, AMS 5 11 13, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a183128_note :
-    ¬∀ m, ∃ z : ℤ, coeff m (hannaExp fun n k => ((n + k - 1).choose k : ℤ) ^ (k ^ 2)) = z := by
-  sorry
-
-/-- **Hanna's note in A183129.** The series
-$\exp\bigl(\sum_{n \ge 1} [\sum_{k \ge 0} \binom{n+k-1}{k}^{k^2+k-1} x^k] x^n/n\bigr)$ does not
-have integer coefficients. -/
-@[category test, AMS 5 11 13, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a183129_note :
+theorem note_not_integral :
     ¬∀ m, ∃ z : ℤ,
-      coeff m (hannaExp fun n k => ((n + k - 1).choose k : ℤ) ^ (k ^ 2 + k - 1)) = z := by
-  sorry
-
-/-- **Hanna's note in A181070.** The series
-$\exp\bigl(\sum_{n \ge 1} [\sum_{k=0}^{n} \binom{n}{k}^{k} x^k] x^n/n\bigr)$ does not have
-integer coefficients. -/
-@[category test, AMS 5 11 13, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a181070_note :
-    ¬∀ m, ∃ z : ℤ,
-      coeff m (hannaExp fun n k => if k ≤ n then (n.choose k : ℤ) ^ k else 0) = z := by
-  sorry
-
-/-- **Hanna's conjecture in A181076.** Every term of A181076 is an integer. -/
-@[category research solved, AMS 5 11 13, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a181076_integral (m : ℕ) : ∃ z : ℤ, a181076 m = z := by
-  sorry
-
-/-- **Hanna's conjecture in A181078.** Every term of A181078 is an integer. -/
-@[category research solved, AMS 5 11 13, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a181078_integral (m : ℕ) : ∃ z : ℤ, a181078 m = z := by
-  sorry
-
-/-- **Hanna's conjecture in A181082.** Every term of A181082 is an integer. -/
-@[category research solved, AMS 5 11 13, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a181082_integral (m : ℕ) : ∃ z : ℤ, a181082 m = z := by
-  sorry
-
-/-- **Hanna's conjecture in A181084.** Every term of A181084 is an integer. -/
-@[category research solved, AMS 5 11 13, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-17-000018"]
-theorem a181084_integral (m : ℕ) : ∃ z : ℤ, a181084 m = z := by
+      coeff m (hannaExp fun n k => ((n + k - 1).choose k : ℤ) ^ (k ^ 2)) = z := by
   sorry
 
 end OeisA183128
