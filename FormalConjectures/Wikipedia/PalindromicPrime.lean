@@ -93,9 +93,8 @@ theorem not_a_121 : ¬ IsPalindromicPrime 121 := by
 
 /-- [Wikipedia's article on palindromic primes](https://en.wikipedia.org/wiki/Palindromic_prime)
 states: "It is not known if there are infinitely many palindromic primes in base 10." -/
-@[category research open, AMS 11]
-theorem infinitude_question :
-    answer(sorry) ↔ {p : ℕ | IsPalindromicPrime p}.Infinite := by
+@[category research open, question, AMS 11]
+theorem infinitude_question : {p : ℕ | IsPalindromicPrime p}.Infinite := by
   sorry
 
 end PalindromicPrime
