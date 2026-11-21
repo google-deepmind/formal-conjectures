@@ -23,7 +23,9 @@ public import FormalConjecturesUtil
 Let f_d(n) be minimal such that, in any set of n points in ℝ^d, there exist at most f_d(n) pairs
 of points which are distance 1 apart. Estimate f_d(n).
 
-*Reference:* [erdosproblems.com/1085](https://www.erdosproblems.com/1085)
+*References:*
+- [erdosproblems.com/1085](https://www.erdosproblems.com/1085)
+- [Er46b] Erdős, P., *On sets of distances of n points*. Amer. Math. Monthly (1946), 248-250.
 -/
 
 @[expose] public section
@@ -45,8 +47,8 @@ Erdős showed $f_2(n) > n^{1+c/\log\log n}$ for some $c > 0$.
 
 Note: erdosproblems.com/1085 strengthened the lower bound to $n^{1+c}$ on
 2026-05-23, attributing it to an internal model at OpenAI with no citable
-reference. This entry records the published bound of Erdős; the statement here
-matches the page as it stood from 2025-10-20 to 2026-05-23.
+reference. This entry records the published bound of Erdős [Er46b]; the
+statement here matches the page as it stood from 2025-10-20 to 2026-05-23.
 -/
 @[category research solved, AMS 52]
 theorem erdos_1085.variants.lower_d2 :
