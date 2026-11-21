@@ -29,6 +29,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos268
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let `X` be the set of points in `Fin d → ℝ` of the shape
 `fun i : Fin d => ∑' n : A, (1 : ℝ) / (n + i)` for some infinite subset `A ⊆ ℕ` such that
 `1 / n` is summable over `A`. `X` has nonempty interior. This is proved in [KoTa24].

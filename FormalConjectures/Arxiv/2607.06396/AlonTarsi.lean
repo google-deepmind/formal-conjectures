@@ -85,9 +85,9 @@ theorem totalLength_le_seven_fifths_iff (G : SimpleGraph V) [DecidableRel G.Adj]
 has a list of cycles covering
 every edge, with $\sum_{C} |E(C)| \leq \frac{7}{5}|E(G)|$.
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem alon_tarsi_short_cycle_cover :
-    answer(sorry) ↔ ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+    ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V)
       [DecidableRel G.Adj], G.IsBridgeless →
       ∃ C : Multiset (Cycle G), IsCycleCover G C ∧
         (totalLength C : ℚ) ≤ 7 / 5 * #G.edgeFinset := by

@@ -22,6 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
  - [Wikipedia](https://en.wikipedia.org/wiki/Hadamard_matrix#Hadamard_conjecture)
+ - [Tao's optimization constant 23a](https://teorth.github.io/optimizationproblems/constants/23a.html)
  - [Résolution d'une question relative aux déterminants](https://gallica.bnf.fr/ark:/12148/bpt6k486252g/f400.image.r) by *Jacques Hadamard*,  Bull. des sciences math., p.245, 1893
 -/
 
@@ -90,6 +91,14 @@ There exists a Hadamard matrix for all $n = 4k$.
 theorem HadamardConjecture (k : ℕ) : ∃ M, IsHadamard (n := 4 * k) M := by
   sorry
 
+/--
+The **smallest unsolved order** of the Hadamard conjecture: the smallest $n = 4k$ such that there
+is no Hadamard matrix of order $n$, or $\infty$ if there is none.
+-/
+@[optimization_constant "23a"]
+noncomputable def hadamardConstant : ℕ∞ :=
+  ⨅ (k : ℕ) (_ : ¬ ∃ M, IsHadamard (n := 4 * k) M), (4 * k : ℕ∞)
+
 @[category test, AMS 15]
 theorem exists_hadamard_zero : ∃ M, IsHadamard (n := 0) M := by
   use 0
@@ -127,17 +136,18 @@ theorem isHadamard_H12 : IsHadamard H12 := by
 
 /--
 For all $k ≤ 166$, it is known there that there is a Hadamard matrix of size $4 * k$.
+So `hadamardConstant` is at least $668$.
 -/
 @[category research solved, AMS 15]
-theorem HadamardConjecture.variants.first_cases (k : ℕ) (h : k ≤ 166) :
-    ∃ M, IsHadamard (n := 4 * k) M := by
+theorem HadamardConjecture.variants.first_cases : 668 ≤ hadamardConstant := by
   sorry
 
 /--
 The smallest order for which no Hadamard matrix is presently known is $668 = 4 * 167$.
+Is `hadamardConstant` larger than $668$?
 -/
 @[category research open, AMS 15]
-theorem HadamardConjecture.variants.«167» : ∃ M, IsHadamard (n := 4 * 167) M := by
+theorem HadamardConjecture.variants.«167» : 668 < hadamardConstant := by
   sorry
 
 end Hadamard

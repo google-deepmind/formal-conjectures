@@ -43,6 +43,7 @@ is a non-trivial three-term arithmetic progression `a, b, c ∈ A` with
 def CommonDifferencesThreeTermAP (A : Finset ℤ) : Set ℤ :=
   {d : ℤ | d ≠ 0 ∧ ∃ a ∈ A, ∃ b ∈ A, ∃ c ∈ A, b - a = d ∧ c - b = d}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The main conjecture: for any finite set of integers $A$ with $|A| = n$, the number of distinct
 common differences in three-term arithmetic progressions is $O(n^{3/2})$.
@@ -60,9 +61,9 @@ the Kakeya conjecture. Under this equivalence:
 - While the specific $O(n^{3/2})$ prediction is resolved negatively, the general question of
   determining the exact optimal exponent $c$ remains open.
 -/
-@[category research solved, AMS 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/f13dd54b520cdf2136fdd3a04f0f9fa50e311358/FormalConjectures/ErdosProblems/1097.lean#L306"]
-theorem erdos_1097 : answer(False) ↔ ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
+theorem erdos_1097 : ¬ ∃ C > (0 : ℝ), ∀ (A : Finset ℤ),
     (CommonDifferencesThreeTermAP A).ncard ≤ C * (A.card : ℝ) ^ (3 / 2 : ℝ) := by
   sorry
 

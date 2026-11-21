@@ -32,6 +32,7 @@ open Filter
 
 namespace Erdos299
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there an infinite sequence $a_1 < a_2 < \dots$ such that $a_{i+1} - a_i = O(1)$ and no finite
 sum of $\frac{1}{a_i}$ is equal to 1?
@@ -41,8 +42,8 @@ There does not exist such a sequence, which follows from the positive solution t
 
 This was formalized in Lean 3 by Bloom and Mehta.
 -/
-@[category research solved, AMS 11 40, formal_proof using other_system at "https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean"]
-theorem erdos_299 : answer(False) ↔ (∃ (a : ℕ → ℕ),
+@[category research solved, question, AMS 11 40, formal_proof using other_system at "https://github.com/b-mehta/unit-fractions/blob/master/src/final_results.lean"]
+theorem erdos_299 : ¬ (∃ (a : ℕ → ℕ),
     StrictMono a ∧ (∀ n, 0 < a n) ∧
     (fun n ↦ (a (n + 1) : ℝ) - a n) =O[atTop] (1 : ℕ → ℝ) ∧
     ∀ S : Finset ℕ, ∑ i ∈ S, (1 : ℝ) / a i ≠ 1) := by

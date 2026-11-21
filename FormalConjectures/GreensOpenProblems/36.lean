@@ -56,25 +56,23 @@ $|A_i + B_i| = |A_i||B_i|$, such that the sets $A_i + B_i$ are disjoint from the
 NOTE: according to [CKS05, 4.1], the conditions should be $A_i + B_j$ disjoint from $A_j + B_k$ for
 $i \neq k$. See `green_36.variants.cks05`.
 -/
-@[category research open, AMS 5 20]
+@[category research open, question, AMS 5 20]
 theorem green_36 :
-    answer(sorry) ↔
-      ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
-        ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
-          (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
-          (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
-          Green36Property A B := by
+    ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
+      ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
+        (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
+        (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
+        Green36Property A B := by
   sorry
 
 /-- Variant using the exact simultaneous double product property from [CKS05, 4.1]. -/
-@[category research open, AMS 5 20]
+@[category research open, question, AMS 5 20]
 theorem green_36.variants.cks05 :
-    answer(sorry) ↔
-      ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
-        ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
-          (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
-          (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
-          SimultaneousDoubleProduct A B := by
+    ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
+      ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
+        (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
+        (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
+        SimultaneousDoubleProduct A B := by
   sorry
 
 -- TODO(jeangud) Add variants mentioned in [Gr24, Problem 36] comments.

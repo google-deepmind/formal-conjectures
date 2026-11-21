@@ -51,6 +51,7 @@ def IsValidCollection (S : List (Finset ℕ)) : Prop :=
   S.Pairwise Disjoint ∧
   IsSquare ((S.map (fun I => ∏ m ∈ I, m)).prod)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for each fixed $n$ and fixed sizes $k_1,\ldots,k_n \geq 4$, there are only finitely
 many collections of disjoint intervals $I_1,\ldots,I_n$ of size $\lvert I_i\rvert = k_i$ for
@@ -62,9 +63,9 @@ this restriction finiteness fails, by a result of Skałba (see [Ul05]).
 This is false: Ulas [Ul05] constructed infinitely many such collections with $n = 4$ and
 $k_1 = \cdots = k_4 = 4$.
 -/
-@[category research solved, AMS 11,
+@[category research solved, question, AMS 11,
   formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos363.lean"]
-theorem erdos_363 : answer(False) ↔ ∀ ks : List ℕ,
+theorem erdos_363 : ¬ ∀ ks : List ℕ,
     {S : List (Finset ℕ) | IsValidCollection S ∧ S.map Finset.card = ks}.Finite := by
   sorry
 

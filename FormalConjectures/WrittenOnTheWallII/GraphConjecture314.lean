@@ -52,6 +52,7 @@ noncomputable def largestInducedPathSize (G : SimpleGraph α) [DecidableRel G.Ad
               (G.induce (s : Set α)).IsTree ∧
               ∀ v : (s : Set α), (G.induce (s : Set α)).degree v ≤ 2 }
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 314](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj314):
 

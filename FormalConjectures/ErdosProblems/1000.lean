@@ -53,6 +53,7 @@ The average $\frac{1}{N}\sum_{k\leq N}\frac{\phi_A(k)}{n_k}$.
 noncomputable def phiAvg (n : ℕ → ℕ) (N : ℕ) : ℝ :=
   (∑ k ∈ Finset.range N, (phiSeq n k : ℝ) / (n k : ℝ)) / (N : ℝ)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{n_1<n_2<\cdots\}$ be an infinite sequence of positive integers, and let $\phi_A(k)$
 count the number of $1\leq m\leq n_k$ such that the fraction $\frac{m}{n_k}$ cannot be written
@@ -70,8 +71,8 @@ $$
 This was solved by Haight [Ha] who proved that such a sequence does exist (contrary to Erdős'
 expectations).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1000.lean"]
-theorem erdos_1000 : answer(True) ↔
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1000.lean"]
+theorem erdos_1000 :
     ∃ n : ℕ → ℕ, StrictMono n ∧ 0 < n 0 ∧
       Tendsto (phiAvg n) atTop (𝓝 0) := by
   sorry

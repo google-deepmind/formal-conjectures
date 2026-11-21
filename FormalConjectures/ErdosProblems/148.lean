@@ -163,13 +163,15 @@ theorem F_first_values :
 theorem u_first_values : u 0 = 1 ∧ u 1 = 2 ∧ u 2 = 6 ∧ u 3 = 42 ∧ u 4 = 1806 := by
   decide
 
+def erdos_148.answer : ℕ → ℝ := sorry
+
 /--
 Let $F(k)$ be the number of solutions to
 $$ 1= \frac{1}{n_1}+\cdots+\frac{1}{n_k},$$
 where $1\leq n_1<\cdots<n_k$ are distinct integers. Find good estimates for $F(k)$.
 -/
-@[category research open, AMS 11]
-theorem erdos_148 : (fun k ↦ (F k : ℝ)) =Θ[atTop] (answer(sorry) : ℕ → ℝ) := by
+@[category research open, question value, AMS 11]
+theorem erdos_148 : (fun k ↦ (F k : ℝ)) =Θ[atTop] erdos_148.answer := by
   sorry
 
 /--

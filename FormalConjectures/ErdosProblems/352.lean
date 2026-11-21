@@ -34,9 +34,9 @@ namespace Erdos352
 Is there some $c > 0$ such that every measurable $A \subseteq \mathbb{R}^2$ of measure $\geq c$
  contains the vertices of a triangle of area 1?
 -/
-@[category research open, AMS 51]
+@[category research open, question, AMS 51]
 theorem erdos_352 :
-    answer(sorry) ↔ ∃ c > (0: ℝ), ∀ A : Set ℝ², MeasurableSet A → ℙ A ≥ c.toEReal
+    ∃ c > (0: ℝ), ∀ A : Set ℝ², MeasurableSet A → ℙ A ≥ c.toEReal
        → (∃ t : Affine.Triangle ℝ ℝ²,
            (∀ p : Fin 3, t.points p ∈ A) ∧
            EuclideanGeometry.triangle_area (t.points 0) (t.points 1) (t.points 2) = 1) := by

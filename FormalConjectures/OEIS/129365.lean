@@ -60,6 +60,7 @@ theorem a_3 : a 3 = 1 := by decide +native
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1 := by decide +native
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture (1): $a(n)$ is always an integer (the denominator divides the numerator).
 
@@ -89,6 +90,7 @@ theorem conjecture1 (n : ℕ) (hn : 0 < n) :
       ((Finset.Icc 1 n).prod fun j => (Finset.Icc 1 n).prod fun k => Nat.gcd j k) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture (2): If $p$ is a prime, then $p \mid a(n)$ if and only if $p \le n/3$.
 
@@ -109,6 +111,7 @@ theorem conjecture2 (n p : ℕ) (hn : 0 < n) (hp : p.Prime) :
     (∃ m : ℕ, a n = m ∧ p ∣ m) ↔ p ≤ n / 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture (3): For each positive integer $n$, prime $p$, and $0 \le k < p$,
 $\mathrm{ord}_p(a(np)) = \mathrm{ord}_p(a(np + k))$.
@@ -129,6 +132,7 @@ theorem conjecture3 (n p k : ℕ) (hn : 0 < n) (hp : p.Prime) (hk : k < p) :
     padicValRat p (a (n * p)) = padicValRat p (a (n * p + k)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture (4): Let $b(n) = \mathrm{A004125}(n) = \sum_{k=1}^n (n \bmod k)$. Then
 $\mathrm{ord}_p(a(np)) = \sum_{i \ge 0} b(\lfloor n/p^i \rfloor)$.

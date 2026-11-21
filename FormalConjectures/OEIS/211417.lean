@@ -73,6 +73,7 @@ lemma a_3 : a 3 = 43880754270176401422739454033276880 := by rfl
 lemma a_4 : a 4 = 38113558705192522309151157825210540422513019720 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It appears that $a(n)/(30n - 1)$ is integral for all $n$ (checked up to $n = 1000$). - _Peter Bala_, Aug 28 2025
 
@@ -84,6 +85,7 @@ A formal proof has been found with the methods described in
 theorem thirty_mul_sub_one_dvd_a (n : ℕ) : (30 * (n : ℤ) - 1) ∣ (a n : ℤ) := by
     sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "7*a(n)/(2*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
@@ -95,6 +97,7 @@ theorem seven_mul_a_dvd_two_mul_add_one (n : ℕ) :
     (2 * (n : ℤ) + 1) ∣ 7 * (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "a(n)/(3*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
@@ -106,6 +109,7 @@ theorem a_dvd_three_mul_add_one (n : ℕ) :
     (3 * (n : ℤ) + 1) ∣ (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "a(n)/(5*n + 1) ... [is an] integer for all n (checked up to n = 1000)."
 - _Peter Bala_, Aug 28 2025
@@ -117,6 +121,7 @@ theorem a_dvd_five_mul_add_one (n : ℕ) :
     (5 * (n : ℤ) + 1) ∣ (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "42*a(n)/((2*n + 1)*(3*n + 1)*(5*n + 1)) [is an] integer for all n
 (checked up to n = 1000)." - _Peter Bala_, Aug 28 2025
@@ -129,6 +134,7 @@ theorem forty_two_mul_a_dvd_product (n : ℕ) :
       42 * (a n : ℤ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: "More generally, for r >= 1, we conjecture that there exists a constant D(r) such that
 D(r)*a(n)/Product_{i = 1..r, i coprime to 30} (30*n - i) is integral for all n."
@@ -152,6 +158,7 @@ theorem general_divisibility (r : ℕ) (hr : 1 ≤ r) :
     ∃ D : ℤ, 0 < D ∧ ∀ n : ℕ, (divisorProduct n r) ∣ (D * (a n : ℤ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Supercongruence: "a(p^k) == a(p^(k-1)) ( mod p^(3*k) ) for any prime p >= 5 and any positive
 integer k." - _Peter Bala_, Jan 24 2020

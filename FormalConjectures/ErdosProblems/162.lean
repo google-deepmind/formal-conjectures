@@ -82,7 +82,28 @@ half of it. Hence $F(n, 1/2) = n + 1$, and the claim fails at $\alpha = 1/2$.
 -/
 @[category textbook, AMS 5]
 theorem erdos_162.variants.half (n : ℕ) : F n (1 / 2) = n + 1 := by
-  sorry
+  have hvac : ∀ c : Sym2 (Fin n) → Bool, IsBalancedAbove n (1 / 2) c (n + 1) := by
+    intro c H hH
+    have := H.card_le_univ
+    simp at this
+    omega
+  refine le_antisymm (Nat.sInf_le ⟨fun _ ↦ true, hvac _⟩) ?_
+  refine le_csInf ⟨n + 1, fun _ ↦ true, hvac _⟩ ?_
+  rintro k ⟨c, hc⟩
+  by_contra! hk
+  have ht := hc Finset.univ (by simp; omega) true
+  have hf := hc Finset.univ (by simp; omega) false
+  have hsum : colourEdgeCount c Finset.univ true + colourEdgeCount c Finset.univ false =
+      n.choose 2 := by
+    have h1 := Finset.card_filter_add_card_filter_not
+      (s := (Finset.univ : Finset (Fin n)).sym2.filter fun e ↦ ¬ e.IsDiag) (fun e ↦ c e = true)
+    simp only [Finset.filter_filter, Bool.not_eq_true] at h1
+    rw [colourEdgeCount, colourEdgeCount, h1, Finset.sym2_univ, ← Fintype.card_subtype,
+      Sym2.card_subtype_not_diag, Fintype.card_fin]
+  simp only [Finset.card_univ, Fintype.card_fin] at ht hf
+  have : (colourEdgeCount c Finset.univ true : ℝ) + colourEdgeCount c Finset.univ false =
+      n.choose 2 := by exact_mod_cast hsum
+  linarith
 
 /-- `k = n + 1` always works, since no vertex set has more than `n` elements. -/
 @[category API, AMS 5]

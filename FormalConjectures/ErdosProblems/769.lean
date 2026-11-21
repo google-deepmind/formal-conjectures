@@ -69,6 +69,7 @@ def Erdos769LowerBound : Prop :=
   ∃ A B N : ℕ, 0 < A ∧ 0 < B ∧
     ∀ n c : ℕ, N ≤ n → IsCutoff n c → A * n ^ n ≤ B * c
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $c(n)$ be minimal such that if $k\geq c(n)$ then the $n$-dimensional unit
 cube can be decomposed into $k$ homothetic $n$-dimensional cubes. Give good
@@ -80,8 +81,8 @@ The `c(n) \gg n^n` conjecture is **false**: for odd `n`, one can tile the unit
 
 Determining good bounds for `c(n)` in general remains open.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-769/Research/Solution.lean"]
-theorem erdos_769 : answer(False) ↔ Erdos769LowerBound := by
+@[category research solved, question, AMS 52, formal_proof using lean4 at "https://github.com/williamjblair/lean-proofs/blob/4f915a323443bfb1709a6805a013812016dca88a/starfleet/erdos-769/Research/Solution.lean"]
+theorem erdos_769 : ¬ Erdos769LowerBound := by
   sorry
 
 /--
@@ -92,11 +93,10 @@ The refuted conjecture would have forced this limit to be at least $1$.
 The cutoff condition is restricted to positive dimensions: in dimension zero,
 exact coverage permits only one tile, so no cutoff exists.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_769.variants.growth_rate :
-    answer(sorry) ↔
-      ∃ c : ℕ → ℕ, (∀ n, 0 < n → IsCutoff n (c n)) ∧
-        ∃ γ : ℝ, Tendsto (fun n : ℕ => Real.log (c n) / (n * Real.log n)) atTop (𝓝 γ) := by
+    ∃ c : ℕ → ℕ, (∀ n, 0 < n → IsCutoff n (c n)) ∧
+      ∃ γ : ℝ, Tendsto (fun n : ℕ => Real.log (c n) / (n * Real.log n)) atTop (𝓝 γ) := by
   sorry
 
 end Erdos769

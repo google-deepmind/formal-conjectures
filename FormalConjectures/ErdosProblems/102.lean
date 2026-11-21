@@ -112,19 +112,20 @@ Let $c > 0$ and let $h_c(n)$ be such that for any $n$ points in $\mathbb{R}^2$ w
 $cn^2$ lines that each contain more than three of the points, some line contains $h_c(n)$ of
 the points. Is it true that, for fixed $c > 0$, $h_c(n) \to \infty$?
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_102 :
-    answer(sorry) ↔ ∀ c > 0, ∀ M : ℕ, ∀ᶠ n in atTop, (M : ℕ∞) ≤ h c n := by
+    ∀ c > 0, ∀ M : ℕ, ∀ᶠ n in atTop, (M : ℕ∞) ≤ h c n := by
   sorry
 
 /--
 It is not known whether $h_c(n) \geq 5$ for all sufficiently large $n$.
 -/
-@[category research open, AMS 52]
+@[category research open, question, AMS 52]
 theorem erdos_102.variants.five :
-    answer(sorry) ↔ ∀ c > 0, ∀ᶠ n in atTop, (5 : ℕ∞) ≤ h c n := by
+    ∀ c > 0, ∀ᶠ n in atTop, (5 : ℕ∞) ≤ h c n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is easy to see that $h_c(n) \ll_c n^{1/2}$: for all sufficiently small $c > 0$ there are
 admissible configurations (e.g. grids) in which no line contains more than $C_c n^{1/2}$ points.
@@ -135,6 +136,7 @@ theorem erdos_102.variants.upper_sqrt :
       h c n ≤ (⌈C * Real.sqrt n⌉₊ : ℕ∞) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős [Er95] suggested that perhaps $h_c(n) \gg_c n^{1/2}$. Zach Hunter pointed out that this is
 false: the points of $\{1, \dots, m\}^d$ with $n \approx m^d$, randomly projected to

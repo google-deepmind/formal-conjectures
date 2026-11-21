@@ -47,6 +47,7 @@ def sumsAndProducts (A : Finset ℤ) : Finset ℤ :=
   (A.powerset.erase ∅).image (fun B => ∑ b ∈ B, b) ∪
     (A.powerset.erase ∅).image (fun B => ∏ b ∈ B, b)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be a finite set of integers. Is it true that, for every $k$, if $\lvert A\rvert$ is
 sufficiently large depending on $k$, then there are least $\lvert A\rvert^k$ many integers which
@@ -62,9 +63,9 @@ for some constant $c>0$. (erdosproblems.com multiplies by $\log\log\lvert A\rver
 
 See also [52](https://www.erdosproblems.com/52).
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos53.lean#L3084"]
-theorem erdos_53 : answer(True) ↔ ∀ k : ℕ, ∃ N : ℕ, ∀ A : Finset ℤ, N ≤ A.card →
+theorem erdos_53 : ∀ k : ℕ, ∃ N : ℕ, ∀ A : Finset ℤ, N ≤ A.card →
     A.card ^ k ≤ (sumsAndProducts A).card := by
   sorry
 

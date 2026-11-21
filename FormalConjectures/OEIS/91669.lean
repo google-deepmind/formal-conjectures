@@ -72,6 +72,7 @@ lemma a_4 : a 4 = 7 := by rfl
 lemma a_5 : a 5 = 42 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture (for $n > 2$): if $n \mid a(n-1) + 2^{n-2}$, then $n$ is a prime with primitive root 2 (A001122). - _Amiram Eldar_ and _Thomas Ordowski_, Jan 19 2020
 

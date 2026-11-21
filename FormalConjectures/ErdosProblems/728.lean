@@ -30,6 +30,7 @@ open scoped Nat Topology
 
 namespace Erdos728
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\varepsilon$ be sufficiently small and $C, C' > 0$. Are there integers $a, b, n$ such that
 $$a, b > \varepsilon n\quad a!\, b! \mid n!\, (a + b - n)!, $$
@@ -47,17 +48,16 @@ This appears to answer the question in the spirit it was intended.
 
 This was formalized in Lean by Alexeev using Aristotle.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos728p.lean"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos728p.lean"]
 theorem erdos_728 :
-    answer(True) ↔
-      ∀ᶠ ε : ℝ in 𝓝[>] 0, ∀ C > (0 : ℝ), ∀ C' > C,
-        ∃ a b n : ℕ,
-          0 < n ∧
-          ε * n < a ∧
-          ε * n < b ∧
-          a ! * b ! ∣ n ! * (a + b - n)! ∧
-          a + b > n + C * log n ∧
-          a + b < n + C' * log n := by
+    ∀ᶠ ε : ℝ in 𝓝[>] 0, ∀ C > (0 : ℝ), ∀ C' > C,
+      ∃ a b n : ℕ,
+        0 < n ∧
+        ε * n < a ∧
+        ε * n < b ∧
+        a ! * b ! ∣ n ! * (a + b - n)! ∧
+        a + b > n + C * log n ∧
+        a + b < n + C' * log n := by
   sorry
 
 -- TODO(firsching): Use Legendre's formula to test divisibility in terms of p-adic valuations.

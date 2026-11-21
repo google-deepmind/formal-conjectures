@@ -89,6 +89,7 @@ lemma a_7 : a 7 = 1 := by rfl
 lemma a_8 : a 8 = 1 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is conjectured that after the first two 0's, the number of consecutive 0's is only 4 or 5, and the number of consecutive 1's is only 3 or 4 (tested up to $n = 10^4$).
 

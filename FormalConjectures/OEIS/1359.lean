@@ -66,6 +66,7 @@ theorem a_4 : a 4 = 17 := by
   simp_all[a]
   exact (congr_arg _ (by constructor) ).trans (Nat.nth_count (by decide))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Primes $p_k$ such that $p_k! \equiv 1 \pmod{p_{k+1}}$ with the exception of $p_{991} = 7841$ and
 other unknown primes $p_k$ for which $(p_k+1)(p_k+2)\cdots(p_{k+1}-2) \equiv 1 \pmod{p_{k+1}}$

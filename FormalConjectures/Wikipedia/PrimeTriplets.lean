@@ -30,9 +30,9 @@ namespace PrimeTriplets
 /--
 Are there infinitely many tuples of three consecutive primes $(p, q, r)$ such that $r - p = 6$?
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem prime_triplets :
-    answer(sorry) ↔ {p : ℕ | Prime p ∧ (Prime (p + 2) ∨ Prime (p + 4)) ∧ Prime (p + 6)}.Infinite := by
+    {p : ℕ | Prime p ∧ (Prime (p + 2) ∨ Prime (p + 4)) ∧ Prime (p + 6)}.Infinite := by
   sorry
 
 end PrimeTriplets

@@ -21,6 +21,10 @@ public import Mathlib.Tactic.Linter.Header
 
 The `StubLinter` ensures that no stubs, placeholder definitions (e.g. `opaque`, `def ... := sorry`),
 or new axioms are introduced in the repository.
+
+The one allowed placeholder is the unknown of a value question: a definition named
+`<theorem>.answer` whose value is `sorry` until the question is answered (see the `question`
+attribute).
 -/
 
 public meta section
@@ -44,6 +48,12 @@ def hasSorry (stx : Syntax) : Bool :=
                    s.getId.eraseMacroScopes == `sorry || s.getId.eraseMacroScopes == `sorryAx))
   ) != none
 
+/-- Whether a definition is the unknown of a value question, i.e. its name ends in `answer`. -/
+def isAnswerDef (decl : Syntax) : Bool :=
+  match decl.find? (·.isOfKind ``Lean.Parser.Command.declId) with
+  | some declId => declId[0].getId.getString! == "answer"
+  | none => false
+
 /-- Checks a declaration command for stubs, placeholder definitions, and axioms. -/
 def checkDecl (stx : Syntax) : CommandElabM Unit := do
   if stx.getKind == ``Lean.Parser.Command.declaration then
@@ -59,7 +69,7 @@ def checkDecl (stx : Syntax) : CommandElabM Unit := do
             kind == ``Lean.Parser.Command.abbrev ||
             kind == ``Lean.Parser.Command.instance ||
             kind == ``Lean.Parser.Command.structure then
-      if hasSorry decl then
+      if hasSorry decl && !isAnswerDef decl then
         logLintIf linter.style.stubs stx
           "Placeholder definitions (e.g., `def foo : Type := sorry`) are not allowed."
 

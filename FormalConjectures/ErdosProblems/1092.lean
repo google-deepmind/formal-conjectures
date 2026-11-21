@@ -64,17 +64,17 @@ This seems to be closely related to, but distinct from, [744](https://www.erdosp
 Tang notes in the comments that Rödl [Ro82] constructed, for any $\epsilon>0$ and $k$, a graph
 with chromatic number $\geq k$ such that every graph on $m$ vertices is bipartite after deleting at
 most $\epsilon m$ edges. -/
-@[category research solved, AMS 5]
-theorem f_asymptotic_2 : answer(False) ↔
-    ∃ g : ℕ → ℕ, IsAdmissible 2 g ∧
+@[category research solved, question, AMS 5]
+theorem f_asymptotic_2 :
+    ¬ ∃ g : ℕ → ℕ, IsAdmissible 2 g ∧
       (fun n : ℕ => (n : ℝ)) =O[atTop] (fun n : ℕ => (g n : ℝ)) := by
   sorry
 
 /-- More generally, is $f_r(n)\gg_r n$ for every $r \geq 2$? Disproved by Rödl, who showed
 $f_r(n) = o(n)$ for all fixed $r \geq 2$. -/
-@[category research solved, AMS 5]
-theorem f_asymptotic_general : answer(False) ↔
-    ∀ r : ℕ, 2 ≤ r → ∃ g : ℕ → ℕ, IsAdmissible r g ∧
+@[category research solved, question, AMS 5]
+theorem f_asymptotic_general :
+    ¬ ∀ r : ℕ, 2 ≤ r → ∃ g : ℕ → ℕ, IsAdmissible r g ∧
       (fun n : ℕ => (n : ℝ)) =O[atTop] (fun n : ℕ => (g n : ℝ)) := by
   sorry
 

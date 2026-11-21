@@ -83,3 +83,7 @@ def MyNormalType : Type := Nat
 
 #guard_msgs in
 theorem MyTheoremWithSorry : 1 = 1 := by sorry
+
+-- The unknown of a value question is the one allowed placeholder definition.
+#guard_msgs in
+def some_value_question.answer : Nat := sorry

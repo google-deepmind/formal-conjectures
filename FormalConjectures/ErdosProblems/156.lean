@@ -46,10 +46,9 @@ Does there exist a maximal Sidon set $A\subset \{1,\ldots,N\}$ of size $O(N^{1/3
 
 A question of Erdős, Sárközy, and Sós [ESS94].
 -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_156 :
-    answer(sorry) ↔
-      (fun N ↦ (minMaximalSidonSet N : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (1 / 3 : ℝ)) := by
+    (fun N ↦ (minMaximalSidonSet N : ℝ)) =O[atTop] (fun N ↦ (N : ℝ) ^ (1 / 3 : ℝ)) := by
   sorry
 
 @[category test, AMS 5]

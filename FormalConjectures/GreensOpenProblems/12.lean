@@ -37,8 +37,8 @@ such that $x_i + y_j \in A$ whenever $j \in \{i, i+1, i+2\}$?
 
 Note: We interpret indices modulo 5.
 -/
-@[category research open, AMS 5 11]
-theorem green_12 : answer(sorry) ↔
+@[category research open, question, AMS 5 11]
+theorem green_12 :
     ∀ {G : Type*} [AddCommGroup G] [Fintype G] [DecidableEq G],
     ∀ (A : Finset G),
     let N := Fintype.card G

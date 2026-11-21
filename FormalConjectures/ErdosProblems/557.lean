@@ -35,6 +35,7 @@ open SimpleGraph
 
 namespace Erdos557
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $R_k(G)$ denote the minimal $m$ such that if the edges of $K_m$ are $k$-coloured then there
 is a monochromatic copy of $G$. Is it true that
@@ -54,6 +55,7 @@ theorem erdos_557 :
       multicolourGraphRamsey k T ≤ k * n + c := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The explicit bound $R_k(T) \leq k(n-2)+3$ for every $k$ and every tree $T$ on $n \geq 2$ vertices.
 The problem page states this bound for $n$ sufficiently large in terms of $k$.
@@ -68,6 +70,7 @@ theorem erdos_557.variants.explicit (k n : ℕ) (T : SimpleGraph (Fin n)) (hT : 
     multicolourGraphRamsey k T ≤ k * (n - 2) + 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The best-possible bound $R_k(T) \leq k(n-2)+2$ for every $k$ and every tree $T$ on $n \geq 2$
 vertices, attained by stars. It follows from the sharp form of the Erdős–Sós theorem (a graph on
@@ -80,6 +83,7 @@ theorem erdos_557.variants.tight (k n : ℕ) (hn : 2 ≤ n) (T : SimpleGraph (Fi
     (hT : T.IsTree) : multicolourGraphRamsey k T ≤ k * (n - 2) + 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 When $n$ is odd and $k \geq 2$ is even, $R_k(T) \leq k(n-2)+1$ for every tree $T$ on $n$ vertices,
 again attained by stars: with $m = k(n-2)+1$ some colour class has at least $(n-2)m/2$ edges, and

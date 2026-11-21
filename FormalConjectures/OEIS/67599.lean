@@ -68,9 +68,9 @@ theorem a_6 : a 6 = 2131 := by
 "$a(31) = a(177147) = 311$. Is there any solution to $a(n) = n$?
 - _Franklin T. Adams-Watters_, Dec 18 2006"
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture :
-    answer(sorry) ↔ ∃ n : ℕ, 2 ≤ n ∧ a n = n := by
+    ∃ n : ℕ, 2 ≤ n ∧ a n = n := by
   sorry
 
 end OeisA67599

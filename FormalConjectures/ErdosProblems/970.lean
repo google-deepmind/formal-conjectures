@@ -48,18 +48,20 @@ Jacobsthal's function, uniformly parametrized by the maximum number of distinct 
 noncomputable def jacobsthalFunction (k : ℕ) : ℕ :=
   sInf {m : ℕ | IsJacobsthalBound k m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $h(k)$ be Jacobsthal's function, defined to as the minimal $m$ such that, if $n$ has at most $k$ prime factors, then in any set of $m$ consecutive integers there exists an integer coprime to $n$. Determine the order of magnitude of $h(k)$. In particular, is it true that $$h(k) \ll k^2?$$
 
 The bound $h(k) \ll k^2$ was proved by an internal OpenAI model in September 2026 [OAI26a]; see
 the linked Lean proof. The order of magnitude of $h(k)$ remains open.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/Jacobsthal/Conclusions/QuadraticBound.lean#L13"]
-theorem erdos_970 : answer(True) ↔
+theorem erdos_970 :
     ∃ C > (0 : ℝ), ∀ k : ℕ, 0 < k → (jacobsthalFunction k : ℝ) ≤ C * k ^ 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The stronger bound $$h(k) \ll \frac{k^2}{(\log\log 3k)^2}$$ proved in [OAI26a].
 -/

@@ -49,6 +49,7 @@ noncomputable def g (n : ℕ) : ℕ :=
     (∀ x y, x ≠ y → f s(x, y) ≠ x ∧ f s(x, y) ≠ y) →
       ∃ X : Finset (Fin n), IsIndependent f X ∧ k ≤ X.card}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f$ be a function from all pairs of elements in $\{1,\ldots,n\}$ to $\{1,\ldots,n\}$ such
 that $f(x,y)\neq x$ and $\neq y$ for all $x,y$. We call $X\subseteq \{1,\ldots,n\}$ independent
