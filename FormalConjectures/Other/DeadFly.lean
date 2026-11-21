@@ -52,30 +52,24 @@ namespace DeadFly
 /-- The Euclidean plane. -/
 abbrev Plane := EuclideanSpace ℝ (Fin 2)
 
-/-- The set `C` has area one. -/
-def HasUnitArea (C : Set Plane) : Prop := MeasureTheory.volume C = 1
-
-/-- The set `S` is convex and has area one. -/
-def ConvexUnitRegion (S : Set Plane) : Prop :=
-  Convex ℝ S ∧ HasUnitArea S
-
 /-- The set `S` meets every convex region of area one. -/
 def MeetsEveryConvexRegion (S : Set Plane) : Prop :=
-  ∀ C : Set Plane, ConvexRegion C → (S ∩ C).Nonempty
+  ∀ C : Set Plane,
+    Convex ℝ C ∧ MeasureTheory.volume C = 1 → (S ∩ C).Nonempty
 
 /-- The set `S` contains pairs of distinct points at arbitrarily small distances.
 
-Equivalent filter formulation:
-
-    Filter.Frequently
-      (fun p : Plane × Plane =>
-        p.1 ∈ S ∧ p.2 ∈ S ∧ p.1 ≠ p.2)
-      (uniformity Plane)
-
 Every entourage contains a pair of distinct points of `S`.
+
+Equivalent metric formulation:
+
+    ∀ ε : ℝ, ε > 0 → ∃ x ∈ S, ∃ y ∈ S, x ≠ y ∧ dist x y < ε
 -/
 def ArbitrarilyClosePoints (S : Set Plane) : Prop :=
-  ∀ ε : ℝ, ε > 0 → ∃ x ∈ S, ∃ y ∈ S, x ≠ y ∧ dist x y < ε
+  Filter.Frequently
+    (fun p : Plane × Plane =>
+      p.1 ∈ S ∧ p.2 ∈ S ∧ p.1 ≠ p.2)
+    (uniformity Plane)
 
 /-- If a set of points in the plane contains one point in each convex region of area $1$, then
 must it have pairs of points at arbitrarily small distances? -/
