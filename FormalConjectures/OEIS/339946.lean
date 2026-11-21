@@ -18,28 +18,13 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# OEIS A339946, Bala's prime-level supercongruence
+# Coefficients of $1/P_n\bigl(\frac{1-x}{1+x}\bigr)$
 
-Peter Bala defines $a(n) = [x^n]\, 1/P_n\bigl(\frac{1-x}{1+x}\bigr)$, where $P_n$ is
-the Legendre polynomial. He conjectures $a(p) \equiv a(1) \pmod{p^5}$ for every prime $p \ge 7$
-(Dec 2020). In Mar 2022 he extends this: for every positive integer $m$, put
-$a_m(n) = [x^{mn}]\, 1/P_n\bigl(\frac{1-x}{1+x}\bigr)$; then $a_m(p) \equiv a_m(1) \pmod{p^5}$ for
-all primes $p \ge 7$.
-
-The Legendre polynomial is $P_n(t) = \tilde P_n\bigl(\frac{1-t}{2}\bigr)$, where
-$\tilde P_n(x) = \sum_k (-1)^k \binom{n}{k} \binom{n+k}{n} x^k$ is Mathlib's
-`Polynomial.shiftedLegendre n` (its Rodrigues formula is
-$n!\,\tilde P_n = \frac{d^n}{dx^n}\bigl(x^n (1-x)^n\bigr)$). We evaluate $P_n$ at the power series
-$\frac{1-x}{1+x} \in \mathbb{Q}[[x]]$ and invert in $\mathbb{Q}[[x]]$; the constant term is
-$P_n(1) = 1$. The values are rational by definition. A congruence $u \equiv v \pmod{p^5}$ is
-stated as $u - v = p^5 z$ for an integer $z$.
-
-We also state that the range $p \ge 7$ is optimal: $a_m(5) \equiv 2 + 625 m^2 \pmod{5^5}$, so the
-congruence at $p = 5$ holds exactly when $5 \mid m$. This is not a claim of Bala; it records the
-sharpness noted with the proof.
+Let $P_n$ be the Legendre polynomial. The sequence is
+$a(n) = [x^n]\, 1/P_n\bigl(\frac{1-x}{1+x}\bigr)$ for $n \ge 1$.
 
 *References:*
-- Peter Bala, [A339946](https://oeis.org/A339946), Dec 23, 2020, and comment of Mar 10, 2022.
+- [A339946](https://oeis.org/A339946), Peter Bala, 2020.
 -/
 
 @[expose] public section
@@ -48,8 +33,9 @@ namespace OeisA339946
 
 open PowerSeries
 
-/-- The Legendre polynomial $P_n(t) = \tilde P_n\bigl(\frac{1-t}{2}\bigr)$ over $\mathbb{Q}$, with
-$\tilde P_n$ = `Polynomial.shiftedLegendre n`. -/
+/-- The Legendre polynomial $P_n(t) = \tilde P_n\bigl(\frac{1-t}{2}\bigr)$ over $\mathbb{Q}$, where
+$\tilde P_n(x) = \sum_k (-1)^k \binom{n}{k} \binom{n+k}{n} x^k$ is the shifted Legendre polynomial
+`Polynomial.shiftedLegendre n`. -/
 noncomputable def legendreP (n : ℕ) : Polynomial ℚ :=
   (Polynomial.map (Int.castRingHom ℚ) (Polynomial.shiftedLegendre n)).comp
     (Polynomial.C (1 / 2) * (1 - Polynomial.X))
@@ -57,35 +43,76 @@ noncomputable def legendreP (n : ℕ) : Polynomial ℚ :=
 /-- The power series $\frac{1-x}{1+x}$. -/
 noncomputable def mobius : ℚ⟦X⟧ := (1 - X) * (1 + X)⁻¹
 
-/-- Bala's $a_m(n) = [x^{mn}]\, 1/P_n\bigl(\frac{1-x}{1+x}\bigr)$. -/
-noncomputable def am (m n : ℕ) : ℚ := coeff (m * n) (Polynomial.aeval mobius (legendreP n))⁻¹
+/-- $a(n) = [x^n]\, 1/P_n\bigl(\frac{1-x}{1+x}\bigr)$. The inverse is taken in $\mathbb{Q}[[x]]$,
+where $P_n\bigl(\frac{1-x}{1+x}\bigr)$ has constant term $P_n(1) = 1$. -/
+noncomputable def a (n : ℕ) : ℚ := coeff n (Polynomial.aeval mobius (legendreP n))⁻¹
 
-/-- OEIS A339946: $a(n) = [x^n]\, 1/P_n\bigl(\frac{1-x}{1+x}\bigr)$. -/
-noncomputable def a339946 (n : ℕ) : ℚ := coeff n (Polynomial.aeval mobius (legendreP n))⁻¹
+@[category test, AMS 11]
+theorem a_1 : a 1 = 2 := by
+  sorry
 
-/-- Bala (A339946, Mar 2022): for every $m \ge 1$ and every prime $p \ge 7$,
-$a_m(p) \equiv a_m(1) \pmod{p^5}$. -/
+@[category test, AMS 11]
+theorem a_2 : a 2 = 24 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_3 : a 3 = 812 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_4 : a 4 = 52920 := by
+  sorry
+
+@[category test, AMS 11]
+theorem a_5 : a 5 = 5635002 := by
+  sorry
+
+/--
+"Calculation suggests that, for the present sequence, we have stronger congruences for prime
+p >= 7, namely a(p) == a(1) ( mod p^5 ) (checked up to p = 61)."
+- Peter Bala, Dec 23 2020.
+
+The values of `a` lie in $\mathbb{Q}$, so the congruence is stated as $a(p) - a(1) = p^5 z$ for
+an integer $z$.
+
+Proved by Wentao Li, with AI assistance.
+-/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000022"]
-theorem am_congr (m : ℕ) (hm : 1 ≤ m) (p : ℕ) (hp : p.Prime) (h7 : 7 ≤ p) :
+theorem conjecture (p : ℕ) (hp : p.Prime) (h7 : 7 ≤ p) :
+    ∃ z : ℤ, a p - a 1 = (p : ℚ) ^ 5 * z := by
+  sorry
+
+/-- Bala's $a_m(n) = [x^{mn}]\, 1/P_n\bigl(\frac{1-x}{1+x}\bigr)$. The case $m = 1$ is `a`. -/
+noncomputable def am (m n : ℕ) : ℚ := coeff (m * n) (Polynomial.aeval mobius (legendreP n))⁻¹
+
+/--
+"For m a positive integer, define a_m(n) = [x^(m*n)] 1/Legendre_P(n,(1 - x)/(1 + x)). We
+conjecture that the supercongruence a_m(p) == a_m(1) ( mod p^5 ) holds for all primes p >= 7."
+- Peter Bala, Mar 10 2022.
+
+As in `conjecture`, the congruence is stated as $a_m(p) - a_m(1) = p^5 z$ for an integer $z$.
+
+Proved by Wentao Li, with AI assistance.
+-/
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000022"]
+theorem conjecture_am (m : ℕ) (hm : 1 ≤ m) (p : ℕ) (hp : p.Prime) (h7 : 7 ≤ p) :
     ∃ z : ℤ, am m p - am m 1 = (p : ℚ) ^ 5 * z := by
   sorry
 
-/-- Bala (A339946, Dec 2020): for every prime $p \ge 7$, $a(p) \equiv a(1) \pmod{p^5}$. -/
-@[category research solved, AMS 5 11, formal_proof using lean4 at
-  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000022"]
-theorem a339946_congr (p : ℕ) (hp : p.Prime) (h7 : 7 ≤ p) :
-    ∃ z : ℤ, a339946 p - a339946 1 = (p : ℚ) ^ 5 * z := by
-  sorry
+/-- For every $m \ge 1$, $a_m(5) \equiv 2 + 625 m^2 \pmod{5^5}$.
 
-/-- Sharpness at $p = 5$: $a_m(5) \equiv 2 + 625 m^2 \pmod{5^5}$ for every $m \ge 1$. -/
+Proved by Wentao Li, with AI assistance. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000022"]
 theorem am_five (m : ℕ) (hm : 1 ≤ m) : ∃ z : ℤ, am m 5 = 2 + 625 * (m : ℚ) ^ 2 + 5 ^ 5 * z := by
   sorry
 
-/-- At $p = 5$, $a_m(5) \equiv a_m(1) \pmod{5^5}$ holds exactly when $5 \mid m$. So $p \ge 7$ is
-the optimal uniform range. -/
+/-- For every $m \ge 1$, $a_m(5) \equiv a_m(1) \pmod{5^5}$ holds exactly when $5 \mid m$. So the
+bound $p \ge 7$ in `conjecture_am` cannot be lowered.
+
+Proved by Wentao Li, with AI assistance. -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000022"]
 theorem am_five_congr_iff (m : ℕ) (hm : 1 ≤ m) :
