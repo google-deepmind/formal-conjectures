@@ -96,6 +96,7 @@ def supportFn (a : G → ℂ) (S : Set (G → ℂ)) : ℝ :=
   sSup (functional G a '' S)
 
 
+set_option linter.style.formal_proof_palomar false in
 /-- For $G = \mathbb{Z}/3\mathbb{Z}$ and the functional $a(0) = -1$, $a(1) = -3$, $a(2) = 3$,
 does the support function of $\Phi$ at $a$ strictly exceed that of $\Phi'$?
 
@@ -106,14 +107,14 @@ $$\sup_{\varphi \in \Phi'(\mathbb{Z}/3\mathbb{Z})} \operatorname{Re}\langle a, \
 The DeepMind prover agent provided a formal proof, showing that $\frac{183095}{30000}$ separates the
 support functions.
 -/
-@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/f5afe85e1e02611f63c32ae041b33c67b7938cba/FormalConjectures/GreensOpenProblems/57.lean#L1071"]
 theorem green_57.variants.z3_functional :
     let a : ZMod 3 → ℂ := ![(-1 : ℂ), -3, 3]
-    answer(True) ↔
-      supportFn (ZMod 3) a (Φ' (ZMod 3)) < supportFn (ZMod 3) a (Φ (ZMod 3)) := by
+    supportFn (ZMod 3) a (Φ' (ZMod 3)) < supportFn (ZMod 3) a (Φ (ZMod 3)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Do $\Phi(\mathbb{Z}/3\mathbb{Z})$ and $\Phi'(\mathbb{Z}/3\mathbb{Z})$ coincide?
 
 Numerical evidence suggests the answer is **no**: the integer functional $a = (-1, -3, 3)$
@@ -121,11 +122,12 @@ separates the two spaces. A branch-and-bound verification over the phase variabl
 $\max_{\Phi'} \operatorname{Re}\langle a, \varphi \rangle < 6.112 < 6.115 \approx
 \max_{\Phi} \operatorname{Re}\langle a, \varphi \rangle$.
 -/
-@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/f5afe85e1e02611f63c32ae041b33c67b7938cba/FormalConjectures/GreensOpenProblems/57.lean#L1100"]
 theorem green_57.variants.z3 :
-    answer(False) ↔ (Φ (ZMod 3) = Φ' (ZMod 3)) := by
+    ¬ (Φ (ZMod 3) = Φ' (ZMod 3)) := by
   sorry
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that for every finite abelian group $G$ the spaces $\Phi(G)$ and $\Phi'(G)$,
 obtained from kernels $\phi(g) = \mathbb{E}_{x_1 + x_2 + x_3 = g} f_1(x_2, x_3)
@@ -135,11 +137,10 @@ third kernel is required to depend only on $x_1 + x_2$?
 
 Green guesses that the answer is probably 'no'.
 -/
-@[category research solved, AMS 5 11, formal_proof using formal_conjectures at
+@[category research solved, question, AMS 5 11, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/f5afe85e1e02611f63c32ae041b33c67b7938cba/FormalConjectures/GreensOpenProblems/57.lean#L1120"]
 theorem green_57 :
-  answer(False) ↔
-    ∀ (G : Type) [AddCommGroup G] [Fintype G] [DecidableEq G],
+    ¬ ∀ (G : Type) [AddCommGroup G] [Fintype G] [DecidableEq G],
       Φ G = Φ' G := by
   sorry
 

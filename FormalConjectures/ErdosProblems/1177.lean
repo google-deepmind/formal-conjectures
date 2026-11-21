@@ -22,6 +22,9 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/1177](https://www.erdosproblems.com/1177)
+- [Li26] Li, E., *A Resolution of Erdős Problems 593 and 1177: Obligatory Triple Systems
+  and Exact Spectra*. [arXiv:2606.24882v2](https://arxiv.org/abs/2606.24882v2) (2026),
+  Corollary 1.4.
 -/
 
 @[expose] public section
@@ -32,13 +35,11 @@ open Cardinal Filter Asymptotics
 
 /--
 Let $G$ be a finite $3$-uniform hypergraph, and let $F_G(\kappa)$ denote the collection of
-$3$-uniform hypergraphs with chromatic number $\kappa$ not containing $G$. If $F_G(\aleph_1)$ is not
-empty then there exists $X\in F_G(\aleph_1)$ of cardinality at most $2^{2^{\aleph_0}}$. If both
-$F_G(\aleph_1)$ and $F_H(\aleph_1)$ are non-empty then $F_G(\aleph_1)\cap F_H(\aleph_1)$ is
-non-empty. If $\kappa,\lambda$ are uncountable cardinals and $F_G(\kappa)$ is non-empty then
-$F_G(\lambda)$ is non-empty.
+$3$-uniform hypergraphs with chromatic number $\kappa$ not containing $G$. If
+$F_G(\aleph_1)$ is non-empty, then it contains a hypergraph on at most
+$2^{2^{\aleph_0}}$ vertices. Li [Li26, Corollary 1.4(1)] proved this.
 -/
-@[category research open, AMS 3 5]
+@[category research solved, AMS 3 5]
 theorem erdos_1177.parts.i :
     ∀ (W : Type) [Fintype W] (G : UniformHypergraph W 3),
     G.HasAvoidingChromaticCardinal ℵ₁ →
@@ -48,12 +49,13 @@ theorem erdos_1177.parts.i :
   sorry
 
 /--
-If both $F_G(\aleph_1)$ and $F_H(\aleph_1)$ are non-empty then
-$F_G(\aleph_1)\cap F_H(\aleph_1)$ is non-empty.
+The assertion that two non-empty avoidance families $F_G(\aleph_1)$ and $F_H(\aleph_1)$
+always have non-empty intersection is false. Li [Li26, Corollary 1.4(2)] gives a
+counterexample using two triples sharing a pair and the loose seven-cycle.
 -/
-@[category research open, AMS 3 5]
+@[category research solved, AMS 3 5]
 theorem erdos_1177.parts.ii :
-    ∀ (W U : Type) [Fintype W] [Fintype U]
+    ¬ ∀ (W U : Type) [Fintype W] [Fintype U]
     (G : UniformHypergraph W 3) (H : UniformHypergraph U 3),
     G.HasAvoidingChromaticCardinal ℵ₁ → H.HasAvoidingChromaticCardinal ℵ₁ →
       ∃ (V : Type) (_ : DecidableEq V) (X : UniformHypergraph V 3),
@@ -62,9 +64,9 @@ theorem erdos_1177.parts.ii :
 
 /--
 If $\kappa,\lambda$ are uncountable cardinals and $F_G(\kappa)$ is non-empty then
-$F_G(\lambda)$ is non-empty.
+$F_G(\lambda)$ is non-empty. Li [Li26, Corollary 1.4(3)] proved this.
 -/
-@[category research open, AMS 3 5]
+@[category research solved, AMS 3 5]
 theorem erdos_1177.parts.iii :
     ∀ (W : Type) [Fintype W] (G : UniformHypergraph W 3)
     (κ μ : Cardinal), ℵ₀ < κ → ℵ₀ < μ →

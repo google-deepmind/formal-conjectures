@@ -42,6 +42,7 @@ open Filter Real SimpleGraph
 namespace Erdos814
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 2$ and $G$ be a graph with $n\geq k-1$ vertices and
 $$(k-1)(n-k+2)+\binom{k-2}{2}+1$$
@@ -54,9 +55,9 @@ exists with at most $n-c_k\sqrt{n}$ vertices. Mousset, Noever, and Skorić [MNS1
 this to $n-c_k\frac{n}{\log n}$. The full conjecture was proved by Sauermann [Sa19], who proved
 this with $c_k \gg 1/k^3$.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos814.lean#L81"]
-theorem erdos_814 : answer(True) ↔
+theorem erdos_814 :
     ∀ k ≥ 2, ∃ c > 0, ∀ n ≥ k - 1, ∀ G : SimpleGraph (Fin n),
       G.edgeFinset.card = (k - 1) * (n + 2 - k) + (k - 2).choose 2 + 1 →
         ∃ S : Finset (Fin n), S.Nonempty ∧ (S.card : ℝ) ≤ (1 - c) * n ∧
@@ -64,6 +65,7 @@ theorem erdos_814 : answer(True) ↔
   sorry
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /-- The conclusion holds as soon as $G$ has at least $(k-1)(n-k+2)+inom{k-2}{2}+1$ edges
 (Sauermann [Sa19]). -/
 @[category research solved, AMS 5, formal_proof using lean4 at

@@ -105,8 +105,8 @@ $$n^{1/3+c_1} \ll h(n) \ll n^{1/2-c_2}?$$
 The lower half has a positive answer (`Erdos813.erdos_813.variants.lower`); the upper half is
 `Erdos813.erdos_813.variants.upper`.
 -/
-@[category research open, AMS 5]
-theorem erdos_813 : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_813 :
     ∃ c₁ > (0 : ℝ), ∃ c₂ > (0 : ℝ),
       (fun n : ℕ ↦ (n : ℝ) ^ (1 / 3 + c₁ : ℝ)) =O[atTop] (fun n ↦ (h n : ℝ)) ∧
         (fun n : ℕ ↦ (h n : ℝ)) =O[atTop] (fun n : ℕ ↦ (n : ℝ) ^ (1 / 2 - c₂ : ℝ)) := by
@@ -137,8 +137,8 @@ The lower half of `Erdos813.erdos_813` has a positive answer: there is a constan
 with $n^{1/3+c_1} \ll h(n)$. This follows from the bound $h(n) \gg n^{5/12-o(1)}$ of Bucić and
 Sudakov [BuSu23], since $5/12 > 1/3$.
 -/
-@[category research solved, AMS 5]
-theorem erdos_813.variants.lower : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_813.variants.lower :
     ∃ c₁ > (0 : ℝ), (fun n : ℕ ↦ (n : ℝ) ^ (1 / 3 + c₁ : ℝ)) =O[atTop] (fun n ↦ (h n : ℝ)) := by
   sorry
 
@@ -146,8 +146,8 @@ theorem erdos_813.variants.lower : answer(True) ↔
 The upper half of `Erdos813.erdos_813`: is there a constant $c_2 > 0$ with
 $h(n) \ll n^{1/2-c_2}$?
 -/
-@[category research open, AMS 5]
-theorem erdos_813.variants.upper : answer(sorry) ↔
+@[category research open, question, AMS 5]
+theorem erdos_813.variants.upper :
     ∃ c₂ > (0 : ℝ), (fun n : ℕ ↦ (h n : ℝ)) =O[atTop] (fun n : ℕ ↦ (n : ℝ) ^ (1 / 2 - c₂ : ℝ)) := by
   sorry
 

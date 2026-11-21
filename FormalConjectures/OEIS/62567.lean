@@ -102,6 +102,7 @@ lemma a_5 : a 5 = 5 := by
   apply a_eq_self 5 (by omega) (by rw [reverseNat_of_lt 5 (by decide) (by decide)])
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The conjecture that $a(3^n) = 10^{3^{n-2}} - 1$ for $n > 1$ was shown to be false for $4 < n < 21$
 by Farideh Firoozbakht, who conjectured that for all $n > 4$, $a(3^n) \neq 10^{3^{n-2}} - 1$.

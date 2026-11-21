@@ -35,6 +35,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos498
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $z_1,\ldots,z_n\in\mathbb{C}$ with $1\leq \lvert z_i\rvert$ for $1\leq i\leq n$. Let $D$ be an
 arbitrary disc of radius $1$. Is it true that the number of sums of the shape
@@ -49,8 +50,8 @@ arbitrary Hilbert spaces [Kl70].
 
 See also [395].
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos498.lean#L2006"]
-theorem erdos_498 : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos498.lean#L2006"]
+theorem erdos_498 :
     ∀ (n : ℕ) (z : Fin n → ℂ), (∀ i, 1 ≤ ‖z i‖) → ∀ c : ℂ,
       {ε : Fin n → ℤ | (∀ i, ε i = -1 ∨ ε i = 1) ∧
         (∑ i, (ε i : ℂ) * z i) ∈ Metric.ball c 1}.ncard ≤ n.choose (n / 2) := by

@@ -63,9 +63,9 @@ The requirement $m \neq n$ is part of the question: $\mathrm{IsBetrothed}\ n\ n$
 $\sigma(n) = 2n + 1$, i.e. that $n$ is quasiperfect, which is the separate open problem
 `QuasiperfectNumbers.exists_quasiperfect`.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem same_parity_betrothed :
-    answer(sorry) ↔ ∃ m n : ℕ, m ≠ n ∧ IsBetrothed m n ∧ (Even m ↔ Even n) := by
+    ∃ m n : ℕ, m ≠ n ∧ IsBetrothed m n ∧ (Even m ↔ Even n) := by
   sorry
 
 /--
@@ -73,9 +73,9 @@ theorem same_parity_betrothed :
 Are there infinitely many betrothed number pairs?
 
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitely_many_betrothed :
-    answer(sorry) ↔ {p : ℕ × ℕ | p.1 < p.2 ∧ IsBetrothed p.1 p.2}.Infinite := by
+    {p : ℕ × ℕ | p.1 < p.2 ∧ IsBetrothed p.1 p.2}.Infinite := by
   sorry
 
 end BetrothedNumbers

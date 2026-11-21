@@ -42,6 +42,7 @@ noncomputable def f (m : ℕ) : ℕ :=
     ∃ H : SimpleGraph V, H ≤ G ∧ H.IsBipartite ∧
       (m : ℝ) / 2 + (√(8 * m + 1) - 1) / 8 + k ≤ H.edgeSet.ncard}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(m)$ be maximal such that every graph with $m$ edges must contain a bipartite graph with
 $$\geq \frac{m}{2}+\frac{\sqrt{8m+1}-1}{8}+f(m)$$
@@ -52,12 +53,13 @@ always. Note that $f(\binom{n}{2})= 0$, taking $K_n$. Solved by Alon [Al96], who
 $f(n^2/2)\gg n^{1/2}$, and also showed that $f(m)\ll m^{1/4}$ for all $m$. The best possible
 constant in $f(m)\leq Cm^{1/4}$ is unknown.
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at
+@[category research solved, question, AMS 5, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos127.lean#L585"]
-theorem erdos_127 : answer(True) ↔ ∃ m : ℕ → ℕ, Tendsto m atTop atTop ∧
+theorem erdos_127 : ∃ m : ℕ → ℕ, Tendsto m atTop atTop ∧
     Tendsto (fun i => f (m i)) atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Edwards [Ed73] proved that every graph with $m$ edges contains a bipartite subgraph with at
 least $\frac{m}{2}+\frac{\sqrt{8m+1}-1}{8}$ edges. -/
 @[category research solved, AMS 5, formal_proof using lean4 at

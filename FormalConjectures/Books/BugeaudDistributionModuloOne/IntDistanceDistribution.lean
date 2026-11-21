@@ -48,8 +48,8 @@ Problem 10.1. Are there a transcendental number $\alpha$ and a positive real
 number $\xi$ such that $\lVert \xi \alpha^n \rVert$ tends to~$0$ as~$n$ tends to infinity? [Har19]
 (Trivial for $|\alpha| < 1$)
 -/
-@[category research open, AMS 11]
-theorem problem_10_1 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem problem_10_1 :
     ∃ (α ξ : ℝ), 1 < |α| ∧ Transcendental ℚ α ∧ 0 < ξ ∧
       Filter.Tendsto (fun n : ℕ ↦ distToNearestInt (ξ * α ^ n)) Filter.atTop (nhds 0) := by
   sorry

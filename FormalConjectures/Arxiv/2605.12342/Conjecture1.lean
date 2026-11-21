@@ -72,6 +72,7 @@ and is an index-$2$ subgroup of $\mathrm{S}_m \times \mathrm{S}_n$.
 noncomputable def gammaSubgroup (m n : ℕ) : Subgroup (Equiv.Perm (Fin m) × Equiv.Perm (Fin n)) :=
   (signDiffHom m n).ker
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Conjecture 1 (Fernandes, 2026):**
 Let $m \ge n \ge 2$ be integers with $(m, n) \notin \{(2,2), (3,3), (4,3), (4,4)\}$.

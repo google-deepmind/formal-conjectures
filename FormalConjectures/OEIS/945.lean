@@ -87,9 +87,9 @@ numbers that must be factored. Already the number $a(1) \cdots a(43) + 1$ has 18
 
 See also [Mullin63].
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem every_prime_occurs :
-    answer(sorry) ↔ ∀ p, p.Prime → ∃ n ≥ 1, a n = p := by
+    ∀ p, p.Prime → ∃ n ≥ 1, a n = p := by
   sorry
 
 end OeisA945

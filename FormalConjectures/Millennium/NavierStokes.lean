@@ -283,6 +283,7 @@ theorem navier_stokes_existence_and_smoothness_periodic (nu : ℝ) (hnu : nu > 0
     ∃ v p, NavierStokesExistenceAndSmoothnessPeriodic nu u₀ (f := 0) v p := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 (C) Breakdown of (forced) Navier–Stokes solutions on ℝ³.
 
@@ -297,6 +298,7 @@ theorem navier_stokes_breakdown_R3 (nu : ℝ) (hnu : nu > 0) :
     ¬ (∃ v p, NavierStokesExistenceAndSmoothnessRn nu u₀ f v p) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 (D) Breakdown of (forced) Navier–Stokes solutions on ℝ³/ℤ³.
 

@@ -44,6 +44,7 @@ variable {V : Type*}
 noncomputable def perfectMatchingCount (G : SimpleGraph V) : ℕ :=
   {M : G.Subgraph | M.IsPerfectMatching}.ncard
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **The Lovász–Plummer conjecture (1970s), proved by Esperet, Kardoš, King, Král' and Norine
 (2011).**
@@ -60,6 +61,7 @@ theorem lovasz_plummer_conjecture :
       (2 : ℝ) ^ (c * Fintype.card V) ≤ perfectMatchingCount G := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **The explicit bound of Esperet–Kardoš–King–Král'–Norine (2011).**
 

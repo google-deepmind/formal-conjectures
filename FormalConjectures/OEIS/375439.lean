@@ -102,6 +102,7 @@ theorem a_6 : a 6 = 9 := by
   rw [a_eq]
   norm_num [rhs, conv3, conv2, subst3, Finset.sum_range_succ, a_0, a_1, a_2, a_3, a_4, a_5]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: $a(n)$ is odd iff $n$ is in A038754, which consists of numbers of the form
 $3^k$ and $2*3^k$."

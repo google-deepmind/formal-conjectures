@@ -58,6 +58,7 @@ theorem a_4 : a 4 = 13 := by
 theorem a_5 : a 5 = 77 := by
   decide +native
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: for $n > 2$, $n$ divides $a(n-2)$ if and only if $n$ is a prime.
 Checked up to 20000. - _Amiram Eldar_ and _Thomas Ordowski_, Jul 27 2019
