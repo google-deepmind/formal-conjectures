@@ -229,63 +229,145 @@ def find_mismatches():
     return mismatches
 
 
-def create_issues(mismatches):
-    """Create GitHub issues for mismatches, skipping duplicates.
+ISSUE_TITLE_RE = re.compile(r"Erdős Problem (\d+): status mismatch")
+
+
+def issue_title(m):
+    """The title of the sync issue for mismatch `m`, which records both computed sides."""
+    return (
+        f"Erdős Problem {m['number']}: status mismatch "
+        f"(repo={m['lean_status']}, erdosproblems.com={m['yaml_status']})"
+    )
+
+
+def issue_labels(m):
+    labels = ["erdos-status-sync"]
+    if m["yaml_status"] == "formally solved":
+        labels.append("formalisation exists elsewhere")
+    return labels
+
+
+ISSUE_LIST_LIMIT = 1000
+
+
+def list_sync_issues():
+    """The open issues under the sync label, or None if `gh` fails.
+
+    This lists the label directly instead of going through GitHub search. Search can lag
+    behind or come back empty, and an empty result made the script open a second issue for a
+    problem that already had one.
+    """
+    result = subprocess.run(
+        [
+            "gh", "issue", "list",
+            "--label", "erdos-status-sync",
+            "--state", "open",
+            "--limit", str(ISSUE_LIST_LIMIT),
+            "--json", "number,title",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(
+            f"Failed to list sync issues (gh exit code {result.returncode})",
+            file=sys.stderr,
+        )
+        return None
+    issues = json.loads(result.stdout) if result.stdout.strip() else []
+    if len(issues) >= ISSUE_LIST_LIMIT:
+        # The list may be cut off. A missing issue would be opened again as a duplicate.
+        print(f"Listed {len(issues)} sync issues, the limit; the list may be incomplete",
+              file=sys.stderr)
+        return None
+    return issues
+
+
+def issues_by_problem(issues):
+    """Open sync issues grouped by problem number (a string), oldest first."""
+    out = {}
+    for issue in sorted(issues, key=lambda i: i["number"]):
+        match = ISSUE_TITLE_RE.match(issue["title"])
+        if match:
+            out.setdefault(match.group(1), []).append(issue)
+    return out
+
+
+def plan_issue_sync(mismatches, issues):
+    """Decide what to do with the sync issues for the current mismatches.
+
+    Returns `(to_create, to_retitle, duplicates)`:
+    - `to_create`: mismatches with no open issue.
+    - `to_retitle`: `(issue number, mismatch)` pairs for the oldest open issue of a problem
+      whose title no longer matches the computed sides.
+    - `duplicates`: `(issue number, kept issue number)` pairs for every newer open issue of
+      a problem that still mismatches.
+
+    Kept separate from the `gh` calls so it can be tested.
+    """
+    grouped = issues_by_problem(issues)
+    to_create, to_retitle, duplicates = [], [], []
+    for m in mismatches:
+        existing = grouped.get(str(m["number"]), [])
+        if not existing:
+            to_create.append(m)
+            continue
+        kept, *rest = existing
+        if kept["title"] != issue_title(m):
+            to_retitle.append((kept["number"], m))
+        duplicates.extend((issue["number"], kept["number"]) for issue in rest)
+    return to_create, to_retitle, duplicates
+
+
+def issue_body(m):
+    num = m["number"]
+    return (
+        f"The status of [Erdős problem {num}]"
+        f"(https://www.erdosproblems.com/{num}) "
+        f"appears to have changed.\n\n"
+        f"- **[This repo](http://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/{num}.lean)**: `{m['lean_status']}` "
+        f"(in `FormalConjectures/ErdosProblems/{num}.lean`)\n"
+        f"- **[erdosproblems.com/{num}](https://www.erdosproblems.com/{num})**: `{m['yaml_status']}`\n\n"
+        f"Please verify and update the `@[category research ...]` "
+        f"annotation if appropriate."
+    )
+
+
+def sync_issues(mismatches, issues):
+    """Create, retitle, and deduplicate sync issues for the current mismatches.
 
     Requires the `gh` CLI to be installed and GH_TOKEN to be set.
     """
-    for m in mismatches:
-        num = m["number"]
-        title_prefix = f"Erdős Problem {num}: status mismatch"
-        title = (
-            f"{title_prefix} "
-            f"(repo={m['lean_status']}, erdosproblems.com={m['yaml_status']})"
-        )
+    to_create, to_retitle, duplicates = plan_issue_sync(mismatches, issues)
 
-        # Skip if an open issue with this prefix already exists
-        result = subprocess.run(
-            [
-                "gh", "issue", "list",
-                "--search", f"{title_prefix} in:title",
-                "--state", "open",
-                "--json", "number",
-            ],
-            capture_output=True,
-            text=True,
-        )
-        if result.returncode != 0:
-            print(
-                f"Failed to check existing issues for Erdős Problem {num} "
-                f"(gh exit code {result.returncode}), skipping to avoid "
-                f"duplicates",
-                file=sys.stderr,
-            )
-            continue
-        existing = json.loads(result.stdout) if result.stdout.strip() else []
-        if existing:
-            print(f"Issue already exists for Erdős Problem {num}, skipping")
-            continue
-
-        body = (
-            f"The status of [Erdős problem {num}]"
-            f"(https://www.erdosproblems.com/{num}) "
-            f"appears to have changed.\n\n"
-            f"- **[This repo](http://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/{num}.lean)**: `{m['lean_status']}` "
-            f"(in `FormalConjectures/ErdosProblems/{num}.lean`)\n"
-            f"- **[erdosproblems.com/{num}](https://www.erdosproblems.com/{num})**: `{m['yaml_status']}`\n\n"
-            f"Please verify and update the `@[category research ...]` "
-            f"annotation if appropriate."
-        )
-        labels = ["erdos-status-sync"]
-        if m["yaml_status"] == "formally solved":
-            labels.append("formalisation exists elsewhere")
-        cmd = ["gh", "issue", "create", "--title", title, "--body", body]
-        for label in labels:
+    for m in to_create:
+        cmd = ["gh", "issue", "create", "--title", issue_title(m), "--body", issue_body(m)]
+        for label in issue_labels(m):
             cmd.extend(["--label", label])
         subprocess.run(cmd)
 
+    for number, m in to_retitle:
+        cmd = ["gh", "issue", "edit", str(number), "--title", issue_title(m)]
+        for label in issue_labels(m):
+            cmd.extend(["--add-label", label])
+        # Comment only after a successful edit. Otherwise the title stays stale and the
+        # next hourly run posts the same comment again.
+        if subprocess.run(cmd).returncode != 0:
+            print(f"Failed to retitle issue #{number}", file=sys.stderr)
+            continue
+        subprocess.run([
+            "gh", "issue", "comment", str(number),
+            "--body",
+            f"The mismatch has changed. This repository now reads `{m['lean_status']}` "
+            f"and erdosproblems.com reads `{m['yaml_status']}`. Title updated automatically.",
+        ])
 
-ISSUE_TITLE_RE = re.compile(r"Erdős Problem (\d+): status mismatch")
+    for number, kept in duplicates:
+        subprocess.run([
+            "gh", "issue", "close", str(number),
+            "--reason", "not planned",
+            "--comment", f"Duplicate of #{kept}. Closed automatically.",
+        ])
 
 
 def issues_to_close(issues, still_open, known):
@@ -307,36 +389,15 @@ def issues_to_close(issues, still_open, known):
     return out
 
 
-def close_resolved_issues(mismatches):
+def close_resolved_issues(mismatches, issues):
     """Close open sync issues whose mismatch has gone away.
 
-    The script opens an issue when this repository and erdosproblems.com disagree, but
-    nothing ever closed them, so the label accumulates issues describing a state that no
-    longer holds. `mismatches` is everything still disagreeing, so any other open issue under
-    the label has been overtaken by a merge.
+    `mismatches` is everything still disagreeing, so any other open issue under the label has
+    been overtaken by a merge.
     """
     # `find_mismatches` keys problems by string, so compare as strings.
     still_open = {str(m["number"]) for m in mismatches}
     known = classifiable()
-    result = subprocess.run(
-        [
-            "gh", "issue", "list",
-            "--label", "erdos-status-sync",
-            "--state", "open",
-            "--limit", "500",
-            "--json", "number,title",
-        ],
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        print(
-            f"Failed to list sync issues (gh exit code {result.returncode}), "
-            f"not closing anything",
-            file=sys.stderr,
-        )
-        return
-    issues = json.loads(result.stdout) if result.stdout.strip() else []
     for number in issues_to_close(issues, still_open, known):
         subprocess.run([
             "gh", "issue", "close", str(number),
@@ -352,10 +413,14 @@ def main():
     print()  # trailing newline
 
     if "--create-issues" in sys.argv:
-        if mismatches:
-            create_issues(mismatches)
-        # Runs even when nothing mismatches, which is exactly when there is most to close.
-        close_resolved_issues(mismatches)
+        issues = list_sync_issues()
+        if issues is None:
+            # Without the list, every mismatch looks new and every issue looks stale.
+            print("Not creating, editing, or closing any issue", file=sys.stderr)
+        else:
+            sync_issues(mismatches, issues)
+            # Runs even when nothing mismatches, which is exactly when there is most to close.
+            close_resolved_issues(mismatches, issues)
 
     return 1 if mismatches else 0
 
