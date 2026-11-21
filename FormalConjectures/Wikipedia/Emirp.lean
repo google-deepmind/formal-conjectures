@@ -75,9 +75,9 @@ theorem not_a_11 : ¬ IsEmirp 11 := by
 
 /-- [Wikipedia's article on emirps](https://en.wikipedia.org/wiki/Emirp) states: "It is not known
 whether there are infinitely many emirps." -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem infinitude_question :
-    answer(sorry) ↔ {p : ℕ | IsEmirp p}.Infinite := by
+    {p : ℕ | IsEmirp p}.Infinite := by
   sorry
 
 end Emirp

@@ -106,12 +106,13 @@ def IsRupert (vertices : Finset ℝ³) : Prop :=
    let outer_shadow := transformed_shadow (convexHull ℝ vertices) 0 outer_rotation
    inner_shadow ⊆ interior outer_shadow
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There exists a convex polyhedron with nonempty interior for which the Rupert property does
 not hold.
 -/
-@[category research solved, AMS 52, formal_proof using lean4 at "https://github.com/jcreedcmu/Noperthedron/blob/1ee88118097acc9db768b44b3c6ea9f60a4e4b67/KernelCaseAnalysis/ProofOfMainTheorem.lean#L21"]
+@[category research solved, question, AMS 52, formal_proof using lean4 at "https://github.com/jcreedcmu/Noperthedron/blob/1ee88118097acc9db768b44b3c6ea9f60a4e4b67/KernelCaseAnalysis/ProofOfMainTheorem.lean#L21"]
 theorem is_every_convex_polyhedron_rupert :
-    answer(False) ↔ ∀ (vertices : Finset ℝ³),
+    ¬ ∀ (vertices : Finset ℝ³),
        (interior (convexHull ℝ vertices : Set ℝ³)).Nonempty → IsRupert vertices := by
  sorry

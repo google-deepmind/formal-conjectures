@@ -52,6 +52,7 @@ The series $\sum_{n=0}^\infty \frac{1}{a_n \cdot a_{n+1}}$.
 noncomputable def ErdosSeries (a : ℕ → ℤ) : ℝ :=
   ∑' n : ℕ, 1 / ((a n : ℝ) * (a (n + 1) : ℝ))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that if $a_0 < a_1 < a_2 < \cdots$ is a strictly increasing sequence
 of integers with $\liminf a_n^{1/2^n} > 1$, then the series
@@ -68,9 +69,9 @@ $1\leq a_1<\cdots$ such that $\lim a_n^{1/\phi^{n}}=C$ where this infinite sum i
 
 This was formalized in Lean by Baretto.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/1051"]
+@[category research solved, question, AMS 11, formal_proof using lean4 at "https://www.erdosproblems.com/forum/thread/1051"]
 theorem erdos_1051 :
-    answer(True) ↔ ∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
+    ∀ (a : ℕ → ℤ), StrictMono a → GrowthCondition a →
       Irrational (ErdosSeries a) := by
   sorry
 

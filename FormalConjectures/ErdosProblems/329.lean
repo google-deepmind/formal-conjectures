@@ -43,15 +43,17 @@ noncomputable def sqrtPartialDensity (A : Set ℕ) (N : ℕ) : ℝ :=
 noncomputable def sidonUpperDensity (A : Set ℕ) : ℝ :=
   limsup (fun N => sqrtPartialDensity A N) atTop
 
+def erdos_329.answer : ℝ := sorry
+
 /--
 **Erdős Problem 329.**
 Let `A ⊆ ℕ` be a Sidon set. How large can
 `lim sup_{N → ∞} |A ∩ {1,…,N}| / N^{1/2}`
 be?
 -/
-@[category research open, AMS 5 11]
+@[category research open, question value, AMS 5 11]
 theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
-    answer(sorry) := by
+    erdos_329.answer := by
   sorry
 
 /--

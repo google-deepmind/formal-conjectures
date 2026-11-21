@@ -56,6 +56,7 @@ theorem a_3 : a 3 = 24 := by decide +native
 @[category test, AMS 11]
 theorem a_4 : a 4 = 720 := by decide +native
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: There are finitely many numbers such that $a(n)$ is not $\equiv 0 \pmod{a(n-1)}$.
 (Also mentioned in A093455.) In fact there are infinitely many such numbers.-/

@@ -36,6 +36,7 @@ open scoped ExponentialSum
 
 namespace Erdos512
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, if $A\subset \mathbb{Z}$ is a finite set of size $N$, then
 $$\int_0^1 \left\lvert \sum_{n\in A}e(n\theta)\right\rvert \mathrm{d}\theta \gg \log N,$$
@@ -44,8 +45,8 @@ where $e(x)=e^{2\pi ix }$?
 Littlewood's conjecture, proved independently by Konyagin [Ko81] and McGehee, Pigno, and
 Smith [MPS81].
 -/
-@[category research solved, AMS 11 42, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/512/Erdos512.lean"]
-theorem erdos_512 : answer(True) ↔
+@[category research solved, question, AMS 11 42, formal_proof using lean4 at "https://github.com/Jayyhk/erdos-lean/blob/f8a51976fd2e66a52b4928c109fb9ae877a1a507/problems/512/Erdos512.lean"]
+theorem erdos_512 :
     ∃ c > (0 : ℝ), ∀ (N : ℕ) (A : Finset ℤ), A.card = N →
       c * Real.log N ≤ ∫ θ in (0 : ℝ)..1, ‖∑ n ∈ A, e (n * θ)‖ := by
   sorry

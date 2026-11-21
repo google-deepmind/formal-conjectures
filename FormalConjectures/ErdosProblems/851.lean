@@ -45,6 +45,7 @@ The set of integers of the form `2^k+p` (where `p` is prime) has positive lower 
 theorem erdos_851.variants.romanoff : 0 < Set.lowerDensity twoPowAddPrimeSet := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon > 0$. Is there some $r \ll_\epsilon 1$ such that the density of integers of the
 form $2^k+n$, where $k \geq 0$ and $n$ has at most $r$ prime divisors, is at least $1-\epsilon$?

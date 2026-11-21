@@ -135,9 +135,9 @@ theorem fortunateNumber_three : fortunateNumber 3 = 13 := by
     interval_cases m <;> norm_num at hmp
 
 /-- **Fortune's Conjecture**: Every Fortunate number is prime. -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem fortune_conjecture :
-    answer(sorry) ↔ (∀ n : ℕ, Nat.Prime (fortunateNumber n)) := by
+    (∀ n : ℕ, Nat.Prime (fortunateNumber n)) := by
   sorry
 
 end FortuneConjecture

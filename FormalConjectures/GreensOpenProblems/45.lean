@@ -43,9 +43,9 @@ integer $\leq N$ lies in at least $10$ of them?
 Erdős remarks that he does not know how to answer it with $10$ replaced by $2$;
 this is `Erdos689.erdos_689`.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem green_45 :
-    answer(sorry) ↔ ∀ᶠ N in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 N,
+    ∀ᶠ N in .atTop, ∃ a : ℕ → ℕ, ∀ m ∈ Finset.Icc 1 N,
       10 ≤ (Finset.Icc 1 N |>.filter fun p => p.Prime ∧ a p ≡ m [MOD p]).card := by
   sorry
 

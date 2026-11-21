@@ -69,6 +69,7 @@ theorem a_3 : a 3 = 17 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 83 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: Given $F(n,L) = \sum_{k=0}^{\lfloor n/2 \rfloor} \binom{n-k}{k}^L$, then
 $\lim_{n\to\infty} F(n+1,L)/F(n,L) = (\mathrm{Fibonacci}(L)\sqrt{5} + \mathrm{Lucas}(L))/2$ for

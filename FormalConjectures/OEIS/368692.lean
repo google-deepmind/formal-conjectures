@@ -65,6 +65,7 @@ lemma a_3 : a 3 = 6700034035890000 := by rfl
 lemma a_4 : a 4 = 928978310614152999200 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is conjectured here that $a(n)$ are integers.
 

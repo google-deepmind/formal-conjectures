@@ -52,6 +52,7 @@ def Colorable (n k : ℕ) : Prop :=
 noncomputable def f (n : ℕ) : ℕ :=
   sInf {k | Colorable n k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be the smallest number of colours required to colour the edges of $K_n$ such that every
 $K_4$ contains at least $5$ colours. Determine the size of $f(n)$.

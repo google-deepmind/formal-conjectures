@@ -58,8 +58,8 @@ theorem erdos_951.variants.isBeurlingPrimes {a : ℕ → ℝ} (ha : 1 < a 0)
   linarith [abs_lt.1 (hN N le_rfl), abs_lt.1 (hN (N + 1) (by grind))]
 
 /-- If `1 < a 0 < ...` has property `Erdos951Prop`, is it true that `#{a i ≤ x} ≤ π x`? -/
-@[category research open, AMS 11]
-theorem erdos_951 : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_951 :
     ∀ a : ℕ → ℝ, 1 < a 0 → StrictMono a → Erdos951Prop a →
       ∀ᶠ (x : ℝ) in Filter.atTop, {i : ℕ | a i ≤ x}.ncard ≤ π ⌊x⌋₊ := by
   sorry

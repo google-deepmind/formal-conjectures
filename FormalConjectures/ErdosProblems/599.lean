@@ -43,8 +43,8 @@ every path from $A$ to $B$ contains at least one vertex of $S$?
 For finite $G$ this is equivalent to Menger's theorem. The answer is **yes**, proved by
 Aharoni and Berger [AhBe09].
 -/
-@[category research solved, AMS 5]
-theorem erdos_599 : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_599 :
     ∀ (V : Type) (G : SimpleGraph V) (A B : Set V),
       Disjoint A B → G.IsIndepSet A → G.IsIndepSet B →
       ∃ (ι : Type) (a b : ι → V) (p : ∀ i, G.Walk (a i) (b i)) (S : Set V),

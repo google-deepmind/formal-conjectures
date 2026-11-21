@@ -225,6 +225,7 @@ def KT : NormalModalLogic := by
     simpa using h.subst σ
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Boxdot Conjecture: every normal modal logic that faithfully interprets KT
 by the boxdot translation is included in KT.

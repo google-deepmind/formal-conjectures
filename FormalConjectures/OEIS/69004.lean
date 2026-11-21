@@ -71,6 +71,7 @@ Conjecture: $a(n) > 0$ for all $n > 1$.-/
 theorem conjecture1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Stronger conjecture: Let pi(n) be the prime counting function (A000720). Then
 pi(n) >= a(n) >= pi(n)/5 for n>1, with the following equalities: pi(2)=a(2),
@@ -94,6 +95,7 @@ theorem conjecture2 : ¬ (
     5 * a 12 = Nat.primeCounting 12) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The upper bound from T. D. Noe's stronger conjecture: "pi(n) >= a(n)" for "n>1".
 It is false at $n = 512720$: $a(512720) \ge 42494 > 42493 = \pi(512720)$.

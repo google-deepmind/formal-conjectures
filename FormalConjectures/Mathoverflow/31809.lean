@@ -40,8 +40,8 @@ Yes. Theorem 1.2 of [CLLZ26] twists the triangulated structure on the category o
 generated projective modules over the preprojective algebra of type $A_5$ over $\mathbb{F}_2$.
 The result is pretriangulated but does not satisfy the octahedral axiom.
 -/
-@[category research solved, AMS 18]
-theorem mathoverflow_31809 : answer(True) ↔ ¬ (∀ (C : Type*) [Category C] [Preadditive C]
+@[category research solved, question, AMS 18]
+theorem mathoverflow_31809 : ¬ (∀ (C : Type*) [Category C] [Preadditive C]
     [HasZeroObject C] [HasShift C ℤ] [∀ (n : ℤ), (shiftFunctor C n).Additive]
     [Pretriangulated C], IsTriangulated C) := by
   sorry

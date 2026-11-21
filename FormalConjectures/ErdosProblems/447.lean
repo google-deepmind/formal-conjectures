@@ -46,11 +46,12 @@ $\lvert \mathcal{F}\rvert =o(2^n)$?
 In [Er65b] Erdős reported that the estimate $\lvert \mathcal{F}\rvert=o(2^n)$ was proved in
 unpublished work by Sárközy and Szemerédi.
 -/
-@[category research solved, AMS 5]
-theorem erdos_447.parts.i : answer(True) ↔
+@[category research solved, question, AMS 5]
+theorem erdos_447.parts.i :
     (fun n : ℕ => (maxUnionFree n : ℝ)) =o[atTop] (fun n : ℕ => (2 : ℝ) ^ n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 How large can a union-free collection $\mathcal{F}$ of subsets of $[n]$ be? By union-free we mean
 there are no solutions to $A\cup B=C$ with distinct $A,B,C\in \mathcal{F}$. Perhaps even
@@ -59,8 +60,8 @@ $$\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}?$$
 Solved by Kleitman [Kl71], who proved
 $$\lvert \mathcal{F}\rvert <(1+o(1))\binom{n}{\lfloor n/2\rfloor}.$$
 -/
-@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos447.lean"]
-theorem erdos_447.parts.ii : answer(True) ↔
+@[category research solved, question, AMS 5, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos447.lean"]
+theorem erdos_447.parts.ii :
     ∃ c : ℕ → ℝ, (c =o[atTop] (1 : ℕ → ℝ)) ∧ ∀ᶠ n : ℕ in atTop,
       (maxUnionFree n : ℝ) < (1 + c n) * (n.choose (n / 2) : ℝ) := by
   sorry

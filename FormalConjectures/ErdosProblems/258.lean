@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos258
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_n \to \infty$ be a sequence of non-zero natural numbers. Is
 $\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of divisors of $n$?
@@ -37,9 +38,9 @@ $\sum_n \frac{d(n)}{(a_1 ... a_n)}$ irrational, where $d(n)$ is the number of di
 This was proved affirmatively by Chojecki and GPT-5.4 Pro [Ch26], and formalised in Lean
 by ster-oc [St26].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://gist.githubusercontent.com/ster-oc/2b7adcf9d753cf6e29d782f7374cc57e/raw/689a8483895cbe147634dfbf2d7b1db93a3b5b5f/Erdos258.lean"]
-theorem erdos_258 : answer(True) ↔ ∀ (a : ℕ → ℕ), (∀ n, 2 ≤ a n) →
+theorem erdos_258 : ∀ (a : ℕ → ℕ), (∀ n, 2 ≤ a n) →
     Filter.Tendsto a Filter.atTop Filter.atTop →
     Irrational (∑' (n : ℕ), ((n + 1).divisors.card / ∏ i ∈ Finset.Icc 1 (n + 1), a i)) := by
   sorry
@@ -51,22 +52,23 @@ Is $\sum_n \frac{d(n)}{a_1 \cdots a_n}$ irrational, where $d(n)$ is the number o
 
 Solution: True (proved by Erdős and Straus [ErSt71], Lemma 2.2 and Theorem 2.13).
 -/
-@[category research solved, AMS 11]
-theorem erdos_258.variants.monotone : answer(True) ↔
+@[category research solved, question, AMS 11]
+theorem erdos_258.variants.monotone :
     ∀ (a : ℕ → ℕ), (∀ n, 2 ≤ a n) → Monotone a →
     Filter.Tendsto a Filter.atTop Filter.atTop →
     Irrational (∑' (n : ℕ), ((n + 1).divisors.card / ∏ i ∈ Finset.Icc 1 (n + 1), a i)) := by
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is $\sum_n \frac{d(n)}{t^n}$ irrational, where $t ≥ 2$ is an integer.
 
 Solution: True (proved by Erdős, see Erdős Problems website)
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/wcook04/plectis-erdos-lean/blob/c4eab2571b4692ee9c08d3ec138176f7fbfa09a9/verification/FCMergedIntegerAdapters/research/adapters/FormalConjecturesAdapter.lean#L112-L117"]
-theorem erdos_258.variants.constant : answer(True) ↔ ∀ t ≥ (2 : ℕ),
+theorem erdos_258.variants.constant : ∀ t ≥ (2 : ℕ),
     Irrational (∑' (n : ℕ), ((n + 1).divisors.card / t^(n + 1))) := by
   sorry
 

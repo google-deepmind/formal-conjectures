@@ -20,7 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Lehmer's Mahler measure problem
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Lehmer%27s_conjecture)
+- [Tao's optimization constant 40a](https://teorth.github.io/optimizationproblems/constants/40a.html)
 -/
 
 @[expose] public section
@@ -40,13 +42,20 @@ noncomputable def mahlerMeasureZ (f : ℤ[X]) : ℝ :=
   mahlerMeasure (f.map (algebraMap ℤ ℂ))
 
 /--
+**Lehmer's Mahler measure constant**: the infimum of $M(f)$ over all $f \in \mathbb{Z}[x]$ with
+$M(f) > 1$.
+-/
+@[optimization_constant "40a"]
+noncomputable def lehmerConstant : ℝ :=
+  sInf {m | ∃ f : ℤ[X], 1 < mahlerMeasureZ f ∧ mahlerMeasureZ f = m}
+
+/--
 Let `M(f)` denote the Mahler measure of `f`.
 There exists a constant `μ>1` such that for any `f(x)∈ℤ[x], M(f)>1 → M(f)≥μ`.
+That is, `lehmerConstant > 1`.
 -/
 @[category research open, AMS 11]
-theorem lehmer_mahler_measure_problem :
-    ∃ μ : ℝ, ∀ f : ℤ[X],
-      μ > 1 ∧ (mahlerMeasureZ f > 1 → mahlerMeasureZ f ≥ μ) := by
+theorem lehmer_mahler_measure_problem : 1 < lehmerConstant := by
   sorry
 
 noncomputable def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1
@@ -55,8 +64,8 @@ noncomputable def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^
 `μ=M(X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1)` is the best value for `lehmer_mahler_measure_problem`.
 -/
 @[category research open, AMS 11]
-theorem lehmer_mahler_measure_problem.variants.best (f : ℤ[X])
-    (hf : mahlerMeasureZ f > 1) : mahlerMeasureZ f ≥ mahlerMeasureZ lehmerPolynomial := by
+theorem lehmer_mahler_measure_problem.variants.best :
+    mahlerMeasureZ lehmerPolynomial ≤ lehmerConstant := by
   sorry
 
 /--
