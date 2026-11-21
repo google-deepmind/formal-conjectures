@@ -105,3 +105,9 @@ theorem sum_distanceMultiplicity (points : Finset X) :
   rcases Nat.eq_zero_or_pos #points with h | h
   · simp [h]
   · rw [Nat.mul_sub_one]
+
+/-- A set has pairwise distinct distances if equal distances between pairs of distinct points
+determine the same unordered pair. -/
+def PairwiseDistinctDistances (A : Set X) : Prop :=
+  ∀ x ∈ A, ∀ y ∈ A, ∀ z ∈ A, ∀ w ∈ A,
+    x ≠ y → z ≠ w → dist x y = dist z w → (x = z ∧ y = w) ∨ (x = w ∧ y = z)
