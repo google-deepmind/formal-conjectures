@@ -161,9 +161,9 @@ predicate used here is equivalent.
 
 *Reference:* [New Results on Periodic Golay Pairs](https://arxiv.org/abs/2408.15611)
 -/
-@[category research open, AMS 5 11 68 94]
+@[category research open, question, AMS 5 11 68 94]
 theorem exists_periodic_golay_pair_106 :
-    answer(sorry) ↔ ∃ A B : BinarySequence 106, IsPeriodicGolayPair A B := by
+    ∃ A B : BinarySequence 106, IsPeriodicGolayPair A B := by
   sorry
 
 end Arxiv.«2408.15611»
