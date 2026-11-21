@@ -88,7 +88,8 @@ theorem erdos_436.parts.ii : ∀ k ≥ 3, Odd k → Λ k 3 < ⊤ := by
   sorry
 
 /-- Lehmer and Lehmer [LeLe62] proved $\Lambda(2, 2) = 9$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/karlesmarin/formalizations/blob/1403f4a437b422626709558c79eaff60022b5577/Formalizations/NumberTheory/Residues/ConsecutiveQuadratic.lean#L220"]
 theorem erdos_436.variants.two_two : Λ 2 2 = 9 := by
   sorry
 
