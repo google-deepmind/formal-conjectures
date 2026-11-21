@@ -80,6 +80,7 @@ theorem suffix_prefix_avoidance_bound
     (A.card : ℝ) * B.card ≤ (q : ℝ) ^ (2 * n) / (exp 1 * n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 $A$ and $B$ are sets of words of length $n$ over alphabet with $q \geq 1$ letters.
 No suffix of a word in $A$ coincides with a prefix of a word in $B$.

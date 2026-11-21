@@ -31,6 +31,7 @@ open scoped ArithmeticFunction.omega
 
 namespace Erdos248
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many $n$ such that $\omega(n + k) \ll k$ for all $k \geq 1$?
 Here $\omega(n)$ is the number of distinct prime divisors of $n$.

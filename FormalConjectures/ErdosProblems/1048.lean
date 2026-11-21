@@ -39,6 +39,7 @@ open Polynomial Erdos1043
 def openLevelSet (f : Polynomial ℂ) : Set ℂ :=
   {z : ℂ | ‖f.eval z‖ < 1}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $f\in \mathbb{C}[x]$ is a monic polynomial with all roots satisfying
 $\lvert z\rvert \leq r$ for some $0 < r < 2$, then must
@@ -51,9 +52,9 @@ Pommerenke [Po61] proved the answer is no for $r>1$, showing that if $f(z)=z^n-r
 $\{ z: \lvert f(z)\rvert \leq 1\}$ has $n$ connected components, all with diameter
 $\to 0$ as $n\to \infty$.
 -/
-@[category research solved, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1048.lean"]
-theorem erdos_1048 : answer(False) ↔
-    ∀ (r : ℝ) (f : ℂ[X]), 0 < r → r < 2 → f.Monic → f.degree ≥ 1 → (∀ z ∈ f.roots, ‖z‖ ≤ r) →
+@[category research solved, question, AMS 30, formal_proof using lean4 at "https://github.com/plby/lean-proofs/blob/main/src/v4.29.1/ErdosProblems/Erdos1048.lean"]
+theorem erdos_1048 :
+    ¬ ∀ (r : ℝ) (f : ℂ[X]), 0 < r → r < 2 → f.Monic → f.degree ≥ 1 → (∀ z ∈ f.roots, ‖z‖ ≤ r) →
       ∃ z ∈ openLevelSet f, ENNReal.ofReal (2 - r) <
         Metric.ediam (connectedComponentIn (openLevelSet f) z) := by
   sorry

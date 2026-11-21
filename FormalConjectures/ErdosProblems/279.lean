@@ -31,8 +31,8 @@ Let $k\geq 3$. Is there a choice of congruence classes $a_p\pmod{p}$ for every p
 such that all sufficiently large integers can be written as $a_p+tp$ for some prime $p$
 and integer $t\geq k$?
 -/
-@[category research open, AMS 11]
-theorem erdos_279 :  answer(sorry) ↔ ∀ k : Nat, k ≥ 3 →
+@[category research open, question, AMS 11]
+theorem erdos_279 :  ∀ k : Nat, k ≥ 3 →
     ∃ a : Nat → Nat, ∃ N : Nat, (∀ p : Nat, p.Prime → a p < p) ∧
     ∀ n ≥ N, ∃ p : Nat, ∃ t ≥ k, p.Prime ∧ n = a p + t * p := by
   sorry

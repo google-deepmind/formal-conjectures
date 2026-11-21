@@ -52,12 +52,11 @@ The $(1 - o(1)) \frac{n}{2}$ lower bound is formalised as: for every $\varepsilo
 of $n$ vertices of a convex polyhedron with $n$ sufficiently large determines at least
 $(1 - \varepsilon) \frac{n}{2}$ distinct distances.
 -/
-@[category research open, AMS 51 52]
+@[category research open, question, AMS 51 52]
 theorem erdos_660 :
-    answer(sorry) ↔
-      ∀ ε : ℝ, 0 < ε → ∀ᶠ n in Filter.atTop, ∀ P : Finset ℝ³,
-        P.card = n → IsPolyhedronVertices P →
-        (1 - ε) * ((n : ℝ) / 2) ≤ (distinctDistances P : ℝ) := by
+    ∀ ε : ℝ, 0 < ε → ∀ᶠ n in Filter.atTop, ∀ P : Finset ℝ³,
+      P.card = n → IsPolyhedronVertices P →
+      (1 - ε) * ((n : ℝ) / 2) ≤ (distinctDistances P : ℝ) := by
   sorry
 
 /--
@@ -75,9 +74,9 @@ theorem erdos_660.variants.altman_planar (n : ℕ) (P : Finset ℝ²)
 In [Er75f] Erdős claims that Altman proved that the vertices determine $\gg n$ many distinct
 distances, but gives no reference.
 -/
-@[category research open, AMS 51 52]
+@[category research open, question, AMS 51 52]
 theorem erdos_660.variants.Er75f :
-    answer(sorry) ↔ ∃ c > (0 : ℝ), ∀ᶠ n in Filter.atTop, ∀ P : Finset ℝ³,
+    ∃ c > (0 : ℝ), ∀ᶠ n in Filter.atTop, ∀ P : Finset ℝ³,
       P.card = n → IsPolyhedronVertices P →
       c * n ≤ (distinctDistances P : ℝ) := by
   sorry

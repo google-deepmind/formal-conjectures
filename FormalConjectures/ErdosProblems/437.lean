@@ -48,6 +48,7 @@ noncomputable def L (x : ℕ) : ℕ :=
   sSup {m | ∃ a : List ℕ, a.Pairwise (· < ·) ∧ (∀ n ∈ a, n ∈ Finset.Icc 1 x) ∧
     squarePartialProducts a = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $1\leq a_1<\cdots<a_k\leq x$. How many of the partial products
 $a_1,a_1a_2,\ldots,a_1\cdots a_k$ can be squares? Is it true that, for any $\epsilon>0$, there can
@@ -56,9 +57,9 @@ be more than $x^{1-\epsilon}$ squares?
 The answer is yes, which follows from work of Bui, Pratt, and Zaharescu [BPZ24], as noted by
 Tao [Ta24].
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+@[category research solved, question, AMS 11, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos437.lean#L746"]
-theorem erdos_437 : answer(True) ↔
+theorem erdos_437 :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℕ in atTop, (x : ℝ) ^ (1 - ε) < L x := by
   sorry
 

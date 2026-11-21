@@ -47,6 +47,7 @@ terms, where the number of terms of `P` is `P.support.card`. -/
 noncomputable def f (k : ℕ) : ℕ :=
   sInf {m | ∃ P : ℚ[X], P.support.card = k ∧ (P ^ 2).support.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(k)$ be the minimum number of terms in $P(x)^2$, where $P \in \mathbb{Q}[x]$ ranges over all
 polynomials with exactly $k$ non-zero terms. Is it true that $f(k) \to \infty$ as $k \to \infty$?
@@ -57,9 +58,9 @@ $f(k) < k^{1-c}$ for some $c > 0$. The answer is yes: Schinzel [Sc87] proved
 $f(k) > \log \log k / \log 2$, and Schinzel and Zannier [ScZa09] improved this to
 $f(k) \gg \log k$.
 -/
-@[category research solved, AMS 11 12, formal_proof using lean4 at
+@[category research solved, question, AMS 11 12, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos485.lean#L39"]
-theorem erdos_485 : answer(True) ↔ Tendsto f atTop atTop := by
+theorem erdos_485 : Tendsto f atTop atTop := by
   sorry
 
 end Erdos485

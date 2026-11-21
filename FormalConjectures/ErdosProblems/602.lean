@@ -74,8 +74,8 @@ forbidden intersection size of 1.
 countably infinite set is in bijection with `ℕ`, the two formulations are equivalent, but
 working over an arbitrary ground type makes the statement apply immediately to, e.g.,
 almost-disjoint families of countable subsets of an uncountable space. -/
-@[category research open, AMS 3 5]
-theorem erdos_602 : answer(sorry) ↔
+@[category research open, question, AMS 3 5]
+theorem erdos_602 :
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
       (∀ i j, i ≠ j → (A i ∩ A j).Finite) →
@@ -95,14 +95,12 @@ particular satisfies `|A_i ∩ A_j| ≠ 1`), then Property B holds trivially.
 `a_i` and `b_i`. We can define a colouring that assigns colour 0 to `a_i` and colour 1
 to `b_i` for each `i` (using disjointness, these choices don't conflict), and extend
 arbitrarily elsewhere. Then no `A_i` is monochromatic. -/
-@[category research solved, AMS 3 5]
-theorem erdos_602.variants.disjoint : answer(True) ↔
+@[category research solved, question, AMS 3 5]
+theorem erdos_602.variants.disjoint :
     ∀ {α : Type*} {I : Type*} (A : I → Set α),
       (∀ i, (A i).Infinite) →
       (∀ i j, i ≠ j → Disjoint (A i) (A j)) →
       HasPropertyB I A := by
-  show True ↔ _
-  simp only [true_iff]
   intro α I A hInfinite hDisjoint
   -- For each i, pick two distinct elements a_fn i, b_fn i ∈ A i.
   have ha_b : ∀ i, ∃ a b : α, a ∈ A i ∧ b ∈ A i ∧ a ≠ b := by
@@ -154,8 +152,8 @@ If the index set is countable, the answer is yes, and the intersection
 condition is unnecessary. This is Bernstein's Lemma:
 every countable system of infinite sets has Property B.
 -/
-@[category research solved, AMS 3 5]
-theorem erdos_602.variants.countable_index : answer(True) ↔
+@[category research solved, question, AMS 3 5]
+theorem erdos_602.variants.countable_index :
     ∀ {α : Type*} (A : ℕ → Set α),
       (∀ i, (A i).Countable ∧ (A i).Infinite) →
       (∀ i j, i ≠ j → (A i ∩ A j).Finite) →
@@ -241,15 +239,13 @@ If the family consists of exactly two countably infinite sets `A₀` and `A₁` 
 - If `|A₀ ∩ A₁| ≥ 2`: the intersection contains two distinct points `x` and `y`.
   Assign `x` colour 0 and `y` colour 1. Both `A₀` and `A₁` contain `x` and `y`,
   so neither is monochromatic. -/
-@[category research solved, AMS 3 5]
-theorem erdos_602.variants.two_sets : answer(True) ↔
+@[category research solved, question, AMS 3 5]
+theorem erdos_602.variants.two_sets :
     ∀ {α : Type*} (A : Fin 2 → Set α),
       (∀ i, (A i).Infinite) →
       (A 0 ∩ A 1).Finite →
       Set.ncard (A 0 ∩ A 1) ≠ 1 →
       HasPropertyB (Fin 2) A := by
-  show True ↔ _
-  simp only [true_iff]
   intro α A hInfinite hFin hNcard
   classical
   -- Case split: intersection empty or size ≥ 2.

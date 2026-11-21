@@ -87,12 +87,14 @@ theorem known_prime_and_semiprimes :
   (a 27).IsSemiprime := by
   sorry
 
+def conjecture.answer : ℕ := sorry
+
 /--
 Primes in this sequence include: $a(8) = 2$, which is next?
 -/
-@[category research open, AMS 11]
+@[category research open, question value, AMS 11]
 theorem conjecture :
-    answer(sorry) = a (sInf {n : ℕ | 8 < n ∧ (a n).Prime}) := by
+    conjecture.answer = a (sInf {n : ℕ | 8 < n ∧ (a n).Prime}) := by
   sorry
 
 end OeisA107247

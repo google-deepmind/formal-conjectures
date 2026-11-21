@@ -70,8 +70,15 @@ theorem universalSpectrumBounded_le (τ : ℝ) :
 
 @[category test, AMS 30]
 theorem integralMeansSpectrum_id (τ : ℝ) : integralMeansSpectrum id τ = 0 := by
-  sorry
+  have hsub : Tendsto (fun r : ℝ => 1 - r) (𝓝[Iio 1] (1 : ℝ)) (𝓝[Ioi 0] 0) := by
+    refine tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within _ ?_
+      (eventually_nhdsWithin_of_forall fun r hr => mem_Ioi.mpr (sub_pos.mpr hr))
+    simpa using ((continuous_sub_left (1 : ℝ)).tendsto 1).mono_left nhdsWithin_le_nhds
+  have habs : Tendsto (fun r : ℝ => |Real.log (1 - r)|) (𝓝[Iio 1] (1 : ℝ)) atTop :=
+    tendsto_abs_atBot_atTop.comp (Real.tendsto_log_nhdsGT_zero.comp hsub)
+  simp [integralMeansSpectrum, (tendsto_const_nhds.div_atTop habs).limsup_eq]
 
+set_option linter.style.formal_proof_palomar false in
 /-- Brennan's conjecture, part 1: $B(-2) = 1$.
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean

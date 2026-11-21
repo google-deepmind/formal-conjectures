@@ -77,8 +77,8 @@ real. We read it as asking for one $c > 0$ such that the inequality holds for al
 The primes are indexed from $p_0 = 2$, as in `primeGap`. Shifting the index by one does not change
 the question.
 -/
-@[category research open, AMS 11]
-theorem erdos_852.parts.i : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_852.parts.i :
     ∃ c : ℝ, 0 < c ∧ ∀ᶠ x : ℝ in atTop,
       ∃ n : ℕ, (n : ℝ) < x ∧ ∃ H : ℕ, (Real.log x) ^ c < (H : ℝ) ∧ DistinctGapRun n H := by
   sorry
@@ -96,8 +96,8 @@ such run.
 
 The indexing is as in `Erdos852.erdos_852.parts.i`.
 -/
-@[category research open, AMS 11]
-theorem erdos_852.parts.ii : answer(sorry) ↔
+@[category research open, question, AMS 11]
+theorem erdos_852.parts.ii :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ x : ℝ in atTop,
       ∀ n : ℕ, (n : ℝ) < x → ∀ H : ℕ, DistinctGapRun n H → (H : ℝ) ≤ ε * Real.log x := by
   sorry

@@ -37,9 +37,9 @@ namespace Erdos918
 /-- Is there a graph with $\aleph_2$ vertices and chromatic number $\aleph_2$ such that every
 subgraph on $\aleph_1$ vertices has chromatic number $\leq\aleph_0$? -/
 -- Formalisation note: source material [ErHa68b] uses only induced subgraphs
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_918.parts.i :
-    answer(sorry) ↔ ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
+    ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
       ∀ (W : Set V) (_ : #W = ℵ₁), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry
 
@@ -48,9 +48,8 @@ every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? 
 -- Formalisation note: `ω` here is `Ordinal.omega0`, from `open scoped Ordinal`, as in 623.lean.
 -- It is the fixed first infinite ordinal, not a variable: `variants.erdos_hajnal` settles every
 -- finite `k` under GCH, and `ℵ_ω` is the limit of that family, so this asks the single next case.
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_918.parts.ii :
-    answer(sorry) ↔
     ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal ≤ ℵ₀ := by
   sorry
@@ -63,21 +62,21 @@ subgraph on $\aleph_1$ vertices has chromatic number $\leq\aleph_0$? -/
 -- `G.induce W`. So the two quantifications are equivalent and the answers cannot differ. The
 -- `= ℵ₀` pair below is genuinely different, because an edgeless subgraph has chromatic
 -- cardinal `1`, and that is the source's own reason for the impossibility there.
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_918.variants.all_subgraphs.parts.i :
-    answer(sorry) ↔ ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
+    ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ₁), H.coe.chromaticCardinal ≤ ℵ₀ := by
   sorry
 
 /-- Is there a graph with $\aleph_{\omega+1}$ vertices and chromatic number $\aleph_1$ such that
 every subgraph on $\aleph_\omega$ vertices has chromatic number $\leq\aleph_0$? -/
-@[category research open, AMS 5]
+@[category research open, question, AMS 5]
 theorem erdos_918.variants.all_subgraphs.parts.ii :
-    answer(sorry) ↔
-      ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
-      ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal ≤ ℵ₀ := by
+    ∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
+    ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal ≤ ℵ₀ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- A question of Erd\H{o}s and Hajnal [ErHa68b], who proved, assuming the generalized continuum
 hypothesis, that for every finite $k \geq 1$ there is a graph with chromatic number $\aleph_1$ and
 $\aleph_k$ vertices where each subgraph on less than $\aleph_k$ vertices has chromatic number
@@ -85,7 +84,8 @@ $\leq \aleph_0$. -/
 -- Formalisation note: the source is missing the assumption that the graph have ℵₖ vertices
 -- which can be found in [ErHa68b, Corollary 1]. That corollary assumes the generalized continuum
 -- hypothesis, stated here as `2 ^ c = Order.succ c` for every infinite cardinal `c`.
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/82c9238052cac467baaf930d5dbe8ae6191a574c/erdos-918/Solution.lean#L56"]
 theorem erdos_918.variants.erdos_hajnal (hGCH : ∀ c : Cardinal.{u}, ℵ₀ ≤ c → 2 ^ c = Order.succ c)
     (k : ℕ) (hk : 0 < k) : ∃ (V : Type u) (G : SimpleGraph V),
     #V = ℵ_ k ∧ G.chromaticCardinal = ℵ₁ ∧
@@ -101,7 +101,8 @@ This is the first question with induced subgraphs. -/
 -- assert it for induced subgraphs, and the argument for the general case does not carry
 -- over: an induced subgraph on `W` has chromatic cardinal at least that of any subgraph
 -- on `W`, so the edgeless-subgraph argument is unavailable here.
-@[category textbook, AMS 5]
+@[category textbook, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/82c9238052cac467baaf930d5dbe8ae6191a574c/erdos-918/Solution.lean#L62"]
 theorem erdos_918.variants.eq_aleph_0.parts.i :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
       ∀ (W : Set V) (_ : #W = ℵ₁), (G.induce W).chromaticCardinal = ℵ₀ := by
@@ -111,7 +112,8 @@ theorem erdos_918.variants.eq_aleph_0.parts.i :
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the first question with all subgraphs. -/
-@[category textbook, AMS 5]
+@[category textbook, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/82c9238052cac467baaf930d5dbe8ae6191a574c/erdos-918/Solution.lean#L67"]
 theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.i :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ 2 ∧ G.chromaticCardinal = ℵ_ 2 ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ₁), H.coe.chromaticCardinal = ℵ₀ := by
@@ -126,7 +128,8 @@ This is the second question with induced subgraphs. -/
 -- assert it for induced subgraphs, and the argument for the general case does not carry
 -- over: an induced subgraph on `W` has chromatic cardinal at least that of any subgraph
 -- on `W`, so the edgeless-subgraph argument is unavailable here.
-@[category textbook, AMS 5]
+@[category textbook, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/82c9238052cac467baaf930d5dbe8ae6191a574c/erdos-918/Solution.lean#L72"]
 theorem erdos_918.variants.eq_aleph_0.parts.ii :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (W : Set V) (_ : #W = ℵ_ ω), (G.induce W).chromaticCardinal = ℵ₀ := by
@@ -136,7 +139,8 @@ theorem erdos_918.variants.eq_aleph_0.parts.ii :
 a likely typo since it can be shown that no such graph exists in this case.
 
 This is the second question with all subgraphs. -/
-@[category textbook, AMS 5]
+@[category textbook, AMS 5, formal_proof using lean4 at
+  "https://github.com/linrock/math-proofs/blob/82c9238052cac467baaf930d5dbe8ae6191a574c/erdos-918/Solution.lean#L78"]
 theorem erdos_918.variants.eq_aleph_0_all_subgraphs.parts.ii :
     ¬∃ (V : Type u) (G : SimpleGraph V), #V = ℵ_ (ω + 1) ∧ G.chromaticCardinal = ℵ₁ ∧
       ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal = ℵ₀ := by

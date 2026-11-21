@@ -42,6 +42,7 @@ open SimpleGraph
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 31](http://cms.uhd.edu/faculty/delavinae/research/wowII/all.html#conj31)
 (Chung):

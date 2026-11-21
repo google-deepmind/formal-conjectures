@@ -48,6 +48,7 @@ noncomputable def f (N : ℕ) : ℕ :=
     StrictMono n ∧ (∀ i, 0 < n i ∧ n i ≤ N) ∧
     ∀ m : ℤ, ∀ i j : Fin r, m ≡ a i [ZMOD (n i : ℤ)] → m ≡ a j [ZMOD (n j : ℤ)] → i = j}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n_1<\cdots < n_r\leq N$ with associated $a_i\pmod{n_i}$ such that the congruence classes are
 disjoint (that is, every integer is $\equiv a_i\pmod{n_i}$ for at most one $1\leq i\leq r$). How
