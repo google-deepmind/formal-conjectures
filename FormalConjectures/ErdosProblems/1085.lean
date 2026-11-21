@@ -40,7 +40,14 @@ noncomputable def f (d n : ℕ) : ℕ := ⨆ (s : Finset (ℝ^ d)) (_ : s.card =
 
 -- TODO: Add erdos_1085.
 
-/-- Erdős showed $f_2(n) > n^{1+c/\log\log n}$ for some $c > 0$. -/
+/--
+Erdős showed $f_2(n) > n^{1+c/\log\log n}$ for some $c > 0$.
+
+Note: erdosproblems.com/1085 strengthened the lower bound to $n^{1+c}$ on
+2026-05-23, attributing it to an internal model at OpenAI with no citable
+reference. This entry records the published bound of Erdős; the statement here
+matches the page as it stood from 2025-10-20 to 2026-05-23.
+-/
 @[category research solved, AMS 52]
 theorem erdos_1085.variants.lower_d2 :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, (n : ℝ) ^ (1 + c / log (log n)) < f 2 n := by
