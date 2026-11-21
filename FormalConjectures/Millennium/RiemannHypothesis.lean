@@ -55,7 +55,7 @@ This is the official Millennium Prize Problem as posed by the
 This uses the `RiemannHypothesis` type from Mathlib, which is defined as
 `∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n : ℕ, s = -2 * (n + 1)) → s ≠ 1 → s.re = 1 / 2`. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/Deicyde/riemann-hypothesis"]
+  "https://github.com/leanprover-community/riemann-hypothesis"]
 theorem riemannHypothesis : RiemannHypothesis := by
   sorry
 
@@ -79,7 +79,7 @@ set_option linter.style.formal_proof_palomar false in
 Dirichlet $L$-function $L(\chi, s)$ of a primitive Dirichlet character $\chi$ have real part
 $\frac{1}{2}$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/Deicyde/riemann-hypothesis"]
+  "https://github.com/leanprover-community/riemann-hypothesis"]
 theorem generalized_riemann_hypothesis (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q)
     (hχ : χ.IsPrimitive) (s : ℂ) (hs : χ.LFunction s = 0)
     (hs_nontrivial : s ∉ Int.cast '' trivialZeros χ) :
