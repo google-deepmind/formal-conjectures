@@ -20,16 +20,26 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 906
 
-*Reference:* [erdosproblems.com/906](https://www.erdosproblems.com/906)
+*References:*
+- [erdosproblems.com/906](https://www.erdosproblems.com/906)
+- [Hou26] E. Hou, *Cofinite Zeros of High Derivatives* (2026),
+  [arXiv:2607.20816](https://arxiv.org/abs/2607.20816).
 -/
 
 @[expose] public section
 
 namespace Erdos906
 
-/-- Does there exists an entire non-zero transcendental function `f : ℂ → ℂ` such that for any
-sequence `n₀ < n₁ < ...`, `{ z | ∃ k, iteratedDeriv (n k) f z = 0 }` is dense. -/
-@[category research open, question, AMS 30]
+/--
+There exists an entire non-zero transcendental function `f : ℂ → ℂ` such that for any
+sequence `n₀ < n₁ < ...`, `{ z | ∃ k, iteratedDeriv (n k) f z = 0 }` is dense.
+
+This is true: Hou [Hou26] constructed a transcendental entire function of order two with the
+stronger property that every nonempty open subset of ℂ contains a zero of $f^{(n)}$ for all
+sufficiently large `n`; this implies the dense-set property for every strictly increasing
+sequence.
+-/
+@[category research solved, AMS 30]
 theorem erdos_906 : ∃ f : ℂ → ℂ, Transcendental (Polynomial ℂ) f ∧
     Differentiable ℂ f ∧ ∀ n : ℕ → ℕ, StrictMono n →
     Dense { z | ∃ k, iteratedDeriv (n k) f z = 0 } := by
