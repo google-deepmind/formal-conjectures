@@ -28,16 +28,16 @@ three distinct subsets $P, Q, R \subseteq \{0, \dots, n-1\}$ satisfy $P \cap R \
 *References:*
 - [A089676](https://oeis.org/A089676)
 - [EF83] Paul Erdős and Zoltán Füredi,
-  [The greatest angle among $n$ points in the $d$-dimensional Euclidean space](https://doi.org/10.1016/S0304-0208(08)73489-3),
+  [The greatest angle among $n$ points in the $d$-dimensional Euclidean space](https://doi.org/10.1016/S0304-0208(08)73398-X),
   *North-Holland Mathematics Studies* **75** (1983), 275–283.
 - [Be06] David Bevan,
   [Sets of points determining only acute angles and some related colouring problems](https://doi.org/10.37236/1038),
   *The Electronic Journal of Combinatorics* **13** (2006), #R12.
 - [Ha11] Viktor Harangi,
-  [Acute sets in Euclidean spaces](https://doi.org/10.1137/100807234),
+  [Acute sets in Euclidean spaces](https://doi.org/10.1137/100808095),
   *SIAM Journal on Discrete Mathematics* **25** (2011), 1212–1229.
 - [Su26a] Mar Allen P. Sugui,
-  [Formal Verification and Lower-Bound Records for Cubic Acute Sets (OEIS A089676) in Lean 4](https://doi.org/10.5281/zenodo.24210870),
+  [Formal Verification of Cubic Acute Set Lower Bounds (OEIS A089676) in Lean 4](https://doi.org/10.5281/zenodo.24210870),
   2026.
 - [Su26b] Mar Allen P. Sugui,
   [Exactness at Dimension 8, Harangi $s=3$ Compositions, and Extended Lower-Bound Records for Cubic Acute Sets (OEIS A089676) in Lean 4](https://github.com/mariyaholic/lean-fc-proofs/blob/40a4fb03d8a97357a12f656c7347cdfc82db5754/docs/cubic-acute-sets-ii/cubic-acute-sets-ii.pdf),
