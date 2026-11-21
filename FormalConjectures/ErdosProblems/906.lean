@@ -31,15 +31,15 @@ public import FormalConjecturesUtil
 namespace Erdos906
 
 /--
-There exists an entire non-zero transcendental function `f : ℂ → ℂ` such that for any
-sequence `n₀ < n₁ < ...`, `{ z | ∃ k, iteratedDeriv (n k) f z = 0 }` is dense.
+Does there exist an entire non-zero transcendental function `f : ℂ → ℂ` such that for any
+sequence `n₀ < n₁ < ...`, `{ z | ∃ k, iteratedDeriv (n k) f z = 0 }` is dense?
 
-This is true: Hou [Hou26] constructed a transcendental entire function of order two with the
-stronger property that every nonempty open subset of ℂ contains a zero of $f^{(n)}$ for all
-sufficiently large `n`; this implies the dense-set property for every strictly increasing
-sequence.
+The answer is yes: Hou [Hou26] constructed a transcendental entire function of order two with
+the stronger property that every nonempty open subset of ℂ contains a zero of $f^{(n)}$ for all
+sufficiently large `n`; a strictly increasing sequence is unbounded, so this implies the
+dense-set property for every strictly increasing sequence.
 -/
-@[category research solved, AMS 30]
+@[category research solved, question, AMS 30]
 theorem erdos_906 : ∃ f : ℂ → ℂ, Transcendental (Polynomial ℂ) f ∧
     Differentiable ℂ f ∧ ∀ n : ℕ → ℕ, StrictMono n →
     Dense { z | ∃ k, iteratedDeriv (n k) f z = 0 } := by
