@@ -22,6 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [Gr24] [Ben Green's 100 Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.44)
+- [Erdős Problem 1202](https://www.erdosproblems.com/1202) (the same problem; resolved in the negative)
 - [Er80] Erdős, Paul. "A survey of problems in combinatorial number theory."
   Annals of Discrete Mathematics 6 (1980): 89-115.
 -/
@@ -38,10 +39,17 @@ $2 \leqslant p_1 < p_2 < \dots < p_{1000} < N^{9/10}$. Does the remaining set ha
 $\frac{1}{10} N$?
 
 We interpret "half the residue classes" as $\lfloor p_i / 2 \rfloor$.
+
+Answer: False. This is the same problem as [Erdős Problem 1202](https://www.erdosproblems.com/1202),
+which was resolved in the negative (the page marks it SOLVED as of its 2026-04-12 revision): for
+any $c > 0$ and $m > \sqrt{N \log N}$ there are $k \gg_c m^2/(N \log N)$ primes
+$m < p_1 < \dots < p_k \leq 2m$, each with $\lfloor p_i/2 \rfloor$ forbidden classes, leaving at
+least $(1/2 - c)N$ integers in $[1, N]$ avoiding all of them. Taking $c < 0.4$ and $m$ large
+enough that $k \geq 1000$ (note $m \ll N^{9/10}$) refutes the bound $10 \cdot |{\rm remaining}| \leq N$.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem green_44 :
-    ∀ (N : ℕ) (p : Fin 1000 → ℕ) (A : (i : Fin 1000) → Finset (ZMod (p i))),
+    ¬ ∀ (N : ℕ) (p : Fin 1000 → ℕ) (A : (i : Fin 1000) → Finset (ZMod (p i))),
       let remaining := (Finset.Icc 1 N).filter (fun x => ∀ i, (x : ZMod (p i)) ∉ A i)
       (∀ i, (p i).Prime) →
       StrictMono p →
