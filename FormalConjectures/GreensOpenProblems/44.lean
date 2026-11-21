@@ -41,7 +41,8 @@ $\frac{1}{10} N$?
 We interpret "half the residue classes" as $\lfloor p_i / 2 \rfloor$.
 
 Answer: False. This is the same problem as [Erdős Problem 1202](https://www.erdosproblems.com/1202),
-which was resolved in the negative (the page marks it SOLVED as of its 2026-04-12 revision): for
+which the erdosproblems.com curators record as resolved in the negative (2026-04-12 revision, due
+to Liam Price and GPT-5.4 Pro): for
 any $c > 0$ and $m > \sqrt{N \log N}$ there are $k \gg_c m^2/(N \log N)$ primes
 $m < p_1 < \dots < p_k \leq 2m$, each with $\lfloor p_i/2 \rfloor$ forbidden classes, leaving at
 least $(1/2 - c)N$ integers in $[1, N]$ avoiding all of them. Taking $c < 0.4$ and $m$ large
