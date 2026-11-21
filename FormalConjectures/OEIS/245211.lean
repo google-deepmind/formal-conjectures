@@ -177,4 +177,19 @@ theorem conjecture.variants.omega_le_four (n : ℕ) (hn : 0 < n) (hΩ : Ω n ≤
     a n = n ↔ n = 21 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
+/--
+Unconditional confirmation of `conjecture` for all positive integers $n$ with at most five
+prime factors counted with multiplicity ($\Omega(n) \le 5$): $a(n) = n \iff n = 21$.
+Proved by combining the $\Omega(n) = 5$ non-squarefree / $p \ge 17$ reduction [Su26, Theorem 6.4]
+with the 5-prime growth bound ($p \ge 73$) and Cunningham prime-factor forced closure across
+$17 \le p \le 71$.
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/mariyaholic/lean-fc-proofs/blob/f6d8623a8f4086e074aa8caf3c27ff1a5cd30075/lean/oeis-a245211/OeisA245211/OmegaFive.lean#L336"]
+theorem conjecture.variants.omega_le_five (n : ℕ) (hn : 0 < n) (hΩ : Ω n ≤ 5) :
+    a n = n ↔ n = 21 := by
+  sorry
+
 end OeisA245211
