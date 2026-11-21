@@ -21,9 +21,8 @@ public import FormalConjecturesUtil
 /-!
 # Arithmetic means of $(21k+8)\binom{2k}{k}^3$
 
-The sequence is the arithmetic mean of $(21k+8)\binom{2k}{k}^3$ over $k = 0, \ldots, n-1$.
-Zhi-Wei Sun conjectured that every term is an integer divisible by $4\binom{2n}{n}$. Kasper
-Andersen confirmed this by identifying $a(n)/(4\binom{2n}{n})$ with A112029$(n-1)$ [An10].
+The sequence is the arithmetic mean of $(21k+8)\binom{2k}{k}^3$ over $k = 0, \ldots, n-1$, for
+$n \ge 1$.
 
 *References:*
 - [A173774](https://oeis.org/A173774), Zhi-Wei Sun, 2010.
@@ -50,12 +49,26 @@ theorem a_1 : a 1 = 8 := by
 theorem a_2 : a 2 = 120 := by
   norm_num [a, Finset.sum_range_succ]
 
+@[category test, AMS 5 11]
+theorem a_3 : a 3 = 3680 := by
+  norm_num [a, Finset.sum_range_succ, Nat.choose]
+
+@[category test, AMS 5 11]
+theorem a_4 : a 4 = 144760 := by
+  norm_num [a, Finset.sum_range_succ, Nat.choose]
+
+@[category test, AMS 5 11]
+theorem a_5 : a 5 = 6427008 := by
+  norm_num [a, Finset.sum_range_succ, Nat.choose]
+
 /--
-Sun "conjectured that each term a(n) is an integer divisible by 4*binomial(2*n,n)."
+"On Feb 10 2010, Zhi-Wei Sun introduced the sequence and conjectured that each term a(n) is an
+integer divisible by 4*binomial(2*n,n)."
 - OEIS A173774.
 
 Kasper Andersen confirmed this [An10]: $a(n) = 4\binom{2n}{n}\,b(n-1)$ with
-$b(m) = \sum_{k=0}^{m} \binom{m+k}{k}^2$ (A112029).
+$b(m) = \sum_{k=0}^{m} \binom{m+k}{k}^2$ (A112029). Formal proof by Wentao Li, with AI
+assistance.
 -/
 @[category research solved, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-19-000005"]
