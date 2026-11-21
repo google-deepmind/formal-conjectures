@@ -71,7 +71,8 @@ theorem lehmer_mahler_measure_problem.variants.best :
 /--
 If $f$ is irreducible and not reciprocal and $M(f) > 1$ then $M(f) \ge M(X^3 - X - 1)$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-20-000002"]
 theorem lehmer_mahler_measure_problem.variants.not_reciprocal (f : ℤ[X]) (hi : Irreducible f)
     (hf : mahlerMeasureZ f > 1) (hf' : f.reverse ≠ f) :
     mahlerMeasureZ f ≥ mahlerMeasureZ (X^3 - X - 1) := by
@@ -90,7 +91,8 @@ rules out both signs. The negative sign has to be excluded as well: the polynomi
 $X^7 - X^6 - X^5 - X^4 + X^3 + X^2 + X - 1$ has all coefficients odd and satisfies
 $X^7 f(1/X) = -f$, but $1 < M(f) = 1.5823\dots < M(X^2 - X - 1)$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-20-000010"]
 theorem lehmer_mahler_measure_problem.variants.odd (f : ℤ[X])
     (hf : mahlerMeasureZ f > 1) (hf' : f.reverse ≠ f) (hf'' : f.reverse ≠ -f)
     (hodd : f.HasOddCoeffs) :
