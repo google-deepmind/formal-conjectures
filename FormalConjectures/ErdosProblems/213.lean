@@ -49,7 +49,8 @@ theorem erdos_213 : ∀ n : ℕ, n ≥ 4 → Erdos213For n := by sorry
 /--
 The best construction to date, due to Kreisel and Kurz, has $n = 7$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-22-000006&version=1"]
 theorem erdos_213.variants.KK08 : Erdos213For 7 := by sorry
 
 end Erdos213
