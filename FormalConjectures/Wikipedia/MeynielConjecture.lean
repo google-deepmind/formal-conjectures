@@ -154,7 +154,8 @@ dismantlable graphs.
 
 *Reference:* [NW83].
 -/
-@[category research solved, AMS 5 91]
+@[category research solved, AMS 5 91, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-22-000011&version=1"]
 theorem meyniel_conjecture.variants.tree {V : Type} [Fintype V] [Nonempty V]
     (G : SimpleGraph V) (hc : G.Connected) (ha : G.IsAcyclic) :
     copNumber G = 1 := by
