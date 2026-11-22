@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 Numbers that are the product of two distinct primes.
 
-References:
+*References:*
 - [A006881](https://oeis.org/A006881)
 -/
 
@@ -30,14 +30,50 @@ References:
 
 namespace OeisA6881
 
+/-- The set of squarefree semiprimes. (Numbers that are the product of two distinct primes.) -/
+def SquarefreeSemiprimes : Set ℕ := {n | n.IsSemiprime ∧ Squarefree n}
+
+@[category API, AMS 11]
+lemma mem_squarefreeSemiprimes {p q : ℕ}
+    (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q) :
+    p * q ∈ SquarefreeSemiprimes := by
+  exact ⟨hp.mul_isAlmostPrime_two hq,
+    Nat.squarefree_mul_iff.mpr ⟨(Nat.coprime_primes hp hq).2 hpq, hp.squarefree, hq.squarefree⟩⟩
+
+@[category test, AMS 11]
+theorem squarefreeSemiprimes_do_not_include_four : 4 ∉ SquarefreeSemiprimes := by
+  change ¬ (Nat.IsSemiprime 4 ∧ Squarefree 4)
+  rintro ⟨_, hs⟩
+  exact (Nat.squarefree_iff_prime_squarefree.mp hs) 2 (by norm_num) (by norm_num)
+
+@[category test, AMS 11]
+theorem a_1 : 6 ∈ SquarefreeSemiprimes := by
+  apply mem_squarefreeSemiprimes (p := 2) (q := 3) <;> norm_num
+
+@[category test, AMS 11]
+theorem a_2 : 10 ∈ SquarefreeSemiprimes := by
+  apply mem_squarefreeSemiprimes (p := 2) (q := 5) <;> norm_num
+
+@[category test, AMS 11]
+theorem a_3 : 14 ∈ SquarefreeSemiprimes := by
+  apply mem_squarefreeSemiprimes (p := 2) (q := 7) <;> norm_num
+
+@[category test, AMS 11]
+theorem a_4 : 15 ∈ SquarefreeSemiprimes := by
+  apply mem_squarefreeSemiprimes (p := 3) (q := 5) <;> norm_num
+
+@[category test, AMS 11]
+theorem a_5 : 21 ∈ SquarefreeSemiprimes := by
+  apply mem_squarefreeSemiprimes (p := 3) (q := 7) <;> norm_num
+
 /--
-"Conjecture: The sums of two elements of [the sequence of squarefree semiprimes] forms a set that includes all primes greater than
-or equal to 29 and all integers greater than or equal to 83 (and many below 83)."
+"Conjecture: The sums of two elements of [the sequence of squarefree semiprimes] forms a set
+that includes all primes greater than or equal to 29 and all integers greater than or
+equal to 83 (and many below 83)."
 - Richard R. Forberg, Mar 04 2015, [A006881](https://oeis.org/A006881)
 -/
 @[category research open, AMS 11]
 theorem conjecture (k : ℕ) (hk : (29 ≤ k ∧ k.Prime) ∨ (83 ≤ k)) :
-  ∃ m n : ({n | n.IsSemiprime ∧ Squarefree n} : Set ℕ), k = m + n := by
-  sorry
+    ∃ m n : SquarefreeSemiprimes, k = m + n := by sorry
 
 end OeisA6881
