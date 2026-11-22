@@ -63,20 +63,26 @@ noncomputable def minimaxAngle (N : ℕ) : ℝ :=
       ∃ x ∈ S, ∃ z ∈ S, ∃ y ∈ S, x ≠ z ∧ y ≠ z ∧ x ≠ y ∧
         α ≤ EuclideanGeometry.angle x z y}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős–Szekeres (1960).** For $n \ge 3$,
 $\alpha_{2^n} = \pi\left(1 - \frac{1}{n}\right)$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52,
+  formal_proof using lean4 at
+    "https://github.com/mavis-codee/erdos-504-lean/blob/39e1d8031ee6cbe851cc05d33af4775894b22a51/Erdos504Formal/Erdos504Minimax.lean#L96"]
 theorem erdos_504 {n : ℕ} (hn : 3 ≤ n) :
     minimaxAngle (2 ^ n) = (1 - 1 / (n : ℝ)) * π := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős–Szekeres (1960).** For $n \ge 3$, also
 $\alpha_{2^n - 1} = \pi\left(1 - \frac{1}{n}\right)$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52,
+  formal_proof using lean4 at
+    "https://github.com/mavis-codee/erdos-504-lean/blob/39e1d8031ee6cbe851cc05d33af4775894b22a51/Erdos504Formal/Erdos504Endpoint.lean#L229"]
 theorem erdos_504.variants.endpoint {n : ℕ} (hn : 3 ≤ n) :
     minimaxAngle (2 ^ n - 1) = (1 - 1 / (n : ℝ)) * π := by
   sorry
