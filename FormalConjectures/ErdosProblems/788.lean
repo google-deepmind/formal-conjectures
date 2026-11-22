@@ -77,6 +77,12 @@ public import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/788](https://www.erdosproblems.com/788)
 - [Forum thread for problem 788](https://www.erdosproblems.com/forum/thread/788)
+- [Ad] Sarosh Adenwalla, comment on
+  [Erdős Problem 788](https://www.erdosproblems.com/forum/thread/788), giving a square-root
+  lower bound.
+- [Hu] Zach Hunter, comment on
+  [Erdős Problem 788](https://www.erdosproblems.com/forum/thread/788), sketching an upper bound
+  via random Cayley graphs.
 - [AlPh25] N. Alon and H. T. Pham, *Random Cayley graphs and random subsets*.
   [arXiv:2509.02561](https://arxiv.org/abs/2509.02561) (2025).
 - [BSS00] Baltz, Andreas and Schoen, Tomasz and Srivastav, Anand, *Probabilistic construction of
@@ -88,8 +94,8 @@ public import FormalConjecturesUtil
 -/
 
 /-
-This file formalizes only the statement of the upper-bound question in Erdős Problem 788.
-It does not prove the upper bound or formalize the lower bound.
+This file formalizes the upper-bound question in Erdős Problem 788 and statements of known
+upper and lower bounds. The research results are stated without proofs.
 -/
 
 @[expose] public section
@@ -247,16 +253,18 @@ theorem f_five : f 5 = 3 := by
     have h : f 5 ≤ 1 + C.card := by simpa using hscore
     omega
   exact le_antisymm upper lower
+
 /--
 Let $f(n)$ be maximal such that if $B\subset (2n,4n)\cap \mathbb{N}$ there exists some
 $C\subset (n,2n)\cap \mathbb{N}$ such that $c_1+c_2\not\in B$ for all $c_1\neq c_2\in C$ and
 $\lvert C\rvert+\lvert B\rvert \geq f(n)$.
 
 Estimate $f(n)$. In particular is it true that $f(n)\leq n^{1/2+o(1)}$?
+This is Choi's conjecture [Ch71], as recorded on the problem page, and remains open.
 
 This formalizes only the upper-bound question: for every $\varepsilon > 0$,
 $f(n) \leq n^{1/2+\varepsilon}$ for all sufficiently large $n$.
-The lower bound and the broader estimation question are not formalized here.
+Known bounds are stated separately below.
 -/
 @[category research open, AMS 5 11]
 theorem erdos_788.upper_bound :
@@ -264,5 +272,60 @@ theorem erdos_788.upper_bound :
       ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n →
         (f n : ℝ) ≤ (n : ℝ) ^ ((1 / 2 : ℝ) + ε) := by
   sorry
+
+/-- Choi [Ch71] proved $f(n) \ll n^{3/4}$, as recorded on the problem page. -/
+@[category research solved, AMS 5 11]
+theorem erdos_788.variants.choi_upper_bound :
+    ∃ c : ℝ, 0 < c ∧ ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n →
+      (f n : ℝ) ≤ c * (n : ℝ) ^ (3 / 4 : ℝ) := by
+  sorry
+
+/-- Sarosh Adenwalla [Ad] gave a construction proving $f(n) \gg n^{1/2}$ in the comments
+on Erdős Problem 788. This attribution is recorded on the problem page. -/
+@[category research solved, AMS 5 11]
+theorem erdos_788.variants.adenwalla_lower_bound :
+    ∃ c : ℝ, 0 < c ∧ ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n →
+      c * (n : ℝ) ^ (1 / 2 : ℝ) ≤ (f n : ℝ) := by
+  sorry
+
+/-- Zach Hunter [Hu] sketched an argument giving $f(n) \ll n^{2/3+o(1)}$ in the comments
+on Erdős Problem 788, as recorded on the problem page. The $o(1)$ is expressed by an
+eventual bound for every positive $\varepsilon$. -/
+@[category research solved, AMS 5 11]
+theorem erdos_788.variants.hunter_upper_bound :
+    ∀ ε : ℝ, 0 < ε →
+      ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n →
+        (f n : ℝ) ≤ (n : ℝ) ^ ((2 / 3 : ℝ) + ε) := by
+  sorry
+
+/-- Baltz, Schoen, and Srivastav [BSS00] proved $f(n) \ll (n\log n)^{2/3}$,
+as recorded on the problem page. -/
+@[category research solved, AMS 5 11]
+theorem erdos_788.variants.baltz_schoen_srivastav_upper_bound :
+    ∃ c : ℝ, 0 < c ∧ ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n →
+      (f n : ℝ) ≤ c * ((n : ℝ) * Real.log (n : ℝ)) ^ (2 / 3 : ℝ) := by
+  sorry
+
+/-- The work of Alon and Pham [AlPh25], combined with Hunter's random Cayley graph
+argument [Hu], implies $f(n) \leq n^{3/5+o(1)}$, as explained on the problem page and in
+its comments. This is a consequence of their work, rather than a claim that their paper
+states this bound for $f$ explicitly. -/
+@[category research solved, AMS 5 11]
+theorem erdos_788.variants.alon_pham_upper_bound :
+    ∀ ε : ℝ, 0 < ε →
+      ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n →
+        (f n : ℝ) ≤ (n : ℝ) ^ ((3 / 5 : ℝ) + ε) := by
+  sorry
+
+/-- The Alon–Pham bound implies Choi's proved upper bound by taking $\varepsilon = 3/20$. -/
+@[category test, AMS 5 11]
+theorem erdos_788.variants.alon_pham_implies_choi :
+    type_of% erdos_788.variants.alon_pham_upper_bound →
+      type_of% erdos_788.variants.choi_upper_bound := by
+  intro h
+  obtain ⟨N, hN, hbound⟩ := h (3 / 20) (by norm_num)
+  refine ⟨1, by norm_num, N, hN, ?_⟩
+  intro n hn
+  simpa only [show (3 / 5 : ℝ) + 3 / 20 = 3 / 4 by norm_num, one_mul] using hbound n hn
 
 end Erdos788
