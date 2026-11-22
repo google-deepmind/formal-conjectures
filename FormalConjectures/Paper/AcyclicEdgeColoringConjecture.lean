@@ -39,6 +39,14 @@ open SimpleGraph
 namespace AcyclicEdgeColoringConjecture
 
 /--
+$G$ satisfies the acyclic edge coloring conjecture if it has an acyclic edge coloring with at most
+`G.maxDegree + 2` colors.
+-/
+def AcyclicEdgeColoringConjectureFor {V : Type*} [Fintype V] (G : SimpleGraph V)
+    [DecidableRel G.Adj] : Prop :=
+  G.AcyclicEdgeColourable (G.maxDegree + 2)
+
+/--
 **The acyclic edge coloring conjecture (Fiamčík 1978 and Alon, Sudakov and Zaks 2001).**
 
 Every finite simple graph $G$ with maximum degree $\Delta$ has an acyclic edge coloring with at most
@@ -49,7 +57,7 @@ $\Delta + 2$ colors, i.e. a proper edge coloring with no 2-colored cycle.
 @[category research open, AMS 5]
 theorem acyclic_edge_coloring_conjecture :
     ∀ {V : Type} [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
-      G.AcyclicEdgeColourable (G.maxDegree + 2) := by
+      AcyclicEdgeColoringConjectureFor G := by
   sorry
 
 /--
@@ -64,7 +72,7 @@ For maximum degree at most 2, the conjecture is trivial. For maximum degree 3, i
 theorem acyclic_edge_coloring_conjecture.variants.maxDegree_le_three :
     ∀ {V : Type} [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj],
       G.maxDegree ≤ 3 →
-      G.AcyclicEdgeColourable (G.maxDegree + 2) := by
+        AcyclicEdgeColoringConjectureFor G := by
   sorry
 
 end AcyclicEdgeColoringConjecture

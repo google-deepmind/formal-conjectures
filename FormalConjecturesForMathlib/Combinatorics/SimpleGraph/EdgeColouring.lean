@@ -59,6 +59,34 @@ the same colour, i.e. there is no path of length 2 in a colour class. -/
 def IsProperEdgeColouring {V ι : Type*} (c : ι → SimpleGraph V) : Prop :=
   ∀ (i : ι) (v u w : V), (c i).Adj v u → (c i).Adj v w → u = w
 
+/-- An edge colouring is proper if and only if for any two edges `vu` and `wx` of the same colour,
+either `v = w` and `u = x`, or `v ≠ w` and `u ≠ x`. As this holds for all orientations of the
+edges, it says that two edges of the same colour are either equal or vertex-disjoint. -/
+theorem isProperEdgeColouring_iff {V ι : Type*} (c : ι → SimpleGraph V) :
+    IsProperEdgeColouring c ↔
+      ∀ (i : ι) (v u w x : V), (c i).Adj v u → (c i).Adj w x →
+        (v = w ∧ u = x) ∨ (v ≠ w ∧ u ≠ x) := by
+  constructor
+  · intro h i v u w x huv hwx
+    unfold IsProperEdgeColouring at h
+    specialize h i
+    by_cases hvw : v = w
+    · subst hvw
+      left
+      exact ⟨rfl, h v u x huv hwx⟩
+    · right
+      refine ⟨hvw, ?_⟩
+      by_contra hux
+      subst hux
+      specialize h u v w
+      apply hvw
+      exact h huv.symm hwx.symm
+  · intro h i v u w hvu hvw
+    specialize h i v u v w hvu hvw
+    obtain ⟨_, huw⟩ | ⟨hvv, _⟩ := h
+    · exact huw
+    · contradiction
+
 /-- An acyclic edge colouring is a proper edge colouring `c : ι → SimpleGraph V` with no
 2-coloured cycle, i.e. the union of any two colour classes is acyclic. -/
 def IsAcyclicEdgeColouring {V ι : Type*} (c : ι → SimpleGraph V) : Prop :=
