@@ -68,7 +68,8 @@ Conjecture: $a(n)$ is an integer for every $n = 0, 1, 2, \dots$.
 Proved in the OEIS Open project, see T. Adamczewski, OEIS Open: How many conjectures can
 language models turn into theorems?, [arXiv:2608.11941](https://arxiv.org/abs/2608.11941).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-22-000013"]
 theorem conjecture_1 (n : ℕ) : (a n).den = 1 := by
   sorry
 
@@ -86,7 +87,8 @@ Conjecture (ii): For any positive integer $n$, we have $a(n) \equiv 0 \pmod 8$,
 and $a(n)/8$ is odd if and only if $n$ is a power of two.
 - _Zhi-Wei Sun_, Apr 19 2011
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-22-000013"]
 theorem conjecture_3 (n : ℕ) (hn : 0 < n) :
     ∃ m : ℤ, a n = 8 * m ∧ (Odd m ↔ ∃ k : ℕ, n = 2 ^ k) := by
   sorry
