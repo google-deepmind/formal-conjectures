@@ -49,6 +49,7 @@ public import FormalConjecturesForMathlib.Analysis.MvPolynomial.MahlerMeasure
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
+public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.LogIntegral
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
@@ -229,8 +230,11 @@ public import FormalConjecturesForMathlib.NumberTheory.PisotNumber
 public import FormalConjecturesForMathlib.NumberTheory.PolygonalNumber
 public import FormalConjecturesForMathlib.NumberTheory.PracticalNumbers
 public import FormalConjecturesForMathlib.NumberTheory.PrimeGap
+public import FormalConjecturesForMathlib.NumberTheory.PrimesInAP
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
+public import FormalConjecturesForMathlib.NumberTheory.PrimitivePrimeDivisor
 public import FormalConjecturesForMathlib.NumberTheory.Refactorable
+public import FormalConjecturesForMathlib.NumberTheory.RiemannZetaZeros
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
 public import FormalConjecturesForMathlib.NumberTheory.Untouchable
