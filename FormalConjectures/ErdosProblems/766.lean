@@ -128,7 +128,8 @@ $$f(n;k,l)\leq \lfloor n^2/4\rfloor+1.$$
 [Er64c, p. 34] states this for every $k \leq n$. We assume $k \geq 3$, since for $k \leq 2$ there
 is no graph with $k$ vertices and $\lfloor k^2/4\rfloor+1$ edges.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-19-000006"]
 theorem erdos_766.variants.dirac_erdos (n k : ℕ) (hk : 3 ≤ k) (hkn : k ≤ n) :
     forcingNumber n k (k ^ 2 / 4 + 1) ≤ n ^ 2 / 4 + 1 := by
   sorry
