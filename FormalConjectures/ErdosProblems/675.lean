@@ -25,6 +25,8 @@ public import FormalConjecturesUtil
 - [Er79] Erdős, Paul, *Some unconventional problems in number theory*. Math. Mag. (1979), 67-70.
 - [Ho26] Ho, B. S., *A squarefree lower bound for Erdős Problem 675*.
   [PDF](https://boonsuan.github.io/erdos675_squarefree.pdf) (2026).
+- [Li26] Liu, Y. L., *Erdős Problem #675, subquestion (a): a super-polynomial lower bound on
+  local periods of the sums-of-two-squares set*. [PDF](https://leon2k2k2k.github.io/erdos675a.pdf) (2026).
 -/
 
 @[expose] public section
@@ -153,5 +155,66 @@ theorem erdos_675.variants.brun (B : Set ℕ) (hB : B.Pairwise Nat.Coprime)
       fun x : ℕ ↦ Real.log (Real.log (x : ℝ))) :
     HasTranslationProperty {n : ℕ | ∀ b ∈ B, ¬ b ∣ n} := by
   sorry
+
+/--
+Let $E = \{x^2 + y^2 : x, y \in \mathbb{N}\}$. If $t$ is an $n$-shift for $E$, that is
+$t \geq 1$ and $a \in E \iff a + t \in E$ for all $1 \leq a \leq n$, then every prime
+$p \equiv 3 \pmod 4$ with $5(p-1)^2 \leq 4n$ divides $t$.
+
+Hence every $n$-shift is a multiple of the product of these primes. Together with a
+Mertens-type lower bound for primes $\equiv 3 \pmod 4$ this gives $t > \exp(n^c)$ for every
+$c < 1/2$ and all large $n$. The argument follows Lemmas 6 and 7 of [Li26], with the witnesses $x^2 + y^2$ and
+$x^2 + (p - y)^2$ in place of the primes from Linnik's theorem used there.
+-/
+@[category research solved, AMS 11]
+theorem erdos_675.variants.sumsOfTwoSquares_prime_dvd_shift {p n t : ℕ} (hp : p.Prime)
+    (hp4 : p % 4 = 3) (hpn : 5 * (p - 1) ^ 2 ≤ 4 * n)
+    (ht : IsTranslation {m : ℕ | ∃ x y : ℕ, m = x ^ 2 + y ^ 2} n t) : p ∣ t := by
+  have := Fact.mk hp
+  -- If `1 ≤ X ^ 2 + Y ^ 2 ≤ n` and `p` divides `X ^ 2 + Y ^ 2 + t = u ^ 2 + v ^ 2`, then
+  -- `p ∣ u` and `p ∣ v` since `-1` is not a square mod `p`, so `p ^ 2 ∣ X ^ 2 + Y ^ 2 + t`.
+  have lift (X Y : ℕ) (h1 : 1 ≤ X ^ 2 + Y ^ 2) (hn : X ^ 2 + Y ^ 2 ≤ n)
+      (hd : p ∣ X ^ 2 + Y ^ 2 + t) : p ^ 2 ∣ X ^ 2 + Y ^ 2 + t := by
+    obtain ⟨u, v, huv⟩ : ∃ u v : ℕ, _ = u ^ 2 + v ^ 2 := (ht.2 _ h1 hn).1 ⟨X, Y, rfl⟩
+    have h := (ZMod.natCast_eq_zero_iff _ p).2 (huv ▸ hd)
+    push_cast at h
+    have hv : (v : ZMod p) = 0 := by_contra fun hv ↦
+      ZMod.mod_four_ne_three_of_sq_eq_neg_sq' hv (eq_neg_of_add_eq_zero_left h) hp4
+    rw [hv, zero_pow two_ne_zero, add_zero, pow_eq_zero_iff two_ne_zero] at h
+    obtain ⟨k, hk⟩ := (ZMod.natCast_eq_zero_iff u p).1 h
+    obtain ⟨l, hl⟩ := (ZMod.natCast_eq_zero_iff v p).1 hv
+    exact ⟨k ^ 2 + l ^ 2, by rw [huv, hk, hl]; ring⟩
+  by_contra hpt
+  -- write `-t = x ^ 2 + y ^ 2` in `ZMod p` with `y ≠ 0`
+  obtain ⟨x, y, hxy, hy⟩ : ∃ x y : ZMod p, x ^ 2 + y ^ 2 = -t ∧ y ≠ 0 := by
+    obtain ⟨a, b, hab⟩ := ZMod.sq_add_sq p (-t)
+    by_cases hb : b = 0
+    · refine ⟨b, a, by rw [← hab, hb]; ring, fun ha ↦ hpt ?_⟩
+      rw [← ZMod.natCast_eq_zero_iff, ← neg_eq_zero, ← hab, ha, hb]; ring
+    · exact ⟨a, b, hab, hb⟩
+  -- lift `x, y` to `0 ≤ X ≤ (p - 1) / 2` and `1 ≤ Y ≤ (p - 1) / 2` with the same squares
+  have sq_eq (z : ZMod p) : ((z.valMinAbs.natAbs : ℕ) : ZMod p) ^ 2 = z ^ 2 := by
+    rw [ZMod.natCast_natAbs_valMinAbs]; split_ifs <;> ring
+  set X := x.valMinAbs.natAbs
+  set Y := y.valMinAbs.natAbs
+  have hX : X ≤ p / 2 := ZMod.natAbs_valMinAbs_le x
+  have hY : Y ≤ p / 2 := ZMod.natAbs_valMinAbs_le y
+  have hY0 : Y ≠ 0 := by simpa [Y, ZMod.valMinAbs_eq_zero] using hy
+  -- the witnesses `a = X ^ 2 + Y ^ 2 < b = X ^ 2 + (p - Y) ^ 2 ≤ n` are both `≡ -t (mod p)`
+  have hab := Nat.pow_le_pow_left (show Y ≤ p - Y by omega) 2
+  have h1 := Nat.pow_le_pow_left (show 2 * X ≤ p - 1 by omega) 2
+  have h2 := Nat.pow_le_pow_left (show p - Y ≤ p - 1 by omega) 2
+  have hY1 := Nat.one_le_pow 2 Y (by omega)
+  rw [mul_pow] at h1
+  have ha := lift X Y (by omega) (by omega) <| (ZMod.natCast_eq_zero_iff _ _).1 <| by
+    push_cast; rw [sq_eq, sq_eq, hxy, neg_add_cancel]
+  have hb := lift X (p - Y) (by omega) (by omega) <| (ZMod.natCast_eq_zero_iff _ _).1 <| by
+    push_cast [Nat.cast_sub (by omega : Y ≤ p)]
+    rw [ZMod.natCast_self, zero_sub, neg_sq, sq_eq, sq_eq, hxy, neg_add_cancel]
+  -- but `b - a = p * (p - 2 * Y)` is not divisible by `p ^ 2`
+  rw [show X ^ 2 + (p - Y) ^ 2 + t = X ^ 2 + Y ^ 2 + t + p * (p - 2 * Y) by
+    zify [(by omega : Y ≤ p), (by omega : 2 * Y ≤ p)]; ring, Nat.dvd_add_right ha, sq] at hb
+  have := Nat.le_of_dvd (by omega) (Nat.dvd_of_mul_dvd_mul_left hp.pos hb)
+  omega
 
 end Erdos675
