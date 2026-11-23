@@ -19,7 +19,10 @@ public import FormalConjecturesUtil
 
 /-! # Erdős Problem 349
 
-*Reference:* [erdosproblems.com/349](https://www.erdosproblems.com/349)
+*References:*
+- [erdosproblems.com/349](https://www.erdosproblems.com/349)
+- [Ge26] Geneson, J., *Deletion thresholds and exponential examples for complete sequences*.
+  [arXiv:2609.25107](https://arxiv.org/abs/2609.25107) (2026).
 -/
 
 @[expose] public section
@@ -48,12 +51,15 @@ theorem erdos_349 :
   sorry
 
 /--
-It seems likely that the sequence is complete for all
-for all $t>0$ and all $1 < \alpha < \frac{1+\sqrt{5}}{2}$.
+Graham suggested that the sequence is complete for all $t>0$ and all
+$1 < \alpha < \frac{1+\sqrt{5}}{2}$. Geneson [Ge26, Theorem 9] disproved this: for the Salem number
+$\alpha$ with minimal polynomial $x^{18} - x^{12} - x^{11} - x^{10} - x^9 - x^8 - x^7 - x^6 + 1$,
+which satisfies $6/5 < \alpha < 13/10$, there are arbitrarily large $t > 0$ such that
+$\lfloor t\alpha^n\rfloor$ is even for every $n \geq 0$, so no odd integer is a sum of terms.
 -/
-@[category research open, AMS 11]
-theorem complete_for_alpha_in_Ioo_one_to_goldenRatio (t α : ℝ) (ht : 0 < t)
-    (hα : α ∈ Set.Ioo 1 ((1 + √5) / 2)) : IsGoodPair t α := by
+@[category research solved, AMS 11]
+theorem complete_for_alpha_in_Ioo_one_to_goldenRatio :
+    ¬ ∀ t α : ℝ, 0 < t → α ∈ Set.Ioo 1 ((1 + √5) / 2) → IsGoodPair t α := by
   sorry
 
 /--
