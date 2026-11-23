@@ -30,6 +30,11 @@ public import FormalConjecturesUtil
   https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Bass-trace-conjecture-for-complex-group-rings-September-24-2026/The-Bass-trace-conjecture-for-complex-group-rings-September-24-2026.pdf
   Lean proof (`OAI.TorsionFreeBass.torsion_free_corollary`):
   https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/RingTheory/BassTrace/TorsionFree.lean#L50
+* [OAI26d] OpenAI, *A Torsion-Free Group Algebra That Is Not Directly Finite*. OpenAI Math
+  Release preprint (2026).
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-Torsion-Free-Group-Algebra-That-Is-Not-Directly-Finite-October-4-2026/direct-finiteness.pdf
+* [MD26] N. Mghirbi and S. Douglas, *Kaplansky's conjectures fail for torsion-free hyperbolic
+  groups in positive characteristic*. arXiv:2611.04599 (2026).
 
 Throughout, "torsion-free" means that the identity is the only element of finite order
 (`Monoid.IsTorsionFree`). This is weaker than Mathlib's `IsMulTorsionFree`, which asks for
@@ -63,19 +68,49 @@ theorem zero_divisor_conjecture :
       NoZeroDivisors (MonoidAlgebra K G) := by
   sorry
 
+omit hG in
 /--
 **The idempotent conjecture**
 
 If `G` is torsion-free, then `K[G]` has no non-trivial idempotents.
 
+This is false. An internal OpenAI model constructed a finitely presented torsion-free group $G$
+and $a, b \in \mathbb{F}_2[G]$ with $ab = 1$ and $ba \neq 1$ in October 2026 [OAI26d]; then
+$e = ba$ is a non-trivial idempotent, see `idempotent_conjecture_of_not_directly_finite`.
+For every prime $p$, [MD26] constructs a finitely presented torsion-free word-hyperbolic group
+whose group algebra over a field of characteristic $p$ has a non-trivial idempotent.
+
 The case of characteristic zero was proved by an internal OpenAI model in September 2026
 [OAI26b]; see `idempotent_conjecture.variants.charZero` and
 `idempotent_conjecture_of_charZero`.
 -/
-@[category research open, AMS 16 20]
-theorem idempotent_conjecture (a : MonoidAlgebra K G) (h : IsIdempotentElem a) :
-    a = 0 ∨ a = 1 := by
+@[category research solved, AMS 16 20]
+theorem idempotent_conjecture :
+    ¬ ∀ (K : Type) [Field K] (G : Type) [Group G], Monoid.IsTorsionFree G →
+      ∀ a : MonoidAlgebra K G, IsIdempotentElem a → a = 0 ∨ a = 1 := by
   sorry
+
+omit hG in
+/--
+A torsion-free group algebra that is not directly finite refutes `idempotent_conjecture`:
+if $ab = 1$ and $ba \neq 1$, then $e = ba$ satisfies $e^2 = b(ab)a = e$ and $e \neq 1$, and
+$e \neq 0$ because $aeb = (ab)(ab) = 1$. [OAI26d] gives such $a, b$ over $\mathbb{F}_2$.
+-/
+@[category test, AMS 16 20]
+theorem idempotent_conjecture_of_not_directly_finite
+    (h : ∃ (G : Type) (_ : Group G) (_ : Monoid.IsTorsionFree G)
+      (a b : MonoidAlgebra (ZMod 2) G), a * b = 1 ∧ b * a ≠ 1) :
+    type_of% idempotent_conjecture := by
+  intro hall
+  obtain ⟨G, _, hG, a, b, hab, hba⟩ := h
+  have he : IsIdempotentElem (b * a) := by
+    show b * a * (b * a) = b * a
+    rw [mul_assoc, ← mul_assoc a b a, hab, one_mul]
+  rcases hall (ZMod 2) G hG (b * a) he with h0 | h1
+  · have h1 : a * (b * a) * b = 1 := by rw [← mul_assoc, hab, one_mul, hab]
+    rw [h0, mul_zero, zero_mul] at h1
+    exact zero_ne_one h1
+  · exact hba h1
 
 section CharZero
 
@@ -98,7 +133,7 @@ theorem idempotent_conjecture.variants.charZero :
   sorry
 
 omit hG in
-/-- OpenAI's Lean statement gives `idempotent_conjecture` for every field of characteristic
+/-- OpenAI's Lean statement gives the idempotent conjecture for every field of characteristic
 zero. -/
 @[category test, AMS 16 20]
 theorem idempotent_conjecture_of_charZero
