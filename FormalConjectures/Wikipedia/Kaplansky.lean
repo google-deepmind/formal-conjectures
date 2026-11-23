@@ -28,6 +28,8 @@ public import FormalConjecturesUtil
 * [OAI26b] OpenAI, *The Bass trace conjecture and the characteristic-zero Kaplansky idempotent
   conjecture*. OpenAI Math Release preprint (2026).
   https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Bass-trace-conjecture-for-complex-group-rings-September-24-2026/The-Bass-trace-conjecture-for-complex-group-rings-September-24-2026.pdf
+  Lean proof (`OAI.TorsionFreeBass.torsion_free_corollary`):
+  https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/RingTheory/BassTrace/TorsionFree.lean#L50
 
 Throughout, "torsion-free" means that the identity is the only element of finite order
 (`Monoid.IsTorsionFree`). This is weaker than Mathlib's `IsMulTorsionFree`, which asks for
@@ -52,7 +54,7 @@ If `G` is torsion-free, then the group algebra `K[G]` has no non-trivial zero di
 This is false. It was disproved by an internal OpenAI model in September 2026 [OAI26a], which
 constructed a finitely presented torsion-free group $G$ and non-zero
 $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$; see
-`counter_zero_divisor_conjecture` and OpenAI's Lean proof.
+`counter_zero_divisor_conjecture` and the linked Lean proof.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Algebra/GroupRing/Main.lean#L13"]
@@ -189,7 +191,7 @@ set_option linter.style.formal_proof_palomar false in
 The **Zero-divisor Conjecture** is false: there is a finitely presented torsion-free group $G$
 and non-zero $\alpha, \beta \in \mathbb{F}_2[G]$ with $\alpha \beta = 0$.
 
-This was proved by an internal OpenAI model in September 2026 [OAI26a]; see OpenAI's Lean
+This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
 proof.
 -/
 @[category research solved, AMS 16 20, formal_proof using lean4 at
