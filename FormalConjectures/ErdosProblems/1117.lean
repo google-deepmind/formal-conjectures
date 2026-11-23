@@ -27,6 +27,7 @@ public import FormalConjecturesUtil
   (1968), 240--243.
 - [GlPa24] Glücksam, Adi and Pardo-Simón, Leticia, *An approximate solution to Erdős' maximum
   modulus points problem*. J. Math. Anal. Appl. (2024), Paper No. 127768, 20.
+- [Li26] Li, Yunpeng, *Maximum-modulus points on concentric circles*. arXiv:2610.15067 (2026).
 -/
 
 @[expose] public section
@@ -64,6 +65,7 @@ theorem erdos_1117.parts.i :
       atTop.limsup (fun r : ℝ≥0 ↦ (nu f r : EReal)) = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(z)$ be an entire function which is not a monomial. Let $\nu(r)$ count the number of $z$
 with $\lvert z\rvert = r$ such that $\lvert f(z)\rvert = \max_{\lvert z\rvert = r}\lvert f(z)\rvert$.
@@ -71,12 +73,15 @@ with $\lvert z\rvert = r$ such that $\lvert f(z)\rvert = \max_{\lvert z\rvert = 
 
 Is it possible for $\liminf \nu(r) = \infty$?
 
-The second question is still open, although an 'approximate' affirmative answer is given by
-Glücksam and Pardo-Simón [GlPa24]. For $\mathbb{N}$-valued $\nu$, this is $\nu(r) \to \infty$.
+The answer is no. Li [Li26, Corollary 2] proves that for every non-monomial entire $f$ there is
+a bound $B$ and arbitrarily large positive radii $r$ with $\nu_f(r) \le B$. Hence
+$\liminf_{r\to\infty}\nu_f(r) < \infty$, so $\nu_f(r)$ cannot tend to infinity. The earlier
+approximate affirmative answer of Glücksam and Pardo-Simón [GlPa24] is therefore not sharp.
 -/
-@[category research open, question, AMS 30]
+@[category research solved, question, AMS 30, formal_proof using lean4 at
+  "https://github.com/liyunpeng1991/liyunpeng1991.github.io/blob/c063e5f83dfa71c97871eabc8b70cf8a8c1e0bc9/proofs/maximum-modulus/lean/MaximumModulus/AllRadii.lean#L26"]
 theorem erdos_1117.parts.ii :
-    ∃ f : ℂ → ℂ, Differentiable ℂ f ∧ ¬ IsMonomial f ∧
+    ¬ ∃ f : ℂ → ℂ, Differentiable ℂ f ∧ ¬ IsMonomial f ∧
       Tendsto (fun r : ℝ≥0 ↦ nu f r) atTop atTop := by
   sorry
 
