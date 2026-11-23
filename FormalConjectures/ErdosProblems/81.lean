@@ -35,9 +35,16 @@ namespace Erdos81
 
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let $G$ be a chordal graph on $n$ vertices - that is, $G$ has no induced cycles of
-length greater than $3$. Can the edges of $G$ be partitioned into $n^2/6+O(n)$ many cliques? -/
-@[category research open, question, AMS 5]
+length greater than $3$. Can the edges of $G$ be partitioned into $n^2/6+O(n)$ many cliques?
+
+The answer is yes: in fact $\lfloor n(n+1)/6\rfloor$ cliques always suffice
+(see [erdosproblems.com/81](https://www.erdosproblems.com/81)). A Lean 4 formalisation is
+available at [N0zoM1z0/erdos-81](https://github.com/N0zoM1z0/erdos-81/blob/main/lean/Erdos81.lean).
+-/
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/N0zoM1z0/erdos-81/blob/main/lean/Erdos81.lean"]
 theorem erdos_81 :
     ∃ C : ℝ, ∀ n : ℕ, ∀ G : SimpleGraph (Fin n), G.IsChordal →
       ∃ P : Finset (Finset (Fin n)), G.IsCliqueEdgePartition P ∧
