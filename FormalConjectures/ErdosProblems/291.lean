@@ -64,6 +64,32 @@ theorem erdos_291.parts.i :
     { n : ℕ | Nat.gcd (a n) (L n) = 1 }.Infinite := by
   sorry
 
+/-- For $n = 2 \cdot 3^k$ with $k \ge 1$, $3$ divides both $a_n$ and $L_n$. Every term $L_n / i$
+with $3^k \nmid i$ is divisible by $3$, and the two remaining terms sum to
+$L_n / 3^k + L_n / (2 \cdot 3^k) = 3 \cdot L_n / (2 \cdot 3^k)$. -/
+@[category API, AMS 11]
+theorem three_dvd_a_and_L (k : ℕ) (hk : 1 ≤ k) : 3 ∣ a (2 * 3 ^ k) ∧ 3 ∣ L (2 * 3 ^ k) := by
+  have hmem : ∀ i, 1 ≤ i → i ≤ 2 * 3 ^ k → i ∣ L (2 * 3 ^ k) := fun i h1 h2 =>
+    Finset.dvd_lcm (Finset.mem_Icc.mpr ⟨h1, h2⟩)
+  have h3k : 3 ≤ 3 ^ k := le_self_pow₀ (by norm_num) (by omega)
+  refine ⟨?_, hmem 3 (by norm_num) (by omega)⟩
+  have hT : {3 ^ k, 2 * 3 ^ k} ⊆ Finset.Icc 1 (2 * 3 ^ k) := by
+    intro i hi; simp only [Finset.mem_insert, Finset.mem_singleton] at hi; rw [Finset.mem_Icc]; omega
+  rw [a, ← Finset.sum_sdiff hT, Finset.sum_pair (by omega)]
+  refine dvd_add (Finset.dvd_sum fun i hi => ?_) ?_
+  · rw [Finset.mem_sdiff, Finset.mem_Icc, Finset.mem_insert, Finset.mem_singleton] at hi
+    by_contra h3
+    have hdiv : 3 ^ k ∣ i * (L (2 * 3 ^ k) / i) := by
+      rw [Nat.mul_div_cancel' (hmem i hi.1.1 hi.1.2)]; exact hmem _ (by omega) (by omega)
+    obtain ⟨c, hc⟩ := (Nat.Coprime.pow_left k ((Nat.Prime.coprime_iff_not_dvd
+      Nat.prime_three).mpr h3)).dvd_of_dvd_mul_right hdiv
+    have hc2 : c ≤ 2 := Nat.le_of_mul_le_mul_left (by rw [← hc]; omega) (by positivity : 0 < 3 ^ k)
+    interval_cases c <;> omega
+  · obtain ⟨m, hm⟩ := hmem _ (by omega) le_rfl
+    rw [hm, show 2 * 3 ^ k * m = 3 ^ k * (2 * m) by ring, Nat.mul_div_cancel_left _ (by positivity),
+      ← show 2 * 3 ^ k * m = 3 ^ k * (2 * m) by ring, Nat.mul_div_cancel_left _ (by positivity)]
+    exact ⟨m, by ring⟩
+
 /--
 Is it true that $(a_n,L_n)>1$ occurs for infinitely many $n$?
 
@@ -73,7 +99,13 @@ $n$ which begins with a $2$ in base $3$ has $3\mid (a_n,L_n)$.
 @[category research solved, question, AMS 11]
 theorem erdos_291.parts.ii :
     { n : ℕ | Nat.gcd (a n) (L n) > 1 }.Infinite := by
-  sorry
+  refine Set.infinite_of_injective_forall_mem (f := fun k : ℕ => 2 * 3 ^ (k + 1)) (fun x y h => by
+    have := Nat.pow_right_injective (by norm_num : 2 ≤ 3) (Nat.eq_of_mul_eq_mul_left (by norm_num) h)
+    omega) fun k => ?_
+  obtain ⟨ha, hL⟩ := three_dvd_a_and_L (k + 1) (by omega)
+  have hL0 : L (2 * 3 ^ (k + 1)) ≠ 0 := by rw [L, Ne, Finset.lcm_eq_zero_iff]; simp
+  exact lt_of_lt_of_le (by norm_num) (Nat.le_of_dvd (Nat.gcd_pos_of_pos_right _
+    (Nat.pos_of_ne_zero hL0)) (Nat.dvd_gcd ha hL))
 
 /--
 More generally, if the leading digit of $n$ in base $p$ is $p-1$ then $p\mid (a_n,L_n)$. There is
