@@ -67,7 +67,8 @@ theorem wolstenholme_prime_2124679 : IsWolstenholmePrime 2124679 := by
 /--
 Equivalently, a prime $p > 7$ is a Wolstenholme prime if it divides the numerator of the Bernoulli number $B_{p-3}$.
 -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11, formal_proof using lean4 at
+"https://github.com/JoseClaudioSJr/wolstenholme-lean/blob/05c68d7b166bd2f2d233f7619868456c8aa306f8/FormalConjecturesCheck.lean#L32"]
 theorem wolstenholme_bernoulli (p : ℕ) : IsWolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑p ∣ (bernoulli' (p - 3)).num := by
   sorry
@@ -76,7 +77,8 @@ theorem wolstenholme_bernoulli (p : ℕ) : IsWolstenholmePrime p ↔
 Another equivalent definition is that a prime $p > 7$ is a Wolstenholme prime
 if it $p^3$ divides the numerator of the harmonic number $H_{p-1}$.
 -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11, formal_proof using lean4 at
+"https://github.com/JoseClaudioSJr/wolstenholme-lean/blob/05c68d7b166bd2f2d233f7619868456c8aa306f8/FormalConjecturesCheck.lean#L28"]
 theorem wolstenholme_harmonic (p : ℕ) : IsWolstenholmePrime p ↔
     (p > 7) ∧ Nat.Prime p ∧ ↑(p ^ 3) ∣ (harmonic (p - 1)).num := by
   sorry
