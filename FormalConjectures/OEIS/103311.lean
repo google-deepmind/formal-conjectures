@@ -65,6 +65,7 @@ lemma a_3 : a 3 = 0 := by rfl
 lemma a_4 : a 4 = -2 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Fibonacci transform satisfying $|a(n)| = F(n+1)$.
 

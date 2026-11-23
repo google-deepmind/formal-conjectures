@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos46
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every finite colouring of the integers have a monochromatic solution to
 $1=\sum \frac{1}{n_i}$ with $2\leq n_1<\cdots <n_k$?

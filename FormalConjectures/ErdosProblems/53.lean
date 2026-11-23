@@ -47,6 +47,7 @@ def sumsAndProducts (A : Finset ℤ) : Finset ℤ :=
   (A.powerset.erase ∅).image (fun B => ∑ b ∈ B, b) ∪
     (A.powerset.erase ∅).image (fun B => ∏ b ∈ B, b)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be a finite set of integers. Is it true that, for every $k$, if $\lvert A\rvert$ is
 sufficiently large depending on $k$, then there are least $\lvert A\rvert^k$ many integers which

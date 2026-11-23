@@ -54,6 +54,7 @@ structure IsRademacherMultiplicative (f : ℕ → Ω → ℝ) : Prop where
   map_mul_of_coprime a b ω : a.Coprime b → f (a * b) ω = f a ω * f b ω
   map_of_not_squarefree n ω : ¬ Squarefree n → f n ω = 0
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f$ be a Rademacher multiplicative function.
 Does there exist some constant $c > 0$ such that, almost surely,

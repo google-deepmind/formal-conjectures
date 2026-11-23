@@ -32,6 +32,7 @@ open Filter
 
 namespace Erdos895
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for all sufficiently large $n$, if $G$ is a triangle-free graph on
 $\{1,\ldots,n\}$ then there must exist three independent points $a,b,a+b$?
@@ -46,6 +47,7 @@ theorem erdos_895 :
       ∃ a b c : Set.Icc 1 n, a ≠ b ∧ (a : ℕ) + (b : ℕ) = c ∧ G.IsIndepSet {a, b, c} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Barber's sharp form of [erdős_895](https://www.erdosproblems.com/895): every triangle-free graph on
 $\{1,\ldots,n\}$ with $n\geq 18$ contains three independent points $a,b,a+b$.

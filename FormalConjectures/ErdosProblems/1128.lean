@@ -223,8 +223,9 @@ $\omega_1$; but any bounded subset of $\omega_1$ is countable (since initial seg
 countable), contradicting $A_1$ being uncountable. The colour-1 case is symmetric with
 the roles of $A_1$ and $B_1$ swapped.
 
-Note: The correct classical result for 2-colourings of pairs (not products) is the
-Erdős–Rado theorem $\omega_1 \to (\omega_1)^2_2$, which concerns unordered pairs.
+Note: For 2-colourings of unordered pairs the analogous statement also fails: Sierpiński
+showed $\omega_1 \not\to (\omega_1)^2_2$. The Erdős–Rado theorem gives
+$(2^{\aleph_0})^+ \to (\aleph_1)^2_{\aleph_0}$ instead.
 -/
 @[category research solved, AMS 3 5]
 theorem erdos_1128.variants.two_dimensional_false :

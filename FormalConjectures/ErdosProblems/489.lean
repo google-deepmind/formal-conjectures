@@ -42,6 +42,7 @@ noncomputable def GapSumSq (A : Set ℕ) (x : ℕ) : ℝ :=
   ∑ i < Nat.count (· ∈ B) x, ((b (i + 1) : ℝ) - b i) ^ 2
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq \mathbb{N}$ be a set such that $\lvert A\cap [1,x]\rvert=o(x^{1/2})$. Let
 $B=\{ n\geq 1 : a\nmid n\textrm{ for all }a\in A\}$.

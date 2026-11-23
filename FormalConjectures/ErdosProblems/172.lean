@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos172
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that in any finite colouring of $\mathbb{N}$ there exist arbitrarily large finite $A$ such that all sums
 and products of distinct elements in $A$ are the same colour?

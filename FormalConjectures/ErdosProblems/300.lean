@@ -44,6 +44,7 @@ noncomputable def A (N : ℕ) : ℕ :=
   sSup {m : ℕ | ∃ B : Finset ℕ, B ⊆ Finset.Icc 1 N ∧ (∀ S ⊆ B, ∑ n ∈ S, (1 / n : ℚ) ≠ 1) ∧
     B.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A(N)$ denote the maximal cardinality of $A\subseteq \{1,\ldots,N\}$ such that
 $\sum_{n\in S}\frac{1}{n}\neq 1$ for all $S\subseteq A$. Estimate $A(N)$.
@@ -58,6 +59,7 @@ $A(N)=(1-1/e+o(1))N$.
 theorem erdos_300 : Tendsto (fun N : ℕ => (A N : ℝ) / N) atTop (𝓝 (1 - 1 / Real.exp 1)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Erdős and Graham [ErGr80] believed that $A(N)=(1+o(1))N$; this was disproved by Croot
 [Cr03]. -/
 @[category research solved, question, AMS 11, formal_proof using lean4 at

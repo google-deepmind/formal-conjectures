@@ -50,6 +50,7 @@ noncomputable def g (k n : ℕ) : ℕ :=
   sSup {m | ∃ G : SimpleGraph (Fin n),
     ¬ HasCycleWithIncidentChords G k ∧ G.edgeFinset.card = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $g_k(n)$ be the maximal number of edges possible on a graph with $n$ vertices which does not
 contain a cycle with $k$ chords incident to a vertex on the cycle. Is it true that

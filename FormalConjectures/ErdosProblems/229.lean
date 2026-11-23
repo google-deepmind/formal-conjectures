@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos229
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $(S_n)_{n \ge 1}$ be a sequence of sets of complex numbers, none of which have a finite
 limit point. Does there exist an entire transcendental function $f(z)$ such that, for all $n \ge 1$, there

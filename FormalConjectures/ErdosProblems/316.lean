@@ -71,6 +71,7 @@ lemma erdos_316.variants.multiset : ∃ A : Multiset ℕ, 0 ∉ A ∧ 1 ∉ A �
     exact this ▸ h B (by simp [hBC])
   decide +kernel
 
+set_option linter.style.formal_proof_palomar false in
 /--
 This is not true in general, as shown by Sándor [Sa97], who observed that the proper divisors of
 $120$ form a counterexample. More generally, Sándor shows that for any $n\geq 2$ there exists a

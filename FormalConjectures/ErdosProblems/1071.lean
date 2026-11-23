@@ -36,6 +36,7 @@ namespace Erdos1071
 def SegmentsDisjoint (seg1 seg2 : ℝ² × ℝ²) : Prop :=
   segment ℝ seg1.1 seg1.2 ∩ segment ℝ seg2.1 seg2.2 ⊆ {seg1.1, seg1.2, seg2.1, seg2.2}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can a finite set of disjoint unit segments in a unit square be maximal?
 Solved affirmatively by [Da85], who gave an explicit construction.
@@ -52,6 +53,7 @@ theorem erdos_1071.parts.i :
           (T : Set (ℝ² × ℝ²)).Pairwise SegmentsDisjoint) S := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is there a region $R$ with a maximal set of disjoint unit line segments that is countably infinite?
 Here a unit line segment is a rotated and translated copy of the open interval $(0,1)$, and it is
 required to be contained in $R$.

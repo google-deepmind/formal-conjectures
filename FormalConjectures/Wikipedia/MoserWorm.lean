@@ -20,7 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Moser's Worm
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Moser%27s_worm_problem)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Moser%27s_worm_problem)
+- [Tao's optimization constant 13a](https://teorth.github.io/optimizationproblems/constants/13a.html)
 -/
 
 @[expose] public section
@@ -91,6 +93,12 @@ theorem mosers_worm_problem_upper_bound :
     ∃ X ∈ WormCovers, volume X = 0.260437 := by
   sorry
 
+/-- **Moser's convex worm cover constant**: the infimal area of a convex set that covers every
+worm by a translation and a rotation. -/
+@[optimization_constant "13a"]
+noncomputable def convexWormCoverConstant : ENNReal :=
+  sInf {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v}
+
 def convex_mosers_worm_problem.answer : ENNReal := sorry
 
 /--
@@ -100,7 +108,7 @@ of a *convex* shape that can cover every unit-length curve?
 -/
 @[category research open, question value, AMS 52]
 theorem convex_mosers_worm_problem :
-    IsGLB {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} convex_mosers_worm_problem.answer := by
+    convexWormCoverConstant = convex_mosers_worm_problem.answer := by
   sorry
 
 /--
@@ -109,7 +117,7 @@ This follows from the Blaschke selection theorem.
 -/
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_bound_attained :
-    ∃ bound, IsLeast {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} bound := by
+    ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = convexWormCoverConstant := by
   sorry
 
 /--
@@ -121,8 +129,7 @@ Acta Mathematica Sinica, 49 (4): 835–846, MR 2264090.
 -/
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_upper_bound :
-    ∃ X : Set ℝ², MeasurableSet X ∧ Convex ℝ X ∧ volume X = 0.270911861 ∧
-      ∀ w ∈ Worms, ∃ (e : ℝ² ≃ₗᵢ[ℝ] ℝ²) (v : ℝ²), e.toLinearEquiv.det = 1 ∧ w ⊆ (fun x => e x + v) '' X := by
+    ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = 0.270911861 := by
   sorry
 
 /--
@@ -136,7 +143,7 @@ International Journal of Computational Geometry & Applications,
 -/
 @[category research solved, AMS 52]
 theorem convex_mosers_worm_problem_lower_bound :
-    0.232239 ∈ lowerBounds {v | ∃ X ∈ WormCovers, Convex ℝ X ∧ volume X = v} := by
+    0.232239 ≤ convexWormCoverConstant := by
   sorry
 
 end MoserWorm

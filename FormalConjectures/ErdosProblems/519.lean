@@ -46,6 +46,7 @@ namespace Erdos519
 noncomputable def powerSum {n : ℕ} (z : Fin n → ℂ) (k : ℕ) : ℂ :=
   ∑ i : Fin n, z i ^ k
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $z_1,\ldots,z_n\in \mathbb{C}$ with $z_1=1$. Must there exist an absolute constant $c>0$ such
 that

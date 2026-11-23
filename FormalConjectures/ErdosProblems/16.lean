@@ -48,6 +48,7 @@ def density_zero (S : Set ℕ) : Prop :=
   open scoped Classical in
   Tendsto (fun x : ℕ ↦ (count (· ∈ S) x : ℝ) / (x : ℝ)) atTop (𝓝 0)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is the set of odd integers not of the form $2^k+p$ the union of an infinite arithmetic progression
 and a set of density $0$?
@@ -81,6 +82,7 @@ theorem erdos_16.variant.romanoff :
     positive_lower_density S := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Using covering congruences Erdős [Er50] proved that the set of odd integers which are not of this
 form contains an infinite arithmetic progression.

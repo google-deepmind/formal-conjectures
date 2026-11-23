@@ -40,6 +40,7 @@ noncomputable def f (m : ℕ) : ℕ :=
   sSup {k | ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.CliqueFree 3 →
     G.edgeSet.ncard = m → ∃ H ≤ G, H.IsBipartite ∧ k ≤ H.edgeSet.ncard}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(m)$ be the maximal $k$ such that a triangle-free graph on $m$ edges must contain a
 bipartite graph with $k$ edges. Determine $f(m)$.

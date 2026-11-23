@@ -77,6 +77,7 @@ theorem erdos_180 :
       family.Nonempty → IsCyclicFamily family → IsCompactFamily family := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The counterexample: a nonempty family of connected bipartite graphs, none acyclic, that is not
 compact.

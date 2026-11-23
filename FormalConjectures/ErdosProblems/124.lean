@@ -77,6 +77,7 @@ lemma erdos124.ne_zero_three_four_seven :
       n ∈ sumsOfDistinctPowers 3 1 + sumsOfDistinctPowers 4 1 + sumsOfDistinctPowers 7 1 :=
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $3\leq d_1 < d_2 < \cdots < d_r$ be integers such that all sufficiently large integers can be
 written as a sum of the shape $\sum_i c_ia_i$ where $c_i \in \{0, 1\}$ and $a_i$ has only the digits

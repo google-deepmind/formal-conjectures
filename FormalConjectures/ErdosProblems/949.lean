@@ -41,8 +41,8 @@ theorem erdos_949 :
     ∀ S : Set ℝ, (∀ a ∈ S, ∀ b ∈ S, a + b ∉ S) → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by
   sorry
 
-/-- Let $S\sub \mathbb{R}$ be a Sidon set. Must there be a set $A\sub \mathbb{R}∖S$ of cardinality
-continuum such that $A + A \sub \mathbb{R}∖S$? -/
+/-- Let $S\subseteq \mathbb{R}$ be a Sidon set. Must there be a set $A\subseteq \mathbb{R}∖S$
+of cardinality continuum such that $A + A \subseteq \mathbb{R}∖S$? -/
 @[category research solved, question, AMS 5]
 theorem erdos_949.variants.sidon :
     ∀ S : Set ℝ, IsSidon S → ∃ A ⊆ Sᶜ, #A = 𝔠 ∧ A + A ⊆ Sᶜ := by

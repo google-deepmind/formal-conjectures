@@ -30,6 +30,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos303
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that in any finite colouring of the integers there exists a monochromatic solution
 to $\frac 1 a = \frac 1 b + \frac 1 c$ with distinct $a, b, c$?

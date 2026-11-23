@@ -102,6 +102,7 @@ theorem erdos_789.variants.sq_isBigO :
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /-- Korsky [Ko26] proved that $h(n) \gg \sqrt{n\log\log n/\log n}$. -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at
 "https://github.com/mo271/formal-conjectures/blob/57a0dc60e2cc245b69870647d122fb851f72d8e4/FormalConjectures/ErdosProblems/789.lean#L907"]
@@ -111,6 +112,7 @@ theorem erdos_789.variants.sqrt_loglog_div_log_isBigO :
   sorry
 
 
+set_option linter.style.formal_proof_palomar false in
 /-- Erdős [Er62c] and Choi [Ch74b] proved that $(n\log(n))^{1/3}\ll h(n)$. This also follows from
 `erdos_789.variants.sqrt_loglog_div_log_isBigO`. -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at
@@ -120,6 +122,7 @@ theorem erdos_789.variants.cube_root_linearithmic_isBigO :
       fun n ↦ (subsetSumThreshold n : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- It is not true that $h(n) = O((n\log(n))^{1/3})$. This follows from
 `erdos_789.variants.sqrt_loglog_div_log_isBigO` [Ko26]. -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at
@@ -129,6 +132,7 @@ theorem erdos_789.variants.isBigO_cube_root_linearithmic :
       fun n ↦ (n * Real.log n) ^ ((1 : ℝ) / 3) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- It is not true that $h(n) = \Theta((n\log(n))^{1/3})$. This follows from
 `erdos_789.variants.isBigO_cube_root_linearithmic`. -/
 @[category research solved, AMS 5, formal_proof using formal_conjectures at

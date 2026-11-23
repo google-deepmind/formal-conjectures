@@ -526,6 +526,7 @@ end Qubit
 theorem mutuallyUnbiasedBases_dim2 : IsMaxMUBCount 2 3 := by
   simpa using Qubit.qubit_maximal
 
+set_option linter.style.formal_proof_palomar false in
 /-- Known general bounds in dimension $6$: the maximal number of mutually unbiased bases
 satisfies $3 \le \mu(6) \le 7$. -/
 @[category research solved, AMS 5 15 81 94,
@@ -534,6 +535,7 @@ theorem mutuallyUnbiasedBases_dim6_bounds :
     HasMUBs 6 3 ∧ ∀ m : ℕ, HasMUBs 6 m → m ≤ 7 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The upper bound $\mu(6) \le 5$: every family of mutually unbiased bases in $\mathbb{C}^6$
 has at most five members. This was proved by an internal OpenAI model in September 2026
 [OAI26a]; see the linked Lean proof. That proof represents each basis as an `OrthonormalBasis`

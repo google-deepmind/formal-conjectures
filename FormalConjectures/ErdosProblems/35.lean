@@ -37,6 +37,7 @@ open Set Pointwise
 namespace Erdos35
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $B\subseteq\mathbb{N}$ be an additive basis of order $k$ with $0\in B$. Is it true that for
 every $A\subseteq\mathbb{N}$ we have

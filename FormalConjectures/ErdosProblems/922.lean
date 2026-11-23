@@ -34,6 +34,7 @@ open SimpleGraph
 
 namespace Erdos922
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 0$. Let $G$ be a graph such that every subgraph $H$ contains an independent set of size
 $\geq (n-k)/2$, where $n$ is the number of vertices of $H$. Must $G$ have chromatic number at most

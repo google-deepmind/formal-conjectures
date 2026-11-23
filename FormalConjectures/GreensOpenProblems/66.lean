@@ -47,13 +47,33 @@ theorem green_66 :
 /--
 Green notes that a well-known, almost trivial argument gives an $O(X^{1/4})$ bound on the left.
 -/
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Green66_green_66_variants_trivial_bound.lean#L52"]
+@[category research solved, AMS 11]
 theorem green_66.variants.trivial_bound :
     ∃ C > (0 : ℝ), ∀ᶠ X : ℝ in atTop,
       ∃ n : ℕ, IsSumOfTwoSquares n ∧
         (n : ℝ) ∈ Set.Icc (X - C * X ^ (1 / 4 : ℝ)) X := by
   -- Subtract the greatest square `u ^ 2` below `X`, then the greatest square `v ^ 2`
   -- below `X - u ^ 2`.
-  sorry
+  refine ⟨5, by norm_num, ?_⟩
+  filter_upwards [eventually_ge_atTop (1 : ℝ)] with X hX
+  set s : ℝ := X ^ (1 / 4 : ℝ) with hs
+  have hs1 : 1 ≤ s := Real.one_le_rpow hX (by norm_num)
+  have hs4 : s ^ 4 = X := by
+    rw [hs, ← Real.rpow_natCast, ← Real.rpow_mul (by linarith)]
+    norm_num
+  obtain ⟨a, ha⟩ : ∃ a : ℕ, a = ⌊s ^ 2⌋₊ := ⟨_, rfl⟩
+  have ha1 : (a : ℝ) ≤ s ^ 2 := ha ▸ Nat.floor_le (by nlinarith)
+  have ha0 : (0 : ℝ) ≤ a := Nat.cast_nonneg a
+  set r : ℝ := X - (a : ℝ) ^ 2 with hr
+  have hr0 : 0 ≤ r := by nlinarith
+  obtain ⟨b, hb⟩ : ∃ b : ℕ, b = ⌊Real.sqrt r⌋₊ := ⟨_, rfl⟩
+  have hbr : (b : ℝ) ^ 2 ≤ r := by
+    nlinarith [Real.sqrt_nonneg r, Real.sq_sqrt hr0, hb ▸ Nat.floor_le (Real.sqrt_nonneg r)]
+  have hrb : r < ((b : ℝ) + 1) ^ 2 := by
+    nlinarith [Real.sqrt_nonneg r, Real.sq_sqrt hr0, hb ▸ Nat.lt_floor_add_one _]
+  have hb3 : (b : ℝ) < 2 * s := by
+    suffices (s ^ 2 - a) * (s ^ 2 + a) < 1 * (s ^ 2 + a) by nlinarith
+    exact mul_lt_mul_of_pos_right (by linarith [ha ▸ Nat.lt_floor_add_one _]) (by nlinarith)
+  refine ⟨a ^ 2 + b ^ 2, ⟨a, b, rfl⟩, ?_, ?_⟩ <;> grind
 
 end Green66

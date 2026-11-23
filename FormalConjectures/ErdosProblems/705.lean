@@ -32,8 +32,9 @@ namespace Erdos705
 open scoped EuclideanGeometry
 open SimpleGraph
 
+set_option linter.style.formal_proof_palomar false in
 /--
-Let $G$ be a finite unit distance graph in $\mamthbb{R}^2$.
+Let $G$ be a finite unit distance graph in $\mathbb{R}^2$.
 Is there some $k$ such that if $G$ has girth $≥ k$, then $\chi(G) ≤ 3$?
 
 The general case was solved by O'Donnell [OD99], who constructed finite unit distance graphs with

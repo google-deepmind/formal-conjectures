@@ -163,6 +163,7 @@ theorem u_invariant_values.variants.not_five : ¬ IsUInvariant 5 := by
 theorem u_invariant_values.variants.not_seven : ¬ IsUInvariant 7 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every power of $2$ is a $u$-invariant [Kaplansky1953, p. 202]: Theorem 3 of [Kaplansky1953]
 gives $u(F((t))) = 2u(F)$, so $u(\mathbb{C}((t_1)) \cdots ((t_k))) = 2^k$; see also

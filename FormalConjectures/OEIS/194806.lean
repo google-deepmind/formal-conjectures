@@ -103,6 +103,7 @@ lemma a_4 : a 4 = 3 := by rfl
 lemma a_5 : a 5 = 4 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is $a(n) / \pi(n)$ bounded as $n \to \infty$? - _Robert Israel_, Jan 09 2017
 

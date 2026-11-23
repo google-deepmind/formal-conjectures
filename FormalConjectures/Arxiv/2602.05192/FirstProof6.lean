@@ -50,6 +50,7 @@ def IsEpsilonLight (G : SimpleGraph V) (ε : ℝ) (S : Finset V) : Prop :=
   letI L_S := lapMatrix ℝ (G_S)
   PosSemidef (ε • L - L_S)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a constant $c > 0$ so that for every graph $G$ and every $\epsilon$ between
 $0$ and $1$, $V$ contains an $\epsilon$-light subset $S$ of size at least $c \epsilon |V|$?

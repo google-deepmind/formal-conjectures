@@ -45,6 +45,7 @@ def OfFiniteOrder {E F: Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 noncomputable def ratio (r : ℝ) (f : ℂ → ℂ) : ℝ :=
   (⨅ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log / (⨆ z : {z : ℂ // ‖z‖ = r}, ‖f z‖).log
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let `f = ∑ aₖzⁿₖ` be an entire function of finite order such that `nₖ / k → ∞`.
 Then `limsup (fun r => ratio r f) atTop = 1`. This is proved in [Fu63]. -/
 @[category research solved, AMS 30, formal_proof using lean4 at
@@ -66,6 +67,7 @@ theorem erdos_516.variants.limsup_ratio_eq_one {f : ℂ → ℂ} {n : ℕ → �
     limsup (fun r => ratio r f) atTop = 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Is it true that for all entire functions `f = ∑ aₖzⁿₖ` such that `∑' 1 / nₖ < ∞`,
 `limsup (fun r => ratio r f) atTop = 1`?
 

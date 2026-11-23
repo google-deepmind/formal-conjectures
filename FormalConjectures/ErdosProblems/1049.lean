@@ -44,6 +44,7 @@ theorem erdos_1049 :
     ∀ t : ℚ, t > 1 → Irrational (∑' n : ℕ+, 1 / ((t : ℝ) ^ (n : ℕ) - 1)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős [Er48] proved that this is true if $t\geq 2$ is an integer.
 -/

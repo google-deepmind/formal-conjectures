@@ -37,6 +37,7 @@ open Filter
 
 namespace Erdos115
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $p(z)$ is a polynomial of degree $n$ such that $\{z : \lvert p(z)\rvert\leq 1\}$ is connected
 then is it true that

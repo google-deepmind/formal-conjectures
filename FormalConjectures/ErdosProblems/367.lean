@@ -82,6 +82,7 @@ theorem erdos_367.variants.k_ge_three_lower :
         ((∏ m ∈ .Ico n (n + 3), B 2 m : ℕ) : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It would also be interesting to find upper and lower bounds for the analogous product with $B_r$
 for $r \geq 3$, where $B_r(n)$ is the $r$-full part of $n$ (that is, the product of prime powers
@@ -93,8 +94,15 @@ The webpage writes "for every fixed $r,k \geq 2$ and $\epsilon > 0$", but van Do
 the [comments](https://www.erdosproblems.com/forum/thread/367#post-1766) that the intended
 reading lets $\epsilon$ depend on $r$ and $k$. Since $B_r(m) \mid m$, the product is at most
 $\prod_{n \leq m < n+k} m$, so the reading with $\epsilon$ universally quantified is false.
+
+The answer is yes: $\epsilon = 1/(2r)$ works. For $j \geq r$ let $x = 2^j + 1$ and $n = x^r - 1$;
+then $B_r(n+1) = x^r$ and $2^j \mid n$ gives $B_r(n) \geq 2^j$, so the product over $[n, n+k)$ is at
+least $2^j x^r \geq (\sqrt{x}/2)\, n^{1 + 1/(2r)}$, which is unbounded. A stronger exponent
+(any $\epsilon < (r+1)/r^2$) is claimed in the [forum](https://www.erdosproblems.com/forum/thread/367)
+but is not formalised.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/kusasyu36/erdos367-higher-full-parts/blob/9c995fbb1ec62bd675ac9bc162f9e2337d6db4f9/Erdos367HigherFullParts.lean#L57"]
 theorem erdos_367.variants.higher_full_parts :
     ∀ r k : ℕ, 3 ≤ r → 2 ≤ k → ∃ ε : ℝ, 0 < ε ∧
       atTop.limsup (fun n ↦

@@ -97,7 +97,7 @@ $$
 $$
 valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} N \ge 1$. (In these bounds $\log_i n$ denotes the $i$-fold iterated logarithm.)
 
-[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum \sb{1}\spN\,1/i$_. Math. Comp. (1975), 29-42.
+[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum_{1}^{N}\,1/i$_. Math. Comp. (1975), 29-42.
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
 @[category research solved, AMS 11]
@@ -116,7 +116,7 @@ Since `Real.log` is defined on all of $\mathbb{R}$, the condition $\log_{2r} N \
 formalised as $\log_i N \ge 1$ for all $i \le 2r$, which is equivalent to it for the
 genuine iterated logarithm and ensures that every intermediate iterate is positive.
 
-[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum \sb{1}\spN\,1/i$_. Math. Comp. (1975), 29-42.
+[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum_{1}^{N}\,1/i$_. Math. Comp. (1975), 29-42.
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
 @[category research solved, AMS 11]

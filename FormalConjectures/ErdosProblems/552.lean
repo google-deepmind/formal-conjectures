@@ -33,7 +33,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos552
 
-def erdos_552.parts.i.answer : ℕ := sorry
+def erdos_552.parts.i.answer (n : ℕ) : ℕ := sorry
 
 /--
 Determine the Ramsey number
@@ -49,7 +49,7 @@ theorem erdos_552.parts.i :
     ∀ (n : ℕ),
       SimpleGraph.graphRamsey (SimpleGraph.cycleGraph 4)
         (completeBipartiteGraph (Fin 1) (Fin n)) =
-        erdos_552.parts.i.answer := by
+        erdos_552.parts.i.answer n := by
   sorry
 
 /--
@@ -64,6 +64,7 @@ theorem erdos_552.parts.ii :
           (completeBipartiteGraph (Fin 1) (Fin n)) : ℝ) ≤ (n : ℝ) + Real.sqrt n - c} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Burr, Erdős, Faudree, Rousseau and Schelp also asked whether $f(n + 1) \le f(n) + 2$ for all $n$,
 where $f(n) = R(C_4, S_n)$. Chen [Ch97] proved this for $n \ge 1$. It fails for $n = 0$, since

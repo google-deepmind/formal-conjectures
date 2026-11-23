@@ -41,6 +41,7 @@ namespace Erdos270
 noncomputable def series (f : ℕ → ℕ) : ℝ :=
   ∑' n : ℕ, (∏ i ∈ Finset.Icc (n + 2) (n + 1 + f (n + 1)), (i : ℝ))⁻¹
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)\to \infty$ as $n\to \infty$. Is it true that
 $$\sum_{n\geq 1} \frac{1}{(n+1)\cdots (n+f(n))}$$
@@ -64,6 +65,7 @@ theorem erdos_270 :
     ¬ ∀ f : ℕ → ℕ, Tendsto f atTop atTop → Irrational (series f) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Crmarić and Kovač [CrKo25]: for any $\alpha \in (0,\infty)$ there exists a function
 $f:\mathbb{N}\to\mathbb{N}$ such that $f(n)\to \infty$ as $n\to\infty$ and

@@ -47,4 +47,7 @@ lemma two_le_nth_divisors {n : ℕ} (hn : n ≠ 0) {i : ℕ} (hi : i ≠ 0)
         (show Nat.nth (· ∈ n.divisors) 0 ≠ 0 by rw [nth_divisors_zero hn]; omega) hfin))
       (by rw [nth_divisors_zero hn]; omega)) hi
 
+instance instDecidablePerfect (n : ℕ) : Decidable n.Perfect :=
+  inferInstanceAs (Decidable (_ ∧ _))
+
 end Nat

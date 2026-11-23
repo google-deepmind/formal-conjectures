@@ -112,6 +112,7 @@ theorem green_25.variants.upper_ess89 :
     ¬ ∀ᶠ N in atTop, Property25 (k N) N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For $k(N) = \lceil N^{23/40} \rceil$, it need not be true: for all sufficiently large $N$
 there is a partition of $[N]$ into $\lceil N^{23/40} \rceil$ parts with

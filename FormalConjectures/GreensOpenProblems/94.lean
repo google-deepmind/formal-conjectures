@@ -34,6 +34,7 @@ open Set MeasureTheory
 
 namespace Green94
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let `A ⊂ R` be a set of positive outer measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
 
@@ -46,6 +47,7 @@ theorem green_94_outer_measure :
    ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `{1, 1/2, 1/4, . . . }`?
 

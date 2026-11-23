@@ -35,6 +35,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos63
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every graph with infinite chromatic number contain a cycle of length $2^n$ for infinitely
 many $n$?

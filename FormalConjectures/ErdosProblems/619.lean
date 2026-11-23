@@ -51,6 +51,7 @@ noncomputable def minNewEdges {V : Type*} (r : ℕ) (G : SimpleGraph V) : ℕ :=
   sInf {k | ∃ H : SimpleGraph V,
     G ≤ H ∧ H.CliqueFree 3 ∧ H.ediam ≤ r ∧ (H \ G).edgeSet.ncard = k}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 619** [EGR98, Er99]: For a triangle-free graph $G$ let $h_r(G)$ be the
 smallest number of edges that need to be added to $G$ so that it has diameter $r$ (while

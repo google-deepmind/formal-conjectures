@@ -44,6 +44,7 @@ def WeaklyNonTrilinear (A : Set ℝ²) : Prop :=
 
 end Prelims
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 846**
 Let `A ⊂ ℝ²` be an infinite set for which there exists some `ϵ>0` such that in any subset of `A`

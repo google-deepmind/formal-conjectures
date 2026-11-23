@@ -47,6 +47,7 @@ def IsStronglyComplete {α : Type*} [Semiring α] (A : Set α) : Prop :=
 /-- The predicate that the rational polynomial `P` has a complete image. -/
 def HasCompleteImage (P : ℚ[X]) : Prop := IsStronglyComplete (imageSet P)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $p(x) \in \mathbb{Q}[x]$ be a non-constant rational polynomial with positive leading
 coefficient. Is it true that $$A=\{ p(n)+1/n : n \in \mathbb{N}\}$$ is strongly complete,

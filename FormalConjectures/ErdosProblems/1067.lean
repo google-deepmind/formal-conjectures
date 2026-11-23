@@ -46,6 +46,7 @@ the graph connected.
 def InfinitelyEdgeConnected {V : Type*} (G : SimpleGraph V) : Prop :=
   ∀ ⦃s : Set (Sym2 V)⦄, s.Finite → (G.deleteEdges s).Connected
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every graph with chromatic number $\aleph_1$ contain an infinitely connected subgraph with
 chromatic number $\aleph_1$?

@@ -23,6 +23,15 @@ public import FormalConjecturesUtil
 References:
 - [Gr24] [Green, Ben. "100 open problems." (2024).](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.27)
 - [Be23] Bedert, Benjamin. "On unique sums in Abelian groups." Combinatorica 44.2 (2024): 269-298.
+- [CY26] Cao, Jiao-Long, and Ye Yuan. "A Second-Logarithm Lower Bound for Sets with No Unique
+  Sums." arXiv preprint arXiv:2608.06728 (2026).
+- [He26] He, Xinjie. "A near-quadratic lower bound for sets with no unique sums." Working draft
+  (July 21, 2026):
+  https://github.com/xinjiegit/ben_27_formalization/blob/f70352964007662e97a810c880abbfea1e2ea262/NUS_edited.tex.
+  Its Lean 4 proof is registered as
+  [PALOMAR-2026-08-18-000003](https://palomar-registry.org/entry.html?id=PALOMAR-2026-08-18-000003&version=1).
+- [HY26] Hou, Jianfeng, and Kai Yang. "A near-quadratic lower bound for sets with no unique sums."
+  arXiv preprint arXiv:2610.09349 (2026).
 - [St76] Straus, E. G. "Differences of residues (mod p)." Journal of Number Theory 8.1 (1976): 40-42.
 -/
 
@@ -42,7 +51,8 @@ noncomputable def m (p : ℕ) : ℝ :=
 /-- `atTop` restricted to prime numbers. -/
 def primesAtTop : Filter ℕ := atTop ⊓ 𝓟 {p : ℕ | p.Prime}
 
-/-- Best-known lower bound [Be23, Theorem 3]. -/
+/-- Bedert's lower bound [Be23, Theorem 3]. This was the best known bound when Green's list was
+written; it has since been improved, see `green_27.lower`. -/
 noncomputable def lowerBest (p : ℕ) : ℝ :=
   (Real.sqrt (Real.log (Real.log (Real.log (p : ℝ)))) /
    Real.log (Real.log (Real.log (Real.log (p : ℝ))))) * Real.log (p : ℝ)
@@ -61,10 +71,18 @@ theorem green_27.equivalent :
   green_27.equivalent.answer ~[primesAtTop] m := by
   sorry
 
-def green_27.lower.answer : ℕ → ℝ := sorry
+noncomputable def green_27.lower.answer : ℕ → ℝ := fun p ↦ Real.log p * Real.log (Real.log p)
 
-/-- Propose a better lower bound along primes. -/
-@[category research open, question value, AMS 5 11]
+/-- Propose a better lower bound along primes.
+
+Cao and Yuan [CY26, Theorem 1.1] prove $m(p) \gg \log p \log \log p$. This beats `lowerBest`,
+since $\sqrt{\log \log \log p} / \log \log \log \log p = o(\log \log p)$.
+
+Xinjie He [He26, Theorem 1.2] and Hou and Yang [HY26, Theorem 1.1] prove the stronger bound
+$m(p) \gg (\log p / \log \log p)^2$. He's proof is formalised in Lean, see
+`green_27.variants.lower_he26_hy26`. Together with `green_27.variants.upper_be23`, this lower bound
+gives $m(p) = (\log p)^{2 + o(1)}$. The exact order of $m(p)$ remains open. -/
+@[category research solved, question value, AMS 5 11]
 theorem green_27.lower :
     (lowerBest =o[primesAtTop] green_27.lower.answer) ∧ (green_27.lower.answer =O[primesAtTop] m)
       := by
@@ -88,7 +106,23 @@ theorem green_27.variants.lower_be23 :
     ∀ᶠ p in primesAtTop,
       ω p * Real.log (p : ℝ) ≤ m p := by
   sorry
+  
+/-- Lower bound: $\log p \log \log p \ll m(p)$ [CY26, Theorem 1.1]. -/
+@[category research solved, AMS 5 11]
+theorem green_27.variants.lower_cy26 :
+  (fun p ↦ Real.log (p : ℝ) * Real.log (Real.log (p : ℝ))) =O[primesAtTop] m := by
+  sorry
 
+/-- Lower bound: $(\log p / \log \log p)^2 \ll m(p)$ [He26, Theorem 1.2], [HY26, Theorem 1.1].
+The linked formal proof is He's. -/
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-08-18-000003"]
+theorem green_27.variants.lower_he26_hy26 :
+  ∃ c > (0 : ℝ), ∀ᶠ p : ℕ in primesAtTop,
+    c * (Real.log (p : ℝ) / Real.log (Real.log (p : ℝ))) ^ 2 ≤ m p := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
 /-- Upper bound: $m(p) \ll (\log p)^2$ [Be23, Theorem 5]. -/
 @[category research solved, AMS 5 11,
   formal_proof using lean4 at "https://github.com/mkwatson/unique-sums-notes/blob/d4383f93a52e3a916ccce78d5fb7739c3bf3dabc/Green27Upper/Theorem.lean#L26"]
