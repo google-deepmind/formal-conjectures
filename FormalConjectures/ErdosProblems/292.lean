@@ -68,18 +68,24 @@ theorem erdos_292.variants.martin :
       fun x ↦ Real.log (Real.log x) / Real.log x := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Straus observed that $A$ is closed under multiplication. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/nanqi1982/formal-conjectures/blob/4b09e89b0667a66a3c72907314cae5c4357f2ab0/FormalConjectures/ErdosProblems/292.lean#L89"]
 theorem erdos_292.variants.mul : ∀ m ∈ A, ∀ n ∈ A, m * n ∈ A := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- $A$ does not contain any prime power. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/nanqi1982/formal-conjectures/blob/4b09e89b0667a66a3c72907314cae5c4357f2ab0/FormalConjectures/ErdosProblems/292.lean#L132"]
 theorem erdos_292.variants.prime_pow : ∀ n ∈ A, ¬ IsPrimePow n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- van Doorn observed that if $n\in A$ (with $n>1$) then $2n\in A$ also. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/nanqi1982/formal-conjectures/blob/4b09e89b0667a66a3c72907314cae5c4357f2ab0/FormalConjectures/ErdosProblems/292.lean#L181"]
 theorem erdos_292.variants.two_mul : ∀ n ∈ A, 1 < n → 2 * n ∈ A := by
   sorry
 
