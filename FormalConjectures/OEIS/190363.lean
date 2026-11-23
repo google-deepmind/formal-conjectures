@@ -98,7 +98,7 @@ $a(n + 21) = a(n + 17) + a(n + 4) - a(n)$ for $n \ge 1$.
 - _Harvey P. Dale_, Jan 28 2025
 
 The conjecture is false: the recurrence first fails at $n = 140$, i.e. for the term
-$a(140 + 21) = a(161) = 543 \ne 542 = a(157) + a(144) - a(140)$.
+$a(140 + 21) = a(161) = 542 \ne 541 = a(157) + a(144) - a(140)$.
 
 Since
 $\lim_{n\to\infty} \frac{a(n)}{n} = \frac{9}{4} + \frac{\sqrt{5}}{2}$ is irrational,
@@ -109,6 +109,28 @@ and $\lim_{n \to \infty} \frac{a_n}{n} = \alpha$ exists, then $\alpha$ must be r
 @[category research solved, AMS 11]
 theorem conjecture :
     ¬ ∀ n : ℕ, 1 ≤ n → (a (n + 21) : ℤ) = a (n + 17) + a (n + 4) - a n := by
-  sorry
+  intro h
+  have h161 : a 161 = 542 := by
+    have h := floor_mul_sqrt_five_div_four 161 180 (by norm_num) (by norm_num)
+    unfold a
+    rw [h]
+    rfl
+  have h157 : a 157 = 528 := by
+    have h := floor_mul_sqrt_five_div_four 157 175 (by norm_num) (by norm_num)
+    unfold a
+    rw [h]
+    rfl
+  have h144 : a 144 = 484 := by
+    have h := floor_mul_sqrt_five_div_four 144 160 (by norm_num) (by norm_num)
+    unfold a
+    rw [h]
+    rfl
+  have h140 : a 140 = 471 := by
+    have h := floor_mul_sqrt_five_div_four 140 156 (by norm_num) (by norm_num)
+    unfold a
+    rw [h]
+    rfl
+  have h' := h 140 (by norm_num)
+  norm_num [h161, h157, h144, h140] at h'
 
 end OeisA190363
