@@ -20,7 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Particular values of the Riemann zeta function
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Particular_values_of_the_Riemann_zeta_function)
+*References:*
+- [Wikipedia: Particular values of the Riemann zeta function](https://en.wikipedia.org/wiki/Particular_values_of_the_Riemann_zeta_function)
+- [Wikipedia: Apéry's constant](https://en.wikipedia.org/wiki/Ap%C3%A9ry%27s_constant)
 -/
 
 @[expose] public section
@@ -98,6 +100,31 @@ At least one of $\zeta(5), \zeta(7), \zeta(9)$ or $\zeta(11)$ is irrational.
 @[category research solved, AMS 11 33]
 theorem exists_irrational_of_five_seven_nine_eleven :
     {5, 7, 9, 11} ∩ { a | ∃ x, Irrational x ∧ riemannZeta a = x} |>.Nonempty := by
+  sorry
+
+/--
+Apéry's constant $\zeta(3)$ is transcendental over $\mathbb{Q}$ (cf. `irrational_three` for
+Apéry's irrationality theorem [Ap79]).
+
+*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Ap%C3%A9ry%27s_constant)
+-/
+@[category research open, AMS 11 33]
+theorem transcendental_three : Transcendental ℚ (riemannZeta 3) := by
+  sorry
+
+/--
+Markov–Hjortnaes–Apéry central-binomial series identity [Ma1890, Hj53, Ap79]:
+$$\zeta(3) = \frac{5}{2} \sum_{n=0}^{\infty} \frac{(-1)^n}{(n + 1)^3 \binom{2(n + 1)}{n + 1}}.$$
+
+- [Ma1890] A. A. Markov (1890), Mém. Acad. Imp. Sci. St.-Pétersbourg (7) **37**, no. 9, 18 pp.
+- [Hj53] M. M. Hjortnaes (1953), Proc. 12th Scand. Math. Congr. (Lund), 211–213.
+- [Ap79] R. Apéry (1979), _Irrationalité de ζ(2) et ζ(3)_, Astérisque **61**, 11–13.
+-/
+@[category textbook, AMS 11 33]
+theorem apery_central_binomial_series :
+    riemannZeta 3 =
+      (5 / 2 : ℂ) * ∑' n : ℕ,
+        (-1 : ℂ) ^ n / (((n : ℂ) + 1) ^ 3 * (Nat.centralBinom (n + 1) : ℂ)) := by
   sorry
 
 end RiemannZetaValues
