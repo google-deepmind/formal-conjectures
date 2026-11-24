@@ -116,7 +116,7 @@ theorem conjecture.variants.even (n : ℕ) (hn : 0 < n) (heven : Even n) : a n �
 set_option linter.style.formal_proof_palomar false in
 /--
 Bounded verification of `conjecture` for $1 \le n \le 150$: $n = 21$ is the unique
-positive integer $n \le 150$ satisfying $a(n) = n$. See [Su26, Theorem 7.2].
+positive integer $n \le 150$ satisfying $a(n) = n$. See [Su26, Theorem 7.1(4)].
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -128,7 +128,7 @@ theorem conjecture.variants.le_150 (n : ℕ) (hn1 : 1 ≤ n) (hn150 : n ≤ 150)
 set_option linter.style.formal_proof_palomar false in
 /--
 No prime power $p^k$ ($k \ge 1$) satisfies $a(p^k) = p^k$, since $a(p^k) \equiv 1 \pmod p$.
-See [Su26, Theorem 4.2].
+See [Su26, Theorem 4.1(3)].
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -140,7 +140,7 @@ theorem conjecture.variants.prime_pow {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) 
 set_option linter.style.formal_proof_palomar false in
 /--
 Among all multiples of $3$, $n = 21$ is the unique fixed point of $a(n)$.
-See [Su26, Theorem 4.4].
+See [Su26, Theorem 4.2(4)].
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -153,7 +153,7 @@ set_option linter.style.formal_proof_palomar false in
 /--
 General parity obstruction: if $n > 0$ is a non-square fixed point ($a(n) = n$ and
 $\tau(n)$ is even) and $p^e \parallel n$ for an odd prime $p$ and exponent $e \ge 1$, then
-$e \equiv 0 \text{ or } 1 \pmod 4$. See [Su26, Theorem 5.3].
+$e \equiv 0 \text{ or } 1 \pmod 4$. See [Su26, Theorem 5.2(1)].
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -168,7 +168,7 @@ set_option linter.style.formal_proof_palomar false in
 /--
 Unconditional confirmation of `conjecture` for all positive integers $n$ with at most four
 prime factors counted with multiplicity ($\Omega(n) \le 4$): $a(n) = n \iff n = 21$.
-See [Su26, Theorem 6.3].
+See [Su26, Theorem 6.1(4)].
 -/
 @[category research solved, AMS 11,
   formal_proof using lean4 at
@@ -181,7 +181,7 @@ set_option linter.style.formal_proof_palomar false in
 /--
 Unconditional confirmation of `conjecture` for all positive integers $n$ with at most five
 prime factors counted with multiplicity ($\Omega(n) \le 5$): $a(n) = n \iff n = 21$.
-Proved by combining the $\Omega(n) = 5$ non-squarefree / $p \ge 17$ reduction [Su26, Theorem 6.4]
+Proved by combining the $\Omega(n) = 5$ non-squarefree / $p \ge 17$ reduction [Su26, Theorem 6.2(2)]
 with the 5-prime growth bound ($p \ge 73$) and Cunningham prime-factor forced closure across
 $17 \le p \le 71$.
 -/
