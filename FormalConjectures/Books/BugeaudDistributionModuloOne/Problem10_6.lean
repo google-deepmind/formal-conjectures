@@ -38,18 +38,21 @@ half sits below the $\log N$ floor that every sublacunary sequence obeys, and so
 counting function of [Kat16, Cor. 4.10]. Consequently `problem_10_6_variant_2`, which asks only
 for intermediate growth, is not open.
 
-The third reading is `IsGenuinelySublacunary`, and it is the only one with content: it implies
-the first (`hasIntermediateGrowth_of_isGenuinelySublacunary`), and it is not answered by runs,
-since inside a run $m_{n+1} - m_n = 1$. That reading is `problem_10_6_variant_1`, which remains
-open; [Kat16, Cor. 4.9] gives a universally densifying sequence of multiplicative shape
-$\{2^n 3^e\}$ whose ratio behaviour reduces the question to a Diophantine statement about
-$\log_2 3$.
+The third reading is `IsGenuinelySublacunary`. It implies the first
+(`hasIntermediateGrowth_of_isGenuinelySublacunary`), and it is not answered by runs, since inside
+a run $m_{n+1} - m_n = 1$. That reading is `problem_10_6_variant_1`. It is not open either:
+[Bos83, Thm. 1.5] puts one term in each of a prescribed sequence of intervals, and the intervals
+can be chosen so that consecutive terms have ratio at least $1 + 1/\log n$. The proof in [Bos83]
+is not constructive. [Kat16, Cor. 4.9] gives a universally densifying sequence of multiplicative
+shape $\{2^n 3^e\}$ whose ratio behaviour reduces to a Diophantine statement about $\log_2 3$.
 
 The three statements that need a long proof carry a `formal_proof` link to the version of this
 file that contains it: the construction by runs, its counting function, and the growth estimate
 behind `hasIntermediateGrowth_of_isGenuinelySublacunary`.
 
 *References:*
+  - [AHK83] Ajtai, M., Havas, I. and Komlós, J. "Every group admits a bad topology." Studies in
+    Pure Mathematics, Birkhäuser, Basel (1983): 21-34.
   - [Bos83] Boshernitzan, Michael D. "Homogeneously distributed sequences and Poincaré sequences
     of integers of sublacunary growth." Monatshefte für Mathematik 96.3 (1983): 173-181.
   - [Bos94] Boshernitzan, Michael D. "Density modulo 1 of dilations of sublacunary sequences."
@@ -58,6 +61,8 @@ behind `hasIntermediateGrowth_of_isGenuinelySublacunary`.
     Vol. 193. Cambridge University Press, 2012. Chapter 10.
   - [Fur67] Furstenberg, H. "Disjointness in ergodic theory, minimal sets, and a problem
     in diophantine approximation". Math. Systems Theory 1, 1–49 (1967).
+  - [GMY25] Gao, Xiang, Mooroogen, Yuveshen and Yip, Chi Hoi. "On an Erdős similarity problem in
+    the large." Bull. Lond. Math. Soc. 57.6 (2025): 1801-1818. arXiv:2311.06727.
   - [Kat16] Katz, Asaf. "Generalizations of Furstenberg's Diophantine result."
     arXiv:1607.00670 (2016).
   - [Mat80] de Mathan, Bernard. "Numbers contravening a condition in density modulo 1."
@@ -116,7 +121,7 @@ is dense modulo one for every irrational $\xi$.
 
 In the subexponential range this is a special case of [Bos83, Thm. 1.5], which produces such a
 sequence inside any prescribed corridor $[n_k, m_k)$ with $m_k - n_k \to \infty$ and
-$m_k / n_k \to 1$, and in the stronger form of uniform distribution; the elementary
+$m_k^{1/k} \to 1$, and in the stronger form of uniform distribution; the elementary
 construction of the linked proof is uniform in `f` and has no growth ceiling. -/
 @[category research solved, AMS 11, formal_proof using formal_conjectures at
 "https://github.com/rwst/formal-conjectures/blob/63c3e7233f1e512ea2474f35f4f2cd70624583f6/FormalConjectures/Books/BugeaudDistributionModuloOne/Problem10_6.lean#L398"]
@@ -238,15 +243,21 @@ Problem 10.6. Find a very rapidly increasing sequence $(m_n)_{n \ge 1}$ of posit
 integers such that $(\{\xi m_n\})_{n \ge 1}$ is dense modulo one for every irrational
 number $\xi$. Note: Furstenberg's $2^m3^n$ is sublacunary but requires two parameters.
 
-This is the reading of "very rapidly increasing" as a lower bound on the consecutive ratios,
-and it is the one that remains open. It is not answered by runs of consecutive integers, since
-inside a run $m_{n+1} - m_n = 1$; and by `not_isLacunary_of_dense` any answer is pinched
-between a decaying ratio floor and the failure of lacunarity. [Kat16, Cor. 4.9] gives a
-universally densifying sequence of the multiplicative shape $\{2^n 3^e\}$, for which the
-ratio condition reduces to a Diophantine statement about the differences of the exponents
-$e$ times $\log_2 3$ modulo one.
+This is the reading of "very rapidly increasing" as a lower bound on the consecutive ratios.
+It is not answered by runs of consecutive integers, since inside a run $m_{n+1} - m_n = 1$; and
+by `not_isLacunary_of_dense` any answer is pinched between a decaying ratio floor and the
+failure of lacunarity. [Kat16, Cor. 4.9] gives a universally densifying sequence of the
+multiplicative shape $\{2^n 3^e\}$, for which the ratio condition reduces to a Diophantine
+statement about the differences of the exponents $e$ times $\log_2 3$ modulo one.
+
+Such a sequence exists by [Bos83, Thm. 1.5]: if $m_k > n_k > 0$ are integers with
+$m_k - n_k \to \infty$ and $m_k^{1/k} \to 1$, then there are integers $n_k \le p_k < m_k$ such
+that $(\xi p_k)_{k \ge 1}$ is uniformly distributed modulo one for every irrational $\xi$. Take
+$n_1 = 1$, $m_k = n_k + k$ and $n_{k+1} = \lceil (1 + 2/\log(k+1)) m_k \rceil$. Then $(p_k)$ is
+strictly increasing and $p_{k+1}/p_k \ge 1 + 2/\log(k+1)$. Ajtai, Havas and Komlós [AHK83] have a
+similar theorem, see [GMY25, Example 2.4(d)].
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11]
 theorem problem_10_6_variant_1 :
     ∃ m : ℕ → ℕ,
     StrictMono m ∧
