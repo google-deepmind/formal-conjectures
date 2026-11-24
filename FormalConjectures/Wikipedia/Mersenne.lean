@@ -190,7 +190,49 @@ $p^2 \mid M_q$ to `IsWieferichPrime p`; the converse under $p \mid M_q$ is added
 theorem sq_dvd_mersenne_iff_isWieferichPrime
     {q p : ℕ} (hq : q.Prime) (hp : p.Prime) (hdvd : p ∣ mersenne q) :
     p ^ 2 ∣ mersenne q ↔ IsWieferichPrime p := by
-  sorry
+  have : Fact p.Prime := ⟨hp⟩
+  have : Fact q.Prime := ⟨hq⟩
+  -- Divisibility of `2 ^ k - 1` by `N` is the equation `2 ^ k = 1` in `ZMod N`.
+  have cast_iff : ∀ N k : ℕ, N ∣ 2 ^ k - 1 ↔ (2 : ZMod N) ^ k = 1 := fun N k => by
+    rw [← ZMod.natCast_eq_zero_iff, Nat.cast_sub Nat.one_le_two_pow, sub_eq_zero]
+    norm_num
+  -- The order of `2` modulo `p` is `q`, hence `q ∣ p - 1`.
+  have hbq : (2 : ZMod p) ^ q = 1 := (cast_iff p q).1 hdvd
+  have hb1 : (2 : ZMod p) ≠ 1 := fun h => by
+    have h1 : ((1 : ℕ) : ZMod p) = 0 := by
+      push_cast
+      linear_combination h
+    exact hp.ne_one (Nat.dvd_one.mp ((ZMod.natCast_eq_zero_iff 1 p).1 h1))
+  have hb0 : (2 : ZMod p) ≠ 0 := fun h => by
+    rw [h, zero_pow hq.ne_zero] at hbq
+    exact zero_ne_one hbq
+  have hqdvd : q ∣ p - 1 := by
+    rw [← orderOf_eq_prime hbq hb1]
+    exact orderOf_dvd_of_pow_eq_one (ZMod.pow_card_sub_one_eq_one hb0)
+  rw [show mersenne q = 2 ^ q - 1 from rfl, IsWieferichPrime, isWieferichPrimeBase_iff, cast_iff,
+    cast_iff]
+  refine ⟨fun h => ⟨hp, ?_⟩, fun ⟨_, h⟩ => ?_⟩
+  · obtain ⟨m, hm⟩ := hqdvd
+    rw [hm, pow_mul, h, one_pow]
+  · -- `2 ^ q ≡ 1 [MOD p]` lifts to `(2 ^ q) ^ p ≡ 1 [MOD p ^ 2]`.
+    have hpq : (2 : ZMod (p ^ 2)) ^ (q * p) = 1 := by
+      obtain ⟨k, hk⟩ := hdvd
+      have h1 : ((p : ℕ) : ZMod (p ^ 2)) ∣ (2 : ZMod (p ^ 2)) ^ q - 1 := by
+        refine ⟨(k : ZMod (p ^ 2)), ?_⟩
+        have := congrArg (Nat.cast : ℕ → ZMod (p ^ 2)) hk
+        rw [show mersenne q = 2 ^ q - 1 from rfl, Nat.cast_sub Nat.one_le_two_pow] at this
+        push_cast at this
+        exact this
+      have h2 := dvd_sub_pow_of_dvd_sub h1 1
+      rw [pow_one, one_pow, ← Nat.cast_pow, ZMod.natCast_self, zero_dvd_iff, sub_eq_zero,
+        ← pow_mul] at h2
+      exact h2
+    have hgcd : Nat.gcd (q * p) (p - 1) = q := by
+      rw [mul_comm, Nat.Coprime.gcd_mul_left_cancel q
+        ((Nat.coprime_self_sub_right hp.one_le).mpr (Nat.coprime_one_right p))]
+      exact Nat.gcd_eq_left hqdvd
+    have hg := pow_gcd_eq_one.mpr ⟨hpq, h⟩
+    rwa [hgcd] at hg
 
 /--
 Rotkiewicz's theorem (1965): if infinitely many values $M_n = 2^n - 1$ are squarefree, then
