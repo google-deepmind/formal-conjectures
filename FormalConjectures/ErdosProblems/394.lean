@@ -105,10 +105,11 @@ theorem erdos_394.variants.hall_conjecture :
     (fun x ↦ x ^ 2 / (Real.log x) ^ c) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Since $t_2(p)=p-1$ for prime $p$ it is trivial that $\sum_{n\leq x}t_2(n)\gg \frac{x^2}{\log x}$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/laughingbear/erdos-394-lean/blob/5f3b463bad0ecda3525fac96f9dd034919fe04e7/Erdos394.lean#L157"]
 theorem erdos_394.variants.lower_bound :
     (fun x ↦ x ^ 2 / Real.log x) ≪
     (fun x ↦ ∑ n ∈ Icc 1 ⌊x⌋₊, (t 2 n : ℝ)) := by
