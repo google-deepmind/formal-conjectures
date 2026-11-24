@@ -39,6 +39,7 @@ and `Firoozbakht` (`Firoozbakht.firoozbakht_conjecture_consequence`).
 - [Gr95] A. Granville (1995), Scand. Actuar. J. **1995**, no. 1, 12–28.
 - [BHP01] R. C. Baker, G. Harman, and J. Pintz (2001), Proc. London Math. Soc. (3) **83**, no. 3,
   532–562.
+- [Al26] L. Alpöge, [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf) (2026).
 -/
 
 @[expose] public section
@@ -127,6 +128,15 @@ theorem cramer_conjecture.variants.granville (c : ℝ)
 $p_{n+1} - p_n = O(\sqrt{p_n} \log p_n)$. -/
 @[category research solved, AMS 11]
 theorem cramer_conjecture.variants.conditional_rh (hRH : RiemannHypothesis) :
+    (fun n : ℕ => (primeGap n : ℝ)) =O[Filter.atTop]
+      (fun n : ℕ => Real.sqrt (Nat.nth Nat.Prime n) * Real.log (Nat.nth Nat.Prime n)) := by
+  sorry
+
+/-- Cramér's bound $p_{n+1} - p_n = O(\sqrt{p_n} \log p_n)$
+(`cramer_conjecture.variants.conditional_rh`) holds unconditionally, since the Riemann
+hypothesis is proved [Al26]. -/
+@[category research solved, AMS 11]
+theorem cramer_conjecture.variants.sqrt_log_bound :
     (fun n : ℕ => (primeGap n : ℝ)) =O[Filter.atTop]
       (fun n : ℕ => Real.sqrt (Nat.nth Nat.Prime n) * Real.log (Nat.nth Nat.Prime n)) := by
   sorry
