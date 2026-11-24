@@ -1,5 +1,5 @@
 /-
-Copyright 2026 The Formal Conjectures Authors.
+Copyright 2025 The Formal Conjectures Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,19 +18,28 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# Collatz conjecture and $m$-cycles
+# Collatz conjecture
 
 *References:*
-- [Wikipedia](https://en.wikipedia.org/wiki/Collatz_conjecture)
-- [Ba25] D. Bařina, *Improved verification limit for the convergence of the Collatz conjecture*,
-  The Journal of Supercomputing **81** (2025), 810.
+* [Wikipedia](https://en.wikipedia.org/wiki/Collatz_conjecture)
+* [erdosproblems.com/1135](https://www.erdosproblems.com/1135)
+* [Gu04] Guy, Richard K., Unsolved problems in number theory. (2004), xviii+437.
+* [La10] Lagarias, Jeffrey C., The {$3x+1$} problem: an overview. (2010), 3--29.
+* [La16] Lagarias, Jeffrey C., Erdős, Klarner, and the {$3x+1$} problem. Amer. Math. Monthly
+  (2016), 753--776.
+* [La85] Lagarias, Jeffrey C., The {$3x+1$} problem and its generalizations. Amer. Math. Monthly
+  (1985), 3--23.
+* [Ba25] Bařina, David, Improved verification limit for the convergence of the Collatz
+  conjecture. J. Supercomput. **81** (2025), 810.
   [DOI](https://doi.org/10.1007/s11227-025-07337-0)
-- [He23] C. Hercher, *There are no Collatz $m$-cycles with $m \le 91$*,
-  Journal of Integer Sequences **26** (2023), Article 23.3.5.
-- [Rh87] G. Rhin, *Approximants de Padé et mesures d'irrationalité de $\log 2$, $\log 3$ et
-  $\log(2/3)$*, Séminaire de Théorie des Nombres, Paris 1985–86, Progress in Mathematics **71**,
-  Birkhäuser (1987), 153–164.
-- [Wa26] X. Wang, *Non-existence of Collatz $m$-cycles for $m \le 95$*, Zenodo (2026).
+* [El93] Eliahou, Shalom, The {$3x+1$} problem: new lower bounds on nontrivial cycle lengths.
+  Discrete Math. **118** (1993), 45--56.
+* [He23] Hercher, Christian, There are no Collatz $m$-cycles with $m \le 91$. J. Integer Seq.
+  **26** (2023), Article 23.3.5.
+* [Rh87] Rhin, Georges, Approximants de Padé et mesures d'irrationalité de $\log 2$, $\log 3$ et
+  $\log(2/3)$. Séminaire de Théorie des Nombres, Paris 1985–86, Progr. Math. **71**, Birkhäuser
+  (1987), 153--164.
+* [Wa26] Wang, Xinjun, Non-existence of Collatz $m$-cycles for $m \le 95$. Zenodo (2026).
   [DOI](https://doi.org/10.5281/zenodo.21017296)
 -/
 
@@ -39,20 +48,21 @@ public import FormalConjecturesUtil
 namespace CollatzConjecture
 
 /--
-Single step of the Collatz map on `ℕ`.
-For $n > 0$, even numbers map to $n / 2$ and odd numbers map to $3n + 1$.
+Consider the following operation on the natural numbers:
+If the number is even, divide it by two.
+If the number is odd, triple it and add one.
 -/
 def collatzStep (n : ℕ) : ℕ :=
-  if n = 0 then 0
-  else if Even n then n / 2
-  else 3 * n + 1
+  if Even n then n / 2 else 3 * n + 1
 
 /--
-The **Collatz conjecture** states that repeating two arithmetic operations will eventually
-transform every positive integer into $1$.
+Now form a sequence beginning with any positive integer, where each subsequent term is obtained
+by applying the operation defined above to the previous term.
+The **Collatz conjecture** states that for any positive integer $n$, there exists a natural number
+$m$ such that the $m$-th term of the sequence is 1.
 -/
 @[category research open, AMS 11 37]
-theorem collatz_conjecture (n : ℕ) (hn : 0 < n) : ∃ k : ℕ, (collatzStep^[k]) n = 1 := by
+theorem collatz_conjecture (n : ℕ) (hn : n > 0) : ∃ m, collatzStep^[m] n = 1 := by
   sorry
 
 /--
@@ -84,8 +94,9 @@ def collatzShortcut (n : ℕ) : ℕ :=
   if Even n then n / 2 else (3 * n + 1) / 2
 
 /--
-Any non-trivial cycle of the shortcut Collatz map `collatzShortcut` has period at least
-$217976794617$.
+Eliahou (1993) [El93] and Bařina (2025) [Ba25]: any non-trivial cycle of the shortcut Collatz
+map `collatzShortcut` has period at least $217976794617$ (applying Eliahou's continued-fraction
+method at Bařina's $2^{71}$ verification bound).
 -/
 @[category research solved, AMS 11 37]
 theorem le_period_collatzShortcut (n : ℕ) (hn : 2 < n) (p : ℕ) (hp : 0 < p)
@@ -109,16 +120,12 @@ theorem IsMCycle.ne_zero {m n : ℕ} (h : IsMCycle m n) : n ≠ 0 :=
   ne_of_gt h.1
 
 /-- The trivial cycle $1 \to 2 \to 1$ is a $1$-cycle through $1$. -/
-@[category test, AMS 11 37,
-  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-15-000008"]
-theorem isMCycle_one_one : IsMCycle 1 1 := by
-  sorry
+@[category test, AMS 11 37]
+theorem isMCycle_one_one : IsMCycle 1 1 := ⟨by decide, 2, by decide⟩
 
 /-- The trivial cycle $1 \to 2 \to 1$ is a $1$-cycle through $2$. -/
-@[category test, AMS 11 37,
-  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-15-000008"]
-theorem isMCycle_one_two : IsMCycle 1 2 := by
-  sorry
+@[category test, AMS 11 37]
+theorem isMCycle_one_two : IsMCycle 1 2 := ⟨by decide, 2, by decide⟩
 
 /--
 Effective linear-form bound for $\log_2 3$ proved from Mathlib alone in the linked development,
