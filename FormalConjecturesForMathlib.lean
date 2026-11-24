@@ -171,6 +171,7 @@ public import FormalConjecturesForMathlib.Dynamics.SymbolicDynamics.BlockComplex
 public import FormalConjecturesForMathlib.FieldTheory.AbsoluteGaloisGroup
 public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
 public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
+public import FormalConjecturesForMathlib.FieldTheory.RatFunc.Derivation
 public import FormalConjecturesForMathlib.Geometry.Euclidean
 public import FormalConjecturesForMathlib.Geometry.Group.Hyperbolic
 public import FormalConjecturesForMathlib.Geometry.Group.WordMetric
@@ -236,6 +237,7 @@ public import FormalConjecturesForMathlib.NumberTheory.Primitive
 public import FormalConjecturesForMathlib.NumberTheory.PrimitivePrimeDivisor
 public import FormalConjecturesForMathlib.NumberTheory.Refactorable
 public import FormalConjecturesForMathlib.NumberTheory.RiemannZetaZeros
+public import FormalConjecturesForMathlib.NumberTheory.SalemNumber
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
 public import FormalConjecturesForMathlib.NumberTheory.Untouchable
