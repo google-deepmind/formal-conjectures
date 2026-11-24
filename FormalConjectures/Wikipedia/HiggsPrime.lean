@@ -23,7 +23,8 @@ public import FormalConjecturesUtil
 Fix an exponent $a \ge 1$. Starting from $Hp_1 = 2$, Denis Higgs defined $Hp_{k+1}$ recursively as
 the minimal prime $q > Hp_k$ whose totient $\varphi(q)$ divides $\prod_{i=1}^k Hp_i^a$. At $a = 1$,
 this greedy construction stops at $[2, 3, 7, 43]$. Whether any exponent $a \ge 2$—in particular
-$a = 2$ (`A007459`, studied by Burris and Lee in 1993)—yields an infinite sequence remains open.
+$a = 2$ (OEIS A007459, studied by Burris and Lee in 1993)—yields an infinite sequence remains
+open.
 
 *References:*
 - [Wikipedia: Higgs prime](https://en.wikipedia.org/wiki/Higgs_prime)

@@ -21,11 +21,12 @@ public import FormalConjecturesUtil
 # Infinitude of lucky primes and twin lucky numbers
 
 Gardiner, Lazarus, Metropolis, and Ulam (1956) defined the *lucky numbers*
-$1, 3, 7, 9, 13, 15, 21, 25, 31, \dots$ (`A000959`) via an iterative positional sieve on positive
-integers: starting from the odd integers, step $s + 1$ removes every $m$-th surviving entry, where
-$m$ is the $(s + 2)$-nd surviving term. Hawkins and Briggs (1957) proved the asymptotic count
-$|\{k \le x : k \text{ lucky}\}| \sim x / \log x$. Whether infinitely many lucky primes (`A031157`)
-or infinitely many twin lucky pairs $(n, n + 2)$ exist remains open (Guy 2004, Section C3).
+$1, 3, 7, 9, 13, 15, 21, 25, 31, \dots$ (OEIS A000959) via an iterative positional sieve on
+positive integers: starting from the odd integers, step $s + 1$ removes every $m$-th surviving
+entry, where $m$ is the $(s + 2)$-nd surviving term. Hawkins and Briggs (1957) proved the
+asymptotic count $|\{k \le x : k \text{ lucky}\}| \sim x / \log x$. Whether infinitely many lucky
+primes (OEIS A031157) or infinitely many twin lucky pairs $(n, n + 2)$ exist remains open
+(Guy 2004, Section C3).
 
 *References:*
 - [Wikipedia: Lucky number](https://en.wikipedia.org/wiki/Lucky_number)
@@ -42,23 +43,6 @@ or infinitely many twin lucky pairs $(n, n + 2)$ exist remains open (Guy 2004, S
 
 namespace LuckyNumber
 
-/-- Positional sieve generating Ulam's lucky sequence: `luckySieve 0 i = 2i + 1`, and stage `s + 1`
-deletes every $m$-th surviving position where $m = \text{luckySieve } s\ (s + 1)$. -/
-def luckySieve : ℕ → ℕ → ℕ
-  | 0, i => 2 * i + 1
-  | s + 1, i =>
-    let m := luckySieve s (s + 1)
-    luckySieve s (i + i / (m - 1))
-
-/-- The $n$-th lucky number (0-indexed: $1, 3, 7, 9, 13, 15, 21, 25, 31, \dots$), using
-stabilization of `luckySieve s n` once $s \ge n$. -/
-def luckyNumber (n : ℕ) : ℕ :=
-  luckySieve n n
-
-/-- Membership predicate for Ulam's lucky sequence (`A000959`). -/
-def IsLuckyNumber (k : ℕ) : Prop :=
-  ∃ n : ℕ, luckyNumber n = k
-
 /-- Verifies the first nine lucky numbers $1, 3, 7, 9, 13, 15, 21, 25, 31$ (including composite
 sieve step $m = 9$ removing $27$). -/
 @[category test, AMS 11]
@@ -66,43 +50,21 @@ theorem luckyNumber_first_nine :
     List.map luckyNumber [0, 1, 2, 3, 4, 5, 6, 7, 8] = [1, 3, 7, 9, 13, 15, 21, 25, 31] :=
   rfl
 
-/-- Verifies that $7$ belongs to the lucky sequence whereas $2$ does not. -/
+/-- Verifies that $7$ belongs to the lucky sequence. -/
 @[category test, AMS 11]
-theorem isLuckyNumber_seven_and_not_two :
-    IsLuckyNumber 7 ∧ ¬ IsLuckyNumber 2 := by
-  refine ⟨⟨2, rfl⟩, ?_⟩
-  have hodd : ∀ s i : ℕ, luckySieve s i % 2 = 1 := by
-    intro s
-    induction s with
-    | zero => intro i; dsimp [luckySieve]; omega
-    | succ s ih => intro i; exact ih _
+theorem isLuckyNumber_seven : IsLuckyNumber 7 :=
+  ⟨2, rfl⟩
+
+/-- Verifies that $2$ does not belong to the lucky sequence. -/
+@[category test, AMS 11]
+theorem not_isLuckyNumber_two : ¬ IsLuckyNumber 2 := by
   rintro ⟨n, hn⟩
-  have h := hodd n n
+  have h := luckySieve_mod_two n n
   change luckyNumber n % 2 = 1 at h
   omega
 
-/-- Once the sieve stage $s$ reaches at least $n$, `luckySieve s n` stabilizes at
-`luckyNumber n`. -/
-@[category API, AMS 11]
-theorem luckySieve_stabilizes {n s : ℕ} (hns : n ≤ s) :
-    luckySieve s n = luckyNumber n := by
-  have hge : ∀ t i : ℕ, 2 * i + 1 ≤ luckySieve t i := fun t => by
-    induction t with
-    | zero => intro i; dsimp [luckySieve]; omega
-    | succ t ih =>
-      intro i; dsimp [luckySieve]
-      have h1 := ih (i + i / (luckySieve t (t + 1) - 1))
-      have h2 := Nat.le_add_right i (i / (luckySieve t (t + 1) - 1)); omega
-  induction s with
-  | zero => obtain rfl : n = 0 := (by omega); rfl
-  | succ s ih =>
-    by_cases hle : n ≤ s
-    · dsimp [luckySieve]; have := hge s (s + 1)
-      rw [Nat.div_eq_of_lt (by omega), add_zero, ih hle]
-    · obtain rfl : n = s + 1 := (by omega); rfl
-
 /--
-Infinitely many terms of the lucky sequence are prime (`A031157`).
+Infinitely many terms of the lucky sequence are prime (OEIS A031157).
 -/
 @[category research open, AMS 11]
 theorem lucky_primes_infinitude :

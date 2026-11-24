@@ -20,6 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 456
 
+Throughout this file, $p_n$ (`leastPrimeInAP 1 n`) denotes the smallest prime congruent to
+$1\pmod{n}$.
+
 *References:*
 - [erdosproblems.com/456](https://www.erdosproblems.com/456)
 - [Er79e] Erdős, Paul, Some unconventional problems in number theory. Astérisque (1979), 73--82.
@@ -33,12 +36,6 @@ open scoped Topology Asymptotics
 namespace Erdos456
 
 /--
-Let $p_n$ be the smallest prime $\equiv 1\pmod{n}$.
--/
-noncomputable def p (n : ℕ) : ℕ :=
-  sInf { k | k.Prime ∧ k ≡ 1 [MOD n] }
-
-/--
 Let $m_n$ be the smallest integer such that $n\mid \phi(m_n)$.
 -/
 noncomputable def m (n : ℕ) : ℕ :=
@@ -50,7 +47,7 @@ Is it true that $m_n<p_n$ for almost all $n$?
 -/
 @[category research open, question, AMS 11]
 theorem erdos_456.parts.i :
-    Tendsto (fun N ↦ (count (fun n ↦ m n < p n) N : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
+    Tendsto (fun N ↦ (count (fun n ↦ m n < leastPrimeInAP 1 n) N : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
   sorry
 
 open scoped Classical in
@@ -60,7 +57,7 @@ Does $p_n/m_n \to \infty$ for almost all $n$?
 @[category research open, question, AMS 11]
 theorem erdos_456.parts.ii :
     ∃ A : Set ℕ, Tendsto (fun N ↦ (count (· ∈ A) N : ℝ) / (N : ℝ)) atTop (𝓝 1) ∧
-      Tendsto (fun n ↦ (p n : ℝ) / (m n : ℝ)) (atTop ⊓ 𝓟 A) atTop := by
+      Tendsto (fun n ↦ (leastPrimeInAP 1 n : ℝ) / (m n : ℝ)) (atTop ⊓ 𝓟 A) atTop := by
   sorry
 
 /--
@@ -76,7 +73,7 @@ Linnik's theorem implies that $p_n\leq n^{O(1)}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_456.variants.linniks_theorem :
-    ∃ L : ℝ, (fun n ↦ (p n : ℝ)) =O[atTop] (fun n ↦ (n : ℝ) ^ L) := by
+    ∃ L : ℝ, (fun n ↦ (leastPrimeInAP 1 n : ℝ)) =O[atTop] (fun n ↦ (n : ℝ) ^ L) := by
   sorry
 
 /--
@@ -84,8 +81,8 @@ It is trivial that $m_n \leq p_n$ always.
 -/
 @[category textbook, AMS 11]
 theorem erdos_456.variants.mn_leq_pn (n : ℕ) :
-    m n ≤ p n := by
-  unfold m p
+    m n ≤ leastPrimeInAP 1 n := by
+  unfold m
   rcases eq_or_ne n 0 with hn | hn
   · subst hn
     have hempty : {k | 0 < k ∧ (0 : ℕ) ∣ totient k} = (∅ : Set ℕ) := by
@@ -97,11 +94,7 @@ theorem erdos_456.variants.mn_leq_pn (n : ℕ) :
       omega
     rw [hempty, Nat.sInf_empty]
     exact Nat.zero_le _
-  · have hne : {k | k.Prime ∧ k ≡ 1 [MOD n]}.Nonempty := by
-      obtain ⟨q, _, hq, hmod⟩ :=
-        Nat.forall_exists_prime_gt_and_modEq 0 hn (Nat.coprime_one_left n)
-      exact ⟨q, hq, hmod⟩
-    obtain ⟨hp, hmod⟩ := Nat.sInf_mem hne
+  · obtain ⟨hp, hmod⟩ := leastPrimeInAP_prime_and_modEq hn (Nat.coprime_one_left n)
     apply Nat.sInf_le
     refine ⟨hp.pos, ?_⟩
     rw [Nat.totient_prime hp]
@@ -112,7 +105,7 @@ Erdős [Er79e] writes it is 'easy to show' that for infinitely many $n$ we have 
 -/
 @[category research solved, AMS 11]
 theorem erdos_456.variants.infinitely_many_n :
-    { n | m n < p n }.Infinite := by
+    { n | m n < leastPrimeInAP 1 n }.Infinite := by
   apply Set.infinite_of_injective_forall_mem (f := fun j : ℕ ↦ 2 ^ (2 * j + 3))
   · intro a b hab
     apply Nat.pow_right_injective (by decide) at hab
@@ -120,21 +113,17 @@ theorem erdos_456.variants.infinitely_many_n :
   · intro j
     let k := 2 * j + 3
     -- Witness n = 2^k for odd k ≥ 3; then m(n) ≤ 2n, while 3 ∣ n + 1 forces p(n) > 2n.
-    change m (2 ^ k) < p (2 ^ k)
+    change m (2 ^ k) < leastPrimeInAP 1 (2 ^ k)
     have hm : m (2 ^ k) ≤ 2 ^ (k + 1) := by
       unfold m
       refine Nat.sInf_le ⟨by positivity, ?_⟩
       rw [Nat.totient_prime_pow Nat.prime_two (by omega)]
       norm_num
-    have hp : 2 ^ (k + 1) + 1 ≤ p (2 ^ k) := by
-      unfold p
-      let q := sInf {x | x.Prime ∧ x ≡ 1 [MOD 2 ^ k]}
+    have hp : 2 ^ (k + 1) + 1 ≤ leastPrimeInAP 1 (2 ^ k) := by
+      let q := leastPrimeInAP 1 (2 ^ k)
       change 2 ^ (k + 1) + 1 ≤ q
-      have hne : {x | x.Prime ∧ x ≡ 1 [MOD 2 ^ k]}.Nonempty := by
-        obtain ⟨r, _, hr, hmod⟩ := Nat.forall_exists_prime_gt_and_modEq 0
-          (pow_ne_zero k (by decide)) (Nat.coprime_one_left (2 ^ k))
-        exact ⟨r, hr, hmod⟩
-      obtain ⟨hprime, hmod⟩ : q.Prime ∧ q ≡ 1 [MOD 2 ^ k] := Nat.sInf_mem hne
+      obtain ⟨hprime, hmod⟩ : q.Prime ∧ q ≡ 1 [MOD 2 ^ k] :=
+        leastPrimeInAP_prime_and_modEq (pow_ne_zero k (by decide)) (Nat.coprime_one_left (2 ^ k))
       rw [Nat.pow_succ]
       by_contra hbound
       have hxle : q ≤ 2 ^ k * 2 := by omega

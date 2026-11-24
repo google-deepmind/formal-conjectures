@@ -77,10 +77,14 @@ theorem isAdmissibleQuadratic_landau : IsAdmissibleQuadratic 1 0 1 := by
   have h0 : 0 ≤ d ^ 2 := sq_nonneg d
   linarith
 
-/-- Root counts of $m^2 + 1$ modulo $2$ ($1$ root) and modulo $3$ ($0$ roots). -/
+/-- Root count of $m^2 + 1$ modulo $2$ equals $1$. -/
 @[category test, AMS 11]
-theorem quadModRootCount_landau_two_and_three :
-    quadModRootCount 1 0 1 2 = 1 ∧ quadModRootCount 1 0 1 3 = 0 := by
+theorem quadModRootCount_landau_two : quadModRootCount 1 0 1 2 = 1 := by
+  decide
+
+/-- Root count of $m^2 + 1$ modulo $3$ equals $0$. -/
+@[category test, AMS 11]
+theorem quadModRootCount_landau_three : quadModRootCount 1 0 1 3 = 0 := by
   decide
 
 /-- Partial product for $m^2 + 1$ over primes $p < 4$ equals $\frac{2 - 1}{1} \cdot \frac{3 - 0}{2}

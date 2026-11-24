@@ -21,8 +21,8 @@ public import FormalConjecturesUtil
 # Infinitude of Lucas primes
 
 The Lucas numbers $(L_n)_{n \ge 0}$ satisfy $L_0 = 2$, $L_1 = 1$, and $L_{n+2} = L_{n+1} + L_n$.
-Prime terms $L_n$ (*Lucas primes*, `A005479`) occur at indices $n = 0, 2, 4, 5, 7, 8, \dots$
-(`A001606`). Every positive index $n$ with $L_n$ prime is either prime itself or of the form
+Prime terms $L_n$ (*Lucas primes*, OEIS A005479) occur at indices $n = 0, 2, 4, 5, 7, 8, \dots$
+(OEIS A001606). Every positive index $n$ with $L_n$ prime is either prime itself or of the form
 $2^k$. Whether infinitely many terms $L_n$ are prime remains open.
 
 *References:*
@@ -40,17 +40,33 @@ namespace LucasPrime
 def IsLucasPrimeIndex (n : ℕ) : Prop :=
   (lucasNumber n).toNat.Prime
 
-/-- Verifies that $L_0 = 2$, $L_4 = 7$, and $L_7 = 29$ are Lucas primes. -/
+/-- Verifies that $L_0 = 2$ is a Lucas prime. -/
 @[category test, AMS 11]
-theorem isLucasPrimeIndex_small_examples :
-    IsLucasPrimeIndex 0 ∧ IsLucasPrimeIndex 4 ∧ IsLucasPrimeIndex 7 := by
+theorem isLucasPrimeIndex_zero : IsLucasPrimeIndex 0 := by
   unfold IsLucasPrimeIndex
   decide
 
-/-- Verifies that $L_1 = 1$ and $L_3 = 4$ are not Lucas primes. -/
+/-- Verifies that $L_4 = 7$ is a Lucas prime. -/
 @[category test, AMS 11]
-theorem not_isLucasPrimeIndex_one_and_three :
-    ¬ IsLucasPrimeIndex 1 ∧ ¬ IsLucasPrimeIndex 3 := by
+theorem isLucasPrimeIndex_four : IsLucasPrimeIndex 4 := by
+  unfold IsLucasPrimeIndex
+  decide
+
+/-- Verifies that $L_7 = 29$ is a Lucas prime. -/
+@[category test, AMS 11]
+theorem isLucasPrimeIndex_seven : IsLucasPrimeIndex 7 := by
+  unfold IsLucasPrimeIndex
+  decide
+
+/-- Verifies that $L_1 = 1$ is not a Lucas prime. -/
+@[category test, AMS 11]
+theorem not_isLucasPrimeIndex_one : ¬ IsLucasPrimeIndex 1 := by
+  unfold IsLucasPrimeIndex
+  decide
+
+/-- Verifies that $L_3 = 4$ is not a Lucas prime. -/
+@[category test, AMS 11]
+theorem not_isLucasPrimeIndex_three : ¬ IsLucasPrimeIndex 3 := by
   unfold IsLucasPrimeIndex
   decide
 

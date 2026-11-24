@@ -42,14 +42,6 @@ open Filter
 
 namespace InghamCubicPrimeGap
 
-/-- Evaluates the first two prime gaps: `primeGap 0 = 1` and `primeGap 1 = 2`. -/
-@[category test, AMS 11]
-theorem primeGap_zero_and_one :
-    primeGap 0 = 1 ∧ primeGap 1 = 2 := by
-  rw [primeGap, primeGap, Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three,
-    Nat.nth_prime_two_eq_five]
-  decide
-
 /-- Checks $(n^3, (n + 1)^3)$ for $1 \le n \le 10$ via explicit prime witnesses. -/
 @[category test, AMS 11]
 theorem exists_prime_between_cubes_up_to_ten (n : ℕ) (hn1 : 1 ≤ n) (hn10 : n ≤ 10) :

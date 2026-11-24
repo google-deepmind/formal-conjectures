@@ -20,11 +20,11 @@ public import FormalConjecturesUtil
 /-!
 # Newman–Shanks–Williams primes
 
-Define $(S_n)_{n \ge 0}$ (`A001333`) via $S_0 = 1$, $S_1 = 1$, and $S_{n+2} = 2 S_{n+1} + S_n$.
+Define $(S_n)_{n \ge 0}$ (OEIS A001333) via $S_0 = 1$, $S_1 = 1$, and $S_{n+2} = 2 S_{n+1} + S_n$.
 Odd-indexed entries
 $$S_{2m + 1} = \frac{(1 + \sqrt{2})^{2m + 1} + (1 - \sqrt{2})^{2m + 1}}{2} \qquad (m \ge 0)$$
-are Newman–Shanks–Williams (NSW) numbers (`A002315`), and prime terms among them are NSW primes
-(`A088165`), beginning with $S_3 = 7$, $S_5 = 41$, $S_7 = 239$, and $S_{19} = 9369319$. Newman,
+are Newman–Shanks–Williams (NSW) numbers (OEIS A002315), and prime terms among them are NSW primes
+(OEIS A088165), beginning with $S_3 = 7$, $S_5 = 41$, $S_7 = 239$, and $S_{19} = 9369319$. Newman,
 Shanks, and Williams (1980/1981) studied these primes while investigating finite simple groups
 whose order is a square; whether infinitely many NSW primes exist remains open.
 
@@ -56,41 +56,63 @@ def nswNumber (m : ℕ) : ℕ := nswRecurrence (2 * m + 1)
 def IsNSWPrime (p : ℕ) : Prop :=
   p.Prime ∧ ∃ m : ℕ, nswNumber m = p
 
-/-- Every term $S_n$ is at least $1$, and $S_n \le S_{n+1}$ holds for all $n \in \mathbb{N}$. -/
+/-- Every term $S_n$ of `nswRecurrence` is at least $1$. -/
 @[category API, AMS 11]
-theorem nswRecurrence_pos_and_mono (n : ℕ) :
-    1 ≤ nswRecurrence n ∧ nswRecurrence n ≤ nswRecurrence (n + 1) := by
-  induction n with
-  | zero => decide
-  | succ k ih =>
-    have hnext : nswRecurrence (k + 1 + 1) = 2 * nswRecurrence (k + 1) + nswRecurrence k := rfl
+theorem one_le_nswRecurrence : ∀ n : ℕ, 1 ≤ nswRecurrence n
+  | 0 => le_rfl
+  | 1 => le_rfl
+  | n + 2 => by
+    have h1 := one_le_nswRecurrence (n + 1)
+    have h0 := one_le_nswRecurrence n
+    simp only [nswRecurrence]
     omega
 
-/-- Verifies `IsNSWPrime` on $7 = S_3$, $41 = S_5$, and $239 = S_7$. -/
-@[category test, AMS 11]
-theorem isNSWPrime_small_witnesses :
-    IsNSWPrime 7 ∧ IsNSWPrime 41 ∧ IsNSWPrime 239 :=
-  ⟨⟨by norm_num, 1, rfl⟩, ⟨by norm_num, 2, rfl⟩, ⟨by norm_num, 3, rfl⟩⟩
+/-- The sequence `nswRecurrence` is monotone on $\mathbb{N}$. -/
+@[category API, AMS 11]
+theorem monotone_nswRecurrence : Monotone nswRecurrence :=
+  monotone_nat_of_le_succ fun
+    | 0 => le_rfl
+    | n + 1 => by
+      simp only [nswRecurrence]
+      omega
 
-/-- Excludes the boundary $S_1 = 1$, the composite NSW number $S_9 = 1393 = 7 \times 199$,
-and the even-indexed prime $S_4 = 17$. -/
+/-- Verifies `IsNSWPrime` on $7 = S_3$. -/
 @[category test, AMS 11]
-theorem not_isNSWPrime_boundary_and_composite :
-    ¬ IsNSWPrime 1 ∧ ¬ (nswNumber 4).Prime ∧ ¬ IsNSWPrime 17 := by
-  refine ⟨fun h => Nat.not_prime_one h.1, by change ¬ Nat.Prime 1393; norm_num, ?_⟩
+theorem isNSWPrime_seven : IsNSWPrime 7 :=
+  ⟨by norm_num, 1, rfl⟩
+
+/-- Verifies `IsNSWPrime` on $41 = S_5$. -/
+@[category test, AMS 11]
+theorem isNSWPrime_41 : IsNSWPrime 41 :=
+  ⟨by norm_num, 2, rfl⟩
+
+/-- Verifies `IsNSWPrime` on $239 = S_7$. -/
+@[category test, AMS 11]
+theorem isNSWPrime_239 : IsNSWPrime 239 :=
+  ⟨by norm_num, 3, rfl⟩
+
+/-- Excludes the initial odd-indexed term $S_1 = 1$, which is not prime. -/
+@[category test, AMS 11]
+theorem not_isNSWPrime_one : ¬ IsNSWPrime 1 :=
+  fun h => Nat.not_prime_one h.1
+
+/-- Confirms that the fifth NSW number $S_9 = 1393 = 7 \times 199$ is composite. -/
+@[category test, AMS 11]
+theorem not_prime_nswNumber_four : ¬ (nswNumber 4).Prime := by
+  change ¬ Nat.Prime 1393
+  norm_num
+
+/-- Excludes the even-indexed prime $S_4 = 17$, which does not occur at any odd index. -/
+@[category test, AMS 11]
+theorem not_isNSWPrime_17 : ¬ IsNSWPrime 17 := by
   rintro ⟨_, m, hm⟩
   rcases m with _ | _ | m'
   · change 1 = 17 at hm; omega
   · change 7 = 17 at hm; omega
-  · have hmono : ∀ a b : ℕ, a ≤ b → nswRecurrence a ≤ nswRecurrence b := by
-      intro a b hab
-      induction hab with
-      | refl => exact le_rfl
-      | step _ ih => exact le_trans ih (nswRecurrence_pos_and_mono _).2
-    have h41 : 41 ≤ nswNumber (m' + 1 + 1) := by
+  · have h41 : 41 ≤ nswNumber (m' + 1 + 1) := by
       unfold nswNumber
       calc 41 = nswRecurrence 5 := rfl
-        _ ≤ nswRecurrence (2 * (m' + 1 + 1) + 1) := hmono 5 _ (by omega)
+        _ ≤ nswRecurrence (2 * (m' + 1 + 1) + 1) := monotone_nswRecurrence (by omega)
     omega
 
 /--

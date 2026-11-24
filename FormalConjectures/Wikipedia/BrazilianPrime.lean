@@ -21,13 +21,13 @@ public import FormalConjecturesUtil
 # Infinitude of Brazilian primes
 
 Introduced at Fortaleza in the 1994 Iberoamerican Mathematical Olympiad, an integer $n \ge 7$ is
-*Brazilian* (`A125134`) when some radix $b$ ($2 \le b \le n - 2$) expresses $n$ using $k \ge 2$
+*Brazilian* (OEIS A125134) when some radix $b$ ($2 \le b \le n - 2$) expresses $n$ using $k \ge 2$
 equal digits $d \in \{1, \dots, b - 1\}$, i.e. $n = d (b^k - 1) / (b - 1)$. Any prime with this
-property (`A085104`: $7, 13, 31, 43, 73, 127, \dots$) forces $d = 1$ and an odd prime length
+property (OEIS A085104: $7, 13, 31, 43, 73, 127, \dots$) forces $d = 1$ and an odd prime length
 $k = q \ge 3$, so $n = (b^q - 1) / (b - 1)$ is a repunit of odd prime length. Schott (2010)
-established convergence of the reciprocal series over Brazilian primes (`A306759`), and elementary
-counting yields relative natural density $0$ among all primes, while whether infinitely many
-Brazilian primes exist remains open.
+established convergence of the reciprocal series over Brazilian primes (OEIS A306759), and
+elementary counting yields relative natural density $0$ among all primes, while whether infinitely
+many Brazilian primes exist remains open.
 
 *References:*
 - [Wikipedia: Brazilian number](https://en.wikipedia.org/wiki/Brazilian_number)

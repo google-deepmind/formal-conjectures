@@ -25,15 +25,28 @@ Dirichlet $L$-series attached to the non-principal character modulo $4$. At posi
 $\beta(2k + 1)$ is a nonzero rational multiple of $\pi^{2k + 1}$ and hence transcendental. At
 positive even exponents, Tanguy Rivoal and Wadim Zudilin [RZ03] proved that infinitely many
 $\beta(2k)$ are irrational, and Zudilin [Zu19] proved that at least one among
-$\beta(2), \beta(4), \dots, \beta(12)$ is irrational. While irrationality of Catalan's constant
-$G = \beta(2)$ has been established (`Irrational.irrational_catalanConstant`), irrationality of any
-individual $\beta(2k)$ with $k \ge 2$ and transcendence of every $\beta(2k)$ (see
-`Transcendental.transcendental_catalanConstant` for $k = 1$) remain open.
+$\beta(2), \beta(4), \dots, \beta(12)$ is irrational.
+
+Wikipedia remarks only that the rationality or algebraicity of general even beta values remains
+undetermined, and [Zu19] explicitly states irrationality and transcendence expectations only for
+Catalan's constant $G = \beta(2)$ (formalized for $k = 1$ as the open conjectures
+`Irrational.irrational_catalanConstant` and `Transcendental.transcendental_catalanConstant`). For
+general $k \ge 1$, irrationality of $\beta(2k) = 4^{-2k} (\zeta(2k, 1/4) - \zeta(2k, 3/4))$
+follows from the Strong Chowla–Milnor conjecture of Gun, Murty, and Rath [GMR11] over $\mathbb{Q}$
+at modulus $4$, while transcendence of $\beta(2k)$ follows from Grothendieck's period conjecture
+on the motivic fundamental group of $\mathbf{G}_m - \mu_4$ via polylogarithms at fourth roots of
+unity, $2 i \beta(2k) = \operatorname{Li}_{2k}(i) - \operatorname{Li}_{2k}(-i)$ [De10, Wa06].
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/Dirichlet_beta_function#Specific_values)
 - [RZ03] T. Rivoal and W. Zudilin, *Diophantine properties of numbers related to Catalan's
   constant*, Math. Ann. **326** (2003), no. 4, 705–721.
+- [Wa06] M. Waldschmidt, *Transcendence of periods: the state of the art*, Pure Appl. Math. Q.
+  **2** (2006), no. 2, 435–463.
+- [De10] P. Deligne, *Le groupe fondamental unipotent motivique de $\mathbf{G}_m - \mu_N$, pour
+  $N = 2, 3, 4, 6$ ou $8$*, Publ. Math. Inst. Hautes Études Sci. **112** (2010), 101–141.
+- [GMR11] S. Gun, M. R. Murty, and P. Rath, *On a conjecture of Chowla and Milnor*, Canad. J.
+  Math. **63** (2011), no. 6, 1328–1344.
 - [Zu19] W. Zudilin, *Arithmetic of Catalan's constant and its relatives*, Abh. Math. Semin. Univ.
   Hambg. **89** (2019), no. 1, 45–53.
 -/
@@ -41,33 +54,6 @@ individual $\beta(2k)$ with $k \ge 2$ and transcendence of every $\beta(2k)$ (se
 @[expose] public section
 
 namespace DirichletBetaValues
-
-/-- Alternating odd-reciprocal series $\beta(s) = \sum_{n=0}^{\infty} (-1)^n / (2n + 1)^s$ for
-integer exponents $s \ge 2$ (where the series converges absolutely; for $s \in \{0, 1\}$, Lean's
-`tsum` over `ℝ` returns `0` rather than the analytic values $\beta(0) = 1/2$ and
-$\beta(1) = \pi/4$). -/
-noncomputable def dirichletBetaNat (s : ℕ) : ℝ :=
-  ∑' n : ℕ, ((-1 : ℝ) ^ n) / ((2 * n + 1 : ℝ) ^ s)
-
-/-- The defining series of `dirichletBetaNat s` is summable whenever $s \ge 2$. -/
-@[category API, AMS 11 33]
-theorem summable_dirichletBetaNat_term {s : ℕ} (hs : 2 ≤ s) :
-    Summable (fun n : ℕ => ((-1 : ℝ) ^ n) / ((2 * n + 1 : ℝ) ^ s)) := by
-  apply Summable.of_norm_bounded (g := fun n : ℕ => (1 : ℝ) / (((n + 1 : ℕ) : ℝ) ^ 2))
-  · exact (summable_nat_add_iff 1).mpr (Real.summable_one_div_nat_pow.mpr one_lt_two)
-  · intro n
-    rw [norm_div, norm_pow, norm_neg, norm_one, one_pow, Real.norm_of_nonneg (by positivity)]
-    apply one_div_le_one_div_of_le (by positivity)
-    push_cast
-    calc
-      ((n + 1 : ℝ) ^ 2) ≤ ((2 * n + 1 : ℝ) ^ 2) := by gcongr; linarith
-      _ ≤ ((2 * n + 1 : ℝ) ^ s) := pow_le_pow_right₀ (by linarith) hs
-
-/-- At $s = 2$, `dirichletBetaNat 2` is definitionally equal to `catalanConstant`. -/
-@[category test, AMS 11 33]
-theorem dirichletBetaNat_two_eq_catalanConstant :
-    dirichletBetaNat 2 = catalanConstant :=
-  rfl
 
 /-- Sanity check at $s = 4$: pairing even and odd terms of the alternating series shows
 $80 / 81 \le \beta(4)$. -/
@@ -100,7 +86,17 @@ theorem rivoal_zudilin_infinitely_many_even_beta_irrational :
   sorry
 
 /--
-For every integer $k \ge 2$, the even beta value $\beta(2k)$ is irrational (for $k = 1$, see
+Zudilin [Zu19] established irrationality for some value among
+$\beta(2), \beta(4), \beta(6), \beta(8), \beta(10), \beta(12)$.
+-/
+@[category research solved, AMS 11 33]
+theorem zudilin_exists_irrational_even_beta_le_twelve :
+    ∃ k ∈ Finset.Icc 1 6, Irrational (dirichletBetaNat (2 * k)) := by
+  sorry
+
+/--
+For every integer $k \ge 2$, the even beta value $\beta(2k)$ is irrational, as predicted by the
+Strong Chowla–Milnor conjecture [GMR11] at modulus $4$ (for $k = 1$, see
 `Irrational.irrational_catalanConstant`).
 -/
 @[category research open, AMS 11 33]
@@ -109,8 +105,10 @@ theorem dirichlet_beta_even_irrational {k : ℕ} (hk : 2 ≤ k) :
   sorry
 
 /--
-For every integer $k \ge 2$, the even beta value $\beta(2k)$ is transcendental over $\mathbb{Q}$
-(for $k = 1$, see `Transcendental.transcendental_catalanConstant`).
+For every integer $k \ge 2$, the even beta value $\beta(2k)$ is transcendental over $\mathbb{Q}$,
+as predicted by Grothendieck's period conjecture on the motivic fundamental group of
+$\mathbf{G}_m - \mu_4$ via polylogarithms at fourth roots of unity [De10, Wa06] (for $k = 1$, see
+`Transcendental.transcendental_catalanConstant`).
 -/
 @[category research open, AMS 11 33]
 theorem dirichlet_beta_even_transcendental {k : ℕ} (hk : 2 ≤ k) :

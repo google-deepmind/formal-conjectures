@@ -22,7 +22,7 @@ public import FormalConjecturesUtil
 
 The Baillie–PSW test (Baillie and Wagstaff 1980; Pomerance, Selfridge, and Wagstaff 1980)
 certifies an odd non-square integer $n \ge 3$ as a probable prime when $n$ satisfies both the
-base-$2$ strong Fermat criterion (`A001262`) and the strong Lucas criterion (`A217255`) for
+base-$2$ strong Fermat criterion (OEIS A001262) and the strong Lucas criterion (OEIS A217255) for
 $P = 1$ and $Q = (1 - D) / 4$, taking the earliest $D \in \{5, -7, 9, -11, 13, \dots\}$ with
 Jacobi symbol $(D / n) = -1$ while rejecting $n$ if an earlier $D_i$ or $Q$ reveals a proper
 divisor. Exhaustive computation rules out composite examples below $2^{64}$, whereas a heuristic
@@ -43,14 +43,6 @@ of Pomerance (1984) predicts infinitely many composite Baillie–PSW pseudoprime
 @[expose] public section
 
 namespace BailliePSWPseudoprime
-
-/-- Base-$2$ strong probable prime condition on an odd integer $n \ge 3$: writing
-$n - 1 = 2^s \cdot d$ with $d$ odd, either $2^d \equiv 1 \pmod{n}$ or $2^{2^r d} \equiv -1
-\pmod{n}$ for some $0 \le r < s$. -/
-def IsStrongBaseTwoPRP (n : ℕ) : Prop :=
-  3 ≤ n ∧ Odd n ∧
-    ∃ s d : ℕ, Odd d ∧ n - 1 = 2 ^ s * d ∧
-      ((2 : ZMod n) ^ d = 1 ∨ ∃ r < s, (2 : ZMod n) ^ (2 ^ r * d) = -1)
 
 /-- Selfridge's $j$-th candidate discriminant $D_j = (-1)^j (2j + 5) \in \{5, -7, 9, -11, \dots\}$
 for $j \ge 0$. -/
@@ -88,18 +80,24 @@ theorem isStrongSelfridgeLucasPRP_five : IsStrongSelfridgeLucasPRP 5 := by
     interval_cases k <;> omega
   · intro i hi; interval_cases i; exact Or.inr (by norm_num [selfridgeD])
 
-/-- Prime $n = 7$ passes both halves of the Baillie–PSW test (at $j = 0, D_0 = 5$) and is not a
-composite pseudoprime. -/
+/-- Prime $n = 7$ passes `IsStrongBaseTwoPRP`. -/
 @[category test, AMS 11]
-theorem bailliePSW_seven :
-    IsStrongBaseTwoPRP 7 ∧ IsStrongSelfridgeLucasPRP 7 ∧ ¬ IsBailliePSWPseudoprime 7 := by
-  refine ⟨⟨by omega, by decide, 1, 3, by decide, by omega, Or.inl (by decide)⟩, ?_,
-    fun ⟨h, _, _⟩ => h.2 (by decide)⟩
+theorem isStrongBaseTwoPRP_seven : IsStrongBaseTwoPRP 7 :=
+  ⟨by omega, by decide, 1, 3, by decide, by omega, Or.inl (by decide)⟩
+
+/-- Prime $n = 7$ passes `IsStrongSelfridgeLucasPRP` at $j = 0$ ($D_0 = 5$). -/
+@[category test, AMS 11]
+theorem isStrongSelfridgeLucasPRP_seven : IsStrongSelfridgeLucasPRP 7 := by
   refine ⟨by omega, by decide, ?_, 0, by norm_num [selfridgeD], by intro i hi; omega,
     by norm_num [selfridgeD], 3, 1, by decide, by omega,
     Or.inr ⟨2, by omega, by norm_num [selfridgeD, LucasSequence.V]⟩⟩
   rintro ⟨k, hk⟩; have : k ≤ 2 := by nlinarith
   interval_cases k <;> omega
+
+/-- Prime $n = 7$ is not a composite Baillie–PSW pseudoprime. -/
+@[category test, AMS 11]
+theorem not_isBailliePSWPseudoprime_seven : ¬ IsBailliePSWPseudoprime 7 :=
+  fun ⟨h, _, _⟩ => h.2 (by decide)
 
 /-- Composite $n = 9$ fails `IsStrongBaseTwoPRP`. -/
 @[category test, AMS 11]
@@ -114,26 +112,43 @@ theorem not_isStrongBaseTwoPRP_nine : ¬ IsStrongBaseTwoPRP 9 := by
   · revert h1; decide
   · interval_cases r <;> (revert h2; decide)
 
-/-- Evaluates the first four Selfridge discriminants $(5, -7, 9, -11)$ and Lucas pairs
-$(U_k(1, -1), V_k(1, -1))$ for $0 \le k \le 3$. -/
+/-- Evaluates the first four Selfridge discriminants $(5, -7, 9, -11)$. -/
 @[category test, AMS 11]
-theorem selfridgeD_and_lucas_small_values :
-    [selfridgeD 0, selfridgeD 1, selfridgeD 2, selfridgeD 3] = [5, -7, 9, -11] ∧
-      [(LucasSequence.U 1 (-1) 0, LucasSequence.V 1 (-1) 0),
-        (LucasSequence.U 1 (-1) 1, LucasSequence.V 1 (-1) 1),
-        (LucasSequence.U 1 (-1) 2, LucasSequence.V 1 (-1) 2),
-        (LucasSequence.U 1 (-1) 3, LucasSequence.V 1 (-1) 3)] =
-        [(0, 2), (1, 1), (1, 3), (2, 4)] := by
+theorem selfridgeD_small_values :
+    [selfridgeD 0, selfridgeD 1, selfridgeD 2, selfridgeD 3] = [5, -7, 9, -11] := by
   decide
 
-/-- Every Baillie–PSW pseudoprime is an odd non-square integer $n \ge 3$; hence no integer $n < 3$
-is a Baillie–PSW pseudoprime. -/
+/-- Evaluates the first four Lucas pairs $(U_k(1, -1), V_k(1, -1))$ for $0 \le k \le 3$. -/
+@[category test, AMS 11]
+theorem lucas_small_values :
+    [(LucasSequence.U 1 (-1) 0, LucasSequence.V 1 (-1) 0),
+      (LucasSequence.U 1 (-1) 1, LucasSequence.V 1 (-1) 1),
+      (LucasSequence.U 1 (-1) 2, LucasSequence.V 1 (-1) 2),
+      (LucasSequence.U 1 (-1) 3, LucasSequence.V 1 (-1) 3)] =
+      [(0, 2), (1, 1), (1, 3), (2, 4)] := by
+  decide
+
+/-- Every Baillie–PSW pseudoprime satisfies $3 \le n$. -/
 @[category API, AMS 11]
-theorem isBailliePSWPseudoprime_odd_nonsquare_and_ge_three {n : ℕ} :
-    (IsBailliePSWPseudoprime n → 3 ≤ n ∧ Odd n ∧ ¬ IsSquare n) ∧
-      (n < 3 → ¬ IsBailliePSWPseudoprime n) :=
-  ⟨fun ⟨_, _, h3, hodd, hnsq, _⟩ => ⟨h3, hodd, hnsq⟩,
-   fun hn ⟨_, ⟨h3, _⟩, _⟩ => by omega⟩
+theorem three_le_of_isBailliePSWPseudoprime {n : ℕ} (h : IsBailliePSWPseudoprime n) : 3 ≤ n :=
+  h.2.1.1
+
+/-- Every Baillie–PSW pseudoprime is odd. -/
+@[category API, AMS 11]
+theorem odd_of_isBailliePSWPseudoprime {n : ℕ} (h : IsBailliePSWPseudoprime n) : Odd n :=
+  h.2.1.2.1
+
+/-- No Baillie–PSW pseudoprime is a perfect square. -/
+@[category API, AMS 11]
+theorem not_isSquare_of_isBailliePSWPseudoprime {n : ℕ} (h : IsBailliePSWPseudoprime n) :
+    ¬ IsSquare n :=
+  h.2.2.2.2.1
+
+/-- No integer $n < 3$ is a Baillie–PSW pseudoprime. -/
+@[category API, AMS 11]
+theorem not_isBailliePSWPseudoprime_of_lt_three {n : ℕ} (hn : n < 3) :
+    ¬ IsBailliePSWPseudoprime n :=
+  fun h => Nat.not_lt.mpr h.2.1.1 hn
 
 /--
 Does there exist a composite Baillie–PSW pseudoprime?

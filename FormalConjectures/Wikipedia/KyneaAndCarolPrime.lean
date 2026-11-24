@@ -20,12 +20,13 @@ public import FormalConjecturesUtil
 /-!
 # Kynea and Carol Primes
 
-Near-square integers $k_n = (2^n + 1)^2 - 2 = 4^n + 2^{n+1} - 1$ (Kynea numbers, `A093069` for
-$n \ge 1$) and $c_n = (2^n - 1)^2 - 2 = 4^n - 2^{n+1} - 1$ (Carol numbers, `A093112` for $n \ge 1$)
-were named by Cletus Emmanuel and studied in prime searches (Crandall and Pomerance, 2005). Prime
-values of $k_n$ (`A091514`, beginning $2, 7, 23, 79, 1087$ from $n = 0$) and of $c_n$ (`A091516`,
-beginning $7, 47, 223, 3967$ from $n = 2$) are conjectured to be infinite; Wikipedia's unsolved
-problems list poses the Kynea case directly, and the companion Carol question is likewise open.
+Near-square integers $k_n = (2^n + 1)^2 - 2 = 4^n + 2^{n+1} - 1$ (Kynea numbers, OEIS A093069 for
+$n \ge 1$) and $c_n = (2^n - 1)^2 - 2 = 4^n - 2^{n+1} - 1$ (Carol numbers, OEIS A093112 for
+$n \ge 1$) were named by Cletus Emmanuel and studied in prime searches (Crandall and Pomerance,
+2005). Prime values of $k_n$ (OEIS A091514, beginning $2, 7, 23, 79, 1087$ from $n = 0$) and of
+$c_n$ (OEIS A091516, beginning $7, 47, 223, 3967$ from $n = 2$) are conjectured to be infinite;
+Wikipedia's unsolved problems list poses the Kynea case directly, and the companion Carol question
+is likewise open.
 
 *References:*
 - [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#Prime_numbers)
@@ -67,24 +68,81 @@ theorem two_le_kyneaNumber (n : ℕ) : 2 ≤ kyneaNumber n := by
   have hsq : 4 ≤ (2 ^ n + 1) ^ 2 := by nlinarith
   omega
 
-/-- Boundary values at $n = 0, 1$: $c_0 = -2$ and $c_1 = -1$, whereas $k_0 = 2$ is prime. -/
+/-- At $n = 0$, the Carol integer equals $c_0 = -2$. -/
 @[category test, AMS 11]
-theorem carol_and_kynea_boundary_values :
-    carolNumber 0 = -2 ∧ carolNumber 1 = -1 ∧ ¬ IsCarolPrimeIndex 0 ∧ ¬ IsCarolPrimeIndex 1 ∧
-      kyneaNumber 0 = 2 ∧ IsKyneaPrimeIndex 0 := by
+theorem carolNumber_zero : carolNumber 0 = -2 := by
   decide
 
-/-- Small Carol checks: $c_2 = 7$, $c_3 = 47$, and $c_4 = 223$ are prime; $c_5 = 959$ is not. -/
+/-- At $n = 1$, the Carol integer equals $c_1 = -1$. -/
 @[category test, AMS 11]
-theorem carol_small_witnesses :
-    IsCarolPrimeIndex 2 ∧ IsCarolPrimeIndex 3 ∧ IsCarolPrimeIndex 4 ∧ ¬ IsCarolPrimeIndex 5 := by
+theorem carolNumber_one : carolNumber 1 = -1 := by
+  decide
+
+/-- Index $n = 0$ fails `IsCarolPrimeIndex` since $c_0 = -2 \le 0$. -/
+@[category test, AMS 11]
+theorem not_isCarolPrimeIndex_zero : ¬ IsCarolPrimeIndex 0 := by
+  decide
+
+/-- Index $n = 1$ fails `IsCarolPrimeIndex` since $c_1 = -1 \le 0$. -/
+@[category test, AMS 11]
+theorem not_isCarolPrimeIndex_one : ¬ IsCarolPrimeIndex 1 := by
+  decide
+
+/-- At $n = 0$, the Kynea number equals $k_0 = 2$. -/
+@[category test, AMS 11]
+theorem kyneaNumber_zero : kyneaNumber 0 = 2 := by
+  decide
+
+/-- Index $n = 0$ satisfies `IsKyneaPrimeIndex` ($k_0 = 2$). -/
+@[category test, AMS 11]
+theorem isKyneaPrimeIndex_zero : IsKyneaPrimeIndex 0 := by
+  decide
+
+/-- Index $n = 2$ gives the Carol prime $c_2 = 7$. -/
+@[category test, AMS 11]
+theorem isCarolPrimeIndex_two : IsCarolPrimeIndex 2 := by
   simp [IsCarolPrimeIndex, carolNumber]
   norm_num
 
-/-- Small Kynea checks: $k_1 = 7$, $k_2 = 23$, and $k_3 = 79$ are prime; $k_4 = 287$ is not. -/
+/-- Index $n = 3$ gives the Carol prime $c_3 = 47$. -/
 @[category test, AMS 11]
-theorem kynea_small_witnesses :
-    IsKyneaPrimeIndex 1 ∧ IsKyneaPrimeIndex 2 ∧ IsKyneaPrimeIndex 3 ∧ ¬ IsKyneaPrimeIndex 4 := by
+theorem isCarolPrimeIndex_three : IsCarolPrimeIndex 3 := by
+  simp [IsCarolPrimeIndex, carolNumber]
+  norm_num
+
+/-- Index $n = 4$ gives the Carol prime $c_4 = 223$. -/
+@[category test, AMS 11]
+theorem isCarolPrimeIndex_four : IsCarolPrimeIndex 4 := by
+  simp [IsCarolPrimeIndex, carolNumber]
+  norm_num
+
+/-- Index $n = 5$ gives $c_5 = 959 = 7 \cdot 137$, which is composite. -/
+@[category test, AMS 11]
+theorem not_isCarolPrimeIndex_five : ¬ IsCarolPrimeIndex 5 := by
+  simp [IsCarolPrimeIndex, carolNumber]
+  norm_num
+
+/-- Index $n = 1$ gives the Kynea prime $k_1 = 7$. -/
+@[category test, AMS 11]
+theorem isKyneaPrimeIndex_one : IsKyneaPrimeIndex 1 := by
+  unfold IsKyneaPrimeIndex kyneaNumber
+  norm_num
+
+/-- Index $n = 2$ gives the Kynea prime $k_2 = 23$. -/
+@[category test, AMS 11]
+theorem isKyneaPrimeIndex_two : IsKyneaPrimeIndex 2 := by
+  unfold IsKyneaPrimeIndex kyneaNumber
+  norm_num
+
+/-- Index $n = 3$ gives the Kynea prime $k_3 = 79$. -/
+@[category test, AMS 11]
+theorem isKyneaPrimeIndex_three : IsKyneaPrimeIndex 3 := by
+  unfold IsKyneaPrimeIndex kyneaNumber
+  norm_num
+
+/-- Index $n = 4$ gives $k_4 = 287 = 7 \cdot 41$, which is composite. -/
+@[category test, AMS 11]
+theorem not_isKyneaPrimeIndex_four : ¬ IsKyneaPrimeIndex 4 := by
   unfold IsKyneaPrimeIndex kyneaNumber
   norm_num
 

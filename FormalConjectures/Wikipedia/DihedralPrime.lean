@@ -65,42 +65,75 @@ instance instDecidableIsDihedralPrime (p : ℕ) : Decidable (IsDihedralPrime p) 
   unfold IsDihedralPrime
   infer_instance
 
-/-- Small dihedral primes $2$, $5$, $11$, $101$, and $1181$, together with involutivity of
-`swapTwoFive`. -/
-@[category test, AMS 11]
-theorem isDihedralPrime_small_examples :
-    IsDihedralPrime 2 ∧ IsDihedralPrime 5 ∧ IsDihedralPrime 11 ∧ IsDihedralPrime 101 ∧
-      IsDihedralPrime 1181 ∧ ∀ d : ℕ, swapTwoFive (swapTwoFive d) = d := by
-  have hd : Nat.digits 10 1181 = [1, 8, 1, 1] := by norm_num
-  refine ⟨by decide, by decide, by decide, by decide, ?_, fun d => ?_⟩
-  · unfold IsDihedralPrime
-    rw [hd]
-    refine ⟨by norm_num, by decide, ?_, ?_, ?_⟩ <;> norm_num [Nat.ofDigits, swapTwoFive]
-  · unfold swapTwoFive
-    split_ifs <;> omega
+/-- The digit-mirror map `swapTwoFive` is an involution. -/
+@[category API, AMS 11]
+theorem swapTwoFive_swapTwoFive (d : ℕ) : swapTwoFive (swapTwoFive d) = d := by
+  unfold swapTwoFive
+  split_ifs <;> omega
 
-/-- Negative checks: $3$ uses an invalid digit, $10$ is composite, and $151$ is a palindromic prime
-over $\{1, 5\}$ whose mirror image $121 = 11^2$ is composite. -/
+/-- $2$ satisfies `IsDihedralPrime`. -/
 @[category test, AMS 11]
-theorem not_isDihedralPrime_examples :
-    ¬ IsDihedralPrime 3 ∧ ¬ IsDihedralPrime 10 ∧ ¬ IsDihedralPrime 151 := by
+theorem isDihedralPrime_two : IsDihedralPrime 2 := by
   decide
 
-/-- $120121$ is a dihedral prime whose four display readings $120121$, $121021$, $150151$, and
-$151051$ are pairwise distinct primes. -/
+/-- $5$ satisfies `IsDihedralPrime`. -/
 @[category test, AMS 11]
-theorem isDihedralPrime_120121 :
-    IsDihedralPrime 120121 ∧
-      let ds := Nat.digits 10 120121
-      [Nat.ofDigits 10 ds, Nat.ofDigits 10 ds.reverse,
-        Nat.ofDigits 10 (ds.map swapTwoFive),
-        Nat.ofDigits 10 (ds.reverse.map swapTwoFive)] =
-        [120121, 121021, 150151, 151051] := by
-  have hd : Nat.digits 10 120121 = [1, 2, 1, 0, 2, 1] := by norm_num
-  refine ⟨?_, by rw [hd]; decide⟩
+theorem isDihedralPrime_five : IsDihedralPrime 5 := by
+  decide
+
+/-- $11$ satisfies `IsDihedralPrime`. -/
+@[category test, AMS 11]
+theorem isDihedralPrime_eleven : IsDihedralPrime 11 := by
+  decide
+
+/-- $101$ satisfies `IsDihedralPrime`. -/
+@[category test, AMS 11]
+theorem isDihedralPrime_101 : IsDihedralPrime 101 := by
+  decide
+
+/-- $1181$ satisfies `IsDihedralPrime`. -/
+@[category test, AMS 11]
+theorem isDihedralPrime_1181 : IsDihedralPrime 1181 := by
+  have hd : Nat.digits 10 1181 = [1, 8, 1, 1] := by norm_num
   unfold IsDihedralPrime
   rw [hd]
   refine ⟨by norm_num, by decide, ?_, ?_, ?_⟩ <;> norm_num [Nat.ofDigits, swapTwoFive]
+
+/-- $3$ fails `IsDihedralPrime` because its digit lies outside $\{0, 1, 2, 5, 8\}$. -/
+@[category test, AMS 11]
+theorem not_isDihedralPrime_three : ¬ IsDihedralPrime 3 := by
+  decide
+
+/-- $10$ fails `IsDihedralPrime` because it is composite. -/
+@[category test, AMS 11]
+theorem not_isDihedralPrime_ten : ¬ IsDihedralPrime 10 := by
+  decide
+
+/-- $151$ is a palindromic prime over $\{1, 5\}$ whose mirror image $121 = 11^2$ is composite. -/
+@[category test, AMS 11]
+theorem not_isDihedralPrime_151 : ¬ IsDihedralPrime 151 := by
+  decide
+
+/-- $120121$ satisfies `IsDihedralPrime`. -/
+@[category test, AMS 11]
+theorem isDihedralPrime_120121 : IsDihedralPrime 120121 := by
+  have hd : Nat.digits 10 120121 = [1, 2, 1, 0, 2, 1] := by norm_num
+  unfold IsDihedralPrime
+  rw [hd]
+  refine ⟨by norm_num, by decide, ?_, ?_, ?_⟩ <;> norm_num [Nat.ofDigits, swapTwoFive]
+
+/-- Seven-segment display readings of $120121$ give the four distinct primes $120121$, $121021$,
+$150151$, and $151051$. -/
+@[category test, AMS 11]
+theorem dihedral_readings_120121 :
+    let ds := Nat.digits 10 120121
+    [Nat.ofDigits 10 ds, Nat.ofDigits 10 ds.reverse,
+      Nat.ofDigits 10 (ds.map swapTwoFive),
+      Nat.ofDigits 10 (ds.reverse.map swapTwoFive)] =
+      [120121, 121021, 150151, 151051] := by
+  have hd : Nat.digits 10 120121 = [1, 2, 1, 0, 2, 1] := by norm_num
+  rw [hd]
+  decide
 
 /--
 Do infinitely many base-$10$ dihedral primes exist?

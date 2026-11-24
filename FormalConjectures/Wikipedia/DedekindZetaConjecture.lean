@@ -62,31 +62,6 @@ def DedekindZetaRelQuotientEntire (K L : Type*) [Field K] [NumberField K]
   ∃ f : ℂ → ℂ, Differentiable ℂ f ∧
     ∀ s : ℂ, 1 < s.re → NumberField.dedekindZeta L s = f s * NumberField.dedekindZeta K s
 
-/-- On the convergence half-plane $\operatorname{Re}(s) > 1$, `NumberField.dedekindZeta ℚ` agrees
-with `riemannZeta`. -/
-@[category API, AMS 11]
-theorem dedekindZeta_rat_eq_riemannZeta {s : ℂ} (hs : 1 < s.re) :
-    NumberField.dedekindZeta ℚ s = riemannZeta s := by
-  rw [NumberField.dedekindZeta, ← LSeries_one_eq_riemannZeta hs]
-  refine LSeries_congr (fun {n} _ => ?_) s
-  suffices hcard : Nat.card {I : Ideal (𝓞 ℚ) // absNorm I = n} = 1 by simp [hcard]
-  let φ := Rat.ringOfIntegersEquiv
-  have hmap (I : Ideal (𝓞 ℚ)) : absNorm (Ideal.map φ I) = absNorm I :=
-    Nat.card_congr (Ideal.quotientEquiv I _ φ rfl).toEquiv.symm
-  have hsurj (J : Ideal ℤ) : Ideal.map φ (Ideal.comap φ J) = J :=
-    Ideal.map_comap_of_surjective _ φ.surjective J
-  let e : {I : Ideal (𝓞 ℚ) // absNorm I = n} ≃ {J : Ideal ℤ // absNorm J = n} :=
-    ⟨fun ⟨I, hI⟩ => ⟨Ideal.map φ I, (hmap I).trans hI⟩,
-      fun ⟨J, hJ⟩ => ⟨Ideal.comap φ J, by rw [← hmap, hsurj, hJ]⟩,
-      fun ⟨I, _⟩ => Subtype.ext <| Ideal.comap_map_of_bijective _ φ.bijective,
-      fun ⟨J, _⟩ => Subtype.ext <| hsurj J⟩
-  rw [Nat.card_congr e]
-  let : Unique {J : Ideal ℤ // absNorm J = n} :=
-    { default := ⟨Ideal.span {(n : ℤ)}, by simp⟩
-      uniq := fun ⟨J, hJ⟩ => Subtype.ext <| by
-        dsimp only; rw [← hJ, Int.ideal_span_absNorm_eq_self] }
-  exact Nat.card_unique
-
 /-- On $\operatorname{Re}(s) > 1$, `riemannZeta s` is nonzero, so any two witnesses factoring
 `NumberField.dedekindZeta K` through `riemannZeta` agree on $\{1 < \operatorname{Re}(s)\}$. -/
 @[category API, AMS 11]
@@ -99,23 +74,32 @@ theorem entire_quotient_unique_on_right_half_plane {K : Type*} [Field K] [Number
   mul_right_cancel₀ (riemannZeta_ne_zero_of_one_lt_re hs) <|
     (hf s hs).symm.trans (hg s hs)
 
-/-- Unconditional sanity check for $K = \mathbb{Q}$: `DedekindZetaQuotientEntire ℚ` holds (witnessed
-by $f \equiv 1$), every witness evaluates to $1$ at $s = 2$, and `DedekindZetaRelQuotientEntire ℚ L`
-agrees with `DedekindZetaQuotientEntire L`. -/
+/-- Unconditional sanity check for $K = \mathbb{Q}$: `DedekindZetaQuotientEntire ℚ` holds, witnessed
+by $f \equiv 1$. -/
 @[category test, AMS 11]
-theorem dedekindZetaQuotientEntire_rat_and_rel_iff (L : Type*) [Field L] [NumberField L] :
-    DedekindZetaQuotientEntire ℚ ∧
-      (∀ f : ℂ → ℂ,
-        (∀ s : ℂ, 1 < s.re → NumberField.dedekindZeta ℚ s = f s * riemannZeta s) → f 2 = 1) ∧
-      (DedekindZetaRelQuotientEntire ℚ L ↔ DedekindZetaQuotientEntire L) := by
-  have h1 : ∀ s : ℂ, 1 < s.re → NumberField.dedekindZeta ℚ s = (fun _ => 1) s * riemannZeta s :=
-    fun s hs => by simpa using dedekindZeta_rat_eq_riemannZeta hs
-  refine ⟨⟨fun _ => 1, differentiable_const 1, h1⟩, fun f hf => ?_, ?_⟩
-  · exact entire_quotient_unique_on_right_half_plane hf h1 (by norm_num : 1 < (2 : ℂ).re)
-  · refine ⟨fun ⟨f, hf, hrel⟩ => ⟨f, hf, fun s hs => ?_⟩,
-      fun ⟨f, hf, habs⟩ => ⟨f, hf, fun s hs => ?_⟩⟩
-    · rw [← dedekindZeta_rat_eq_riemannZeta hs]; exact hrel s hs
-    · rw [dedekindZeta_rat_eq_riemannZeta hs]; exact habs s hs
+theorem dedekindZetaQuotientEntire_rat : DedekindZetaQuotientEntire ℚ :=
+  ⟨fun _ => 1, differentiable_const 1,
+    fun _ hs => by simpa using dedekindZeta_rat_eq_riemannZeta hs⟩
+
+/-- Every witness factoring `NumberField.dedekindZeta ℚ` through `riemannZeta` evaluates to $1$ at
+$s = 2$. -/
+@[category test, AMS 11]
+theorem dedekindZeta_rat_quotient_eval_two {f : ℂ → ℂ}
+    (hf : ∀ s : ℂ, 1 < s.re → NumberField.dedekindZeta ℚ s = f s * riemannZeta s) :
+    f 2 = 1 :=
+  entire_quotient_unique_on_right_half_plane (g := fun _ => 1) hf
+    (fun _ hs => by simpa using dedekindZeta_rat_eq_riemannZeta hs)
+    (by norm_num : 1 < (2 : ℂ).re)
+
+/-- Over base field $\mathbb{Q}$, `DedekindZetaRelQuotientEntire ℚ L` agrees with
+`DedekindZetaQuotientEntire L`. -/
+@[category test, AMS 11]
+theorem dedekindZetaRelQuotientEntire_rat_iff (L : Type*) [Field L] [NumberField L] :
+    DedekindZetaRelQuotientEntire ℚ L ↔ DedekindZetaQuotientEntire L := by
+  refine ⟨fun ⟨f, hf, hrel⟩ => ⟨f, hf, fun s hs => ?_⟩,
+    fun ⟨f, hf, habs⟩ => ⟨f, hf, fun s hs => ?_⟩⟩
+  · rw [← dedekindZeta_rat_eq_riemannZeta hs]; exact hrel s hs
+  · rw [dedekindZeta_rat_eq_riemannZeta hs]; exact habs s hs
 
 /--
 Aramata–Brauer theorem [Ar33, Br47]: whenever $K / \mathbb{Q}$ is a Galois number field, the ratio

@@ -90,19 +90,6 @@ noncomputable def artinEulerProduct {K L V : Type*} [Field K] [NumberField K]
   ∏' 𝔭 : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K),
     artinLocalEulerFactor ρ 𝔭 s
 
-/-- Every one-dimensional complex representation of $G$ on $\mathbb{C}$ is irreducible. -/
-@[category API, AMS 11]
-theorem isIrreducible_one_dim {G : Type*} [Group G] (ρ : Representation ℂ G ℂ) :
-    ρ.IsIrreducible := by
-  refine { exists_pair_ne := ⟨⊥, ⊤, fun h => ?_⟩, eq_bot_or_eq_top := fun W => ?_ }
-  · have h1 : (1 : ℂ) ∈ (⊤ : Subrepresentation ρ).toSubmodule := Submodule.mem_top
-    rw [← h] at h1
-    change (1 : ℂ) ∈ (⊥ : Submodule ℂ ℂ) at h1
-    simp at h1
-  · rcases eq_bot_or_eq_top W.toSubmodule with h | h
-    · exact Or.inl (Subrepresentation.toSubmodule_injective h)
-    · exact Or.inr (Subrepresentation.toSubmodule_injective h)
-
 /-- Over a trivial extension $K / K$ of any number field $K$, the trivial representation on
 $\mathbb{C}$ has `inertiaAveragedFrob = id` at every nonzero prime $\mathfrak{p}$ of
 $\mathcal{O}_K$. -/
@@ -146,13 +133,10 @@ theorem artinLocalEulerFactor_trivial_self {K : Type*} [Field K] [NumberField K]
     exact h ⟨𝔭, Ideal.ext fun _ => Iff.rfl⟩
 
 /-- The sign character on $\mathbb{Z}^\times$ gives a one-dimensional representation on $\mathbb{C}$
-that is both irreducible and nontrivial, while the zero-space Euler product equals $1$. -/
+that is both irreducible and nontrivial. -/
 @[category test, AMS 11]
-theorem sign_char_irreducible_nontrivial_and_zero_euler (s : ℂ) :
-    (∃ χ : Representation ℂ ℤˣ ℂ, χ.IsIrreducible ∧ ¬ χ.IsTrivial) ∧
-      artinEulerProduct (1 : Representation ℂ (ℚ ≃ₐ[ℚ] ℚ) (Fin 0 → ℂ)) s = 1 := by
-  refine ⟨?_, by simp [artinEulerProduct, artinLocalEulerFactor,
-    LinearMap.det_eq_one_of_subsingleton]⟩
+theorem sign_char_irreducible_nontrivial :
+    ∃ χ : Representation ℂ ℤˣ ℂ, χ.IsIrreducible ∧ ¬ χ.IsTrivial := by
   let χ : Representation ℂ ℤˣ ℂ :=
     { toFun := fun u => ((u : ℤ) : ℂ) • LinearMap.id
       map_one' := by ext; simp
@@ -162,6 +146,12 @@ theorem sign_char_irreducible_nontrivial_and_zero_euler (s : ℂ) :
   have h1 : χ (-1 : ℤˣ) (1 : ℂ) = 1 := χ.isTrivial_apply (-1 : ℤˣ) (1 : ℂ)
   change (((-1 : ℤˣ) : ℤ) : ℂ) * 1 = 1 at h1
   norm_num at h1
+
+/-- On the zero-dimensional complex representation space, the Artin Euler product equals $1$. -/
+@[category test, AMS 11]
+theorem artinEulerProduct_zero_dim (s : ℂ) :
+    artinEulerProduct (1 : Representation ℂ (ℚ ≃ₐ[ℚ] ℚ) (Fin 0 → ℂ)) s = 1 := by
+  simp [artinEulerProduct, artinLocalEulerFactor, LinearMap.det_eq_one_of_subsingleton]
 
 /-- **Artin's Holomorphy Conjecture** (1923): For every finite Galois extension $L / K$ of algebraic
 number fields and every finite-dimensional nontrivial irreducible complex representation $\rho$ of

@@ -25,7 +25,7 @@ prime pairs
 $$B_2 = \sum_{p, p + 2 \text{ prime}} \left(\frac{1}{p} + \frac{1}{p + 2}\right)
   = \left(\frac{1}{3} + \frac{1}{5}\right) + \left(\frac{1}{5} + \frac{1}{7}\right) +
     \left(\frac{1}{11} + \frac{1}{13}\right) + \cdots \approx 1.9021605831$$
-(`A065421`, counting $1 / 5$ in both $(3, 5)$ and $(5, 7)$) is finite, unlike Euler's divergent
+(OEIS A065421, counting $1 / 5$ in both $(3, 5)$ and $(5, 7)$) is finite, unlike Euler's divergent
 series over all primes. Since finitely many rational terms always have a rational sum,
 irrationality of $B_2$ would entail infinitely many twin primes; whether $B_2$ is irrational
 remains open.
@@ -44,23 +44,16 @@ remains open.
 
 namespace BrunConstant
 
-/-- `p` is the lesser member of a twin prime pair `(p, p + 2)`. -/
-def IsTwinPrimeLower (p : ℕ) : Prop := p.Prime ∧ (p + 2).Prime
-
-/-- Reciprocal-pair summand $1/p + 1/(p + 2)$ attached to a natural number $p$. -/
-noncomputable def twinPrimeTerm (p : ℕ) : ℝ :=
-  (1 : ℝ) / (p : ℝ) + (1 : ℝ) / ((p : ℝ) + 2)
-
-/-- Brun's constant $B_2 = \sum_{p, p+2 \text{ prime}} (1/p + 1/(p + 2))$ (`A065421`, where $1/5$
-appears in both $(3, 5)$ and $(5, 7)$). -/
-noncomputable def brunConstant : ℝ :=
-  ∑' p : {p : ℕ // IsTwinPrimeLower p}, twinPrimeTerm p.1
-
-/-- $p = 3$ begins the twin prime pair $(3, 5)$ with reciprocal sum $1/3 + 1/5 = 8/15$. -/
+/-- $p = 3$ begins the twin prime pair $(3, 5)$. -/
 @[category test, AMS 11]
-theorem isTwinPrimeLower_three_and_term :
-    IsTwinPrimeLower 3 ∧ twinPrimeTerm 3 = 8 / 15 := by
-  unfold IsTwinPrimeLower twinPrimeTerm
+theorem isTwinPrimeLower_three : IsTwinPrimeLower 3 := by
+  unfold IsTwinPrimeLower
+  norm_num
+
+/-- The twin prime pair starting at $p = 3$ has reciprocal sum $1/3 + 1/5 = 8/15$. -/
+@[category test, AMS 11]
+theorem twinPrimeTerm_three : twinPrimeTerm 3 = 8 / 15 := by
+  unfold twinPrimeTerm
   norm_num
 
 /-- $p = 7$ is not the lesser member of a twin prime pair because $9$ is composite. -/
