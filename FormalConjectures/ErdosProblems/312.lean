@@ -29,7 +29,8 @@ namespace Erdos312
 
 /--
 Does there exist a constant `c > 0` such that, for any `K > 1`, whenever `A` is a sufficiently large
-finite multiset of integers with $\sum_{n \in A} 1/n > K$ there exists some $S \subseteq A$ such that
+finite multiset of positive integers with $\sum_{n \in A} 1/n > K$ there exists some $S \subseteq A$
+such that
 $1 - \exp(-(c*K)) < \sum_{n \in S} 1/n \le 1$?
 -/
 @[category research open, question, AMS 5 11]
@@ -38,7 +39,7 @@ theorem erdos_312 :
       ∀ (K : ℝ), 1 < K →
         ∃ (N₀ : ℕ),
           ∀ (n : ℕ) (a : Fin n → ℕ),
-            (n ≥ N₀ ∧ (∑ i : Fin n, (a i : ℝ)⁻¹) > K) →
+            (n ≥ N₀ ∧ (∀ i, 0 < a i) ∧ (∑ i : Fin n, (a i : ℝ)⁻¹) > K) →
               ∃ (S : Finset (Fin n)),
                 1 - Real.exp (-(c * K)) < (∑ i ∈ S, (a i : ℝ)⁻¹) ∧
                 ∑ i ∈ S, (a i : ℝ)⁻¹ ≤ 1 := by
