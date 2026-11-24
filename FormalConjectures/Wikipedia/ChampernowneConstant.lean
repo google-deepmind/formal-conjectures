@@ -23,7 +23,8 @@ public import FormalConjecturesUtil
 
 D. G. Champernowne (1933) introduced the real constant
 $$C_{10} = 0.12345678910111213\dots = \sum_{k=0}^{\infty} \frac{d_k}{10^{k+1}},$$
-built by concatenating the decimal expansions of $1, 2, 3, \dots$ in increasing order (`A033307`),
+built by concatenating the decimal expansions of $1, 2, 3, \dots$ in increasing order
+(OEIS A033307),
 and established base-$10$ normality of $C_{10}$. Kurt Mahler (1937) proved that $C_{10}$ is
 transcendental over $\mathbb{Q}$, and Masaaki Amou (1991) established that its irrationality
 measure equals $\mu(C_{10}) = 10$.
@@ -47,16 +48,6 @@ entails normality in every power base $10^r$ by Maxfield 1953).
 @[expose] public section
 
 namespace ChampernowneConstant
-
-/-- The $k$-th decimal digit ($0$-indexed) after the radix point of Champernowne's decimal constant
-$C_{10} = 0.1234567891011\dots$, read from the concatenated big-endian base-$10$ digits of
-$1, 2, \dots, k + 1$. -/
-def champernowneDigit (k : ℕ) : ℕ :=
-  (((List.range (k + 1)).flatMap fun j => (Nat.digits 10 (j + 1)).reverse)).getD k 0
-
-/-- Champernowne's decimal constant $C_{10} = \sum_{k=0}^{\infty} d_k / 10^{k+1}$. -/
-noncomputable def champernowneConstant : ℝ :=
-  ∑' k : ℕ, (champernowneDigit k : ℝ) / (10 : ℝ) ^ (k + 1)
 
 /-- The initial $13$ decimal digits of $C_{10}$ equal $[1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 1, 1]$. -/
 @[category test, AMS 11]

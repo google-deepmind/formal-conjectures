@@ -30,7 +30,7 @@ Ljunggren (1943) settled all $n > 2$, isolating $(x, y, n, q) = (3, 11, 5, 2)$
 ($11^2 = 121 = 11111_3$) and $(7, 20, 4, 2)$ ($20^2 = 400 = 1111_7$). Bugeaud and Mignotte (2002)
 conjectured that across all $q \ge 2$ the sole further solution is $(18, 7, 3, 3)$
 ($7^3 = 343 = 111_{18}$), so the perfect powers representable as repunits of length at least $3$
-equal $\{121, 343, 400\}$ (`A208242`).
+equal $\{121, 343, 400\}$ (OEIS A208242).
 
 *References:*
 - [Wikipedia: Repdigit](https://en.wikipedia.org/wiki/Repdigit)
@@ -47,8 +47,8 @@ equal $\{121, 343, 400\}$ (`A208242`).
 
 namespace NagellLjunggrenConjecture
 
-/-- Parameters `(x, y, n, q)` solving `Nat.repunit x n = y ^ q` in integers `1 < x`, `1 < y`,
-`2 < n`, and `2 ≤ q`. -/
+/-- Parameters $(x, y, n, q)$ solving $\sum_{k=0}^{n-1} x^k = y^q$ (`Nat.repunit`) in integers
+$1 < x$, $1 < y$, $2 < n$, and $2 \le q$. -/
 def IsNagellLjunggrenSolution (x y n q : ℕ) : Prop :=
   1 < x ∧ 1 < y ∧ 2 < n ∧ 2 ≤ q ∧ Nat.repunit x n = y ^ q
 
@@ -81,9 +81,9 @@ theorem not_isNagellLjunggrenSolution_2_3_3_2 :
     ¬ IsNagellLjunggrenSolution 2 3 3 2 := by
   decide
 
-/-- Multiplicative form of the Nagell–Ljunggren equation: `(x, y, n, q)` satisfies
-`IsNagellLjunggrenSolution` if and only if `1 < x`, `1 < y`, `2 < n`, `2 ≤ q`, and
-`x ^ n - 1 = (x - 1) * y ^ q`. -/
+/-- Multiplicative form of the Nagell–Ljunggren equation: $(x, y, n, q)$ satisfies
+`IsNagellLjunggrenSolution` if and only if $1 < x$, $1 < y$, $2 < n$, $2 \le q$, and
+$x^n - 1 = (x - 1) y^q$. -/
 @[category API, AMS 11]
 theorem isNagellLjunggrenSolution_iff_pow_sub_one (x y n q : ℕ) :
     IsNagellLjunggrenSolution x y n q ↔
@@ -126,7 +126,7 @@ theorem nagell_ljunggren_conjecture :
   sorry
 
 /--
-**Nagell–Ljunggren / Bugeaud–Mignotte Conjecture** (value form, `A208242`): the perfect powers
+**Nagell–Ljunggren / Bugeaud–Mignotte Conjecture** (value form, OEIS A208242): the perfect powers
 representable as repunits of length at least $3$ in some radix $x \ge 2$ equal $\{121, 343, 400\}$.
 -/
 @[category research open, AMS 11]

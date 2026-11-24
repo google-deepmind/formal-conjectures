@@ -43,14 +43,6 @@ irrationality of $V$ itself remains open.
 
 namespace GiesekingConstant
 
-/-- Paired Dirichlet summand $(3n + 1)^{-2} - (3n + 2)^{-2}$ in $L(2, \chi_{-3})$. -/
-noncomputable def giesekingTerm (n : ℕ) : ℝ :=
-  1 / (3 * (n : ℝ) + 1) ^ 2 - 1 / (3 * (n : ℝ) + 2) ^ 2
-
-/-- Gieseking's constant $V = \frac{3\sqrt{3}}{4} \sum_{n=0}^\infty ((3n+1)^{-2} - (3n+2)^{-2})$. -/
-noncomputable def giesekingConstant : ℝ :=
-  (3 * Real.sqrt 3 / 4) * ∑' n : ℕ, giesekingTerm n
-
 /-- At $n = 0$, the initial paired term $1/1^2 - 1/2^2$ equals $3/4$. -/
 @[category test, AMS 11 33]
 theorem giesekingTerm_zero : giesekingTerm 0 = 3 / 4 := by

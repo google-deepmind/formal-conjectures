@@ -40,18 +40,6 @@ or the Euler–Mascheroni constant $\gamma$.
 
 namespace KhinchinConstant
 
-/-- Factor at index $r$ in the Euler-type product for Khinchin's constant: equal to $1$ at $r = 0$
-(and at $r = 1$ since $\log 1 = 0$), and $\bigl(1 + \frac{1}{r(r+2)}\bigr)^{\log r / \log 2}$ for
-$r \ge 1$. -/
-noncomputable def khinchinFactor (r : ℕ) : ℝ :=
-  if r = 0 then 1
-  else (1 + 1 / ((r : ℝ) * ((r : ℝ) + 2))) ^ (Real.log (r : ℝ) / Real.log 2)
-
-/-- Khinchin's constant $K_0 = \prod_{r=1}^{\infty} \bigl(1 + \frac{1}{r(r+2)}\bigr)^{\log_2 r}$,
-defined via an $\mathbb{N}$-indexed `tprod`. -/
-noncomputable def khinchinConstant : ℝ :=
-  ∏' r : ℕ, khinchinFactor r
-
 /-- Geometric mean $(a_1 a_2 \cdots a_n)^{1/n}$ formed from `Real.partQuot x k` over
 $0 \le k < n$. -/
 noncomputable def continuedFractionGeomMean (x : ℝ) (n : ℕ) : ℝ :=

@@ -21,11 +21,11 @@ public import FormalConjecturesUtil
 /-!
 # Irrationality of the Golomb–Dickman Constant
 
-The *Golomb–Dickman constant* $\lambda \approx 0.6243299885$ (`A084945`), studied independently by
-Karl Dickman (1930) for largest prime factors of integers and Solomon W. Golomb (1964) for longest
-cycles in random permutations, admits the logarithmic-integral representation (derived via random
-permutations by Shepp and Lloyd 1966 and equated with Dickman's constant by Knuth and Trabb Pardo
-1976; see Finch 2003, §5.4)
+The *Golomb–Dickman constant* $\lambda \approx 0.6243299885$ (OEIS A084945), studied independently
+by Karl Dickman (1930) for largest prime factors of integers and Solomon W. Golomb (1964) for
+longest cycles in random permutations, admits the logarithmic-integral representation (derived via
+random permutations by Shepp and Lloyd 1966 and equated with Dickman's constant by Knuth and Trabb
+Pardo 1976; see Finch 2003, §5.4)
 $$\lambda = \int_0^1 \exp\left(\int_0^x \frac{dt}{\log t}\right) dx$$
 and satisfies Dickman's asymptotic mean formula
 $$\lambda = \lim_{n \to \infty} \frac{1}{n} \sum_{k=2}^n \frac{\log P_1(k)}{\log k},$$
@@ -50,17 +50,6 @@ Lagarias (2013), whether $\lambda$ is rational or irrational remains open.
 @[expose] public section
 
 namespace GolombDickmanConstant
-
-/-- Inner logarithmic integral $\mathrm{li}(x) = \int_0^x \frac{dt}{\log t}$ for $0 \le x < 1$
-(at $t = 0$, Lean's `Real.log 0 = 0` extends $1 / \log t$ continuously by $0$, and the single
-endpoint $x = 1$ has measure zero in the outer integral on $[0, 1]$). -/
-noncomputable def golombDickmanInner (x : ℝ) : ℝ :=
-  ∫ t in (0 : ℝ)..x, 1 / Real.log t
-
-/-- The Golomb–Dickman constant
-$\lambda = \int_0^1 \exp\bigl(\int_0^x \frac{dt}{\log t}\bigr)\,dx$. -/
-noncomputable def golombDickmanConstant : ℝ :=
-  ∫ x in (0 : ℝ)..1, Real.exp (golombDickmanInner x)
 
 /-- At $x = 0$, the inner integral `golombDickmanInner 0` vanishes. -/
 @[category test, AMS 11]

@@ -24,7 +24,7 @@ public import FormalConjecturesUtil
 Štefan Znám (1972) asked which finite sets $S = \{n_1, \dots, n_k\}$ of integers greater than $1$
 have the property that every $x \in S$ properly divides $1 + \prod_{y \in S \setminus \{x\}} y$.
 Ladislav Skula (1975) proved that no solution exists for $k < 5$, Jaroslav Janák and Skula (1978)
-showed that only finitely many solutions exist for each fixed $k$ (`A075441`), and Qi Sun (1983)
+showed that only finitely many solutions exist for each fixed $k$ (OEIS A075441), and Qi Sun (1983)
 constructed at least one solution for every $k \ge 5$. Whether any proper Znám set consists
 entirely of odd integers remains open.
 
@@ -109,7 +109,7 @@ theorem not_isProperZnamSet_sylvester_four : ¬ IsProperZnamSet {2, 3, 7, 43} :=
 
 /--
 **Janák–Skula Finiteness Theorem** (1978): for every cardinality $k$, only finitely many finite
-sets $S \subseteq \mathbb{N}$ of size $k$ satisfy `IsProperZnamSet S` (`A075441`).
+sets $S \subseteq \mathbb{N}$ of size $k$ satisfy `IsProperZnamSet S` (OEIS A075441).
 -/
 @[category research solved, AMS 11]
 theorem znam_solutions_finite (k : ℕ) :
