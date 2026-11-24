@@ -118,6 +118,21 @@ theorem erdos_382.parts.ii :
     ∀ k : ℕ, ∃ u v : ℕ, LargestPrimeRepeated u v ∧ k ≤ v - u := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
+/--
+The pair $(u, v) = (12339873448110272, 12339873448110289)$, with $v - u = 17$, satisfies the
+condition. Here $v = p^2$ with $p = 111084983$ prime, and every integer in $[u, v]$ has all its
+prime factors at most $p$, so $p$ is the largest prime dividing the product and $p^2$ divides it.
+This gives the case $k = 17$ of `Erdos382.erdos_382.parts.ii`. In the public sources we checked
+(November 2026), the widest example reported before had $v - u = 15$ (Leandre Jack, OEIS A388850),
+and StijnC gave one with $v - u = 13$ on the erdosproblems.com forum.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/f47d150fd0b7b7e36164ddad1fc12317af72bc76/ErdosLean/Erdos382Width17.lean#L77-L102"]
+theorem erdos_382.variants.width_17 :
+    LargestPrimeRepeated 12339873448110272 12339873448110289 := by
+  sorry
+
 /--
 Erdős and Graham [ErGr80] report that it follows from results of Ramachandra that
 $v - u \leq v^{1/2+o(1)}$ for every pair $u \leq v$ as in `Erdos382.erdos_382.parts.i`.
