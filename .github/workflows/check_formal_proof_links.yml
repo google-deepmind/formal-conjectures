@@ -9,7 +9,9 @@ jobs:
   check:
     runs-on: ubuntu-latest
     if: github.repository == 'google-deepmind/formal-conjectures'
-    # The script reads the working tree and fetches public URLs; it makes no API calls.
+    # The script reads the links from the extract_names metadata the website publishes
+    # (data/conjectures.json), so no Lean build is needed, and fetches public URLs; it makes
+    # no API calls.
     permissions:
       contents: read
     steps:
