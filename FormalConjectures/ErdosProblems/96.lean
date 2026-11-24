@@ -57,13 +57,20 @@ This function is often denoted as $U_c(n)$ in combinatorics.
 noncomputable def maxConvexUnitDistances (n : ℕ) : ℕ :=
   sSup (convexUnitDistanceCounts n)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $n$ points in $\mathbb{R}^2$ form a convex polygon then there are $O(n)$ many pairs which are
 distance $1$ apart.
+
+The conjecture is false: for all large $n$ there is a convex polygon with
+$\gg n\log\log n$ many unit-distance pairs (see
+[erdosproblems.com/96](https://www.erdosproblems.com/96)). A Lean 4 formalisation is available at
+[lkruer/erdos-96-97-proof](https://github.com/lkruer/erdos-96-97-proof/blob/90fd28e53183f44ae8271b8e71590ed18eb1c28b/Erdos9697Complete.lean#L2416).
 -/
-@[category research open, question, AMS 52]
+@[category research solved, question, AMS 52, formal_proof using lean4 at
+  "https://github.com/lkruer/erdos-96-97-proof/blob/90fd28e53183f44ae8271b8e71590ed18eb1c28b/Erdos9697Complete.lean#L2416"]
 theorem erdos_96 :
-    (fun n => (maxConvexUnitDistances n : ℝ)) =O[atTop] fun n => (n : ℝ) := by
+    ¬ ((fun n => (maxConvexUnitDistances n : ℝ)) =O[atTop] fun n => (n : ℝ)) := by
   sorry
 
 end Erdos96
