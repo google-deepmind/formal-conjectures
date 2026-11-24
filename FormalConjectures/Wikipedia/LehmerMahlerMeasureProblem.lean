@@ -58,10 +58,9 @@ That is, `lehmerConstant > 1`.
 theorem lehmer_mahler_measure_problem : 1 < lehmerConstant := by
   sorry
 
-noncomputable def lehmerPolynomial : ℤ[X] := X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1
-
 /--
-`μ=M(X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1)` is the best value for `lehmer_mahler_measure_problem`.
+`μ = M(X^10 + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1)` (`mahlerMeasureZ lehmerPolynomial`) is
+the best value for `lehmer_mahler_measure_problem`.
 -/
 @[category research open, AMS 11]
 theorem lehmer_mahler_measure_problem.variants.best :
