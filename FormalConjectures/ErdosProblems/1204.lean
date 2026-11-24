@@ -95,18 +95,24 @@ theorem erdos_1204.variants.A_lower :
     ∀ ε > (0 : ℝ), ∀ᶠ k : ℕ in atTop, (1 / 2 - ε) * k * Real.log k ≤ (A k : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is known that $A(k)\leq (1+o(1))k\log k$, by taking the $k$ smallest primes $>k$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-1204-lean/blob/89bf18e8bc3381e75f3995b43327c19c038dc4dd/Erdos1204.lean#L173"]
 theorem erdos_1204.variants.A_upper :
     ∀ ε > (0 : ℝ), ∀ᶠ k : ℕ in atTop, (A k : ℝ) ≤ (1 + ε) * k * Real.log k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Taking the first $k$ primes which are $>k$ implies $B(k)\leq (1/2+o(1))k\log k$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-1204-lean/blob/89bf18e8bc3381e75f3995b43327c19c038dc4dd/Erdos1204.lean#L212"]
 theorem erdos_1204.variants.B_upper :
     ∀ ε > (0 : ℝ), ∀ᶠ k : ℕ in atTop, B k ≤ (1 / 2 + ε) * k * Real.log k := by
   sorry
