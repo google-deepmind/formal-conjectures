@@ -60,11 +60,13 @@ theorem erdos_400.parts.ii :
         atTop (𝓝 1) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Graham write that it is easy to show that $g_k(n) \ll_k \log n$ always, but the best
 possible constant is unknown.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/laughingbear/erdos-400-lean/blob/5cca18cf2b17d7cddd6cb982f2058a2216df29de/Erdos400.lean#L105"]
 theorem erdos_400.variants.upper_bound (k : ℕ) (hk : k ≥ 2) :
     (fun n : ℕ ↦ (g k n : ℝ)) ≪ (fun n : ℕ ↦ Real.log (n : ℝ)) := by
   sorry
