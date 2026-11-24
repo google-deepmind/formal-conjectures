@@ -35,16 +35,21 @@ namespace Erdos81
 
 open SimpleGraph
 
-set_option linter.style.formal_proof_palomar false in
 /-- Let $G$ be a chordal graph on $n$ vertices - that is, $G$ has no induced cycles of
 length greater than $3$. Can the edges of $G$ be partitioned into $n^2/6+O(n)$ many cliques?
 
-The answer is yes: in fact $\lfloor n(n+1)/6\rfloor$ cliques always suffice
-(see [erdosproblems.com/81](https://www.erdosproblems.com/81)). A Lean 4 formalisation is
-available at [N0zoM1z0/erdos-81](https://github.com/N0zoM1z0/erdos-81/blob/main/lean/Erdos81.lean).
+The answer is yes: in fact $\lfloor n(n+1)/6\rfloor$ cliques suffice for all sufficiently
+large $n$ (see [erdosproblems.com/81](https://www.erdosproblems.com/81)). The corollary gives
+the $n^2/6+Cn$ bound for every $n$, which is the statement below.
+
+A Lean 4 formalisation is available at
+[N0zoM1z0/erdos-81](https://github.com/N0zoM1z0/erdos-81/blob/cbde8a0a0563372b23b1b39a44180d2c0fb02f44/lean/Erdos81/MainTheorem.lean#L125),
+conditional on Vizing's theorem, the Häggkvist–Janssen list-edge-colouring bound, and a
+packing-transfer interface that includes LP attainment
+(`erdos81_of_inputs` in
+[ExternalInputs.lean](https://github.com/N0zoM1z0/erdos-81/blob/cbde8a0a0563372b23b1b39a44180d2c0fb02f44/lean/Erdos81/ExternalInputs.lean)).
 -/
-@[category research solved, question, AMS 5, formal_proof using lean4 at
-  "https://github.com/N0zoM1z0/erdos-81/blob/main/lean/Erdos81.lean"]
+@[category research solved, question, AMS 5]
 theorem erdos_81 :
     ∃ C : ℝ, ∀ n : ℕ, ∀ G : SimpleGraph (Fin n), G.IsChordal →
       ∃ P : Finset (Finset (Fin n)), G.IsCliqueEdgePartition P ∧
