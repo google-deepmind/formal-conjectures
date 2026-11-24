@@ -163,7 +163,10 @@ Conjecture (ii): For each triple $(c_1, c_2, c_3) \in \{(1,8,20), (3,5,15), (6,1
 $x^2 + y^2 + z^2 + w^2$ with $x, y, z, w$ nonnegative integers such that
 $xy(c_1 x^2 + c_2 y^2 + c_3 z^2)$ is a square.
 
-Disproved for $(c_1, c_2, c_3) = (42, 98, 14)$ at $n = 56271$.
+Disproved for $(c_1, c_2, c_3) = (42, 98, 14)$ at $n = 56271$. In v12 (Dec 2016) of
+[arXiv:1604.06723](https://arxiv.org/abs/1604.06723) (Conjecture 4.13(iv)), Zhi-Wei Sun
+removed $(42, 98, 14)$ while keeping the remaining six triples open; see
+`conjecture_3.variants.remaining_triples`.
 -/
 @[category research solved, AMS 11]
 theorem conjecture_3 :
@@ -285,5 +288,18 @@ theorem conjecture_3 :
   · exact hmod.2.2.2.2 hpar
   · exact hne (by rw [ha]; omega)
   · rw [ha, hok] at htrue; exact Bool.false_ne_true htrue
+
+/--
+Open variant of `conjecture_3` restricted to the remaining six triples
+$\{(1,8,20), (3,5,15), (6,14,4), (7,29,5), (18,38,18), (39,81,51)\}$ from
+[OEIS A261876](https://oeis.org/A261876) / Conjecture 4.13(iv) of
+[arXiv:1604.06723](https://arxiv.org/abs/1604.06723) after removing $(42, 98, 14)$.
+-/
+@[category research open, AMS 11]
+theorem conjecture_3.variants.remaining_triples (t : ℕ × ℕ × ℕ) (ht : t ∈ triples)
+    (hne : t ≠ (42, 98, 14)) (n : ℕ) :
+    ∃ x y z w : ℕ, n = x ^ 2 + y ^ 2 + z ^ 2 + w ^ 2 ∧
+      IsSquare (x * y * (t.1 * x ^ 2 + t.2.1 * y ^ 2 + t.2.2 * z ^ 2)) := by
+  sorry
 
 end OeisA261876
