@@ -21,7 +21,9 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 14
 
-*Reference:* [erdosproblems.com/14](https://www.erdosproblems.com/14)
+*References:*
+- [erdosproblems.com/14](https://www.erdosproblems.com/14)
+- [Conjectures.io result](https://conjectures.io/results/adb53fba-0b01-4398-abab-cb9b2176eebc/solution)
 -/
 
 @[expose] public section
@@ -49,17 +51,26 @@ noncomputable def squareRoot (N : ℕ) : ℝ :=
 Let $A ⊆ \mathbb{N}$. Let $B ⊆ \mathbb{N}$ be the set of integers which are representable
 in exactly one way as the sum of two elements from $A$. Is it true that for all
 $\epsilon > 0$ and large $N$, $|\{1,\ldots,N\} \setminus B| \gg_\epsilon N^{1/2 - \epsilon}$?
+
+The answer is yes: in fact $|\{1,\ldots,N\} \setminus B| \gg N^{1/2}$ for all $A$
+(see [erdosproblems.com/14](https://www.erdosproblems.com/14)).
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_14.parts.i :
     ∀ A, ∀ ε > 0, nonUniqueSumCount A ≫ almostSquareRoot ε := by sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it possible that $|\{1,\ldots,N\} \setminus B| = o(N^\frac{1}{2})$?
+
+The answer is no: in fact $|\{1,\ldots,N\} \setminus B| \gg N^{1/2}$ for all $A$.
+A formalised proof is available at
+[Conjectures.io](https://conjectures.io/results/adb53fba-0b01-4398-abab-cb9b2176eebc/solution).
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://conjectures.io/results/adb53fba-0b01-4398-abab-cb9b2176eebc/solution"]
 theorem erdos_14.parts.ii :
-    ∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot := by
+    ¬ ∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot := by
   sorry
 
 end Erdos14
