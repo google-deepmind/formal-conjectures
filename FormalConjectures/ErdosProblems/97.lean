@@ -74,10 +74,13 @@ def HasNUnitDistanceProperty (n : ℕ) (A : Finset ℝ²) : Prop :=
 
 /--
 Does every convex polygon have a vertex with no other 4 vertices equidistant from it?
+
+The answer is no. For all large $n$ there is a convex polygon with $n$ vertices such that every
+vertex has $\gg \log\log n$ vertices at distance $1$. See the reference above.
 -/
-@[category research open, question, AMS 52]
+@[category research solved, question, AMS 52]
 theorem erdos_97 :
-    ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A := by
+    ¬ ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty 4 A := by
   sorry
 
 /--
@@ -107,10 +110,13 @@ theorem erdos_97.variants.three_equidistant :
 /--
 Erdős also conjectured that there is a $k$ for which every convex polygon has a vertex
 with no other $k$ vertices equidistant from it.
+
+This is false by the same result. For every $k$ there is a convex polygon in which every vertex
+has at least $k$ vertices at distance $1$.
 -/
-@[category research open, question, AMS 52]
+@[category research solved, question, AMS 52]
 theorem erdos_97.variants.k_equidistant :
-    ∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty k A := by
+    ¬ ∃ k : ℕ, ∀ A : Finset ℝ², A.Nonempty → ConvexIndep A → ¬HasNEquidistantProperty k A := by
   sorry
 
 /--
