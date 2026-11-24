@@ -24,6 +24,10 @@ public import FormalConjecturesUtil
 - [erdosproblems.com/3](https://www.erdosproblems.com/3)
 - [BlSi20] Bloom, Thomas F. and Sisask, Olof, *Breaking the logarithmic barrier in Roth's theorem
   on arithmetic progressions*. arXiv:2007.03528 (2020).
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [Ge77] Gerver, Joseph L., *The sum of the reciprocals of a set of integers with no arithmetic
+  progression of $k$ terms*. Proc. Amer. Math. Soc. (1977), 211-214.
 - [Go01] Gowers, W. T., *A new proof of Szemerédi's theorem*. Geom. Funct. Anal. (2001), 465-588.
 - [GrTa17] Green, Ben and Tao, Terence, *New bounds for Szemerédi's theorem, III: a
   polylogarithmic bound for $r_4(N)$*. Mathematika (2017).
@@ -34,6 +38,10 @@ public import FormalConjecturesUtil
 - [OAI26] OpenAI, *Quasipolynomial Bounds for Arithmetic Progressions*. OpenAI Math Release
   preprint (2026).
   https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Quasipolynomial-Bounds-for-Arithmetic-Progressions-September-23-2026/paper.pdf
+- [Pa07] Pal, Goutam, *On sequences of positive integers containing no $p$ terms in arithmetic
+  progression*. arXiv:math/0703467 (2007).
+- [TaVu06] Tao, Terence and Vu, Van, *Additive combinatorics*. Cambridge Studies in Advanced
+  Mathematics 105 (2006).
 -/
 
 @[expose] public section
@@ -86,6 +94,64 @@ Proved by Bloom and Sisask [BlSi20].
     assuming erdos_3.variants.kelley_meka]
 theorem erdos_3.variants.three : ∀ A : Set ℕ,
     (¬ Summable fun a : A ↦ 1 / (a : ℝ)) → ∃ S ⊆ A, S.IsAPOfLength 3 := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+Fix $k \geq 3$. Every $A \subset \mathbb{N}$ with $\sum_{n \in A}\frac 1 n = \infty$ contains a
+non-trivial $k$-term arithmetic progression if and only if the following holds: for every
+$\varepsilon > 0$ there is $N$ such that every set $A$ of integers $\geq N$ with no non-trivial
+$k$-term arithmetic progression has $\sum_{n \in A}\frac 1 n < \varepsilon$.
+
+The second property, for every $k \geq 3$, is a question of Erdős [Er80, p. 92]. It is the last
+question on [erdosproblems.com/169](https://www.erdosproblems.com/169). Pal [Pa07, Lemma 5] proved
+that the first property implies the second at the same $k$. Gerver [Ge77] proved that the first
+property for every $k$ is equivalent to a uniform bound on these sums for every $k$. The proof goes
+through the convergence of $\sum_j r_k(4^j) / 4^j$, as in [TaVu06, Exercise 10.0.6].
+-/
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/48826f608768cdc2bdab7c6996a30a34c70d453e/ErdosLean/Erdos169Er80.lean"]
+theorem erdos_3.variants.uniform_tail_iff (k : ℕ) (hk : 3 ≤ k) :
+    (∀ A : Set ℕ, (¬ Summable fun a : A ↦ 1 / (a : ℝ)) → ∃ S ⊆ A, S.IsAPOfLength k) ↔
+      ∀ ε > (0 : ℝ), ∃ N : ℕ, ∀ A : Set ℕ, A.IsAPOfLengthFree k → (∀ a ∈ A, N ≤ a) →
+        (Summable fun a : A ↦ 1 / (a : ℝ)) ∧ ∑' a : A, 1 / (a : ℝ) < ε := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+For every $\varepsilon > 0$ there is $N$ such that every set $A$ of integers $\geq N$ with no
+non-trivial $3$-term arithmetic progression has $\sum_{n \in A}\frac 1 n < \varepsilon$.
+
+This is the case $k = 3$ of the question of Erdős [Er80] in `erdos_3.variants.uniform_tail_iff`.
+It follows from the bound of Kelley and Meka [KeMe23], which makes $\sum_j r_3(4^j) / 4^j$
+converge.
+-/
+@[category research solved, AMS 5 11,
+  conditional formal_proof using lean4 at
+    "https://github.com/mnn31/erdos-lean/blob/48826f608768cdc2bdab7c6996a30a34c70d453e/ErdosLean/Erdos169Er80.lean"
+    assuming erdos_3.variants.kelley_meka]
+theorem erdos_3.variants.uniform_tail_three :
+    ∀ ε > (0 : ℝ), ∃ N : ℕ, ∀ A : Set ℕ, A.IsAPOfLengthFree 3 → (∀ a ∈ A, N ≤ a) →
+      (Summable fun a : A ↦ 1 / (a : ℝ)) ∧ ∑' a : A, 1 / (a : ℝ) < ε := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+For every $k \geq 3$ and $\varepsilon > 0$ there is $N$ such that every set $A$ of integers
+$\geq N$ with no non-trivial $k$-term arithmetic progression has
+$\sum_{n \in A}\frac 1 n < \varepsilon$.
+
+This is the question of Erdős [Er80, p. 92] on
+[erdosproblems.com/169](https://www.erdosproblems.com/169). By
+`erdos_3.variants.uniform_tail_iff` it is equivalent to `erdos_3`, so it follows from `erdos_3`.
+-/
+@[category research solved, AMS 5 11,
+  conditional formal_proof using lean4 at
+    "https://github.com/mnn31/erdos-lean/blob/48826f608768cdc2bdab7c6996a30a34c70d453e/ErdosLean/Erdos169Er80.lean"
+    assuming erdos_3]
+theorem erdos_3.variants.uniform_tail :
+    ∀ k : ℕ, 3 ≤ k → ∀ ε > (0 : ℝ), ∃ N : ℕ, ∀ A : Set ℕ, A.IsAPOfLengthFree k →
+      (∀ a ∈ A, N ≤ a) → (Summable fun a : A ↦ 1 / (a : ℝ)) ∧ ∑' a : A, 1 / (a : ℝ) < ε := by
   sorry
 
 /--
