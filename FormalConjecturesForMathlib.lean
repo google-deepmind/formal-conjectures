@@ -235,6 +235,7 @@ public import FormalConjecturesForMathlib.NumberTheory.PrimesInAP
 public import FormalConjecturesForMathlib.NumberTheory.Primitive
 public import FormalConjecturesForMathlib.NumberTheory.PrimitivePrimeDivisor
 public import FormalConjecturesForMathlib.NumberTheory.Refactorable
+public import FormalConjecturesForMathlib.NumberTheory.Repunit
 public import FormalConjecturesForMathlib.NumberTheory.RiemannZetaZeros
 public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 public import FormalConjecturesForMathlib.NumberTheory.SmoothScale
