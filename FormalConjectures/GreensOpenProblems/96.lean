@@ -29,6 +29,8 @@ public import FormalConjecturesUtil
   J. Anal. Math. 105 (2008), 363--378.
 - [Pi83] Pisier, G., *Arithmetic characterizations of Sidon sets*.
   Bull. Amer. Math. Soc. (N.S.) 8 (1983), no. 1, 87--89.
+- [Le26] Lewko, M., *The Sidon Decomposition Problem in Abelian Groups of Bounded Torsion*.
+  [arXiv:2606.06669](https://arxiv.org/abs/2606.06669) (2026).
 -/
 
 @[expose] public section
@@ -102,7 +104,10 @@ commutative harmonic analysis sense) is a finite union of independent sets, that
 $A \subset \mathbb{Z}$, all of whose finite subset sums are distinct (for example, the powers of
 two)." Green notes that [Pi83] showed that $S \subset \mathbb{Z}$ is Sidon if and only if there is a
 $\delta > 0$ such that every finite $S' \subset S$ contains an independent set $A$ with
-$|A| \geq \delta |S'|$.
+$|A| \geq \delta |S'|$. This characterisation needs $0 \notin S$, since the only independent subset
+of $S' = \{0\}$ is empty; it is stated for sets not containing $0$ in [Le26, Theorem 1.1], where
+independent sets are called quasi-independent (no nontrivial sum with coefficients in
+$\{-1, 0, 1\}$ vanishes, which is the same condition).
 
 We assume $0 \notin \Lambda$: no independent set contains $0$, while $\{0\}$ is a Sidon set, so
 without this hypothesis the answer would be no for a trivial reason.
