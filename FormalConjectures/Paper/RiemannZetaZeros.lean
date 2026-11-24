@@ -25,6 +25,8 @@ public import FormalConjecturesUtil
   simple and on the critical line*, August 2026.
   [pdf](https://www-cdn.anthropic.com/95c246936988e43127bc6b2ceb7077c1dad2d68e.pdf),
   [Lean formalisation](https://github.com/anthropics/zeta-23-lean).
+- [BH13] Bui, H. M. and Heath-Brown, D. R., *On simple zeros of the Riemann zeta-function*, 2013.
+  [arXiv:1302.5018](https://arxiv.org/abs/1302.5018)
 - [Wikipedia](https://en.wikipedia.org/wiki/Riemann_hypothesis#Zeros_on_the_critical_line)
 
 For a nontrivial zero `ρ = β + iγ` of `ζ` (or of a Dirichlet `L`-function) with multiplicity
@@ -114,7 +116,11 @@ theorem distinct_prop_montgomeryTaylor : ∃ o : ℝ → ℝ, o =o[atTop] (1 : �
 
 /-- Is the proportion of simple zeros of `ζ` on the critical line unconditionally larger than
 the Montgomery–Taylor bound `2 - c_MT⁻¹ = 0.6725…`? [Cl26, §7.2] puts the ceiling of its
-method at about `0.682`. -/
+method at about `0.682`.
+
+Assuming the Riemann Hypothesis, Bui and Heath-Brown [BH13] proved that the proportion of simple
+zeros is at least `19/27 = 0.7037…`. They count the zeros with `0 < γ < T`, and the statement here
+counts those with `T < γ ≤ 2T`. -/
 @[category research open, AMS 11]
 theorem simple_prop_lt : ∃ c > 2 - montgomeryTaylorConst⁻¹, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
@@ -128,7 +134,11 @@ theorem simple_prop_one_hundred : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → 
   sorry
 
 /-- Is the proportion of distinct zeros of `ζ` unconditionally larger than the Montgomery–Taylor
-bound `(3 - c_MT⁻¹) / 2 = 0.8362…`? -/
+bound `(3 - c_MT⁻¹) / 2 = 0.8362…`?
+
+Assuming the Riemann Hypothesis, Bui and Heath-Brown [BH13] proved that the proportion of distinct
+zeros is at least `0.84665`. They count the zeros with `0 < γ < T`, and the statement here counts
+those with `T < γ ≤ 2T`. -/
 @[category research open, AMS 11]
 theorem distinct_prop_lt : ∃ c > (3 - montgomeryTaylorConst⁻¹) / 2, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
