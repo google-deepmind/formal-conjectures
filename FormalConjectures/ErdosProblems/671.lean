@@ -17,6 +17,9 @@ module
 
 public import FormalConjecturesUtil
 
+open Filter
+open scoped Topology
+
 /-!
 # Erdős Problem 671
 *Reference:* [erdosproblems.com/671](https://www.erdosproblems.com/671)
@@ -44,6 +47,8 @@ noncomputable def lagrangeInterpolation (n : ℕ) (x : ℕ → ℝ) (f : ℝ →
   ∑ k ∈ Finset.range n, (f (x k)) * (lagrangeBasis n x k t)
 
 
+set_option linter.style.formal_proof_palomar false in
+
 /-- Given $a_{i}^n\in [-1,1]$ for all $1\leq i\leq n<\infty$ such that for fixed $n$ the $a_{i}^n$
 are pairwise disjoint, we define $p_{i}^n$ as the unique polynomial of degree at most $n-1$ such
 that $p_{i}^n(a_{i}^n)=1$ and $p_{i}^n(a_{i'}^n)=0$ if $1\leq i'\leq n$ with $i\neq i'$. We similarly
@@ -56,24 +61,25 @@ exists some $x\in [-1,1]$ where\[\limsup_{n\to \infty} \sum_{1\leq i\leq n}|p_{i
 yet\[\mathcal{L}^nf(x) \to f(x)?\]
 -/
 
-@[category research open, question, AMS 41]
+@[category research solved, question, AMS 41, formal_proof using lean4 at "https://github.com/umaia1234/agentic-conjectures/blob/main/problems/erdos-671/upstream/Erdos671.public.lean"]
 theorem erdos_671.parts.i :
     ∃ a : ℕ → ℕ → ℝ, (∀ k,∀ i : Fin k, a k i ∈ Set.Icc (-1 : ℝ) 1 ∧ Set.InjOn (a k) (Finset.range k)) ∧
     (∀ f : ℝ → ℝ, ContinuousOn f (Set.Icc (-1 : ℝ) 1) → ∃ x ∈ Set.Icc (-1 : ℝ) 1,
     (∀ M : ℕ, ∃ᶠ n : ℕ in Filter.atTop, lebesgueFunction n (a n) x ≥ M) ∧
-    (∀ ε > (0 : ℝ), ∃ N : ℕ, ∀ n : ℕ, (n ≥ N → |lagrangeInterpolation n (a n) f x - f x| < ε))) := by
+    (Filter.Tendsto (fun n ↦ lagrangeInterpolation n (a n) f x) atTop (𝓝 (f x)))) := by
   sorry
+
+set_option linter.style.formal_proof_palomar false in
 
 /-- Is there such a sequence such that\[\limsup_{n\to \infty} \sum_{1\leq i\leq n}|p_{i}^n(x)|=\infty\]
 for every $x\in [-1,1]$ and yet for every continuous $f:[-1,1]\to \mathbb{R}$ there exists $x\in [-1,1]$
 with\[\mathcal{L}^nf(x) \to f(x)?\] -/
 
-@[category research open, question, AMS 41]
+@[category research solved, question, AMS 41, formal_proof using lean4 at "https://github.com/umaia1234/agentic-conjectures/blob/main/problems/erdos-671/upstream/Erdos671.public.lean"]
 theorem erdos_671.parts.ii :
     ∃ a : ℕ → ℕ → ℝ, (∀ k,∀ i : Fin k, a k i ∈ Set.Icc (-1 : ℝ) 1 ∧ Set.InjOn (a k) (Finset.range k)) ∧
     (∀ x ∈ Set.Icc (-1 : ℝ) 1, (∀ M : ℕ, ∃ᶠ n : ℕ in Filter.atTop, lebesgueFunction n (a n) x ≥ M)) ∧
-    (∀ f : ℝ → ℝ, ContinuousOn f (Set.Icc (-1 : ℝ) 1) → ∃ x₀ ∈ Set.Icc (-1 : ℝ) 1, (∀ ε > (0 : ℝ), ∃ N : ℕ, ∀ n : ℕ,
-    (n ≥ N → |lagrangeInterpolation n (a n) f x₀ - f x₀| < ε))) := by
+    (∀ f : ℝ → ℝ, ContinuousOn f (Set.Icc (-1 : ℝ) 1) → ∃ x₀ ∈ Set.Icc (-1 : ℝ) 1, Filter.Tendsto (fun n ↦ lagrangeInterpolation n (a n) f x₀) atTop (𝓝 (f x₀))) := by
   sorry
 
 end Erdos671
