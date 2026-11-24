@@ -77,9 +77,13 @@ def trivialZeros {q : ℕ} (χ : DirichletCharacter ℂ q) : Set ℤ :=
 set_option linter.style.formal_proof_palomar false in
 /-- The **Generalized Riemann Hypothesis** asserts that all the non-trivial zeros of the
 Dirichlet $L$-function $L(\chi, s)$ of a primitive Dirichlet character $\chi$ have real part
-$\frac{1}{2}$. -/
+$\frac{1}{2}$.
+
+The linked proof states this for the zeros with $0 < \operatorname{Re}(s) < 1$. Our statement
+follows by combining it with the
+[bridge theorem](https://github.com/leanprover-community/riemann-hypothesis/blob/d27f71347abceb76cd37dc8a5fccbe556ec2be90/comparator/FormalConjecturesBridge.lean#L152). -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/leanprover-community/riemann-hypothesis"]
+  "https://github.com/leanprover-community/riemann-hypothesis/blob/d27f71347abceb76cd37dc8a5fccbe556ec2be90/src/Main.lean#L54"]
 theorem generalized_riemann_hypothesis (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q)
     (hχ : χ.IsPrimitive) (s : ℂ) (hs : χ.LFunction s = 0)
     (hs_nontrivial : s ∉ Int.cast '' trivialZeros χ) :
