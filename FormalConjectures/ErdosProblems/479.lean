@@ -36,4 +36,21 @@ theorem erdos_479 : ∀ᵉ (k : ℤ) (k ≠ 1),
     { n : ℕ | (2 : ℤ) ^ n ≡ k [ZMOD (n : ℤ)] }.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
+/--
+For every $i \geq 1$ there are infinitely many $n$ such that $2^n \equiv -2^i \pmod{n}$, that is,
+$n \mid 2^n + 2^i$. This answers the question for $k = -2, -4, -8, -16, \ldots$. On the
+erdosproblems.com forum (December 2025), Tang recorded the question as open for every fixed $k$
+other than $k \in \{0, -1, -2\}$ and $k = 2^i$.
+
+Starting from $n = 2^i$, replace $n$ by $np$, where $p$ is a prime for which $2$ has order
+$2(n - i)$ modulo $p$. Such a prime exists by Bang's theorem, and $np \mid 2^{np} + 2^i$ follows
+from Fermat's little theorem modulo $p$ and from $2(n - i) \mid p - 1$ modulo $n$.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/1b13018b741a8b89ec0e6ec797f1c935d6b97fd2/ErdosLean/Erdos479.lean#L336-L367"]
+theorem erdos_479.variants.neg_two_pow :
+    ∀ i ≥ 1, { n : ℕ | (2 : ℤ) ^ n ≡ -(2 ^ i) [ZMOD (n : ℤ)] }.Infinite := by
+  sorry
+
 end Erdos479
