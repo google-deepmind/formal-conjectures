@@ -22,6 +22,8 @@ public import FormalConjecturesUtil
 
 *References:*
 - [erdosproblems.com/675](https://www.erdosproblems.com/675)
+- [CM24] Choudhry, A. and Maji, B., *Finite sequences of integers expressible as sums of two
+  squares*. Int. J. Number Theory (2024). [arXiv:2310.13317](https://arxiv.org/abs/2310.13317)
 - [Er79] Erdős, Paul, *Some unconventional problems in number theory*. Math. Mag. (1979), 67-70.
 - [Ho26] Ho, B. S., *A squarefree lower bound for Erdős Problem 675*.
   [PDF](https://boonsuan.github.io/erdos675_squarefree.pdf) (2026).
@@ -152,6 +154,26 @@ theorem erdos_675.variants.brun (B : Set ℕ) (hB : B.Pairwise Nat.Coprime)
     (hsum : (fun x : ℕ ↦ ∑ b ∈ Finset.range x with b ∈ B, (1 : ℝ) / (b : ℝ)) =o[atTop]
       fun x : ℕ ↦ Real.log (Real.log (x : ℝ))) :
     HasTranslationProperty {n : ℕ | ∀ b ∈ B, ¬ b ∣ n} := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/--
+There are infinitely many $8$-shifts for the set $E$ of sums of two squares, that is,
+infinitely many $t \geq 1$ with $a \in E \iff a + t \in E$ for all $1 \leq a \leq 8$.
+
+Let $u^2 + 119 = 21 s^2$ with $u, s \geq 1$. Put $x = 2 s^2 - 1$ and
+$t = x^2 - 1 = 4 s^2 (s^2 - 1)$. Then $t + 1 = x^2$, $t + 2 = x^2 + 1^2$,
+$t + 4 = (x - 1)^2 + (2 s)^2$, $t + 5 = x^2 + 2^2$ and $t + 8 = (x - 21)^2 + (2 u)^2$.
+Since $8 \mid t$, the numbers $t + 3$, $t + 6$, $t + 7$ are $3, 6, 7 \pmod 8$, so they are not
+in $E$. The map $(u, s) \mapsto (55 u + 252 s, 12 u + 55 s)$ preserves $u^2 - 21 s^2$, so the
+solution $(35, 8)$ gives infinitely many solutions. This is the Pell device that Choudhry and
+Maji [CM24] use to find infinitely many $n$ with $n$, $n + 1$, $n + 2$, $n + 4$, $n + 5$ all
+sums of two squares.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/9379e117b30715c885c69878e10edd359c5c2a6c/ErdosLean/Erdos675.lean"]
+theorem erdos_675.variants.sumsOfTwoSquares_infinite_eight_shifts :
+    {t : ℕ | IsTranslation {m : ℕ | ∃ x y : ℕ, m = x ^ 2 + y ^ 2} 8 t}.Infinite := by
   sorry
 
 end Erdos675
