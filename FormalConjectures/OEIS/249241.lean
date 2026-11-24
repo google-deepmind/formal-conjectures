@@ -49,36 +49,23 @@ noncomputable def a (n : ℕ) : ℕ :=
 @[category test, AMS 11]
 theorem a_0 : a 0 = 2 := by
   simp [a]
-  rw [Nat.le_antisymm_iff]
-  constructor <;> simp [nextPrime]
-  · use 3
-    norm_num
-  · intros
-    omega
+  rw [nextPrime, Nat.find_eq_iff]
+  decide
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 2 := by
   simp [a]
   norm_num [show primorial 3 = 6 by rfl]
-  rw [Nat.le_antisymm_iff]
-  constructor <;> simp [nextPrime]
-  · use 3
-    norm_num
-  · intros
-    omega
+  rw [nextPrime, Nat.find_eq_iff]
+  decide
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 3 := by
   simp [a]
   norm_num [show primorial 5 = 30 by rfl]
   suffices nextPrime 6 = 7 by lia
-  rw [Nat.le_antisymm_iff]
-  constructor <;> simp [nextPrime]
-  · use 7
-    norm_num
-  · intro m _ _
-    rw [show m = 6 by omega]
-    norm_num
+  rw [nextPrime, Nat.find_eq_iff]
+  decide
 
 /-- Conjecture: All terms of A249241 are prime. -/
 @[category research open, AMS 11]
