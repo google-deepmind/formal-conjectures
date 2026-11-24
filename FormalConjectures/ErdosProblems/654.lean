@@ -48,6 +48,8 @@ $\frac{3}{4}n$ distinct distances to the other points. This gives infinitely man
 enough to refute the statement with $\varepsilon = 1/8$. See `Erdos654.erdos_654.variants.feng`.
 -/
 @[category research solved, question, AMS 52, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-02-000006",
+  formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-03-000009"]
 theorem erdos_654.parts.i :
     ¬ ∀ ε > (0 : ℝ), ∀ᶠ n : ℕ in atTop, ∀ A : Finset ℝ², #A = n → NoFourConcyclic A →
@@ -105,6 +107,8 @@ The construction places $2m$ points on each of two perpendicular lines, so it is
 position. Each point has at most $3m - 1$ distinct distances to the other points.
 -/
 @[category research solved, AMS 52, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-02-000006",
+  formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-03-000009"]
 theorem erdos_654.variants.feng (m : ℕ) (hm : 10 ≤ m) :
     ∃ A : Finset ℝ², #A = 4 * m ∧ NoFourConcyclic A ∧

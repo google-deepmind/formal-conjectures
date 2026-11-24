@@ -182,7 +182,8 @@ theorem poisson_conjecture.variants.dimension_ge_two (n : ℕ) (hn : 2 ≤ n) :
 The Jacobian conjecture in dimension $2n$ implies the Poisson conjecture in dimension `n`
 ([AvdE07], Theorem 1 and Theorem 7).
 -/
-@[category research solved, AMS 14 17]
+@[category research solved, AMS 14 17, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-03-000028"]
 theorem poisson_conjecture.variants.jacobian_implication (n : ℕ)
     (h : JacobianConjectureProp K (Fin (2 * n))) : PoissonConjectureFor K n := by
   sorry

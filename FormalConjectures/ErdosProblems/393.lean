@@ -165,7 +165,8 @@ degree at least $2$, the equation $P(x) = n!$ has only finitely many solutions. 
 erdosproblems.com, this implies that $f(n) \to \infty$, conditional on the $abc$ conjecture
 (`ABC.abc`).
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-02-000011"]
 theorem erdos_393.variants.luca (habc : type_of% ABC.abc) : Tendsto f atTop atTop := by
   sorry
 
