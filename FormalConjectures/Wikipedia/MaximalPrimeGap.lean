@@ -85,7 +85,49 @@ theorem isMaximalPrimeGapIndex_zero : IsMaximalPrimeGapIndex 0 :=
 @[category textbook, AMS 11]
 theorem infinite_maximalPrimeGapIndex :
     {n : ℕ | IsMaximalPrimeGapIndex n}.Infinite := by
-  sorry
+  -- Prime gaps are unbounded: no prime lies in `[(G + 1)! + 2, (G + 1)! + G + 1]`.
+  have unbounded : ∀ G : ℕ, ∃ n, G < primeGap n := by
+    intro G
+    have hfac : 0 < (G + 1).factorial := Nat.factorial_pos _
+    set x := (G + 1).factorial + 1 with hx
+    set c := Nat.count Nat.Prime (x + 1) with hc
+    have hcpos : 0 < c :=
+      (Nat.zero_le _).trans_lt (Nat.count_strict_mono Nat.prime_two (by omega))
+    have h1 : Nat.nth Nat.Prime (c - 1) < x + 1 := Nat.nth_lt_of_lt_count (by omega)
+    have h2 : x + 1 ≤ Nat.nth Nat.Prime c := by
+      by_contra h
+      have hlt : c < c := (Nat.lt_nth_iff_count_lt Nat.infinite_setOfPred_prime).2 (not_le.1 h)
+      exact lt_irrefl _ hlt
+    have h3 : (G + 1).factorial + G + 2 ≤ Nat.nth Nat.Prime c := by
+      by_contra h
+      have hq := Nat.prime_nth_prime c
+      set q := Nat.nth Nat.Prime c with hqdef
+      -- `q = (G + 1)! + j` with `2 ≤ j ≤ G + 1`, and then `j ∣ q`.
+      have hj : q - (G + 1).factorial ∣ q := by
+        have hdvd : q - (G + 1).factorial ∣ (G + 1).factorial :=
+          Nat.dvd_factorial (by omega) (by omega)
+        have := Nat.dvd_add_self_right.mpr hdvd
+        rwa [Nat.add_sub_cancel' (by omega)] at this
+      rcases (Nat.dvd_prime hq).1 hj with h' | h' <;> omega
+    refine ⟨c - 1, ?_⟩
+    unfold primeGap
+    rw [show c - 1 + 1 = c by omega]
+    omega
+  -- If there were finitely many record indices, the gaps would be bounded.
+  intro hfin
+  obtain ⟨N, hN⟩ := hfin.bddAbove
+  have key : ∀ n, primeGap n ≤ (Finset.range (N + 1)).sup primeGap := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | _ n ih =>
+      by_cases hn : n ≤ N
+      · exact Finset.le_sup (f := primeGap) (Finset.mem_range.2 (by omega))
+      · obtain ⟨m, hm, hle⟩ : ∃ m, m < n ∧ primeGap n ≤ primeGap m := by
+          by_contra h
+          exact hn (hN fun m hm => lt_of_not_ge fun hle => h ⟨m, hm, hle⟩)
+        exact hle.trans (ih m hm)
+  obtain ⟨n, hn⟩ := unbounded ((Finset.range (N + 1)).sup primeGap)
+  exact absurd (key n) (not_le.2 hn)
 
 /-- Shanks's maximal prime gap conjecture (1964): the maximal prime gap $G(x)$ starting below $x$
 satisfies $G(x) \sim (\log x)^2$ as $x \to \infty$ (contradicted by Granville's refinement
