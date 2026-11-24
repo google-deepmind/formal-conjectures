@@ -151,7 +151,7 @@ private def first59Terms : Finset ℕ :=
 Is $1155$ the last odd number in this sequence?
 ($1155$ is the $59$th term starting from $1$, corresponding to $a(58) = 1155$).
 
-The answer is **no**: the smallest odd term exceeding $1155$ is
+The answer is **no**: an odd term exceeding $1155$ is
 $815634435 = 1155 \cdot 547 \cdot 1291 = 3 \cdot 5 \cdot 7 \cdot 11 \cdot 547 \cdot 1291$.
 For primes $11 < p < q$, $2(1155pq) - \sigma_1(1155pq) = 6\bigl((p - 384)(q - 384) - 147840\bigr)$,
 and $(p - 384)(q - 384) = 147841 = 163 \cdot 907$ gives $(p, q) = (547, 1291)$ with
