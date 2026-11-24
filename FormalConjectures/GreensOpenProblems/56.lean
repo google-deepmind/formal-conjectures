@@ -27,6 +27,9 @@ public import FormalConjecturesUtil
   Ann. of Math. (2) 201 (2025), no. 2, 515-549. [arXiv:2311.05762](https://arxiv.org/abs/2311.05762)
 - [GGMT24] W. T. Gowers, B. Green, F. Manners and T. Tao, *Marton's Conjecture in abelian groups
   with bounded torsion*. [arXiv:2404.02244](https://arxiv.org/abs/2404.02244) (2024).
+- [GT10] B. Green and T. Tao, *An equivalence between inverse sumset theorems and inverse
+  conjectures for the $U^3$ norm*. Math. Proc. Cambridge Philos. Soc. 149 (2010), no. 1, 1-19.
+  [arXiv:0906.3100](https://arxiv.org/abs/0906.3100)
 -/
 
 @[expose] public section
@@ -76,18 +79,20 @@ $\lVert f \rVert_{U^{s+1}} \geqslant \delta$. Then there is a form $\psi$ of deg
 $|\mathbb{E}_{x \in \mathbb{F}_p^n} f(x) e(-2\pi i \psi(x)/p)| \gg \delta^{O_s(1)}$."
 
 Reading: the headline of the problem is only a topic, so the statement is the conjecture
-quoted above. We read the constants as the
-notation $O_s(1)$ indicates: the exponent is a constant $C$ depending only on $s$, while the
-constant $c$ implied by $\gg$ may depend on the fixed $s$ and $p$, but not on $n$, $f$ or
-$\delta$. A "form of degree $s$" is a polynomial of total degree at most $s$ (its constant term is
-allowed). The hypothesis is the $2^{s+1}$-th power form
+quoted above. Here the exponent is a constant $C$ depending only on $s$, as the notation
+$O_s(1)$ indicates. The place of the constant $c$ implied by $\gg$ is a separate formalisation
+choice of ours. Read with the notation convention of [Gr24], where implied constants are absolute,
+the display asks for an absolute $c$; we let $c$ depend on $s$ and $p$ (but not on $n$, $f$ or
+$\delta$), which gives a weaker statement. A "form of degree $s$" is a polynomial of total degree
+at most $s$ (its constant term is allowed). The hypothesis is the $2^{s+1}$-th power form
 `δ ^ 2 ^ (s + 1) ≤ gowersNormPow (s + 1) f`, and $0 < \delta \le 1$ since the norm of a
 $1$-bounded function is at most $1$. Green's $e(-2\pi i \psi(x)/p)$ is $e^{-2\pi i \psi(x)/p}$.
 
 The statement is open as a whole. [Gr24] (update 2023) reports that "polynomially effective bounds
 for the case $s = 2$ are now known"; the exponent in these bounds depends on $p$ (see
-`green_56.variants.s_two_odd_char`). If the exponent is allowed to depend on $p$, the open part is
-$s \ge 3$ (`green_56.variants.fixed_prime`).
+`green_56.variants.s_two_odd_char`), so they do not give the case $s = 2$ of this statement. In
+the reading with $p$ fixed and an exponent that may depend on $p$, which the source also supports,
+the case $s = 2$ is known and the open part is $s \ge 3$ (`green_56.variants.fixed_prime`).
 -/
 @[category research open, AMS 5 11 42]
 theorem green_56 :
@@ -100,11 +105,19 @@ theorem green_56 :
   sorry
 
 /--
-A weaker form of the Polynomial Gowers Inverse Conjecture, in which the exponent may also depend
-on the prime $p$, for $s \ge 3$ (for $s = 2$ this weaker form is known, see below). This
-weakening is ours; it is not stated in [Gr24]. [Gr24, Problem 56] reports quantitative (but not
-polynomial) bounds for $s \ge 3$ from Gowers–Milićević and quasipolynomial bounds for $s = 3$ from
-Milićević.
+The Polynomial Gowers Inverse Conjecture for a fixed prime $p$, in which the exponent may also
+depend on $p$, for $s \ge 3$ (for $s = 2$ this form is known, see below). It is weaker than
+`green_56`, where the exponent depends on $s$ only.
+
+This reading is supported by the source. For the equivalence of the case $s = 2$ with Marton's
+conjecture, [Gr24] cites [GT10] (and, independently, Lovett), and the remark after Theorem 1.12 of
+[GT10] says that "a similar result would hold over $\mathbb{F}_p$, for any fixed prime $p$, though
+the exponents obtained would depend on $p$". The 2023 update of [Gr24] counts the bounds that
+follow from [GGMT25] and [GGMT24] as polynomially effective bounds for the case $s = 2$; in
+[GGMT24] the exponent is $O(p^3)$.
+
+[Gr24, Problem 56] reports quantitative (but not polynomial) bounds for $s \ge 3$ from
+Gowers–Milićević and quasipolynomial bounds for $s = 3$ from Milićević.
 -/
 @[category research open, AMS 5 11 42]
 theorem green_56.variants.fixed_prime :
