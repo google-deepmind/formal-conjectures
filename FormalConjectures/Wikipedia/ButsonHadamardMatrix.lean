@@ -100,7 +100,8 @@ Hadamard matrix $H(p, n)$ exists, then $p \mid n$.
 The hypothesis $n \ge 2$ excludes the trivial $1 \times 1$ matrix $[1]$, which satisfies
 $H(p, 1)$ for every $p \ge 1$.
 -/
-@[category research solved, AMS 5 15]
+@[category research solved, AMS 5 15, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-23-000020"]
 theorem butson_prime_divisibility {p n : ℕ} (hp : p.Prime) (hn : 2 ≤ n)
     (hex : ∃ M, IsButsonHadamard (n := n) p M) :
     p ∣ n := by
