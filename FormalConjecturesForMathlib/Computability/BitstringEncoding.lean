@@ -17,6 +17,10 @@ module
 
 public import Mathlib.Computability.Encoding
 public import Mathlib.Algebra.Field.Rat
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Data.List.Lex
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Data.Sym.Sym2
 
 /-!
 # Bitstring encodings
@@ -28,7 +32,8 @@ Making it a `class` makes it easier to quickly ask if a function is computable i
 without having to explicitly pass around the encoding (See `IsPolyTime`).
 
 We set up instances for common types like Bool, ℕ, ℤ, ℚ,
-and instance derivations for `Prod` and `List` types,
+and instance derivations for `Prod`, `Sigma`, `List`, `Multiset`, `Sym2` and `Finset` types
+and for simple graphs on finite vertex types,
 so that we obtain instances for many common types appearing in algorithms and complexity theory.
 
 While different references may choose different encodings, generally our encodings should be
@@ -190,6 +195,15 @@ instance [BitstringEncoding α] [BitstringEncoding β] : BitstringEncoding (α �
       | _, _ => none
   decode_encode p := by simp
 
+/-- A dependent pair is encoded as a self-delimiting block for the first component followed by
+the encoding of the second, as for `Prod`. -/
+instance {γ : α → Type*} [BitstringEncoding α] [∀ a, BitstringEncoding (γ a)] :
+    BitstringEncoding (Σ a, γ a) where
+  encode p := delimit (bitEncode p.1) ++ bitEncode p.2
+  decode input := (undelimit input).bind fun p =>
+    (bitDecode p.1).bind fun a => (bitDecode p.2 : Option (γ a)).map fun b => ⟨a, b⟩
+  decode_encode p := by simp
+
 /-- A list is encoded as the concatenation of self-delimiting blocks for its elements. -/
 instance [BitstringEncoding α] : BitstringEncoding (List α) where
   encode l := ((l.map bitEncode).map delimit).flatten
@@ -197,6 +211,31 @@ instance [BitstringEncoding α] : BitstringEncoding (List α) where
   decode_encode l := by
     rw [undelimitBlocks_flatten_delimit (l.map bitEncode)]
     exact mapM_bitDecode_map_bitEncode l
+
+/-- The linear order on `α` that compares encodings lexicographically.
+
+This is not an instance, since `α` may already carry a different order. -/
+abbrev encodingOrder [BitstringEncoding α] : LinearOrder α :=
+  LinearOrder.lift' bitEncode bitEncode_injective
+
+/-- A multiset is encoded as the list of its elements, sorted by `encodingOrder`. -/
+instance [BitstringEncoding α] : BitstringEncoding (Multiset α) :=
+  letI := encodingOrder (α := α)
+  ofLeftInverse (fun s : Multiset α => s.sort (· ≤ ·)) (fun l => some (l : Multiset α))
+    (fun s => congrArg some (Multiset.sort_eq s _))
+
+/-- An unordered pair is encoded as the two-element multiset of its entries; decoding checks the
+cardinality. -/
+instance [BitstringEncoding α] : BitstringEncoding (Sym2 α) :=
+  ofLeftInverse (fun z => ((Sym2.equivMultiset α z : Multiset α)))
+    (fun m => if h : Multiset.card m = 2 then some ((Sym2.equivMultiset α).symm ⟨m, h⟩) else none)
+    (fun z => by simp [(Sym2.equivMultiset α z).property])
+
+/-- A finite set is encoded as its underlying multiset; decoding checks for duplicates. -/
+instance [BitstringEncoding α] : BitstringEncoding (Finset α) :=
+  letI : DecidableEq α := fun a b => decidable_of_iff _ bitEncode_injective.eq_iff
+  ofLeftInverse Finset.val (fun m => if h : m.Nodup then some ⟨m, h⟩ else none)
+    (fun s => by simp [s.nodup])
 
 /-- A subtype inherits the encoding of the ambient type; decoding additionally checks the
 defining predicate. -/
@@ -211,6 +250,11 @@ def ofSubtype {p : α → Prop} [BitstringEncoding α] [DecidablePred p] :
 instance : BitstringEncoding ℕ+ :=
   ofSubtype (p := fun n : ℕ => 0 < n)
 
+/-- `Fin n` is encoded as the underlying natural number; decoding checks the bound. -/
+instance (n : ℕ) : BitstringEncoding (Fin n) :=
+  ofLeftInverse (fun i : Fin n => (i : ℕ)) (fun m => if h : m < n then some ⟨m, h⟩ else none)
+    (fun i => by simp)
+
 /-- `ℤ` is encoded via the pair `(n.toNat, (-n).toNat)` (one component is always `0`). -/
 instance : BitstringEncoding ℤ :=
   ofLeftInverse (fun n : ℤ => (n.toNat, (-n).toNat))
@@ -220,6 +264,23 @@ instance : BitstringEncoding ℤ :=
 instance : BitstringEncoding ℚ :=
   ofLeftInverse (fun q : ℚ => (q.num, q.den))
     (fun p => some ((p.1 : ℚ) / (p.2 : ℚ))) (fun q => by simp [Rat.num_div_den])
+
+open scoped Classical in
+/--
+A simple graph on a finite vertex type is encoded as the pair of its vertex set and its
+`edgeFinset`.
+We include the vertex set so that the encoding length is at least linear in the number of vertices,
+so the encoding is polytime-transcodable with an adjacency matrix.
+-/
+noncomputable instance {V : Type*} [Fintype V] [BitstringEncoding V] :
+    BitstringEncoding (SimpleGraph V) :=
+  ofLeftInverse (fun G => (Finset.univ (α := V), G.edgeFinset))
+    (fun p => some (SimpleGraph.fromEdgeSet p.2)) (fun G => by simp)
+
+open scoped Classical in
+theorem bitEncode_simpleGraph {V : Type*} [Fintype V] [BitstringEncoding V]
+    (G : SimpleGraph V) : bitEncode G = bitEncode (Finset.univ (α := V), G.edgeFinset) :=
+  rfl
 
 end BitstringEncoding
 
