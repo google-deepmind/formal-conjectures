@@ -24,8 +24,9 @@ There exists a real $A > 1$ such that
 $\lfloor A^{3^n}\rfloor$ is prime for every positive integer $n$, where $\lfloor\cdot\rfloor$
 denotes the floor function.
 
-The least such $A$ is known as *Mills' constant*. It is irrational, and assuming the
-Riemann hypothesis it is approximately $1.3063778838\ldots$.
+The least such $A$ is known as *Mills' constant*. It is irrational. Caldwell and
+Cheng showed that it is $1.3063778838\ldots$ assuming the Riemann hypothesis, which is proved
+[Al26].
 
 *References:*
 - [Wikipedia, Mills' constant](https://en.wikipedia.org/wiki/Mills%27_constant)
@@ -37,6 +38,7 @@ Riemann hypothesis it is approximately $1.3063778838\ldots$.
 - [Determining Mills' Constant ..](https://cs.uwaterloo.ca/journals/JIS/VOL8/Caldwell/caldwell78.pdf)
   by *Chris K. Caldwell and Yuanyou Cheng*, J. Integer Seq. **8** (2005), Article 05.4.1.
 - [OEIS A051021](https://oeis.org/A051021) (decimal expansion of Mills' constant)
+- [Al26] Alpöge, L., [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf) (2026).
 -/
 
 @[expose] public section
@@ -83,6 +85,15 @@ Mills' constant begins at $1.3063778838\ldots$.
 -/
 @[category research solved, AMS 11]
 theorem lower_bound_of_RH (hRH : RiemannHypothesis) {A} (hA : IsMinMills A) :
+    A ∈ Set.Ioo (1.3063778838 : ℝ) 1.3063778839 := by
+  sorry
+
+/--
+Mills' constant begins at $1.3063778838\ldots$ unconditionally, since the Riemann hypothesis is
+proved [Al26].
+-/
+@[category research solved, AMS 11]
+theorem mem_Ioo {A} (hA : IsMinMills A) :
     A ∈ Set.Ioo (1.3063778838 : ℝ) 1.3063778839 := by
   sorry
 
