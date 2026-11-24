@@ -266,16 +266,20 @@ instance : BitstringEncoding ℚ :=
     (fun p => some ((p.1 : ℚ) / (p.2 : ℚ))) (fun q => by simp [Rat.num_div_den])
 
 open scoped Classical in
-/-- A simple graph on a finite vertex type is encoded as its `edgeFinset`. Decoding a finite set
-of unordered pairs uses `fromEdgeSet`, which drops the diagonal. -/
+/--
+A simple graph on a finite vertex type is encoded as the pair of its vertex set and its
+`edgeFinset`.
+We include the vertex set so that the encoding length is at least linear in the number of vertices,
+so the encoding is polytime-transcodable with an adjacency matrix.
+-/
 noncomputable instance {V : Type*} [Fintype V] [BitstringEncoding V] :
     BitstringEncoding (SimpleGraph V) :=
-  ofLeftInverse (fun G => G.edgeFinset) (fun s => some (SimpleGraph.fromEdgeSet s))
-    (fun G => by simp)
+  ofLeftInverse (fun G => (Finset.univ (α := V), G.edgeFinset))
+    (fun p => some (SimpleGraph.fromEdgeSet p.2)) (fun G => by simp)
 
 open scoped Classical in
 theorem bitEncode_simpleGraph {V : Type*} [Fintype V] [BitstringEncoding V]
-    (G : SimpleGraph V) : bitEncode G = bitEncode G.edgeFinset :=
+    (G : SimpleGraph V) : bitEncode G = bitEncode (Finset.univ (α := V), G.edgeFinset) :=
   rfl
 
 end BitstringEncoding

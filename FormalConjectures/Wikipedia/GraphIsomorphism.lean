@@ -49,7 +49,7 @@ noncomputable def graphIsomorphic (x : Σ n, SimpleGraph (Fin n) × SimpleGraph 
 simple graphs are isomorphic?
 
 The input is encoded by `BitstringEncoding`: the number of vertices $n$ in binary, then each
-graph as its finite set of edges.
+graph as its finite set of vertices together with its finite set of edges.
 
 *Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Graph_isomorphism_problem) -/
 @[category research open, question, AMS 5 68]
