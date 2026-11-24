@@ -74,20 +74,20 @@ theorem tameConductor_eq_prod_primeFactors_of_coprime (W : WeierstrassCurve ℤ)
     tameConductor W = ∏ p ∈ W.Δ.natAbs.primeFactors, p := by
   simp [tameConductor, hcop]
 
-/-- On the modular curve $X_0(11)$ with minimal equation $y^2 + y = x^3 - x^2$, the discriminant is
-$\Delta = -11$. -/
+/-- On the modular curve $X_1(11)$ (Cremona `11a3`) with minimal equation $y^2 + y = x^3 - x^2$,
+the discriminant is $\Delta = -11$. -/
 @[category test, AMS 11 14]
-theorem x0_eleven_discriminant :
+theorem x1_eleven_discriminant :
     (⟨0, -1, 1, 0, 0⟩ : WeierstrassCurve ℤ).Δ = -11 := by
   norm_num [WeierstrassCurve.Δ, WeierstrassCurve.b₂, WeierstrassCurve.b₄,
     WeierstrassCurve.b₆, WeierstrassCurve.b₈]
 
-/-- On the modular curve $X_0(11)$ ($y^2 + y = x^3 - x^2$), `tameConductor` evaluates to $11$. -/
+/-- On the modular curve $X_1(11)$ ($y^2 + y = x^3 - x^2$), `tameConductor` evaluates to $11$. -/
 @[category test, AMS 11 14]
-theorem x0_eleven_tameConductor :
+theorem x1_eleven_tameConductor :
     tameConductor ⟨0, -1, 1, 0, 0⟩ = 11 := by
   let W : WeierstrassCurve ℤ := ⟨0, -1, 1, 0, 0⟩
-  have hΔ : W.Δ = -11 := x0_eleven_discriminant
+  have hΔ : W.Δ = -11 := x1_eleven_discriminant
   have hc4 : W.c₄ = 16 := by
     norm_num [W, WeierstrassCurve.c₄, WeierstrassCurve.b₂, WeierstrassCurve.b₄]
   have hgcd : Int.gcd W.c₄ W.Δ = 1 := by

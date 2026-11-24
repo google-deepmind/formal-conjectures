@@ -18,7 +18,7 @@ module
 public import FormalConjecturesUtil
 
 /-!
-# Small Salem numbers and Salem's closure conjecture
+# Small Salem numbers and Boyd's closure conjecture
 
 A real algebraic integer $\tau > 1$ is a *Salem number* (`IsSalem`) when all of its remaining
 complex Galois conjugates $z$ satisfy $|z| \le 1$, with $|z| = 1$ attained by some conjugate.
@@ -29,8 +29,10 @@ $$P(X) = X^{10} + X^9 - X^7 - X^6 - X^5 - X^4 - X^3 + X + 1.$$
 Whether $\sigma_1$ is minimal among all Salem numbers `[Bo77]` `[Bo02, p. 16]`—and even whether $1$
 is not an accumulation point of Salem numbers `[Bo77]`, a special case of
 `LehmerMahlerMeasureProblem.lehmer_mahler_measure_problem`—remains open. Raphaël Salem `[Sa45]`
-proved that every Pisot number (`IsPisot`) is a limit point of Salem numbers, and conjectured
-`[Sa63, p. 31]` that the union of Pisot and Salem numbers is closed in $\mathbb{R}$.
+proved that every Pisot number (`IsPisot`) is a limit point of Salem numbers and asked
+`[Sa63, p. 31]` whether any other real number is a limit point of Salem numbers; David Boyd
+`[Bo77, p. 315]` conjectured the closure statement that the union of Pisot and Salem numbers is
+closed in $\mathbb{R}$ (which still permits Salem numbers as limit points; see `[Sm15, §3.1]`).
 
 *References:*
 - [Wikipedia: Salem number](https://en.wikipedia.org/wiki/Salem_number)
@@ -44,6 +46,8 @@ proved that every Pisot number (`IsPisot`) is a limit point of Salem numbers, an
 - `[Bo77]` D. W. Boyd, *Small Salem numbers*, Duke Math. J. **44** (1977), no. 2, 315–328.
 - `[Bo02]` P. Borwein, *Computational Excursions in Analysis and Number Theory*, CMS Books in
   Mathematics, Springer, 2002, p. 16.
+- `[Sm15]` C. Smyth, *Seventy years of Salem numbers*, Bull. Lond. Math. Soc. **47** (2015),
+  no. 3, 379–395.
 -/
 
 @[expose] public section
@@ -103,8 +107,10 @@ theorem salem_numbers_bounded_away_from_one :
   sorry
 
 /--
-Salem's closure conjecture `[Sa63, p. 31]`: the union of the set of Pisot–Vijayaraghavan numbers
-and the set of Salem numbers is a closed subset of $\mathbb{R}$.
+Boyd's closure conjecture `[Bo77, p. 315]` (compare `[Sm15, §3.1]`): the union of the set of
+Pisot–Vijayaraghavan numbers and the set of Salem numbers is a closed subset of $\mathbb{R}$.
+Unlike Salem's question `[Sa63, p. 31]` asking whether every accumulation point of Salem numbers is
+a Pisot number, this closure formulation still permits a Salem number to be an accumulation point.
 -/
 @[category research open, AMS 11]
 theorem pisot_union_salem_isClosed_conjecture :
