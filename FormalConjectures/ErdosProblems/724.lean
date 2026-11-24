@@ -70,14 +70,77 @@ theorem erdos_724 :
     ∃ c > (0 : ℝ), ∀ᶠ n : ℕ in atTop, c * Real.sqrt (n : ℝ) ≤ (maxMOLS n : ℝ) := by
   sorry
 
+/-- The entries of `latinSquare10` (found by a computer search for an orthogonal pair). -/
+def latinSquare10Mat : Matrix (Fin 10) (Fin 10) (Fin 10) :=
+  !![0, 1, 2, 3, 4, 5, 6, 7, 8, 9;
+    1, 0, 5, 2, 7, 9, 8, 3, 6, 4;
+    8, 6, 0, 9, 1, 3, 7, 2, 4, 5;
+    5, 8, 1, 6, 3, 0, 9, 4, 7, 2;
+    4, 5, 6, 0, 2, 7, 3, 9, 1, 8;
+    7, 2, 9, 5, 8, 1, 4, 6, 0, 3;
+    2, 4, 3, 7, 5, 6, 1, 8, 9, 0;
+    9, 7, 8, 1, 0, 4, 2, 5, 3, 6;
+    6, 3, 4, 8, 9, 2, 0, 1, 5, 7;
+    3, 9, 7, 4, 6, 8, 5, 0, 2, 1]
+
+/-- The entries of `orthogonalMate10`. -/
+def orthogonalMate10Mat : Matrix (Fin 10) (Fin 10) (Fin 10) :=
+  !![0, 1, 2, 3, 4, 5, 6, 7, 8, 9;
+    9, 7, 1, 5, 6, 8, 3, 2, 4, 0;
+    7, 0, 3, 6, 5, 4, 8, 9, 1, 2;
+    6, 5, 4, 9, 0, 1, 7, 8, 2, 3;
+    2, 3, 8, 4, 7, 0, 9, 5, 6, 1;
+    3, 4, 0, 8, 2, 7, 5, 1, 9, 6;
+    8, 6, 7, 1, 9, 2, 0, 4, 3, 5;
+    4, 9, 6, 2, 8, 3, 1, 0, 5, 7;
+    5, 8, 9, 0, 1, 6, 2, 3, 7, 4;
+    1, 2, 5, 7, 3, 9, 4, 6, 0, 8]
+
+/-- A Latin square of order $10$ that is orthogonal to `orthogonalMate10`. -/
+def latinSquare10 : LatinSquare 10 where
+  mat := latinSquare10Mat
+  row_injective := by
+    show ∀ i, Function.Injective fun j ↦ latinSquare10Mat i j
+    decide +kernel
+  col_injective := by
+    show ∀ j, Function.Injective fun i ↦ latinSquare10Mat i j
+    decide +kernel
+
+/-- A Latin square of order $10$ that is orthogonal to `latinSquare10`. -/
+def orthogonalMate10 : LatinSquare 10 where
+  mat := orthogonalMate10Mat
+  row_injective := by
+    show ∀ i, Function.Injective fun j ↦ orthogonalMate10Mat i j
+    decide +kernel
+  col_injective := by
+    show ∀ j, Function.Injective fun i ↦ orthogonalMate10Mat i j
+    decide +kernel
+
 /--
 Euler conjectured that $f(n) = 1$ when $n \equiv 2 \pmod{4}$. This is false: Bose, Parker, and
 Shrikhande [BPS60] proved $f(n) \geq 2$ for $n \geq 7$, so for example $f(10) \geq 2$.
+
+The proof below checks the explicit orthogonal pair `latinSquare10`, `orthogonalMate10`.
 -/
 @[category research solved, question, AMS 5]
 theorem erdos_724.variants.euler_conjecture :
     ¬ ∀ n : ℕ, n ≡ 2 [MOD 4] → maxMOLS n = 1 := by
-  sorry
+  intro h
+  have hLM : IsOrthogonal latinSquare10 orthogonalMate10 := by
+    unfold IsOrthogonal
+    decide +kernel
+  have hne : latinSquare10 ≠ orthogonalMate10 := fun h' ↦
+    absurd (congrArg (fun L : LatinSquare 10 ↦ L.mat 1 0) h') (by decide +kernel)
+  have h2 : 2 ≤ maxMOLS 10 := by
+    classical
+    refine le_csSup ⟨Fintype.card (LatinSquare 10), ?_⟩
+      ⟨{latinSquare10, orthogonalMate10}, card_pair hne, ?_⟩
+    · rintro k ⟨S, rfl, -⟩
+      exact card_le_univ S
+    · rw [coe_pair, Set.pairwise_pair]
+      exact fun _ ↦ ⟨hLM, fun p q hpq ↦ hLM (congrArg Prod.swap hpq)⟩
+  have := h 10 rfl
+  omega
 
 /--
 Bose, Parker, and Shrikhande [BPS60] proved that $f(n) \geq 2$ for all $n \geq 7$.

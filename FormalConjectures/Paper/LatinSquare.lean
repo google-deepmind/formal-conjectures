@@ -27,6 +27,9 @@ This file formalizes some conjectures and theorems around latin squares.
 * [Wa2011] Wanless, Ian. "Transversals in Latin Squares: A Survey."
   Surveys in Combinatorics 2011, R. Chapman, Ed. Cambridge University Press, 2011, pp. 403–437.
   https://users.monash.edu.au/~iwanless/papers/transurveyBCC.pdf
+* [EMM19] Eberhard, Sean, Freddie Manners, and Rudi Mrazović. "Additive triples of bijections, or
+  the toroidal semiqueens problem." J. Eur. Math. Soc. 21 (2019), no. 2, pp. 441–463.
+  https://arxiv.org/abs/1510.05987
 * https://en.wikipedia.org/wiki/Problems_in_Latin_squares
 -/
 
@@ -164,8 +167,13 @@ $$
 c_1^n n! \leq z_n \leq c_2^n n!
 $$
 for all odd $n \geq 3$.
+
+This is true. By [EMM19, Theorem 1.2], $z_n = (e^{-1/2} + o(1)) \, n!^2 / n^{n-1}$ for odd $n$
+(the paper's $s_n$ equals $n! \, z_n$), which proves Vardi's conjecture [EMM19, Conjecture 1.1]:
+the bounds hold for all large odd $n$ with any $0 < c_1 < 1/e < c_2 < 1$. The finitely many
+remaining odd $n \geq 3$ are covered by $0 < z_n < n!$, after decreasing $c_1$ and increasing $c_2$.
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5]
 theorem numTransversalsZn :
       ∃ᵉ (c₁ > (0 : ℝ)) (c₂ < (1 : ℝ)) (_ : c₁ < c₂),
       ∀ n ≥ 3, Odd n →
@@ -177,10 +185,14 @@ Conjecture 6.9 in [Wa2011]:
 $$
 \lim_{\substack{n \to \infty \\ n \text{ odd}}} \frac{1}{n} \log(z_n / n!) = -1
 $$
-It is not even known if this limit exists. Note that $z_n = 0$ for even $n$ (see `z_even`), so the
-limit must be restricted to odd $n$; here we parametrise odd $n$ as $2k + 1$.
+Note that $z_n = 0$ for even $n$ (see `z_even`), so the limit must be restricted to odd $n$; here
+we parametrise odd $n$ as $2k + 1$.
+
+This is true: the limit exists and equals $-1$. It follows from the asymptotic
+$z_n = (e^{-1/2} + o(1)) \, n!^2 / n^{n-1}$ for odd $n$ of [EMM19, Theorem 1.2] and Stirling's
+formula; the introduction of [EMM19] notes that the theorem confirms this conjecture.
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5]
 theorem growthRateZn :
     Filter.Tendsto (fun k => (1 : ℝ) / (2 * k + 1) *
       Real.log (z (2 * k + 1) / (2 * k + 1).factorial)) Filter.atTop
