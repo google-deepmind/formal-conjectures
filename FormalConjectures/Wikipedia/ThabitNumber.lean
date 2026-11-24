@@ -77,7 +77,73 @@ theorem thabit_amicable_rule {n : ℕ} (hn : 2 ≤ n) (hp : (thabitNumber (n - 1
     (hq : (thabitNumber n).Prime) (hr : (9 * 2 ^ (2 * n - 1) - 1).Prime) :
     IsAmicable (2 ^ n * thabitNumber (n - 1) * thabitNumber n)
       (2 ^ n * (9 * 2 ^ (2 * n - 1) - 1)) := by
-  sorry
+  open ArithmeticFunction in
+  -- Write `t = 2 ^ (n - 1)`; then `p + 1 = 3t`, `q + 1 = 6t`, `r + 1 = 18t²` and `2 ^ n = 2t`.
+  set t := 2 ^ (n - 1) with ht
+  have ht2 : 2 ≤ t := by
+    calc 2 = 2 ^ 1 := rfl
+      _ ≤ 2 ^ (n - 1) := Nat.pow_le_pow_right (by norm_num) (by omega)
+  have h2n : 2 ^ n = 2 * t := by
+    rw [ht, ← pow_succ']
+    congr 1
+    omega
+  have h2n1 : 2 ^ (2 * n - 1) = 2 * t ^ 2 := by
+    rw [ht, ← pow_mul, ← pow_succ']
+    congr 1
+    omega
+  have hp1 : thabitNumber (n - 1) + 1 = 3 * t := by
+    unfold thabitNumber
+    omega
+  have hq1 : thabitNumber n + 1 = 6 * t := by
+    unfold thabitNumber
+    omega
+  have hr1 : 9 * 2 ^ (2 * n - 1) - 1 + 1 = 18 * t ^ 2 := by
+    have : 0 < t ^ 2 := by positivity
+    omega
+  have hs : sigma 1 (2 ^ n) + 1 = 4 * t := by
+    rw [sigma_one_apply_prime_pow Nat.prime_two, Nat.geomSum_eq le_rfl, pow_succ, h2n]
+    omega
+  generalize thabitNumber (n - 1) = p at hp hp1 ⊢
+  generalize thabitNumber n = q at hq hq1 ⊢
+  generalize 9 * 2 ^ (2 * n - 1) - 1 = r at hr hr1 ⊢
+  have hσ : ∀ {x : ℕ}, x.Prime → sigma 1 x = x + 1 := fun {x} hx => by
+    have := sigma_one_apply_prime_pow (i := 1) hx
+    simpa [Finset.sum_range_succ, add_comm] using this
+  have ht4 : 4 ≤ t ^ 2 := by nlinarith
+  have c2p : Nat.Coprime (2 ^ n) p :=
+    ((Nat.coprime_primes Nat.prime_two hp).mpr (by omega)).pow_left n
+  have c2q : Nat.Coprime (2 ^ n) q :=
+    ((Nat.coprime_primes Nat.prime_two hq).mpr (by omega)).pow_left n
+  have c2r : Nat.Coprime (2 ^ n) r :=
+    ((Nat.coprime_primes Nat.prime_two hr).mpr (by omega)).pow_left n
+  have cpq : Nat.Coprime p q := (Nat.coprime_primes hp hq).mpr (by omega)
+  have hσa : sigma 1 (2 ^ n * p * q) = sigma 1 (2 ^ n) * (p + 1) * (q + 1) := by
+    rw [isMultiplicative_sigma.map_mul_of_coprime (Nat.Coprime.mul_left c2q cpq),
+      isMultiplicative_sigma.map_mul_of_coprime c2p, hσ hp, hσ hq]
+  have hσb : sigma 1 (2 ^ n * r) = sigma 1 (2 ^ n) * (r + 1) := by
+    rw [isMultiplicative_sigma.map_mul_of_coprime c2r, hσ hr]
+  generalize sigma 1 (2 ^ n) = s at hs hσa hσb
+  -- Pass to `ℤ`, where `s = 4t - 1`, `p = 3t - 1`, `q = 6t - 1` and `r = 18t² - 1`.
+  have e1 : (s : ℤ) = 4 * t - 1 := by omega
+  have e2 : (p : ℤ) = 3 * t - 1 := by omega
+  have e3 : (q : ℤ) = 6 * t - 1 := by omega
+  have e4 : (r : ℤ) = 18 * (t : ℤ) ^ 2 - 1 := by
+    have : ((r + 1 : ℕ) : ℤ) = ((18 * t ^ 2 : ℕ) : ℤ) := by rw [hr1]
+    push_cast at this
+    linarith
+  rw [isAmicable_iff, hσa, hσb, h2n]
+  refine ⟨?_, ?_, ?_⟩
+  · zify
+    rw [e1, e2, e3, e4]
+    ring
+  · zify
+    rw [e1, e2, e3, e4]
+    ring
+  · intro h
+    have h' : (2 * (t : ℤ) * p * q) = 2 * t * r := by exact_mod_cast h
+    rw [e2, e3, e4] at h'
+    have ht' : (2 : ℤ) ≤ t := by exact_mod_cast ht2
+    nlinarith
 
 /--
 There are infinitely many exponents $n \in \mathbb{N}$ ([OEIS A002235](https://oeis.org/A002235))
