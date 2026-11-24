@@ -20,7 +20,12 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 985
 
-*Reference:* [erdosproblems.com/985](https://www.erdosproblems.com/985)
+*References:*
+- [erdosproblems.com/985](https://www.erdosproblems.com/985)
+- [MTT16] McGown, K., Treviño, E. and Trudgian, T., *Resolving Grosswald's conjecture on GRH*.
+  Funct. Approx. Comment. Math. 55 (2016), 215–225.
+  [arXiv:1508.05182](https://arxiv.org/abs/1508.05182)
+- [Al26] Alpöge, L., [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf) (2026).
 -/
 
 @[expose] public section
@@ -29,14 +34,20 @@ namespace Erdos985
 
 /--
 Is it true that, for every prime $p$, there is a prime $q \leq p$ which is a primitive root modulo $p$?
+
+The answer is yes. Assuming the Generalized Riemann Hypothesis for Dirichlet $L$-functions, the
+least prime primitive root modulo $p$ is less than $\sqrt{p} - 2$ for every prime $p > 2791$
+[MTT16, Theorem 1]. A finite computation covers the odd primes $p \leq 2791$. The Generalized
+Riemann Hypothesis is proved [Al26].
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem erdos_985 : ∀ᵉ (p : ℕ) (hp_prime : p.Prime) (hp_nontrivial : p ≠ 2),
     ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
   sorry
 
 -- TODO: Artin conjectured that 2 is a primitive root for infinitely many primes $p$, which
--- Hooley proved assuming the Generalised Riemann Hypothesis.
+-- Hooley proved assuming the Riemann hypothesis for the Dedekind zeta functions of certain Kummer
+-- fields.
 
 /--
 Heath-Brown proved that at least one of 2, 3, or 5 is a primitive root for infinitely many primes $p$.
