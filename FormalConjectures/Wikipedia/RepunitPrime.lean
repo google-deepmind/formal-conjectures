@@ -20,8 +20,8 @@ public import FormalConjecturesUtil
 /-!
 # Decimal Repunit Primes
 
-A decimal repunit is a natural number whose decimal representation consists entirely of ones.
-It is conjectured that infinitely many decimal repunits are prime.
+A decimal repunit (`Nat.repunit 10 n`) is a natural number whose decimal representation consists
+entirely of ones. It is conjectured that infinitely many decimal repunits are prime.
 
 *References:*
 - [Wikipedia: Repunit](https://en.wikipedia.org/wiki/Repunit#Decimal_repunit_primes)
@@ -34,44 +34,40 @@ It is conjectured that infinitely many decimal repunits are prime.
 
 namespace RepunitPrime
 
-/-- The decimal repunit of length $n$, defined as $1 + 10 + \cdots + 10^{n-1}$. -/
-def repunit10 (n : ℕ) : ℕ :=
-  ∑ i ∈ Finset.range n, 10 ^ i
+@[category test, AMS 11]
+theorem repunit10_one : Nat.repunit 10 1 = 1 := by
+  norm_num [Nat.repunit]
 
 @[category test, AMS 11]
-theorem repunit10_one : repunit10 1 = 1 := by
-  norm_num [repunit10, Finset.sum_range_succ]
+theorem repunit10_two : Nat.repunit 10 2 = 11 := by
+  norm_num [Nat.repunit]
 
 @[category test, AMS 11]
-theorem repunit10_two : repunit10 2 = 11 := by
-  norm_num [repunit10, Finset.sum_range_succ]
+theorem repunit10_three : Nat.repunit 10 3 = 111 := by
+  norm_num [Nat.repunit]
 
 @[category test, AMS 11]
-theorem repunit10_three : repunit10 3 = 111 := by
-  norm_num [repunit10, Finset.sum_range_succ]
+theorem repunit10_four : Nat.repunit 10 4 = 1111 := by
+  norm_num [Nat.repunit]
 
 @[category test, AMS 11]
-theorem repunit10_four : repunit10 4 = 1111 := by
-  norm_num [repunit10, Finset.sum_range_succ]
+theorem repunit10_five : Nat.repunit 10 5 = 11111 := by
+  norm_num [Nat.repunit]
 
 @[category test, AMS 11]
-theorem repunit10_five : repunit10 5 = 11111 := by
-  norm_num [repunit10, Finset.sum_range_succ]
+theorem repunit10_two_prime : (Nat.repunit 10 2).Prime := by
+  norm_num [Nat.repunit]
 
 @[category test, AMS 11]
-theorem repunit10_two_prime : (repunit10 2).Prime := by
-  norm_num [repunit10, Finset.sum_range_succ]
-
-@[category test, AMS 11]
-theorem repunit10_three_not_prime : ¬ (repunit10 3).Prime := by
-  norm_num [repunit10, Finset.sum_range_succ, Nat.prime_def_lt]
+theorem repunit10_three_not_prime : ¬ (Nat.repunit 10 3).Prime := by
+  norm_num [Nat.repunit, Nat.prime_def_lt]
   exact ⟨3, by norm_num, by norm_num, by norm_num⟩
 
 /-- [Wikipedia's repunit article](https://en.wikipedia.org/wiki/Repunit#Decimal_repunit_primes)
-states: "It has been conjectured that there are infinitely many repunit primes." -/
+conjectures that infinitely many base-$10$ repunits are prime. -/
 @[category research open, AMS 11]
 theorem infinitely_many_repunit_primes :
-    {n : ℕ | (repunit10 n).Prime}.Infinite := by
+    {n : ℕ | (Nat.repunit 10 n).Prime}.Infinite := by
   sorry
 
 end RepunitPrime

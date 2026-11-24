@@ -20,9 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # The Goormaghtigh conjecture
 
-A repunit is a number whose digits in some base are all $1$. Here a nontrivial representation has
-at least three digits. The Goormaghtigh conjecture says that $31$ and $8191$ are the only numbers
-having nontrivial repunit representations in two different bases.
+A repunit (`Nat.repunit`) is a number whose digits in some base are all $1$. Here a nontrivial
+representation has at least three digits. The Goormaghtigh conjecture says that $31$ and $8191$ are
+the only numbers having nontrivial repunit representations in two different bases.
 
 *References:*
 * [Wikipedia](https://en.wikipedia.org/wiki/Goormaghtigh_conjecture)
@@ -34,16 +34,12 @@ having nontrivial repunit representations in two different bases.
 
 namespace Goormaghtigh
 
-/-- The repunit with `digits` digits in the given base, expressed without division. -/
-def repunit (base digits : ℕ) : ℕ :=
-  ∑ i ∈ Finset.range digits, base ^ i
-
 /-- A number having repunit representations of at least three digits in two distinct bases. -/
 def IsGoormaghtighNumber (N : ℕ) : Prop :=
   ∃ base₁ base₂ digits₁ digits₂ : ℕ,
     2 ≤ base₁ ∧ 2 ≤ base₂ ∧ base₁ ≠ base₂ ∧
       3 ≤ digits₁ ∧ 3 ≤ digits₂ ∧
-        repunit base₁ digits₁ = N ∧ repunit base₂ digits₂ = N
+        Nat.repunit base₁ digits₁ = N ∧ Nat.repunit base₂ digits₂ = N
 
 /-- The only Goormaghtigh numbers are $31$ and $8191$. -/
 @[category research open, AMS 11]
@@ -55,17 +51,17 @@ theorem goormaghtigh_conjecture (N : ℕ) (hN : IsGoormaghtighNumber N) :
 @[category test, AMS 11]
 theorem isGoormaghtighNumber_31 : IsGoormaghtighNumber 31 := by
   refine ⟨2, 5, 5, 3, ?_⟩
-  norm_num [repunit]
+  norm_num [Nat.repunit]
 
 /-- The number $8191$ is a repunit in bases $2$ and $90$. -/
 @[category test, AMS 11]
 theorem isGoormaghtighNumber_8191 : IsGoormaghtighNumber 8191 := by
   refine ⟨2, 90, 13, 3, ?_⟩
-  norm_num [repunit]
+  norm_num [Nat.repunit]
 
 /-- Allowing two-digit repunits would make $13$ a representation in two distinct bases. -/
 @[category test, AMS 11]
-theorem repunit_two_digits : repunit 3 3 = 13 ∧ repunit 12 2 = 13 := by
-  norm_num [repunit]
+theorem repunit_two_digits : Nat.repunit 3 3 = 13 ∧ Nat.repunit 12 2 = 13 := by
+  norm_num [Nat.repunit]
 
 end Goormaghtigh
