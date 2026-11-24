@@ -25,9 +25,13 @@ public import FormalConjecturesUtil
 - [Wikipedia: Catalan's Mersenne conjecture](https://en.wikipedia.org/wiki/Catalan%27s_Mersenne_conjecture)
 - [Wikipedia: List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#Prime_numbers)
 - [Wikipedia: Wieferich prime](https://en.wikipedia.org/wiki/Wieferich_prime)
+- [Wikipedia: Double Mersenne number](https://en.wikipedia.org/wiki/Double_Mersenne_number)
+- [OEIS A077586](https://oeis.org/A077586)
 - [MathWorld: Catalan-Mersenne Number](https://mathworld.wolfram.com/Catalan-MersenneNumber.html)
 - A. Rotkiewicz, *Sur les nombres de Mersenne dépourvus de diviseurs carrés et sur les nombres
   naturels $n$, tels que $n^2 \mid 2^n - 2$*, Mat. Vesnik **2** (17) (1965), 78–80.
+- I. J. Good, *Conjectures concerning the Mersenne numbers*, Math. Tables Aids Comput. **9**
+  (1955), 120–121.
 -/
 
 @[expose] public section
@@ -201,6 +205,68 @@ rather than only primes gives the stronger form of this implication.
 theorem rotkiewicz_infinite_non_wieferich_of_squarefree_mersenne :
     {n : ℕ | Squarefree (mersenne n)}.Infinite →
       {p : ℕ | p.Prime ∧ ¬ IsWieferichPrime p}.Infinite := by
+  sorry
+
+/-- Iterated Mersenne value $M_{M_n} = 2^{2^n - 1} - 1$, defined via Mathlib's `mersenne`. -/
+def doubleMersenne (n : ℕ) : ℕ :=
+  mersenne (mersenne n)
+
+/-- Primality of $M_{M_n}$ forces $M_n$ to be prime. -/
+@[category API, AMS 11]
+theorem mersenne_prime_of_doubleMersenne_prime {n : ℕ} (h : (doubleMersenne n).Prime) :
+    (mersenne n).Prime :=
+  h.of_mersenne
+
+/-- Primality of $M_{M_n}$ forces the exponent $n$ to be prime. -/
+@[category API, AMS 11]
+theorem prime_of_doubleMersenne_prime {n : ℕ} (h : (doubleMersenne n).Prime) :
+    n.Prime :=
+  h.of_mersenne.of_mersenne
+
+/-- Exponent $p = 2$ yields the prime $M_{M_2} = 7$. -/
+@[category test, AMS 11]
+theorem doubleMersenne_prime_two : (doubleMersenne 2).Prime := by
+  unfold doubleMersenne mersenne
+  decide
+
+/-- Exponent $p = 3$ yields the prime $M_{M_3} = 127$. -/
+@[category test, AMS 11]
+theorem doubleMersenne_prime_three : (doubleMersenne 3).Prime := by
+  unfold doubleMersenne mersenne
+  decide
+
+/-- Input $n = 0$ gives $M_{M_0} = 0$, which is not prime. -/
+@[category test, AMS 11]
+theorem not_doubleMersenne_prime_zero : ¬ (doubleMersenne 0).Prime := by
+  unfold doubleMersenne mersenne
+  norm_num
+
+/-- Input $n = 1$ gives $M_{M_1} = 1$, which is not prime. -/
+@[category test, AMS 11]
+theorem not_doubleMersenne_prime_one : ¬ (doubleMersenne 1).Prime := by
+  unfold doubleMersenne mersenne
+  norm_num
+
+/-- Input $n = 4$ gives $M_{M_4} = 2^{15} - 1 = 32767$, which is not prime. -/
+@[category test, AMS 11]
+theorem not_doubleMersenne_prime_four : ¬ (doubleMersenne 4).Prime := by
+  unfold doubleMersenne mersenne
+  norm_num
+
+/--
+No fifth iterated Mersenne value $M_{M_p} = 2^{2^p - 1} - 1$ is prime beyond $p = 7$.
+-/
+@[category research open, AMS 11]
+theorem no_fifth_double_mersenne_prime :
+    ¬ ∃ p : ℕ, 7 < p ∧ (doubleMersenne p).Prime := by
+  sorry
+
+/--
+Only finitely many exponents $p$ make $M_{M_p} = 2^{2^p - 1} - 1$ prime.
+-/
+@[category research open, AMS 11]
+theorem no_fifth_double_mersenne_prime.variants.finite :
+    {p : ℕ | (doubleMersenne p).Prime}.Finite := by
   sorry
 
 end Mersenne

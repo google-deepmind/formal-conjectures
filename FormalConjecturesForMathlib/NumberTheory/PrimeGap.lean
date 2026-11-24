@@ -18,6 +18,7 @@ module
 
 public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Data.Nat.Prime.Nth
 public import Mathlib.Data.Nat.Nth
 public import Mathlib.NumberTheory.PrimeCounting
 
@@ -27,6 +28,14 @@ public import Mathlib.NumberTheory.PrimeCounting
 The prime gap: the difference between the $n+1$-th and $n$-th prime.
 -/
 noncomputable def primeGap (n : ℕ) : ℕ := (n + 1).nth Nat.Prime - n.nth Nat.Prime
+
+@[simp]
+theorem primeGap_zero : primeGap 0 = 1 := by
+  rw [primeGap, Nat.nth_prime_zero_eq_two, Nat.nth_prime_one_eq_three]
+
+@[simp]
+theorem primeGap_one : primeGap 1 = 2 := by
+  rw [primeGap, Nat.nth_prime_one_eq_three, Nat.nth_prime_two_eq_five]
 
 /--
 The maximal prime gap starting strictly below $x$, i.e.,

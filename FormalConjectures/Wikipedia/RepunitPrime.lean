@@ -34,10 +34,6 @@ It is conjectured that infinitely many decimal repunits are prime.
 
 namespace RepunitPrime
 
-/-- The decimal repunit of length $n$, defined as $1 + 10 + \cdots + 10^{n-1}$. -/
-def repunit10 (n : ℕ) : ℕ :=
-  ∑ i ∈ Finset.range n, 10 ^ i
-
 @[category test, AMS 11]
 theorem repunit10_one : repunit10 1 = 1 := by
   norm_num [repunit10, Finset.sum_range_succ]
