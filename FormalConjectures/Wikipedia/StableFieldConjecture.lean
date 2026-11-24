@@ -23,16 +23,17 @@ public import FormalConjecturesUtil
 A structure's first-order theory is model-theoretically stable when no partitioned formula defines
 arbitrarily long finite half-graphs (Shelah's order property; see
 `FirstOrder.Ring.IsStableRing`). Every algebraically closed field is stable in `Language.ring`
-([Ma02, Example 4.1.14]; `Wikipedia: Stable theory`). Motivated by the classification of
-superstable fields [CS80], the **stable field conjecture** (listed on Wikipedia's unsolved
-problems page under `#Model_theory_and_formal_languages`) states that any infinite field $K$ whose
+([Ma02, Example 4.1.14]; [Wikipedia: Stable theory](https://en.wikipedia.org/wiki/Stable_theory)).
+Motivated by the classification of superstable fields [CS80], the **stable field conjecture**
+(listed on [Wikipedia's unsolved problems list](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#Model_theory_and_formal_languages))
+states that any infinite field $K$ whose
 theory in `Language.ring` is stable must be separably closed (`IsSepClosed K`). Finite fields are
 excluded because every finite ring is automatically stable while no finite field is separably
 closed.
 
 *References:*
-- [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics)
-  (section `#Model_theory_and_formal_languages`, stating the stable field conjecture)
+- [Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#Model_theory_and_formal_languages)
+  (model-theory section, stating the stable field conjecture)
 - [Wikipedia: Stable theory](https://en.wikipedia.org/wiki/Stable_theory)
   (order-property characterization and stability of algebraically closed fields)
 - [CS80] G. Cherlin and S. Shelah, *Superstable fields and groups*, Ann. Math. Logic **18**
@@ -93,15 +94,15 @@ theorem not_isSepClosed_real : ¬ IsSepClosed ℝ := by
   nlinarith [sq_nonneg z]
 
 /-- Every algebraically closed field is model-theoretically stable in `Language.ring`
-([Ma02, Example 4.1.14]; see `Wikipedia: Stable theory`). -/
+([Ma02, Example 4.1.14]; see [Wikipedia: Stable theory](https://en.wikipedia.org/wiki/Stable_theory)). -/
 @[category textbook, AMS 3 12]
 theorem isStableRing_of_isAlgClosed (K : Type*) [Field K] [IsAlgClosed K] :
     FirstOrder.Ring.IsStableRing K := by
   sorry
 
-/-- **Stable field conjecture** ([CS80]; Wikipedia `List of unsolved problems in mathematics`,
-`#Model_theory_and_formal_languages`). Any infinite field $K$ that is stable in `Language.ring` is
-separably closed (`IsSepClosed K`). -/
+/-- **Stable field conjecture** ([CS80];
+[Wikipedia](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#Model_theory_and_formal_languages)).
+Any infinite field $K$ that is stable in `Language.ring` is separably closed (`IsSepClosed K`). -/
 @[category research open, AMS 3 12]
 theorem stable_field_conjecture (K : Type*) [Field K] [Infinite K]
     (hK : FirstOrder.Ring.IsStableRing K) :

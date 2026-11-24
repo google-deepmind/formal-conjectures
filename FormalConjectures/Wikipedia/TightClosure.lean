@@ -130,7 +130,7 @@ theorem not_inTightClosure_bot_one (R : Type*) [CommRing R] [IsDomain R] {p : �
 /-- **Brenner–Monsky theorem** [BM10]: formation of tight closure need not commute with
 localization at a multiplicative subset $S \subseteq R \setminus \{0\}$, even for Noetherian
 integral domains of prime characteristic. -/
-@[category research solved, question, AMS 13]
+@[category research solved, AMS 13]
 theorem brenner_monsky_tight_closure_localization :
     ¬ ∀ (p : ℕ) [Fact p.Prime] (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R]
         [CharP R p] (I : Ideal R) (S : Submonoid R), (0 : R) ∉ S →

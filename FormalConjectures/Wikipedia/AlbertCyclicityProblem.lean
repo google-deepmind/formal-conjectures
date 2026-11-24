@@ -48,7 +48,9 @@ universe u
 
 /-- A finite-dimensional division $K$-algebra $D$ is *cyclic* if it admits a $K$-algebra
 embedding from a finite cyclic Galois extension $L / K$ satisfying $[L : K]^2 = [D : K]$
-(a cyclic maximal subfield; see [GS17, Proposition 2.5.2]). -/
+(a cyclic maximal subfield when $D$ is central over $K$; see [GS17, Proposition 2.5.2]). Centrality
+(`Algebra.IsCentral K D`) is assumed separately in the theorems below rather than bundled into this
+predicate. -/
 def IsCyclicDivisionAlgebra (K : Type u) [Field K] (D : Type u) [DivisionRing D]
     [Algebra K D] : Prop :=
   ∃ (L : Type u) (_ : Field L) (_ : Algebra K L) (_ : FiniteDimensional K L),

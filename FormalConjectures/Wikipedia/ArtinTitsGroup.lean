@@ -28,11 +28,12 @@ $$\underbrace{s_i s_j s_i \cdots}_{m_{ij}\text{ factors}}
 for every pair $(i, j)$ with $m_{ij} \ge 2$, omitting the reflection relations $s_i^2 = 1$ of the
 associated Coxeter group $W(M)$ (`M.Group`).
 
-A central open conjecture in combinatorial and geometric group theory states that every Artin–Tits
+A central conjecture in combinatorial and geometric group theory asserts that every Artin–Tits
 group $A(M)$ has trivial torsion (`Monoid.IsTorsionFree`). Deligne (1972) and Brieskorn and Saito
 (1972) established torsion-freeness whenever $M$ has spherical type ($W(M)$ finite), and the same
 conclusion holds in the right-angled case ($m_{ij} \in \{2, \infty\}$ for $i \ne j$; see Charney
-2007).
+2007). For arbitrary finite-rank Coxeter matrices, torsion-freeness was proved in September 2026
+[OAI26, Corollary 10.1(i)].
 
 *References:*
 - [Wikipedia: Artin–Tits group](https://en.wikipedia.org/wiki/Artin%E2%80%93Tits_group)
@@ -42,6 +43,9 @@ conclusion holds in the right-angled case ($m_{ij} \in \{2, \infty\}$ for $i \ne
   273–302.
 - R. Charney, *An introduction to right-angled Artin groups*, Geom. Dedicata **125** (2007),
   141–158.
+- [OAI26] OpenAI, *Harmonic heights and the Artin $K(\pi, 1)$ conjecture*, OpenAI Math Release
+  preprint (2026), Corollary 10.1(i).
+  https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Harmonic-heights-and-the-Artin-K-pi-1-conjecture-September-23-2026/paper.pdf
 -/
 
 @[expose] public section
@@ -100,8 +104,15 @@ theorem ofMatrix_rank_zero_torsion_free (M : CoxeterMatrix (Fin 0)) :
 /-- **Artin–Tits Torsion-Freeness Conjecture**: For every finite index set $B$ and Coxeter matrix
 $M$ on $B$, the Artin–Tits group $A(M)$ has trivial torsion (`Monoid.IsTorsionFree`). Note that
 uniqueness of roots (`IsMulTorsionFree`) already fails in the $3$-strand braid group, where
-$(s_1 s_2)^3 = (s_2 s_1)^3$ with $s_1 s_2 \ne s_2 s_1$. -/
-@[category research open, AMS 20]
+$(s_1 s_2)^3 = (s_2 s_1)^3$ with $s_1 s_2 \ne s_2 s_1$.
+
+This was proved for finite-rank Artin–Tits groups in September 2026 [OAI26, Corollary 10.1(i)],
+using a finite-dimensional classifying space arising from contractibility of the Salvetti cover;
+see the
+[checked contractibility statement](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/ComparatorChallenges/HarmonicArtin.lean)
+(whose presentation differs from `relators M` only by trivial length-zero and diagonal relations)
+and [verification log](https://github.com/mathcommunity/oai-math-revised/blob/main/checks/comparator-2026-10-26/logs/HarmonicArtin.log). -/
+@[category research solved, AMS 20]
 theorem artin_tits_group_torsion_free {B : Type} [Finite B] (M : CoxeterMatrix B) :
     Monoid.IsTorsionFree (ofMatrix M) := by
   sorry
