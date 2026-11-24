@@ -18,7 +18,9 @@ import json
 import os
 import tempfile
 import unittest
+from unittest import mock
 
+import check_formal_proof_links
 from check_formal_proof_links import (
     check_link,
     declaration_near,
@@ -30,6 +32,7 @@ from check_formal_proof_links import (
     module_path,
     names_agree,
     raw_url,
+    run,
 )
 
 # The shape `lake exe extract_names` writes (schema version 2).
@@ -108,6 +111,23 @@ class LinksFromMetadataTest(unittest.TestCase):
     def test_rejects_unknown_metadata(self):
         with self.assertRaises(ValueError):
             links_from_metadata({"something": []})
+
+    def test_skips_a_blank_formal_conjectures_link(self):
+        # The `formal_proof` attribute allows `link: ""` for a `formal_conjectures` proof.
+        metadata = {"problems": [
+            {"theorem": "A.a", "module": "FormalConjectures.A",
+             "formalProofs": [{"kind": "formal_conjectures", "link": "", "conditions": []}]},
+            {"theorem": "A.b", "module": "FormalConjectures.A",
+             "formalProofs": [{"kind": "formal_conjectures", "link": "  ", "conditions": []}]},
+        ]}
+        self.assertEqual(links_from_metadata(metadata), [])
+
+    def test_keeps_a_blank_external_link_to_report_it(self):
+        metadata = {"problems": [
+            {"theorem": "A.a", "module": "FormalConjectures.A",
+             "formalProofs": [{"kind": "lean4", "link": "", "conditions": []}]},
+        ]}
+        self.assertEqual([(l["name"], l["url"]) for l in links_from_metadata(metadata)], [("A.a", "")])
 
     def test_loads_a_local_file(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -299,10 +319,64 @@ class CheckLinkTest(unittest.TestCase):
         cache = {raw_url(l["url"]): (200, "theorem Erdos1 : True := trivial")}
         self.assertEqual(check_link(l, cache), [])
 
+    def test_a_blank_external_link_is_missing(self):
+        l = link(kind="lean4", url="")
+        self.assertEqual([f["kind"] for f in check_link(l, {}, wayback=False)], ["missing-link"])
+
     def test_non_lean_target_is_only_checked_for_reachability(self):
         l = link(kind="other_system", url="https://example.org/b.v")
         cache = {l["url"]: (200, "Lemma erdos_1 : True.")}
         self.assertEqual(check_link(l, cache), [])
+
+
+# A blank `formal_conjectures` link beside a valid one, as `extract_names` writes them.
+BLANK_BESIDE_VALID = {
+    "problems": [
+        {"theorem": "Erdos1.erdos_1", "module": "FormalConjectures.ErdosProblems.«1»",
+         "formalProofs": [{"kind": "formal_conjectures", "link": "", "conditions": []}]},
+        {"theorem": "Erdos1.erdos_1.variants.two", "module": "FormalConjectures.ErdosProblems.«1»",
+         "formalProofs": [{"kind": "lean4", "link": "https://github.com/x/y/blob/c/F.lean#L1",
+                           "conditions": []}]},
+    ],
+}
+
+
+class RunTest(unittest.TestCase):
+    """`run` end to end, with `fetch` replaced so nothing touches the network."""
+
+    def run_with(self, metadata, bodies):
+        fetched = []
+
+        def fake_fetch(url):
+            fetched.append(url)
+            return bodies.get(url, (404, ""))
+
+        with mock.patch.object(check_formal_proof_links, "fetch", fake_fetch):
+            findings = run(links_from_metadata(metadata), wayback=False)
+        return findings, fetched
+
+    def test_a_blank_link_does_not_stop_the_valid_one_being_checked(self):
+        target = "https://raw.githubusercontent.com/x/y/c/F.lean"
+        findings, fetched = self.run_with(BLANK_BESIDE_VALID, {target: (200, "theorem t : True := trivial\n")})
+        self.assertEqual(fetched, [target])
+        self.assertEqual(findings, [])
+
+    def test_the_valid_link_is_still_reported_when_broken(self):
+        findings, _ = self.run_with(BLANK_BESIDE_VALID, {})
+        self.assertEqual([(f["kind"], f["name"]) for f in findings],
+                         [("unreachable", "Erdos1.erdos_1.variants.two")])
+
+
+class FetchTest(unittest.TestCase):
+
+    def test_a_link_that_is_not_a_url_is_reported_not_raised(self):
+        for url in ["", "not a url", "ftp://example.org/a.lean"]:
+            self.assertEqual(check_formal_proof_links.fetch(url), ("not an http(s) URL", ""))
+
+    def test_an_unfetchable_url_is_reported(self):
+        l = link(kind="lean4", url="example.org/a.lean")
+        findings = check_link(l, {raw_url(l["url"]): check_formal_proof_links.fetch(l["url"])}, wayback=False)
+        self.assertEqual([(f["kind"], f["detail"]) for f in findings], [("unreachable", "not an http(s) URL")])
 
 
 if __name__ == "__main__":

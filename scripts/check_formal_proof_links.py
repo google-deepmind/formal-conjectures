@@ -10,6 +10,11 @@ Lean sources: either the raw output (`{"problems": [...]}`, as written to
 (`{"conjectures": [...]}`). By default the published copy is fetched, so no build is needed.
 Each entry gives the full declaration name and its `formalProofs` (kind, link, conditions).
 
+A `formal_conjectures` proof may have an empty link (the `formal_proof` attribute allows it,
+since the proof is in this repository), and such entries are skipped. A `lean4` or
+`other_system` proof with an empty link is reported as `missing-link`: the proof lives
+elsewhere and there is nothing to follow.
+
 For each link:
 
 1. Fetch the target. A GitHub `blob` URL is fetched as raw content. Report HTTP errors, and
@@ -35,7 +40,8 @@ Usage:
   python check_formal_proof_links.py --quiet               # only the summary line
   python check_formal_proof_links.py --offline             # list the links, fetch no targets
 
-Exit status is 1 for `unreachable`, `anchor-not-on-declaration` and `name-not-found`.
+Exit status is 1 for `unreachable`, `missing-link`, `anchor-not-on-declaration` and
+`name-not-found`.
 """
 
 import argparse
@@ -60,7 +66,7 @@ DECLARATION_NAME = re.compile(r"\b(?:theorem|lemma|alias)\s+([^\s:({]+)")
 GITHUB_BLOB = re.compile(r"https://github\.com/([^/]+)/([^/]+)/blob/([^/]+)/(.+?)(?:#L(\d+)(?:-L(\d+))?)?$")
 
 # Finding kinds that fail the run.
-FAILING_KINDS = {"unreachable", "anchor-not-on-declaration", "name-not-found"}
+FAILING_KINDS = {"unreachable", "missing-link", "anchor-not-on-declaration", "name-not-found"}
 
 # How far from a line anchor a declaration keyword may start. Anchors sometimes point at the
 # attribute line above the `theorem`, and sometimes at the `:=` line below a long statement.
@@ -118,7 +124,10 @@ def module_path(module):
 
 
 def links_from_metadata(metadata):
-    """Return one record per formal proof in `extract_names` metadata, raw or published."""
+    """Return one record per formal proof in `extract_names` metadata, raw or published.
+
+    A `formal_conjectures` proof with an empty link is skipped. Any other proof with an empty
+    link is kept, with `url` set to "", so that `check_link` reports it as `missing-link`."""
     entries = metadata.get("problems")
     if entries is None:
         entries = metadata.get("conjectures")
@@ -127,12 +136,15 @@ def links_from_metadata(metadata):
     links = []
     for entry in entries:
         for proof in entry.get("formalProofs") or []:
+            url = (proof.get("link") or "").strip()
+            if not url and proof["kind"] == "formal_conjectures":
+                continue
             links.append(
                 {
                     "file": entry.get("githubPath") or module_path(entry["module"]),
                     "name": entry["theorem"],
                     "kind": proof["kind"],
-                    "url": proof["link"],
+                    "url": url,
                     "conditions": proof.get("conditions") or [],
                 }
             )
@@ -198,14 +210,18 @@ def declaration_near(body, anchor):
 
 
 def fetch(url):
-    """Return (status, body). `status` is an int HTTP code or an error string."""
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    """Return (status, body). `status` is an int HTTP code or an error string. Never raises:
+    a link that is not an http(s) URL gives `not an http(s) URL`, so one bad link cannot stop
+    the scan."""
+    if not url.lower().startswith(("http://", "https://")):
+        return "not an http(s) URL", ""
     try:
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
         with urllib.request.urlopen(req, timeout=TIMEOUT_SECONDS) as resp:
             return resp.status, resp.read().decode("utf-8", "replace")
     except urllib.error.HTTPError as e:
         return e.code, ""
-    except Exception as e:  # network errors, timeouts
+    except Exception as e:  # malformed URLs, network errors, timeouts
         return type(e).__name__, ""
 
 
@@ -232,6 +248,8 @@ def wayback_snapshot(url):
 
 def check_link(link, body_cache, wayback=True):
     """Return a list of findings for one link. Empty means the link is fine."""
+    if not link["url"]:
+        return [finding(link, "missing-link", f"`{link['kind']}` proof has an empty link")]
     target = raw_url(link["url"])
     if target not in body_cache:
         body_cache[target] = fetch(target)
@@ -242,7 +260,8 @@ def check_link(link, body_cache, wayback=True):
         if wayback:
             snapshot = wayback_snapshot(link["url"])
             extra["wayback"] = snapshot or "none"
-        return [finding(link, "unreachable", f"HTTP {status}", **extra)]
+        detail = f"HTTP {status}" if isinstance(status, int) else status
+        return [finding(link, "unreachable", detail, **extra)]
 
     if not target.endswith(".lean"):
         return []  # not a Lean file; reachability is all that can be checked
@@ -273,7 +292,7 @@ def finding(link, kind, detail, **extra):
 def run(links, wayback=True):
     body_cache = {}
     # Fetch every distinct target once, in parallel, then check sequentially.
-    targets = sorted({raw_url(l["url"]) for l in links})
+    targets = sorted({raw_url(l["url"]) for l in links if l["url"]})
     with concurrent.futures.ThreadPoolExecutor(WORKERS) as ex:
         for target, result in zip(targets, ex.map(fetch, targets)):
             body_cache[target] = result
