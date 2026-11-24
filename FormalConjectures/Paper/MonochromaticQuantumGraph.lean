@@ -204,6 +204,33 @@ def EqSystemN {α : Type} [Semiring α] (N D : Nat) (W : WeightsN N D α) : Prop
     pmSumN N D W ι =
       (if allEqual ι then (1 : α) else (0 : α))
 
+/-- Restricting the colours along `g` and applying a ring homomorphism `f` to the weights commutes
+with the perfect-matching sum. -/
+@[category API, AMS 5 14 81]
+theorem pmSumListAux_map {α β : Type} [Semiring α] [Semiring β] (f : α →+* β) {N D D' : Nat}
+    (g : Fin D → Fin D') (W : WeightsN N D' α) (ι : V N → Fin D) (n : Nat) (L : List (V N)) :
+    pmSumListAux (fun e => f (W ⟨e.u, e.v, g e.i, g e.j⟩)) ι n L =
+      f (pmSumListAux W (g ∘ ι) n L) := by
+  induction n using Nat.twoStepInduction generalizing L with
+  | zero => simp [pmSumListAux]
+  | one => simp [pmSumListAux]
+  | more n ih _ =>
+    rcases L with _ | ⟨v, _ | ⟨u, vs⟩⟩
+    · simp [pmSumListAux]
+    · simp [pmSumListAux]
+    · simp only [pmSumListAux, ih, map_list_sum, List.map_map, mkEdge, Function.comp_def, map_mul]
+
+/-- A solution of the equation system stays a solution after restricting the colours along an
+injective map and applying a ring homomorphism to the weights. -/
+@[category API, AMS 5 14 81]
+theorem EqSystemN.map {α β : Type} [Semiring α] [Semiring β] (f : α →+* β) {N D D' : Nat}
+    {g : Fin D → Fin D'} (hg : g.Injective) {W : WeightsN N D' α} (hW : EqSystemN N D' W) :
+    EqSystemN N D (fun e => f (W ⟨e.u, e.v, g e.i, g e.j⟩)) := by
+  intro ι
+  have h : allEqual (g ∘ ι) ↔ allEqual ι := by simp [allEqual, allEqualList, hg.eq_iff]
+  rw [pmSumN, pmSumList, pmSumListAux_map, ← pmSumList, ← pmSumN, hW (g ∘ ι)]
+  by_cases hι : allEqual ι <;> simp [hι, h]
+
 /-
 # Witnesses & theorems (sanity checks)
 
@@ -459,12 +486,16 @@ theorem eqSystem6_no_solution_d6 :
   sorry
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, question, AMS 5 14 81]
+equation system over $\mathbb{C}$?
+
+This follows from `eqSystem6_no_solution_d3`: a solution with $D \geq 3$ colours restricts to a
+solution with $3$ colours. -/
+@[category research solved, question, AMS 5 14 81]
 theorem eqSystem6_no_solution_ge3 :
     ∀ D : Nat, D ≥ 3 →
       ¬ ∃ W : WeightsN 6 D ℂ, EqSystemN 6 D W := by
-  sorry
+  rintro D hD ⟨W, hW⟩
+  exact eqSystem6_no_solution_d3 ⟨_, hW.map (.id ℂ) (Fin.castLE_injective hD)⟩
 
 /-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
@@ -604,11 +635,14 @@ theorem eqSystem4_no_solution_ge4_real :
   sorry
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{R}$? -/
-@[category research open, question, AMS 5 14 81]
+equation system over $\mathbb{R}$?
+
+This follows from `eqSystem6_no_solution_d3`: a real solution is a complex solution. -/
+@[category research solved, question, AMS 5 14 81]
 theorem eqSystem6_no_solution_d3_real :
     ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W := by
-  sorry
+  rintro ⟨W, hW⟩
+  exact eqSystem6_no_solution_d3 ⟨_, hW.map Complex.ofRealHom Function.injective_id⟩
 
 set_option linter.style.formal_proof_palomar false in
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
@@ -622,12 +656,15 @@ theorem eqSystem6_no_solution_d5_real :
   sorry
 
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{R}$? -/
-@[category research open, question, AMS 5 14 81]
+equation system over $\mathbb{R}$?
+
+This follows from `eqSystem6_no_solution_ge3`: a real solution is a complex solution. -/
+@[category research solved, question, AMS 5 14 81]
 theorem eqSystem6_no_solution_ge3_real :
     ∀ D : Nat, D ≥ 3 →
       ¬ ∃ W : WeightsN 6 D ℝ, EqSystemN 6 D W := by
-  sorry
+  rintro D hD ⟨W, hW⟩
+  exact eqSystem6_no_solution_ge3 D hD ⟨_, hW.map Complex.ofRealHom Function.injective_id⟩
 
 /-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
