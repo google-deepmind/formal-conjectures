@@ -63,10 +63,21 @@ theorem a_5 : a 5 = 9 := by
   simp only [a, catalan_eq_centralBinom_div]
   exact IsLeast.csInf_eq (by decide)
 
+set_option linter.style.formal_proof_palomar false in
 /-- Conjecture: $a(n)$ exists for all $n > 0$.
 Since $a(n)$ is defined as the infimum of a set of positive integers, existence is equivalent
-to $0 < a(n)$. -/
-@[category research open, AMS 11]
+to $0 < a(n)$.
+
+This is true. Take primes $u > 2n$ and $r$ with $3u/2 \le r < 2u$ such that $N = ru + n$ lies in
+suitable residue classes modulo prime powers dividing $n$, and put $m = ru$. Kummer's theorem
+then shows that $n$, $r$ and $u$ all divide $C(N)$. Such primes exist by the prime number theorem
+for arithmetic progressions. - Zedan Soorya, Nov 13 2026 (OEIS comment)
+
+The linked Lean proof follows this argument. It takes the prime number theorem for arithmetic
+progressions from PrimeNumberTheoremAnd (`chebyshev_asymptotic_pnt`). -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/oeis-a248123-lean/blob/98210f1e638f218f13e3edf6c5876c0f12b46bfe/A248123.lean#L410-L411"]
 theorem conjecture (n : ℕ) (hn : 0 < n) : 0 < a n := by
   sorry
 
