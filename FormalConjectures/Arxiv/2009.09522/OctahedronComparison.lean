@@ -30,9 +30,28 @@ case is due to **J. Kim**: *Octahedron comparison in geodesic CAT(0) spaces:
 An exact computer-assisted proof candidate*. To our knowledge, it has not yet
 been independently checked or published.
 
-Question 6.1 asks whether every length CAT(0) space satisfies octahedron
-comparison. The converse asks whether every six-point metric space satisfying
+Question 6.1.1 asks whether every length CAT(0) space satisfies octahedron
+comparison. The converse (Question 6.1.2) asks whether every six-point metric space satisfying
 octahedron comparison admits an isometric embedding into a length CAT(0) space.
+
+On Question 6.1.1. J. Kim, Octahedron comparison in geodesic CAT(0) spaces:
+An exact computer-assisted proof candidate,
+Theorem 1.1 (https://projectdiderot.com/papers/cf6f919f-158e-4657-a5a1-0cda0cf9f6ea),
+treats octahedron comparison in geodesic CAT(0) spaces. Kim describes the
+manuscript as a computer-assisted proof candidate. In the postscript to §9 of
+A. Petrunin, A gallery of open problems in geometry that keep me puzzled and
+amused (§9 (https://arxiv.org/pdf/2510.11908v2#page=7)), Petrunin later credits
+Kim with solving the geodesic question.
+The geodesic result would also cover the length-space statement formalized here.
+Let X be a length CAT(0) space. Its metric completion is again a length space.
+It still satisfies the (2+2)-point inequalities, since these are closed
+conditions in the distances. So the completion is a complete length CAT(0)
+space, and such a space is geodesic
+(Alexander–Kapovitch–Petrunin, Alexandrov geometry: foundations,
+Proposition 9.7 and Corollary 9.11 (https://anton-petrunin.github.io/book/arXiv.pdf#page=112)).
+Octahedron comparison then restricts to X along the isometric inclusion.
+The converse, Question 6.1.2, is a separate question and is not addressed by
+these results.
 -/
 
 @[expose] public section
