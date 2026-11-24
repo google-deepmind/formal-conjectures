@@ -65,10 +65,10 @@ distance $1$ apart.
 The conjecture is false: for all large $n$ there is a convex polygon with
 $\gg n\log\log n$ many unit-distance pairs (see
 [erdosproblems.com/96](https://www.erdosproblems.com/96)). A Lean 4 formalisation is available at
-[lkruer/erdos-96-97-proof](https://github.com/lkruer/erdos-96-97-proof/blob/main/Erdos9697Complete.lean).
+[lkruer/erdos-96-97-proof](https://github.com/lkruer/erdos-96-97-proof/blob/90fd28e53183f44ae8271b8e71590ed18eb1c28b/Erdos9697Complete.lean#L2416).
 -/
 @[category research solved, question, AMS 52, formal_proof using lean4 at
-  "https://github.com/lkruer/erdos-96-97-proof/blob/main/Erdos9697Complete.lean"]
+  "https://github.com/lkruer/erdos-96-97-proof/blob/90fd28e53183f44ae8271b8e71590ed18eb1c28b/Erdos9697Complete.lean#L2416"]
 theorem erdos_96 :
     ¬ ((fun n => (maxConvexUnitDistances n : ℝ)) =O[atTop] fun n => (n : ℝ)) := by
   sorry
