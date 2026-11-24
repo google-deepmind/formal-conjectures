@@ -32,6 +32,14 @@ The Idoneal Numbers Completeness Conjecture asserts that the following list of
 *References:*
 - [Wikipedia: Idoneal number](https://en.wikipedia.org/wiki/Idoneal_number)
 - [OEIS A000926](https://oeis.org/A000926)
+- [We73] Weinberger, P. J., *Exponents of the class groups of complex quadratic fields*.
+  Acta Arith. 22 (1973), 117–124.
+- [Ka11] Kani, E., *Idoneal numbers and some generalizations*. Ann. Sci. Math. Québec 35 (2011),
+  197–227.
+- [MJ15] Mosunov, A. S. and Jacobson, M. J., Jr., *Unconditional class group tabulation of imaginary
+  quadratic fields to $|\Delta| < 2^{40}$*. [arXiv:1502.07953](https://arxiv.org/abs/1502.07953)
+  (2015).
+- [Al26] Alpöge, L., [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf) (2026).
 -/
 
 @[expose] public section
@@ -97,8 +105,15 @@ theorem knownIdonealNumbers_are_idoneal : ∀ n ∈ knownIdonealNumbers, IsIdone
 
 /--
 Idoneal numbers completeness conjecture.
+
+This follows from the Generalized Riemann Hypothesis for Dirichlet $L$-functions, which is proved
+[Al26]. Under this hypothesis, Weinberger [We73, Theorem 1] proved that the class group of
+$\mathbb{Q}(\sqrt{-d})$ does not have exponent $2$ if its discriminant $-d$ satisfies $d > 5460$.
+Completeness of the list is deduced from this in [Ka11, Corollary 23]. Weinberger's proof uses a
+computation of Lehmer, without details, for $d < 200560490130$. The unconditional tabulation for
+$d < 2^{40}$ in [MJ15] covers this range.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem idoneal_numbers_completeness :
     ∀ n : ℕ, IsIdoneal n → n ∈ knownIdonealNumbers := by
   sorry
