@@ -62,10 +62,12 @@ $m = n - 2$ and $n = m + 2$. "Smooth" is `ContDiffOn ℝ ∞` on the open cube, 
 plane" is an affine subspace whose direction has dimension $2$, and "in $5$ points" is read as
 "in at least $5$ points" (the intersection may be infinite, `encard = ⊤`).
 
-[Gr24] remarks that the analogous number of intersection points for codimension $d$ and
-$d$-dimensional planes is finite (sketched by Thom [Th69], with details in [CM09] and explicit
-constructions in [DL12]), and that it is not known whether it is bounded independently of $n$ for
-$d = 2$.
+More generally, [Gr24] writes $f(n, d)$ for the largest $k$ such that every smooth surface of
+codimension $d$ in $\mathbb{R}^n$ meets some $d$-dimensional plane in at least $k$ points. He
+remarks that $f(n, d)$ is finite for all $n, d$: for each $n$ and $d$ there are surfaces of
+codimension $d$ that meet every $d$-dimensional plane in at most $N$ points, for some finite $N$
+(a proof was sketched by Thom [Th69], with details in [CM09] and explicit constructions in
+[DL12]). It is not known whether $f(n, 2)$ is bounded independently of $n$.
 -/
 @[category research open, question, AMS 53 57]
 theorem green_73 :
