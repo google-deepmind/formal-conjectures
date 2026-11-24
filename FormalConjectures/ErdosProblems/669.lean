@@ -187,7 +187,9 @@ theorem erdos_669.variants.exactly_le_atLeast (k n : ℕ) :
 /--
 $f_2(n)=F_2(n)=\binom{n}{2}$.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52,
+  formal_proof using lean4 at
+  "https://github.com/stokes/erdos-proofs/blob/2a9eb1a1bdd869f09f9fad2c654db8508c6ad7fc/ErdosProofs/Erdos669.lean"]
 theorem erdos_669.variants.k_two (n : ℕ) :
     maxLinesExactly 2 n = n.choose 2 ∧ maxLinesAtLeast 2 n = n.choose 2 := by
   sorry
