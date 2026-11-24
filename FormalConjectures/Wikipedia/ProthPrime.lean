@@ -90,7 +90,70 @@ $a^{(N - 1) / 2} = -1$.
 @[category textbook, AMS 11]
 theorem proth_primality_criterion (N : ℕ) (hN : IsProthNumber N) :
     N.Prime ↔ ∃ a : ZMod N, a ^ ((N - 1) / 2) = -1 := by
-  sorry
+  obtain ⟨k, n, hk, hn, hkn, hNeq⟩ := hN
+  have h2n : 2 ^ n = 2 * 2 ^ (n - 1) := by
+    rw [← pow_succ']
+    congr 1
+    omega
+  have hpos : 0 < 2 ^ (n - 1) := by positivity
+  have hk1 : 1 ≤ k := hk.pos
+  have hodd : N % 2 = 1 := by
+    rw [hNeq, h2n, ← mul_assoc, mul_comm k 2, mul_assoc]
+    omega
+  have hN3 : 3 ≤ N := by
+    have : 1 * 2 ≤ k * 2 ^ n := Nat.mul_le_mul hk1 (by omega)
+    omega
+  constructor
+  · -- A quadratic non-residue `a` satisfies `a ^ ((N - 1) / 2) = -1` by Euler's criterion.
+    intro hp
+    have : Fact N.Prime := ⟨hp⟩
+    obtain ⟨a, ha⟩ := FiniteField.exists_nonsquare (F := ZMod N) (by
+      rw [ZMod.ringChar_zmod_n]
+      omega)
+    have ha0 : a ≠ 0 := fun h => ha (h ▸ IsSquare.zero)
+    refine ⟨a, ?_⟩
+    rw [show (N - 1) / 2 = N / 2 by omega]
+    exact (ZMod.pow_div_two_eq_neg_one_or_one _ ha0).resolve_left
+      fun h1 => ha ((ZMod.euler_criterion _ ha0).2 h1)
+  · -- Every prime factor `q` of `N` satisfies `2 ^ n ∣ q - 1`, so `q ^ 2 > N`.
+    rintro ⟨a, ha⟩
+    by_contra hnp
+    have hq : N.minFac.Prime := Nat.minFac_prime (by omega)
+    have hqN : N.minFac ∣ N := Nat.minFac_dvd N
+    have hq2 : N.minFac ^ 2 ≤ N := Nat.minFac_sq_le_self (by omega) hnp
+    generalize N.minFac = q at hq hqN hq2
+    have hqodd : q ≠ 2 := fun h => by
+      rw [h] at hqN
+      omega
+    have : Fact q.Prime := ⟨hq⟩
+    have : Fact (2 < q) := ⟨lt_of_le_of_ne hq.two_le (Ne.symm hqodd)⟩
+    have : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+    have hexp : (N - 1) / 2 = k * 2 ^ (n - 1) := by
+      rw [hNeq, Nat.add_sub_cancel, h2n, ← mul_assoc, mul_comm k 2, mul_assoc,
+        Nat.mul_div_cancel_left _ (by norm_num)]
+    -- The image `b` of `a ^ k` in `ZMod q` has order exactly `2 ^ n`.
+    set b : ZMod q := (ZMod.castHom hqN (ZMod q) a) ^ k with hb
+    have hb1 : b ^ 2 ^ (n - 1) = -1 := by
+      rw [hb, ← pow_mul, ← hexp, ← map_pow, ha, map_neg, map_one]
+    have hb2 : b ^ 2 ^ (n - 1 + 1) = 1 := by
+      rw [pow_succ, pow_mul, hb1]
+      norm_num
+    have hord : orderOf b = 2 ^ (n - 1 + 1) :=
+      orderOf_eq_prime_pow (by rw [hb1]; exact ZMod.neg_one_ne_one) hb2
+    have hb0 : b ≠ 0 := fun h => by
+      rw [h, zero_pow (by positivity)] at hb2
+      exact zero_ne_one hb2
+    have hdvd : 2 ^ (n - 1 + 1) ∣ q - 1 := by
+      rw [← hord]
+      exact orderOf_dvd_of_pow_eq_one (ZMod.pow_card_sub_one_eq_one hb0)
+    rw [show n - 1 + 1 = n by omega] at hdvd
+    have hle : 2 ^ n ≤ q - 1 := Nat.le_of_dvd (by have := hq.two_le; omega) hdvd
+    have hq' : 2 ^ n + 1 ≤ q := by have := hq.two_le; omega
+    have hsq : (2 ^ n + 1) ^ 2 ≤ q ^ 2 := Nat.pow_le_pow_left hq' 2
+    have hlt : N < (2 ^ n + 1) ^ 2 := by
+      rw [hNeq]
+      nlinarith [Nat.mul_lt_mul_of_pos_right hkn (by positivity : 0 < 2 ^ n)]
+    exact absurd (hlt.trans_le (hsq.trans hq2)) (lt_irrefl _)
 
 /--
 There are infinitely many Proth primes ([OEIS A080076](https://oeis.org/A080076)).
