@@ -75,7 +75,21 @@ theorem harmonicNumDivisibleSet_two_small :
 /-- Every $H_n$ with $n \ge 1$ has odd reduced numerator, hence $J_2 = \emptyset$. -/
 @[category textbook, AMS 11]
 theorem harmonicNumDivisibleSet_two_empty : harmonicNumDivisibleSet 2 = ∅ := by
-  sorry
+  ext n
+  simp only [harmonicNumDivisibleSet, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false,
+    not_and]
+  intro hn hdvd
+  have : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have hnum : (harmonic n).num ≠ 0 := Rat.num_ne_zero.mpr (harmonic_pos (by omega)).ne'
+  have h2 : 2 ∣ (harmonic n).num.natAbs := Int.natCast_dvd.mp hdvd
+  have hden : ¬ 2 ∣ (harmonic n).den := fun h =>
+    Nat.not_coprime_of_dvd_of_dvd (by norm_num) h2 h (harmonic n).reduced
+  -- The 2-adic valuation of `H_n` is `-⌊log₂ n⌋ ≤ 0`; an even numerator would make it `≥ 1`.
+  have hval := padicValRat_two_harmonic n
+  rw [padicValRat_def, padicValNat.eq_zero_of_not_dvd hden] at hval
+  have h1 : 1 ≤ padicValInt 2 (harmonic n).num :=
+    one_le_padicValNat_of_dvd (Int.natAbs_ne_zero.mpr hnum) h2
+  omega
 
 /-- Eswarathasan–Levine inclusion theorem (1991): every prime $p \ge 5$ satisfies
 $\{p - 1, p^2 - p, p^2 - 1\} \subseteq J_p$ (using Wolstenholme's theorem at $p - 1$; cf.
