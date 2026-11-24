@@ -153,4 +153,25 @@ theorem erdos_394.variants.factorial_gap_10 :
   intro k hk2 hk10
   interval_cases k <;> simp_all
 
+set_option linter.style.formal_proof_palomar false in
+/--
+Erdős and Hall [ErHa78] note that $t_{n-1}(n!) = 2$ and that $t_{n-2}(n!) = O(n)$, which is best
+possible (for example when $n = 2^k$), and they ask what can be said about $t_{n-3}(n!)$. This
+variant determines the limit superior:
+$$\limsup_{n\to\infty} \frac{t_{n-3}(n!)}{n} = 2.$$
+It does not answer the open-ended question about the behaviour of $t_{n-3}(n!)$ in full.
+
+For the upper bound write $m = a + 1$. Then $n!$ divides $m(m+1)\cdots(m+n-4)$ if and only if
+$n(n-1)(n-2)$ divides $\binom{a+n-3}{n-3}$, and Kummer's theorem turns this into conditions on the
+residues of $a$ modulo the prime powers dividing $n(n-1)(n-2)$. A sieve over the primes $p \geq 5$
+dividing $n(n-1)(n-2)$ finds a suitable $a \leq (2 + \varepsilon)n$ for all large $n$. For the
+lower bound, when $n = 3^y$ with $y \geq 2$ the base $3$ digits of $n - 3$ force a carry at level
+$y + 1$, so $t_{n-3}(n!) \geq 2n + 4$.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/d521df7b70dfb0d24a2132f00bef4fe607b8c38c/ErdosLean/Erdos394Limsup.lean"]
+theorem erdos_394.variants.factorial_sub_three_limsup :
+    limsup (fun n : ℕ ↦ (t (n - 3) (n !) : ℝ) / n) atTop = 2 := by
+  sorry
+
 end Erdos394
