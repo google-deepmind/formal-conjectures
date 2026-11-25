@@ -37,7 +37,8 @@ def congruentNumber (n : ℕ) : Prop :=
   ∃ (a b c : ℚ), a ^ 2 + b ^ 2 = c ^ 2 ∧ n = (2⁻¹ : ℚ) * a * b
 
 /-- 1 is not a congruent number, as proved by Fermat via infinite descent. -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11, formal_proof using lean4 at
+  "https://github.com/veljjanoski/formal-conjectures-proofs/blob/11f00a9b53956ee79ae72574ff8348b1bdeb5ac2/FcProofs/CongruentNumberOne.lean#L231"]
 theorem not_congruentNumber_1 : ¬ congruentNumber 1 := by
   sorry
 

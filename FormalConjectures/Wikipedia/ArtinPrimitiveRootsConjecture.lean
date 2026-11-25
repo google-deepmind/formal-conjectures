@@ -51,32 +51,20 @@ covered by the Generalized Riemann Hypothesis for Dirichlet $L$-functions.
 
 @[expose] public section
 
-open GRH
+open ERH
 open scoped Topology Nat
 
 namespace ArtinPrimitiveRootsConjecture
-
-/-- `Z` is a Dedekind zeta function of the number field `K`: it is holomorphic away from $s = 1$
-and agrees with the Dedekind zeta series of `K` on $\operatorname{Re} s > 1$, where that series
-converges. Such a `Z` is uniquely determined on $\mathbb{C} \setminus \{1\}$. -/
-def IsDedekindZeta (K : Type*) [Field K] [NumberField K] (Z : ℂ → ℂ) : Prop :=
-  DifferentiableOn ℂ Z {1}ᶜ ∧ ∀ s : ℂ, 1 < s.re → Z s = NumberField.dedekindZeta K s
-
-/-- The **Riemann hypothesis for the Dedekind zeta function** $\zeta_K$ of a number field $K$:
-every zero of (the analytic continuation of) $\zeta_K$ in the critical strip
-$0 < \operatorname{Re} s < 1$ has real part $\frac{1}{2}$. -/
-def DedekindZetaRH (K : Type*) [Field K] [NumberField K] : Prop :=
-  ∀ Z : ℂ → ℂ, IsDedekindZeta K Z → ∀ s : ℂ, 0 < s.re → s.re < 1 → Z s = 0 → s.re = 1 / 2
 
 open Polynomial in
 /-- **Hooley's hypothesis** for $a$: the Riemann hypothesis holds for the Dedekind zeta function
 of the Kummer field $\mathbb{Q}(\zeta_k, a^{1/k})$, the splitting field of $X^k - a$ over
 $\mathbb{Q}$, for every squarefree $k$. This is the hypothesis under which Hooley [Ho67] proved
-Artin's conjecture. -/
+Artin's conjecture. It is a special case of `ERH.extended_riemann_hypothesis`. -/
 def HooleyHypothesis (a : ℤ) : Prop :=
   ∀ k : ℕ, Squarefree k →
     letI := NumberField.of_module_finite ℚ (X ^ k - C (a : ℚ)).SplittingField
-    DedekindZetaRH (X ^ k - C (a : ℚ)).SplittingField
+    ExtendedRiemannHypothesis (X ^ k - C (a : ℚ)).SplittingField
 
 /-- Let $S(a)$ be the set of primes such that $a$ is a primitive root modulo $p$. -/
 abbrev S (a : ℤ) : Set ℕ :=
