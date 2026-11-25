@@ -68,6 +68,7 @@ theorem erdos_864 :
         (#A : ℝ) ≤ (1 + ε) * (2 / Real.sqrt 3) * Real.sqrt (N : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Freud [ErFr91] [Er92c] prove that
 $$\lvert A\rvert \geq (1+o(1))\frac{2}{\sqrt{3}}N^{1/2}.$$
@@ -78,7 +79,8 @@ That is, for every $\varepsilon > 0$ and all large $N$ there is a set $A\subsete
 with the property of `Erdos864.erdos_864` and $|A| \geq (1-\varepsilon)\frac{2}{\sqrt{3}}N^{1/2}$.
 So the constant $2/\sqrt{3}$ there cannot be replaced by a smaller one.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-sidon-constructions-lean/blob/530da941d5e4f3f637a8c26b96655473a4dad8a8/ErdosSidonConstructions.lean#L775"]
 theorem erdos_864.variants.lower_bound :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ N : ℕ in atTop, ∃ A ⊆ Finset.Icc 1 N,
       HasAtMostOneRepeatedSum A ∧
