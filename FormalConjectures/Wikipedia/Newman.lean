@@ -21,6 +21,8 @@ public import FormalConjecturesUtil
 # Newman's Conjecture
 
 *References:*
+References for Newman's Conjecture, Erdős' conjecture related to problem 1106 and the Erdős–Ivić
+conjecture.
 [Wikipedia](https://en.wikipedia.org/wiki/Newman%27s_conjecture)
 [MathWorld](https://mathworld.wolfram.com/NewmansConjecture.html)
 [arXiv:0008140](https://arxiv.org/abs/math/0008140)
@@ -40,16 +42,18 @@ theorem newman_conjecture (m r : ℕ) (hr : r < m) :
   sorry
 
 /--
-Newman's Conjecture implies Erdős : For every prime $m$ there exists some $n$ such that
-$m | p(n)$.
+Newman's Conjecture implies the following Erdős' conjecture (related to Problem 1106) [Wikipedia]:
+For every prime $m$ there exists some $n$ such that $m | p(n)$.
+It was proven by Ono in [arXiv:0008140].
 -/
 @[category textbook, AMS 5 11]
 theorem newman_implies_erdos (m : ℕ) (hm : m.Prime) (P : type_of% newman_conjecture) :
     {n : ℕ | Nat.partitionNumber n % m = (0 : ℕ)}.Nonempty := (P m 0 hm.pos).nonempty
 
 /--
-Newman's Conjecture implies Erdős–Ivić : There exist infinitely many primes $m$ such that
-for some $n > 0, m | p(n)$.
+Newman's Conjecture implies Erdős–Ivić conjecture [Wikipedia]:
+There exist infinitely many primes $m$ such that for some $n > 0, m | p(n)$.
+It was proven by A. Schnizel, as stated in [arXiv:0008140].
 -/
 @[category textbook, AMS 5 11]
 theorem newman_implies_erdos_ivic (P : type_of% newman_conjecture) :
