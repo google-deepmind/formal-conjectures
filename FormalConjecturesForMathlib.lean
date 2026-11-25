@@ -51,6 +51,7 @@ public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveChar
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.LogIntegral
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
+public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.SigmoidDerivatives
 public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
 public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
