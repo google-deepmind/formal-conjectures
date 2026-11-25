@@ -22,8 +22,11 @@ public import FormalConjecturesUtil
 
 *References:*
 * [Gr24] [Green's Open Problems #36](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.36)
-* [CKS05] Cohn, H., Kleinberg, R., Szegedy, B., and Umans, C. "Group-theoretic Algorithms for
-  Matrix Multiplication" (Problem 4.7)
+* [CKSU05] H. Cohn, R. Kleinberg, B. Szegedy, and C. Umans,
+  [*Group-theoretic Algorithms for Matrix Multiplication*](https://arxiv.org/abs/math/0511460),
+  Theorem 4.4 and Conjecture 4.7.
+* [OAI26] OpenAI, [*The matrix multiplication exponent is nine fourths*](https://github.com/openai/math/blob/92b516ef8e2abf66c3db7aa31438d3010bc7956f/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf),
+  Theorem 1.1.
 -/
 
 @[expose] public section
@@ -33,7 +36,7 @@ open scoped Pointwise
 
 namespace Green36
 
-/-- The simultaneous double product property [CKS05, 4.1]. -/
+/-- The simultaneous double product property [CKSU05, Definition 4.1]. -/
 def SimultaneousDoubleProduct {ι H : Type*} [AddCommGroup H]
     (A B : ι → Finset H) : Prop :=
   open scoped Classical in
@@ -53,22 +56,24 @@ together with subsets $A_1, ..., A_n, B_1, ..., B_n$ satisfying $|A_i||B_i| \ge 
 $|A_i + B_i| = |A_i||B_i|$, such that the sets $A_i + B_i$ are disjoint from the sets $A_j + B_k$
 ($j \neq k$)?
 
-NOTE: according to [CKS05, 4.1], the conditions should be $A_i + B_j$ disjoint from $A_j + B_k$ for
-$i \neq k$. See `green_36.variants.cks05`.
+No. Negating the sets $B_i$ converts this to the simultaneous double product property in
+[CKSU05, Definition 4.1]. Such families would force the matrix multiplication exponent to be $2$
+by [CKSU05, Theorem 4.4], whereas [OAI26, Theorem 1.1] gives $9/4$.
 -/
-@[category research open, question, AMS 5 20]
+@[category research solved, question, AMS 5 20]
 theorem green_36 :
-    ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
+    ¬ ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
       ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
         (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
         (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
         Green36Property A B := by
   sorry
 
-/-- Variant using the exact simultaneous double product property from [CKS05, 4.1]. -/
-@[category research open, question, AMS 5 20]
+/-- The answer is also no for the simultaneous double product property as stated in
+[CKSU05, Definition 4.1]. -/
+@[category research solved, question, AMS 5 20]
 theorem green_36.variants.cks05 :
-    ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
+    ¬ ∀ ε > (0 : ℝ), ∃ᶠ n in atTop,
       ∃ (H : Type) (_ : AddCommGroup H) (_ : Finite H) (A B : Fin n → Finset H),
         (n : ℝ) ^ (2 - ε) ≤ Nat.card H ∧ Nat.card H ≤ (n : ℝ) ^ (2 + ε) ∧
         (∀ i, (n : ℝ) ^ (2 - ε) ≤ (A i).card * (B i).card) ∧
