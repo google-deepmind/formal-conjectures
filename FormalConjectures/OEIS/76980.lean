@@ -45,21 +45,8 @@ noncomputable def a (n : ℕ) : ℕ := Nat.nth IsLeyland n
 
 @[category test, AMS 11]
 theorem a_0 : a 0 = 3 := by
-  unfold a
-  rw [Nat.nth_zero, IsLeast.csInf_eq]
-  have h3 : IsLeyland 3 := Or.inl rfl
-  have hge : ∀ m, IsLeyland m → 3 ≤ m := by
-    intro m hm
-    by_cases h : 3 ≤ m
-    · assumption
-    · unfold IsLeyland at hm
-      obtain _ | h' := hm
-      · omega
-      · obtain ⟨n, hn, k, hk, hmk⟩ := h'
-        have : n ≤ n ^ k :=  Nat.le_self_pow (by positivity) n
-        have : k ^ n > 0 := by positivity
-        omega
-  exact ⟨h3, hge⟩
+  rw [a, Nat.nth_zero, IsLeast.csInf_eq]
+  exact ⟨.inl rfl, by grind [IsLeyland, Nat.le_self_pow, lowerBounds]⟩
 
 /--
 First statement of the conjecture from Zhi-Wei Sun:
