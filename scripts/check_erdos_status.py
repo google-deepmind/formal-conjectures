@@ -240,11 +240,31 @@ def issue_title(m):
     )
 
 
+SYNC_LABEL = "erdos-status-sync"
+FORMALISED_LABEL = "formalisation exists elsewhere"
+
+
 def issue_labels(m):
-    labels = ["erdos-status-sync"]
+    labels = [SYNC_LABEL]
     if m["yaml_status"] == "formally solved":
-        labels.append("formalisation exists elsewhere")
+        labels.append(FORMALISED_LABEL)
     return labels
+
+
+def label_changes(m, issue):
+    """The labels to add to and remove from `issue`, as `(to_add, to_remove)`.
+
+    Only the labels that this script manages are removed.
+    """
+    current = {label["name"] for label in issue["labels"]}
+    wanted = issue_labels(m)
+    to_add = [label for label in wanted if label not in current]
+    to_remove = [
+        label
+        for label in (SYNC_LABEL, FORMALISED_LABEL)
+        if label in current and label not in wanted
+    ]
+    return to_add, to_remove
 
 
 ISSUE_LIST_LIMIT = 1000
@@ -260,10 +280,10 @@ def list_sync_issues():
     result = subprocess.run(
         [
             "gh", "issue", "list",
-            "--label", "erdos-status-sync",
+            "--label", SYNC_LABEL,
             "--state", "open",
             "--limit", str(ISSUE_LIST_LIMIT),
-            "--json", "number,title",
+            "--json", "number,title,labels",
         ],
         capture_output=True,
         text=True,
@@ -296,27 +316,29 @@ def issues_by_problem(issues):
 def plan_issue_sync(mismatches, issues):
     """Decide what to do with the sync issues for the current mismatches.
 
-    Returns `(to_create, to_retitle, duplicates)`:
+    Returns `(to_create, to_edit, duplicates)`:
     - `to_create`: mismatches with no open issue.
-    - `to_retitle`: `(issue number, mismatch)` pairs for the oldest open issue of a problem
-      whose title no longer matches the computed sides.
+    - `to_edit`: `(issue, mismatch)` pairs for the oldest open issue of a problem whose title
+      or managed labels no longer match the computed sides.
     - `duplicates`: `(issue number, kept issue number)` pairs for every newer open issue of
       a problem that still mismatches.
 
     Kept separate from the `gh` calls so it can be tested.
     """
     grouped = issues_by_problem(issues)
-    to_create, to_retitle, duplicates = [], [], []
+    to_create, to_edit, duplicates = [], [], []
     for m in mismatches:
         existing = grouped.get(str(m["number"]), [])
         if not existing:
             to_create.append(m)
             continue
         kept, *rest = existing
-        if kept["title"] != issue_title(m):
-            to_retitle.append((kept["number"], m))
+        # Check the labels even if the title is current. Otherwise a label left over from an
+        # earlier status would never be corrected.
+        if kept["title"] != issue_title(m) or any(label_changes(m, kept)):
+            to_edit.append((kept, m))
         duplicates.extend((issue["number"], kept["number"]) for issue in rest)
-    return to_create, to_retitle, duplicates
+    return to_create, to_edit, duplicates
 
 
 def issue_body(m):
@@ -334,11 +356,11 @@ def issue_body(m):
 
 
 def sync_issues(mismatches, issues):
-    """Create, retitle, and deduplicate sync issues for the current mismatches.
+    """Create, edit, and deduplicate sync issues for the current mismatches.
 
     Requires the `gh` CLI to be installed and GH_TOKEN to be set.
     """
-    to_create, to_retitle, duplicates = plan_issue_sync(mismatches, issues)
+    to_create, to_edit, duplicates = plan_issue_sync(mismatches, issues)
 
     for m in to_create:
         cmd = ["gh", "issue", "create", "--title", issue_title(m), "--body", issue_body(m)]
@@ -346,15 +368,24 @@ def sync_issues(mismatches, issues):
             cmd.extend(["--label", label])
         subprocess.run(cmd)
 
-    for number, m in to_retitle:
-        cmd = ["gh", "issue", "edit", str(number), "--title", issue_title(m)]
-        for label in issue_labels(m):
+    for issue, m in to_edit:
+        number = issue["number"]
+        retitle = issue["title"] != issue_title(m)
+        to_add, to_remove = label_changes(m, issue)
+        cmd = ["gh", "issue", "edit", str(number)]
+        if retitle:
+            cmd.extend(["--title", issue_title(m)])
+        for label in to_add:
             cmd.extend(["--add-label", label])
+        for label in to_remove:
+            cmd.extend(["--remove-label", label])
         # Comment only after a successful edit. Otherwise the title stays stale and the
         # next hourly run posts the same comment again.
         if subprocess.run(cmd).returncode != 0:
-            print(f"Failed to retitle issue #{number}", file=sys.stderr)
+            print(f"Failed to edit issue #{number}", file=sys.stderr)
             continue
+        if not retitle:
+            continue  # a label correction alone needs no comment
         subprocess.run([
             "gh", "issue", "comment", str(number),
             "--body",

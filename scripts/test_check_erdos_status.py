@@ -17,20 +17,29 @@
 import contextlib
 import io
 import unittest
+from unittest import mock
 
 from check_erdos_status import (
+    FORMALISED_LABEL,
+    SYNC_LABEL,
     issues_to_close,
+    label_changes,
     plan_issue_sync,
     problem_status,
+    sync_issues,
     yaml_status_to_category,
 )
 
 
-def issue(number, problem, repo="solved", site="formally solved"):
+def issue(number, problem, repo="solved", site="formally solved", labels=None):
+    """A sync issue. Its labels default to the ones the script gives for `site`."""
+    if labels is None:
+        labels = [SYNC_LABEL] + ([FORMALISED_LABEL] if site == "formally solved" else [])
     return {
         "number": number,
         "title": f"Erdős Problem {problem}: status mismatch "
                  f"(repo={repo}, erdosproblems.com={site})",
+        "labels": [{"name": label} for label in labels],
     }
 
 
@@ -206,7 +215,7 @@ class PlanIssueSyncTest(unittest.TestCase):
         # Erdős 848: the issue says erdosproblems.com=solved, but the script now reads open.
         m = mismatch("848", repo="formally solved", site="open")
         old = issue(4053, "848", repo="formally solved", site="solved")
-        self.assertEqual(plan_issue_sync([m], [old]), ([], [(4053, m)], []))
+        self.assertEqual(plan_issue_sync([m], [old]), ([], [(old, m)], []))
 
     def test_closes_newer_duplicates_and_keeps_the_oldest(self):
         # Erdős 43 had #5119 and #7544 open together.
@@ -217,7 +226,22 @@ class PlanIssueSyncTest(unittest.TestCase):
     def test_retitles_only_the_kept_issue_of_a_duplicate_pair(self):
         m = mismatch("43", site="open")
         issues = [issue(5119, "43"), issue(7544, "43")]
-        self.assertEqual(plan_issue_sync([m], issues), ([], [(5119, m)], [(7544, 5119)]))
+        self.assertEqual(
+            plan_issue_sync([m], issues), ([], [(issues[0], m)], [(7544, 5119)]))
+
+    def test_edits_an_issue_with_a_current_title_and_a_stale_label(self):
+        m = mismatch("71", site="open")
+        old = issue(100, "71", site="open", labels=[SYNC_LABEL, FORMALISED_LABEL])
+        self.assertEqual(plan_issue_sync([m], [old]), ([], [(old, m)], []))
+
+    def test_edits_an_issue_with_a_current_title_and_a_missing_label(self):
+        m = mismatch("71")
+        old = issue(100, "71", labels=[SYNC_LABEL])
+        self.assertEqual(plan_issue_sync([m], [old]), ([], [(old, m)], []))
+
+    def test_unmanaged_labels_need_no_edit(self):
+        old = issue(100, "71", site="open", labels=[SYNC_LABEL, "erdos-problems"])
+        self.assertEqual(plan_issue_sync([mismatch("71", site="open")], [old]), ([], [], []))
 
     def test_leaves_issues_for_resolved_problems_to_issues_to_close(self):
         self.assertEqual(
@@ -228,6 +252,68 @@ class PlanIssueSyncTest(unittest.TestCase):
         self.assertEqual(
             plan_issue_sync([m], [{"number": 100, "title": "Something else entirely"}]),
             ([m], [], []))
+
+
+class LabelChangesTest(unittest.TestCase):
+
+    def test_adds_the_formalised_label_on_an_upgrade(self):
+        self.assertEqual(
+            label_changes(mismatch("71"), issue(100, "71", site="open")),
+            ([FORMALISED_LABEL], []))
+
+    def test_removes_the_formalised_label_on_a_downgrade(self):
+        for site in ("open", "solved"):
+            with self.subTest(site=site):
+                self.assertEqual(
+                    label_changes(mismatch("71", site=site), issue(100, "71")),
+                    ([], [FORMALISED_LABEL]))
+
+    def test_keeps_unmanaged_labels(self):
+        old = issue(
+            100, "71", labels=[SYNC_LABEL, FORMALISED_LABEL, "erdos-problems"])
+        self.assertEqual(
+            label_changes(mismatch("71", site="open"), old), ([], [FORMALISED_LABEL]))
+
+
+class SyncIssuesTest(unittest.TestCase):
+
+    def commands(self, m, old, returncode=0):
+        """The `gh` commands that `sync_issues` runs, without running them."""
+        with mock.patch("check_erdos_status.subprocess.run") as run:
+            run.return_value.returncode = returncode
+            with contextlib.redirect_stderr(io.StringIO()):
+                sync_issues([m], [old])
+        return [call.args[0] for call in run.call_args_list]
+
+    def test_a_downgrade_retitles_removes_the_label_and_comments(self):
+        for site in ("open", "solved"):
+            with self.subTest(site=site):
+                edit, comment = self.commands(mismatch("71", site=site), issue(100, "71"))
+                self.assertEqual(edit, [
+                    "gh", "issue", "edit", "100",
+                    "--title", issue(100, "71", site=site)["title"],
+                    "--remove-label", FORMALISED_LABEL,
+                ])
+                self.assertEqual(comment[:4], ["gh", "issue", "comment", "100"])
+
+    def test_an_upgrade_retitles_adds_the_label_and_comments(self):
+        edit, comment = self.commands(mismatch("71"), issue(100, "71", site="open"))
+        self.assertEqual(edit, [
+            "gh", "issue", "edit", "100",
+            "--title", issue(100, "71")["title"],
+            "--add-label", FORMALISED_LABEL,
+        ])
+        self.assertEqual(comment[:4], ["gh", "issue", "comment", "100"])
+
+    def test_a_label_correction_alone_posts_no_comment(self):
+        old = issue(100, "71", site="open", labels=[SYNC_LABEL, FORMALISED_LABEL])
+        self.assertEqual(
+            self.commands(mismatch("71", site="open"), old),
+            [["gh", "issue", "edit", "100", "--remove-label", FORMALISED_LABEL]])
+
+    def test_a_failed_edit_posts_no_comment(self):
+        commands = self.commands(mismatch("71", site="open"), issue(100, "71"), returncode=1)
+        self.assertEqual([c[:3] for c in commands], [["gh", "issue", "edit"]])
 
 
 if __name__ == "__main__":
