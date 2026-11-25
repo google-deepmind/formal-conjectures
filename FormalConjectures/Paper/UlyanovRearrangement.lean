@@ -48,8 +48,8 @@ noncomputable def partialSymmetricRearrangedSums {α : Type} (f : ℤ → α →
 Now, we define the partial symmetric rearranged fourier sums as the partial symmetric rearranged
 sums of the sequence $\{\widehat{f}(n) e^{2\pi inx}\}_{n\in\mathbb{Z}}$.
 -/
-noncomputable def partialSymmetricRearrangedFourierSums {T : ℝ} [hT : Fact (0 < T)]
-    (f : C(AddCircle T, ℂ)) (σ : Equiv.Perm ℤ) (N : ℕ)  : AddCircle T → ℂ :=
+noncomputable def partialSymmetricRearrangedFourierSums
+    (f : C(AddCircle (1:ℝ), ℂ)) (σ : Equiv.Perm ℤ) (N : ℕ)  : AddCircle (1:ℝ) → ℂ :=
     partialSymmetricRearrangedSums (fun n => fun x =>
     (fourierCoeff f n) * (fourier n x)) σ N
 
@@ -60,8 +60,8 @@ series of $f$ given by $S_{N,\sigma}f(x) = \sum_{|n|\le N} \widehat{f}(\sigma(n)
 \sigma(n)x}$ converges uniformly to $f$.
 -/
 @[category research open, question, AMS 42]
-theorem UlyanovRearrangementQuestion {T : ℝ} [hT : Fact (0 < T)] :
-    ∀ f : C(AddCircle T, ℂ), ∃ σ : Equiv.Perm ℤ,
+theorem UlyanovRearrangementQuestion :
+    ∀ f : C(AddCircle 1, ℂ), ∃ σ : Equiv.Perm ℤ,
     TendstoUniformly (partialSymmetricRearrangedFourierSums f σ) f Filter.atTop := by sorry
 
 end UlyanovRearrangement
