@@ -114,10 +114,13 @@ then $\lvert A\rvert \sim N^{1/r}.$
 theorem erdos_241.variants.generalization (r : ℕ) (hr : r ≥ 2) :  BoseChowlaConjecture r := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 This is known only for $r=2$ (see [erdosproblems.com/30]).
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-30-lean/blob/b54103b72135385b036230e9ad35b131fbcc0c31/Erdos30.lean#L542"]
 theorem erdos_241.variants.r_eq_2 :
     BoseChowlaConjecture 2 := by
   sorry
