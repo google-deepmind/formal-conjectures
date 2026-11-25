@@ -42,11 +42,17 @@ We interpret "half the residue classes" as $\lfloor p_i / 2 \rfloor$.
 
 Answer: False. This is the same problem as [Erdős Problem 1202](https://www.erdosproblems.com/1202),
 which the erdosproblems.com curators record as resolved in the negative (2026-04-12 revision, due
-to Liam Price and GPT-5.4 Pro): for
-any $c > 0$ and $m > \sqrt{N \log N}$ there are $k \gg_c m^2/(N \log N)$ primes
-$m < p_1 < \dots < p_k \leq 2m$, each with $\lfloor p_i/2 \rfloor$ forbidden classes, leaving at
-least $(1/2 - c)N$ integers in $[1, N]$ avoiding all of them. Taking $c < 0.4$ and $m$ large
-enough that $k \geq 1000$ (note $m \ll N^{9/10}$) refutes the bound $10 \cdot |{\rm remaining}| \leq N$.
+to Liam Price and GPT-5.4 Pro).
+
+The refutation is by explicit sieve configurations; a witnessed instance (verification credited to
+B. Cowgill, 2026-11-23): for $N = 10^{12}$, take the $1000$ primes
+$p_1 < \dots < p_{1000}$ in $(10^9, 10^9 + 50000)$ and forbid the upper half
+$\lfloor p_i/2 \rfloor$ of each prime's residue classes. With $q = 10^9$, every integer of the
+form $j q + r$ with $0 \leqslant j < 1000$ and $10^8 \leqslant r < 3 \cdot 10^8$ survives: its
+residue modulo $p_i$ is $r - j(p_i - q)$, which lies between $0$ and $(p_i - 1)/2$. At least
+$N/5$ of $[1, N]$ survive, so $10 \cdot |{\rm remaining}| > N$ and the sieve's guarantee fails
+in the range needed for this problem. (The general estimate recorded in the 1202 resolution is not
+claimed uniformly; this instance is the range Green's problem requires.)
 -/
 @[category research solved, question, AMS 11]
 theorem green_44 :
