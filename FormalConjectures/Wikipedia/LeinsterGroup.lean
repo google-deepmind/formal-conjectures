@@ -74,7 +74,39 @@ to divisors of the group order, and a number is perfect if and only if the sum o
 theorem cyclic_of_perfect_is_leinster (G : Type*) [Group G] [Fintype G]
     [IsCyclic G] (h_perfect : Nat.Perfect (Fintype.card G)) :
     IsLeinster G := by
-  sorry
+  classical
+  -- In a cyclic group, a subgroup is the set of solutions of `x ^ |H| = 1`.
+  have key (H : Subgroup G) :
+      (H : Set G).toFinset = Finset.univ.filter (fun x => x ^ Nat.card H = 1) := by
+    have hsub : (H : Set G).toFinset ⊆ Finset.univ.filter (fun x => x ^ Nat.card H = 1) :=
+        fun x hx => by
+      simp only [Set.mem_toFinset, SetLike.mem_coe] at hx
+      have h := congrArg Subtype.val (pow_card_eq_one' (x := (⟨x, hx⟩ : H)))
+      simp only [Subgroup.coe_pow, OneMemClass.coe_one] at h
+      simpa using h
+    refine Finset.eq_of_subset_of_card_le hsub ?_
+    rw [Set.toFinset_card]
+    refine (IsCyclic.card_pow_eq_one_le Nat.card_pos).trans_eq ?_
+    rw [← Nat.card_eq_fintype_card]; rfl
+  have inj {H K : Subgroup G} (h : Nat.card H = Nat.card K) : H = K := by
+    have := key H; rw [h, ← key K] at this
+    exact SetLike.coe_injective (Set.toFinset_inj.1 this)
+  obtain ⟨g, hg⟩ := IsCyclic.exists_generator (α := G)
+  have hg' : orderOf g = Fintype.card G := by
+    rw [orderOf_eq_card_of_forall_mem_zpowers hg, Nat.card_eq_fintype_card]
+  rw [IsLeinster, ← (Nat.perfect_iff_sum_divisors_eq_two_mul Fintype.card_pos).1 h_perfect]
+  refine Finset.sum_bij (fun H _ => Nat.card H.1) (fun H _ => ?_) (fun H _ K _ h => ?_)
+    (fun d hd => ?_) (fun _ _ => rfl)
+  · exact Nat.mem_divisors.2 ⟨by simpa using H.1.card_subgroup_dvd_card, Fintype.card_ne_zero⟩
+  · exact Subtype.ext (inj h)
+  · obtain ⟨hdvd, -⟩ := Nat.mem_divisors.1 hd
+    refine ⟨⟨Subgroup.zpowers (g ^ (Fintype.card G / d)), inferInstance⟩,
+      Finset.mem_univ _, ?_⟩
+    have h0 : Fintype.card G / d ≠ 0 := (Nat.div_pos (Nat.le_of_dvd Fintype.card_pos hdvd)
+      (Nat.pos_of_dvd_of_pos hdvd Fintype.card_pos)).ne'
+    have hdvd' : Fintype.card G / d ∣ orderOf g := by rw [hg']; exact Nat.div_dvd_of_dvd hdvd
+    rw [Nat.card_zpowers, orderOf_pow_of_dvd h0 hdvd', hg',
+      Nat.div_div_self hdvd Fintype.card_ne_zero]
 
 /--
 An abelian group is a Leinster group if and only if it is cyclic with order equal
