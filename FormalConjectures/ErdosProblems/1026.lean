@@ -101,11 +101,12 @@ A construction of Cambie in the comments shows that $c\leq 1$.
 theorem erdos_1026.variants.upper_bound : 1 ∈ upperBounds admissibleConstants := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Hanani [Ha57] showed that every sequence is the disjoint union of at most
 $(\sqrt{2}+o(1))\sqrt{n}$ many monotonic subsequences, whence $c\geq 1/\sqrt{2}$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/laughingbear/erdos-1026-lean/blob/1e3346b2fae2e019046aebbe363c5742d28eff81/Erdos1026.lean#L250"]
 theorem erdos_1026.variants.lower_bound : 1 / Real.sqrt 2 ∈ admissibleConstants := by
   sorry
 
