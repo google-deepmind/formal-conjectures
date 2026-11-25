@@ -58,7 +58,7 @@ theorem conjecture_i (n : ℕ) : ∃ p : ℕ, p.Prime ∧ a n ≤ p + 1 ∧ p + 
 
 /--
 Second statement of the conjecture from Zhi-Wei Sun:
-(ii) $a(n) < p < a(n+1)$ for some prime $p$, except that the interval $(a(5), a(6)) = (54, 57)$ contains no prime.
+(ii) $a(n) < p < a(n+1)$ for some prime $p$, except that the interval $(a(4), a(5)) = (54, 57)$ contains no prime.
 -/
 @[category research open, AMS 11]
 theorem conjecture_ii (n : ℕ) (hn : n ≠ 4) : ∃ p : ℕ, p.Prime ∧ a n < p ∧ p < a (n + 1) := by
