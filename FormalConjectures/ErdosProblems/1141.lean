@@ -31,6 +31,9 @@ public import FormalConjecturesUtil
   (2017), 2815--2826.
 - [Me1874] F. Mertens, Ein Beitrag zur analytischen Zahlentheorie. J. Reine Angew. Math. (1874),
   46--62.
+- [Eb26] L. Eberwein, *1722 is the largest $n$ with $n-k^2$ prime for all $k$ coprime to $n$*,
+  [github.com/loganeberwein/erdos-proofs/tree/main/1141](https://github.com/loganeberwein/erdos-proofs/tree/main/1141) (2026).
+- [Al26] L. Alpöge, [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf) (2026).
 - [Va99] Various, Some of Paul's favorite problems. Booklet produced for the conference "Paul Erdős
   and his mathematics", Budapest, July 1999 (1999).
 -/
@@ -113,6 +116,17 @@ Pollack [Po17]. Oriike [Or26] formalised the deduction in Lean.
     "https://github.com/Jayyhk/erdos-lean/blob/main/problems/1141/Erdos1141.lean"]
 theorem erdos_1141 :
     ¬ Infinite { n | Erdos1141Prop n } := by
+  sorry
+
+/--
+$1722$ is the largest $n$ with this property, so the $n \geq 2$ with this property are exactly the
+terms of [A214583]. [Eb26] proves this assuming the Generalized Riemann Hypothesis for Dirichlet
+$L$-functions, which is proved [Al26]. An explicit Ankeny-type bound gives a small prime $p \nmid n$
+modulo which $n$ is a square; a sieve count over residue classes mod $6p$ then rules out every
+$n \geq 1.165 \cdot 10^{12}$, and a computer search covers all smaller $n$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_1141.variants.largest : ∀ n > 1722, ¬ Erdos1141Prop n := by
   sorry
 
 @[category test, AMS 11]
