@@ -66,13 +66,16 @@ theorem erdos_302.parts.i (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTripleCard N (f 
     Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 erdos_302.parts.i.answer) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In particular, is $f(N)=(\tfrac{1}{2}+o(1))N$?
 
 This is false: it is contradicted by Cambie's lower bound of $(5/8+o(1))N$ recorded below,
 since $5/8 > 1/2$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-302-lean/blob/f1ef2909563ad38ddc02993b03bb3110ce50c68f/Erdos302.lean#L181"]
 theorem erdos_302.parts.ii (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTripleCard N (f N)) :
     ¬ Tendsto (fun N : ℕ => (f N : ℝ) / N) atTop (𝓝 ((1 : ℝ) / 2)) := by
   sorry
@@ -118,12 +121,15 @@ theorem erdos_302.variants.lower_half (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTrip
   have hN : (0 : ℝ) ≤ N := Nat.cast_nonneg N
   nlinarith
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Stijn Cambie has observed that
 $$f(N)\geq (5/8+o(1))N,$$
 taking $A$ to be all odd integers $\leq N/4$ and all integers in $[N/2,N]$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-302-lean/blob/f1ef2909563ad38ddc02993b03bb3110ce50c68f/Erdos302.lean#L197"]
 theorem erdos_302.variants.lower_five_eighths (f : ℕ → ℕ) (hf : ∀ N, IsMaxNoTripleCard N (f N))
     (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ N : ℕ in atTop, ((5 : ℝ) / 8 - ε) * N ≤ f N := by
