@@ -65,11 +65,14 @@ theorem erdos_241 :
     (fun N ↦ (f N 3 : ℝ)) ~[atTop] (fun N ↦ (N : ℝ) ^ ((1 : ℝ) / 3)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bose and Chowla [BoCh62] provided a construction proving one half of this, namely
 $(1+o(1))N^{1/3}\leq f(N)$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-241-lean/blob/f305b86a3714315dbc45a4f2a9bdfa1e379d5704/Erdos241.lean#L278"]
 theorem erdos_241.variants.lower_bound :
     ∃ ε : ℕ → ℝ, ε =o[atTop] (fun _ ↦ (1 : ℝ)) ∧
     ∀ᶠ N in atTop, (1 + ε N) * (N : ℝ) ^ ((1 : ℝ) / 3) ≤ (f N 3 : ℝ) := by
