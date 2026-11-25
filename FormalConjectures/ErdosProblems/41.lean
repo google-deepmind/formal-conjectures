@@ -56,12 +56,14 @@ theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.
     Filter.atTop.liminf (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ)^(1/3 : ℝ)) = 0 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős proved that if the pairwise sums $a+b$ are all distinct aside from the trivial
 coincidences, then
 $$\liminf_{N \to \infty} \frac{\lvert A \cap \{1,\ldots,N\}\rvert}{N^{1/2}}=0.$$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-sidon-liminf-lean/blob/d5263990e0ba2bc3ca40225b76b49278515495ea/ErdosSidonLiminf.lean#L838"]
 theorem erdos_41.variants.pairwise (A : Set ℕ) (hA₂ : NtupleCondition A 2) (hA : A.Infinite) :
     Filter.atTop.liminf (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ).sqrt) = 0 := by
   sorry
