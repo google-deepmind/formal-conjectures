@@ -109,7 +109,13 @@ problem, but it was quickly proven by Jansen and others using a simple inductive
   inductive hypothesis to $n - 3^k$ (which is even).
 -/
 @[category research solved, AMS 11]
-theorem erdos_123.variants.powers_2_3 : IsDComplete (↑(powers 2) * ↑(powers 3)) := by sorry
+theorem erdos_123.variants.powers_2_3 : IsDComplete (↑(powers 2) * ↑(powers 3)) := by
+  refine Filter.Eventually.of_forall fun n => ?_
+  obtain ⟨s, hs, hanti, hsum⟩ := Nat.exists_antichain_powers_two_three n
+  refine ⟨s, fun x hx => ?_, hanti, hsum⟩
+  obtain ⟨a, b, rfl⟩ := hs x hx
+  exact Set.mem_mul.2 ⟨2 ^ a, Submonoid.pow_mem _ (Submonoid.mem_powers 2) a,
+    3 ^ b, Submonoid.pow_mem _ (Submonoid.mem_powers 3) b, rfl⟩
 
 /--
 In [Er92b] Erdős makes the stronger conjecture (for $a=2$, $b=3$, and $c=5$) that, for any

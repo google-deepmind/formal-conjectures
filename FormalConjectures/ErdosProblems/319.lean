@@ -31,7 +31,7 @@ open scoped Topology Finset Real
 
 namespace Erdos319
 
-def erdos_319.answer : ℕ := sorry
+def erdos_319.answer (N : ℕ) : ℕ := sorry
 
 /-- What is the size of the largest $A\subseteq\{1, \dots, N\}$ such that there is a function
 $\delta : A \to \{-1, 1\}$ such that
@@ -48,7 +48,7 @@ theorem erdos_319 (N : ℕ) : IsGreatest
     { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : ∃ δ : ℕ → ℤˣ, ∑ n ∈ A, (δ n : ℚ) / n = 0 ∧
         ∀ A' ⊂ A, A'.Nonempty → ∑ n ∈ A', (δ n : ℚ) / n ≠ 0) }
-    erdos_319.answer := by
+    (erdos_319.answer N) := by
   sorry
 
 -- Formalisation note: it's possible that solution to `erdos_319` needs to be
