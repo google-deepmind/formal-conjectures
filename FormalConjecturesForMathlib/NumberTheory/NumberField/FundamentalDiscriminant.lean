@@ -60,4 +60,22 @@ theorem isFundamentalDiscr_iff {D : ℤ} :
       exact .inl ⟨⟨m, rfl⟩, by omega, hm⟩
     · exact .inr h
 
+/-- Fundamental discriminant $D(d)$ of $\mathbb{Q}(\sqrt{d})$ for squarefree $d \ne 0, 1$: equal
+to $d$ if $d \equiv 1 \pmod{4}$ and $4d$ otherwise. -/
+def quadFundDisc (d : ℤ) : ℤ :=
+  if d % 4 = 1 then d else 4 * d
+
+/-- For every squarefree integer $d \ne 1$, `quadFundDisc d` satisfies `IsFundamentalDiscr`. -/
+theorem isFundamentalDiscr_quadFundDisc {d : ℤ} (hsf : Squarefree d) (hne : d ≠ 1) :
+    IsFundamentalDiscr (quadFundDisc d) := by
+  rw [isFundamentalDiscr_iff]
+  have hnot4 : ¬ (4 : ℤ) ∣ d := fun ⟨c, hc⟩ =>
+    absurd (hsf 2 ⟨c, by omega⟩) (by simp [Int.isUnit_iff])
+  unfold quadFundDisc
+  by_cases h1 : d % 4 = 1
+  · rw [if_pos h1]
+    exact Or.inr ⟨hne, h1, hsf⟩
+  · rw [if_neg h1]
+    exact Or.inl ⟨d, rfl, by omega, hsf⟩
+
 end NumberField

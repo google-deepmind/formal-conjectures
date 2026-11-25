@@ -23,8 +23,12 @@ public import FormalConjecturesUtil
 *References:*
 - [Wikipedia: Mersenne conjectures](https://en.wikipedia.org/wiki/Mersenne_conjectures)
 - [Wikipedia: Catalan's Mersenne conjecture](https://en.wikipedia.org/wiki/Catalan%27s_Mersenne_conjecture)
+- [Wikipedia: List of unsolved problems in mathematics](https://en.wikipedia.org/wiki/List_of_unsolved_problems_in_mathematics#Prime_numbers)
+- [Wikipedia: Wieferich prime](https://en.wikipedia.org/wiki/Wieferich_prime)
 - [MathWorld: Catalan-Mersenne Number](https://mathworld.wolfram.com/Catalan-MersenneNumber.html)
 - S. S. Wagstaff Jr., *Divisors of Mersenne numbers*, Math. Comp. 40 (1983), 385–397.
+- A. Rotkiewicz, *Sur les nombres de Mersenne dépourvus de diviseurs carrés et sur les nombres
+  naturels $n$, tels que $n^2 \mid 2^n - 2$*, Mat. Vesnik **2** (17) (1965), 78–80.
 -/
 
 @[expose] public section
@@ -159,6 +163,59 @@ Are all Catalan-Mersenne numbers $c_n$ with $n \geq 5$ prime?
 @[category research open, question, AMS 11]
 theorem catalans_mersenne_conjecture :
     ∀ n ≥ 5, Nat.Prime (catalanMersenne n) := by
+  sorry
+
+/-- Checks `Squarefree (mersenne p)` at $p = 2, 3$ and at the first composite prime-exponent value
+$M_{11} = 2047 = 23 \cdot 89$. -/
+@[category test, AMS 11]
+theorem squarefree_mersenne_small_primes :
+    Squarefree (mersenne 2) ∧ Squarefree (mersenne 3) ∧ Squarefree (mersenne 11) := by
+  decide +kernel
+
+/-- Confirms that $M_0 = 0$ and $M_6 = 63 = 3^2 \cdot 7$ fail `Squarefree`, motivating the
+restriction to prime exponents. -/
+@[category test, AMS 11]
+theorem not_squarefree_mersenne_zero_and_six :
+    ¬ Squarefree (mersenne 0) ∧ ¬ Squarefree (mersenne 6) := by
+  refine ⟨by rw [mersenne_zero]; exact not_squarefree_zero, fun h => ?_⟩
+  have h3 : IsUnit (3 : ℕ) := h 3 ⟨7, rfl⟩
+  rw [Nat.isUnit_iff] at h3
+  omega
+
+/-- At composite exponent $q = 6$, $3^2 \mid M_6 = 63$ even though $3$ is not a Wieferich prime. -/
+@[category test, AMS 11]
+theorem composite_index_sq_dvd_not_wieferich :
+    3 ^ 2 ∣ mersenne 6 ∧ ¬ IsWieferichPrime 3 :=
+  ⟨⟨7, rfl⟩, by decide⟩
+
+/--
+Is $M_p = 2^p - 1$ squarefree for every prime $p$?
+-/
+@[category research open, question, AMS 11]
+theorem squarefree_mersenne_of_prime :
+    ∀ p : ℕ, p.Prime → Squarefree (mersenne p) := by
+  sorry
+
+/--
+For primes $q$ and $p$ with $p \mid M_q$, the square $p^2$ divides $M_q = 2^q - 1$ precisely when
+`IsWieferichPrime p` holds. The unsolved-problems source states the forward direction from
+$p^2 \mid M_q$ to `IsWieferichPrime p`; the converse under $p \mid M_q$ is added here.
+-/
+@[category textbook, AMS 11]
+theorem sq_dvd_mersenne_iff_isWieferichPrime
+    {q p : ℕ} (hq : q.Prime) (hp : p.Prime) (hdvd : p ∣ mersenne q) :
+    p ^ 2 ∣ mersenne q ↔ IsWieferichPrime p := by
+  sorry
+
+/--
+Rotkiewicz's theorem (1965): if infinitely many values $M_n = 2^n - 1$ are squarefree, then
+infinitely many primes fail `IsWieferichPrime`. Allowing $n$ to range over all natural numbers
+rather than only primes gives the stronger form of this implication.
+-/
+@[category research solved, AMS 11]
+theorem rotkiewicz_infinite_non_wieferich_of_squarefree_mersenne :
+    {n : ℕ | Squarefree (mersenne n)}.Infinite →
+      {p : ℕ | p.Prime ∧ ¬ IsWieferichPrime p}.Infinite := by
   sorry
 
 end Mersenne

@@ -29,7 +29,7 @@ namespace Erdos503
 
 open scoped EuclideanGeometry
 
-def erdos_503.answer : ℕ := sorry
+def erdos_503.answer (n : ℕ) : ℕ := sorry
 
 /--
 What is the size of the largest $A \subseteq \mathbb{R}^n$ such that every three points from $A$
@@ -38,7 +38,7 @@ of the distances $|x - y|$, $|y - z|$, $|x - z|$ are equal.
 -/
 @[category research open, question value, AMS 51]
 theorem erdos_503 (n : ℕ) :
-    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} erdos_503.answer := by
+    IsGreatest {(A.ncard) | (A : Set (ℝ^n)) (hA : A.IsIsosceles)} (erdos_503.answer n) := by
   sorry
 
 /--
