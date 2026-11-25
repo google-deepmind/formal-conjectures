@@ -61,4 +61,5 @@ theorem newman_implies_erdos_ivic (P : type_of% newman_conjecture) :
     refine hB ⟨hm_prime, not_isEmpty_iff.mpr ?_⟩
     exact Set.nonempty_coe_sort.mpr <| (P m 0 (hm_prime.pos)).nonempty
   lia
+
 end NewmanConjecture
