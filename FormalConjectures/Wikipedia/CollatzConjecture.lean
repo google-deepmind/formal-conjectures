@@ -144,8 +144,7 @@ theorem diophantine_terminal (K L : ℕ) (hK : 2438425051595107335801557824 ≤ 
 
 /--
 Hercher (2023) [He23]: conditional on Bařina's $2^{71}$ verification, there is no non-trivial
-Collatz $m$-cycle with $m \le 91$. (The extension through $m \le 100$ is formalized in the linked
-repository using `native_decide` for $92 \le m \le 100$.)
+Collatz $m$-cycle with $m \le 91$.
 -/
 @[category research solved, AMS 11 37,
   formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-15-000008"]
@@ -156,9 +155,8 @@ theorem not_isMCycle_of_le_91_of_barina
   sorry
 
 /--
-It is open whether a non-trivial Collatz $101$-cycle exists (for $m \le 95$, see Wang (2026) [Wa26];
-for $m \le 100$, a certificate and Lean 4 formalization using `native_decide` for $92 \le m \le 100$
-are given in the repository linked at `PALOMAR-2026-11-15-000008`).
+It is open whether a non-trivial Collatz $101$-cycle exists (for $m \le 91$, see Hercher (2023)
+[He23] and `not_isMCycle_of_le_91_of_barina`; for $m \le 95$, see Wang (2026) [Wa26]).
 -/
 @[category research open, AMS 11 37]
 theorem not_isMCycle_101 (n : ℕ) (hn : 2 < n) : ¬ IsMCycle 101 n := by
