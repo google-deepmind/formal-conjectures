@@ -47,7 +47,9 @@ many vertices?
 
 A conjecture of Ajtai, Erdős, Komlós, and Szemerédi [AEKS81].
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/AItoBit/formal-conjectures/blob/8cf6eb5d0204f9590118597b40185cc8d19db587/proofs/erdos802/Bridge802.lean#L120"]
 theorem erdos_802 : ∀ r : ℕ, ∃ c > (0 : ℝ), ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
     G.CliqueFree r →
       c * (log G.averageDegree / G.averageDegree) * n ≤ G.indepNum := by
@@ -60,7 +62,9 @@ with average degree $t$ contains an independent set on
 $$\gg_r \frac{\log\log(t+1)}{t}n$$
 many vertices.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/AItoBit/formal-conjectures/blob/8cf6eb5d0204f9590118597b40185cc8d19db587/proofs/erdos802/Results802.lean#L14"]
 theorem erdos_802.variants.aeks : ∀ r : ℕ, ∃ c > (0 : ℝ), ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
     G.CliqueFree r →
       c * (log (log (G.averageDegree + 1)) / G.averageDegree) * n ≤ G.indepNum := by
@@ -76,7 +80,9 @@ many vertices.
 We assume $t \geq 2$. For $t + 1$ slightly larger than $e$ the factor $\log\log(t+1)$ is close
 to $0$, so the bound blows up and the statement is false without such a restriction.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/AItoBit/formal-conjectures/blob/8cf6eb5d0204f9590118597b40185cc8d19db587/proofs/erdos802/Results802.lean#L21"]
 theorem erdos_802.variants.shearer : ∀ r : ℕ, ∃ c > (0 : ℝ), ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
     G.CliqueFree r → 2 ≤ G.averageDegree →
       c * (log G.averageDegree / (log (log (G.averageDegree + 1)) * G.averageDegree)) * n ≤
@@ -90,7 +96,9 @@ triangle-free graph on $n$ vertices with average degree $t$ contains an independ
 $$\gg \frac{\log t}{t}n$$
 many vertices.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/AItoBit/formal-conjectures/blob/8cf6eb5d0204f9590118597b40185cc8d19db587/proofs/erdos802/Results802.lean#L29"]
 theorem erdos_802.variants.r_eq_three : ∃ c > (0 : ℝ), ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
     G.CliqueFree 3 →
       c * (log G.averageDegree / G.averageDegree) * n ≤ G.indepNum := by
@@ -101,7 +109,9 @@ open scoped Classical in
 Alon [Al96b] proved the conjectured bound under the stronger assumption that the induced graph
 on every vertex neighbourhood has chromatic number $\leq r - 2$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at
+    "https://github.com/AItoBit/formal-conjectures/blob/8cf6eb5d0204f9590118597b40185cc8d19db587/proofs/erdos802/Results802.lean#L36"]
 theorem erdos_802.variants.alon : ∀ r : ℕ, ∃ c > (0 : ℝ), ∀ n : ℕ, ∀ G : SimpleGraph (Fin n),
     (∀ v, (G.induce (G.neighborSet v)).Colorable (r - 2)) →
       c * (log G.averageDegree / G.averageDegree) * n ≤ G.indepNum := by
