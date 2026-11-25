@@ -59,12 +59,14 @@ theorem erdos_1191.parts.ii : ∃ A : Set ℕ, A.Infinite ∧ IsSidon A ∧
       ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ c)) atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős proved (see for example [HaRo66]) that if $A$ is an infinite Sidon set then
 $$\liminf_{x\to \infty} \frac{\lvert A\cap [1,x]\rvert}{x^{1/2}}(\log x)^{1/2}\leq c$$
 for some constant $c>0$. See also `erdos_158.variants.isSidon'`.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-sidon-liminf-lean/blob/a54e7260aeb0bc2b0214b441f5266367b5129d9f/ErdosSidonLiminf.lean#L534"]
 theorem erdos_1191.variants.liminf_le {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
     ∃ c > (0 : ℝ), liminf (fun x : ℕ ↦ ENNReal.ofReal
       ((A ∩ .Icc 1 x).ncard / (x : ℝ) ^ (1 / 2 : ℝ) * log x ^ (1 / 2 : ℝ))) atTop ≤

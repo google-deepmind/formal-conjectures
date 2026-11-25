@@ -131,6 +131,7 @@ theorem erdos_1194.variants.greedy_upper_bound :
       ∀ a, IsLargerElement A n a → (a : ℝ) ≤ C * (n : ℝ) ^ 3 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős [Er80, p. 100] wrote it is 'easy to see' that
 $$\limsup_{n\to \infty}\frac{a_n}{n}=\infty.$$
@@ -143,7 +144,8 @@ a suitable choice of $f$.
 Formally: for every perfect difference set $A$ and every $C$, $a_n \geq Cn$ for infinitely many
 $n$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-sidon-liminf-lean/blob/a54e7260aeb0bc2b0214b441f5266367b5129d9f/ErdosSidonLiminf.lean#L640"]
 theorem erdos_1194.variants.limsup_eq_top :
     ∀ A : Set ℕ, IsPerfectDifferenceSetInt A → ∀ C : ℝ, HasLargeElement A (fun n ↦ C * n) := by
   sorry

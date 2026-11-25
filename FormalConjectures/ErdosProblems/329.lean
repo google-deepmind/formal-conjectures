@@ -76,12 +76,14 @@ theorem erdos_329.variants.kruckeberg_1961 : ∃ (A : Set ℕ), IsSidon A ∧
     sidonUpperDensity A = 1 / Real.sqrt 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Turán [ErTu41] proved the upper bound of 1.
 
 [ErTu41] Erdős, P. and Turán, P., On a problem of Sidon in additive number theory, and on some related problems. J. London Math. Soc. (1941), 212-215.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-sidon-liminf-lean/blob/a54e7260aeb0bc2b0214b441f5266367b5129d9f/ErdosSidonLiminf.lean#L758"]
 theorem erdos_329.variants.turan_1941 : ∀ (A : Set ℕ), IsSidon A → sidonUpperDensity A ≤ 1 := by
   sorry
 

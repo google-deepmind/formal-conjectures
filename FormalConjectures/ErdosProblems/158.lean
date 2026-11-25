@@ -61,9 +61,11 @@ theorem erdos_158 : ∀ A : Set ℕ, A.Infinite → B2 2 A →
     liminf (fun N : ℕ => (A ∩ .Iio N).ncard * (N : ℝ) ^ (- 1 / 2 : ℝ)) atTop = 0 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Let `A` be an infinite Sidon set. Then
 `liminf |A ∩ {1, ..., N}| * N ^ (- 1 / 2) * (log N) ^ (1 / 2) < ∞`. This is proved in [ESS94]. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-sidon-liminf-lean/blob/a54e7260aeb0bc2b0214b441f5266367b5129d9f/ErdosSidonLiminf.lean#L549"]
 theorem erdos_158.variants.isSidon' {A : Set ℕ} (hAinf : A.Infinite) (hAsid : IsSidon A) :
     liminf (fun N ↦ ENNReal.ofReal ((A ∩ .Iio N).ncard * N ^ (- 1 / 2 : ℝ) * log N ^ (1 / 2 : ℝ)))
       atTop < ⊤ := by
