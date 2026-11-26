@@ -57,6 +57,7 @@ The smallest integer $m$ such that $\sum_{n\leq m} \left(\frac{n}{p}\right)<\eps
 noncomputable def f' (ε : ℝ) (p : ℕ) : ℕ :=
   sInf { m | Erdos981Property ε p m }
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon > 0$ and $f_\epsilon(p)$ be the smallest integer $m$
 such that $\sum_{n\leq N} \left(\frac{n}{p}\right)<\epsilon N$ for all $N\geq m$. Prove that

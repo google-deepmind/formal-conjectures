@@ -42,6 +42,7 @@ open MeasureTheory Set
 
 open scoped ENNReal EuclideanGeometry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Falconer's distance set conjecture, $d = 2$ case.
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean
@@ -51,6 +52,7 @@ proof. -/
 lemma falconer_conjecture_two (E : Set <| ℝ²) (hc : IsCompact E) (hd : 2 < 2 * dimH E ) :
     0 < volume (image2 dist E E) := sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Falconer's distance set conjecture in dimension $d \ge 2$.
 
 The hypothesis $2 \le d$ excludes a degenerate case: the conclusion is false for $d = 1$.

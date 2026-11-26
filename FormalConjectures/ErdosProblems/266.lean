@@ -29,6 +29,7 @@ namespace Erdos266
 
 open Filter
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a_n$ be an infinite sequence of positive integers such that $\sum \frac{1}{a_n}$ converges.
 There exists some integer $t \ge 1$ such that $\sum \frac{1}{a_n + t}$ is irrational.
@@ -45,6 +46,7 @@ theorem erdos_266 :
       ∃ t ≥ (1 : ℕ), Irrational <| ∑' n, (1 : ℝ) / ((a n) + t)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 In fact, Kovač and Tao proved in [KoTa24] that there exists a strictly increasing
 sequence $a_n$ of positive integers such that $\sum \frac{1}{a_n + t}$ converges to a rational

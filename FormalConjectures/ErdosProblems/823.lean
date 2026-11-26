@@ -37,6 +37,7 @@ open scoped ArithmeticFunction.sigma Nat
 
 namespace Erdos823
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\alpha\geq 1$. Is there a sequence of integers $n_k,m_k$ such that $n_k/m_k\to \alpha$ and
 $\sigma(n_k)=\sigma(m_k)$ for all $k\geq 1$, where $\sigma$ is the sum of divisors function?

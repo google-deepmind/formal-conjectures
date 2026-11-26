@@ -38,6 +38,7 @@ open scoped Cardinal
 
 namespace Erdos594
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Erdős Problem 594** (Erdős–Hajnal [ErHa66], [Er69b]):
 

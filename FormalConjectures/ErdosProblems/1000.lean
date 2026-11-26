@@ -53,6 +53,7 @@ The average $\frac{1}{N}\sum_{k\leq N}\frac{\phi_A(k)}{n_k}$.
 noncomputable def phiAvg (n : ℕ → ℕ) (N : ℕ) : ℝ :=
   (∑ k ∈ Finset.range N, (phiSeq n k : ℝ) / (n k : ℝ)) / (N : ℝ)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A=\{n_1<n_2<\cdots\}$ be an infinite sequence of positive integers, and let $\phi_A(k)$
 count the number of $1\leq m\leq n_k$ such that the fraction $\frac{m}{n_k}$ cannot be written

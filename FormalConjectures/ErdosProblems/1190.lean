@@ -46,6 +46,7 @@ noncomputable def eps (m : ℕ) : ℝ :=
     (∀ n ∈ S, ∀ n' ∈ S, n ≠ n' → ¬ ∃ x : ℤ, x ≡ a n [ZMOD n] ∧ x ≡ a n' [ZMOD n']) ∧
     (∑ n ∈ S, (n : ℝ)⁻¹) = s}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let
 $$\epsilon_m=\max \sum \frac{1}{n_i}$$

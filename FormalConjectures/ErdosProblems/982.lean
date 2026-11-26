@@ -39,6 +39,7 @@ theorem erdos_982 (n : ℕ) (hn : 3 ≤ n) (p : Fin n → ℝ²) (hp : Function.
     ∃ (i : Fin n), { d : ℝ | ∃ j : Fin n, j ≠ i ∧ d = dist (p i) (p j) }.ncard ≥ n / 2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For distinct points on a common circle, every vertex has at least
 $\lfloor\frac{n}{2}\rfloor$ different distances to the other vertices.

@@ -52,6 +52,7 @@ most `C` elements of `{n⁻¹ : 1 ≤ n ≤ p^ε}` (or `0` if no such `C` exists
 noncomputable def C (ε : ℝ) : ℕ :=
   sInf {C | ∀ p : ℕ, p.Prime → ∀ a : ZMod p, ∃ s : Multiset ℕ, s.card ≤ C ∧ Represents ε p a s}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon>0$. Does there exist a constant $C_\epsilon$ such that, for all primes $p$, every
 residue modulo $p$ is the sum of at most $C_\epsilon$ many elements of
@@ -71,6 +72,7 @@ theorem erdos_1180 : ∀ ε : ℝ, 0 < ε → ∃ C : ℕ, ∀ p : ℕ, p.Prime 
     ∃ s : Multiset ℕ, s.card ≤ C ∧ Represents ε p a s := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Shparlinski [Sh02] proved that $\ll \epsilon^{-3}$ summands suffice for every residue modulo
 every sufficiently large prime, where the threshold on $p$ may depend on $\epsilon$. No bound
@@ -84,6 +86,7 @@ theorem erdos_1180.variants.shparlinski : ∃ K : ℝ, ∀ ε : ℝ, 0 < ε → 
       ∃ s : Multiset ℕ, (s.card : ℝ) ≤ K * ε⁻¹ ^ 3 ∧ Represents ε p a s := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Glibichuk [Gl06] improved the bound to $\ll \epsilon^{-2}$ summands, again for every
 sufficiently large prime.
@@ -95,6 +98,7 @@ theorem erdos_1180.variants.glibichuk : ∃ K : ℝ, ∀ ε : ℝ, 0 < ε → ε
       ∃ s : Multiset ℕ, (s.card : ℝ) ≤ K * ε⁻¹ ^ 2 ∧ Represents ε p a s := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- It is trivial that at least $\gg \epsilon^{-1}$ summands are required. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/linrock/math-proofs/blob/ba96303b34a95ac458958c1eb0bbdee54733484a/erdos-1180/Solution.lean#L95"]

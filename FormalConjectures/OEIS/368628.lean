@@ -87,6 +87,7 @@ theorem a_5 : a 5 = 345 := by
   rw [a_eq]
   norm_num [conv4, conv2, Finset.sum_range_succ, a_0, a_1, a_2, a_3, a_4]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: $a(n)$ is odd when $n = (4^k - 1)/3$ for $k \ge 0$, and even elsewhere."
 - Paul D. Hanna, Jan 10 2024.

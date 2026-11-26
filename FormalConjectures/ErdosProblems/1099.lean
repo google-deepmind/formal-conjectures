@@ -44,6 +44,7 @@ noncomputable def h (α : ℝ) (n : ℕ) : ℝ :=
   ∑ i : Fin (n.divisors.card - 1),
     ((Nat.nth (· ∣ n) (i + 1) : ℝ) / Nat.nth (· ∣ n) i - 1) ^ α
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $1=d_1<\cdots<d_{\tau(n)}=n$ be the divisors of $n$, and for $\alpha>1$ let
 $$h_\alpha(n) = \sum_i \left( \frac{d_{i+1}}{d_i}-1\right)^\alpha.$$

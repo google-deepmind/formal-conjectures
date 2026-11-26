@@ -47,6 +47,7 @@ def sumSquaredGaps : List ℕ → ℕ
 def sortedTotatives (n : ℕ) : List ℕ :=
   ((Finset.Ico 1 n).filter fun m => m.Coprime n).sort (· ≤ ·)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $n \geq 1$ and
 $$A = \{a_1 < \cdots < a_{\phi(n)}\} = \{1 \leq m < n : (m, n) = 1\}.$$

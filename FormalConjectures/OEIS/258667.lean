@@ -128,6 +128,7 @@ lemma a_4 : a 4 = 0 := by rfl
 lemma a_5 : a 5 = 0 := by rfl
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture: $a(n) \sim e^{-2} \cdot n! / (n-2)$.
 

@@ -47,6 +47,7 @@ theorem tauRatio_pos {n : ℕ} (hn : 0 < n) : 0 < tauRatio n := by
   have h2 : 0 < σ 0 n := ArithmeticFunction.sigma_pos_iff.2 hn
   exact div_pos (Nat.cast_pos.2 h1) (Nat.cast_pos.2 h2)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\tau(n)$ count the number of divisors of $n$. Is the sequence
 $$\frac{\tau(n+1)}{\tau(n)}$$

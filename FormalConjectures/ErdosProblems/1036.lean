@@ -54,6 +54,7 @@ def NoLargeBiclique {V : Type*} (G : SimpleGraph V) (m : ℝ) : Prop :=
   ∀ k : ℕ, ((completeBipartiteGraph (Fin k) (Fin k)).IsContained G ∨
     (completeBipartiteGraph (Fin k) (Fin k)).IsContained Gᶜ) → (2 * k : ℝ) ≤ m
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph on $n$ vertices which does not contain a trivial (empty or complete) graph on
 more than $c\log n$ vertices. Must $G$ contain at least $2^{\Omega_c(n)}$ many induced subgraphs

@@ -126,6 +126,7 @@ theorem Invariant_subspace_problem_non_separable [InnerProductSpace ℂ H] [Comp
             rintro _ ⟨_, ⟨n, rfl⟩, rfl⟩
             exact ⟨n + 1, by simp [pow_succ']⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every normal linear operator `T : H → H` on a Hilbert space `H` of dimension at least 2 has a
 non-trivial closed `T`-invariant subspace. If `T` is a multiple of the identity, one can take any
@@ -139,6 +140,7 @@ theorem Invariant_subspace_problem_normal_operator [InnerProductSpace ℂ H] [Co
     Nonempty (ClosedInvariantSubspace T) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There exists a bounded linear operator `T` on the l1 space `(lp (fun (_ : ℕ) => ℂ) 1))` without
 non-trivial closed `T`-invariant subspace [Read 1985](https://doi.org/10.1112/blms/17.4.305), see

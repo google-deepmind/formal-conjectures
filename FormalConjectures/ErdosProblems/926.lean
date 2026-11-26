@@ -59,6 +59,7 @@ def H (k : ℕ) : SimpleGraph (Unit ⊕ (Fin k ⊕ {p : Fin k × Fin k // p.1 < 
     intro x
     rcases x with _ | _ | _ <;> simp
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 4$. Is it true that
 $$\mathrm{ex}(n;H_k) \ll_k n^{3/2},$$

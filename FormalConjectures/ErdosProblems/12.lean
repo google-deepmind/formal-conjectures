@@ -49,6 +49,7 @@ theorem isGood_example :
 open Erdos12
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be an infinite set such that there are no distinct $a,b,c \in A$
 such that $a \mid (b+c)$ and $b,c > a$. Is there such an $A$ with
@@ -63,6 +64,7 @@ theorem erdos_12.parts.i : ∃ (A : Set ℕ), IsGood A ∧
       (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ).sqrt) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A$ be an infinite set such that there are no distinct $a,b,c \in A$
 such that $a \mid (b+c)$ and $b,c > a$. Does there exist some absolute constant $c > 0$

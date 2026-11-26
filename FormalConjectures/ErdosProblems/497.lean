@@ -35,6 +35,7 @@ open Filter
 
 namespace Erdos497
 
+set_option linter.style.formal_proof_palomar false in
 /--
 How many antichains in $[n]$ are there? That is, how many families of subsets of $[n]$ are
 there such that, if $\mathcal{F}$ is such a family and $A,B\in \mathcal{F}$, then

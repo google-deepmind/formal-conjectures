@@ -37,6 +37,7 @@ open Filter Real SimpleGraph
 namespace Erdos803
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 We call a graph $H$ $D$-balanced (or $D$-almost-regular) if the maximum degree of $H$ is at most
 $D$ times the minimum degree of $H$.

@@ -37,7 +37,7 @@ This project follows
    and comment on the issue (e.g., "I plan to work on this") to have it
    assigned to you.
 
-   More generally, we encourage adding formalisations of open conjectures from
+   More generally, we encourage adding formalisations of *open* conjectures from
    all sorts of sources, including:
 
    - **Literature:** textbooks, problem books and research papers (including
@@ -55,15 +55,17 @@ This project follows
      [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book).
 
    We are also interested in the formalised statements of solved variants of
-   open conjectures and solved statements from dedicated problem lists. While
-   the main goal is to collect conjecture statements, we appreciate the
-   inclusion of very short proofs for solved items or counterexamples,
+   open conjectures and solved statements from dedicated problem lists. 
+   Apart from that solved problems, even in cases where they were settled
+   recently are out of scope.
+   While the main goal is to collect conjecture statements, we appreciate
+   the inclusion of very short proofs for solved items or counterexamples,
    especially if they are illuminating and testing the definitions.
    **Longer proofs (i.e. more than 25-50 lines) are not to be included in this
    repository.** Instead, we welcome you to host your proof in your own
    repository and link to it using the `formal_proof` mechanism described
-   below. For formal proofs of research problems, we strongly recommend
-   linking to a [Palomar](https://palomar-registry.org/) entry.
+   below. For formal proofs of research problems, the `formal_proof` mechanism should always link to
+   a [Palomar](https://palomar-registry.org/) entry.
    This does not apply to `FormalConjecturesForMathlib`, where we want
    all statements to have proofs.
 
@@ -253,14 +255,22 @@ any category.
 
 Use `@[formal_proof using <kind> at "link"]` where `<kind>` is one of:
 
-- `formal_conjectures` — formally proved in this repository (link to commit).
+- `formal_conjectures` — formally proved in this repository.
 - `lean4` — formally proved in Lean 4 elsewhere (e.g. Mathlib or another
   repository).
 - `other_system` — formally proved in another formal system (Rocq, Isabelle,
   etc.).
 
+For a `research solved` problem, the link must point to a Palomar entry at
+`https://palomar-registry.org/entry.html?id=...`. The attribute checks the URL's
+shape, not whether the entry exists. This also applies to conditional formal proofs.
+Existing proofs without a Palomar entry can disable this check for one declaration
+with `set_option linter.style.formal_proof_palomar false in` before its docstring.
+The other formal proof checks remain enabled.
+
 ```lean
-@[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/example"]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-05-000002"]
 theorem some_problem : ... := by
   sorry
 ```

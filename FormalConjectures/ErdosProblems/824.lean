@@ -58,6 +58,7 @@ def hSquarefree (x : ℕ) : ℕ :=
   ((Finset.Ico 1 x ×ˢ Finset.Ico 1 x).filter fun (a, b) ↦
     a < b ∧ Squarefree a ∧ Squarefree b ∧ σ 1 a = σ 1 b).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $h(x)$ count the number of integers $1\leq a<b<x$ such that $(a,b)=1$ and
 $\sigma(a)=\sigma(b)$, where $\sigma$ is the sum of divisors function. Is it true that

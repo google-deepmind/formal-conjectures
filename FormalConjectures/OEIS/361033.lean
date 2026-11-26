@@ -50,6 +50,7 @@ theorem a_3 : a 3 = 17325 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 1513512 := by decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The parity conjecture:
 "Conjecture: $a(n)$ is odd iff $n = 2^k - 1$ for some $k \ge 0$."

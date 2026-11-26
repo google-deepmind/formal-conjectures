@@ -29,6 +29,7 @@ open scoped ArithmeticFunction.sigma
 
 namespace Erdos48
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many integers $n, m$ such that $ϕ(n) = σ(m)$?
 -/

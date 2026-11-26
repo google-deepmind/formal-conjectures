@@ -33,6 +33,7 @@ open MeasureTheory
 
 namespace Erdos1126
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If
 $$f(x+y)=f(x)+f(y)$$

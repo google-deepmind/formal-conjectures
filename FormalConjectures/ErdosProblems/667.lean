@@ -90,6 +90,7 @@ theorem erdos_667.variants.monotoneOn (p : ℕ) :
     MonotoneOn (c p) (Set.Icc 1 (Nat.choose (p - 1) 2 + 1)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The right endpoint: when $q = \binom{p-1}{2} + 1$ one has $c(p, q) = 1$
 (stated as "easy to see" on erdosproblems.com/667).

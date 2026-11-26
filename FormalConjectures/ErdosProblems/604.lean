@@ -65,6 +65,7 @@ of $n$ points in $\mathbb{R}^2$, so the infimum is a minimum. -/
 noncomputable def pinnedDistinctDistances (n : ℕ) : ℕ :=
   sInf {m : ℕ | ∃ A : Finset ℝ², #A = n ∧ A.sup (distinctDistancesFrom A) = m}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Given $n$ distinct points $A\subset\mathbb{R}^2$, must there be a point $x\in A$ such that
 $$\#\{ d(x,y) : y \in A\} \gg n^{1-o(1)}?$$

@@ -64,6 +64,7 @@ lemma a_4 : a 4 = 4 := by native_decide
 lemma a_5 : a 5 = 5 := by native_decide
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 We conjecture that $\sum_{i=1}^{n} \frac{1}{i} \binom{2n-i-1}{i-1}$ is not an integer for $n > 1$.
 

@@ -64,6 +64,7 @@ noncomputable def p (z : ℕ → ℂ) (n : ℕ) : ℂ → ℂ :=
 noncomputable def M (z : ℕ → ℂ) (n : ℕ) : ℝ :=
     sSup { (‖p z n w‖) | (w : ℂ) (_ : ‖w‖ = 1) }
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $\limsup M_n = \infty$?
 
@@ -78,6 +79,7 @@ theorem erdos_119.parts.i :
       atTop.limsup (fun n => (M z n : EReal)) = ⊤ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that there exists $c > 0$ such that for infinitely many $n$ we have $M_n > n^c$?
 
@@ -90,6 +92,7 @@ theorem erdos_119.parts.ii :
       ∃ (c : ℝ) (hc : c > 0), Infinite {n : ℕ | M z n > n ^ c} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that there exists $c > 0$ such that, for all large $n$, $\sum_{k \leq n} M_k > n^{1 + c}$?
 

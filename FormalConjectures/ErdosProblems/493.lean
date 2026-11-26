@@ -29,6 +29,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos493
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does there exist a $k$ such that every sufficiently large integer can be written in the form
 $$\prod_{i=1}^k a_i - \sum_{i=1}^k a_i$$

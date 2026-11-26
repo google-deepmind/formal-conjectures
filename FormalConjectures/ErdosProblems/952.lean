@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos952
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there an infinite sequence of distinct Gaussian primes $x_1,x_2,\ldots$
 such that $\lvert x_{n+1}-x_n\rvert \ll 1$?

@@ -178,6 +178,7 @@ theorem classNumber_eq_ncard_reducedForms (D : ℕ) (hsq : Squarefree D) (h3 : D
       {⟨a, b, c⟩ : ℤ × ℤ × ℤ | IsReducedForm D a b c}.ncard := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Zheng's explicit lower bound: `liminf_{X → ∞} N_odd(X) / √X ≥ 243 / (64 √6 π⁵)`, where
 `N_odd(X)` is the number of `n ≤ X` with `p(n)` odd [Ono-Swaminathan, Appendix A, Corollary 2]. -/
 @[category research solved, AMS 11,

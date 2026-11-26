@@ -78,6 +78,7 @@ theorem integralMeansSpectrum_id (τ : ℝ) : integralMeansSpectrum id τ = 0 :=
     tendsto_abs_atBot_atTop.comp (Real.tendsto_log_nhdsGT_zero.comp hsub)
   simp [integralMeansSpectrum, (tendsto_const_nhds.div_atTop habs).limsup_eq]
 
+set_option linter.style.formal_proof_palomar false in
 /-- Brennan's conjecture, part 1: $B(-2) = 1$.
 
 This was proved by an internal OpenAI model in September 2026 [OAI26a]; see the linked Lean

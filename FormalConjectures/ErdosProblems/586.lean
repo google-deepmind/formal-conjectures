@@ -39,6 +39,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos586
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a covering system such that no two of the moduli divide each other?
 

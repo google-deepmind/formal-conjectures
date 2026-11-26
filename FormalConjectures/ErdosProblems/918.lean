@@ -76,6 +76,7 @@ theorem erdos_918.variants.all_subgraphs.parts.ii :
     ∀ (H : G.Subgraph) (_ : #H.verts = ℵ_ ω), H.coe.chromaticCardinal ≤ ℵ₀ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- A question of Erd\H{o}s and Hajnal [ErHa68b], who proved, assuming the generalized continuum
 hypothesis, that for every finite $k \geq 1$ there is a graph with chromatic number $\aleph_1$ and
 $\aleph_k$ vertices where each subgraph on less than $\aleph_k$ vertices has chromatic number

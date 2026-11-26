@@ -37,6 +37,7 @@ namespace Erdos1219
 
 universe u
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $(n_k)$ be an increasing sequence of integers such that $2^{\aleph_{n_k}}$ is strictly
 increasing, and $2^{\aleph_{n_0}} > \aleph_\omega$. Is it true that

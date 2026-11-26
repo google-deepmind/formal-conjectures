@@ -68,6 +68,7 @@ noncomputable def fEntry {p : ℕ} (i j : ℕ) : ZMod (p ^ 2) :=
     let den : R := (iInt - jInt : ℤ)
     num * den⁻¹
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture 1: For any primitive $2n$-th root $\zeta$ of unity, the permanent of the $2n \times 2n$
 matrix $[m(j,k)]_{j,k=1..2n}$ coincides with $a(n) = ((2n-1)!!)^2$, where $m(j,k)$ is

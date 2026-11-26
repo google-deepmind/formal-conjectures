@@ -67,6 +67,7 @@ theorem erdos_261.variants.borwein_loring_property (m : ℕ) (hm : 2 ≤ m) :
     Erdos261Prop (2 ^ (m + 1) - m - 2) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Are there infinitely many positive integers $n$ such that there exist some $t \ge 2$ and
 distinct integers $a_1, \ldots, a_t \ge 1$ satisfying
 $$\frac{n}{2^n} = \sum_{1 \le k \le t} \frac{a_k}{2^{a_k}}?$$
@@ -76,6 +77,7 @@ In [Er88c], Erdős notes that Cusick had a simple proof that infinitely many suc
 theorem erdos_261.parts.i : {n : ℕ | 0 < n ∧ Erdos261Prop n}.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Tengely, Ulas, and Zygadlo [TUZ20] verified that every positive integer $n \le 10000$ has
 the required property. -/
 @[category research solved, AMS 11, formal_proof using lean4 at "https://github.com/linrock/math-proofs/blob/b53791ff6294b4b90e3653970367f127a52fd16e/erdos-261/Solution.lean#L85"]
@@ -96,6 +98,7 @@ theorem erdos_261.parts.iii : ∃ x : ℚ,
     𝔠 ≤ #{a : ℕ → ℕ | Erdos261InfiniteRepresentation x a} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- In [Er88c], Erdős asks the weaker question of whether there exists a rational $x$ with at
 least two representations
 $$x = \sum_{k=1}^{\infty} \frac{a_k}{2^{a_k}}$$

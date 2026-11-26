@@ -33,6 +33,7 @@ open scoped Polynomial
 
 namespace Erdos1150
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there some constant $c > 0$ such that, for all large enough $n$ and all polynomials $P$ of
 degree $n$ with coefficients in $\{-1, 1\}$,

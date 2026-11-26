@@ -37,6 +37,7 @@ def HasEqualIntervalSums (A : ℕ → ℕ) (s : ℕ) : Prop :=
   ∃ u v x y : ℕ, u < v ∧ v ≤ s ∧ x < y ∧ y ≤ s ∧ (u, v) ≠ (x, y) ∧
     ∑ i ∈ Finset.Ico u v, A i = ∑ i ∈ Finset.Ico x y, A i
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $a,K\geq 1$. Does there exist $f(a,K)$ such that if $a=a_1<\cdots <a_s$ is a sequence of
 integers with $a_s> f(a,K)$ and with bounded gaps $a_{i+1}-a_i\leq K$ then there are two distinct

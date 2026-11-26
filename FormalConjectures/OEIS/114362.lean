@@ -94,6 +94,7 @@ theorem conjecture1 (n : ℕ) (hn_gt_one : 1 < n) (hn_odd : Odd n) :
 noncomputable def t (n : ℕ) : ℝ :=
   (riemannZeta (2 * (n : ℂ))).re / ((riemannZeta (n : ℂ)).re ^ 2)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture:
 $\frac{1 - t(n)}{1 + t(n)} = \frac{1}{2^n} + \frac{1}{3^n} + \frac{1}{5^n} + \frac{1}{7^n} +

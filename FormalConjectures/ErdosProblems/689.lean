@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos689
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let `n` be sufficiently large. Is there some choice of congruence class `a_p` for all primes
 `2 ≤ p ≤ n` such that every integer in `[1,n]` satisfies at least two of the congruences

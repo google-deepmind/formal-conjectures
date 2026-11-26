@@ -46,6 +46,7 @@ noncomputable def f (m : ℕ) : ℕ :=
     ∃ a b : Fin r → ℕ, (Function.Injective a) ∧ (Function.Injective b) ∧
       (∀ i, a i ∈ A) ∧ (∀ i, (b i : ℝ) ∈ Set.Ioo x (x + 2 * (N : ℝ))) ∧ (∀ i, a i ∣ b i)}
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(m)$ be such that if $A\subseteq \{1,\ldots,N\}$ has $\lvert A\rvert=m$ then every interval
 in $[1,\infty)$ of length $2N$ contains $\geq f(m)$ many distinct integers $b_1,\ldots,b_r$ where
@@ -66,6 +67,7 @@ This was formalized in Lean by van Doorn using Aristotle.
 theorem erdos_650.parts.i (m : ℕ) : f m = min m ⌈2 * Real.sqrt m⌉₊ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(m)$ be such that if $A\subseteq \{1,\ldots,N\}$ has $\lvert A\rvert=m$ then every interval
 in $[1,\infty)$ of length $2N$ contains $\geq f(m)$ many distinct integers $b_1,\ldots,b_r$ where

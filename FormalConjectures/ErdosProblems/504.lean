@@ -81,6 +81,7 @@ theorem erdos_504.variants.endpoint {n : ℕ} (hn : 3 ≤ n) :
     minimaxAngle (2 ^ n - 1) = (1 - 1 / (n : ℝ)) * π := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The lower-bound half of `erdos_504` in existential form (Theorem 1 of
 [ErSz60]): any $2^n$ points of the plane contain three points determining an
@@ -94,6 +95,7 @@ theorem erdos_504.variants.erdos_szekeres_1960 {n : ℕ} (hn : 3 ≤ n)
       (1 - 1 / (n : ℝ)) * π < EuclideanGeometry.angle p q r := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Szekeres (1941), lower bound.** More than $2^n$ points of the plane contain
 three points determining an angle strictly greater than $\pi(1 - 1/n)$.
@@ -106,6 +108,7 @@ theorem erdos_504.variants.szekeres_lower {n : ℕ} (hn : 0 < n) (S : Finset ℂ
       (1 - 1 / (n : ℝ)) * π < EuclideanGeometry.angle p q r := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Szekeres (1941), upper-bound construction.** For every $\varepsilon > 0$
 there is a set of exactly $2^t$ points of the plane all of whose angles are

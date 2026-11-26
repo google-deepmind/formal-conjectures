@@ -72,6 +72,7 @@ def conjecture309Statement : Prop :=
       (G.totalDominationNumber : ℝ) ≤
         ((maxEvenCorrection G : ℝ) + (mt : ℝ)) / 2
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every finite simple connected graph $G$ of order greater than two satisfy
 $$

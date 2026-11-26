@@ -149,6 +149,7 @@ theorem casas_alvero.double_prime_power (p k : ℕ) (hp : p.Prime) (hd : P.natDe
 
 end conjecture
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The Casas-Alvero conjecture fails in positive characteristic `p` for polynomials of degree `p + 1`.
 This was shown by Graf von Bothmer, Labs, Schicho, and van de Woestijne.

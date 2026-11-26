@@ -50,6 +50,7 @@ recorded in the `formal_proof` attributes below.
 
 namespace KomlosConjecture
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **The Komlós conjecture**
 
@@ -70,6 +71,7 @@ theorem komlos_conjecture :
         ∀ j, |∑ i, ε i * v i j| ≤ K := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Banaszczyk's theorem**
 

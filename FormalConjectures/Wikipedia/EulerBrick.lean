@@ -92,6 +92,7 @@ the polynomial of the first Cuboid polynomial is irreducible. -/
 def CuboidOne : Prop := ∀ ⦃a b : ℤ⦄, gcd a b = 1 → 0 < a → 0 < b → a ≠ b → CuboidOneFor a b
 
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The first Cuboid conjecture
 

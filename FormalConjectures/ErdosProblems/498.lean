@@ -35,6 +35,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos498
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $z_1,\ldots,z_n\in\mathbb{C}$ with $1\leq \lvert z_i\rvert$ for $1\leq i\leq n$. Let $D$ be an
 arbitrary disc of radius $1$. Is it true that the number of sums of the shape

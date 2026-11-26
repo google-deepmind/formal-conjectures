@@ -118,6 +118,7 @@ This is Definition 3.1 in [EHS82].
 noncomputable def SimpleGraph.maxSubgraphEdgeDistToBipartite
     (G : SimpleGraph V) (n : ℕ) : ℕ := sSup <| SimpleGraph.subgraphEdgeDistsToBipartite G n
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)\to \infty$ possibly very slowly.
 Is there a graph of infinite chromatic number such that every finite subgraph on $n$

@@ -39,6 +39,7 @@ noncomputable abbrev V (x : ℝ) : ℝ :=
   open scoped Classical in
   (Finset.Icc 1 ⌊x⌋₊ |>.filter (fun n => ∃ (m : ℕ), m.totient = n)).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. Does `V(2x)/V(x)→2` ?
 
@@ -51,6 +52,7 @@ theorem erdos_416.parts.i :
     Filter.Tendsto (fun x => (V (2 * x) / V (x))) Filter.atTop (𝓝 2) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let `V(x)` count the number of `n≤x` such that `ϕ(m)=n` is solvable. Then `V(cx)/V(x)→c` for
 every fixed `c>0`, which answers a question of Erdős and Hall. This was proved by an internal

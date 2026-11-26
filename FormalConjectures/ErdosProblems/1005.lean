@@ -71,6 +71,7 @@ theorem erdos_1005 :
     ∃ c : ℝ, 0 < c ∧ Tendsto (fun n : ℕ => (f n : ℝ) / n) atTop (𝓝 c) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The constant in Problem 1005 is $c = 1/4$: $f(n) = (1/4 + o(1)) n$ (Cipollini and GPT-5.5;
 formalised by Cipollini, van Doorn and Aristotle). -/
 @[category research solved, AMS 11, formal_proof using lean4 at

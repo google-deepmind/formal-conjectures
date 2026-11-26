@@ -85,6 +85,7 @@ def IsSurjunctive : Prop :=
     Function.Injective τ →
     Function.Surjective τ
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Gottschalk's surjunctivity conjecture** (1973): every group is surjunctive.
 That is, for every group `G` and every finite alphabet `A`, every injective cellular
 automaton on `A^G` is surjective.
@@ -98,6 +99,7 @@ theorem gottschalk_surjunctivity_conjecture :
     ¬ ∀ (G : Type) [Group G], IsSurjunctive G := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Gottschalk's surjunctivity conjecture** is false: there is a group that is not
 surjunctive.
 

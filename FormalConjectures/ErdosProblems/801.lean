@@ -35,6 +35,7 @@ open Filter SimpleGraph
 
 namespace Erdos801
 
+set_option linter.style.formal_proof_palomar false in
 /--
 If $G$ is a graph on $n$ vertices containing no independent set on $>n^{1/2}$ vertices then there
 is a set of $\leq n^{1/2}$ vertices containing $\gg n^{1/2}\log n$ edges.

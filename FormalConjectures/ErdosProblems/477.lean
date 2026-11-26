@@ -33,6 +33,7 @@ open Polynomial Set
 
 namespace Erdos477
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there a polynomial $f:\mathbb{Z}\to \mathbb{Z}$ of degree at least $2$ and a set
 $A\subset \mathbb{Z}$ such that for any $n\in \mathbb{Z}$ there is exactly one $a\in A$ and
@@ -84,6 +85,7 @@ theorem erdos_477.variants.X_pow_three :
     ∀ A : Set ℤ, ∃ z, ¬ ∃! a ∈ A ×ˢ (Set.range f.eval), z = a.1 + a.2 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Sekanina [Sek59] asked whether there is no such $A$ for $X^k$, for every $k \ge 2$.
 This is false: a complement exists for every even $k \ge 6$. The linked formal proof gives the

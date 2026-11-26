@@ -143,6 +143,7 @@ theorem isKilledBy_of_isUniversalKillingExponent (n m : ℕ+)
   haveI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   h R _ (rankAtStalk_monoidAlgebra R n)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Grothendieck's question: is every finite locally free group scheme of rank $n$, over every
 commutative ring, killed by $n$?

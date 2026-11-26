@@ -39,6 +39,7 @@ namespace WrittenOnTheWallII.GraphConjecture438b
 
 open SimpleGraph Finset
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII 438b states that every connected graph of order greater than three
 satisfies

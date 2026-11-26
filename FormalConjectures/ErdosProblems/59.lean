@@ -49,6 +49,7 @@ theorem numFree_pos {k : ℕ} {H : SimpleGraph (Fin k)} (hH : H ≠ ⊥) (n : �
   unfold numFree
   exact (Set.ncard_pos (Set.toFinite _)).2 ⟨⊥, SimpleGraph.free_bot hH⟩
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that the number of graphs on $n$ vertices which do not contain $G$ is
 $$\leq 2^{(1+o(1))\mathrm{ex}(n;G)}?$$
@@ -76,6 +77,7 @@ theorem erdos_59.variants.erdos_frankl_rodl {k : ℕ} (H : SimpleGraph (Fin k))
       (numFree H n : ℝ) ≤ (2 : ℝ) ^ ((1 + ε) * (extremalNumber n H : ℝ)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The answer is no for $G=C_6$, the cycle on 6 vertices. Morris and Saxton [MoSa16, Proposition
 1.4] have proved there are at least

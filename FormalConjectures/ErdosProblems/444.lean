@@ -49,6 +49,7 @@ theorem divisorCount_zero_two_three_four_twelve : divisorCount {0, 2, 3, 4} 12 =
   simp [divisorCount, show Nat.divisors 12 = {1, 2, 3, 4, 6, 12} by decide, filter_insert]
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq\mathbb{N}$ be infinite and $d_A(n)$ count the number of $a\in A$ which divide $n$.
 Is it true that, for every $k$,

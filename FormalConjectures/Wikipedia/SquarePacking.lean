@@ -158,6 +158,7 @@ theorem three_square_packing_in_circle_bound :
 
 noncomputable def least_three_square_packing_in_circle.answer : ℝ≥0 := (5 * NNReal.sqrt 17) / 16
 
+set_option linter.style.formal_proof_palomar false in
 /--
 What is the smallest circle that can contain 3 unit squares?
 

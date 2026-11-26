@@ -38,10 +38,9 @@ public import FormalConjecturesUtil
 
 @[expose] public section
 
-open scoped ArithmeticFunction.sigma
-
 namespace Erdos418
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Are there infinitely many integers not of the form $n - \phi(n)$?
 
@@ -119,7 +118,7 @@ Pomerance [PoPo16] give a heuristic predicting its value).
 -/
 @[category research solved, AMS 11]
 theorem erdos_418.variants.sigma :
-    0 < { (σ 1 n - n : ℕ) | n }ᶜ.lowerDensity := by
+    0 < {n : ℕ | n.IsUntouchable}.lowerDensity := by
   sorry
 
 /--

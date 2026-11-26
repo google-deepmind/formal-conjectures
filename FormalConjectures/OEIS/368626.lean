@@ -88,6 +88,7 @@ theorem a_5 : a 5 = 138 := by
   rw [a_eq]
   norm_num [conv3, conv2, Finset.sum_range_succ, a_0, a_1, a_2, a_3, a_4]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 "Conjecture: $a(n)$ is odd when $n = 2^k - 1$ for $k \ge 0$ and even elsewhere."
 - Paul D. Hanna, Jan 09 2024.

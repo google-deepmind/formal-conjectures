@@ -314,6 +314,7 @@ theorem isMaxRank_three_three_five_bounds {R : ℕ} (hR : IsMaxRank [3, 3, 5] R)
 
 def isMaxRank_three_three_five.answer : ℕ := 6
 
+set_option linter.style.formal_proof_palomar false in
 /-- Determine the maximal rank of a $3 \times 3 \times 5$ tensor. It was the one
 undetermined entry of the table of $\operatorname{mrank}(3, 3, p)$ for $p \leq 9$
 [BFZ24, (4.20)]. The answer is `6`. A Lean proof is given in [Ki26]. -/

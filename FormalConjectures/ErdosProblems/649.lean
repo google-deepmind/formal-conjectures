@@ -33,6 +33,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos649
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $P(m)$ denote the greatest prime factor of $m$. Is it true that, for any two primes $p,q$,
 there exists some integer $n$ such that $P(n)=p$ and $P(n+1)=q$?
@@ -51,6 +52,7 @@ theorem erdos_649 :
       ∃ n : ℕ, n.maxPrimeFac = p ∧ (n + 1).maxPrimeFac = q := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The number of solutions is finite for any fixed $p,q$ since the largest prime factor of $n(n+1)$
 tends to $\infty$ (Mahler [Ma35] showed that this is $\gg \log\log n$, see
@@ -87,6 +89,7 @@ theorem erdos_649.variants.no_solution_two_seven :
   have hk3 : k % 3 < 3 := Nat.mod_lt _ (by norm_num)
   interval_cases h : k % 3 <;> omega
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Even with such amendments, this problem is false in a strong sense: Alan Tong has provided the
 following elegant elementary proof that, for any given prime $p$, there are infinitely many

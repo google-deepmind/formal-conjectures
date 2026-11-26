@@ -41,6 +41,7 @@ open Filter Finset
 
 namespace Erdos702
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $k\geq 4$. If $\mathcal{F}$ is a family of subsets of $\{1,\ldots,n\}$ with $\lvert A\rvert=k$
 for all $A\in \mathcal{F}$ and $\lvert \mathcal{F}\rvert >\binom{n-2}{k-2}$ then there are

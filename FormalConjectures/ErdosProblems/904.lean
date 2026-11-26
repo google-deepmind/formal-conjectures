@@ -41,6 +41,7 @@ abbrev n (V : Type*) [Fintype V] : ℕ := Fintype.card V
 /-- The number of edges of the Turán graph $T(n, r)$, i.e. the Turán number. -/
 abbrev turanNumber (n r : ℕ) : ℕ := #(SimpleGraph.turanGraph n r).edgeFinset
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $r\geq 2$ and let $t_r(n)$ be the Turán number (the maximal number of edges in a graph on $n$
 vertices with no $K_{r+1}$).

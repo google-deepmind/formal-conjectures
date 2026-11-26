@@ -33,6 +33,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos310
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\alpha >0$ and $N\geq 1$. Is it true that for any $A\subseteq \{1,\ldots,N\}$ with
 $\lvert A\rvert \geq \alpha N$ there exists some $S\subseteq A$ such that

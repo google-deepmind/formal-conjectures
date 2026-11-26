@@ -37,6 +37,7 @@ open SimpleGraph
 namespace Erdos621
 
 open scoped Classical in
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $G$ be a graph on $n$ vertices, $\alpha_1(G)$ be the maximum number of edges that contain
 at most one edge from every triangle, and $\tau_1(G)$ be the minimum number of edges that

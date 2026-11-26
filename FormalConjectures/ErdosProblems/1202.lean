@@ -31,6 +31,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos1202
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $\epsilon > 0$. Does there exist $k$ such that, for every $n$, any primes
 $p_1 < \cdots < p_k < n^{1-\epsilon}$ and any sets $A_i$ of $\frac{p_i - 1}{2}$ residue classes

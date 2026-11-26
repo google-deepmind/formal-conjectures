@@ -44,7 +44,7 @@ of the non-collinear triples of `P`.)
 noncomputable def numCircles (P : Set ℝ²) : ℕ :=
   Set.ncard { s : Sphere ℝ² | 3 ≤ {p ∈ P | p ∈ s}.ncard }
 
-def erdos_506.answer : ℕ := sorry
+def erdos_506.answer (n : ℕ) : ℕ := sorry
 
 /--
 What is the minimum number of circles determined by any $n$ points in $\mathbb{R}^2$, not all on a
@@ -67,7 +67,7 @@ theorem erdos_506 (n : ℕ) (hn : 4 ≤ n) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      erdos_506.answer := by
+      (erdos_506.answer n) := by
   sorry
 
 def erdos_506.variants.large_n.answer (n : ℕ) : ℕ := (n - 1).choose 2 + 1 - (n - 1) / 2
@@ -86,7 +86,7 @@ theorem erdos_506.variants.large_n (n : ℕ) (hn : 393 < n) :
       (erdos_506.variants.large_n.answer n) := by
   sorry
 
-def erdos_506.variants.small_n.answer : ℕ := sorry
+def erdos_506.variants.small_n.answer (n : ℕ) : ℕ := sorry
 
 /--
 The problem appears to remain open for small $n$: Elliott's answer is established only for
@@ -98,7 +98,7 @@ theorem erdos_506.variants.small_n (n : ℕ) (hn : 4 ≤ n) (hn' : n ≤ 393) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
         numCircles (P : Set ℝ²) = k }
-      erdos_506.variants.small_n.answer := by
+      (erdos_506.variants.small_n.answer n) := by
   sorry
 
 /--

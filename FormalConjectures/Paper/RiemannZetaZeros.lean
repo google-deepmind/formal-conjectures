@@ -25,6 +25,8 @@ public import FormalConjecturesUtil
   simple and on the critical line*, August 2026.
   [pdf](https://www-cdn.anthropic.com/95c246936988e43127bc6b2ceb7077c1dad2d68e.pdf),
   [Lean formalisation](https://github.com/anthropics/zeta-23-lean).
+- [BH13] Bui, H. M. and Heath-Brown, D. R., *On simple zeros of the Riemann zeta-function*, 2013.
+  [arXiv:1302.5018](https://arxiv.org/abs/1302.5018)
 - [Wikipedia](https://en.wikipedia.org/wiki/Riemann_hypothesis#Zeros_on_the_critical_line)
 
 For a nontrivial zero `ρ = β + iγ` of `ζ` (or of a Dirichlet `L`-function) with multiplicity
@@ -53,7 +55,7 @@ def nontrivialZeros (f : ℂ → ℂ) (T₁ T₂ : ℝ) : Set ℂ :=
 /-- `N(T₁, T₂)`: the nontrivial zeros of `f` with imaginary part in `(T₁, T₂]`, counted with
 multiplicity. -/
 noncomputable def N (f : ℂ → ℂ) (T₁ T₂ : ℝ) : ℕ :=
-  ∑ᶠ s ∈ nontrivialZeros f T₁ T₂, (analyticOrderAt f s).toNat
+  Complex.zeroCountOn f (nontrivialZeros f T₁ T₂)
 
 /-- `N_d(T₁, T₂)`: the number of distinct nontrivial zeros of `f` with imaginary part in
 `(T₁, T₂]`. -/
@@ -74,6 +76,7 @@ open ZetaZeros
 
 namespace riemannZeta
 
+set_option linter.style.formal_proof_palomar false in
 /-- At least two thirds of the nontrivial zeros of `ζ`, counted with
 multiplicity, are simple and on the critical line [Cl26, Theorem A (i)]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -82,6 +85,7 @@ theorem simple_prop_two_thirds : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → �
     ∀ T > 0, (2 / 3 - o T) * N riemannZeta T (2 * T) ≤ Ns riemannZeta T (2 * T) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- At least five sixths of the nontrivial zeros of `ζ`, counted with
 multiplicity, are distinct [Cl26, Theorem A (ii)]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -90,6 +94,7 @@ theorem distinct_prop_five_sixths : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ �
     ∀ T > 0, (5 / 6 - o T) * N riemannZeta T (2 * T) ≤ Nd riemannZeta T (2 * T) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The proportion of simple zeros of `ζ` on the critical line is at least
 `2 - c_MT⁻¹ = 0.6725…`. [Cl26, Theorem A]-/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -99,6 +104,7 @@ theorem simple_prop_montgomeryTaylor : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ
       Ns riemannZeta T (2 * T) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The proportion of distinct zeros of `ζ` is at least `(3 - c_MT⁻¹) / 2 = 0.8362…`,
 [Cl26, Theorem A]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -110,7 +116,11 @@ theorem distinct_prop_montgomeryTaylor : ∃ o : ℝ → ℝ, o =o[atTop] (1 : �
 
 /-- Is the proportion of simple zeros of `ζ` on the critical line unconditionally larger than
 the Montgomery–Taylor bound `2 - c_MT⁻¹ = 0.6725…`? [Cl26, §7.2] puts the ceiling of its
-method at about `0.682`. -/
+method at about `0.682`.
+
+Assuming the Riemann Hypothesis, Bui and Heath-Brown [BH13] proved that the proportion of simple
+zeros is at least `19/27 = 0.7037…`. They count the zeros with `0 < γ < T`, and the statement here
+counts those with `T < γ ≤ 2T`. -/
 @[category research open, AMS 11]
 theorem simple_prop_lt : ∃ c > 2 - montgomeryTaylorConst⁻¹, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
@@ -124,7 +134,11 @@ theorem simple_prop_one_hundred : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → 
   sorry
 
 /-- Is the proportion of distinct zeros of `ζ` unconditionally larger than the Montgomery–Taylor
-bound `(3 - c_MT⁻¹) / 2 = 0.8362…`? -/
+bound `(3 - c_MT⁻¹) / 2 = 0.8362…`?
+
+Assuming the Riemann Hypothesis, Bui and Heath-Brown [BH13] proved that the proportion of distinct
+zeros is at least `0.84665`. They count the zeros with `0 < γ < T`, and the statement here counts
+those with `T < γ ≤ 2T`. -/
 @[category research open, AMS 11]
 theorem distinct_prop_lt : ∃ c > (3 - montgomeryTaylorConst⁻¹) / 2, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
@@ -143,6 +157,7 @@ namespace DirichletCharacter
 
 variable {M : ℕ} [NeZero M] {χ : DirichletCharacter ℂ M}
 
+set_option linter.style.formal_proof_palomar false in
 /-- At least two thirds of the nontrivial zeros of `L(s, χ)`, `χ` primitive,
 counted with multiplicity, are simple and on the critical line, [Cl26, Theorem B]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -151,6 +166,7 @@ theorem simple_prop_two_thirds (hχ : χ.IsPrimitive) : ∃ o : ℝ → ℝ, o =
     ∀ T > 0, (2 / 3 - o T) * N (LFunction χ) T (2 * T) ≤ Ns (LFunction χ) T (2 * T) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- At least five sixths of the nontrivial zeros of `L(s, χ)`, `χ` primitive,
 counted with multiplicity, are distinct, [Cl26, Theorem B]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -159,6 +175,7 @@ theorem distinct_prop_five_sixths (hχ : χ.IsPrimitive) : ∃ o : ℝ → ℝ, 
     ∀ T > 0, (5 / 6 - o T) * N (LFunction χ) T (2 * T) ≤ Nd (LFunction χ) T (2 * T) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The proportion of simple zeros of `L(s, χ)`, `χ` primitive, on the critical line is at
 least `2 - c_MT⁻¹ = 0.6725…`, [Cl26, Theorem B]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
@@ -169,6 +186,7 @@ theorem simple_prop_montgomeryTaylor (hχ : χ.IsPrimitive) :
       Ns (LFunction χ) T (2 * T) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The proportion of distinct zeros of `L(s, χ)`, `χ` primitive, is at least
 `(3 - c_MT⁻¹) / 2 = 0.8362…`, [Cl26, Theorem B]. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
