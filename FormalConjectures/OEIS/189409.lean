@@ -57,8 +57,10 @@ It is unknown whether or not numbers in this sequence are always squarefree.
 The answer is no: $a(9) = 223092870^2 + 1 = 49770428644836901 = 29^2 \cdot 53 \cdot 1116604864937$.
 Indeed $223092870 \equiv 800 \pmod{841}$ and $800^2 + 1 = 640001 = 841 \cdot 761$.
 For $n \le 1000$ and primes $q < 2 \cdot 10^7$ this is the only case of $q^2 \mid a(n)$.
-A kernel-checked Lean proof (standard axioms only) is at
-[oeis-counterexamples](https://github.com/DevSingh05/oeis-a189409).
+This was first shown in the OEIS Open project, see T. Adamczewski, OEIS Open: How many
+conjectures can language models turn into theorems?,
+[arXiv:2608.11941](https://arxiv.org/abs/2608.11941). A kernel-checked Lean proof of exactly
+this statement is at [oeis-a189409](https://github.com/DevSingh05/oeis-a189409).
 -/
 @[category research solved, question, AMS 11]
 theorem conjecture_1 : ¬ ∀ n : ℕ, Squarefree (a n) := by
