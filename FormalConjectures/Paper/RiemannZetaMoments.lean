@@ -71,9 +71,11 @@ theorem moment_isEquiv (k : ℕ) : ∃ c > (0 : ℝ),
     moment k ~[atTop] fun T ↦ c * T.log ^ (k ^ 2) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- The asymptotic behaviour of the first moment of the Riemann zeta function was proved by
 Hardy and Littlewood, where $c_1 = 1$ [Co26, §3.4.5]. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-zeta-second-moment/blob/8e35dc65037672a04c495a3b706c7ab18c72d676/ZetaMomentsFC/Main.lean#L43"]
 theorem moment_isEquiv₁ : moment 1 ~[atTop] fun T ↦ T.log := by
   sorry
 
