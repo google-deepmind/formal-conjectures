@@ -56,11 +56,13 @@ theorem erdos_329 : sSup {sidonUpperDensity A | (A : Set ℕ) (_ : IsSidon A)} =
     erdos_329.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős proved that upper density `1 / 2` can be attained; in particular,
 there exists a Sidon set whose upper density is *at least* `1 / 2`.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-329-lean/blob/539708fc06b2b97cae823bfbb55eeb7e07d5b611/Erdos329.lean#L477"]
 theorem erdos_329.variants.lower_bound : ∃ (A : Set ℕ), IsSidon A ∧ sidonUpperDensity A ≥ 1/2 := by
   sorry
 
@@ -104,10 +106,12 @@ theorem erdos_329.variants.converse_implication :
 
 /-  ## Related results and examples -/
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is possible to construct a Sidon set with positive density.
 -/
-@[category textbook, AMS 5 11]
+@[category textbook, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-329-lean/blob/539708fc06b2b97cae823bfbb55eeb7e07d5b611/Erdos329.lean#L487"]
 theorem exists_sidon_pos_density : ∃ (A : Set ℕ), IsSidon A ∧ 0 < sidonUpperDensity A := by
   sorry
 
