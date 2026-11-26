@@ -57,7 +57,8 @@ theorem jacobson_conjecture :
 @[category textbook, AMS 13 16]
 theorem jacobson_conjecture_of_comm_ring (R : Type u) [CommRing R] [IsNoetherianRing R] :
     JacobsonConjectureFor R := by
-  sorry
+  simpa [JacobsonConjectureFor, Ideal.zero_eq_bot] using
+    Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := R) (Ring.jacobson R) Ideal.jacobson_bot.ge
 
 /-- Originally, on page 200 of [Ja1956], Jacobson asked if the Jacobson conjecture holds for all right
 Noetherian rings. However in [He1965] Herstein constructs a right Noetherian ring for which the
