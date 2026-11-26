@@ -27,6 +27,14 @@ public import FormalConjecturesUtil
 - [ErGr80] Erdős, P. and Graham, R., Old and new problems and results in combinatorial number
   theory. Monographies de L'Enseignement Mathematique (1980).
 - [va25](https://github.com/Woett/Mathematical-shorts/blob/main/Two-colouring%20and%20density%20lead%20to%20solutions%20to%20an%20equation%20in%20unit%20fractions.pdf)
+
+*Further upper bounds:*
+- Khanukov's [v0.2.0 preprint](https://doi.org/10.5281/zenodo.22737316) gives
+  $\limsup_{N\to\infty} f(N)/N \leq 140803024/163562355$, with an
+  [end-to-end Lean proof](https://github.com/khanukov/erdos302/blob/3e400a3807d22f711c7998f9537f49991925231a/Erdos302/Asymptotic/Integration.lean#L30-L37).
+- The [v0.3.0 preprint](https://doi.org/10.5281/zenodo.24457000) gives
+  $\limsup_{N\to\infty} f(N)/N < 0.830783022367$ using reproducible
+  computer-checked certificates. This stronger bound is not formalized end to end in Lean.
 -/
 
 @[expose] public section
