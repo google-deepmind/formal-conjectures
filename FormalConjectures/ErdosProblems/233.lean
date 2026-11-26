@@ -24,6 +24,7 @@ public import FormalConjecturesUtil
   - [erdosproblems.com/233](https://www.erdosproblems.com/233)
   - [A74741](https://oeis.org/A74741)
   - [Wikipedia](https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_conjecture)
+  - [Al26] Alpöge, L., [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf) (2026).
 -/
 
 @[expose] public section
@@ -46,6 +47,15 @@ Cramér proved an upper bound of $O(N(\log N)^4)$ conditional on the Riemann hyp
 -/
 @[category research solved, AMS 11]
 theorem erdos_233.variants.upper_bound (h : RiemannHypothesis) :
+    (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) =O[atTop] fun N => N * (log N)^4 := by
+  sorry
+
+/--
+Cramér's upper bound of $O(N(\log N)^4)$ is unconditional, since the Riemann hypothesis is proved
+[Al26].
+-/
+@[category research solved, AMS 11]
+theorem erdos_233.variants.upper_bound_unconditional :
     (fun N => ((∑ n ∈ Finset.range N, (primeGap n) ^ 2) : ℝ)) =O[atTop] fun N => N * (log N)^4 := by
   sorry
 
