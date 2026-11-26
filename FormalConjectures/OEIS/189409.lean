@@ -53,9 +53,15 @@ theorem a_4 : a 4 = 44101 := by simp [a]
 /--
 It is unknown whether or not numbers in this sequence are always squarefree.
 - _John M. Campbell_, Apr 21 2011
+
+The answer is no: $a(9) = 223092870^2 + 1 = 49770428644836901 = 29^2 \cdot 53 \cdot 1116604864937$.
+Indeed $223092870 \equiv 800 \pmod{841}$ and $800^2 + 1 = 640001 = 841 \cdot 761$.
+For $n \le 1000$ and primes $q < 2 \cdot 10^7$ this is the only case of $q^2 \mid a(n)$.
+A kernel-checked Lean proof (standard axioms only) is at
+[oeis-counterexamples](https://github.com/DevSingh05/oeis-a189409).
 -/
-@[category research open, question, AMS 11]
-theorem conjecture_1 : ∀ n : ℕ, Squarefree (a n) := by
+@[category research solved, question, AMS 11]
+theorem conjecture_1 : ¬ ∀ n : ℕ, Squarefree (a n) := by
   sorry
 
 /--
