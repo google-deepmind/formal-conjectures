@@ -66,8 +66,10 @@ theorem erdos_969.variants.prime_number_theorem :
     (fun x => |squarefreeCountingError x|) =o[atTop] (fun x : ℕ => (x : ℝ).sqrt) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Evelyn and Linfoot proved $E(x)=\Omega(x^{1/4})$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-evelyn-linfoot/blob/6ae14136caafd354286599db8511a5ba0c58fbec/EvelynLinfootFC/FC.lean#L16"]
 theorem erdos_969.variants.evelyn_linfoot :
     ¬(fun x => |squarefreeCountingError x|) =o[atTop]
       (fun x : ℕ => (x : ℝ) ^ (1 / 4 : ℝ)) := by
