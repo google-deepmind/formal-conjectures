@@ -86,9 +86,24 @@ set for every `3 ≤ r`.
 -/
 @[category research solved, AMS 5]
 theorem erdos_619.variants.add_edges_diam_three {V : Type*} [Fintype V]
-    (G : SimpleGraph V) (hG : G.Connected) (hG' : G.CliqueFree 3) :
+    (G : SimpleGraph V) (_hG : G.Connected) (hG' : G.CliqueFree 3) :
     ∃ H : SimpleGraph V, G ≤ H ∧ H.CliqueFree 3 ∧ H.ediam ≤ 3 := by
-  sorry
+  classical
+  obtain ⟨H, hGH, hH⟩ :=
+    Finite.exists_le_maximal (p := fun H : SimpleGraph V ↦ H.CliqueFree 3) hG'
+  refine ⟨H, hGH, hH.1, ediam_le_iff.2 fun u v ↦ ?_⟩
+  by_cases huv : u = v
+  · subst huv; simp
+  by_cases hadj : H.Adj u v
+  · exact (edist_le hadj.toWalk).trans (by simp)
+  obtain ⟨s, hus, hvs, hu, hv⟩ := exists_of_maximal_cliqueFree_not_adj hH huv hadj
+  obtain ⟨w, hw⟩ : s.Nonempty := by
+    rw [Finset.nonempty_iff_ne_empty]
+    rintro rfl
+    simpa using hu.card_eq
+  have huw : H.Adj u w := hu.1 (by simp) (by simp [hw]) (by rintro rfl; exact hus hw)
+  have hvw : H.Adj v w := hv.1 (by simp) (by simp [hw]) (by rintro rfl; exact hvs hw)
+  exact (edist_le (huw.toWalk.append hvw.symm.toWalk)).trans (by simp; norm_num)
 
 /--
 Erdős, Gyárfás and Ruszinkó [EGR98]: $h_3(G) \leq n$ for every connected triangle-free
