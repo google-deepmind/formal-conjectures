@@ -118,14 +118,14 @@ theorem erdos_409.parts.ii :
     ∃ (p : ℕ) (hp : p.Prime), { n | ∃ i, (φ · + 1)^[i] n = p }.Infinite := by
   sorry
 
-def erdos_409.parts.iii.answer : ℝ := sorry
+def erdos_409.parts.iii.answer (p : ℕ) : ℝ := sorry
 
 /--
 What is the density of $n$ which reach any fixed prime under the iteration $n\mapsto\phi(n) + 1$?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_409.parts.iii (p : ℕ) (h : p.Prime) :
-    { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity erdos_409.parts.iii.answer := by
+    { n | ∃ i, (φ · + 1)^[i] n = p }.HasDensity (erdos_409.parts.iii.answer p) := by
   sorry
 
 def erdos_409.variants.sigma.answer (n : ℕ) : ℕ := sorry

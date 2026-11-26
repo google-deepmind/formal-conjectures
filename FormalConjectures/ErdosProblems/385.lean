@@ -29,7 +29,7 @@ namespace Erdos385
 
 open Filter
 
-/-- Let $F(n) := \max\{m + p(m) \mid  \textrm{$m < n$ composite}\}\}$ where $p(m)$ is the least
+/-- Let $F(n) := \max\{m + p(m) \mid m < n \textrm{ composite}\}$ where $p(m)$ is the least
 prime divisor of $m$. -/
 noncomputable def F (n : ℕ) : ℕ := sSup {m + m.minFac | (m < n) (_ : m.Composite)}
 
@@ -52,13 +52,13 @@ theorem trivial_ub (n : ℕ) : F n ≤ n + √n := by
           push_cast; rw [Real.sqrt_sq (Nat.cast_nonneg _)]]
         exact Real.sqrt_le_sqrt (by exact_mod_cast Nat.sqrt_le' n)
 
-/-- Let $F(n) := \max\{m + p(m) \mid  \textrm{$m < n$ composite}\}\}$ where $p(m)$ is the least
+/-- Let $F(n) := \max\{m + p(m) \mid m < n \textrm{ composite}\}$ where $p(m)$ is the least
 prime divisor of $m$. Is it true that $F(n)>n$ for all sufficiently large $n$? -/
 @[category research open, question, AMS 11]
 theorem erdos_385.parts.i : ∀ᶠ n in atTop, n < F n := by
   sorry
 
-/-- Let $F(n) := \max\{m + p(m) \mid  \textrm{$m < n$ composite}\}\}$ where $p(m)$ is the least
+/-- Let $F(n) := \max\{m + p(m) \mid m < n \textrm{ composite}\}$ where $p(m)$ is the least
 prime divisor of $m$. Does $F(n) - n \to \infty$ as $n\to\infty$? -/
 @[category research open, question, AMS 11]
 theorem erdos_385.parts.ii : atTop.Tendsto (fun n ↦ F n - n) atTop := by
