@@ -103,10 +103,26 @@ theorem a_4 : a 4 = 67 := by
 /--
 Terms are squares at only(?) three values of $n = 3, 6, 4072$:
 corresponding terms are 6^2, 13^2, and 15735^2.
+
+Disproved: for $n = 111008771$, with $p_n = 2274652151$ and $p_{2n} = 4711447171$,
+$a(n) = 387024194082134596 = 622112686^2$. This is the only further square for $n < 3 \cdot 10^8$.
+See [a105720-counterexample](https://github.com/David-glitc/a105720-counterexample), which
+reduces this statement in Lean to the computed value of $a(111008771)$ and gives three
+independent programs for that value.
+-/
+@[category research solved, AMS 11]
+theorem conjecture :
+    ¬ ∀ n : ℕ, 0 < n → (IsSquare (a n) ↔ (n = 3 ∨ n = 6 ∨ n = 4072)) := by
+  sorry
+
+/--
+Are there infinitely many $n$ such that $a(n)$ is a square?
+Heuristically $a(n) \approx 1.5 n^2 \log n$, so the expected number of squares up to $N$ grows like
+$\sqrt{\log N}$.
 -/
 @[category research open, AMS 11]
-theorem conjecture :
-    ∀ n : ℕ, 0 < n → (IsSquare (a n) ↔ (n = 3 ∨ n = 6 ∨ n = 4072)) := by
+theorem conjecture.variants.infinitely_many_squares :
+    Set.Infinite {n : ℕ | IsSquare (a n)} := by
   sorry
 
 end OeisA105720
