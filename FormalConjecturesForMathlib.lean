@@ -186,6 +186,7 @@ public import FormalConjecturesForMathlib.GroupTheory.GroupAction.InvolutionFixe
 public import FormalConjecturesForMathlib.GroupTheory.GroupAction.MovedPoints
 public import FormalConjecturesForMathlib.GroupTheory.GroupAction.OrbitCounts
 public import FormalConjecturesForMathlib.GroupTheory.GroupAction.TransitivityDegree
+public import FormalConjecturesForMathlib.GroupTheory.LocallySolvable
 public import FormalConjecturesForMathlib.GroupTheory.PrimeDivisors
 public import FormalConjecturesForMathlib.GroupTheory.RationalClasses
 public import FormalConjecturesForMathlib.GroupTheory.SubgroupCounts

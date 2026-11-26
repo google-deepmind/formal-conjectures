@@ -1,0 +1,45 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.GroupTheory.Solvable
+
+/-!
+# Locally Solvable
+
+* `Group.IsLocallySolvable G`: the proposition that a group `G` is locally solvable.
+* `Group.IsLocallySolvable.of_isSolvable`: every solvable group is locally solvable.
+-/
+
+@[expose] public section
+
+namespace Group
+
+/--
+A group $G$ is locally solvable (locally soluble)
+if every finitely generated subgroup $H$ of $G$ is solvable (soluble).
+-/
+def IsLocallySolvable (G : Type*) [Group G] : Prop :=
+  ∀ (H : Subgroup G), Subgroup.FG H → IsSolvable H
+
+variable {G : Type*} [Group G]
+
+/-- Every solvable group is locally solvable. -/
+theorem IsLocallySolvable.of_isSolvable [IsSolvable G] : IsLocallySolvable G :=
+  fun _ _ => inferInstance
+
+end Group
