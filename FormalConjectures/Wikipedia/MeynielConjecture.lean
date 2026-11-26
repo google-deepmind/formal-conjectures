@@ -119,21 +119,21 @@ theorem meyniel_conjecture :
 **The soft Meyniel conjecture.**
 
 There are constants `ε, C > 0` such that every connected graph on `n` vertices has cop number
-at most `C n^(1 - ε)`. Even this weakening of Meyniel's conjecture is open; no bound of the
-form `O(n^(1 - ε))` is known. See [BB12].
+at most `C n^(1 - ε)`. Geneson's formalization proves the stronger bound `n^(2/3 + o(1))`.
 -/
-@[category research open, AMS 5 91]
+@[category research solved, AMS 5 91, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-26-000031&version=1"]
 theorem meyniel_conjecture.variants.soft :
     ∃ ε C : ℝ, 0 < ε ∧ 0 < C ∧ ∀ (V : Type) [Fintype V] (G : SimpleGraph V), G.Connected →
       (copNumber G : ℝ) ≤ C * (Fintype.card V : ℝ) ^ ((1 : ℝ) - ε) := by
   sorry
 
 /--
-**Scott–Sudakov (2011): the best known general bound.**
+**Scott–Sudakov (2011).**
 
-Every connected graph on `n` vertices has cop number at most `n / 2^((1 - o(1)) √(log₂ n))`.
-This (together with the same bound obtained independently by Lu–Peng and by Frieze, Krivelevich
-and Loh) is the best known bound towards Meyniel's conjecture.
+Scott and Sudakov proved the upper bound `n / 2^((1 - o(1)) √(log₂ n))` for the cop number
+of a connected graph on `n` vertices. Lu and Peng obtained the same bound independently,
+as did Frieze, Krivelevich and Loh.
 
 *Reference:* [SS11].
 -/
