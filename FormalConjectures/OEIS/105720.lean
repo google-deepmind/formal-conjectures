@@ -105,10 +105,10 @@ Terms are squares at only(?) three values of $n = 3, 6, 4072$:
 corresponding terms are 6^2, 13^2, and 15735^2.
 
 Disproved: for $n = 111008771$, with $p_n = 2274652151$ and $p_{2n} = 4711447171$,
-$a(n) = 387024194082134596 = 622112686^2$. This is the only further square for $n < 3 \cdot 10^8$.
+$a(n) = 387024194082134596 = 622112686^2$. This is the only further square for $0 < n < 3 \cdot 10^8$.
 See [a105720-counterexample](https://github.com/David-glitc/a105720-counterexample), which
-reduces this statement in Lean to the computed value of $a(111008771)$ and gives three
-independent programs for that value.
+reduces this statement in Lean to the computed value of $a(111008771)$. Two programs compute
+the sum, and SymPy independently checks the endpoint primes and their indices.
 -/
 @[category research solved, AMS 11]
 theorem conjecture :
@@ -120,7 +120,7 @@ Are there infinitely many $n$ such that $a(n)$ is a square?
 Heuristically $a(n) \approx 1.5 n^2 \log n$, so the expected number of squares up to $N$ grows like
 $\sqrt{\log N}$.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture.variants.infinitely_many_squares :
     Set.Infinite {n : ℕ | IsSquare (a n)} := by
   sorry
