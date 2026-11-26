@@ -29,6 +29,8 @@ public import FormalConjecturesUtil
 - [Fa87] Fan, Genghua, On diameter 2-critical graphs. Discrete Math. 67 (1987), 235-240.
 - [Fü92] Füredi, Zoltán, The maximum number of edges in a minimal graph of diameter 2.
   J. Graph Theory 16 (1992), 81-98.
+- [DaFo26] Das, Sanjana and Fox, Jacob, A proof of the Murty-Simon conjecture on
+  diameter-$2$-critical graphs. [arXiv:2610.39032](https://arxiv.org/abs/2610.39032) (2026).
 -/
 
 @[expose] public section
@@ -51,10 +53,12 @@ Let $G$ be a graph on $n$ vertices with diameter $2$ such that deleting any edge
 diameter. Is it true that $G$ has at most $\lfloor n^2 / 4 \rfloor$ edges? Equality is conjectured
 to hold for the complete balanced bipartite graph $K_{\lceil n/2 \rceil, \lfloor n/2 \rfloor}$.
 
-The conjecture is resolved up to a finite check: Fan [Fa87] verified it for $n \leq 24$ and
-$n = 26$, and Füredi [Fü92] proved it for all sufficiently large $n$.
+The answer is yes: Das and Fox [DaFo26] proved the Murty-Simon conjecture for all $n$
+(previously Fan [Fa87] verified $n \leq 24$ and $n = 26$, and Füredi [Fü92] proved it for
+sufficiently large $n$).
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-01-000011"]
 theorem erdos_742 :
     ∀ (V : Type*) [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj], IsDiameter2Critical G →
