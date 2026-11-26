@@ -48,6 +48,7 @@ public import FormalConjecturesForMathlib.Analysis.Matrix.Spectrum
 public import FormalConjecturesForMathlib.Analysis.MvPolynomial.MahlerMeasure
 public import FormalConjecturesForMathlib.Analysis.Real.Cardinality
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.AdditiveCharacter
+public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Gamma.Deligne
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.Log.Basic
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.LogIntegral
 public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
