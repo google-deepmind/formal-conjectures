@@ -52,4 +52,94 @@ theorem erdos_389.variants.mehta_four :
   by_contra! hlt
   interval_cases k <;> revert hdvd <;> native_decide
 
+/--
+The minimal $k$ for $n = 1$ is $1$ (Bhavik Mehta's table, OEIS A375071).
+-/
+@[category textbook, AMS 11]
+theorem erdos_389.variants.mehta_one :
+    IsLeast
+      { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (1 + i) ∣ ∏ i ∈ Finset.range k, (1 + k + i) }
+      1 := by
+  have hlt : ∀ k < 1, 1 ≤ k →
+      ¬ ∏ i ∈ Finset.range k, (1 + i) ∣ ∏ i ∈ Finset.range k, (1 + k + i) := by
+    native_decide
+  refine ⟨⟨by norm_num, by native_decide⟩, fun k ⟨hk1, hk⟩ => ?_⟩
+  by_contra! h
+  exact hlt k h hk1 hk
+
+/--
+The minimal $k$ for $n = 2$ is $5$ (Bhavik Mehta's table, OEIS A375071).
+-/
+@[category textbook, AMS 11]
+theorem erdos_389.variants.mehta_two :
+    IsLeast
+      { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (2 + i) ∣ ∏ i ∈ Finset.range k, (2 + k + i) }
+      5 := by
+  have hlt : ∀ k < 5, 1 ≤ k →
+      ¬ ∏ i ∈ Finset.range k, (2 + i) ∣ ∏ i ∈ Finset.range k, (2 + k + i) := by
+    native_decide
+  refine ⟨⟨by norm_num, by native_decide⟩, fun k ⟨hk1, hk⟩ => ?_⟩
+  by_contra! h
+  exact hlt k h hk1 hk
+
+/--
+The minimal $k$ for $n = 3$ is $4$ (Bhavik Mehta's table, OEIS A375071).
+-/
+@[category textbook, AMS 11]
+theorem erdos_389.variants.mehta_three :
+    IsLeast
+      { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (3 + i) ∣ ∏ i ∈ Finset.range k, (3 + k + i) }
+      4 := by
+  have hlt : ∀ k < 4, 1 ≤ k →
+      ¬ ∏ i ∈ Finset.range k, (3 + i) ∣ ∏ i ∈ Finset.range k, (3 + k + i) := by
+    native_decide
+  refine ⟨⟨by norm_num, by native_decide⟩, fun k ⟨hk1, hk⟩ => ?_⟩
+  by_contra! h
+  exact hlt k h hk1 hk
+
+/--
+The minimal $k$ for $n = 5$ is $206$ (Bhavik Mehta's table, OEIS A375071).
+-/
+@[category textbook, AMS 11]
+theorem erdos_389.variants.mehta_five :
+    IsLeast
+      { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (5 + i) ∣ ∏ i ∈ Finset.range k, (5 + k + i) }
+      206 := by
+  have hlt : ∀ k < 206, 1 ≤ k →
+      ¬ ∏ i ∈ Finset.range k, (5 + i) ∣ ∏ i ∈ Finset.range k, (5 + k + i) := by
+    native_decide
+  refine ⟨⟨by norm_num, by native_decide⟩, fun k ⟨hk1, hk⟩ => ?_⟩
+  by_contra! h
+  exact hlt k h hk1 hk
+
+/--
+The minimal $k$ for $n = 6$ is $2475$ (Bhavik Mehta's table, OEIS A375071).
+-/
+@[category textbook, AMS 11]
+theorem erdos_389.variants.mehta_six :
+    IsLeast
+      { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (6 + i) ∣ ∏ i ∈ Finset.range k, (6 + k + i) }
+      2475 := by
+  have hlt : ∀ k < 2475, 1 ≤ k →
+      ¬ ∏ i ∈ Finset.range k, (6 + i) ∣ ∏ i ∈ Finset.range k, (6 + k + i) := by
+    native_decide
+  refine ⟨⟨by norm_num, by native_decide⟩, fun k ⟨hk1, hk⟩ => ?_⟩
+  by_contra! h
+  exact hlt k h hk1 hk
+
+/--
+The minimal $k$ for $n = 7$ is $984$ (Bhavik Mehta's table, OEIS A375071).
+-/
+@[category textbook, AMS 11]
+theorem erdos_389.variants.mehta_seven :
+    IsLeast
+      { k | 1 ≤ k ∧ ∏ i ∈ Finset.range k, (7 + i) ∣ ∏ i ∈ Finset.range k, (7 + k + i) }
+      984 := by
+  have hlt : ∀ k < 984, 1 ≤ k →
+      ¬ ∏ i ∈ Finset.range k, (7 + i) ∣ ∏ i ∈ Finset.range k, (7 + k + i) := by
+    native_decide
+  refine ⟨⟨by norm_num, by native_decide⟩, fun k ⟨hk1, hk⟩ => ?_⟩
+  by_contra! h
+  exact hlt k h hk1 hk
+
 end Erdos389
