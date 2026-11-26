@@ -68,7 +68,8 @@ theorem erdos_307.variants.coprime : ∃ P Q : Finset ℕ, 0 ∉ P ∩ Q ∧ 1 <
 
 /--
 Does the weakened coprime version have an example with $1\not\in P\cup Q$? None was known.
-Solved (Phillips, 2026): there is an example with $|Q| = 5$ and $|P| = 968$.
+Solved in 2026: there is an example with $|Q| = 5$ and $|P| = 968$. It was found and formalised by
+AI agents (Claude) in a project run by D. Phillips; see the linked Palomar entry.
 -/
 @[category research solved, question, AMS 5 11, formal_proof using lean4 at
   "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-26-000045"]
