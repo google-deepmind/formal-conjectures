@@ -23,6 +23,10 @@ public import FormalConjecturesUtil
 *References:*
  - [erdosproblems.com/835](https://www.erdosproblems.com/835)
  - [MT25](https://github.com/QuanyuTang/erdos-problem-835/blob/main/On_Problem_835.pdf)
+ - [MH72] Mendelsohn, N. S. and Hung, S. H. Y., *On the Steiner systems $S(3, 4, 14)$ and
+   $S(4, 5, 15)$*. Utilitas Math. **1** (1972), 5-95.
+ - [OP08] Östergård, P. R. J. and Pottonen, O., *There exists no Steiner system $S(4, 5, 17)$*.
+   J. Combin. Theory Ser. A **115** (2008), 1570-1573.
 -/
 
 @[expose] public section
@@ -165,6 +169,45 @@ theorem johnsonGraph_chromaticNumber_odd_of_johnson_chromaticNumber_composite :
   constructor
   · exact even_iff_two_dvd.mp (Odd.add_one h_odd)
   · omega
+
+/--
+For $k = 10$, equality $\chi(J(20, 10)) = 11$ would force
+$\alpha(J(20, 10)) \ge \binom{20}{10} / 11 = 16796$, requiring a Steiner system $S(9, 10, 20)$.
+Five successive derived designs yield $S(4, 5, 15)$, which does not exist by Mendelsohn and
+Hung [MH72].
+-/
+@[category research solved, AMS 5]
+theorem johnsonGraph_20_10_chromaticNumber : 10 + 1 < J(20, 10).chromaticNumber := by
+  sorry
+
+/--
+For $k = 12$, equality $\chi(J(24, 12)) = 13$ would force
+$\alpha(J(24, 12)) \ge \binom{24}{12} / 13 = 208012$, requiring a Steiner system $S(11, 12, 24)$.
+Seven successive derived designs yield $S(4, 5, 17)$, which does not exist by Östergård and
+Pottonen [OP08].
+-/
+@[category research solved, AMS 5]
+theorem johnsonGraph_24_12_chromaticNumber : 12 + 1 < J(24, 12).chromaticNumber := by
+  sorry
+
+/--
+Combining the known bounds for $3 \le k \le 9$, the Johnson bound for $k \in \{11, 13, 14, 15\}$,
+and the Steiner non-existence obstructions for $k = 10$ and $k = 12$ settles all $3 \le k \le 15$,
+leaving $k = 16$ ($J(32, 16)$) as the smallest open case.
+-/
+@[category test, AMS 5]
+theorem chromaticNumber_johnson_2k_k_lower_bound_le_15 (hk : 3 ≤ k) (hk' : k ≤ 15) :
+    k + 1 < J(2 * k, k).chromaticNumber := by
+  by_cases h8 : k ≤ 8
+  · exact chromaticNumber_johnson_2k_k_lower_bound hk h8
+  interval_cases k
+  · exact johnsonGraph_18_9_chromaticNumber
+  · exact johnsonGraph_20_10_chromaticNumber
+  · grw [← div_johnsonBound_le_chromaticNum_johnson]; decide +kernel
+  · exact johnsonGraph_24_12_chromaticNumber
+  · grw [← div_johnsonBound_le_chromaticNum_johnson]; decide +kernel
+  · grw [← div_johnsonBound_le_chromaticNum_johnson]; decide +kernel
+  · grw [← div_johnsonBound_le_chromaticNum_johnson]; decide +kernel
 
 /-- Is the chromatic number of `J(2 * k, k)` always at least `k + 2`? -/
 @[category research open, question, AMS 5]
