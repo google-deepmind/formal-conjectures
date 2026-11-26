@@ -34,13 +34,6 @@ open Pointwise
 namespace Kourovka.«9.65»
 
 /--
-A group G is locally solvable (locally soluble)
-if every finitely generated subgroup H of G is solvable (soluble).
--/
-def IsLocallySolvable (G : Type*) [Group G] : Prop :=
-  ∀ (H : Subgroup G), Subgroup.FG H → Group.IsSolvable H
-
-/--
 A group G is a product of two periodic subgroups H, K
 if G = H * K.
 -/
@@ -54,9 +47,7 @@ if it is a product of two periodic (torsion) subgroups?
 -/
 @[category research open, question, AMS 20]
 theorem kourovka_9_65 :
-    ∀ (G : Type) [Group G],
-      IsLocallySolvable G →
-      IsProdOfTwoPeriodicSubgroups G →
+    ∀ (G : Type) [Group G], Group.IsLocallySolvable G → IsProdOfTwoPeriodicSubgroups G →
       IsMulTorsion G := by
   sorry
 
