@@ -75,39 +75,31 @@ Wooley's explicit bound $\psi^{((d-5)/2)}(d)$ for one form of odd degree $d \ge 
 noncomputable def wooleyBound (d : ℕ) : ℝ :=
   wooleyPsi ((d - 5) / 2) d
 
-def green_98.answer : ℕ → ℕ := sorry
-
 /--
 Let $d \ge 3$ be an odd integer. Give bounds on $\nu(d)$ such that if $n > \nu(d)$ the following is
 true: given any homogeneous polynomial $F(x) = F(x_1, \dots, x_n) \in \mathbb{Z}[x_1, \dots, x_n]$
 of degree $d$, there is some $x \in \mathbb{Z}^n \setminus \{0\}$ such that $F(x) = 0$.
 
-We read this as asking for an upper bound: a function `green_98.answer` such that, for every odd
-$d \ge 3$, every integral form of degree $d$ in more than `green_98.answer d` variables has a
-nontrivial integer zero. In terms of the least threshold this says `nu d ≤ green_98.answer d`.
+Explicit bounds are known: [Gr24] notes that Wooley [Wo98] "gave the first explicit values of
+$\nu(d)$, which have tower-type growth in $d$" (`green_98.variants.wooley`). As the open target we
+take the possibility that [Gr24] mentions: "So far as I am aware it is considered possible that
+$\nu(d) = d^2$, but even the local variant of this (that is, finding solutions in $\mathbb{Q}_p$
+rather than $\mathbb{Q}$) is wide open". [Gr24] does not state this as a conjecture, so we record
+it as a yes-or-no question: is the least threshold `nu d` equal to $d^2$ for every odd $d \ge 3$?
 
-Explicit bounds of this kind are known: [Gr24] notes that Wooley [Wo98] "gave the first explicit
-values of $\nu(d)$, which have tower-type growth in $d$" (`green_98.variants.wooley`). So the
-answer is also required to improve on the known bound: it is $o$ of Wooley's bound `wooleyBound d`
-along the odd degrees $d = 2k + 7$. This asks only for an asymptotic improvement on
-[Wo98, Theorem 1]. [LSZ25] note that for larger odd degrees "the only explicit bounds available
-are of recursive type" and are due to Wooley.
-
-The exact least threshold is not asked for here: see `green_98.variants.d_sq` for the possibility
-$\nu(d) = d^2$ and `green_98.variants.order` for the order of growth.
+For $d = 3$ the equality $\nu(3) = 9$ follows from the 2026 preprint [BBGW26]
+(`green_98.variants.cubic_ten`) and the lower bound recalled in [LSZ25] ("it is known that at
+least 10 variables are required"). The question is open for $d \ge 5$.
 -/
-@[category research open, question value, AMS 11]
-theorem green_98 :
-    (∀ d : ℕ, Odd d → 3 ≤ d → ∀ n : ℕ, green_98.answer d < n → HasNontrivialZero d n) ∧
-      (fun k : ℕ ↦ (green_98.answer (2 * k + 7) : ℝ)) =o[atTop]
-        fun k : ℕ ↦ wooleyBound (2 * k + 7) := by
+@[category research open, question, AMS 11]
+theorem green_98 : ∀ d : ℕ, Odd d → 3 ≤ d → nu d = d ^ 2 := by
   sorry
 
 def green_98.variants.order.answer : ℕ → ℝ := sorry
 
 /--
 The order of growth of the least threshold $\nu(d)$ (`nu`) along the odd degrees $d = 2k + 3$, up
-to constant factors. This is a separate question from the upper bound asked for in `green_98`.
+to constant factors. If the answer to `green_98` is yes, this is $k^2$.
 -/
 @[category research open, question value, AMS 11]
 theorem green_98.variants.order :
@@ -155,21 +147,10 @@ theorem green_98.variants.heath_brown : ∀ n : ℕ, 14 ≤ n → HasNontrivialZ
 **Bonolis--Browning--Glas--Wang** [BBGW26] (a 2026 preprint): "any integral cubic form in ten or
 more variables has a nontrivial integer zero", that is, $\nu(3) \le 9$. Together with the lower
 bound $\nu(3) \ge 9$ recalled in [LSZ25] ("it is known that at least 10 variables are required"),
-this gives $\nu(3) = 9$.
+this gives $\nu(3) = 9$, the case $d = 3$ of `green_98`.
 -/
 @[category research solved, AMS 11]
 theorem green_98.variants.cubic_ten : ∀ n : ℕ, 10 ≤ n → HasNontrivialZero 3 n := by
-  sorry
-
-/--
-[Gr24] writes: "So far as I am aware it is considered possible that $\nu(d) = d^2$." This is
-the conjecture, for every odd $d \ge 3$. (It agrees with the fact, recalled in [LSZ25], that at
-least $10$ variables are needed for cubic forms, that is, $\nu(3) \ge 9$.) For $d = 3$ the
-matching upper bound $\nu(3) \le 9$ is `green_98.variants.cubic_ten`; the conjecture is open for
-$d \ge 5$.
--/
-@[category research open, AMS 11]
-theorem green_98.variants.d_sq : ∀ d : ℕ, Odd d → 3 ≤ d → nu d = d ^ 2 := by
   sorry
 
 end Green98
