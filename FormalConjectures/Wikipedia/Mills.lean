@@ -50,11 +50,13 @@ Given any real $A$, `IsMills A` encodes the statement that $\lfloor A^{3^n}\rflo
 -/
 abbrev IsMills (A : ℝ) : Prop := ∀ (n : ℕ+), Prime ⌊A ^ (3 ^ (n : ℕ))⌋₊
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Mills' theorem** (Mills, 1947).
 There is a real number $A > 1$ such that $\lfloor A^{3^n}\rfloor$ is prime.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-public/blob/34e46bb66030768ccef37b45ebe7cb35080f4252/problems/mills_uncond/MillsUncond/Main.lean#L80"]
 theorem exists' : ∃ A > 1, IsMills A := by
   sorry
 
@@ -63,11 +65,13 @@ For a real $A$, `IsMinMills A` is the smallest value satisfying `IsMills A`.
 -/
 abbrev IsMinMills (A : ℝ) : Prop := IsLeast {x | x > 1 ∧ IsMills x} A
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Mills' constant.**
 There is a *least* Mills number.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-public/blob/34e46bb66030768ccef37b45ebe7cb35080f4252/problems/mills_uncond/MillsUncond/Main.lean#L86"]
 theorem exists_least : ∃ A, IsMinMills A := by
   sorry
 
