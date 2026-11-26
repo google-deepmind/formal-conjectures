@@ -113,7 +113,47 @@ excludes degenerate sets such as `{2}`, on which `P₁` holds vacuously. -/
 @[category research solved, AMS 11]
 theorem erdos_318.variants.contain_single_even {A : Set ℕ} (hA : A.Infinite)
     (hA' : {n | n ∈ A \ {0} ∧ Even n}.ncard = 1) : ¬ P₁ A := by
-  sorry
+  obtain ⟨e, he⟩ := Set.ncard_eq_one.mp hA'
+  have heA : e ∈ A \ {0} ∧ Even e := (Set.ext_iff.mp he e).mpr rfl
+  have hodd : ∀ n ∈ A \ {0}, n ≠ e → Odd n := fun n hn hne ↦
+    Nat.not_even_iff_odd.mp fun h ↦ hne ((Set.ext_iff.mp he n).mp ⟨hn, h⟩)
+  have key : ∀ T : Finset ℕ, (∀ n ∈ T, Odd n) →
+      ∃ a M : ℕ, Odd M ∧ ∑ n ∈ T, (1 : ℝ) / n = a / M := by
+    intro T
+    induction T using Finset.induction_on with
+    | empty => exact fun _ ↦ ⟨0, 1, odd_one, by simp⟩
+    | insert n T hn ih =>
+      intro hT
+      obtain ⟨a, M, hM, hs⟩ := ih fun m hm ↦ hT m (Finset.mem_insert_of_mem hm)
+      have hn' := hT n (Finset.mem_insert_self n T)
+      have := hn'.pos.ne'
+      have := hM.pos.ne'
+      refine ⟨a * n + M, M * n, hM.mul hn', ?_⟩
+      rw [Finset.sum_insert hn, hs]
+      field_simp
+      push_cast
+      ring
+  obtain ⟨m, hmA, hm⟩ := (hA.sdiff (Set.toFinite {0, e})).nonempty
+  have hm' : m ≠ 0 ∧ m ≠ e := by simpa using hm
+  intro h
+  obtain ⟨S, hSne, hS, hsum⟩ := h (fun n ↦ if n = e then -1 else 1)
+    (fun h' ↦ by have := congrFun h' ⟨e, heA.1⟩; norm_num at this)
+    (fun h' ↦ by have := congrFun h' ⟨m, hmA, hm'.1⟩; norm_num [hm'.2] at this)
+    (by rintro _ ⟨n, rfl⟩; by_cases n = e <;> simp [*])
+  by_cases heS : e ∈ S
+  · obtain ⟨a, M, hM, hs⟩ := key (S.erase e) fun n hn ↦
+      hodd n (hS (Finset.mem_of_mem_erase hn)) (Finset.ne_of_mem_erase hn)
+    rw [← Finset.add_sum_erase S _ heS, if_pos rfl,
+      Finset.sum_congr rfl fun n hn ↦ by rw [if_neg (Finset.ne_of_mem_erase hn)], hs] at hsum
+    have : (e : ℝ) ≠ 0 := by exact_mod_cast heA.1.2
+    have : (M : ℝ) ≠ 0 := by exact_mod_cast hM.pos.ne'
+    have hMe : M = a * e := by
+      field_simp at hsum
+      exact_mod_cast (by linarith : (M : ℝ) = a * e)
+    exact Nat.not_even_iff_odd.mpr hM (hMe ▸ heA.2.mul_left a)
+  · refine (Finset.sum_pos (fun n hn ↦ ?_) hSne).ne' hsum
+    have : (0 : ℝ) < n := by exact_mod_cast Nat.pos_of_ne_zero (hS hn).2
+    simp [show n ≠ e from fun h ↦ heS (h ▸ hn), this]
 
 /-- There exists a set `A` with positive density that does not have property `P₁`.
 #TODO: prove this lemma by assuming `erdos_318.contain_single_even`.
