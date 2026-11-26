@@ -67,8 +67,9 @@ The main theorem is:
 
 D. Radchenko and C. Wheeler proved this statement in [RW26] and [RW-rec], using a
 theorem of M. Appleby, S. T. Flammia and G. S. Kopp [AFK25]. A Lean proof is linked
-from the `formal_proof` attributes. An earlier, independent Lean formalization of
-the existence of SIC-POVMs, with its own statements, is [Oz26].
+from the `formal_proof` attributes and registered as [PALOMAR-2026-11-26-000040].
+An earlier, independent Lean formalization of the existence of SIC-POVMs, with its own
+statements, is [Oz26].
 
 ### Special cases
 The file also isolates several special cases:
@@ -113,6 +114,9 @@ placeholder proofs `by sorry`; they are intended to be proved in the next PR.
   arXiv:2501.03970.
 
 ### Formalizations
+- [PALOMAR-2026-11-26-000040](https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-26-000040&version=1):
+  a Lean 4 proof of `sicPOVMs` and of the benchmark dimensions below, checked by
+  Comparator against the statements of this file and registered with the Palomar registry.
 - [Oz26] M. Ozols, *SIC-existence*, Lean 4 formalization of the existence of SICs and of
   rank-$r$ SICs, https://github.com/marozols/SIC-existence.
 
@@ -417,7 +421,8 @@ theorem hasSICPOVM_75 : HasSICPOVM 75 := by sorry
 Do SIC-POVMs exist in every finite dimension?
 
 Yes. D. Radchenko and C. Wheeler proved this in [RW26] and [RW-rec], using a theorem of
-M. Appleby, S. T. Flammia and G. S. Kopp [AFK25].
+M. Appleby, S. T. Flammia and G. S. Kopp [AFK25]. The formal proof registered as
+[PALOMAR-2026-11-26-000040] proves `sicPOVMs` for these definitions.
 -/
 @[category research solved, question, AMS 15 47 81,
   formal_proof using lean4 at "https://github.com/Hertaspace/sic-povm-lean/blob/e74571352233162adee70895903d82f8465fd054/SICLean/Solution.lean#L18"]
