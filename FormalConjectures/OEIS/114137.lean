@@ -107,12 +107,21 @@ theorem conjecture1 :
   Set.Infinite {n : ℕ | a n = 1} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Does every odd number occur?
+
+The answer is **no**: using a period-$360$ double covering system formed by $20$ odd primes
+dividing $2^{360} - 1$ (together with $3^2$ and $5^2$), the $41$-digit odd integer
+$K = 31578183342437226018483364220022071159573$ satisfies, for every $n \in \mathbb{N}$,
+$p q \mid 2^n + K$ for a prime pair $(p, q)$ with $p q < K < 2^n + K$. Hence $2^n + K$ has at
+least $3$ prime factors counted with multiplicity and is never a semiprime, so $a(n) \ne K$ for
+all $n$.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/samuelburbulla/formal-conjectures-proofs/blob/96ec2e531949c62e44c5b4cafe38eeb94ebbe2de/FormalConjecturesProofs/OEIS/A114137.lean#L166"]
 theorem conjecture2 :
-  ∀ k : ℕ, Odd k → ∃ n : ℕ, a n = k := by
+    ¬ ∀ k : ℕ, Odd k → ∃ n : ℕ, a n = k := by
   sorry
 
 end OeisA114137
