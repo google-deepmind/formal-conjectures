@@ -66,7 +66,8 @@ theorem divisorSummatory_one : divisorSummatory 1 = 1 := by
     Finset.card_singleton, Nat.cast_one]
 
 /-- Dirichlet's bound [Di49]: $\Delta(x) = O(x^{1/2})$. -/
-@[category textbook, AMS 11]
+@[category textbook, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-divisor-problem/blob/ace06772c7d91fe6b9db7c258dbb012bb631fd54/HardyOmegaFC/DivisorDirichlet.lean#L104"]
 theorem divisor_error_dirichlet :
     divisorError =O[atTop] fun x => Real.sqrt x := by
   sorry
@@ -80,11 +81,13 @@ theorem dirichlet_divisor_problem :
     ∀ ε > (0 : ℝ), divisorError =O[atTop] fun x => x ^ ((1 : ℝ) / 4 + ε) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Hardy's lower bound [Ha16]: $\Delta(x)$ is not $o(x^{1/4})$, so the exponent $1/4$ in the
 Dirichlet divisor problem cannot be improved.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-divisor-problem/blob/ace06772c7d91fe6b9db7c258dbb012bb631fd54/HardyOmegaFC/DivisorHardy.lean#L23"]
 theorem divisor_error_hardy :
     ¬ (divisorError =o[atTop] fun x => x ^ ((1 : ℝ) / 4)) := by
   sorry
