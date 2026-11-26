@@ -20,8 +20,9 @@ public import FormalConjecturesUtil
 /-!
 # The Bing-Borsuk Conjecture
 
-The Bing-Borsuk conjecture states that every $n$-dimensional homogeneous absolute neighborhood
-retract is a topological $n$-manifold.
+The Bing-Borsuk conjecture states that every $n$-dimensional homogeneous Euclidean neighborhood
+retract is a topological $n$-manifold [HR2008, Section 1]. We use its formulation for locally
+compact separable metric absolute neighborhood retracts.
 
 The conjecture has been verified in dimensions $1$ and $2$ but remains open in higher dimensions.
 A notable consequence is that if the $3$-dimensional case is true, it implies the Poincaré
@@ -42,13 +43,15 @@ open scoped Manifold
 open TopologicalSpace
 
 /--
-The Bing-Borsuk Conjecture: every $n$-dimensional homogeneous absolute neighborhood retract
-is a topological $n$-manifold. A topological space $X$ is an $n$-dimensional manifold
-when `T2Space X ∧ Nonempty (ChartedSpace (Fin n → ℝ) X)`. The hypothesis `[MetrizableSpace X]`
-implies `T2Space X` so this does not appear in the conclusion.
+Every $n$-dimensional locally compact separable metric homogeneous absolute neighborhood retract
+is a topological $n$-manifold [HR2008, Sections 1 and 2]. Local compactness and separability are
+the domain assumptions of the Euclidean neighborhood retract formulation. Metrizability supplies
+the Hausdorff property, so the conclusion only needs a charted-space structure.
 -/
 @[category research open, AMS 54 57]
-theorem bing_borsuk_conjecture : ∀ n : ℕ, ∀ (X : Type) [TopologicalSpace X] [MetrizableSpace X] [HomogeneousSpace X] [IsAbsoluteNeighborhoodRetract X],
+theorem bing_borsuk_conjecture (n : ℕ) (X : Type) [TopologicalSpace X] [MetrizableSpace X]
+    [LocallyCompactSpace X] [SeparableSpace X] [HomogeneousSpace X]
+    [IsAbsoluteNeighborhoodRetract X] :
     HasLebesgueCoveringDimensionEq X n → Nonempty (ChartedSpace (Fin n → ℝ) X) := by
   sorry
 
