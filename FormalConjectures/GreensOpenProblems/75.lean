@@ -109,7 +109,28 @@ We state the form given in [CL25].
 @[category research solved, AMS 5 52]
 theorem green_75.variants.alon :
     ∃ X : Finset (ℝ × ℝ), 2 ≤ #X ∧ ∀ p ∈ X, ∀ q ∈ X, p ≠ q → 2 ≤ imbalance X p q := by
-  sorry
+  -- Alon's configuration from arXiv:2506.00224, Figure 1(c), with both axes rescaled.
+  let S : Finset (ℤ × ℤ) :=
+    {(0, 0), (2, 0), (1, 3), (-2, 0), (-4, 0), (3, -3), (4, -6), (2, 6),
+      (3, 9), (2, -2), (-1, 1), (2, 4)}
+  let det (p q x : ℤ × ℤ) :=
+    (q.1 - p.1) * (x.2 - p.2) - (q.2 - p.2) * (x.1 - p.1)
+  have certificate : ∀ p ∈ S, ∀ q ∈ S, p ≠ q →
+      2 ≤ |(#{x ∈ S | 0 < det p q x} : ℤ) - #{x ∈ S | det p q x < 0}| := by
+    decide +kernel
+  let cast : ℤ ↪ ℝ := ⟨Int.cast, Int.cast_injective⟩
+  let e := cast.prodMap cast
+  have transfer (p q x : ℤ × ℤ) : cross (e p) (e q) (e x) = (det p q x : ℝ) := by
+    simp only [cross, det, Int.cast_sub, Int.cast_mul]
+    rfl
+  refine ⟨S.map e, ?_, ?_⟩
+  · have hcard : #S = 12 := by decide +kernel
+    simp [hcard]
+  · intro p hp q hq hne
+    obtain ⟨u, hu, rfl⟩ := Finset.mem_map.mp hp
+    obtain ⟨v, hv, rfl⟩ := Finset.mem_map.mp hq
+    simpa [imbalance, leftCount, rightCount, Finset.filter_map, Function.comp_def, transfer] using
+      certificate u hu v hv (fun h => hne (congrArg e h))
 
 /-- The point `p` is on neither side of a line through `p`. -/
 @[category API, AMS 5 52]
