@@ -26,21 +26,31 @@ public import FormalConjecturesUtil
 - [S. Dubey, Codex Worklog (2026)](https://gist.github.com/siddhantdubey/22f22a7a23db5174ee59e32eaa8724aa)
   gives the first public counterexample: $K_{5,5,5}$ with one pendant vertex.
 - [AI Village, Graffiti verification worklog, §7ay (2026)](https://gitlab.com/ai-village-agents/village/graffiti-verification)
-  shows that `I?bnVrwyW` is the unique counterexample of minimum order.
+  shows that `I?bnVrwyW` is the unique counterexample of minimum order under the frequency
+  reading described below.
 - [A. Manrique de Lara Martín, On Graffiti.pc Conjectures 431a, 431b and 431c (2026)](https://doi.org/10.5281/zenodo.24558425)
   bounds the residue of an infinite family of counterexamples and formalizes the disproof.
 
-The conjecture is false. The smallest counterexample is the graph with graph6 code `I?bnVrwyW`.
-It has ten vertices and the adjacency lists
+The conjecture is false. The source writes $|T_{\min}(G)|$, where $T_{\min}(G)$ is the smallest
+number of triangles that contain a vertex. This can be read in two ways.
+
+- Frequency reading: the number of vertices that attain $T_{\min}(G)$. Under this reading the
+  graph with graph6 code `I?bnVrwyW` is the unique smallest counterexample up to isomorphism:
+  no connected graph on at most nine vertices violates the bound, and it is the only one on
+  ten vertices that does.
+- Minimum-value reading: the value $T_{\min}(G)$ itself. Under this reading the bound already
+  fails on six vertices; see `conjecture431a.variants.min_value`.
+
+The graph `I?bnVrwyW` has ten vertices and the adjacency lists
 
 `0: 4 5 6 7 8 9`, `1: 5 6 7 8 9`, `2: 5 6 7 8 9`, `3: 7 8`, `4: 0 5 6 7 8 9`,
 `5: 0 1 2 4`, `6: 0 1 2 4`, `7: 0 1 2 3 4 9`, `8: 0 1 2 3 4 9`, `9: 0 1 2 4 7 8`.
 
 Vertex `3` is the only vertex of degree two, so $N(D) = \{7, 8\}$. No vertex outside
 $\{7, 8\}$ has exactly one neighbor in it, so $\mathrm{peN}(N(D)) = 0$. The residue is two.
-Vertex `3` is the only vertex that lies in no triangle, so $|T_{\min}(G)| = 1$.
-The independent domination number is four, for example with $\{0, 1, 2, 3\}$.
-The claimed inequality therefore becomes $4 \le 2 + 0 + 1$.
+Vertex `3` is the only vertex that lies in no triangle, so $|T_{\min}(G)| = 1$ under the
+frequency reading. The independent domination number is four, for example with
+$\{0, 1, 2, 3\}$. The claimed inequality therefore becomes $4 \le 2 + 0 + 1$.
 -/
 
 @[expose] public section
@@ -80,7 +90,7 @@ noncomputable def freqMinTriangles [Nonempty V] (G : SimpleGraph V)
 set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 431a](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-asked whether every connected graph $G$ on $n > 3$ vertices satisfies
+states that every connected graph $G$ on $n > 3$ vertices satisfies
 $i(G) \le \mathrm{residue}(G) + \mathrm{peN}(N(D)) + |T_{\min}(G)|$,
 where $D$ is the set of vertices of degree two of $G$.
 
@@ -91,12 +101,13 @@ in $S$. $T(v)$ is the number of triangles that contain $v$, and $T_{\min}(G)$ is
 smallest value of $T(v)$.
 
 The source defines $T_{\min}$ as a number. We read $|T_{\min}(G)|$ as the number of
-vertices $v$ with $T(v) = T_{\min}(G)$. The variant
+vertices $v$ with $T(v) = T_{\min}(G)$ (the frequency reading). The variant
 `conjecture431a.variants.min_value` uses the value $T_{\min}(G)$ itself.
 
-The answer is no. The graph `I?bnVrwyW` gives $4 \le 2 + 0 + 1$.
+The conjecture is false. The graph `I?bnVrwyW` gives $4 \le 2 + 0 + 1$. Under this reading it
+is the unique smallest counterexample up to isomorphism.
 -/
-@[category research solved, question, AMS 5,
+@[category research solved, AMS 5,
   formal_proof using lean4 at "https://zenodo.org/records/24559666/files/GraphConjecture431aDisproof.lean"]
 theorem conjecture431a :
     ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] [Nonempty V]
@@ -117,7 +128,7 @@ This reading already fails on six vertices. Attach a pendant vertex to a vertex 
 part of size three of $K_{2,3}$. The result has $i(G) = 3$, but the bound is $2 + 0 + 0$.
 The graph `I?bnVrwyW` also refutes this reading, with $4 \le 2 + 0 + 0$.
 -/
-@[category research solved, question, AMS 5,
+@[category research solved, AMS 5,
   formal_proof using lean4 at "https://zenodo.org/records/24559666/files/GraphConjecture431aDisproof.lean"]
 theorem conjecture431a.variants.min_value :
     ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] [Nonempty V]
