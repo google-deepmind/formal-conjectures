@@ -94,7 +94,7 @@ For example, `S₃ × C₅` (order 30) and `A₅ × C₁₅₁₂₈` are Leinst
 
 Reference: Leinster, Tom (2001). "Perfect numbers and groups".
 -/
-@[category research solved, AMS 20]
+@[category research solved, AMS 20, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_LeinsterGroup_exists_nonabelian_leinster_group.lean#L268"]
 theorem exists_nonabelian_leinster_group :
     ∃ G : Type, ∃ (_ : Group G) (_ : Fintype G),
       IsLeinster G ∧ ¬ ∀ (a b : G), a * b = b * a := by
