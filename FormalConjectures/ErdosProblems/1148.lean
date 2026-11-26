@@ -88,11 +88,34 @@ def erdos_1148_weaker_prop (n : ℕ) : Prop :=
     (y ^ 2 : ℝ) ≤ n + 2 * Real.sqrt n ∧
     (z ^ 2 : ℝ) ≤ n + 2 * Real.sqrt n
 
+/-- The natural-number form of `erdos_1148_weaker_prop`, with $\lfloor\sqrt{n}\rfloor$ in the
+bound. -/
+@[category API, AMS 11]
+private lemma erdos_1148_weaker_nat (n : ℕ) : ∃ x y z : ℕ, x ^ 2 + y ^ 2 = n + z ^ 2 ∧
+    x ^ 2 ≤ n + 2 * n.sqrt ∧ y ^ 2 ≤ n + 2 * n.sqrt ∧ z ^ 2 ≤ n + 2 * n.sqrt := by
+  have h1 := Nat.sqrt_le' n
+  have h2 := Nat.lt_succ_sqrt' n
+  generalize n.sqrt = s at *
+  obtain ⟨r, rfl⟩ : ∃ r, n = s ^ 2 + r := ⟨n - s ^ 2, by omega⟩
+  have hr : r ≤ 2 * s := by nlinarith
+  rcases Nat.even_or_odd' r with ⟨k, rfl | rfl⟩
+  · rcases Nat.eq_zero_or_pos k with rfl | hk
+    · exact ⟨s, 0, 0, by ring, by nlinarith, by nlinarith, by nlinarith⟩
+    · obtain ⟨t, rfl⟩ : ∃ t, s = t + k := ⟨s - k, by omega⟩
+      exact ⟨t + k + 1, t, t + 1, by ring, by nlinarith, by nlinarith, by nlinarith⟩
+  · obtain ⟨t, rfl⟩ : ∃ t, s = t + k + 1 := ⟨s - k - 1, by omega⟩
+    exact ⟨t + k + 1, k + 1, k, by ring, by nlinarith, by nlinarith, by nlinarith⟩
+
 /--
 [Va99] reports this is 'obvious' if we replace $\leq n$ with $\leq n+2\sqrt{n}$.
 -/
 @[category research solved, AMS 11]
 theorem erdos_1148.variants.weaker : ∀ n, erdos_1148_weaker_prop n := by
-  sorry
+  intro n
+  obtain ⟨x, y, z, h, hx, hy, hz⟩ := erdos_1148_weaker_nat n
+  have hs : (n : ℝ) + 2 * (n.sqrt : ℕ) ≤ n + 2 * Real.sqrt n := by
+    gcongr; exact Real.nat_sqrt_le_real_sqrt
+  refine ⟨x, y, z, by omega, ?_, ?_, ?_⟩ <;>
+    refine le_trans ?_ hs <;> exact_mod_cast ‹_›
 
 end Erdos1148
