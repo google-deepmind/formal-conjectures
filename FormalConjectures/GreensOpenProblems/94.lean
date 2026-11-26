@@ -53,7 +53,8 @@ Let `A ⊂ R` be a set of positive measure. Does $A$ contain an affine copy of `
 
 The answer is "no": there are compact sets of measure arbitrarily close to $1$ in $[0, 1]$
 that contain no affine copy of $\{2^{-n} : n \geq 1\}$. This was proved by an internal OpenAI
-model in September 2026 [OAI26a]; see the linked Lean proof.
+model in September 2026 [OAI26a]; see the linked Lean proof. The linked statement is
+`green_94.variants.dyadic_affine_avoidance`; see `green_94_of_dyadic_affine_avoidance`.
 -/
 @[category research solved, question, AMS 28, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/MeasureTheory/DyadicAvoidance/Main.lean#L103"]
@@ -62,5 +63,34 @@ theorem green_94 :
    MeasurableSet A ∧ volume A > 0 →
    ∃ a b : ℝ, a ≠ 0 ∧ ∀ n : ℕ, a * (1 / 2^n) + b ∈ A := by
   sorry
+
+/--
+The statement of the linked Lean proof, with its definition of the dyadic points unfolded: for
+every `0 < η < 1` there is a compact `E ⊆ [0, 1]` of measure greater than `1 - η` such that
+every affine copy `x + s 2^{-n}`, `s ≠ 0`, of $\{2^{-n} : n \geq 1\}$ has a point outside `E`.
+-/
+@[category research solved, AMS 28]
+theorem green_94.variants.dyadic_affine_avoidance :
+    ∀ η : ℝ, 0 < η → η < 1 → ∃ E : Set ℝ,
+      E ⊆ Set.Icc (0 : ℝ) 1 ∧ IsCompact E ∧
+      MeasureTheory.volume E > ENNReal.ofReal (1 - η) ∧
+      ∀ x s : ℝ, s ≠ 0 → ∃ n : ℕ, 1 ≤ n ∧
+        x + s * (2 : ℝ)⁻¹ ^ n ∉ E := by
+  sorry
+
+/-- The case `η = 1 / 2` of [OAI26a] answers `green_94`: a compact set is measurable. -/
+@[category test, AMS 28]
+theorem green_94_of_dyadic_affine_avoidance
+    (h : type_of% green_94.variants.dyadic_affine_avoidance) : type_of% green_94 := by
+  intro hall
+  obtain ⟨E, -, hE, hvol, havoid⟩ := h (1 / 2) (by norm_num) (by norm_num)
+  obtain ⟨a, b, ha, hab⟩ := hall E ⟨hE.measurableSet, pos_of_gt hvol⟩
+  obtain ⟨n, -, hn⟩ := havoid b a ha
+  apply hn
+  have : b + a * (2 : ℝ)⁻¹ ^ n = a * (1 / 2 ^ n) + b := by
+    rw [inv_pow, one_div]
+    ring
+  rw [this]
+  exact hab n
 
 end Green94
