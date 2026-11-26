@@ -47,36 +47,45 @@ def IsHadamard' {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) : Prop :=
 
 /--
 Both definitions are equivalent.
-
-TODO(firsching): complete and golf the proof
 -/
 @[category test, AMS 15]
-theorem isHadamard_equiv_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) : IsHadamard' M ↔ IsHadamard M := by
-  simp [IsHadamard, IsHadamard']
-  intro h
-  let N := M.transpose * M
-  constructor
-  · intro h
-    have h_det : (M.transpose * M).det = n^((n : ℝ)) := by
-      have : Matrix.diagonal (fun x : Fin n => (n : ℝ)) = (n : Matrix (Fin n) (Fin n) ℝ) := by
-        rfl
-      rw [h, ← this]
-      norm_num
-    simp only [Matrix.det_mul, Matrix.det_transpose] at h_det
-    rw [← Real.sqrt_mul_self_eq_abs M.det, h_det]
-    have : √(↑n ^ (n : ℝ)) = (↑n ^ (n : ℝ)) ^ ((1 : ℝ)/2) := by
-      rw [Real.rpow_div_two_eq_sqrt]
-      · simp only [Real.rpow_natCast, Real.rpow_one]
-      · simp only [Real.rpow_natCast, Nat.cast_nonneg, pow_nonneg]
-    rw [this]
-    simp
-    refine ((fun {x y z} hx hy hz ↦ (Real.eq_rpow_inv hx hy hz).mpr) ?_ ?_ ?_ ?_).symm
-    · exact Real.rpow_nonneg (Nat.cast_nonneg' n) _
-    · simp only [Nat.cast_nonneg, pow_nonneg]
-    · norm_num
-    · rw [← Real.rpow_mul <| Nat.cast_nonneg' n]
-      norm_num
-  · sorry
+theorem isHadamard_equiv_isHadamard' (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) :
+    IsHadamard' M ↔ IsHadamard M := by
+  simp only [IsHadamard, IsHadamard']
+  have hdiag_n : Matrix.diagonal (fun _ => (n : ℝ)) = (n : Matrix (Fin n) (Fin n) ℝ) := rfl
+  refine and_congr_right fun hM => ⟨fun h => ?_, fun h => ?_⟩
+  · have hdet : M.det ^ 2 = (n : ℝ) ^ n := by
+      simpa [Matrix.det_mul, Matrix.det_transpose, ← hdiag_n, sq] using congrArg Matrix.det h
+    rw [← Real.sqrt_sq_eq_abs, hdet, Real.sqrt_eq_rpow, ← Real.rpow_natCast,
+      ← Real.rpow_mul (Nat.cast_nonneg n), mul_one_div]
+  · rcases Nat.eq_zero_or_pos n with rfl | hn
+    · exact Subsingleton.elim _ _
+    · have hn' : (0 : ℝ) < n := Nat.cast_pos.mpr hn
+      have hH := Matrix.isHermitian_conjTranspose_mul_self M
+      have he_nonneg := Matrix.eigenvalues_conjTranspose_mul_self_nonneg M
+      have hsq : ∀ k i : Fin n, M k i * M k i = 1 := fun k i => by
+        rcases Finset.mem_insert.mp (hM k i) with hk | hk <;> simp_all
+      have htrace : ∑ i, hH.eigenvalues i = (n : ℝ) * n := by
+        simpa [Matrix.trace, Matrix.mul_apply, hsq] using hH.trace_eq_sum_eigenvalues.symm
+      have hprod : ∏ i, hH.eigenvalues i = (n : ℝ) ^ n := by
+        have hdp := hH.det_eq_prod_eigenvalues.symm
+        rw [Matrix.det_mul, Matrix.det_conjTranspose, star_trivial, ← sq, ← sq_abs, h,
+          ← Real.rpow_natCast, ← Real.rpow_mul hn'.le,
+          show (n : ℝ) / 2 * (2 : ℕ) = (n : ℝ) by norm_num, Real.rpow_natCast] at hdp
+        simpa using hdp
+      have harith : ∑ i : Fin n, (n : ℝ)⁻¹ * hH.eigenvalues i = n := by
+        rw [← Finset.mul_sum, htrace, inv_mul_cancel_left₀ hn'.ne']
+      have hgeom : ∏ i : Fin n, hH.eigenvalues i ^ (n : ℝ)⁻¹ = n := by
+        rw [Real.finsetProd_rpow _ _ (fun i _ => he_nonneg i), hprod, ← Real.rpow_natCast,
+          ← Real.rpow_mul hn'.le, mul_inv_cancel₀ hn'.ne', Real.rpow_one]
+      have he_eq : ∀ i, hH.eigenvalues i = n := fun i =>
+        ((Real.geom_mean_eq_arith_mean_weighted_iff_of_pos' Finset.univ (fun _ => (n : ℝ)⁻¹)
+          hH.eigenvalues (fun _ _ => inv_pos.mpr hn') (by simp [mul_inv_cancel₀ hn'.ne'])
+          (fun j _ => he_nonneg j)).mp (hgeom.trans harith.symm) i (Finset.mem_univ i)).trans harith
+      have hspec := hH.spectral_theorem
+      rw [show RCLike.ofReal ∘ hH.eigenvalues = fun _ => (n : ℝ) from funext he_eq,
+        hdiag_n, map_natCast] at hspec
+      simpa using hspec
 
 /- Note: the conjecture was originally formulated by
 Hadamard as a question: "For which values of $n=4k$ does
