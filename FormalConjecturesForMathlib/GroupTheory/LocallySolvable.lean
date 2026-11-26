@@ -22,6 +22,7 @@ public import Mathlib.GroupTheory.Solvable
 # Locally Solvable
 
 * `Group.IsLocallySolvable G`: the proposition that a group `G` is locally solvable.
+* `Group.IsLocallySolvable.of_isSolvable`: every solvable group is locally solvable.
 -/
 
 @[expose] public section
@@ -34,5 +35,11 @@ if every finitely generated subgroup $H$ of $G$ is solvable (soluble).
 -/
 def IsLocallySolvable (G : Type*) [Group G] : Prop :=
   ∀ (H : Subgroup G), Subgroup.FG H → IsSolvable H
+
+variable {G : Type*} [Group G]
+
+/-- Every solvable group is locally solvable. -/
+theorem IsLocallySolvable.of_isSolvable [IsSolvable G] : IsLocallySolvable G :=
+  fun _ _ => inferInstance
 
 end Group
