@@ -57,11 +57,13 @@ theorem greedySidonSet_isSidon (n : ℕ) : IsSidon (Finset.greedySidonBelow n : 
   have subset : Finset.greedySidonBelow n ⊆ (Finset.greedySidon.aux n).1 := Finset.filter_subset _ _
   exact (Finset.greedySidon.aux n).1.2 i₁ (subset hi₁) j₁ (subset hj₁) i₂ (subset hi₂) j₂ (subset hj₂) eq
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is easy to prove that the greedy construction of a maximal Sidon set in $\{1,\ldots,N\}$ has size
 $\gg N^{1/3}$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-156-lean/blob/d269b046554c21ffed8c63fd45f753f2e17e87a8/Erdos156.lean#L359"]
 theorem erdos_156.variants.greedy_lower_bound :
     (fun N ↦ ((Finset.greedySidonBelow N).card : ℝ)) ≫ (fun N ↦ (N : ℝ) ^ (1 / 3 : ℝ)) := by
   sorry
