@@ -29,11 +29,11 @@ namespace Kourovka.«20.21»
 /--
 Does there exist a finite group $G$ with two normal subgroups $K$ and $L$, each with index $12$ in $G$, such that $K$ is isomorphic to $L$, but $G/K$ is isomorphic to $C_{12}$, while $G/L$ is isomorphic to $A_4$?
 -/
-@[category research solved, question, AMS 20]
+@[category research open, question, AMS 20]
 theorem kourovka_20_21 :
     ∃ (G : Type) (hG_Grp : Group G) (hG_fin : Finite G) (K L : Subgroup G) (hK : (K.index = 12) ∧ (K.Normal)) (hL : (L.index = 12) ∧ (L.Normal)),
     letI : K.Normal := hK.2
     letI : L.Normal := hL.2
-    Nonempty (K ≃* L) ∧ IsCyclic (G⧸K) ∧ Nonempty (G⧸L ≃* alternatingGroup (Fin 4)) := by  sorry
+    Nonempty (K ≃* L) ∧ IsCyclic (G⧸K) ∧ Nonempty (G⧸L ≃* alternatingGroup (Fin 4)) := by sorry
 
 end Kourovka.«20.21»
