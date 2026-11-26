@@ -73,10 +73,12 @@ theorem erdos_890.variants.liminf_lower_bound (k : ℕ) :
     liminf (fun n ↦ (∑ i ∈ range k, (ω (n + i) : EReal))) atTop ≥ k + π k - 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is a classical fact that $\limsup_{n\to \infty}\omega(n)\frac{\log\log n}{\log n}=1.$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-erdos890-omega/blob/3e8d86cd499f459e809fb70265d53ec190f0fcf1/Erdos890OmegaFC/Main.lean#L229"]
 theorem erdos_890.variants.omega_limsup :
     limsup (fun n ↦ (ω n : EReal) * (log (log n) / log n)) atTop = 1 := by
   sorry
