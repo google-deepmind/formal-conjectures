@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.AnnihilationNumber
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
 
 /-!
 # TxGraffiti Conjecture 1: independence, annihilation, and residue

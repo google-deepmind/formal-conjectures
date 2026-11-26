@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Computability.TuringMachine.BusyBeavers
 
 /-!
 # Tao's Optimization Constant 14 / Smallest $n$ for which the value of $BB(n)$ is undecidable

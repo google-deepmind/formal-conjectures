@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Saturation
 meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
 meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HarmonicIndex
 meta import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Saturation

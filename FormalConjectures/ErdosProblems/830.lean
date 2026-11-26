@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Analysis.SpecialFunctions.NthRoot
+public import FormalConjecturesForMathlib.NumberTheory.Amicable
 
 /-!
 # Erdős Problem 830

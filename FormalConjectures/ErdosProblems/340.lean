@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Basic
+public import FormalConjecturesForMathlib.Data.Set.Density
 meta import FormalConjecturesForMathlib.Combinatorics.Basic
 
 /-!

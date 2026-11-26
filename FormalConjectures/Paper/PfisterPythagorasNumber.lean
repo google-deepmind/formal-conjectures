@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Algebra.Ring.PythagorasNumber
+public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 
 /-!
 # Pfister's problem on the Pythagoras number of $\mathbb{R}(X_1, \dots, X_n)$

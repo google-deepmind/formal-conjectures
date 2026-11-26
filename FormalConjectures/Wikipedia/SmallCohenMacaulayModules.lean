@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.RingTheory.CohenMacaulayModule
 
 /-!
 # The small Cohen-Macaulay modules conjecture

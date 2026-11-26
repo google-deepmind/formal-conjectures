@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Computability.Primrec
 
 /-!
 # Decidability of reachability for branching vector addition systems

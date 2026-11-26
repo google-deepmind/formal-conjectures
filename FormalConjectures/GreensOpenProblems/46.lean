@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
 
 /-!
 # Ben Green's Open Problem 46

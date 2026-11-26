@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Additive.Basis
+public import FormalConjecturesForMathlib.Data.Real.NearestInt
 
 /-!
 # Erdős Problem 1147

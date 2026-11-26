@@ -18,6 +18,10 @@ module
 public import FormalConjecturesUtil
 public import FormalConjectures.Wikipedia.EllipticCurveRank
 public import FormalConjectures.Wikipedia.HasseWeil
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.GlobalPeriod
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Regulator
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.Tamagawa
+public import FormalConjecturesForMathlib.AlgebraicGeometry.EllipticCurve.TateShafarevich
 
 
 /-!

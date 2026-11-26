@@ -27,7 +27,9 @@ contain `sorry`.
 add tests for `FormalConjecturesForMathlib/` there. Put lemmas and sanity checks for a shared
 definition in the `FormalConjecturesForMathlib/` file that defines it.
 
-Problem files normally import only `FormalConjecturesUtil`.
+Problem files `public import FormalConjecturesUtil` and only the `FormalConjecturesForMathlib`
+modules they use, also with `public import`. Do not import the aggregate
+`FormalConjecturesForMathlib` or Mathlib modules directly.
 `FormalConjecturesForMathlib/` files import only the required Mathlib modules.
 
 ## State the source faithfully

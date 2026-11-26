@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Cycle
 
 /-!
 # The Lovász–Plummer conjecture (proved 2011) and Sheehan's conjecture

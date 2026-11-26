@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.PerfectPower
+public import FormalConjecturesForMathlib.NumberTheory.SierpinskiNumber
 
 /-!
 # Erdős Problem 1113

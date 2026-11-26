@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.MaxPrimeFac
 
 /-!
 # Decimal concatenation of a cofactor and the largest prime factor

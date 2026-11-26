@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
 
 /-!
 # Sumner's universal tournament conjecture (1971)

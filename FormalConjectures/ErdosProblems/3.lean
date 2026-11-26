@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Analysis.Asymptotics.Basic
+public import FormalConjecturesForMathlib.Combinatorics.AP.Basic
 
 /-!
 # Erdős Problem 3

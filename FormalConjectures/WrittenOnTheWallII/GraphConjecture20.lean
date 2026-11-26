@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Induced
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degrees
 
 /-!
 # Written on the Wall II - Conjecture 20

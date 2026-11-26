@@ -16,6 +16,9 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.NumberTheory.NumberField.FundamentalDiscriminant
+public import FormalConjecturesForMathlib.NumberTheory.NumberField.Quadratic
+public import FormalConjecturesForMathlib.NumberTheory.WallSunSunPrimes
 
 /-!
 # Infinitude of Wall–Sun–Sun primes

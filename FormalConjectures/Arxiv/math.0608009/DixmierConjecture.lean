@@ -17,6 +17,7 @@ module
 
 public import FormalConjectures.Arxiv.«math.0608009».PoissonConjecture
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Algebra.WeylAlgebra
 
 /-!
 # The Dixmier Conjecture

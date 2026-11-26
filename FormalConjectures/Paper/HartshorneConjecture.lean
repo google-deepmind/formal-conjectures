@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.AlgebraicGeometry.ProjectiveSpace
+public import FormalConjecturesForMathlib.AlgebraicGeometry.VectorBundle
 
 /-! # Hartshorne's conjecture on Vector Bundles
 

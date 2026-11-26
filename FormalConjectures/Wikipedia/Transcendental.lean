@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Real.Constants
 
 /-!
 # Open questions on transcendence of numbers

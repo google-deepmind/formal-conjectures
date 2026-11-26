@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.Prime.Defs
 
 /-!
 # Numbers $n$ such that $n^2 + \pi(n)$ is prime

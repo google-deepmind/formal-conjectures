@@ -17,6 +17,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.FieldTheory.MilnorKTheory
+public import FormalConjecturesForMathlib.FieldTheory.MvRatFunc.Defs
 
 /-!
 # The symbol length of $K^M_n(\mathbb{C}(x_1, \dots, x_m))/p$

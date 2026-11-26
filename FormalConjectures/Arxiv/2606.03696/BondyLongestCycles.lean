@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Circumference
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Connectivity
 
 /-!
 # Bondy's conjecture on longest cycles in highly connected graphs

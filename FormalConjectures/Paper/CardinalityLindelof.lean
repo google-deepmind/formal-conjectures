@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Topology.GDelta
 
 /-!
 # Conjecture about cardinality of Lindelöf spaces

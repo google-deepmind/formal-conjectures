@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Topology.CardinalInvariants
+public import FormalConjecturesForMathlib.Topology.Discrete
 
 /-!
 # Conjectures around homogeneous topological spaces

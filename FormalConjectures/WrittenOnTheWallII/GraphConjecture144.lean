@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.LargestInducedTree
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.VertexDistance
 
 /-!
 # Written on the Wall II - Conjecture 144

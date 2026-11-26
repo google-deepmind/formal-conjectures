@@ -16,6 +16,10 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Digraph.Tournament
+public import FormalConjecturesForMathlib.Combinatorics.LimitObjects.Tournamenton
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.CompleteGraphEdgeCount
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.HomDensity
 
 /-!
 # Sidorenko's conjecture (1993)

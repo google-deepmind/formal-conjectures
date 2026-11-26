@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Data.Nat.Full
 
 /-!
 # Number of symbols '*' and '^' to write the canonical prime factorization of n

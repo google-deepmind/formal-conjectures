@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Analysis.Equidistribution.ModOne
+public import FormalConjecturesForMathlib.NumberTheory.NormalNumber
 
 /-!
 # Normal and rich numbers and the sequence $(b^n \xi)$ modulo one

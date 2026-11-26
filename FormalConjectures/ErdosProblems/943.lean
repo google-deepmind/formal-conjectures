@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.Additive.Convolution
+public import FormalConjecturesForMathlib.Data.Nat.Full
 
 /-!
 # Erdős Problem 943

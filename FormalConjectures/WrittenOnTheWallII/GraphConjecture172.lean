@@ -17,6 +17,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Eccentricity
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.SpanningTree
 
 /-!
 # Written on the Wall II - Conjecture 172

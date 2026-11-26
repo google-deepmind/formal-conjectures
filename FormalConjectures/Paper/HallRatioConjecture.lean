@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.FractionalChromaticNumber
 
 /-!
 # The Hall ratio conjecture (Harris 2019) — disproved

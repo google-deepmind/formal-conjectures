@@ -17,6 +17,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.SetTheory.Ordinal.PartitionRelation
 
 /-!
 # Erdős Problem 1169

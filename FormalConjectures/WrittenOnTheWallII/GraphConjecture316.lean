@@ -16,6 +16,8 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Degrees
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.WellTotallyDominated
 /-!
 # Written on the Wall II - Conjecture 316
 
