@@ -55,11 +55,13 @@ region—remains open.
 
 namespace SkewesNumber
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Littlewood's oscillation theorem (1914): both $\{m \ge 2 \mid \operatorname{li}(m) < \pi(m)\}$ and
 $\{n \ge 2 \mid \pi(n) < \operatorname{li}(n)\}$ are infinite.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-public/blob/7890f31b6124e4bb197fc6a279654a97f89a7839/problems/littlewood_fc/LittlewoodFC/Main.lean#L127"]
 theorem littlewood_pi_minus_li_infinite_sign_changes :
     {m : ℕ | 2 ≤ m ∧ Real.logIntegral (m : ℝ) < (Nat.primeCounting m : ℝ)}.Infinite ∧
       {n : ℕ | 2 ≤ n ∧ (Nat.primeCounting n : ℝ) < Real.logIntegral (n : ℝ)}.Infinite := by
