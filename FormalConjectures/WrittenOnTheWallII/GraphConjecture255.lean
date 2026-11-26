@@ -71,6 +71,7 @@ def maxEdgeNeighborhood (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
   (Finset.univ.filter fun p : V × V => G.Adj p.1 p.2).sup
     fun p => (G.neighborFinset p.1 ∪ G.neighborFinset p.2).card
 
+set_option linter.style.formal_proof_palomar false in
 /--
 WOWII [Conjecture 255](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
 states that every simple connected graph $G$ satisfies
@@ -86,7 +87,8 @@ $G$ has an edge and a total dominating set.
 The conjecture is false. The earliest counterexample we know of, on eleven vertices, is in
 `kiankyars/math` (October 2026).
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://zenodo.org/records/24571037/files/GraphConjecture255Proofs.lean"]
 theorem conjecture255 :
     ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] [Nontrivial V]
       (G : SimpleGraph V) [DecidableRel G.Adj],
@@ -110,6 +112,7 @@ theorem conjecture255.variants.at_most_ten_vertices [Nontrivial V]
     (2 * G.center.ncard : ℝ) / (maxEdgeNeighborhood G : ℝ) ≤ G.totalDominationNumber := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 A corrected form of WOWII Conjecture 255: every connected graph $G$ on at least two vertices
 satisfies $|C| \le (\gamma_t(G) - 1) \cdot \max_e |N(e)|$. Such a graph has $\gamma_t(G) \ge 2$,
@@ -119,7 +122,8 @@ inequality with the constant $2$ replaced by $t/(t-1)$.
 The proof is the covering argument of T. Newton for Conjecture 256, together with
 $|C| \le n$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://zenodo.org/records/24571037/files/GraphConjecture255Proofs.lean"]
 theorem conjecture255.variants.fixed_total_domination [Nontrivial V]
     (G : SimpleGraph V) [DecidableRel G.Adj] (hG : G.Connected) :
     G.center.ncard ≤ (G.totalDominationNumber - 1) * maxEdgeNeighborhood G := by
