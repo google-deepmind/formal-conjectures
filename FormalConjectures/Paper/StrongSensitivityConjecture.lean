@@ -107,7 +107,9 @@ celebrated result (often called the sensitivity theorem) gives a quartic bound,
 `bs(f) ≤ s(f)^4`, thereby settling the original conjecture.
 
 The quadratic bound is false. This was disproved by an internal OpenAI model in September 2026
-[OAI26]; see the linked Lean proof. -/
+[OAI26]; see the linked Lean proof. The linked statement, with its own definitions over an arbitrary
+finite index type, is `strong_sensitivity_conjecture.variants.quantitative_separation`; see
+`strong_sensitivity_conjecture_of_quantitative_separation`. -/
 @[category research solved, AMS 68, formal_proof using lean4 at
   "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/Sensitivity/Separation.lean#L12"]
 theorem strong_sensitivity_conjecture :
@@ -147,4 +149,111 @@ lemma nisanExample_blockSensitivity (n : ℕ) (hn : 4 ∣ n) (hn_large : 8 ≤ n
   sorry
 
 end Sensitivity
+
+/- ## The separation of [OAI26]
+
+The definitions in `Separation` are copied from the Lean statement linked at
+`strong_sensitivity_conjecture`. They index bits by an arbitrary finite type, and a valid block
+configuration must also consist of nonempty blocks. -/
+
+namespace Separation
+
+open Classical in
+/-- Flip operator over a finite index type, as defined in [OAI26]. -/
+noncomputable def flip {I : Type} (x : I → Bool) (B : Finset I) : I → Bool :=
+  fun i => if i ∈ B then !(x i) else x i
+
+open Classical in
+/-- Local sensitivity, as defined in [OAI26]. -/
+noncomputable def sensitivityAt {I : Type} [Fintype I]
+    (f : (I → Bool) → Bool) (x : I → Bool) : ℕ :=
+  (Finset.univ.filter fun i => f (flip x {i}) ≠ f x).card
+
+open Classical in
+/-- Global sensitivity, as defined in [OAI26]. -/
+noncomputable def sensitivity {I : Type} [Fintype I] (f : (I → Bool) → Bool) : ℕ :=
+  Finset.univ.sup (sensitivityAt f)
+
+open Classical in
+/-- Local block sensitivity, as defined in [OAI26]. -/
+noncomputable def blockSensitivityAt {I : Type} [Fintype I]
+    (f : (I → Bool) → Bool) (x : I → Bool) : ℕ :=
+  Finset.univ.sup fun blocks : Finset (Finset I) =>
+    if (∀ A ∈ blocks, ∀ B ∈ blocks, A ≠ B → Disjoint A B) ∧
+        (∀ B ∈ blocks, B.Nonempty ∧ f (flip x B) ≠ f x)
+    then blocks.card else 0
+
+open Classical in
+/-- Global block sensitivity, as defined in [OAI26]. -/
+noncomputable def blockSensitivity {I : Type} [Fintype I] (f : (I → Bool) → Bool) : ℕ :=
+  Finset.univ.sup (blockSensitivityAt f)
+
+/-- On `Fin n`, the flip of [OAI26] is `flip`; only the decidability instance differs. -/
+@[category API, AMS 68]
+lemma flip_eq {n : ℕ} (x : Fin n → Bool) (B : Finset (Fin n)) :
+    flip x B = StrongSensitivityConjecture.flip x B := by
+  funext i
+  by_cases h : i ∈ B <;> simp [flip, StrongSensitivityConjecture.flip, h]
+
+/-- On `Fin n`, the sensitivity of [OAI26] is `sensitivity`. -/
+@[category API, AMS 68]
+lemma sensitivity_eq {n : ℕ} (f : (Fin n → Bool) → Bool) :
+    sensitivity f = StrongSensitivityConjecture.sensitivity f := by
+  unfold sensitivity StrongSensitivityConjecture.sensitivity
+  refine Finset.sup_congr (by ext; simp) fun x _ => ?_
+  unfold sensitivityAt StrongSensitivityConjecture.sensitivityAt
+  congr 1
+  ext i
+  simp [flip_eq]
+
+/-- On `Fin n`, the block sensitivity of [OAI26] is at most `blockSensitivity`: every block
+configuration it counts is valid. -/
+@[category API, AMS 68]
+lemma blockSensitivity_le {n : ℕ} (f : (Fin n → Bool) → Bool) :
+    blockSensitivity f ≤ StrongSensitivityConjecture.blockSensitivity f := by
+  unfold blockSensitivity StrongSensitivityConjecture.blockSensitivity
+  refine Finset.sup_le fun x _ => le_trans ?_
+    (Finset.le_sup (f := StrongSensitivityConjecture.blockSensitivityAt f) (Finset.mem_univ x))
+  unfold blockSensitivityAt StrongSensitivityConjecture.blockSensitivityAt
+  refine Finset.sup_le fun blocks _ => ?_
+  split_ifs with h
+  · have hv : IsValidBlockConfig f x blocks := ⟨fun A hA B hB hAB => h.1 A hA B hB hAB,
+      fun B hB => by rw [← flip_eq]; exact (h.2 B hB).2⟩
+    exact Finset.le_sup (by classical exact Finset.mem_filter.2 ⟨Finset.mem_univ _, hv⟩)
+  · exact Nat.zero_le _
+
+end Separation
+
+/-- For every `d ≥ 1` there is a Boolean function `f` with
+`bs(f) / s(f)^2 ≥ 2^d / (4 (d + 2)^2)`, stated with the definitions in `Separation`.
+
+This was proved by an internal OpenAI model in September 2026 [OAI26]; see the linked Lean
+proof. -/
+@[category research solved, AMS 68]
+theorem strong_sensitivity_conjecture.variants.quantitative_separation (d : ℕ) (hd : 1 ≤ d) :
+    ∃ (n : ℕ) (f : (Fin n → Bool) → Bool),
+      0 < n ∧ f (fun _ => false) = false ∧
+      (∃ x y : Fin n → Bool, f x ≠ f y) ∧
+      (2 : ℝ) ^ d / (4 * ((d : ℝ) + 2) ^ 2) ≤
+        (Separation.blockSensitivity f : ℝ) / (Separation.sensitivity f : ℝ) ^ 2 := by
+  sorry
+
+/-- The quantitative separation of [OAI26] disproves the strong sensitivity conjecture: at
+`d = 10` the ratio `bs(f) / s(f)^2` exceeds `1`. -/
+@[category test, AMS 68]
+theorem strong_sensitivity_conjecture_of_quantitative_separation
+    (h : type_of% @strong_sensitivity_conjecture.variants.quantitative_separation) :
+    type_of% @strong_sensitivity_conjecture := by
+  intro hall
+  obtain ⟨n, f, -, -, -, hf⟩ := h 10 (by norm_num)
+  have key : (Separation.blockSensitivity f : ℝ) ≤ (Separation.sensitivity f : ℝ) ^ 2 := by
+    rw [Separation.sensitivity_eq]
+    exact_mod_cast (Separation.blockSensitivity_le f).trans (hall n f)
+  have hle : (Separation.blockSensitivity f : ℝ) / (Separation.sensitivity f : ℝ) ^ 2 ≤ 1 := by
+    rcases eq_or_ne (Separation.sensitivity f) 0 with h0 | h0
+    · simp [h0]
+    · exact div_le_one_of_le₀ key (by positivity)
+  norm_num at hf
+  linarith
+
 end StrongSensitivityConjecture
