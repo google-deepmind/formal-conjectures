@@ -23,8 +23,9 @@ public import FormalConjecturesUtil.Attributes.Basic
 # Extract Names
 
 This script extracts metadata (theorem names, statements, categories, subjects,
-formal proof links, and whether the source poses the statement as a question) from
-formalized mathematical conjectures in the repository.
+formal proof links, what a proof rests on beyond the standard axioms, and whether the
+source poses the statement as a question) from formalized mathematical conjectures in the
+repository.
 
 ### Usage
 
@@ -88,7 +89,7 @@ def getFileLastModified (file : System.FilePath) : IO (Option String) :=
 /-- Valid keys for the `--exclude` flag. -/
 def validExcludeKeys : List String :=
   ["docstring", "statement", "subjects", "formalProofs",
-   "hasSorryFreeProof", "moduleDocstrings", "question",
+   "hasSorryFreeProof", "restsOn", "moduleDocstrings", "question",
    "fileFirstAdded", "fileLastModified"]
 
 -- `FormalProofInfo` and its ordering live in `FormalConjecturesUtil.Metadata`,
@@ -104,6 +105,12 @@ structure TheoremInfo where
   docstring : Option String
   formalProofs : List FormalProofInfo
   hasSorryFreeProof : Bool
+  /-- What the proof rests on beyond `propext`, `Classical.choice` and `Quot.sound`: the
+  open statements (declarations proved by `sorry`) it reaches, `native` for native
+  evaluation, other axioms by name; see `FormalConjectures.Metadata.restsOn`. Only
+  recorded for a proof whose own term has no `sorry`, and omitted from the JSON when
+  empty. -/
+  restsOn : List String
   subsets : List String
   /-- The kind of question (`"yes_no"` or `"value"`) if the declaration carries the
   `question` attribute. -/
@@ -125,6 +132,8 @@ def TheoremInfo.toFilteredJson (info : TheoremInfo) (exclude : Std.HashSet Strin
         [("formalProofs", Json.arr (info.formalProofs.map FormalProofInfo.toJson).toArray)])
     ++ (if exclude.contains "hasSorryFreeProof" then [] else
         [("hasSorryFreeProof", toJson info.hasSorryFreeProof)])
+    ++ (if exclude.contains "restsOn" || info.restsOn.isEmpty then [] else
+        [("restsOn", toJson info.restsOn)])
     ++ (if info.subsets.isEmpty then [] else [("subsets", toJson info.subsets)])
     ++ (match info.question with
         | some kind => if exclude.contains "question" then [] else [("question", toJson kind)]
@@ -274,9 +283,15 @@ unsafe def main (args : List String) : IO Unit := do
                     link := tag.proofLink,
                     conditions := tag.conditions.map Name.toString : FormalProofInfo })
                 |>.toArray.qsort (fun a b => a.sortKey < b.sortKey) |>.toList
-              -- Check whether the proof term is sorry-free
+              -- A proof is sorry-free when `#print axioms` shows no `sorryAx`, as PROOFS.md
+              -- asks, not only when its own term has none: a proof that calls a lemma proved
+              -- by `sorry` rests on that lemma, which `restsOn` names.
+              let ownTermSorryFree := info.value? (allowOpaque := true) |>.any (!·.hasSorry)
               let hasSorryFreeProof :=
-                info.value? (allowOpaque := true) |>.any (!·.hasSorry)
+                ownTermSorryFree && !(← collectAxioms name).contains ``sorryAx
+              let restsOn ← if ownTermSorryFree && !excludeSet.contains "restsOn" then
+                  pure (← restsOn name).toList
+                else pure []
               -- Warn about suspicious category / sorry combinations
               if let some catTag := categoryFullMap.get? name then
                 match catTag.category, hasSorryFreeProof with
@@ -299,6 +314,7 @@ unsafe def main (args : List String) : IO Unit := do
                 docstring := docstring,
                 formalProofs := formalProofs,
                 hasSorryFreeProof := hasSorryFreeProof,
+                restsOn := restsOn,
                 subsets := subsets
                 question := (← getQuestionKind? name).map toString
                 fileFirstAdded := fileFirstAdded
