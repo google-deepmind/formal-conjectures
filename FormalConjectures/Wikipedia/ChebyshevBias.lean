@@ -67,9 +67,11 @@ theorem five_notMem_chebyshevModFourLeadSet : 5 ∉ chebyshevModFourLeadSet := b
   change ¬ (Nat.primeCountingMod 5 4 1 < Nat.primeCountingMod 5 4 3)
   decide
 
+set_option linter.style.formal_proof_palomar false in
 /-- Littlewood's oscillation theorem (1914): both $\pi(n; 4, 3) > \pi(n; 4, 1)$ and
 $\pi(n; 4, 1) > \pi(n; 4, 3)$ hold for infinitely many $n \in \mathbb{N}$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-littlewood-mod4/blob/cee89ef3f8d2fee652637004f6ce40a8b35cdd46/LeanClassics/ChebyshevMod4Landau.lean#L732"]
 theorem littlewood_mod_four_sign_changes :
     chebyshevModFourLeadSet.Infinite ∧
       {n : ℕ | n.primeCountingMod 4 3 < n.primeCountingMod 4 1}.Infinite := by
