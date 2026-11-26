@@ -184,8 +184,10 @@ theorem alaoglu_erdos_prime_powers_rational_conjecture (p q : ℕ) (x : ℝ)
     ∃ k : ℤ, x = k := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Infinitely many integers satisfy `IsColossallyAbundant` [AE44]. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-colossally-abundant/blob/1ec2a3dd49685aa06ad701aa75b5e879dc0396c1/CAInfiniteFC/Main.lean#L179"]
 theorem infinite_colossallyAbundant :
     {n : ℕ | IsColossallyAbundant n}.Infinite := by
   sorry
