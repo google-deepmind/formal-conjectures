@@ -69,13 +69,16 @@ theorem erdos_30.variants.O_one :
     (fun N => h N - (N : ℝ).sqrt) =O[atTop] fun _ => (1 : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Turán [ErTu41] proved $h(N) \le \sqrt N + O(N^{1/4})$.
 
 This is an upper bound only. A statement with `=O` would also assert the lower bound
 $h(N) \ge \sqrt N - O(N^{1/4})$, which is not part of this result.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-30-lean/blob/b54103b72135385b036230e9ad35b131fbcc0c31/Erdos30.lean#L375"]
 theorem erdos_30.variants.erdos_turan :
     ∃ C : ℝ, ∀ᶠ N in atTop, (h N : ℝ) ≤ (N : ℝ).sqrt + C * (N : ℝ) ^ (4⁻¹ : ℝ) := by
   sorry
@@ -116,19 +119,25 @@ theorem erdos_30.variants.carter_hunter_obryant :
       (h N : ℝ) ≤ (N : ℝ).sqrt + (0.98183 : ℝ) * (N : ℝ) ^ (4⁻¹ : ℝ) + C := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Singer's construction [Si38] shows $h(N) \ge (1 - o(1)) N^{1/2}$ for all $N$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-30-lean/blob/b54103b72135385b036230e9ad35b131fbcc0c31/Erdos30.lean#L430"]
 theorem erdos_30.variants.singer :
     ∀ ε > (0 : ℝ), ∀ᶠ N : ℕ in atTop, (1 - ε) * (N : ℝ).sqrt ≤ h N := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Combining Singer's lower bound [Si38] with the Erdős–Turán upper bound [ErTu41]:
 $h(N) \sim N^{1/2}$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/laughingbear/erdos-30-lean/blob/b54103b72135385b036230e9ad35b131fbcc0c31/Erdos30.lean#L454"]
 theorem erdos_30.variants.isEquivalent_sqrt :
     (fun N => (h N : ℝ)) ~[atTop] fun N => (N : ℝ).sqrt := by
   sorry
