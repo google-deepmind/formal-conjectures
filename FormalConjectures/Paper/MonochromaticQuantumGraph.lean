@@ -563,7 +563,7 @@ equation system over $\mathbb{C}$?
 
 This follows from `eqSystem6_no_solution_d3` by restricting colours (`no_ge3_of_no_d3`). -/
 @[category research solved, question, AMS 5 14 81, formal_proof using formal_conjectures at
-"FC_LINK_GE3"]
+"https://github.com/duggiephresh/formal-conjectures/blob/74078419e16d830440065a890a3fcc3c7e81a5cb/FormalConjectures/Paper/MonochromaticQuantumGraph.lean#L567"]
 theorem eqSystem6_no_solution_ge3 :
     ∀ D : Nat, D ≥ 3 →
       ¬ ∃ W : WeightsN 6 D ℂ, EqSystemN 6 D W :=
@@ -713,7 +713,7 @@ equation system over $\mathbb{R}$?
 This follows from `eqSystem6_no_solution_d3`, since a real solution is a complex solution
 (`no_real_of_no_complex`). -/
 @[category research solved, question, AMS 5 14 81, formal_proof using formal_conjectures at
-"FC_LINK_D3R"]
+"https://github.com/duggiephresh/formal-conjectures/blob/74078419e16d830440065a890a3fcc3c7e81a5cb/FormalConjectures/Paper/MonochromaticQuantumGraph.lean#L717"]
 theorem eqSystem6_no_solution_d3_real :
     ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W :=
   no_real_of_no_complex eqSystem6_no_solution_d3
@@ -735,7 +735,7 @@ equation system over $\mathbb{R}$?
 
 This follows from `eqSystem6_no_solution_d3_real` by restricting colours (`no_ge3_of_no_d3`). -/
 @[category research solved, question, AMS 5 14 81, formal_proof using formal_conjectures at
-"FC_LINK_GE3R"]
+"https://github.com/duggiephresh/formal-conjectures/blob/74078419e16d830440065a890a3fcc3c7e81a5cb/FormalConjectures/Paper/MonochromaticQuantumGraph.lean#L739"]
 theorem eqSystem6_no_solution_ge3_real :
     ∀ D : Nat, D ≥ 3 →
       ¬ ∃ W : WeightsN 6 D ℝ, EqSystemN 6 D W :=
