@@ -61,11 +61,13 @@ of the values of $\varphi(n)/n$.
 theorem erdos_50_schoenberg : ∃ f : ℝ → ℝ, IsDistributionOfPhiRatio f := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős [Er95] proved that the distribution function of $\varphi(n)/n$ is purely singular on
 $[0, 1]$: it is continuous there, but its derivative is zero almost everywhere on $[0, 1]$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-erdos50/blob/86f48b8cd52ed6898ca90ed7eca40a6bda756cf3/Erdos50FC/Singular.lean#L425"]
 theorem erdos_50_singular (f : ℝ → ℝ) (hf : IsDistributionOfPhiRatio f) :
     IsPurelySingularOn f (Icc 0 1) := by
   sorry
