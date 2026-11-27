@@ -27,7 +27,7 @@ $\zeta(s)$ and nonvanishing on $\mathbb{R} \cap [1/2, 1]$, this differs only by 
 leaves $O_\varepsilon$ bounds unchanged.) The Density Hypothesis states that
 $N(\sigma, T) = O_\varepsilon(T^{2(1 - \sigma) + \varepsilon})$ uniformly over
 $\frac{1}{2} \le \sigma \le 1$ for every $\varepsilon > 0$. Either the Riemann Hypothesis or
-Lindelöf's hypothesis implies this estimate. Unconditional bounds of the shape
+Lindelöf's hypothesis implies this estimate. Alpöge proved the Riemann Hypothesis [Al26]. Unconditional bounds of the shape
 $N(\sigma, T) = O_\varepsilon(T^{A(\sigma)(1 - \sigma) + \varepsilon})$ were proved by Ingham
 (1940) with $A(\sigma) = \frac{3}{2 - \sigma}$, Huxley (1972) with
 $A(\sigma) = \frac{3}{3\sigma - 1}$, and Guth and Maynard (2024) with
@@ -35,6 +35,7 @@ $A(\sigma) = \frac{15}{5\sigma + 3}$; combining Ingham's bound for $\sigma \le \
 Guth and Maynard's bound for $\sigma \ge \frac{7}{10}$ yields the uniform exponent $\frac{30}{13}$.
 
 *References:*
+- [Al26] L. Alpöge, [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf), 2026.
 - [Wikipedia](https://en.wikipedia.org/wiki/Lindel%C3%B6f_hypothesis#The_density_hypothesis)
 - A. E. Ingham, *On the estimation of $N(\sigma, T)$*, Quart. J. Math. Oxford Ser. **11** (1940),
   DOI: `10.1093/qmath/os-11.1.201`.
@@ -94,10 +95,12 @@ theorem zetaZeroSet_finite (σ T : ℝ) :
   refine ⟨⟨(s.re, s.im), ⟨⟨hs.1, hs.2.1⟩, ⟨hs.2.2.1.le, hs.2.2.2.1⟩⟩, ?_⟩, hs.2.2.2.2⟩
   simp [mul_comm Complex.I, Complex.re_add_im]
 
+set_option linter.style.formal_proof_palomar false in
 /-- Density Hypothesis: for every $\varepsilon > 0$, there exists $C > 0$ such that
 $N(\sigma, T) \le C \, T^{2(1 - \sigma) + \varepsilon}$ for all $\frac{1}{2} \le \sigma \le 1$
 and $T \ge 2$. -/
-@[category research open, AMS 11 30]
+@[category research solved, AMS 11 30, formal_proof using lean4 at
+  "https://github.com/senamakel/density-rh/blob/91ffb87856da458ef93fcc139af0d1d389a82af2/Unconditional/DensityUnconditional.lean#L11"]
 theorem density_hypothesis_zeta_zeros (ε : ℝ) (hε : 0 < ε) :
     ∃ C : ℝ, 0 < C ∧ ∀ σ T : ℝ, 1 / 2 ≤ σ → σ ≤ 1 → 2 ≤ T →
       (zetaZeroCount σ T : ℝ) ≤ C * T ^ (2 * (1 - σ) + ε) := by
