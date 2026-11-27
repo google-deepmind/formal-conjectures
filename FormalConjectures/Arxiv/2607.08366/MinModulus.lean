@@ -26,6 +26,9 @@ public import FormalConjecturesUtil
   by *José A. R. Fonollosa*
 - [jarfo/min-modulus](https://github.com/jarfo/min-modulus), the author's Lean development of
   the paper's Main Theorem. Section 7 of the paper describes it.
+- [Sun16z/min-modulus-gap](https://github.com/Sun16z/min-modulus-gap)
+  ([doi:10.5281/zenodo.24586140](https://doi.org/10.5281/zenodo.24586140)), a Lean development of
+  lower bounds toward Conjecture 1, used for the solved variants below.
 
 The paper's Main Theorem fixes the super-increasing set $\{2^k - 1\}$ and pins the least modulus
 at which *it* is valid. Conjecture 1 says no other set of $n$ residues does better, and is open.
@@ -85,6 +88,42 @@ valid, which would make the statement false for a reason unrelated to the questi
 theorem min_modulus :
     ∀ n N : ℕ, 2 ≤ n → 0 < N → N < minModulus n →
       ∀ A : Finset (ZMod N), #A = n → ¬ IsValidMod A := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/-- **Conjecture 1 for `n = 3`.** No set of `3` residues is valid mod `N` for `0 < N < 6`,
+where `minModulus 3 = 6`. The paper reports a computer check for small `n`; this is a formal
+proof. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Sun16z/min-modulus-gap/blob/667622ba92f1a4fcb390cb501235c111dedbd630/MinModulusGap.lean#L2963-L2973"]
+theorem min_modulus.variants.three :
+    ∀ N : ℕ, 0 < N → N < minModulus 3 → ∀ A : Finset (ZMod N), #A = 3 → ¬ IsValidMod A := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/-- **Conjecture 1 for `n = 4`.** No set of `4` residues is valid mod `N` for `0 < N < 12`,
+where `minModulus 4 = 12`. The paper reports a computer check for small `n`; this is a formal
+proof. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Sun16z/min-modulus-gap/blob/667622ba92f1a4fcb390cb501235c111dedbd630/MinModulusGap.lean#L2976-L2986"]
+theorem min_modulus.variants.four :
+    ∀ N : ℕ, 0 < N → N < minModulus 4 → ∀ A : Finset (ZMod N), #A = 4 → ¬ IsValidMod A := by
+  sorry
+
+set_option linter.style.formal_proof_palomar false in
+/-- **A lower bound toward Conjecture 1.** For `n ≥ 3`, a valid set of `n` residues mod `N`
+forces
+$$N \geq 2^{n-1} + \frac{2^{n-1}}{72\,(n-1)\sqrt{(n-1)\ln n}}.$$
+Conjecture 1 predicts $N \geq 2^n - 2^{\lfloor \log_2 n \rfloor}$, roughly twice $2^{n-1}$. -/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Sun16z/min-modulus-gap/blob/667622ba92f1a4fcb390cb501235c111dedbd630/MinModulusGap.lean#L2324-L2337"]
+theorem min_modulus.variants.lower_bound :
+    ∀ n N : ℕ, 3 ≤ n → 0 < N → ∀ A : Finset (ZMod N), #A = n → IsValidMod A →
+      (2 : ℝ) ^ (n - 1) + (2 : ℝ) ^ (n - 1) / (72 * ((n - 1 : ℕ) : ℝ) *
+        Real.sqrt (((n - 1 : ℕ) : ℝ) * Real.log (n : ℝ))) ≤ (N : ℝ) := by
   sorry
 
 set_option linter.style.formal_proof_palomar false in
