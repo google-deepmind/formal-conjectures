@@ -43,6 +43,7 @@ with logarithmic density in $(1/2, 1)$; proving this unconditionally remains ope
 - K. Ford, S. Konyagin, and Y. Lamzouri, *The prime number race and zeros of Dirichlet
   $L$-functions off the critical line. III*, Quart. J. Math. **64** (2013), no. 4, 1091–1098
   (`arXiv:1204.6715`).
+- L. Alpöge, [Note on the Riemann Hypothesis](https://alpo.ge/remark.pdf) (2026).
 -/
 
 @[expose] public section
@@ -85,6 +86,16 @@ theorem knapowski_turan_natural_density_false
     (hGRH : ∀ s : ℂ, 0 < s.re → s.re < 1 →
       DirichletCharacter.LFunction (ZMod.χ₄.ringHomComp (Int.castRingHom ℂ)) s = 0 →
       s.re = 1 / 2) :
+    ¬ chebyshevModFourLeadSet.HasDensity 1 := by
+  sorry
+
+/-- The Knapowski–Turán natural-density conjecture is false: the set of $n \in \mathbb{N}$ with
+$\pi(n; 4, 3) > \pi(n; 4, 1)$ does not have natural density $1$. This is
+`knapowski_turan_natural_density_false` with its hypothesis discharged: $\chi_4$ is primitive,
+and the Generalized Riemann Hypothesis for Dirichlet $L$-functions of primitive characters on the
+critical strip $0 < \operatorname{Re} s < 1$ is proved (L. Alpöge, 2026). -/
+@[category research solved, AMS 11]
+theorem knapowski_turan_natural_density_false_unconditional :
     ¬ chebyshevModFourLeadSet.HasDensity 1 := by
   sorry
 
