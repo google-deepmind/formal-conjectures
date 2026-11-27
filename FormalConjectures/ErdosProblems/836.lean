@@ -65,4 +65,29 @@ theorem erdos_836.parts.ii :
         ∃ e ∈ H, ∃ f ∈ H, e ≠ f ∧ c * r ≤ ((e ∩ f).card : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
+/--
+Let $t \geq 2$. If $H$ is a finite $r$-uniform hypergraph which is intersecting and not
+$2$-colourable, and any two distinct edges of $H$ share at most $t$ vertices, then $r \leq 2t$.
+
+The problem page notes that in the Fano plane no two edges meet in $r - 1$ vertices, and asks for
+other examples. Erdős and Lovász [ErLo75] already gave such examples for every $r = 3^k$. This
+variant is a bound around that question, not an answer to it.
+
+Price [Pr26] showed $r \leq 2t + 1$ for every $t$, and the Fano plane ($r = 3$, $t = 1$) attains
+it. The variant says that equality needs $t = 1$. Fix an edge $A$ and a proper $2$-colouring of
+the other edges in which $A$ is red and the blue class $B$ is as small as possible. For each
+$y \in A$ there is an edge $F_y$ with $F_y \cap A = \{y\}$ and $F_y \setminus \{y\} \subseteq B$.
+Price's double count shows that if $r = 2t + 1$, then every vertex of $B$ lies in exactly $t + 1$
+of the sets $F_y$. So $(t + 1)|B| = r(r - 1) = 2t(2t + 1)$, and $t + 1$ divides $2$.
+-/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/f21dab0a72b1c833d3dc4a2df41e6ef2c66dcece/ErdosLean/Erdos836.lean"]
+theorem erdos_836.variants.r_le_two_mul_of_inter_le {V : Type*} [DecidableEq V] (r t : ℕ)
+    (ht : 2 ≤ t) (H : Finset (Finset V)) (hU : H.IsUniform r)
+    (hI : (H : Set (Finset V)).Intersecting) (hC : ¬ H.HypergraphColorable 2)
+    (hT : (H : Set (Finset V)).Pairwise fun e f ↦ (e ∩ f).card ≤ t) :
+    r ≤ 2 * t := by
+  sorry
+
 end Erdos836
