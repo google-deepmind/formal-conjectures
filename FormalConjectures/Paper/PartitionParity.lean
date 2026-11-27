@@ -64,7 +64,8 @@ namespace PartitionParity
 open Nat Real Filter Topology Asymptotics Polynomial
 
 /-- `p(n)` is even for infinitely many `n` and odd for infinitely many `n`. (Kolberg) -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-13-000019"]
 theorem kolberg :
     {n : ℕ | Even (partitionNumber n)}.Infinite ∧ {n : ℕ | Odd (partitionNumber n)}.Infinite := by
   sorry
