@@ -27,8 +27,16 @@ asked by user [*Junyan Xu*](https://mathoverflow.net/users/3332/junyan-xu)
 
 namespace Mathoverflow486451
 
-/-- There exists a semiring with a unique left maximal ideal but more than one right maximal ideals. -/
-@[category research solved, AMS 16]
+set_option linter.style.formal_proof_palomar false in
+/-- There exists a semiring with a unique left maximal ideal but more than one right maximal ideals.
+
+An example is $\{0\} \cup \mathbb{N}^3$, where $(j, k, n)$ is the map on $\mathbb{N} \cup \{\infty\}$
+sending $m \le j$ to $0$ and $m > j$ to $m - j + k$, tagged with $n \in \mathbb{N}$. Addition is the
+pointwise minimum of the maps with the sum of the tags, and multiplication is composition with the
+product of the tags.
+-/
+@[category research solved, AMS 16, formal_proof using lean4 at
+  "https://github.com/GuillaumeBAUD-coder/open-math-agents/blob/98fa381187b82c8b1c75270ec5bb3a4a7bfcd242/proofs/Mathoverflow486451.exists_semiring_unique_left_maximal_not_unique_right_maximal.lean#L202"]
 theorem exists_semiring_unique_left_maximal_not_unique_right_maximal :
     ∃ (R : Type) (_ : Semiring R), (∃! I : Ideal R, I.IsMaximal) ∧
       ∃ I J : Ideal Rᵐᵒᵖ, I.IsMaximal ∧ J.IsMaximal ∧ I ≠ J := by
