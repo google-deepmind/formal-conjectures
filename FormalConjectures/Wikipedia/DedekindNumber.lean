@@ -255,7 +255,8 @@ $$
 where $b_i^k$ is the $i$-th bit of $k$. However, this formula is not computationally
 efficient for large $n$.
 -/
-@[category research solved, AMS 5 6]
+@[category research solved, AMS 5 6, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-24-000019"]
 theorem M_eq_kisielewiczFormula : M = kisielewiczFormula := by
   sorry
 
