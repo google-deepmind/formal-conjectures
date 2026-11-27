@@ -62,7 +62,56 @@ If $n$ is an even perfect number, then $a(n) = n$.
 @[category textbook, AMS 11]
 theorem a_eq_self_of_perfect_of_even (n : ℕ) (hperf : n.Perfect) (heven : Even n) :
     a n = n := by
-  sorry
+  set k := n.factorization 2
+  set m := ordCompl[2] n
+  set p := 2 ^ (k + 1) - 1
+  have hk : 0 < k := Nat.Prime.factorization_pos_of_dvd Nat.prime_two hperf.2.ne' (even_iff_two_dvd.mp heven)
+  have hp_add : p + 1 = 2 ^ (k + 1) := Nat.sub_add_cancel Nat.one_le_two_pow
+  have hp3 : 3 ≤ p := by have := Nat.pow_le_pow_right (by decide : 0 < 2) (Nat.succ_le_succ hk); omega
+  have hcop_p : p.Coprime (2 ^ (k + 1)) := by rw [← hp_add]; simp
+  have hn : n = 2 ^ k * p := by
+    have hkm : 2 ^ k * m = n := Nat.ordProj_mul_ordCompl_eq_self n 2
+    have hsum := (Nat.perfect_iff_sum_divisors_eq_two_mul hperf.2).mp hperf
+    have h1 := geom_sum_mul_add 1 (k + 1)
+    rw [← hkm, ((Nat.coprime_ordCompl Nat.prime_two hperf.2.ne').pow_left k).sum_divisors_mul,
+      Nat.divisors_prime_pow Nat.prime_two, Finset.sum_map] at hsum
+    simp only [one_add_one_eq_two, mul_one, Function.Embedding.coeFn_mk] at h1 hsum
+    rw [show ∑ i ∈ Finset.range (k + 1), 2 ^ i = p by omega, ← mul_assoc, ← pow_succ'] at hsum
+    obtain ⟨j, hj⟩ : p ∣ m := hcop_p.dvd_of_dvd_mul_left ⟨_, hsum.symm⟩
+    have h2 := Nat.eq_of_mul_eq_mul_left (by omega : 0 < p)
+      (show p * ∑ d ∈ m.divisors, d = p * (2 ^ (k + 1) * j) by rw [hsum, hj]; ring)
+    rw [Nat.sum_divisors_eq_sum_properDivisors_add_self, ← hp_add] at h2
+    suffices j = 1 by rw [← hkm, hj, this, mul_one]
+    by_contra hne
+    have hj0 : 0 < j := Nat.pos_of_mul_pos_left (hj ▸ show 0 < m from Nat.ordCompl_pos 2 hperf.2.ne')
+    nlinarith [show 1 + j ≤ ∑ x ∈ m.properDivisors, x from
+      Finset.sum_pair (f := fun x : ℕ => x) (Ne.symm hne) ▸ Finset.sum_le_sum_of_subset
+        (by simp [Finset.insert_subset_iff, Nat.mem_properDivisors, hj]; constructor <;> nlinarith)]
+  suffices h : n.properDivisors.powerset.image (fun s => ∑ x ∈ s, x) = Finset.range (n + 1) by
+    rw [a, h, Finset.card_range, Nat.add_sub_cancel]
+  ext t; simp only [Finset.mem_image, Finset.mem_powerset, Finset.mem_range]
+  have hps := (Nat.perfect_iff_sum_properDivisors hperf.2).mp hperf
+  refine ⟨fun ⟨s, hs, hst⟩ => Nat.lt_succ_of_le
+    (hst ▸ (Finset.sum_le_sum_of_subset hs).trans hps.le), fun ht => ?_⟩
+  rcases eq_or_lt_of_le (Nat.lt_succ_iff.mp ht) with htn | hlt
+  · exact ⟨n.properDivisors, Finset.Subset.rfl, htn ▸ hps⟩
+  have hbit (x d i : ℕ) (hx : x < 2 ^ d) (hi : i ∈ x.bitIndices.toFinset) : i < d :=
+    (Nat.pow_lt_pow_iff_right (by decide : 1 < 2)).mp <| (Finset.single_le_sum (fun _ _ => Nat.zero_le _) hi).trans_lt (by simpa)
+  refine ⟨(t % p).bitIndices.toFinset.image (2 ^ ·) ∪ (t / p).bitIndices.toFinset.image (p * 2 ^ ·),
+    Finset.union_subset (Finset.image_subset_iff.mpr fun i hi => ?_) (Finset.image_subset_iff.mpr fun i hi => ?_), ?_⟩
+  · have hik := Nat.lt_succ_iff.mp (hbit _ (k + 1) i ((Nat.mod_lt t (by omega)).trans (by omega)) hi)
+    exact Nat.mem_properDivisors.mpr ⟨(Nat.pow_dvd_pow 2 hik).trans ⟨p, hn⟩,
+      by nlinarith [Nat.pow_le_pow_right (by decide : 0 < 2) hik, Nat.one_le_two_pow (n := k)]⟩
+  · have hik := hbit _ k i (Nat.div_lt_of_lt_mul (by rw [mul_comm, ← hn]; exact hlt)) hi
+    exact Nat.mem_properDivisors.mpr ⟨hn ▸ mul_comm (2 ^ k) p ▸ mul_dvd_mul_left p (Nat.pow_dvd_pow 2 hik.le),
+      by nlinarith [Nat.pow_lt_pow_right (by decide : 1 < 2) hik]⟩
+  · have hinj := Nat.pow_right_injective (by decide : 2 ≤ 2)
+    rw [Finset.sum_union (Finset.disjoint_left.mpr fun x hu hv => by
+        obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp hu; obtain ⟨j', _, hj'⟩ := Finset.mem_image.mp hv
+        have hci := (hcop_p.coprime_dvd_right (dvd_pow_self 2 k.succ_ne_zero)).pow_right i
+        have := Nat.eq_one_of_dvd_one (hci.gcd_eq_one ▸ Nat.dvd_gcd dvd_rfl ⟨2 ^ j', hj'.symm⟩); omega),
+      Finset.sum_image fun _ _ _ _ h => hinj h, Finset.sum_image fun _ _ _ _ h => hinj (mul_left_cancel₀ (by omega) h), ← Finset.mul_sum]
+    simpa using Nat.mod_add_div t p
 
 /-- The subset sums of a disjoint union are the sums of a subset sum of each part. -/
 @[category API, AMS 11]
