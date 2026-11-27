@@ -67,9 +67,12 @@ lemma hasAddVCNDimAtMost_two_one_of_convex_r3 :
       HasAddVCNDimAtMost C 2 1 := sorry
 
 /-- Every convex set in $\mathbb R^3$ has $\mathrm{VC}_2$ dimension at most 2. -/
-@[category research open, AMS 5 52]
+@[category research solved, AMS 5 52,
+  formal_proof using lean4 at
+    "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000053"]
 lemma hasAddVCNDimAtMost_two_two_of_convex_r3 {C : Set ℝ³} (hC : Convex ℝ C) :
-    HasAddVCNDimAtMost C 2 2 := sorry
+    HasAddVCNDimAtMost C 2 2 := by
+  sorry
 
 set_option linter.style.formal_proof_palomar false in
 /-- For every $n \ge 1$ there exists some $d$ such that every convex set in $\mathbb R^{n + 1}$ has
