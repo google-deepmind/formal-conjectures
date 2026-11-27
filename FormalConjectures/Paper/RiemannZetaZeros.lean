@@ -28,7 +28,8 @@ public import FormalConjecturesUtil
 - [BH13] Bui, H. M. and Heath-Brown, D. R., *On simple zeros of the Riemann zeta-function*, 2013.
   [arXiv:1302.5018](https://arxiv.org/abs/1302.5018)
 - [Li26] T. Lince, three-point bound for simple zeros of the Riemann zeta function, 2026.
-  [Lean proof](https://github.com/teal-sea/zeta-lab/blob/84312e4477dfeb7e0d8a91c38897f225f5a52f19/lean/bridge/V2Solution.lean#L184-L190).
+  [Lean proof](https://github.com/teal-sea/zeta-lab/blob/84312e4477dfeb7e0d8a91c38897f225f5a52f19/lean/bridge/V2Solution.lean#L184-L190)
+  and [derivation of the statement below](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/3b8f978c523c674cba8d62afdff6909241313ccb/proofs/riemann-zeta-simple-proportion/SimplePropLt.lean).
 - [Wikipedia](https://en.wikipedia.org/wiki/Riemann_hypothesis#Zeros_on_the_critical_line)
 
 For a nontrivial zero `ρ = β + iγ` of `ζ` (or of a Dirichlet `L`-function) with multiplicity
