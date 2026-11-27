@@ -313,7 +313,36 @@ theorem petersen_radius : radius PetersenGraph = 2 := by
 
 @[category test, AMS 5]
 theorem petersen_girth : PetersenGraph.girth = 5 := by
-  sorry
+  have hfive : cycleGraph 5 ⊑ PetersenGraph := by
+    let vertices : Fin 5 → PetersenVertex :=
+      ![⟨{0, 1}, by decide⟩, ⟨{2, 3}, by decide⟩, ⟨{0, 4}, by decide⟩,
+        ⟨{1, 2}, by decide⟩, ⟨{3, 4}, by decide⟩]
+    have hinj : Function.Injective vertices := by decide +kernel
+    have hadj : ∀ a b, (cycleGraph 5).Adj a b → PetersenGraph.Adj (vertices a) (vertices b) := by
+      decide +kernel
+    exact ⟨⟨⟨vertices, fun h => hadj _ _ h⟩, hinj⟩⟩
+  obtain ⟨_, w, hw, hwlength⟩ := (cycleGraph_isContained_iff (by decide)).1 hfive
+  refine le_antisymm ((girth_le_length hw).trans_eq hwlength) ?_
+  obtain ⟨v, p, hp, hlength⟩ := exists_girth_eq_length.mpr (fun h => h _ hw)
+  rw [hlength]
+  by_contra! hshort
+  have := hp.three_le_length
+  rcases (show p.length = 3 ∨ p.length = 4 by omega) with hthree | hfour
+  · obtain ⟨f⟩ := (cycleGraph_isContained_iff (n := 3) (by decide)).2 ⟨v, p, hp, hthree⟩
+    have hnoTriangle : ∀ a b c : PetersenVertex,
+        PetersenGraph.Adj a b → PetersenGraph.Adj b c → PetersenGraph.Adj c a → False := by
+      decide +kernel
+    exact hnoTriangle (f 0) (f 1) (f 2)
+      (f.toHom.map_rel (by decide)) (f.toHom.map_rel (by decide)) (f.toHom.map_rel (by decide))
+  · obtain ⟨f⟩ := (cycleGraph_isContained_iff (n := 4) (by decide)).2 ⟨v, p, hp, hfour⟩
+    have hnoSquare : ∀ a b c d : PetersenVertex,
+        PetersenGraph.Adj a b → PetersenGraph.Adj b c → PetersenGraph.Adj c d →
+        PetersenGraph.Adj d a → a ≠ c → b ≠ d → False := by
+      decide +kernel
+    exact hnoSquare (f 0) (f 1) (f 2) (f 3)
+      (f.toHom.map_rel (by decide)) (f.toHom.map_rel (by decide))
+      (f.toHom.map_rel (by decide)) (f.toHom.map_rel (by decide))
+      (f.injective.ne (by decide)) (f.injective.ne (by decide))
 
 open scoped Classical in
 @[category test, AMS 5]
