@@ -59,6 +59,7 @@ lemma vanDerWaerden (n : ℕ) (M : Matrix (Fin n) (Fin n) ℝ) (hM : M ∈ doubl
     n ^ (- n : ℤ) * n ! ≤ M.permanent := by
   sorry
 
+open Finset in
 /--
 A weaker version of Erdős' problem 499, which asks whether for every doubly stochastic matrix, there
 exists a permutation $σ \in S_n$ with $M_{i, σ(i)} ≠ 0$ and such that
@@ -73,6 +74,53 @@ Proved by Marcus and Ree [MaRe59].
 lemma erdos_499.variants.one_le :
     ∀ n > 0, ∀ M ∈ doublyStochastic ℝ (Fin n), ∃ σ : Equiv.Perm (Fin n),
       (∀ i, M i (σ i) ≠ 0) ∧ 1 ≤ ∑ i, M i (σ i) := by
-  sorry
+  intro n hn M hM
+  obtain ⟨w, hw0, hw1, hwM⟩ := exists_eq_sum_perm_of_mem_doublyStochastic hM
+  obtain ⟨-, hrow, -⟩ := mem_doublyStochastic_iff_sum.1 hM
+  have hent (i j) : M i j = ∑ σ : Equiv.Perm (Fin n), if σ i = j then w σ else 0 := by
+    rw [← hwM]
+    simp [Matrix.sum_apply, PEquiv.toMatrix_apply]
+  have hkey : ∑ i, ∑ j, M i j ^ 2 = ∑ σ, w σ * ∑ i, M i (σ i) := by
+    calc ∑ i, ∑ j, M i j ^ 2
+        = ∑ i, ∑ j, ∑ σ : Equiv.Perm (Fin n), if σ i = j then M i j * w σ else 0 := by
+          refine sum_congr rfl fun i _ => sum_congr rfl fun j _ => ?_
+          rw [sq]
+          conv_lhs => arg 2; rw [hent i j]
+          rw [mul_sum]
+          exact sum_congr rfl fun σ _ => by split_ifs <;> simp
+      _ = ∑ i, ∑ σ : Equiv.Perm (Fin n), M i (σ i) * w σ := by
+          refine sum_congr rfl fun i _ => ?_
+          rw [sum_comm]
+          simp
+      _ = _ := by
+          rw [sum_comm]
+          simp_rw [mul_sum, mul_comm]
+  have hS : 1 ≤ ∑ i, ∑ j, M i j ^ 2 := by
+    have h1 (i) : (1 : ℝ) ≤ n * ∑ j, M i j ^ 2 := by
+      simpa [hrow i] using sq_sum_le_card_mul_sum_sq (s := univ) (f := M i)
+    have h2 : (n : ℝ) * 1 ≤ n * ∑ i, ∑ j, M i j ^ 2 := by
+      rw [mul_sum]
+      simpa using sum_le_sum fun i (_ : i ∈ univ) => h1 i
+    exact le_of_mul_le_mul_left h2 (by exact_mod_cast hn)
+  obtain ⟨σ, hwσ, hDσ⟩ : ∃ σ, 0 < w σ ∧ 1 ≤ ∑ i, M i (σ i) := by
+    by_contra! h
+    obtain ⟨τ, hτ⟩ : ∃ τ, 0 < w τ := by
+      by_contra! h'
+      linarith [sum_nonpos fun σ (_ : σ ∈ univ) => h' σ]
+    have : ∑ σ, w σ * ∑ i, M i (σ i) < ∑ σ, w σ := by
+      apply sum_lt_sum
+      · intro σ _
+        rcases (hw0 σ).eq_or_lt with h0 | h0
+        · simp [← h0]
+        · exact mul_le_of_le_one_right h0.le (h σ h0).le
+      · exact ⟨τ, mem_univ _, mul_lt_of_lt_one_right hτ (h τ hτ)⟩
+    linarith
+  refine ⟨σ, fun i => ?_, hDσ⟩
+  have : w σ ≤ M i (σ i) := by
+    rw [hent]
+    calc w σ = if σ i = σ i then w σ else 0 := by simp
+      _ ≤ _ := single_le_sum (f := fun τ : Equiv.Perm (Fin n) => if τ i = σ i then w τ else 0)
+          (fun τ _ => by split_ifs <;> simp [hw0]) (mem_univ σ)
+  exact (hwσ.trans_le this).ne'
 
 end Erdos499
