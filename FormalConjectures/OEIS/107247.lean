@@ -65,6 +65,25 @@ theorem a_3 : a 3 = 0 := by decide
 @[category test, AMS 11]
 theorem a_4 : a 4 = 0 := by decide
 
+/-- Trial division by all odd numbers up to the square root, checked by the kernel. (The proof
+term that `norm_num` builds for a prime of this size is too deep for the kernel.) -/
+@[category API, AMS 11]
+private lemma prime_5045088967 : Nat.Prime 5045088967 := by
+  have hall : (List.range' 3 35514 2).all (fun m => 5045088967 % m != 0) = true := by
+    decide +kernel
+  rw [Nat.prime_def_le_sqrt]
+  refine ⟨by norm_num, fun m hm2 hms hdvd => ?_⟩
+  have hsq : Nat.sqrt 5045088967 = 71028 := by norm_num
+  rw [hsq] at hms
+  rcases Nat.even_or_odd m with he | ho
+  · have h2 : 2 ∣ 5045088967 := (even_iff_two_dvd.mp he).trans hdvd
+    omega
+  · have hmem : m ∈ List.range' 3 35514 2 := by
+      obtain ⟨j, rfl⟩ := ho
+      exact List.mem_range'.mpr ⟨j - 1, by omega, by omega⟩
+    have h := List.all_eq_true.mp hall m hmem
+    simp [Nat.dvd_iff_mod_eq_zero.mp hdvd] at h
+
 /--
 Primes in this sequence include: $a(8) = 2$.
 Semiprimes in this sequence include: $a(9) = 6 = 2 * 3$, $a(10) = 22 = 2 * 11$,
@@ -85,7 +104,25 @@ theorem known_prime_and_semiprimes :
   (a 16).IsSemiprime ∧
   (a 17).IsSemiprime ∧
   (a 27).IsSemiprime := by
-  sorry
+  have h8 : a 8 = 2 := by decide +kernel
+  have h9 : a 9 = 2 * 3 := by decide +kernel
+  have h10 : a 10 = 2 * 11 := by decide +kernel
+  have h11 : a 11 = 2 * 43 := by decide +kernel
+  have h13 : a 13 = 2 * 683 := by decide +kernel
+  have h14 : a 14 = 2 * 2731 := by decide +kernel
+  have h16 : a 16 = 2 * 43691 := by decide +kernel
+  have h17 : a 17 = 37 * 9419 := by decide +kernel
+  have h27 : a 27 = 71 * 5045088967 := by decide +kernel
+  rw [h8, h9, h10, h11, h13, h14, h16, h17, h27]
+  exact ⟨by norm_num,
+    Nat.Prime.mul_isAlmostPrime_two (by norm_num) (by norm_num),
+    Nat.Prime.mul_isAlmostPrime_two (by norm_num) (by norm_num),
+    Nat.Prime.mul_isAlmostPrime_two (by norm_num) (by norm_num),
+    Nat.Prime.mul_isAlmostPrime_two (by norm_num) (by norm_num),
+    Nat.Prime.mul_isAlmostPrime_two (by norm_num) (by norm_num),
+    Nat.Prime.mul_isAlmostPrime_two (by norm_num) (by norm_num),
+    Nat.Prime.mul_isAlmostPrime_two (by norm_num) (by norm_num),
+    Nat.Prime.mul_isAlmostPrime_two (by norm_num) prime_5045088967⟩
 
 def conjecture.answer : ℕ := sorry
 
