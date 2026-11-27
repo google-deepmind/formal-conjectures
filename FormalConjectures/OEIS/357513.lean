@@ -26,6 +26,8 @@ with $a(0) = 0$.
 
 *References:*
 - [A357513](https://oeis.org/A357513)
+- O. Kutal, [A proof of the generalized conjecture, with Lean formalization](
+  https://github.com/TheSil/A357513_conjecture), 2026.
 -/
 
 @[expose] public section
@@ -93,10 +95,15 @@ noncomputable def u (m : ℕ) (n : ℕ) : ℕ :=
     ((n.choose k : ℚ) ^ 2 * ((n + k).choose k : ℚ) ^ 2) / k ^ (2 * m + 1) |>.num.natAbs
 
 /--
-We conjecture that $u(p-1) == 0 (mod p^4)$ for all primes $p$,
+We conjecture that $u(p-1) \equiv 0 \pmod{p^4}$ for all primes $p$,
 with a finite number of exceptions that depend on $m$.
+
+Ondrej Kutal proved this in 2026. He showed that the exceptional primes are exactly the primes $p$
+with $(p - 1) \mid (2m + 4)$ and $p \nmid (2m + 7)$. The linked formal proof uses the exceptions
+$p < 2m + 6$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-21-000016"]
 theorem general_supercongruence (m : ℕ) : ∃ (exceptions : Finset ℕ), ∀ p, p.Prime →
     p ∉ exceptions → u m (p - 1) = (0 : ZMod (p ^ 4)) := by
   sorry
