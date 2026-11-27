@@ -40,7 +40,7 @@ The annihilation number $A(G)$ is the largest $k$ for which the $k$ smallest deg
 the number of edges. The minimum disparity $\mathrm{disp}_{\min}(G)$ is the smallest number of
 distinct degrees in $G$ among the open neighbors of any vertex. It is positive because $G$ is
 connected and has more than one vertex. This claim is false. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/adamben04/open-conjectures/blob/5d8340d799176a7e90a77ace38ffc56d62529938/results/graffiti-pc-382d-400c/Graffiti2Dom.lean"]
 theorem conjecture400c :
     ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       G.Connected → 2 < Fintype.card V →
