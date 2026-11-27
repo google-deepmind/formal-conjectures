@@ -50,14 +50,18 @@ theorem isRefactorable_eight_and_nine : Nat.IsRefactorable 8 ∧ Nat.IsRefactora
 theorem not_isRefactorable_zero_and_ten : ¬ Nat.IsRefactorable 0 ∧ ¬ Nat.IsRefactorable 10 := by
   decide
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Kennedy–Cooper Theorem (1990):** Refactorable integers have natural density $0$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-refactorable-numbers/blob/1d1d800bc765379c544473134a2995db585d023b/RefactorableFC/Density.lean#L209"]
 theorem refactorable_hasDensity_zero :
     {n : ℕ | n.IsRefactorable}.HasDensity 0 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Zelinsky's Theorem (2002):** Three consecutive integers cannot all be refactorable. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-refactorable-numbers/blob/1d1d800bc765379c544473134a2995db585d023b/RefactorableFC/NoThreeFC.lean#L14"]
 theorem no_three_consecutive_refactorable (n : ℕ) :
     ¬ (n.IsRefactorable ∧ (n + 1).IsRefactorable ∧ (n + 2).IsRefactorable) := by
   sorry
