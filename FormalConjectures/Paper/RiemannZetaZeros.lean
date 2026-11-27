@@ -27,6 +27,8 @@ public import FormalConjecturesUtil
   [Lean formalisation](https://github.com/anthropics/zeta-23-lean).
 - [BH13] Bui, H. M. and Heath-Brown, D. R., *On simple zeros of the Riemann zeta-function*, 2013.
   [arXiv:1302.5018](https://arxiv.org/abs/1302.5018)
+- [Kn26] K. M. Knausgård, [dyadic lower bound for distinct critical-line zeros](https://github.com/josusanmartin/riemann/blob/d4d280813d0b4f2a8fbb89229755b24f1dfee63e/submissions/knausgard-rh-reflected-kernel-8542/submission.json),
+  with the [compact RH kernel replay](https://github.com/josusanmartin/riemann/releases/tag/compact-rh-854225-v1).
 - [Wikipedia](https://en.wikipedia.org/wiki/Riemann_hypothesis#Zeros_on_the_critical_line)
 
 For a nontrivial zero `ρ = β + iγ` of `ζ` (or of a Dirichlet `L`-function) with multiplicity
@@ -133,13 +135,15 @@ theorem simple_prop_one_hundred : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → 
     ∀ T > 0, (1 - o T) * N riemannZeta T (2 * T) ≤ Ns riemannZeta T (2 * T) := by
   sorry
 
-/-- Is the proportion of distinct zeros of `ζ` unconditionally larger than the Montgomery–Taylor
-bound `(3 - c_MT⁻¹) / 2 = 0.8362…`?
-
-Assuming the Riemann Hypothesis, Bui and Heath-Brown [BH13] proved that the proportion of distinct
-zeros is at least `0.84665`. They count the zeros with `0 < γ < T`, and the statement here counts
-those with `T < γ ≤ 2T`. -/
-@[category research open, AMS 11]
+set_option linter.style.formal_proof_palomar false in
+/-- The proportion of distinct zeros of `ζ` exceeds the Montgomery–Taylor bound
+`(3 - c_MT⁻¹) / 2 = 0.8362…`. Knausgård [Kn26] proves a dyadic lower bound of
+`0.854225 - o(1)` for distinct zeros on the critical line, with multiplicity in the
+denominator. The compact RH replay discharges its Riemann hypothesis assumption.
+Taking `c = 17/20` gives the stated inequality. Bui and Heath-Brown [BH13] give
+a cumulative lower bound of `0.84665` assuming RH. -/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/josusanmartin/riemann/blob/d4d280813d0b4f2a8fbb89229755b24f1dfee63e/submissions/knausgard-rh-reflected-kernel-8542/proof/Solution.lean#L17405-L17409"]
 theorem distinct_prop_lt : ∃ c > (3 - montgomeryTaylorConst⁻¹) / 2, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
     ∀ T > 0, (c - o T) * N riemannZeta T (2 * T) ≤ Nd riemannZeta T (2 * T) := by
