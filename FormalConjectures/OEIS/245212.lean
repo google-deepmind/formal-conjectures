@@ -250,4 +250,49 @@ theorem conjecture.variants.finite_without_exponent_two_mod_four (r : ℕ) (hr :
       (∀ p ∈ n.primeFactors, n.factorization p % 4 ≠ 2) ∧ a n = (σ 1 n : ℤ)}.Finite := by
   sorry
 
+
+/--
+For a fixed positive exponent at two there are effectively finitely many equality
+inputs with two distinct odd prime factors, allowing both odd exponents to vary.
+See the [proof and independent algorithms](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/bac7f4cb656ff4b8915475d88c4c941fb335d7b0/proofs/oeis-divisor-sums/A245212/even-two-primes/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.finite_two_odd_primes (k : ℕ) (hk : 0 < k) :
+    {n : ℕ | a n = (σ 1 n : ℤ) ∧ ∃ p q e f : ℕ, p.Prime ∧ q.Prime ∧ Odd p ∧
+      p < q ∧ 0 < e ∧ 0 < f ∧ n = 2 ^ k * p ^ e * q ^ f}.Finite := by
+  sorry
+
+/--
+For each of the first eleven positive exponents at two, there is no equality with
+exactly two distinct odd prime factors. See the [exhaustive proof](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/bac7f4cb656ff4b8915475d88c4c941fb335d7b0/proofs/oeis-divisor-sums/A245212/even-two-primes/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.eleven_two_adic_layers (k p q e f : ℕ)
+    (hk : 1 ≤ k) (hk' : k ≤ 11) (hp : p.Prime) (hq : q.Prime) (ho : Odd p)
+    (hpq : p < q) (he : 0 < e) (hf : 0 < f) :
+    let n := 2 ^ k * p ^ e * q ^ f
+    a n ≠ (σ 1 n : ℤ) := by
+  sorry
+
+/--
+The divisor count of the odd part bounds the exponent at two in every equality
+with nontrivial odd part. See the [prefix argument](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/bac7f4cb656ff4b8915475d88c4c941fb335d7b0/proofs/oeis-divisor-sums/A245212/even-two-primes/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.two_exponent_bound_by_odd_divisors (k m : ℕ)
+    (hm : 1 < m) (ho : Odd m) (h : a (2 ^ k * m) = (σ 1 (2 ^ k * m) : ℤ)) :
+    let D := m.divisors.card
+    2 ^ (k + 1) < 2 * D ^ 2 * (2 * (k + 1) * D ^ 2) ^ (D - 1) := by
+  sorry
+
+/--
+With at most 32 divisors in the odd part, equality holds exactly at powers of two.
+See the [proof and two exact classifiers](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/bac7f4cb656ff4b8915475d88c4c941fb335d7b0/proofs/oeis-divisor-sums/A245212/even-two-primes/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.odd_part_at_most_32_divisors (k m : ℕ)
+    (ho : Odd m) (hd : m.divisors.card ≤ 32) :
+    a (2 ^ k * m) = (σ 1 (2 ^ k * m) : ℤ) ↔ m = 1 := by
+  sorry
+
 end OeisA245212
