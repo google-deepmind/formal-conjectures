@@ -68,11 +68,13 @@ theorem erdos_1016 :
       Real.logb 2 n + Nat.iteratedLog 2 n - C ≤ h n := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bondy [Bo71] stated without proof, and Griffin [Gr13] proved, the lower bound
 $h(n) \ge \log_2(n - 1) - 1$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/rotem4997/erdos-1016-lean/blob/78f094696cf12c35cec5b581c36b2a311272ad95/Erdos1016Lean/Bondy.lean#L220"]
 theorem erdos_1016.variants.lower (n : ℕ) (hn : 3 ≤ n) :
     Real.logb 2 (n - 1) - 1 ≤ h n := by
   sorry
