@@ -66,8 +66,10 @@ $N(X,\delta)>X^{1/2-\delta^{1/7}}$.
 theorem erdos_466 : ∃ δ : ℝ, 0 < δ ∧ Tendsto (fun X ↦ N X δ) atTop atTop := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Graham proved that $N(X,1/10)> \frac{\log X}{10}$. -/
-@[category research solved, AMS 11 52]
+@[category research solved, AMS 11 52, formal_proof using lean4 at
+  "https://github.com/GuillaumeBAUD-coder/open-math-agents/blob/9b69776f5de33d84b3d3280ac433e16515023fa2/proofs/Erdos466.erdos_466.variants.graham.lean#L203"]
 theorem erdos_466.variants.graham : ∀ X : ℝ, 1 ≤ X → Real.log X / 10 < N X (1 / 10) := by
   sorry
 
