@@ -61,8 +61,14 @@ theorem a_4 : a 4 = 3593 := by decide
 /--
 "It appears that for primes $p \ge 5$, $a(p) \equiv 1 \pmod{p^5}$."
 - _Peter Bala_, Dec 12 2021
+
+Proved by Tanner Clary, with AI assistance, by separating the $k = 0$ term and applying the
+square-difference identity
+$(k!)^4 \binom{n}{k}\binom{n-1}{k}\binom{n+k-1}{k}^2 = n^3 (n - k) \prod_{j=1}^{k-1} (n^2 - j^2)^2$
+for $1 \le k < n$, together with harmonic-sum cancellations in $\mathbb{Z}/p^5\mathbb{Z}$.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-26-000050"]
 theorem conjecture_1 (p : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
     a p % (p ^ 5) = 1 := by
   sorry
@@ -71,8 +77,12 @@ theorem conjecture_1 (p : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) :
 "Conjecture: for $r \ge 2$, and all primes $p \ge 5$,
 $a(p^r) \equiv a(p^{r-1}) \pmod{p^{3r+3}}$."
 - _Peter Bala_, Oct 13 2022
+
+Proved by Tanner Clary, with AI assistance, by cancelling powers of $p$ over $\mathbb{Z}$ for
+indices $p \nmid k$ and telescoping $p$-divisible indices across $p$-adic valuation slices.
 -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-26-000050"]
 theorem conjecture_2 (p r : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) (hr2 : 2 ≤ r) :
     a (p ^ r) % (p ^ (3 * r + 3)) = a (p ^ (r - 1)) % (p ^ (3 * r + 3)) := by
   sorry
