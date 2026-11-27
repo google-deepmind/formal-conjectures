@@ -97,13 +97,20 @@ theorem a_4 : a 4 = 5 := by
   have := Nat.nth_count (p := A) h5
   rwa [hcnt] at this
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is $1155$ the last odd number in this sequence?
 ($1155$ is the $59$th term starting from $1$, corresponding to $a(58) = 1155$).
+
+Answer: No. $815634435 = 3 \cdot 5 \cdot 7 \cdot 11 \cdot 547 \cdot 1291$ satisfies
+$\sigma(n) = 2n - 6$; the greedy procedure subtracts all of its proper divisors and leaves
+$6$, so it is an odd term after $1155$ (cf. [A141548](https://oeis.org/A141548)).
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Lxsoftroxs/formal-conjectures/blob/b9b84c2b680c2bbaf0af35c69a0f9e4c59646645/FormalConjectures/OEIS/108864.proof.lean#L87-L94"]
 theorem conjecture :
-    ∀ n > 58, Even (a n) := by
+    ¬ ∀ n > 58, Even (a n) := by
   sorry
 
 end OeisA108864
