@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjectures.Millennium.RiemannHypothesis
 
 /-!
 # Asymptotic density of powerful numbers
@@ -80,6 +81,7 @@ theorem asymptotic_bateman_grosswald :
       fun x => x ^ ((1 : ℝ) / 6) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can the exponent $1/6$ in the error term of the Bateman–Grosswald asymptotic be improved
 unconditionally? That is, is there $\delta > 0$ such that
@@ -88,7 +90,10 @@ O(x^{1/6 - \delta})?$$
 The answer is yes. Liu proved the exponent $121/860 + \varepsilon$ assuming the Riemann
 Hypothesis [SA26, §1], and the Riemann Hypothesis is proved [Al26].
 -/
-@[category research solved, question, AMS 11]
+@[category research solved, question, AMS 11,
+  conditional formal_proof using lean4 at
+    "https://github.com/ChironTheCentaur/rh-lab-powerful-numbers/blob/467faf0ee95603cd28ff806134bd3e0de330747d/PowerfulFC/ErrorTerm.lean#L236"
+    assuming RiemannHypothesis.riemannHypothesis]
 theorem error_term_improvement :
     ∃ δ > (0 : ℝ),
       (fun x : ℝ => (Q x : ℝ) - A * x ^ ((1 : ℝ) / 2) - B * x ^ ((1 : ℝ) / 3)) =O[atTop]
