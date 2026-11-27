@@ -35,6 +35,7 @@ $A(\sigma) = \frac{15}{5\sigma + 3}$; combining Ingham's bound for $\sigma \le \
 Guth and Maynard's bound for $\sigma \ge \frac{7}{10}$ yields the uniform exponent $\frac{30}{13}$.
 
 *References:*
+- S. Enamakel, [The density hypothesis from RH in Lean](https://github.com/senamakel/density-rh/tree/91ffb87856da458ef93fcc139af0d1d389a82af2), 2026.
 - [Wikipedia](https://en.wikipedia.org/wiki/Lindel%C3%B6f_hypothesis#The_density_hypothesis)
 - A. E. Ingham, *On the estimation of $N(\sigma, T)$*, Quart. J. Math. Oxford Ser. **11** (1940),
   DOI: `10.1093/qmath/os-11.1.201`.
