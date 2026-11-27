@@ -48,10 +48,13 @@ theorem erdos_473 :
 
 /--
 Segal also asked whether for every $n \ge 2$ there is a permutation $a_1, \ldots, a_n$ of
-$\{1, \ldots, n\}$ such that $a_k + a_{k+1}$ is prime for all $1 \le k < n$. This is conjectured to
-be true, and has been verified for infinitely many $n$.
+$\{1, \ldots, n\}$ such that $a_k + a_{k+1}$ is prime for all $1 \le k < n$.
+
+The answer is yes for every $n \ge 2$. Vaed Prasad (lead author) and Codex (OpenAI,
+`gpt-6.2-astra`, AI research assistant) co-developed the solution and co-constructed its Lean proof.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000054&version=1"]
 theorem erdos_473.variants.finite :
     ∀ n : ℕ, 2 ≤ n → ∃ a : Fin n ≃ Fin n, ∀ k : Fin n, ∀ h : k.val + 1 < n,
       ((a k).val + 1 + ((a ⟨k.val + 1, h⟩).val + 1)).Prime := by
