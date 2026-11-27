@@ -69,13 +69,23 @@ theorem hasDivisibleDistinctTuple_sq (n : ℕ) :
 theorem f_ten_le : f 10 ≤ 15 :=
   f_le ⟨![11, 22, 21, 16, 15, 12, 14, 24, 18, 20], by decide, by decide⟩
 
-def erdos_710.answer : ℕ → ℝ := sorry
+/-- The asymptotic answer $f(n)\sim\frac{\sqrt{2}}{e}n\sqrt{\log n}$. -/
+noncomputable def erdos_710.answer : ℕ → ℝ :=
+  fun n => Real.sqrt 2 / Real.exp 1 * (n : ℝ) * Real.sqrt (Real.log (n : ℝ))
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $f(n)$ be minimal such that in $(n,n+f(n))$ there exist distinct integers $a_1,\ldots,a_n$
 such that $k\mid a_k$ for all $1\leq k\leq n$. Obtain an asymptotic formula for $f(n)$.
+
+The formula $f(n)\sim\frac{\sqrt{2}}{e}n\sqrt{\log n}$ was announced by David Turturean
+(see the [proof claim](https://www.erdosproblems.com/forum/thread/710/proof-claims#proof-claim-344)).
+A complete Lean 4 formalization is due to Will Howe, Grant Huffman, Jensen Kohlmeyer and
+Liam Kruer ([source](https://github.com/Ghuffy1/erdos710-lean)).
 -/
-@[category research open, question value, AMS 11]
+@[category research solved, question value, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/Ghuffy1/erdos710-lean/blob/7844854432654d58bfbf6f39c4fdac3da2d736ed/Erdos710/Final.lean#L18-L19"]
 theorem erdos_710 : (fun n ↦ (f n : ℝ)) ~[atTop] erdos_710.answer := by
   sorry
 
