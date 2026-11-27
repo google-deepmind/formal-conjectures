@@ -100,20 +100,89 @@ theorem erdos_878.parts.iii_eventually :
     ¬ ∀ᶠ x : ℕ in atTop, maxUpTo f x = maxUpTo F x := by
   sorry
 
-def erdos_878.parts.iv.answer : ℕ → ℝ := by sorry
+/-- The threshold for the largest prime in the cofactor decomposition. -/
+noncomputable def cofactorThreshold (x : ℕ) : ℝ :=
+  Real.exp (Real.log (x : ℝ) ^ (2 / 3 : ℝ))
 
-/-- Find an asymptotic formula for the number of $n<x$ such that $f(n)=F(n)$. -/
-@[category research open, question value, AMS 11]
+/-- The maximum number of distinct prime factors allowed in the cofactor. -/
+noncomputable def omegaCutoff (x : ℕ) : ℕ :=
+  ⌊Real.log (x : ℝ) ^ (1 / 20 : ℝ)⌋₊
+
+/-- The fixed prime factors of the cofactor and the one variable base. -/
+abbrev CofactorIndex (m : ℕ) := Option {p : ℕ // p ∈ m.primeFactors}
+
+/-- The real bases used to test candidate summands. -/
+noncomputable def cofactorBase (m : ℕ) (u : ℝ) : CofactorIndex m → ℝ
+  | none => u
+  | some p => p.val
+
+/-- The exponents needed by every summand no greater than `x`. -/
+abbrev CofactorExponents (x m : ℕ) := CofactorIndex m → Fin (Nat.log 2 x + 1)
+
+/-- A candidate product of the fixed bases and the variable base. -/
+noncomputable def cofactorValue (x m : ℕ) (u : ℝ) (a : CofactorExponents x m) : ℝ :=
+  ∏ i, cofactorBase m u i ^ (a i).val
+
+/-- The largest permitted exponent for base `b` at the real endpoint `N`. -/
+noncomputable def realPrimeExponent (x : ℕ) (b N : ℝ) : ℕ :=
+  ((Finset.range (Nat.log 2 x + 1)).filter fun k ↦ b ^ k ≤ N).sup id
+
+/-- A real value `u` passes the cofactor comparison when no mixed product improves its support. -/
+noncomputable def cofactorGood (x m : ℕ) (u : ℝ) : Prop :=
+  ∀ a : CofactorExponents x m, 2 ≤ cofactorValue x m u a →
+    cofactorValue x m u a ≤ (m : ℝ) * u →
+    cofactorValue x m u a ≤
+      ∑ i, if (a i).val = 0 then 0 else
+        cofactorBase m u i ^ realPrimeExponent x (cofactorBase m u i) ((m : ℝ) * u)
+
+/-- The least allowed real value of the variable prime. -/
+noncomputable def cofactorLower (m : ℕ) (Y : ℝ) : ℝ :=
+  max Y ((m.primeFactors.sup id : ℕ) : ℝ)
+
+/-- The upper endpoint of the variable prime. -/
+noncomputable def cofactorUpper (x m : ℕ) : ℝ := (x : ℝ) / m
+
+/-- Cofactors which meet the size and prime-factor cutoffs. -/
+noncomputable def cofactorIndices (x K : ℕ) (Y : ℝ) : Finset ℕ :=
+  (Finset.Ico 1 x).filter fun m ↦ m.primeFactors.card ≤ K ∧ Y < cofactorUpper x m
+
+open MeasureTheory in
+/-- The logarithmic integral over the part of the interval passing the cofactor test. -/
+noncomputable def cofactorIntegral (x m : ℕ) (l r : ℝ) : ℝ :=
+  ∫ u in {u | u ∈ Set.Ioo l r ∧ cofactorGood x m u}, (Real.log u)⁻¹
+
+/-- The finite sum of logarithmic integrals in the answer to part (iv). -/
+noncomputable def cofactorAnswer (x : ℕ) : ℝ :=
+  ∑ m ∈ cofactorIndices x (omegaCutoff x) (cofactorThreshold x),
+    cofactorIntegral x m (cofactorLower m (cofactorThreshold x)) (cofactorUpper x m)
+
+/-- The explicit sum of logarithmic integrals for the equality count. -/
+noncomputable def erdos_878.parts.iv.answer : ℕ → ℝ := cofactorAnswer
+
+/-- Find an asymptotic formula for the number of $n<x$ such that $f(n)=F(n)$.
+
+The asymptotic equivalent is a sum of logarithmic integrals over the real sets determined
+by the cofactors of the largest prime factor. -/
+@[category research solved, question value, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-19-000035&version=1"]
 theorem erdos_878.parts.iv :
     (fun x : ℕ ↦
       (((Finset.Ico 1 x).filter fun n ↦ f n = F n).card : ℝ))
       ~[atTop] erdos_878.parts.iv.answer := by
   sorry
 
-def erdos_878.parts.v.answer : ℕ → ℝ := by sorry
+/-- The truncated prime sum in the asymptotic formula for part (v). -/
+noncomputable def erdos_878.parts.v.answer (x : ℕ) : ℝ :=
+  (x : ℝ) * ∑ p ∈ (Finset.range (⌊(Real.log (x : ℝ)) ^ 2⌋₊ + 1)).filter Nat.Prime,
+    let r := Real.log x - (Nat.log p x : ℝ) * Real.log p
+    Real.exp (-r) / p * (r + Real.log p / ((p : ℝ) - 1))
 
-/-- Find an asymptotic formula for $H(x)=\sum_{n<x}f(n)/n$. -/
-@[category research open, question value, AMS 11]
+/-- Find an asymptotic formula for $H(x)=\sum_{n<x}f(n)/n$.
+
+The asymptotic equivalent is a sum over primes up to $(\log x)^2$, weighted by the
+remainder of $\log x$ modulo $\log p$. -/
+@[category research solved, question value, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-19-000034&version=1"]
 theorem erdos_878.parts.v :
     H ~[atTop] erdos_878.parts.v.answer := by
   sorry
