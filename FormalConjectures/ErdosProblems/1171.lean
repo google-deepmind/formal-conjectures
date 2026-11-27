@@ -58,7 +58,8 @@ theorem k_one : OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 1 := by
 `OrdinalMultiColorRamsey` is monotone in the number of non-zero colors:
 a witness for the `k`-color version yields one for any `j ≤ k`.
 -/
-@[category API, AMS 5]
+@[category API, AMS 5, formal_proof using lean4 at
+  "https://github.com/tommac/erdos-formal-proofs/blob/6b0e28e7092b04a9c6517c6a9498171855cd69b3/ErdosFormalProofs/Erdos1171MonoK.lean#L96"]
 theorem mono_k {j k : ℕ} (hjk : j ≤ k)
     (hk : OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 k) :
     OrdinalMultiColorRamsey (ω_ 1 ^ 2) (ω_ 1 * ω) 3 j := by
