@@ -114,14 +114,17 @@ theorem distinct_prop_montgomeryTaylor : ∃ o : ℝ → ℝ, o =o[atTop] (1 : �
       Nd riemannZeta T (2 * T) := by
   sorry
 
-/-- Is the proportion of simple zeros of `ζ` on the critical line unconditionally larger than
-the Montgomery–Taylor bound `2 - c_MT⁻¹ = 0.6725…`? [Cl26, §7.2] puts the ceiling of its
-method at about `0.682`.
+/-- The proportion of simple zeros of `ζ` on the critical line exceeds the Montgomery–Taylor
+bound $H = 2 - c_{\mathrm{MT}}^{-1}$ by a fixed positive amount.
+[Lince’s three-point estimate](https://palomar-registry.org/entry.html?id=PALOMAR-2026-08-25-000005)
+gives the unconditional asymptotic lower bound $(149000000 H - 99200)/148800133$ on $(T,2T]$.
+The [Lean derivation](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/0306ab722d6e99db486fd84250a06aabd145592e/SimplePropLt.lean#L95) uses the same dyadic window for both counts.
 
 Assuming the Riemann Hypothesis, Bui and Heath-Brown [BH13] proved that the proportion of simple
 zeros is at least `19/27 = 0.7037…`. They count the zeros with `0 < γ < T`, and the statement here
 counts those with `T < γ ≤ 2T`. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-08-25-000005"]
 theorem simple_prop_lt : ∃ c > 2 - montgomeryTaylorConst⁻¹, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
       ∀ T > 0, (c - o T) * N riemannZeta T (2 * T) ≤ Ns riemannZeta T (2 * T) := by
