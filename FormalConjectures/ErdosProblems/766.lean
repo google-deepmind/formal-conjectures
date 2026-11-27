@@ -107,6 +107,7 @@ theorem erdos_766.parts.i :
       (fun n ↦ (forcingNumber n k l : ℝ)) =Θ[atTop] erdos_766.parts.i.answer k l := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 For fixed $k$ and large $n$ is $f(n;k,l)$ a strictly monotone function of $l$?
 
@@ -115,7 +116,8 @@ $k<l\leq k^2/4$ in which the question is asked there; here `k ^ 2 / 4` is $\lflo
 The question for the function of erdosproblems.com is
 `Erdos766.erdos_766.variants.minExtremalNumber_strictMonoOn`.
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://github.com/GuillaumeBAUD-coder/open-math-agents/blob/7ffbca0359a65565a0867f86d676d76386431de5/proofs/Erdos766.erdos_766.parts.ii.lean#L180"]
 theorem erdos_766.parts.ii :
     ∀ k : ℕ, ∀ᶠ n : ℕ in atTop,
       StrictMonoOn (forcingNumber n k) (Set.Ioc k (k ^ 2 / 4)) := by
