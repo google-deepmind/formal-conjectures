@@ -67,7 +67,8 @@ satisfy $a(x) = 8$. Is $p\#_{12}/p\#_4 = 35336848261$ the least $x \ge 2$ such t
 But is $p\#12/p\#4$ the least such $x$?"
 - _Robert G. Wilson v_, Dec 18 2014
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/pablodrake/oeis-a251758/blob/4de97230cbe83997a4d3d005d668b51926e2a236/OeisA251758/Proof.lean#L1301"]
 theorem conjecture :
     IsLeast {x : ℕ | 2 ≤ x ∧ a x = 8}
       (Nat.kthPrimorial 12 / Nat.kthPrimorial (Nat.primeCounting' 8)) := by
