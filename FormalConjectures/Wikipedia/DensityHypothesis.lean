@@ -36,6 +36,7 @@ Guth and Maynard's bound for $\sigma \ge \frac{7}{10}$ yields the uniform expone
 
 *References:*
 - S. Enamakel, [The density hypothesis from RH in Lean](https://github.com/senamakel/density-rh/tree/91ffb87856da458ef93fcc139af0d1d389a82af2), 2026.
+- D. A. Dabish, [A weighted-summability proof of the density estimate](https://github.com/DomTheDeveloper/ProofPlaygrond/tree/e3880df996c7303548cc7fc1072a8ec8dc8b48ba/proofs/zeta-density-weighted), 2026.
 - [Wikipedia](https://en.wikipedia.org/wiki/Lindel%C3%B6f_hypothesis#The_density_hypothesis)
 - A. E. Ingham, *On the estimation of $N(\sigma, T)$*, Quart. J. Math. Oxford Ser. **11** (1940),
   DOI: `10.1093/qmath/os-11.1.201`.
