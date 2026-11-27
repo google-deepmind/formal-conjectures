@@ -67,13 +67,13 @@ theorem conjecture (n : ℕ) (hn : 0 < n) : a n = n ↔ n = 21 := by
   sorry
 
 /--
-If a positive integer $n$ has a prime divisor at most 251, then $a(n) = n$ exactly when
+If a positive integer $n$ has a prime divisor at most 257, then $a(n) = n$ exactly when
 $n = 21$. Two independent exhaustive programs verify the finite cases in the
-[computer-assisted proof](https://github.com/DomTheDeveloper/ProofPlaygrond/tree/0d4f34b5e72421de27457f886fbdd8ef018870d0/proofs/oeis-divisor-sums).
+[computer-assisted proof](https://github.com/DomTheDeveloper/ProofPlaygrond/tree/4e6809caad9a8a72b72182dea47ddcc4bce87596/proofs/oeis-divisor-sums/A245211/least-prime-257).
 -/
 @[category research solved, AMS 11]
 theorem conjecture.variants.small_prime_factor (n : ℕ) (hn : 0 < n)
-    (hp : ∃ p ∈ n.primeFactors, p ≤ 251) : a n = n ↔ n = 21 := by
+    (hp : ∃ p ∈ n.primeFactors, p ≤ 257) : a n = n ↔ n = 21 := by
   sorry
 
 /--
