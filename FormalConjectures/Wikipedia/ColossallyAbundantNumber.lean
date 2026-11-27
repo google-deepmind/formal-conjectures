@@ -190,6 +190,7 @@ theorem infinite_colossallyAbundant :
     {n : ℕ | IsColossallyAbundant n}.Infinite := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- Unconditional prime-or-squarefree-semiprime ratio theorem [AE44, p. 455]: if $m < n$ satisfy
 `AreConsecutiveAlaogluErdosColossallyAbundant m n`, then $n / m$ is either prime or a product of two
 distinct primes (proved via the six exponentials theorem [La66, Ra68]). Varying $\varepsilon > 0$
@@ -197,16 +198,19 @@ yields the same set of integers under `IsAlaogluErdosColossallyAbundant` as unde
 greatest-maximizer convention, so both give the same consecutive pairs; some one-sided strict
 tie-breaker is needed, since a four-way tie $n, np, nq, npq$ with primes $p < q$ under two-sided
 non-strict `IsColossallyAbundant` would include consecutive terms $np, nq$ of ratio $q / p$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-ca-maximizers/blob/eabb6173b6271ce4b6ca91c92caab5adb5d44060/CARatiosFC/Ratio.lean#L184"]
 theorem alaoglu_erdos_prime_or_semiprime_ratio (m n : ℕ)
     (h : AreConsecutiveAlaogluErdosColossallyAbundant m n) :
     (∃ p : ℕ, p.Prime ∧ n = p * m) ∨
       ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ p ≠ q ∧ n = p * q * m := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- By the six exponentials theorem [La66, Ra68], for each $\varepsilon > 0$, at most four integers
 $n > 1$ simultaneously maximize $\sigma_1(n) / n^{1+\varepsilon}$ [AE44, EN75]. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-ca-maximizers/blob/eabb6173b6271ce4b6ca91c92caab5adb5d44060/CARatiosFC/Maximizers.lean#L154"]
 theorem encard_colossallyAbundant_maximizers_le_four (ε : ℝ) (hε : 0 < ε) :
     Set.encard {n : ℕ | 1 < n ∧ ∀ k : ℕ, 1 < k →
       (σ 1 k : ℝ) / (k : ℝ) ^ (1 + ε) ≤ (σ 1 n : ℝ) / (n : ℝ) ^ (1 + ε)} ≤ 4 := by
