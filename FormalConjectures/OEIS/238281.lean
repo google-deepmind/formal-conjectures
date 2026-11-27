@@ -70,13 +70,20 @@ OEIS states open intervals, but for $n = 2$ the only candidate is $k = 1$, where
 interval $(0, 2)$ contains 0 primes while $(2, 4)$ contains 1 prime. Half-open intervals
 $((k-1)n, kn]$ match Sun's Mathematica formula `PrimePi[k*n] - PrimePi[(k-1)*n]` and hold for
 $n = 2$.
+
+This is false. For $n = 14$ no such $k$ exists. For $n = 286$ no such $k$ exists either.
 -/
-@[category research open, AMS 11]
-theorem conjecture_2 (n : ℕ) (hn : 1 < n) (h8 : n ≠ 8) :
-    ∃ k : ℕ, 0 < k ∧ k < n ∧ (2 * k + 1).Prime ∧
-      Nat.primeCounting (k * n) - Nat.primeCounting ((k - 1) * n) =
-      Nat.primeCounting ((k + 1) * n) - Nat.primeCounting (k * n) := by
-  sorry
+@[category research solved, AMS 11]
+theorem conjecture_2 :
+    ¬ ∀ n : ℕ, 1 < n → n ≠ 8 →
+      ∃ k : ℕ, 0 < k ∧ k < n ∧ (2 * k + 1).Prime ∧
+        Nat.primeCounting (k * n) - Nat.primeCounting ((k - 1) * n) =
+        Nat.primeCounting ((k + 1) * n) - Nat.primeCounting (k * n) := by
+  intro h
+  obtain ⟨k, hk0, hk, hp, he⟩ := h 14 (by norm_num) (by norm_num)
+  interval_cases k <;> first
+    | (exfalso; revert hp; norm_num; done)
+    | (exfalso; revert he; decide +kernel)
 
 /--
 Conjecture (ii): For any integer $n > 4$, there is a positive integer $k < p_n$ such that all the
