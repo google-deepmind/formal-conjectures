@@ -76,6 +76,7 @@ theorem sumner_conjecture.variants.large_n :
           Fintype.card V = 2 * n - 2 → G.IsTournament → Embeds D G := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **El Sahili (2004): tournaments on $3n - 3$ vertices suffice.**
 
@@ -84,7 +85,8 @@ improving the bound $12n$ of Häggkvist and Thomason [HT91].
 
 *Reference:* [ES04].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-sumner-el-sahili/blob/a41c4affce63499d7af29595f9d294de8d870c86/SumnerFC/Statement.lean#L35"]
 theorem sumner_conjecture.variants.el_sahili (n : ℕ) (hn : 2 ≤ n)
     {W : Type} [Fintype W] [DecidableEq W] (D : Digraph W) [DecidableRel D.Adj]
     (hW : Fintype.card W = n) (hD : IsOrientedTree D)
