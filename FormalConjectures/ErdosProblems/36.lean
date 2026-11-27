@@ -355,6 +355,17 @@ by *Jan Kristian Haugland*
 theorem minimum_overlap.variants.upper.haugland_2022 :
     atTop.limsup MinOverlapQuotient ≤ 0.3809268534330870 := by sorry
 
+/--
+Dong's $9{,}408$-cell witness gives the following rational upper bound.
+See [the Lean derivation](https://github.com/Hallllllll/erdos36-minimum-overlap-lean4/blob/06476b584422c4826c092654c80cbdc2c6402eb0/Overlap/FormalConjecturesBridge.lean#L90)
+and the [archived overlap witness](https://doi.org/10.5281/zenodo.24575270).
+-/
+@[category research solved, AMS 5 11]
+theorem minimum_overlap.variants.upper.dong_2026 :
+    atTop.limsup MinOverlapQuotient ≤
+      2462273619527794579322422405079 / 6465103708838880000000000000000 := by
+  sorry
+
 def erdos_36.variants.lower.answer : ℝ := sorry
 
 /--
@@ -379,6 +390,15 @@ theorem erdos_36.variants.upper :
 
 /--
 The limit of `MinOverlapQuotient` exists and it is less than $0.385694$.
+
+In Dong's Lean development,
+[`whiteBridge`](https://github.com/Hallllllll/erdos36-minimum-overlap-lean4/blob/06476b584422c4826c092654c80cbdc2c6402eb0/Overlap/DiscreteUpper.lean#L87)
+formalizes Swinnerton-Dyer's convergence theorem (published in Haugland, 1996) for the
+internal overlap ratio, which converges to the continuous constant.
+[`minimumOverlap_eq_erdos36`](https://github.com/Hallllllll/erdos36-minimum-overlap-lean4/blob/06476b584422c4826c092654c80cbdc2c6402eb0/Overlap/FormalConjecturesBridge.lean#L56)
+identifies the finite minima by changing indices.
+[`continuous_upper_bound`](https://github.com/Hallllllll/erdos36-minimum-overlap-lean4/blob/06476b584422c4826c092654c80cbdc2c6402eb0/Overlap/Main.lean#L119)
+bounds the continuous constant by a rational below $0.385694$.
 -/
 @[category research solved, AMS 5 11]
 theorem erdos_36.variants.exists : ∃ c, atTop.Tendsto MinOverlapQuotient (𝓝 c) ∧ c < 0.385694 := by
