@@ -29,6 +29,22 @@ public import FormalConjecturesUtil
 
 namespace Arxiv.«2608.08695»
 
+open scoped ENNReal
+
+/-- A continuous linear map to a subspace is a projection if it fixes every vector in that subspace. -/
+def IsProjection {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X] (Y : Submodule ℝ X) (P : X →L[ℝ] Y) : Prop :=
+  ∀ y : Y, P (y : X) = y
+
+/-- The relative projection constant of a subspace is the infimum of the operator norms of continuous linear projections onto it. -/
+noncomputable def RelativeProjectionConstant {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X] (Y : Submodule ℝ X) : ℝ≥0∞ :=
+  sInf {c : ℝ≥0∞ | ∃ P : X →L[ℝ] Y, IsProjection Y P ∧ c = ENNReal.ofReal ‖P‖}
+
+universe u
+
+/-- The absolute projection constant of a real Banach space. -/
+noncomputable def absoluteProjectionConstant (Y : Type u) [NormedAddCommGroup Y] [NormedSpace ℝ Y] [CompleteSpace Y] : ℝ≥0∞ :=
+  sSup {c : ℝ≥0∞ | ∃ (X : Type u) (_ : NormedAddCommGroup X) (_ : NormedSpace ℝ X) (_ : CompleteSpace X) (i : Y →ₗᵢ[ℝ] X), c = RelativeProjectionConstant i.toLinearMap.range}
+
 /-- A real matrix is admissible if its rows are orthonormal. -/
 def IsAdmissible (m N : ℕ) (U : Matrix (Fin m) (Fin N) ℝ) : Prop :=
   U * U.transpose = 1
@@ -37,18 +53,27 @@ def IsAdmissible (m N : ℕ) (U : Matrix (Fin m) (Fin N) ℝ) : Prop :=
 def IsAdmissibleWeights (N : ℕ) (t : Fin N → ℝ) : Prop :=
   (∀ i : Fin N, 0 ≤ t i) ∧ (∑ i : Fin N, (t i) ^ 2) = 1
 
-/-- The sum of absolute inner products between columns of 'U', weighted by the products of the corresponding entries of 't'. -/
+/-- The sum of absolute inner products between columns of `U`, weighted by the products of the corresponding entries of `t`. -/
 noncomputable def F (m N : ℕ) (U : Matrix (Fin m) (Fin N) ℝ) (t : Fin N → ℝ) : ℝ :=
   ∑ i : Fin N, ∑ j : Fin N, t i * t j * |(U.transpose * U) i j|
 
-/-- The set of values of 'F' over all dimensions 'N >= m', admissible matrices, and admissible weight vectors. -/
+/-- The set of values of `F` over all dimensions `N >= m`, admissible matrices, and admissible weight vectors. -/
 def S (m : ℕ) : Set ℝ :=
   {x : ℝ | ∃ N : ℕ, m ≤ N ∧ ∃ U : Matrix (Fin m) (Fin N) ℝ, ∃ t : Fin N → ℝ, IsAdmissible m N U ∧ IsAdmissibleWeights N t ∧ F m N U t = x}
 
-/-- The maximal real projection constant in dimension 'm' is defined as the supremum of 'S m' using the finite-matrix characterization. -/
-noncomputable def lambdaR (m : ℕ) : ℝ :=
-  sSup (S m)
+/-- The maximal real projection constant of all $m$-dimensional real Banach spaces. -/
+noncomputable def lambdaR (m : ℕ) : ℝ≥0∞ :=
+  sSup {c : ℝ≥0∞ | ∃ (Y : Type) (_ : NormedAddCommGroup Y) (_ : NormedSpace ℝ Y) (_ : CompleteSpace Y), FiniteDimensional ℝ Y ∧ Module.finrank ℝ Y = m ∧ c = absoluteProjectionConstant Y}
 
+/-- In positive dimension, the maximal real projection constant equals the supremum of the admissible matrix values (Theorem 1.1 and the identity preceding Example 2.1). -/
+@[category research solved, AMS 46]
+theorem lambdaR_eq_matrix_sup (m : ℕ) (hm : 0 < m) : lambdaR m = ENNReal.ofReal (sSup (S m)) := by sorry
+
+/-- The one-dimensional matrix objective attains value $1$ at the identity matrix. -/
+@[category test, AMS 46]
+theorem one_mem_S_one : (1 : ℝ) ∈ S 1 := by
+  refine ⟨1, le_rfl, 1, fun _ => 1, ?_⟩
+  simp [IsAdmissible, IsAdmissibleWeights, F]
 
 /-- The maximal real projection constant in dimension 6 is $16/7$ -/
 @[category research open, AMS 46]
