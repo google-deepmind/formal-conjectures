@@ -54,4 +54,102 @@ theorem erdos_433 : ∀ k, 2 ≤ k →
     Tendsto (fun n : ℕ => (g k n : ℝ) / ((n : ℝ) ^ 2 / ((k : ℝ) - 1))) atTop (𝓝 1) := by
   sorry
 
+/-- If $1 \in A$, every natural number lies in the closure, so the Frobenius number is $0$. -/
+@[category API, AMS 11]
+lemma frobeniusNumber_of_one_mem {A : Finset ℕ} (h : 1 ∈ A) : frobeniusNumber A = 0 := by
+  have : {m | m ∉ AddSubmonoid.closure (A : Set ℕ)} = ∅ := by
+    ext m
+    simpa using (AddSubmonoid.closure (A : Set ℕ)).nsmul_mem
+      (AddSubmonoid.subset_closure (Finset.mem_coe.mpr h)) m
+  simp [frobeniusNumber, this]
+
+/-- Sylvester's theorem: for coprime $a, b > 1$, the Frobenius number of $\{a, b\}$ is
+$ab - a - b$. -/
+@[category API, AMS 11]
+lemma frobeniusNumber_pair {a b : ℕ} (cop : a.Coprime b) (ha : 1 < a) (hb : 1 < b) :
+    frobeniusNumber {a, b} = a * b - a - b := by
+  have h := _root_.frobeniusNumber_pair cop ha hb
+  rw [_root_.FrobeniusNumber, ← Finset.coe_pair] at h
+  exact h.csSup_eq
+
+/-- The Frobenius number of a $2$-element subset of $\{1, \ldots, n\}$ with greatest common
+divisor one is at most $(n-1)n - (n-1) - n$. -/
+@[category API, AMS 11]
+lemma frobeniusNumber_le_of_card_eq_two {n : ℕ} {A : Finset ℕ} (hA : A ⊆ Finset.Icc 1 n)
+    (hcard : A.card = 2) (hgcd : A.gcd id = 1) :
+    frobeniusNumber A ≤ (n - 1) * n - (n - 1) - n := by
+  obtain ⟨a, b, hab, rfl⟩ := Finset.card_eq_two.mp hcard
+  have ha := hA (by simp : a ∈ ({a, b} : Finset ℕ))
+  have hb := hA (by simp : b ∈ ({a, b} : Finset ℕ))
+  simp only [Finset.mem_Icc] at ha hb
+  have cop : a.Coprime b := by
+    simp only [Finset.gcd_insert, Finset.gcd_singleton, id, normalize_eq] at hgcd
+    exact hgcd
+  rcases eq_or_ne a 1 with rfl | ha1
+  · simp [frobeniusNumber_of_one_mem]
+  rcases eq_or_ne b 1 with rfl | hb1
+  · simp [frobeniusNumber_of_one_mem]
+  rw [frobeniusNumber_pair cop (by omega) (by omega)]
+  -- Write `a = x + 2`, `b = y + 2`, `n = z + 3`, so that every product is an atom for `omega`.
+  obtain ⟨x, rfl⟩ : ∃ x, a = x + 2 := ⟨a - 2, by omega⟩
+  obtain ⟨y, rfl⟩ : ∃ y, b = y + 2 := ⟨b - 2, by omega⟩
+  obtain ⟨z, rfl⟩ : ∃ z, n = z + 3 := ⟨n - 3, by omega⟩
+  have hxy : (x + 1) * (y + 1) ≤ (z + 1) * (z + 2) := by
+    rcases lt_or_gt_of_ne hab with h | h
+    · exact Nat.mul_le_mul (by omega) (by omega)
+    · exact (Nat.mul_le_mul (by omega) (by omega) : (x + 1) * (y + 1) ≤ (z + 2) * (z + 1)).trans
+        (le_of_eq (Nat.mul_comm _ _))
+  have e1 : (x + 2) * (y + 2) = (x + 1) * (y + 1) + x + y + 3 := by ring
+  have e2 : (z + 3 - 1) * (z + 3) = (z + 1) * (z + 2) + 2 * z + 4 := by
+    rw [show z + 3 - 1 = z + 2 by omega]; ring
+  omega
+
+/-- For $n \geq 3$, $g(2, n) = n^2 - 3n + 1$, attained by $\{n - 1, n\}$. -/
+@[category API, AMS 11]
+lemma g_two {n : ℕ} (hn : 3 ≤ n) : g 2 n = n ^ 2 - 3 * n + 1 := by
+  obtain ⟨z, rfl⟩ : ∃ z, n = z + 3 := ⟨n - 3, by omega⟩
+  have hval : (z + 3 - 1) * (z + 3) - (z + 3 - 1) - (z + 3) = (z + 3) ^ 2 - 3 * (z + 3) + 1 := by
+    have e1 : (z + 3 - 1) * (z + 3) = z ^ 2 + 5 * z + 6 := by
+      rw [show z + 3 - 1 = z + 2 by omega]; ring
+    have e2 : (z + 3) ^ 2 = z ^ 2 + 6 * z + 9 := by ring
+    omega
+  have hmem : (z + 3) ^ 2 - 3 * (z + 3) + 1 ∈ {m | ∃ A : Finset ℕ, A ⊆ Finset.Icc 1 (z + 3) ∧
+      A.card = 2 ∧ A.gcd id = 1 ∧ m = frobeniusNumber A} := by
+    have cop : (z + 2).Coprime (z + 3) := by
+      rw [show z + 3 = (z + 2) + 1 by ring, Nat.coprime_self_add_right]
+      exact Nat.coprime_one_right _
+    refine ⟨{z + 2, z + 3}, ?_, ?_, ?_, ?_⟩
+    · intro x hx
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hx
+      simp only [Finset.mem_Icc]
+      omega
+    · simp
+    · simp only [Finset.gcd_insert, Finset.gcd_singleton, id, normalize_eq]
+      exact cop
+    · rw [frobeniusNumber_pair cop (by omega) (by omega), ← hval]
+      congr 2
+  apply le_antisymm
+  · refine csSup_le ⟨_, hmem⟩ ?_
+    rintro m ⟨A, hA, hcard, hgcd, rfl⟩
+    exact hval ▸ frobeniusNumber_le_of_card_eq_two hA hcard hgcd
+  · refine le_csSup ⟨(z + 3) ^ 2 - 3 * (z + 3) + 1, ?_⟩ hmem
+    rintro m ⟨A, hA, hcard, hgcd, rfl⟩
+    exact hval ▸ frobeniusNumber_le_of_card_eq_two hA hcard hgcd
+
+/-- The case $k = 2$ of `erdos_433`: $g(2, n) \sim n^2$. This follows from Sylvester's theorem
+that the Frobenius number of coprime $a, b > 1$ is $ab - a - b$. -/
+@[category research solved, AMS 11]
+theorem erdos_433.variants.k_eq_two :
+    Tendsto (fun n : ℕ => (g 2 n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 1) := by
+  have h0 := tendsto_one_div_atTop_nhds_zero_nat (𝕜 := ℝ)
+  have hlim : Tendsto (fun n : ℕ => 1 - 3 * (1 / (n : ℝ)) + (1 / (n : ℝ)) ^ 2) atTop (𝓝 1) := by
+    simpa using (tendsto_const_nhds.sub (tendsto_const_nhds.mul h0)).add (h0.pow 2)
+  refine hlim.congr' ?_
+  filter_upwards [eventually_ge_atTop 3] with n hn
+  have hn0 : (n : ℝ) ≠ 0 := by positivity
+  rw [g_two hn, Nat.cast_add, Nat.cast_sub (by nlinarith), Nat.cast_mul, Nat.cast_pow]
+  field_simp
+  push_cast
+  ring
+
 end Erdos433
