@@ -25,6 +25,8 @@ prime factors of $k$ counted with multiplicity.
 
 *References:*
 - [A212496](https://oeis.org/A212496)
+- [MoTr21] Mossinghoff, M. J. and Trudgian, T. S., *Oscillations in weighted arithmetic sums*.
+  Int. J. Number Theory 17 (2021), 1697-1716. [arXiv:2007.14537](https://arxiv.org/abs/2007.14537)
 -/
 
 @[expose] public section
@@ -64,18 +66,23 @@ def b (n : ℕ) : ℚ :=
 /--
 "On May 16 2012, Zhi-Wei Sun conjectured that $a(n)$ is positive for each $n > 4$."
 - _Zhi-Wei Sun_, May 19 2012
+
+This is false: $a(n) < -0.019349\sqrt{n}$ for infinitely many $n$ [MoTr21, Theorem 1.3]. No
+explicit such $n$ is known.
 -/
-@[category research open, AMS 11]
-theorem conjecture_1 (n : ℕ) (hn : 4 < n) : 0 < a n := by
+@[category research solved, AMS 11]
+theorem conjecture_1 : ¬ ∀ n : ℕ, 4 < n → 0 < a n := by
   sorry
 
 /--
 "Moreover, he guessed that $a(n) > \sqrt{n}$ for any $n > 324$."
 - _Zhi-Wei Sun_, May 19 2012
+
+This is false. The smallest $n \geq 325$ with $a(n) \leq \sqrt{n}$ is $n = 702469704523413$, where
+$a(n) = 26504145$ [MoTr21, Theorem 1.2(a)].
 -/
-@[category research open, AMS 11]
-theorem conjecture_2 (n : ℕ) (hn : 324 < n) :
-    Real.sqrt (n : ℝ) < (a n : ℝ) := by
+@[category research solved, AMS 11]
+theorem conjecture_2 : ¬ ∀ n : ℕ, 324 < n → Real.sqrt (n : ℝ) < (a n : ℝ) := by
   sorry
 
 /--
@@ -90,18 +97,22 @@ theorem conjecture_3 (n : ℕ) (hn : 5892 < n) :
 /--
 "Sun also conjectured that $b(n) = \sum_{k=1}^n (-1)^{k-\Omega(k)}/k < 0$ for all $n=1,2,3,\dots$"
 - _Zhi-Wei Sun_, May 19 2012
+
+This is false: $b(n)\sqrt{n} > 0.019349$ for infinitely many $n$ [MoTr21, Theorem 1.3]. No explicit
+such $n$ is known.
 -/
-@[category research open, AMS 11]
-theorem conjecture_4 (n : ℕ) (hn : 0 < n) : b n < 0 := by
+@[category research solved, AMS 11]
+theorem conjecture_4 : ¬ ∀ n : ℕ, 0 < n → b n < 0 := by
   sorry
 
 /--
 "Moreover, he guessed that $b(n) < -1/\sqrt{n}$ for all $n > 1$."
 - _Zhi-Wei Sun_, May 19 2012
+
+This is false, since $b(n)$ is positive for infinitely many $n$ [MoTr21, Theorem 1.3].
 -/
-@[category research open, AMS 11]
-theorem conjecture_5 (n : ℕ) (hn : 1 < n) :
-    (b n : ℝ) < -1 / Real.sqrt (n : ℝ) := by
+@[category research solved, AMS 11]
+theorem conjecture_5 : ¬ ∀ n : ℕ, 1 < n → (b n : ℝ) < -1 / Real.sqrt (n : ℝ) := by
   sorry
 
 /--
