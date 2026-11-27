@@ -27,6 +27,8 @@ public import FormalConjecturesUtil
   [Lean formalisation](https://github.com/anthropics/zeta-23-lean).
 - [BH13] Bui, H. M. and Heath-Brown, D. R., *On simple zeros of the Riemann zeta-function*, 2013.
   [arXiv:1302.5018](https://arxiv.org/abs/1302.5018)
+- [Li26] T. Lince, three-point bound for simple zeros of the Riemann zeta function, 2026.
+  [Lean proof](https://github.com/teal-sea/zeta-lab/blob/84312e4477dfeb7e0d8a91c38897f225f5a52f19/lean/bridge/V2Solution.lean#L184-L190).
 - [Wikipedia](https://en.wikipedia.org/wiki/Riemann_hypothesis#Zeros_on_the_critical_line)
 
 For a nontrivial zero `ρ = β + iγ` of `ζ` (or of a Dirichlet `L`-function) with multiplicity
@@ -114,14 +116,16 @@ theorem distinct_prop_montgomeryTaylor : ∃ o : ℝ → ℝ, o =o[atTop] (1 : �
       Nd riemannZeta T (2 * T) := by
   sorry
 
-/-- Is the proportion of simple zeros of `ζ` on the critical line unconditionally larger than
-the Montgomery–Taylor bound `2 - c_MT⁻¹ = 0.6725…`? [Cl26, §7.2] puts the ceiling of its
-method at about `0.682`.
+/-- The proportion of simple zeros of `ζ` on the critical line exceeds the Montgomery–Taylor
+bound $H = 2 - c_{\mathrm{MT}}^{-1}$ by a fixed positive amount. Lince [Li26] proves the
+asymptotic lower bound $(149000000 H - 99200)/148800133 = 0.6727373\ldots$ on $(T,2T]$
+unconditionally.
 
 Assuming the Riemann Hypothesis, Bui and Heath-Brown [BH13] proved that the proportion of simple
 zeros is at least `19/27 = 0.7037…`. They count the zeros with `0 < γ < T`, and the statement here
 counts those with `T < γ ≤ 2T`. -/
-@[category research open, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-08-25-000005"]
 theorem simple_prop_lt : ∃ c > 2 - montgomeryTaylorConst⁻¹, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
       ∀ T > 0, (c - o T) * N riemannZeta T (2 * T) ≤ Ns riemannZeta T (2 * T) := by
