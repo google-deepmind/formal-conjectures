@@ -66,4 +66,23 @@ Conjecture: $21$ is the only positive integer $n$ such that $a(n) = n$.
 theorem conjecture (n : ℕ) (hn : 0 < n) : a n = n ↔ n = 21 := by
   sorry
 
+/--
+If a positive integer $n$ has a prime divisor at most 251, then $a(n) = n$ exactly when
+$n = 21$. Two independent exhaustive programs verify the finite cases in the
+[computer-assisted proof](https://github.com/DomTheDeveloper/ProofPlaygrond/tree/0d4f34b5e72421de27457f886fbdd8ef018870d0/proofs/oeis-divisor-sums).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.small_prime_factor (n : ℕ) (hn : 0 < n)
+    (hp : ∃ p ∈ n.primeFactors, p ≤ 251) : a n = n ↔ n = 21 := by
+  sorry
+
+/--
+For $X \geq 10^{100}$, the proportion of fixed points among the positive integers up to
+$X$ is less than one in $120\,000\,000$. See the [quantitative bound](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/0d4f34b5e72421de27457f886fbdd8ef018870d0/proofs/oeis-divisor-sums/A245212/A245212-Density-Zero.pdf).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.quantitative_sparsity (X : ℕ) (hX : 10 ^ 100 ≤ X) :
+    120000000 * ((Finset.Icc 1 X).filter (fun n => a n = n)).card < X := by
+  sorry
+
 end OeisA245211
