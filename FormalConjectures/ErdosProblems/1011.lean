@@ -28,6 +28,7 @@ public import FormalConjecturesUtil
   [On minimal triangle-free 6-chromatic graphs](https://arxiv.org/abs/1707.07581).
   Journal of Graph Theory 93 (2020), 34–48.
   [Graph catalogue](https://houseofgraphs.org/TrianglefreeKChrom).
+- K. Kitamura, [the five-colour threshold from order 80](https://github.com/KitaKen1/erdos-1011-lean/blob/c1a089df40579aa3cb1dc3f22c588834691d7176/lean-r5/R5Kernel/Final.lean#L6).
 -/
 
 @[expose] public section
@@ -182,5 +183,15 @@ theorem erdos_1011.variants.five_small :
   exact ⟨⟨h22, fun _ hm ↦ erdos_1011.variants.five_lower 0 hm⟩,
     ⟨h23, fun _ hm ↦ erdos_1011.variants.five_lower 1 hm⟩,
     ⟨h24, fun _ hm ↦ erdos_1011.variants.five_lower 2 hm⟩⟩
+
+set_option linter.style.formal_proof_palomar false in
+/-- For every $n \ge 47$, the least number of edges forcing a triangle in an $n$-vertex graph
+of chromatic number at least five is $\lfloor (n-6)^2/4 \rfloor + 6$.
+This extends Kitamura's five-colour theorem to orders $47$ through $79$. -/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/prabhavag/erdos-1011-five-colour/blob/2dfbb57f2387bd73f4f0798330b1c67131d57828/Proof/From47.lean#L137"]
+theorem erdos_1011.variants.five_ge_47 {n : ℕ} (hn : 47 ≤ n) :
+    IsLeast (thresholds 5 n) ((n - 6) ^ 2 / 4 + 6) := by
+  sorry
 
 end Erdos1011
