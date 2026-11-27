@@ -93,7 +93,6 @@ noncomputable def c₀ : ℝ :=
 /-- The sample space of LO's weights `a ∈ [1, B]ⁿ` [LO85, (3.3)]. -/
 noncomputable def sampleBox (n B : ℕ) : Finset (Fin n → ℤ) := Fintype.piFinset fun _ => Finset.Icc (1 : ℤ) B
 
-set_option linter.style.formal_proof_palomar false in
 open Classical in
 /--
 **The "almost no" half of the Lagarias–Odlyzko sharpness conjecture** [LO85, §5(2)].
@@ -104,7 +103,7 @@ For every density `d > 1/c₀ = 0.6463…` there is `δ > 0` such that for every
 vector of the lattice `L(a, ∑ eᵢ aᵢ)`.
 -/
 @[category research solved, AMS 11 52 68, formal_proof using lean4 at
-  "https://github.com/Attia-Ahmed/formal-proofs/blob/main/PNP/PaperResults.lean#L5378"]
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000077"]
 theorem almost_no_above_critical_density (d : ℝ) (hd : 1 / c₀ < d) :
     ∃ δ > 0, ∀ η > 0, ∀ᶠ n in Filter.atTop,
       (((sampleBox n ⌊(2 : ℝ) ^ ((n : ℝ) / d)⌋₊).filter fun a =>
