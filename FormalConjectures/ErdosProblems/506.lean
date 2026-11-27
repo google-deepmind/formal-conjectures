@@ -27,6 +27,8 @@ public import FormalConjecturesUtil
 - [BaBa94] Bálintová, A. and Bálint, V., *On the number of circles determined by $n$ points in the
   Euclidean plane*, Acta Math. Hungar. (1994), 283–289.
 - [PuSm] Purdy and Smith. No reference found.
+- [Wang26] Liyan Wang, *Circles determined by planar point sets* (2026), Theorem 1.2.
+  [arXiv:2608.19844](https://arxiv.org/abs/2608.19844)
 -/
 
 @[expose] public section
@@ -53,8 +55,8 @@ circle?
 There is clearly some non-degeneracy condition intended here - probably either that not all the
 points are on a line, or the stronger condition that no three points are on a line.
 
-The answer is known for $n > 393$ (see `erdos_506.variants.large_n`) but the problem appears to
-remain open for small $n$ (see `erdos_506.variants.small_n`).
+The cases $4 \le n \le 393$ and $n > 393$ are stated in `erdos_506.variants.small_n` and
+`erdos_506.variants.large_n`, respectively.
 -/
 -- Formalisation notes:
 -- * Following Elliott, the non-degeneracy condition used here is the weaker of the two: the points
@@ -86,14 +88,20 @@ theorem erdos_506.variants.large_n (n : ℕ) (hn : 393 < n) :
       (erdos_506.variants.large_n.answer n) := by
   sorry
 
-def erdos_506.variants.small_n.answer (n : ℕ) : ℕ := sorry
+def erdos_506.variants.small_n.answer (n : ℕ) : ℕ :=
+  if n = 6 then 8
+  else if n = 7 then 11
+  else if n = 8 then 17
+  else erdos_506.variants.large_n.answer n
 
+set_option linter.style.formal_proof_palomar false in
 /--
-The problem appears to remain open for small $n$: Elliott's answer is established only for
-$n > 393$, so the minimum number of circles determined by $n$ points, not all on a line and not all
-on a circle, is unknown for $n \le 393$.
+For $4 \le n \le 393$, the minimum number of circles is $8$, $11$, and $17$ at $n=6,7,8$,
+respectively. At every other order in this range it is
+$\binom{n-1}{2}+1-\lfloor(n-1)/2\rfloor$ [Wang26, Theorem 1.2].
 -/
-@[category research open, question value, AMS 51 52]
+@[category research solved, question value, AMS 51 52, formal_proof using lean4 at
+  "https://github.com/rafalwronapl/erdos506-review-package-2026-08-16/blob/f647646e77e48c10cf7928d5203214b520537506/formalization/Erdos506/Canonical.lean#L233"]
 theorem erdos_506.variants.small_n (n : ℕ) (hn : 4 ≤ n) (hn' : n ≤ 393) :
     IsLeast { k : ℕ | ∃ P : Finset ℝ²,
         P.card = n ∧ ¬ Collinear ℝ (P : Set ℝ²) ∧ ¬ Cospherical (P : Set ℝ²) ∧
