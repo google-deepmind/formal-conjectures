@@ -118,7 +118,8 @@ theorem erdos_1192.variants.renyi :
 /--
 Ruzsa [Ru90] proved that the answer is yes for $r=2$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000076"]
 theorem erdos_1192.variants.ruzsa :
     ∃ A : Set ℕ,
       (∀ᶠ n in atTop, f_r A 2 n > 0) ∧
