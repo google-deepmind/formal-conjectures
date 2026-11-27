@@ -27,6 +27,8 @@ public import FormalConjecturesUtil
   [Lean formalisation](https://github.com/anthropics/zeta-23-lean).
 - [BH13] Bui, H. M. and Heath-Brown, D. R., *On simple zeros of the Riemann zeta-function*, 2013.
   [arXiv:1302.5018](https://arxiv.org/abs/1302.5018)
+- [Kn26] K. M. Knausgård, [dyadic lower bound for distinct critical-line zeros](https://github.com/josusanmartin/riemann/blob/d4d280813d0b4f2a8fbb89229755b24f1dfee63e/submissions/knausgard-rh-reflected-kernel-8542/submission.json),
+  with the [compact RH kernel replay](https://github.com/josusanmartin/riemann/releases/tag/compact-rh-854225-v1).
 - [Wikipedia](https://en.wikipedia.org/wiki/Riemann_hypothesis#Zeros_on_the_critical_line)
 
 For a nontrivial zero `ρ = β + iγ` of `ζ` (or of a Dirichlet `L`-function) with multiplicity
@@ -133,13 +135,12 @@ theorem simple_prop_one_hundred : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → 
     ∀ T > 0, (1 - o T) * N riemannZeta T (2 * T) ≤ Ns riemannZeta T (2 * T) := by
   sorry
 
-/-- Is the proportion of distinct zeros of `ζ` unconditionally larger than the Montgomery–Taylor
-bound `(3 - c_MT⁻¹) / 2 = 0.8362…`?
-
-Assuming the Riemann Hypothesis, Bui and Heath-Brown [BH13] proved that the proportion of distinct
-zeros is at least `0.84665`. They count the zeros with `0 < γ < T`, and the statement here counts
-those with `T < γ ≤ 2T`. -/
-@[category research open, AMS 11]
+set_option linter.style.formal_proof_palomar false in
+/-- The proportion of distinct zeros of `ζ` in `(T, 2T]` exceeds the Montgomery–Taylor bound
+`(3 - c_MT⁻¹) / 2 = 0.8362…`. The witness `c = 17/20` follows from Knausgård's dyadic
+`0.854225 - o(1)` estimate [Kn26] for distinct critical-line zeros counted against all zeros
+with multiplicity. Bui and Heath-Brown [BH13] give a cumulative bound of `0.84665` under RH. -/@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/DomTheDeveloper/formal-conjectures/blob/f951bc57ee15d1a0c3f970a4bdd64a76e3c9d8f9/Proofs/DistinctZeros/Result.lean#L14-L21"]
 theorem distinct_prop_lt : ∃ c > (3 - montgomeryTaylorConst⁻¹) / 2, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
     ∀ T > 0, (c - o T) * N riemannZeta T (2 * T) ≤ Nd riemannZeta T (2 * T) := by
