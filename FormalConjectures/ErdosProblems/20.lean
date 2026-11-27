@@ -25,6 +25,9 @@ public import FormalConjecturesUtil
 * [Wikipedia](https://en.wikipedia.org/wiki/Sunflower_(mathematics))
 * [ErRa60] Erdős, Paul and Rado, Richard. Intersection theorems for systems of sets.
   J. London Math. Soc. 35 (1960), 85--90.
+* [OAI26] OpenAI, *An exponential bound for sunflowers*, OpenAI Math Release preprint,
+  November 24, 2026.
+  [paper](https://github.com/openai/math/blob/3344da59991ed94f9ba711217b29c1d760badfa6/preprints/An-exponential-bound-for-sunflowers-November-24-2026/paper.pdf)
 
 -/
 
@@ -47,10 +50,18 @@ theorem f_0_1 : f 0 1 = 1 := by
   · obtain ⟨S, hS⟩ := (hn (α := ℕ) {} (by simpa))
     simp_all [bot_unique hS.1]
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that $f(n,k) < c_k^n$ for some constant $c_k>0$ and for all $n > 0$?
+
+The answer is yes, by [OAI26]. For every $k \ge 3$ there is $C_k \ge 1$ such that every
+family of more than $C_k^n$ distinct $n$-element sets contains a $k$-sunflower, so
+$f(n,k) \le C_k^n + 1 < (C_k + 2)^n$ for $n > 0$. The cases $k \le 2$ are immediate.
+The linked Lean theorem states this for finite families (`Finset (Finset α)`); an
+$n$-uniform family with $n > 0$ and positive `ncard` is such a family.
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5,
+  formal_proof using lean4 at "https://github.com/openai/math/blob/3344da59991ed94f9ba711217b29c1d760badfa6/lean/OAI/Combinatorics/Sunflower/FixedBase.lean#L41-L48"]
 theorem erdos_20 : ∃ (c : ℕ → ℕ), ∀ n k, n > 0 → f n k < (c k) ^ n := by
   sorry
 
