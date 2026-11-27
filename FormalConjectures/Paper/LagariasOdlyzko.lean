@@ -68,7 +68,7 @@ def lattice {n : ℕ} (a : Fin n → ℤ) (M : ℤ) : Submodule ℤ ((Fin n → 
 def target {n : ℕ} (a e : Fin n → ℤ) : ℤ := ∑ i, e i * a i
 
 /-- The squared Euclidean norm on `ℤⁿ × ℤ`. -/
-def sqNorm {n : ℕ} (v : (Fin n → ℤ) × ℤ) : ℤ := ∑ i, v.1 i ^ 2 + v.2 ^ 2
+def sqNorm {n : ℕ} (v : (Fin n → ℤ) × ℤ) : ℤ := (∑ i, v.1 i ^ 2) + v.2 ^ 2
 
 /-- The planted vector `(e, 0) ∈ L(a, M(a, e))` [LO85, (3.4)] is *a* shortest nonzero vector of
 the lattice: no nonzero lattice vector is strictly shorter. Ties are allowed, so this is the
