@@ -43,7 +43,7 @@ jobs:
   # The category check is a policy gate, so it has tests of its own. They need
   # no Lean build, so they run alongside it rather than after it.
   scripts:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: Test scripts
     steps:
       - name: Checkout project
@@ -75,7 +75,7 @@ jobs:
         run: python3 -m unittest discover -s site -p 'test_*.py' -v
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: Build project
     steps:
 
