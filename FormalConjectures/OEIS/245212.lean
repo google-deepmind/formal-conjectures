@@ -239,4 +239,15 @@ theorem conjecture.variants.four_prime_component_bound (n : ℕ) (ho : Odd n)
     ∃ p ∈ n.primeFactors, (p - 1) * (n.factorization p + 1) < 51204 := by
   sorry
 
+/--
+At fixed $r\ge 2$, only finitely many odd equality inputs with $r$ distinct prime factors have
+no prime exponent congruent to $2$ modulo $4$. This includes all odd fourth powers at this rank.
+See the [effective finiteness proof](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/9ac47e40ce71a4f5e0b32bc57c603e2d9ca7ad30/proofs/oeis-divisor-sums/A245212/primary-components/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.finite_without_exponent_two_mod_four (r : ℕ) (hr : 2 ≤ r) :
+    {n : ℕ | Odd n ∧ n.primeFactors.card = r ∧
+      (∀ p ∈ n.primeFactors, n.factorization p % 4 ≠ 2) ∧ a n = (σ 1 n : ℤ)}.Finite := by
+  sorry
+
 end OeisA245212
