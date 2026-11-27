@@ -165,4 +165,28 @@ theorem conjecture.variants.four_prime_divisibility (n : ℕ) (hn : 1 < n) (ho :
     (hcard : n.primeFactors.card = 4) (h : a n = (σ 1 n : ℤ)) : 27 ∣ n := by
   sorry
 
+/--
+On each prescribed finite prime support the equality set is a finite union of points
+and prime-power families $mp^e$ with $e\ge 1$. See the
+[effective classification](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/a5e0a2c4efbf87e21011f3a24a6991c6c1fe1ea5/proofs/oeis-divisor-sums/A245212/fixed-support/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.fixed_support_classification (S : Finset ℕ)
+    (hS : ∀ p ∈ S, p.Prime) :
+    ∃ F : Finset ℕ, ∃ R : Finset (ℕ × ℕ),
+      (∀ mp ∈ R, mp.2 ∈ S ∧ mp.2.Prime ∧ 0 < mp.1 ∧ ¬ mp.2 ∣ mp.1) ∧
+      ∀ n : ℕ, (0 < n ∧ n.primeFactors = S ∧ a n = (σ 1 n : ℤ)) ↔
+        n ∈ F ∨ ∃ mp ∈ R, ∃ e : ℕ, 0 < e ∧ n = mp.1 * mp.2 ^ e := by
+  sorry
+
+/--
+Among all positive $11$-smooth integers, precisely the powers of two satisfy the equality.
+See the [two independent certificates](https://github.com/DomTheDeveloper/ProofPlaygrond/tree/a5e0a2c4efbf87e21011f3a24a6991c6c1fe1ea5/proofs/oeis-divisor-sums/A245212/fixed-support).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.smooth_eleven (n : ℕ) (hn : 0 < n)
+    (hsmooth : ∀ p ∈ n.primeFactors, p ≤ 11) :
+    a n = (σ 1 n : ℤ) ↔ ∃ e : ℕ, n = 2 ^ e := by
+  sorry
+
 end OeisA245212
