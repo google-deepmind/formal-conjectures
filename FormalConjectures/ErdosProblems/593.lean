@@ -41,14 +41,42 @@ namespace Erdos593
 
 /- ## Main open problem -/
 
-def erdos_593.answer : Set ((n : ℕ) × UniformHypergraph (Fin n) 3) := sorry
+/-- The Levi graph (point–edge incidence graph) of a hypergraph `H` on `V`: the bipartite graph
+on `V ⊕ H.edgeSet` joining a vertex $x$ to an edge $e$ exactly when $x \in e$. -/
+def leviGraph {V : Type*} {k : ℕ} (H : UniformHypergraph V k) :
+    SimpleGraph (V ⊕ H.edgeSet) :=
+  SimpleGraph.fromRel fun
+    | .inl x, .inr e => x ∈ (e : Set V)
+    | _, _ => False
+
+/-- In the Levi graph, a vertex is adjacent to an edge exactly when it lies in that edge. -/
+@[category test, AMS 5]
+theorem leviGraph_adj_inl_inr {V : Type*} {k : ℕ} (H : UniformHypergraph V k) (x : V)
+    (e : H.edgeSet) : (leviGraph H).Adj (.inl x) (.inr e) ↔ x ∈ (e : Set V) := by
+  simp [leviGraph]
+
+/-- The finite $3$-uniform hypergraphs `H` such that
+1. `H` is linear: two distinct edges share at most one vertex;
+2. every edge-node of the Levi graph of `H` is incident with a bridge of the Levi graph;
+3. every Berge cycle of `H` has even length. A Berge cycle of length $\ell$ is a cycle of
+   length $2\ell$ in the Levi graph, so this says that every cycle of the Levi graph has
+   length divisible by $4$. -/
+def erdos_593.answer : Set ((n : ℕ) × UniformHypergraph (Fin n) 3) :=
+  {p | p.2.edgeSet.Pairwise (fun e f ↦ (e ∩ f).Subsingleton) ∧
+    (∀ e : p.2.edgeSet, ∃ x ∈ (e : Set (Fin p.1)),
+      (leviGraph p.2).IsBridge s(.inl x, .inr e)) ∧
+    ∀ (z : Fin p.1 ⊕ p.2.edgeSet) (c : (leviGraph p.2).Walk z z), c.IsCycle → 4 ∣ c.length}
 
 /--
 **Erdős Problem 593 (\$500)**: Characterize those finite 3-uniform hypergraphs which appear
 in every 3-uniform hypergraph of chromatic number $> \aleph_0$.
 
 The answer is the set of obligatory finite 3-uniform hypergraphs, represented here on the
-labelled vertex sets `Fin n`.
+labelled vertex sets `Fin n`. A finite 3-uniform hypergraph $F$ is obligatory if and only if
+1. $F$ is linear: two distinct edges share at most one vertex;
+2. in the Levi (point–edge incidence) graph of $F$, every edge-node is incident with a bridge;
+3. every Berge cycle of $F$ has even length.
+Isolated vertices of $F$ do not affect these conditions. See `erdos_593.answer`.
 
 Two-colorability (Property B) is a necessary condition, see
 `erdos_593.variants.obligatory_implies_two_colorable`, but it is not sufficient: two triples
@@ -57,10 +85,11 @@ sharing a pair form a 2-colorable hypergraph that is not obligatory, see
 completely solved by Erdős–Galvin–Hajnal [EGH75]: the obligatory graphs are exactly the finite
 bipartite graphs.
 
-A resolution has been claimed by E. Li (arXiv:2606.24882, 2026); at the time of writing
-erdosproblems.com still lists the problem as open.
+The first complete proof of this characterization is due to E. Li (arXiv:2606.24882, 2026).
+The linked Lean formalization is by S. Petkov.
 -/
-@[category research open, question value, AMS 5]
+@[category research solved, question value, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-16-000018"]
 theorem erdos_593 :
     {p : Σ n : ℕ, UniformHypergraph (Fin n) 3 | p.2.IsObligatory} = erdos_593.answer := by
   sorry
