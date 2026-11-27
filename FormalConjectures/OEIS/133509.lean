@@ -20,13 +20,18 @@ public import FormalConjecturesUtil
 /-!
 # Exponents with a unique positive decimal digit-sum fixed point
 
-Let $s_{10}(n)$ denote the sum of the base-$10$ digits of $n$. Sequence `A133509` lists nonnegative
-exponents $k$ for which $m = 1$ is the only positive integer satisfying $s_{10}(m^k) = m$
-(beginning $0, 105, 164, 186, \dots$). For $k \ge 1$, membership in `A133509` is equivalent to the
-vanishing of `A046471(k)`, which counts fixed points $m > 1$; whether `A133509` is infinite remains
-open. Companion sequence `A046000(k)` records the largest positive fixed point of $m \mapsto
-s_{10}(m^k)$, for which M. F. Hasler (June 12, 2026) conjectured the upper bound
+Let $s_{10}(n)$ denote the sum of the base-$10$ digits of $n$. Sequence `A133509` defines the set
+of nonnegative exponents $k$ for which $m = 1$ is the only positive integer satisfying
+$s_{10}(m^k) = m$ and lists its initial terms $0, 105, 164, 186, \dots$ (with OEIS keywords
+`nonn,base`, without `fini`). Companion entry `A046471(k)` counts nontrivial fixed points $m > 1$
+for $k \ge 1$ (so $k \in \text{A133509} \iff \text{A046471}(k) = 0$ for $k \ge 1$), while
+`A046000(k)` records the largest positive fixed point of $m \mapsto s_{10}(m^k)$, for which
+M. F. Hasler (June 12, 2026) conjectured the upper bound
 $m < (5 + 2.7 \log(k + 1))(k + 1)$.
+
+The infinitude question `infinite_exponents` below is not stated in `A133509` itself; it is posed
+here as a new open question motivated by `A133509` (and its shifted analogue studied in
+[Liu, *Digit Sums of Powers*](https://github.com/LiuChang-ao/digit-sum-powers-formal)).
 
 *References:*
 - [A133509](https://oeis.org/A133509)
@@ -87,7 +92,8 @@ theorem mem_iff_one_greatest (k : ℕ) :
     have := h.2 (show m ∈ {x : ℕ | 0 < x ∧ (Nat.digits 10 (x ^ k)).sum = x} from ⟨hm, he⟩)
     omega
 
-/-- Are there infinitely many exponents $k$ for which $m = 1$ is the only positive solution to
+/-- Open question motivated by `A133509` (not stated in the OEIS entry itself): are there
+infinitely many exponents $k$ for which $m = 1$ is the only positive solution to
 $s_{10}(m^k) = m$? -/
 @[category research open, question, AMS 11]
 theorem infinite_exponents : exponents.Infinite := by
