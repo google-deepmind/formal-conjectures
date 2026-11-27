@@ -59,9 +59,13 @@ theorem a_5 : a 5 = 3 := by decide
 
 /--
 Conjecture (i): $a(n) > 0$ for all $n > 1$.
+
+Disproved: $a(4722) = 0$, that is, $(k + 1)^{\phi(4722 - k)} + k$ is composite for every
+$0 < k < 4722$. This is the least counterexample. A Lean proof of this statement, depending only
+on the standard axioms, is at [oeis-a234360](https://github.com/DevSingh05/oeis-a234360).
 -/
-@[category research open, AMS 11]
-theorem conjecture_1 (n : ℕ) (hn : 1 < n) : 0 < a n := by
+@[category research solved, AMS 11]
+theorem conjecture_1 : ¬ ∀ n : ℕ, 1 < n → 0 < a n := by
   sorry
 
 /--
@@ -81,19 +85,30 @@ theorem conjecture_2 :
 
 /--
 Conjecture (ii): If $n > 1$, then $k(k + 1)^{\phi(n - k)} + 1$ is prime for some $0 < k < n$.
+
+Disproved: for $n = 7588$ the number $k(k + 1)^{\phi(n - k)} + 1$ is composite for every
+$0 < k < n$. This is the least counterexample. A Lean proof of this statement, depending only on
+the standard axioms, is at [oeis-a234360](https://github.com/DevSingh05/oeis-a234360).
 -/
-@[category research open, AMS 11]
-theorem conjecture_3 (n : ℕ) (hn : 1 < n) :
-    ∃ k, 0 < k ∧ k < n ∧ Nat.Prime (k * (k + 1) ^ (n - k).totient + 1) := by
+@[category research solved, AMS 11]
+theorem conjecture_3 :
+    ¬ ∀ n : ℕ, 1 < n →
+      ∃ k, 0 < k ∧ k < n ∧ Nat.Prime (k * (k + 1) ^ (n - k).totient + 1) := by
   sorry
 
 /--
 Conjecture (ii): If $n > 3$, then $k(k + 1)^{\phi(n - k) / 2} - 1$ is prime for some $0 < k < n$.
+
+Disproved: for $n = 3998$ the number $k(k + 1)^{\phi(n - k) / 2} - 1$ is composite for every
+$0 < k < n - 2$, and for $k = n - 2, n - 1$ (where $\phi(n - k) = 1$) the right-hand side below is
+not a perfect square. This is the least counterexample. A Lean proof of this statement, depending
+only on the standard axioms, is at [oeis-a234360](https://github.com/DevSingh05/oeis-a234360).
 -/
-@[category research open, AMS 11]
-theorem conjecture_4 (n : ℕ) (hn : 3 < n) :
-    ∃ k, 0 < k ∧ k < n ∧
-      ∃ p : ℕ, p.Prime ∧ (p + 1) ^ 2 = k ^ 2 * (k + 1) ^ (n - k).totient := by
+@[category research solved, AMS 11]
+theorem conjecture_4 :
+    ¬ ∀ n : ℕ, 3 < n →
+      ∃ k, 0 < k ∧ k < n ∧
+        ∃ p : ℕ, p.Prime ∧ (p + 1) ^ 2 = k ^ 2 * (k + 1) ^ (n - k).totient := by
   sorry
 
 end OeisA234360
