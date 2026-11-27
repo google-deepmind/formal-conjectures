@@ -40,9 +40,13 @@ This is false: Norin, Sun, and Zhao [NSZ16] have proved that if $T$ is the union
 and $2k$ vertices, with an edge joining the centre of the two stars, then $R(T)\geq (4.2-o(1))k$,
 and conjectured that $R(T)=(4.2+o(1))k$.
 
+An explicit counterexample: for $k = 4$, the double star with centres of 3 and 7 leaves has
+$R(T) \geq 16 > 15$, witnessed by a 2-colouring of $K_{15}$ with no monochromatic copy.
+
 This problem is #15 in Ramsey Theory in the graphs problem collection.
 -/
-@[category research solved, question, AMS 5]
+@[category research solved, question, AMS 5,
+  formal_proof using lean4 at "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000061"]
 theorem erdos_549 :
     ¬ ∀ (k : ℕ) (hk : 2 ≤ k) (T : SimpleGraph (Fin k ⊕ Fin (2 * k))),
       T.IsTree →
