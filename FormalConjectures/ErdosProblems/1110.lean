@@ -21,7 +21,12 @@ public import FormalConjectures.ErdosProblems.«246»
 /-!
 # Erdős Problem 1110
 
-*Reference:* [Erdős Problem 1110](https://www.erdosproblems.com/1110)
+*References:*
+- [erdosproblems.com/1110](https://www.erdosproblems.com/1110)
+- [Ap26] Apiros3, *Erdős Problem 1110* (2026). Lean formalisation,
+  [github.com/Apiros3/erdos1110](https://github.com/Apiros3/erdos1110/tree/6d66854a3d940490c25a802b9aed54fe896ec8ec).
+- [YuCh22] Yu, Wang-Xing and Chen, Yong-Gao, *On a conjecture of Erdős and Lewin*. J. Number
+  Theory 238 (2022), 763--778.
 -/
 
 @[expose] public section
@@ -45,8 +50,14 @@ integers of the form $p^kq^l$, none of which divide each other.
 If $\{p,q\}\neq \{2,3\}$ then what can be said about the density of non-representable
 numbers? Are there infinitely many coprime non-representable numbers, that is, an infinite
 family of pairwise coprime non-representable integers?
+
+We state the second question. The answer is yes. Yu and Chen [YuCh22] proved it for all pairs
+except $(p, q) = (5, 2)$, $(9, 2)$ and $(5, 3)$. For these three pairs, take $c = 3$, $5$ and $2$
+respectively. Then $p^a + c q^M$ is non-representable for all $a, M \geq 1$ with $p^a < q^M$ and
+$c q^M < (p - 1) p^a$, and infinitely many of these numbers are pairwise coprime [Ap26].
+[Ap26] is a Lean formalisation from 2026 without a published paper.
 -/
-@[category research open, question, AMS 5 11]
+@[category research solved, question, AMS 5 11]
 theorem erdos_1110 :
     ∀ (p q : ℕ), q < p → 2 ≤ q →
       Nat.Coprime p q → ¬(p = 3 ∧ q = 2) →
