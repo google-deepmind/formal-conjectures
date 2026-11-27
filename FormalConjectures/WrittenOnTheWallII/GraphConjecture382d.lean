@@ -38,7 +38,7 @@ $\gamma_2(G) \le \operatorname{diam}(G)(\alpha(G)+|X|)/2$. Here $\alpha(G)$ is t
 number and $X$ contains all vertices whose open neighborhoods have maximum independence number.
 The 2-domination number $\gamma_2(G)$ is the smallest size of a set $D$ such that every vertex
 outside $D$ has at least two neighbors in $D$. This claim is false. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/adamben04/open-conjectures/blob/main/results/graffiti-pc-382d-400c/Graffiti2Dom.lean"]
 theorem conjecture382d :
     ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
       G.Connected → 2 < Fintype.card V →
