@@ -179,7 +179,8 @@ De Bruijn and Erdős [dBEr49, §§2-5] proved that $\Lambda_1=\frac{1}{\log 2}$,
 $\lambda_1=\frac{1}{\log 4}$, and $\mu_1=2$. A sequence which witnesses this is
 $a_k=\log_2(2k-1)$. For $r=1$ the normalisation by $r$ plays no role.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000013"]
 theorem erdos_1221.variants.r_one :
     bigLambda 1 = ENNReal.ofReal (1 / Real.log 2) ∧
       smallLambda 1 = ENNReal.ofReal (1 / Real.log 4) ∧ mu 1 = 2 := by
