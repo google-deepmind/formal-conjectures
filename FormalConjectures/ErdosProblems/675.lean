@@ -154,4 +154,24 @@ theorem erdos_675.variants.brun (B : Set ℕ) (hB : B.Pairwise Nat.Coprime)
     HasTranslationProperty {n : ℕ | ∀ b ∈ B, ¬ b ∣ n} := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
+/--
+There are infinitely many $12$-shifts for the set $E$ of sums of two squares, that is,
+infinitely many $t \geq 1$ with $a \in E \iff a + t \in E$ for all $1 \leq a \leq 12$.
+In particular there are infinitely many $n$-shifts for every $n \leq 12$.
+
+Let $u^2 = 2 W^2 + 1$ with $W \geq 1$. Put $x = 16 u^2 W^2 - 1$ and $t = x^2 - 1$. Then
+$t + 1 = x^2$, $t + 2 = x^2 + 1^2$, $t + 5 = x^2 + 2^2$, $t + 10 = x^2 + 3^2$ and
+$t + 9 = (x - 2)^2 + (8 u W)^2$ are sums of two squares, and so are $t + 8$ and $t + 4$, by
+explicit identities that use the Pell equation. Since $32 \mid t$, the numbers $t + 3$, $t + 6$,
+$t + 7$, $t + 11$, $t + 12$ are $3, 6, 7, 11, 12 \pmod{16}$, so they are not in $E$. The map
+$(u, W) \mapsto (3 u + 4 W, 2 u + 3 W)$ preserves $u^2 - 2 W^2$, so the solution $(3, 2)$ gives
+infinitely many solutions.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/mnn31/erdos-lean/blob/c5e9a02f6c173f3bd5f39fac490440b44b5593d7/ErdosLean/Erdos675Twelve.lean"]
+theorem erdos_675.variants.sumsOfTwoSquares_infinite_twelve_shifts :
+    {t : ℕ | IsTranslation {m : ℕ | ∃ x y : ℕ, m = x ^ 2 + y ^ 2} 12 t}.Infinite := by
+  sorry
+
 end Erdos675
