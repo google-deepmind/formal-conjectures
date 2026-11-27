@@ -53,7 +53,7 @@ theorem newman_implies_erdos (m : ℕ) (hm : m.Prime) (P : type_of% newman_conje
 /--
 Newman's Conjecture implies Erdős–Ivić conjecture [Wikipedia]:
 There exist infinitely many primes $m$ such that for some $n > 0, m | p(n)$.
-It was proven by A. Schnizel, as stated in [arXiv:0008140].
+It was proven by A. Schinzel, as stated in [arXiv:0008140].
 -/
 @[category textbook, AMS 5 11]
 theorem newman_implies_erdos_ivic (P : type_of% newman_conjecture) :
