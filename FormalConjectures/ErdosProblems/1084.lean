@@ -54,8 +54,9 @@ set_option linter.style.formal_proof_palomar false in
 theorem erdos_1084.variants.upper_d1 : f 1 n = n - 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- It is easy to check that $f_2(n) < 3n$. -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using formal_conjectures at "https://github.com/JimmyHungX/formal-conjectures/blob/eab1c145382a35c44959fe35b6e6353be2d07992/FormalConjectures/ErdosProblems/1084.lean#L185"]
 theorem erdos_1084.variants.easy_upper_d2 (hn : n ≠ 0) : f 2 n < 3 * n := by
   sorry
 
