@@ -101,11 +101,34 @@ theorem erdos_929.variants.rosser :
     ∀ ε : ℝ, 0 < ε → ∀ᶠ k : ℕ in atTop, (k : ℝ) ^ ((1 : ℝ) / 2 - ε) ≤ (S k : ℝ) := by
   sorry
 
+/-- The condition `AllHaveSmallPrimeFactor (k + 1) k` is periodic modulo `(k + 1)!`. -/
+@[category API, AMS 11]
+lemma periodic_allHaveSmallPrimeFactor (k : ℕ) :
+    Function.Periodic (AllHaveSmallPrimeFactor (k + 1) k) (k + 1).factorial := fun n => by
+  refine propext <| forall₂_congr fun i _ => exists_congr fun p => and_congr_right fun hp =>
+    and_congr_right fun hpk => ?_
+  rw [add_right_comm]
+  exact Nat.dvd_add_left (Nat.dvd_factorial hp.pos hpk)
+
 /--
 It is trivial that $S(k)\leq k+1$ since, for example, one can take $n\equiv 1\pmod{(k+1)!}$.
 -/
 @[category textbook, AMS 11]
 theorem erdos_929.variants.trivial_upper (k : ℕ) : S k ≤ k + 1 := by
-  sorry
+  classical
+  refine S_le ⟨_, ?_, Nat.hasDensity_of_periodic (Nat.factorial_pos _)
+    (periodic_allHaveSmallPrimeFactor k)⟩
+  obtain ⟨m, hm, hpm⟩ : ∃ m < (k + 1).factorial, AllHaveSmallPrimeFactor (k + 1) k m := by
+    rcases Nat.eq_zero_or_pos k with rfl | hk
+    · exact ⟨0, Nat.factorial_pos _, fun i hi => by simp at hi⟩
+    · refine ⟨1, Nat.one_lt_factorial.mpr (by omega), fun i hi => ?_⟩
+      obtain ⟨h1, h2⟩ := Finset.mem_Icc.mp hi
+      exact ⟨(1 + i).minFac, Nat.minFac_prime (by omega),
+        (Nat.minFac_le (by omega)).trans (by omega), Nat.minFac_dvd _⟩
+  have hc : 0 < Nat.count (AllHaveSmallPrimeFactor (k + 1) k) (k + 1).factorial :=
+    (Nat.zero_le _).trans_lt (Nat.count_lt_count_succ_iff.mpr hpm) |>.trans_le
+      (Nat.count_monotone _ hm)
+  positivity
+
 
 end Erdos929
