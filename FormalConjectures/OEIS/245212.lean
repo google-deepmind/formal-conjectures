@@ -217,4 +217,26 @@ theorem conjecture.variants.at_most_512_divisors (n : ℕ) (hn : 0 < n)
     a n = (σ 1 n : ℤ) ↔ ∃ e : ℕ, n = 2 ^ e := by
   sorry
 
+/--
+At each fixed number $r\ge 2$ of distinct prime factors, every odd equality input has two
+distinct primary components bounded in terms of $r$.
+See the [effective bound](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/3fef60dfa8ec969ced4afb1711969cdd65bf3a2f/proofs/oeis-divisor-sums/A245212/primary-components/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.two_bounded_components (r : ℕ) (hr : 2 ≤ r) :
+    ∃ B : ℕ, ∀ n : ℕ, Odd n → n.primeFactors.card = r → a n = (σ 1 n : ℤ) →
+      ∃ p ∈ n.primeFactors, ∃ q ∈ n.primeFactors, p ≠ q ∧
+        p ^ n.factorization p ≤ B ∧ q ^ n.factorization q ≤ B := by
+  sorry
+
+/--
+For an odd equality input with four distinct prime factors, some $p^e\parallel n$ satisfies
+$(p-1)(e+1)<51\,204$. See the [four-prime ratio and finite certificate](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/3fef60dfa8ec969ced4afb1711969cdd65bf3a2f/proofs/oeis-divisor-sums/A245212/primary-components/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.four_prime_component_bound (n : ℕ) (ho : Odd n)
+    (hcard : n.primeFactors.card = 4) (h : a n = (σ 1 n : ℤ)) :
+    ∃ p ∈ n.primeFactors, (p - 1) * (n.factorization p + 1) < 51204 := by
+  sorry
+
 end OeisA245212
