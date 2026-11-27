@@ -137,7 +137,8 @@ $$
 [ErSz35] Erdős, P. and Szekeres, G., _A combinatorial problem in geometry_.
   Compos. Math. (1935), 463-470.
 -/
-@[category research solved, AMS 52]
+@[category research solved, AMS 52, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000086"]
 theorem ersz_bounds :
     ∀ n ≥ 3, 2^(n - 2) + 1 ≤ f n ∧ f n ≤ Nat.choose (2 * n - 4) (n - 2) + 1 := by
   sorry
