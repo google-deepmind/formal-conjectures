@@ -63,7 +63,30 @@ with denominator dividing $[1, \ldots, N]$, so $\delta(N) \geq 1/[1,\ldots,N]$.
 -/
 @[category textbook, AMS 11]
 theorem delta_ge_inv_lcm (N : ℕ) : 1 / (((Icc 1 N).lcm id : ℕ) : ℝ) ≤ delta N := by
-  sorry
+  set L := (Icc 1 N).lcm id
+  have hL : (0 : ℝ) < L := by
+    have : L ≠ 0 := by simp [L, Finset.lcm_eq_zero_iff]
+    positivity
+  refine le_csInf ⟨1, one_ne_zero, ∅, empty_subset _, by simp⟩ ?_
+  rintro x ⟨hx, A, hA, rfl⟩
+  set q : ℤ := L - ∑ n ∈ A, ((L / n : ℕ) : ℤ)
+  have key : (L : ℝ) * (1 - ∑ n ∈ A, (1 : ℝ) / n) = q := by
+    simp only [q, Int.cast_sub, Int.cast_natCast, Int.cast_sum, mul_sub, mul_one, mul_sum]
+    congr 1
+    refine sum_congr rfl fun n hn => ?_
+    have hn : n ∈ Icc 1 N := hA hn
+    have hn0 : (n : ℝ) ≠ 0 := by have := (mem_Icc.mp hn).1; positivity
+    have hd : n ∣ L := dvd_lcm (f := id) hn
+    rw [Nat.cast_div hd hn0]
+    simp [div_eq_mul_inv]
+  have hq : q ≠ 0 := by
+    rintro h
+    rw [h, Int.cast_zero, mul_eq_zero] at key
+    exact hx (by rw [key.resolve_left hL.ne', abs_zero])
+  have h1 : (1 : ℝ) ≤ |(q : ℝ)| := by exact_mod_cast Int.one_le_abs hq
+  rw [← key, abs_mul, abs_of_pos hL] at h1
+  rw [div_le_iff₀ hL]
+  linarith
 
 /-- Since $[1, \ldots, N] = e^{(1+o(1))N}$, the trivial bound gives $\delta(N) \ge e^{-(1+o(1))N}$. -/
 @[category textbook, AMS 11]
