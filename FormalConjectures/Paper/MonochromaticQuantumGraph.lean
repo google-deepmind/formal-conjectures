@@ -204,6 +204,31 @@ def EqSystemN {α : Type} [Semiring α] (N D : Nat) (W : WeightsN N D α) : Prop
     pmSumN N D W ι =
       (if allEqual ι then (1 : α) else (0 : α))
 
+/-- Pushing edge weights forward along a ring homomorphism commutes with `pmSumListAux`. -/
+@[category API, AMS 5 14 81]
+lemma pmSumListAux_map {α β : Type} [Semiring α] [Semiring β] (f : α →+* β)
+    {N D : Nat} (W : WeightsN N D α) (ι : V N → Fin D) :
+    ∀ (n : Nat) (L : List (V N)),
+      pmSumListAux (fun e => f (W e)) ι n L = f (pmSumListAux W ι n L)
+  | 0, _ => (map_one f).symm
+  | 1, _ => (map_zero f).symm
+  | _ + 2, [] => (map_one f).symm
+  | _ + 2, [_] => (map_zero f).symm
+  | n + 2, v :: v' :: vs => by
+      simp only [pmSumListAux, map_list_sum, List.map_map]
+      congr 1
+      refine List.map_congr_left fun u _ => ?_
+      simp only [Function.comp_apply, map_mul, pmSumListAux_map f W ι n ((v' :: vs).erase u)]
+
+/-- Pushing edge weights forward along a ring homomorphism preserves solutions to `EqSystemN`. -/
+@[category API, AMS 5 14 81]
+lemma EqSystemN.map {α β : Type} [Semiring α] [Semiring β] (f : α →+* β)
+    {N D : Nat} {W : WeightsN N D α} (hW : EqSystemN N D W) :
+    EqSystemN N D (fun e => f (W e)) := by
+  intro ι
+  rw [pmSumN, pmSumList, pmSumListAux_map, ← pmSumList, ← pmSumN, hW ι]
+  split_ifs <;> simp
+
 /-
 # Witnesses & theorems (sanity checks)
 
@@ -604,11 +629,15 @@ theorem eqSystem4_no_solution_ge4_real :
   sorry
 
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{R}$? -/
-@[category research open, question, AMS 5 14 81]
+equation system over $\mathbb{R}$?
+
+This follows from the complex version `eqSystem6_no_solution_d3` by lifting real weights along
+`Complex.ofRealHom : ℝ →+* ℂ`. -/
+@[category research solved, question, AMS 5 14 81]
 theorem eqSystem6_no_solution_d3_real :
-    ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W := by
-  sorry
+    ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W :=
+  fun ⟨W, hW⟩ =>
+    eqSystem6_no_solution_d3 ⟨fun e => Complex.ofRealHom (W e), hW.map Complex.ofRealHom⟩
 
 set_option linter.style.formal_proof_palomar false in
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
