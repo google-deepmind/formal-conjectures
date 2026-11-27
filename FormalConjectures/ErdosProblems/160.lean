@@ -20,7 +20,18 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 160
 
-*Reference:* [erdosproblems.com/160](https://www.erdosproblems.com/160)
+*References:*
+- [erdosproblems.com/160](https://www.erdosproblems.com/160)
+- [BlSi23] Bloom, Thomas F. and Sisask, Olof, *An improvement to the Kelley-Meka bounds on
+  three-term arithmetic progressions*. [arXiv:2309.02353](https://arxiv.org/abs/2309.02353) (2023).
+- [DTZ25] Deng, Mingyang, Tidor, Jonathan and Zhao, Yufei, *Uniform sets with few progressions
+  via colorings*. Math. Proc. Cambridge Philos. Soc. 179 (2025), 79--103.
+- [Hu25] Hunter, Zach,
+  [comment on erdosproblems.com/160](https://www.erdosproblems.com/forum/thread/160#post-1200)
+  (2025).
+- [ShDo26] Shi, Ruizhe and Dong, Yiqi, *An Improved Upper Bound for Colorings Without
+  Symmetrically Colored $k$-Term Arithmetic Progressions*.
+  [arXiv:2607.20752](https://arxiv.org/abs/2607.20752) (2026).
 -/
 
 @[expose] public section
@@ -51,23 +62,36 @@ theorem erdos_160.known_upper :
 
 open Real
 
-def erdos_160.better_upper.answer : ℕ → ℝ := sorry
+noncomputable def erdos_160.better_upper.answer : ℕ → ℝ := fun n => (n : ℝ) ^ ((2 : ℝ) / 5)
 
 /--
 Estimate $h(n)$ by finding a better upper bound.
+
+Hunter [Hu25] observed that $h(N) \leq N^{\frac{\log 3}{\log 22} + o(1)}$, where
+$\frac{\log 3}{\log 22} \approx 0.355$. Colourings with $N^{o(1)}$ colours exclude every pattern
+with at most two colours except $ABBA$, and [DTZ25] excludes $ABBA$ with
+$O(N^{\frac{\log 3}{\log 22}})$ colours. So $h(N) \ll N^{\frac 2 5}$. Shi and Dong [ShDo26] improve
+the exponent to $\frac 1 4 + o(1)$; [ShDo26] is a 2026 preprint.
 -/
-@[category research open, question value, AMS 5 51]
+@[category research solved, question value, AMS 5 51]
 theorem erdos_160.better_upper :
     (fun n => (erdos_160.h n : ℝ)) =O[atTop] erdos_160.better_upper.answer ∧
     erdos_160.better_upper.answer =o[atTop] fun n => (n : ℝ) ^ ((2 : ℝ) / 3) := by
   sorry
 
-def erdos_160.better_lower.answer : ℕ → ℝ := sorry
+noncomputable def erdos_160.better_lower.answer : ℕ → ℝ :=
+  fun n => exp (log n ^ ((1 : ℝ) / 10))
 
 /--
 Estimate $h(n)$ by finding a better lower bound.
+
+The observation of Zachary Hunter in [that question](https://mathoverflow.net/q/410808) coupled
+with the bound of Bloom and Sisask [BlSi23] on sets without three-term arithmetic progressions
+implies that $h(N) \gg \exp(c(\log N)^{\frac 1 9})$ for some $c > 0$. So
+$h(N) \gg \exp((\log N)^{\frac 1 {10}})$, which grows faster than
+$\exp(c(\log N)^{\frac 1 {12}})$ for every $c > 0$.
 -/
-@[category research open, question value, AMS 5 51]
+@[category research solved, question value, AMS 5 51]
 theorem erdos_160.better_lower:
     (erdos_160.better_lower.answer =O[atTop] fun n => (erdos_160.h n : ℝ)) ∧
     ∀ c > 0,
