@@ -229,9 +229,9 @@ theorem M_eq_M' : M  = M' := by
   ext n
   exact Fintype.card_congr (equivMonotoneSperner n)
 
-/-- A closed formula for the Dedekind numbers as found by Kisielewicz (1998):
+/-- A closed formula for the Dedekind numbers as found by Kisielewicz (1988):
 $$
-  M(n) = \sum_{k=0}^{2^{2^n}}\prod_{j = 1}^{2 ^ n - 1}\prod_{i = 0}^{j - 1} \left(
+  M(n) = \sum_{k=0}^{2^{2^n} - 1}\prod_{j = 1}^{2 ^ n - 1}\prod_{i = 0}^{j - 1} \left(
     1 - b_i^kb_j^k \prod_{m = 0}^{\log_2 i} (1 - b_m^i + b_m^ib_m^j)\right),
 $$,
 where $b_i^k$ is the $i$-th bit of $k$. -/
@@ -249,7 +249,7 @@ def kisielewiczFormula (n : ℕ) : ℕ :=
 
 /-- Kisielewicz (1988) proved the following arithmetic formula for the Dedekind numbers:
 $$
-  M(n) = \sum_{k=0}^{2^{2^n}}\prod_{j = 1}^{2 ^ n - 1}\prod_{i = 0}^{j - 1} \left(
+  M(n) = \sum_{k=0}^{2^{2^n} - 1}\prod_{j = 1}^{2 ^ n - 1}\prod_{i = 0}^{j - 1} \left(
     1 - b_i^kb_j^k \prod_{m = 0}^{\log_2 i} (1 - b_m^i + b_m^ib_m^j)\right),
 $$
 where $b_i^k$ is the $i$-th bit of $k$. However, this formula is not computationally
