@@ -60,6 +60,7 @@ theorem gyarfas_sumner_conjecture :
       T.IsTree → ∃ f : ℕ → ℕ, IsChiBoundedBy T f := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Paths (Gyárfás 1987).**
 
@@ -68,7 +69,8 @@ nonempty $G$, Gyárfás's argument gives $\chi(G) \le (n-1)^{\omega(G) - 1}$.
 
 *Reference:* [Gy87].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/rotem4997/gyarfas-path-lean/blob/d7763701b7cf970bef9c0eae880c79ef50813145/GyarfasPathLean/Basic.lean#L350"]
 theorem gyarfas_sumner_conjecture.variants.path (n : ℕ) :
     ∃ f : ℕ → ℕ, IsChiBoundedBy (pathGraph n) f := by
   sorry
