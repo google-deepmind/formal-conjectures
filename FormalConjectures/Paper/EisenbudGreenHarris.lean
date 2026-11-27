@@ -59,9 +59,10 @@ ideal of pure powers `MvPolynomial.purePowersIdeal` are defined in
   Amer. Math. Soc. 33 (1996), 295-324.
   [PDF](https://www.ams.org/journals/bull/1996-33-03/S0273-0979-96-00666-0/S0273-0979-96-00666-0.pdf)
 - [CS18] G. Caviglia, A. Sammartano, *On the Lex-plus-powers conjecture*, Adv. Math. 340 (2018),
-  1148-1163. [arXiv:1802.03035](https://arxiv.org/abs/1802.03035), Conjecture 1.1.
+  284-299. [arXiv:1802.03035](https://arxiv.org/abs/1802.03035), Conjecture 1.1.
 - [CDS20] G. Caviglia, A. De Stefani, *The Eisenbud-Green-Harris conjecture for fast-growing
-  degree sequences*, Trans. Amer. Math. Soc. 375 (2022), 2777-2792.
+  degree sequences*, Ann. Sc. Norm. Super. Pisa Cl. Sci., 1753-1762 (published online 2024),
+  [doi:10.2422/2036-2145.202203_025](https://doi.org/10.2422/2036-2145.202203_025).
   [arXiv:2007.15467](https://arxiv.org/abs/2007.15467), Definition 2.1, Conjecture 2.3 and
   Theorem A. The statement formalised below is Conjecture 2.3.
 - [CM08] G. Caviglia, D. Maclagan, *Some cases of the Eisenbud-Green-Harris conjecture*, Math.
