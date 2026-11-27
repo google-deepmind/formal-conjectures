@@ -70,7 +70,8 @@ and is $k$-choosable, as shown by Erdős, Rubin and Taylor.
 
 *Reference:* [ERT79].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000060"]
 theorem ohba_conjecture.variants.erdos_rubin_taylor (k : ℕ) :
     Choosable (completeMultipartiteGraph (fun _ : Fin k => Fin 2)) k := by
   sorry
