@@ -200,6 +200,16 @@ theorem erdos_687.variants.iwaniec :
   sorry
 
 /--
+OpenAI's quadratic bound for Jacobsthal's function [OAI26a], together with Chebyshev's
+estimate for the number of primes, gives $Y(x) \ll (x/\log x)^2$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_687.variants.quadratic_log :
+    (fun x : ℕ ↦ (Y x : ℝ)) =O[atTop]
+      (fun x : ℕ ↦ ((x : ℝ) / Real.log (x : ℝ)) ^ 2) := by
+  sorry
+
+/--
 Ford, Green, Konyagin, Maynard and Tao [FGKMT18] proved
 $$Y(x) \gg \frac{x \log x \log\log\log x}{\log\log x}.$$
 -/
