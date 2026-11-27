@@ -27,7 +27,8 @@ $\zeta(s)$ and nonvanishing on $\mathbb{R} \cap [1/2, 1]$, this differs only by 
 leaves $O_\varepsilon$ bounds unchanged.) The Density Hypothesis states that
 $N(\sigma, T) = O_\varepsilon(T^{2(1 - \sigma) + \varepsilon})$ uniformly over
 $\frac{1}{2} \le \sigma \le 1$ for every $\varepsilon > 0$. Either the Riemann Hypothesis or
-Lindelöf's hypothesis implies this estimate. Alpöge proved the Riemann Hypothesis [Al26]. Unconditional bounds of the shape
+Lindelöf's hypothesis implies this estimate. Alpöge proved the Riemann Hypothesis [Al26].
+Unconditional bounds of the shape
 $N(\sigma, T) = O_\varepsilon(T^{A(\sigma)(1 - \sigma) + \varepsilon})$ were proved by Ingham
 (1940) with $A(\sigma) = \frac{3}{2 - \sigma}$, Huxley (1972) with
 $A(\sigma) = \frac{3}{3\sigma - 1}$, and Guth and Maynard (2024) with
