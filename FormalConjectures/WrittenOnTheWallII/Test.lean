@@ -420,7 +420,24 @@ theorem C6_radius : radius C6 = 3 := by
 
 @[category test, AMS 5]
 theorem C6_girth : C6.girth = 6 := by
-  sorry
+  have hcycle := cycleGraph.isCycle_cycle (n := 3)
+  refine le_antisymm (by simpa [C6, cycleGraph.length_cycle] using girth_le_length hcycle) ?_
+  obtain ⟨v, p, hp, hlength⟩ := exists_girth_eq_length.mpr (fun h => h _ hcycle)
+  rw [hlength]
+  by_contra! hshort
+  have heven := ((cycleGraph.bicoloring_of_even 6 (by decide)).even_length_iff_congr p).2 Iff.rfl
+  have hfour : p.length = 4 := by
+    obtain ⟨k, hk⟩ := heven
+    have := hp.three_le_length
+    omega
+  obtain ⟨f⟩ := (cycleGraph_isContained_iff (n := 4) (by decide)).2 ⟨v, p, hp, hfour⟩
+  have hnoSquare : ∀ a b c d : Fin 6,
+      C6.Adj a b → C6.Adj b c → C6.Adj c d → C6.Adj d a → a ≠ c → b ≠ d → False := by
+    decide +kernel
+  exact hnoSquare (f 0) (f 1) (f 2) (f 3)
+    (f.toHom.map_rel (by decide)) (f.toHom.map_rel (by decide))
+    (f.toHom.map_rel (by decide)) (f.toHom.map_rel (by decide))
+    (f.injective.ne (by decide)) (f.injective.ne (by decide))
 
 open scoped Classical in
 @[category test, AMS 5]
