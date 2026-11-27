@@ -53,7 +53,7 @@ Two known Wolstenholme primes: 16843 and 2124679.
 Formal proof linked here provided by AlphaProof
 -/
 @[category test, AMS 11]
-theorem wolstenholme_prime_16483 : IsWolstenholmePrime 16843 := by
+theorem wolstenholme_prime_16843 : IsWolstenholmePrime 16843 := by
   unfold IsWolstenholmePrime Nat.ModEq
   refine ⟨by norm_num, by norm_num, ?_⟩
   native_decide

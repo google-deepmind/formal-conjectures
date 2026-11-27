@@ -183,8 +183,9 @@ theorem squarefree_mersenne_of_prime :
 
 /--
 For primes $q$ and $p$ with $p \mid M_q$, the square $p^2$ divides $M_q = 2^q - 1$ precisely when
-`IsWieferichPrime p` holds. The unsolved-problems source states the forward direction from
-$p^2 \mid M_q$ to `IsWieferichPrime p`; the converse under $p \mid M_q$ is added here.
+`IsWieferichPrime p` holds. This is stated in the "Connection with Mersenne and Fermat primes"
+section of the Wikipedia article on Wieferich primes: a prime divisor $p$ of $M_q$ is a Wieferich
+prime if and only if $p^2$ divides $M_q$.
 -/
 @[category textbook, AMS 11]
 theorem sq_dvd_mersenne_iff_isWieferichPrime
