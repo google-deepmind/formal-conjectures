@@ -140,7 +140,7 @@ set_option linter.style.formal_proof_palomar false in
 `(3 - c_MT⁻¹) / 2 = 0.8362…`. The witness `c = 17/20` follows from Knausgård's dyadic
 `0.854225 - o(1)` estimate [Kn26] for distinct critical-line zeros counted against all zeros
 with multiplicity. Bui and Heath-Brown [BH13] give a cumulative bound of `0.84665` under RH. -/@[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/DomTheDeveloper/formal-conjectures/blob/81fefd2eae7b6e06c55fcddcfc18752e0daba924/Proofs/DistinctZeros/Result.lean#L9-L15"]
+  "https://github.com/DomTheDeveloper/formal-conjectures/blob/f951bc57ee15d1a0c3f970a4bdd64a76e3c9d8f9/Proofs/DistinctZeros/Result.lean#L14-L21"]
 theorem distinct_prop_lt : ∃ c > (3 - montgomeryTaylorConst⁻¹) / 2, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
     ∀ T > 0, (c - o T) * N riemannZeta T (2 * T) ≤ Nd riemannZeta T (2 * T) := by
