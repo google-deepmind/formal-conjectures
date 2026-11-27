@@ -1,0 +1,439 @@
+/-
+Copyright 2026 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+public import FormalConjecturesUtil
+
+/-!
+# Erdős Problem 784
+
+*References:*
+- [erdosproblems.com/784](https://www.erdosproblems.com/784)
+- [Er72] Erdős, Paul, *Extremal problems in number theory*. Proceedings of the 1972 Number Theory
+  Conference (Univ. Colorado, Boulder, Colo.) (1972), 80-86. The problem is in §VI, pp. 84–85.
+- [Er73] Erdős, P., *Problems and results on combinatorial number theory*. A survey of
+  combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971)
+  (1973), 117-138. The problem is in §14.1, p. 135.
+- [Er80] Erdős, Paul, *A survey of problems in combinatorial number theory*. Ann. Discrete Math.
+  (1980), 89-115.
+- [ErRu80] Erdős, P. and Ruzsa, I. Z., *On the small sieve. I. Sifting by primes*. J. Number Theory
+  (1980), 385--394.
+- [Ru82] Ruzsa, Imre Z., *On the small sieve. {II}. Sifting by composite numbers*. J. Number Theory
+  (1982), 260--268.
+- [Sa98] Saias, Eric, *Applications des entiers \`a{} diviseurs denses*. Acta Arith. (1998), 225--240.
+- [ScSz59] Schinzel, A. and Szekeres, G., *Sur un probl\`{e}me de M. Paul Erdős*. Acta Sci. Math.
+  (Szeged) (1959), 221-229.
+- [We25] Weingartner, Andreas, *The Schinzel-Szekeres function*. Res. Number Theory (2025), Paper
+  No. 63, 32.
+-/
+
+@[expose] public section
+
+open Filter Asymptotics Real Finset
+
+namespace Erdos784
+
+/--
+$H_C(x)$ is the minimum of $\#\{ m\leq x : a\nmid m\textrm{ for all }a\in A\}$ as $A$ ranges over
+all subsets of $\{2,\ldots,\lfloor x\rfloor\}$ with $\sum_{n\in A}\frac{1}{n}\leq C$.
+
+For $C\geq 0$ the empty set is admissible, so this is the minimum of a nonempty set of natural
+numbers. (If $C<0$ there are no admissible sets and `sInf` returns $0$.)
+-/
+noncomputable def H (C : ℝ) (x : ℕ) : ℕ :=
+  sInf {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Finset.Icc 2 x)
+    (_ : A.reciprocalSum ≤ C)}
+
+/--
+The bound asked in the boxed problem: some $c=c(C)>0$ such that
+$H_C(x)\gg x/(\log x)^c$ for all sufficiently large $x$.
+-/
+def BoundHolds (C : ℝ) : Prop :=
+  ∃ c > (0 : ℝ), ∃ K > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
+    K * (x : ℝ) / (log x) ^ c ≤ H C x
+
+/-- For `C ≥ 0` the empty sieve is admissible, so `H C x ≤ x`. -/
+@[category API, AMS 11]
+lemma H_le_self {C : ℝ} (hC : 0 ≤ C) (x : ℕ) : H C x ≤ x := by
+  refine Nat.sInf_le ⟨∅, empty_subset _, by simpa [reciprocalSum_empty] using hC,
+    card_avoidsDivisors_empty x⟩
+
+/-- Enlarging `C` can only shrink `H` when `C ≥ 0` (empty sieve is admissible). -/
+@[category API, AMS 11]
+lemma H_anti {C C' : ℝ} (hC : 0 ≤ C) (h : C ≤ C') (x : ℕ) : H C' x ≤ H C x := by
+  classical
+  let S : Set ℕ := {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+    (_ : A.reciprocalSum ≤ C)}
+  let S' : Set ℕ := {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+    (_ : A.reciprocalSum ≤ C')}
+  have hsub : S ⊆ S' := by
+    rintro _ ⟨A, hA, hsum, rfl⟩
+    exact ⟨A, hA, hsum.trans h, rfl⟩
+  have hne : S.Nonempty :=
+    ⟨x, ∅, empty_subset _, by simpa [reciprocalSum_empty] using hC, card_avoidsDivisors_empty x⟩
+  exact csInf_le_csInf' hne hsub
+
+/-- Any admissible sieve witnesses an upper bound on `H C x`. -/
+@[category API, AMS 11]
+lemma H_le_avoidsDivisors_card {C : ℝ} {A : Finset ℕ} {x : ℕ}
+    (hA : A ⊆ Icc 2 x) (hsum : A.reciprocalSum ≤ C) :
+    H C x ≤ (avoidsDivisors A x).card :=
+  Nat.sInf_le ⟨A, hA, hsum, rfl⟩
+
+/-- If `C < 0` there are no admissible sets (reciprocal sums are nonnegative), so `H C x = 0`. -/
+@[category API, AMS 11]
+lemma H_eq_zero_of_neg {C : ℝ} (hC : C < 0) (x : ℕ) : H C x = 0 := by
+  classical
+  have hempty :
+      {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+        (_ : A.reciprocalSum ≤ C)} = ∅ := by
+    ext n
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+    rintro ⟨A, _hA, hsum, rfl⟩
+    exact not_lt_of_ge (reciprocalSum_nonneg A) (lt_of_le_of_lt hsum hC)
+  change sInf _ = 0
+  rw [hempty, Nat.sInf_empty]
+
+
+/-- If `0 ≤ C < 1/x` (and `x ≥ 1`) then only the empty sieve is admissible, so `H C x = x`. -/
+@[category API, AMS 11]
+lemma H_eq_self_of_lt_inv {C : ℝ} {x : ℕ} (hx : 1 ≤ x) (hC0 : 0 ≤ C)
+    (hC : C < (1 : ℝ) / x) : H C x = x := by
+  classical
+  let S : Set ℕ := {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+    (_ : A.reciprocalSum ≤ C)}
+  have hempty_mem : x ∈ S :=
+    ⟨∅, empty_subset _, by simpa [reciprocalSum_empty] using hC0, card_avoidsDivisors_empty x⟩
+  have honly : S = {x} := by
+    ext n
+    constructor
+    · rintro ⟨A, hA, hsum, rfl⟩
+      have hAempty : A = ∅ := by
+        by_contra hne
+        have hAne : A.Nonempty := Finset.nonempty_iff_ne_empty.mpr hne
+        obtain ⟨a, ha⟩ := hAne
+        have haI := mem_Icc.mp (hA ha)
+        have hx2 : 2 ≤ x := le_trans haI.1 haI.2
+        have hge : (1 : ℝ) / x ≤ A.reciprocalSum :=
+          le_reciprocalSum_of_subset_Icc_two hA ⟨a, ha⟩ hx2
+        exact (not_le_of_gt hC) (hge.trans hsum)
+      subst hAempty
+      simp [card_avoidsDivisors_empty]
+    · intro hn
+      simp only [Set.mem_singleton_iff] at hn
+      subst hn
+      exact hempty_mem
+  change sInf S = x
+  simp [honly, csInf_singleton]
+
+
+
+/-- Special case `C = 0`: only the empty sieve is admissible for `x ≥ 1`, so `H 0 x = x`. -/
+@[category API, AMS 11]
+lemma H_zero_eq_self {x : ℕ} (hx : 1 ≤ x) : H (0 : ℝ) x = x :=
+  H_eq_self_of_lt_inv hx le_rfl <|
+    one_div_pos.mpr (Nat.cast_pos.mpr (Nat.pos_of_ne_zero (by omega)))
+
+/-- For `x = 0` the survivor set is empty, so `H C 0 = 0` for every `C`. -/
+@[simp, category API, AMS 11]
+lemma H_of_x_zero (C : ℝ) : H C 0 = 0 := by
+  classical
+  by_cases hC : (0 : ℝ) ≤ C
+  · have hle : H C 0 ≤ 0 := by
+      simpa [card_avoidsDivisors_empty] using
+        (H_le_avoidsDivisors_card (A := (∅ : Finset ℕ)) (x := 0) (empty_subset _)
+          (by simpa [reciprocalSum_empty] using hC))
+    exact Nat.eq_zero_of_le_zero hle
+  · exact H_eq_zero_of_neg (lt_of_not_ge hC) 0
+
+/-- Admissible sieves live in `{2, …, x}`, so `1` always survives and `H_C(x) ≥ 1`
+when `C ≥ 0` and `x ≥ 1`. -/
+@[category API, AMS 11]
+lemma one_le_H {C : ℝ} {x : ℕ} (hC : 0 ≤ C) (hx : 1 ≤ x) : 1 ≤ H C x := by
+  classical
+  have hne : Set.Nonempty
+      {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+        (_ : A.reciprocalSum ≤ C)} :=
+    ⟨x, ∅, empty_subset _, by simpa [reciprocalSum_empty] using hC,
+      card_avoidsDivisors_empty x⟩
+  have hmem := Nat.sInf_mem hne
+  simp only [Set.mem_ofPred_eq] at hmem
+  obtain ⟨A, hA, _, heq⟩ := hmem
+  have : 1 ≤ (avoidsDivisors A x).card :=
+    one_le_card_avoidsDivisors hx (one_not_mem_of_subset_Icc_two hA)
+  simpa [H, heq] using this
+
+/-- Singleton sieve `{a}` with `2 ≤ a ≤ x` and `1/a ≤ C` gives `H C x ≤ x - ⌊x/a⌋`. -/
+@[category API, AMS 11]
+lemma H_le_card_singleton_sieve {C : ℝ} {a x : ℕ} (ha : 2 ≤ a) (hax : a ≤ x)
+    (hsum : (1 : ℝ) / a ≤ C) :
+    H C x ≤ x - x / a := by
+  have hA : ({a} : Finset ℕ) ⊆ Icc 2 x := by
+    intro y hy
+    simp only [mem_singleton] at hy
+    subst hy
+    exact mem_Icc.mpr ⟨ha, hax⟩
+  have hsum' : ({a} : Finset ℕ).reciprocalSum ≤ C := by
+    simpa [reciprocalSum_singleton] using hsum
+  simpa [card_avoidsDivisors_singleton] using H_le_avoidsDivisors_card hA hsum'
+
+/-- If `#A / 2 ≤ C` for an admissible shape `A ⊆ {2, …, x}`, then `H` is at most the
+survivor count of `A` (via `∑ 1/a ≤ #A / 2`). -/
+@[category API, AMS 11]
+lemma H_le_avoidsDivisors_card_of_half_card_le {C : ℝ} {A : Finset ℕ} {x : ℕ}
+    (hA : A ⊆ Icc 2 x) (hC : (A.card : ℝ) / 2 ≤ C) :
+    H C x ≤ (avoidsDivisors A x).card :=
+  H_le_avoidsDivisors_card hA <|
+    (Finset.reciprocalSum_le_half_card_of_subset_Icc_two hA).trans hC
+
+/-- For `C ≥ 1/2` and `x ≥ 2`, sieving by `{2}` yields `H C x ≤ x - ⌊x/2⌋`. -/
+@[category API, AMS 11]
+lemma H_le_x_sub_x_div_two {C : ℝ} {x : ℕ} (hx : 2 ≤ x) (hC : (1 : ℝ) / 2 ≤ C) :
+    H C x ≤ x - x / 2 :=
+  H_le_card_singleton_sieve (a := 2) (by omega) hx hC
+
+/-- For `n ≥ 2`, `x ≥ n` and `C ≥ 1/n`, sieving by `{n}` yields `H C x ≤ x - ⌊x/n⌋`. -/
+@[category API, AMS 11]
+lemma H_le_x_sub_x_div {C : ℝ} {n x : ℕ} (hn : 2 ≤ n) (hx : n ≤ x)
+    (hC : (1 : ℝ) / n ≤ C) :
+    H C x ≤ x - x / n :=
+  H_le_card_singleton_sieve (a := n) hn hx hC
+
+/-- Sieving by `{a}` leaves `x - ⌊x/a⌋` survivors. -/
+@[category test, AMS 11]
+theorem erdos_784.variants.card_singleton_sieve (a x : ℕ) :
+    (avoidsDivisors {a} x).card = x - x / a :=
+  card_avoidsDivisors_singleton a x
+
+/-- The $H_C$ question has a positive answer precisely when $C \le 1$. -/
+def erdos_784.answer (C : ℝ) : Prop := C ≤ 1
+
+/--
+Let $C>0$. With $1$ excluded from the sieve, does there exist $c = c(C) > 0$ such that
+$H_C(x) \gg x/(\log x)^c$ for all sufficiently large $x$?
+
+Here $H_C(x)$ is the minimum of
+$\#\{m \le x : a \nmid m \text{ for all } a \in A\}$
+as $A$ ranges over subsets of $\{2, \ldots, \lfloor x \rfloor\}$ with
+$\sum_{n \in A} 1/n \le C$. This lower bound is `BoundHolds`. The answer is recorded as
+`erdos_784.answer`: yes when $0 < C \le 1$ and no when $C > 1$.
+
+The boxed text on erdosproblems.com/784 quantifies over $A \subseteq [1, x]$. Under that
+literal reading the answer is no for every $C \ge 1$, since $A = \{1\}$ has reciprocal sum $1$
+and sieves out every $m \le x$ (`erdos_784.variants.sieving_by_one`). The same page says
+$1 \notin A$ is the intended hypothesis, and defines $H_C$ by excluding $1$.
+
+For $0 < C < 1$ the union bound $(1 - C)x$ is enough. For $C = 1$,
+$H_1(x) \asymp x/\log x$ (Ruzsa's lower bound, Saias's upper bound; also the case $z = 1$ of
+Weingartner, Theorem 5). For fixed $C > 1$, Weingartner, Theorem 5, gives
+$H_C(x) \asymp x^{e^{1 - C}}/\log x$, which is $o\bigl(x/(\log x)^c\bigr)$ for every $c > 0$.
+Ruzsa had already shown $H_C(x) = x^{e^{1 - C} + o(1)}$.
+
+Erdős stated the claim as a conjecture for every bound $T$, including $T > 1$, in
+[Er72, §VI, pp. 84–85] (strict inequality $\sum 1/a_i < T$) and as a question in
+[Er73, §14.1, p. 135] (strict inequality $\sum 1/a_i < c_1$). The formal statement follows
+the $H_C$ convention of erdosproblems.com/784: non-strict reciprocal sum, and $1$ excluded.
+-/
+@[category research solved, question value, AMS 11]
+theorem erdos_784 (C : ℝ) (hC : 0 < C) :
+    BoundHolds C ↔ erdos_784.answer C := by
+  sorry
+
+/--
+For $C=1$ it is known that
+$$H_1(x)\asymp \frac{x}{\log x}.$$
+The lower bound is due to Ruzsa [Ru82], and the upper bound is due to Saias [Sa98].
+-/
+@[category research solved, AMS 11]
+theorem erdos_784.variants.C_eq_one :
+    (fun x : ℕ ↦ (H 1 x : ℝ)) =Θ[atTop] (fun x : ℕ ↦ (x : ℝ) / log x) := by
+  sorry
+
+/--
+For fixed $C>1$ Ruzsa answered this question in the negative. (In [Er80] Erdős states that Ruzsa's
+construction shows his 'intuition completely misled' him.) In fact
+$$H_C(x)=x^{e^{1-C}+o(1)}.$$
+This was improved by Weingartner [We25] who proved (for any fixed $C>1$)
+$$H_C(x)\asymp \frac{x^{e^{1-C}}}{\log x}.$$
+-/
+@[category research solved, AMS 11]
+theorem erdos_784.variants.weingartner (C : ℝ) (hC : 1 < C) :
+    (fun x : ℕ ↦ (H C x : ℝ)) =Θ[atTop]
+      (fun x : ℕ ↦ (x : ℝ) ^ exp (1 - C) / log x) := by
+  sorry
+
+/--
+On the other hand, if $A$ is restricted to sets of primes then Erdős and Ruzsa [ErRu80] proved that
+there are always $\gg_C x$ many $n\leq x$ not divisible by any $p\in A$.
+-/
+@[category research solved, AMS 11]
+theorem erdos_784.variants.primes (C : ℝ) (hC : 0 < C) :
+    ∃ K > (0 : ℝ), ∀ᶠ x : ℕ in atTop,
+      ∀ A : Finset ℕ, A ⊆ Finset.Icc 1 x → (∀ p ∈ A, p.Prime) → A.reciprocalSum ≤ C →
+        K * (x : ℝ) ≤ (avoidsDivisors A x).card := by
+  sorry
+
+/--
+jif also notes that a lower bound of $(1-C)x$ is trivial by the union bound if $0<C<1$.
+-/
+@[category textbook, AMS 11]
+theorem erdos_784.variants.union_bound (C : ℝ) (hC : 0 < C) (_hC1 : C < 1) :
+    ∀ᶠ x : ℕ in atTop, (1 - C) * x ≤ H C x := by
+  refine Eventually.of_forall fun x ↦ ?_
+  simp only [H]
+  have hne : Set.Nonempty
+      {(avoidsDivisors A x).card | (A : Finset ℕ) (_ : A ⊆ Icc 2 x)
+        (_ : A.reciprocalSum ≤ C)} :=
+    ⟨x, ∅, empty_subset _, by simpa [reciprocalSum_empty] using hC.le,
+      card_avoidsDivisors_empty x⟩
+  have hmem := Nat.sInf_mem hne
+  simp only [Set.mem_ofPred_eq] at hmem
+  obtain ⟨A, h₁, h₂, heq⟩ := hmem
+  have hsum : A.reciprocalSum ≤ C := by
+    clear * - h₁ h₂; first | exact h₁ | exact h₂
+  rw [← heq]
+  exact le_card_avoidsDivisors_of_reciprocalSum_le A x hsum
+
+/-- The boxed bound $H_C(x)\gg x/(\log x)^c$ holds for every $0<C<1$, via the union bound
+and $x/\log x=o(x)$. -/
+@[category textbook, AMS 11]
+theorem erdos_784.variants.BoundHolds_of_lt_one (C : ℝ) (hC : 0 < C) (hC1 : C < 1) :
+    BoundHolds C := by
+  refine ⟨1, one_pos, 1 - C, sub_pos.mpr hC1, ?_⟩
+  have hunion := erdos_784.variants.union_bound C hC hC1
+  have hlog : Tendsto (fun x : ℕ ↦ log x) atTop atTop :=
+    tendsto_log_atTop.comp tendsto_natCast_atTop_atTop
+  filter_upwards [hunion, hlog.eventually (eventually_ge_atTop 1)] with x hH hlogx
+  have hpow : (1 : ℝ) ≤ (log x) ^ (1 : ℝ) := by
+    rw [rpow_one]
+    exact hlogx
+  exact (div_le_self (mul_nonneg (sub_nonneg.mpr hC1.le) (Nat.cast_nonneg _)) hpow).trans hH
+
+/-- Sieving by `{1}` empties `{1, …, x}`; this motivates excluding `1` from admissible `A` in `H`. -/
+@[category test, AMS 11]
+theorem erdos_784.variants.sieving_by_one (x : ℕ) :
+    avoidsDivisors ({1} : Finset ℕ) x = ∅ :=
+  avoidsDivisors_eq_empty_of_one_mem (by simp) x
+
+/-- Empty sieve: `#(avoidsDivisors ∅ x) = x`. -/
+@[category test, AMS 11]
+theorem erdos_784.variants.card_empty_sieve (x : ℕ) :
+    (avoidsDivisors (∅ : Finset ℕ) x).card = x :=
+  card_avoidsDivisors_empty x
+
+/-- Union of sieves is intersection of survivors. -/
+@[category test, AMS 11]
+theorem erdos_784.variants.sieve_union (A B : Finset ℕ) (x : ℕ) :
+    avoidsDivisors (A ∪ B) x = avoidsDivisors A x ∩ avoidsDivisors B x :=
+  avoidsDivisors_union A B x
+
+/-- Subsets of `{1, …, x}` have `∑ 1/a ≤ #A`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.reciprocalSum_le_card_of_subset_Icc
+    {A : Finset ℕ} {x : ℕ} (hA : A ⊆ Icc 1 x) :
+    A.reciprocalSum ≤ A.card :=
+  Finset.reciprocalSum_le_card_of_subset_Icc hA
+
+/-- Admissible sieves satisfy `∑ 1/a ≤ #A / 2`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.reciprocalSum_le_half_card_of_subset_Icc_two
+    {A : Finset ℕ} {x : ℕ} (hA : A ⊆ Icc 2 x) :
+    A.reciprocalSum ≤ (A.card : ℝ) / 2 :=
+  Finset.reciprocalSum_le_half_card_of_subset_Icc_two hA
+
+/-- `1` survives every sieve that excludes `1`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.one_mem_avoidsDivisors {A : Finset ℕ} {x : ℕ}
+    (hx : 1 ≤ x) (h1 : 1 ∉ A) : 1 ∈ avoidsDivisors A x :=
+  Finset.one_mem_avoidsDivisors hx h1
+
+/-- The sieve is empty iff `x = 0` or `1 ∈ A`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.avoidsDivisors_eq_empty_iff (A : Finset ℕ) (x : ℕ) :
+    avoidsDivisors A x = ∅ ↔ x = 0 ∨ 1 ∈ A :=
+  Finset.avoidsDivisors_eq_empty_iff A x
+
+/-- Survivor count equals `x` minus the number of integers hit by the sieve. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.card_avoidsDivisors_eq_sub_sieved (A : Finset ℕ) (x : ℕ) :
+    (avoidsDivisors A x).card = x - #{m ∈ Icc 1 x | ∃ a ∈ A, a ∣ m} :=
+  Finset.card_avoidsDivisors_eq_sub_sieved A x
+
+/-- Nat union bound: `#survivors ≥ x - ∑ ⌊x/a⌋`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.le_card_avoidsDivisors_sub_sum_div (A : Finset ℕ) (x : ℕ) :
+    x - ∑ a ∈ A, x / a ≤ (avoidsDivisors A x).card :=
+  Finset.le_card_avoidsDivisors_sub_sum_div A x
+
+/-- Inserting a sieve element filters previous survivors by non-divisibility. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.avoidsDivisors_insert (A : Finset ℕ) (a x : ℕ) :
+    avoidsDivisors (insert a A) x = (avoidsDivisors A x).filter (fun m => ¬ a ∣ m) :=
+  Finset.avoidsDivisors_insert A a x
+
+/-- If `a ∈ A` then survivors of `A` are among survivors of `{a}`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.avoidsDivisors_subset_singleton {A : Finset ℕ} {a x : ℕ}
+    (ha : a ∈ A) :
+    avoidsDivisors A x ⊆ avoidsDivisors {a} x :=
+  Finset.avoidsDivisors_subset_avoidsDivisors_singleton ha
+
+/-- If `a ∈ A` then `#survivors ≤ x - ⌊x/a⌋`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.card_avoidsDivisors_le_sub_div_of_mem {A : Finset ℕ} {a x : ℕ}
+    (ha : a ∈ A) :
+    (avoidsDivisors A x).card ≤ x - x / a :=
+  Finset.card_avoidsDivisors_le_sub_div_of_mem ha
+
+/-- If `A ⊆ {n, …, x}` with `n ≥ 2` and `#A / n ≤ C`, then `H C x` is at most the
+survivor count of `A`. -/
+@[category API, AMS 11]
+lemma H_le_avoidsDivisors_card_of_card_div_le {C : ℝ} {A : Finset ℕ} {x n : ℕ}
+    (hn : 2 ≤ n) (hA : A ⊆ Icc n x) (hC : (A.card : ℝ) / n ≤ C) :
+    H C x ≤ (avoidsDivisors A x).card := by
+  have hA2 : A ⊆ Icc 2 x := hA.trans (Icc_subset_Icc_left hn)
+  exact H_le_avoidsDivisors_card hA2 <|
+    (Finset.reciprocalSum_le_card_div (by omega)
+      (fun _a ha ↦ (mem_Icc.mp (hA ha)).1)).trans hC
+
+/-- Reciprocal sum of a union is at most the sum of the reciprocal sums. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.reciprocalSum_union_le (A B : Finset ℕ) :
+    (A ∪ B).reciprocalSum ≤ A.reciprocalSum + B.reciprocalSum :=
+  Finset.reciprocalSum_union_le A B
+
+
+/-- If every sieve element exceeds `x`, the survivor set is `{1, …, x}`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.avoidsDivisors_eq_Icc_of_forall_lt {A : Finset ℕ} {x : ℕ}
+    (hA : ∀ a ∈ A, x < a) : avoidsDivisors A x = Icc 1 x :=
+  Finset.avoidsDivisors_eq_Icc_of_forall_lt hA
+
+/-- Subsets of `{1, …, x}` satisfy `#A / x ≤ ∑ 1/a`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.le_reciprocalSum_card_div_of_subset_Icc
+    {A : Finset ℕ} {x : ℕ} (hx : 0 < x) (hA : A ⊆ Icc 1 x) :
+    (A.card : ℝ) / x ≤ A.reciprocalSum :=
+  Finset.le_reciprocalSum_card_div_of_subset_Icc hx hA
+
+/-- Lower bound dual to `reciprocalSum_le_card_div`: elements `≤ n` give `∑ 1/a ≥ #A / n`. -/
+@[category API, AMS 11]
+theorem erdos_784.variants.card_div_le_reciprocalSum {A : Finset ℕ} {n : ℕ}
+    (hn : 0 < n) (hA : ∀ a ∈ A, 0 < a ∧ a ≤ n) :
+    (A.card : ℝ) / n ≤ A.reciprocalSum :=
+  Finset.card_div_le_reciprocalSum hn hA
+
+end Erdos784
