@@ -69,7 +69,25 @@ exactly when $m \geq 5$. -/
 @[category test, AMS 5]
 theorem multicolourGraphRamsey_one_cycleGraph_five :
     multicolourGraphRamsey 1 (cycleGraph 5) = 5 := by
-  sorry
+  have labelGraph_eq_top {n : ℕ} (C : TopEdgeLabeling (Fin n) (Fin 1)) (i : Fin 1) :
+      C.labelGraph i = completeGraph (Fin n) := by
+    ext x y
+    change (C.labelGraph i).Adj x y ↔ x ≠ y
+    rw [TopEdgeLabeling.labelGraph_adj]
+    exact ⟨fun ⟨h, _⟩ => h, fun h => ⟨h, Subsingleton.elim _ _⟩⟩
+  unfold multicolourGraphRamsey
+  apply IsLeast.csInf_eq
+  constructor
+  · intro C
+    refine ⟨0, ?_⟩
+    rw [labelGraph_eq_top, isContained_top_iff]
+    exact ⟨Function.Embedding.refl _⟩
+  · intro n hn
+    let C : TopEdgeLabeling (Fin n) (Fin 1) := EdgeLabeling.mk (fun _ _ _ => 0) (by simp)
+    obtain ⟨i, hi⟩ := hn C
+    rw [labelGraph_eq_top, isContained_top_iff] at hi
+    obtain ⟨f⟩ := hi
+    simpa using Fintype.card_le_of_injective f f.injective
 
 /--
 Let $R_k(G)$ denote the minimal $m$ such that if the edges of $K_m$ are $k$-coloured then there
