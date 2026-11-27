@@ -369,6 +369,105 @@ We state the same family of "no-solution" conjectures for multiple coefficient d
 All "general" conjectures are restricted to even `N`.
 -/
 
+/- ## Transfer lemmas
+
+A solution over a semiring maps to a solution over any other semiring along a ring homomorphism, and
+a solution with `D` colours restricts to one with fewer colours along an injection `Fin D' → Fin D`.
+Hence non-existence over `ℂ` gives non-existence over `ℝ`, and non-existence for `D = 3` gives it
+for every `D ≥ 3`. -/
+
+section Transfer
+
+variable {α β : Type} [Semiring α] [Semiring β]
+
+/-- The perfect-matching sum commutes with ring homomorphisms. -/
+@[category API, AMS 5 14 81]
+theorem pmSumListAux_map (f : α →+* β) {N D : Nat} (W : WeightsN N D α) (ι : V N → Fin D) :
+    ∀ (n : Nat) (L : List (V N)),
+      pmSumListAux (fun e => f (W e)) ι n L = f (pmSumListAux W ι n L)
+  | 0, _ => by simp [pmSumListAux]
+  | 1, _ => by simp [pmSumListAux]
+  | _ + 2, [] => by simp [pmSumListAux]
+  | _ + 2, [_] => by simp [pmSumListAux]
+  | n + 2, v :: vs => by
+      rcases vs with _ | ⟨w, ws⟩
+      · simp [pmSumListAux]
+      · rw [pmSumListAux, pmSumListAux]
+        · rw [map_list_sum, List.map_map]
+          congr 1
+          apply List.map_congr_left
+          intro u _
+          simp [pmSumListAux_map f W ι n]
+        all_goals simp
+
+/-- A solution over `α` maps to a solution over `β` along a ring homomorphism. -/
+@[category API, AMS 5 14 81]
+theorem EqSystemN.map (f : α →+* β) {N D : Nat} {W : WeightsN N D α} (h : EqSystemN N D W) :
+    EqSystemN N D (fun e => f (W e)) := by
+  intro ι
+  have hι := h ι
+  unfold pmSumN pmSumList at hι ⊢
+  rw [pmSumListAux_map, hι]
+  split_ifs <;> simp
+
+/-- Restrict a `D`-colour weighting to `D'` colours along `e : Fin D' → Fin D`. -/
+def restrictW {N D D' : Nat} (e : Fin D' → Fin D) (W : WeightsN N D α) : WeightsN N D' α :=
+  fun ed => W ⟨ed.u, ed.v, e ed.i, e ed.j⟩
+
+@[category API, AMS 5 14 81]
+theorem pmSumListAux_restrict {N D D' : Nat} (e : Fin D' → Fin D) (W : WeightsN N D α)
+    (ι : V N → Fin D') :
+    ∀ (n : Nat) (L : List (V N)),
+      pmSumListAux (restrictW e W) ι n L = pmSumListAux W (fun v => e (ι v)) n L
+  | 0, _ => by simp [pmSumListAux]
+  | 1, _ => by simp [pmSumListAux]
+  | _ + 2, [] => by simp [pmSumListAux]
+  | _ + 2, [_] => by simp [pmSumListAux]
+  | n + 2, v :: vs => by
+      rcases vs with _ | ⟨w, ws⟩
+      · simp [pmSumListAux]
+      · rw [pmSumListAux, pmSumListAux]
+        · congr 1
+          apply List.map_congr_left
+          intro u _
+          rw [pmSumListAux_restrict e W ι n]
+          rfl
+        all_goals simp
+
+@[category API, AMS 5 14 81]
+theorem allEqual_comp {N D D' : Nat} {e : Fin D' → Fin D} (he : Function.Injective e)
+    (ι : V N → Fin D') : allEqual (fun v => e (ι v)) ↔ allEqual ι := by
+  unfold allEqual allEqualList
+  have : (fun v w : V N => e (ι v) = e (ι w)) = (fun v w => ι v = ι w) := by
+    funext v w; exact propext he.eq_iff
+  rw [this]
+
+/-- A solution with `D` colours restricts to a solution with `D'` colours along an injection. -/
+@[category API, AMS 5 14 81]
+theorem EqSystemN.restrict {N D D' : Nat} {e : Fin D' → Fin D} (he : Function.Injective e)
+    {W : WeightsN N D α} (h : EqSystemN N D W) : EqSystemN N D' (restrictW e W) := by
+  intro ι
+  have hι := h (fun v => e (ι v))
+  unfold pmSumN pmSumList at hι ⊢
+  rw [pmSumListAux_restrict, hι]
+  simp only [allEqual_comp he]
+
+/-- No solution over `ℂ` implies no solution over `ℝ`. -/
+@[category API, AMS 5 14 81]
+theorem no_real_of_no_complex {N D : Nat} (h : ¬ ∃ W : WeightsN N D ℂ, EqSystemN N D W) :
+    ¬ ∃ W : WeightsN N D ℝ, EqSystemN N D W :=
+  fun ⟨_, hW⟩ => h ⟨_, hW.map Complex.ofRealHom⟩
+
+/-- No solution with `3` colours implies none with any `D ≥ 3` colours, over any semiring. -/
+@[category API, AMS 5 14 81]
+theorem no_ge3_of_no_d3 {N : Nat} {α : Type} [Semiring α]
+    (h : ¬ ∃ W : WeightsN N 3 α, EqSystemN N 3 W) :
+    ∀ D : Nat, D ≥ 3 → ¬ ∃ W : WeightsN N D α, EqSystemN N D W := by
+  intro D hD ⟨_, hW⟩
+  exact h ⟨_, hW.restrict (e := Fin.castLE hD) (Fin.castLE_injective hD)⟩
+
+end Transfer
+
 /- ## Conjectures over ℂ -/
 
 
@@ -458,13 +557,17 @@ theorem eqSystem6_no_solution_d6 :
     ¬ ∃ W : WeightsN 6 6 ℂ, EqSystemN 6 6 W := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{C}$? -/
-@[category research open, question, AMS 5 14 81]
+equation system over $\mathbb{C}$?
+
+This follows from `eqSystem6_no_solution_d3` by restricting colours (`no_ge3_of_no_d3`). -/
+@[category research solved, question, AMS 5 14 81, formal_proof using formal_conjectures at
+"FC_LINK_GE3"]
 theorem eqSystem6_no_solution_ge3 :
     ∀ D : Nat, D ≥ 3 →
-      ¬ ∃ W : WeightsN 6 D ℂ, EqSystemN 6 D W := by
-  sorry
+      ¬ ∃ W : WeightsN 6 D ℂ, EqSystemN 6 D W :=
+  no_ge3_of_no_d3 eqSystem6_no_solution_d3
 
 /-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{C}$? -/
@@ -603,12 +706,17 @@ theorem eqSystem4_no_solution_ge4_real :
       ¬ ∃ W : WeightsN 4 D ℝ, EqSystemN 4 D W := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For $N = 6$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{R}$? -/
-@[category research open, question, AMS 5 14 81]
+equation system over $\mathbb{R}$?
+
+This follows from `eqSystem6_no_solution_d3`, since a real solution is a complex solution
+(`no_real_of_no_complex`). -/
+@[category research solved, question, AMS 5 14 81, formal_proof using formal_conjectures at
+"FC_LINK_D3R"]
 theorem eqSystem6_no_solution_d3_real :
-    ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W := by
-  sorry
+    ¬ ∃ W : WeightsN 6 3 ℝ, EqSystemN 6 3 W :=
+  no_real_of_no_complex eqSystem6_no_solution_d3
 
 set_option linter.style.formal_proof_palomar false in
 /-- For $N = 6$ and $D = 5$, does there exist no solution to the monochromatic quantum graph
@@ -621,13 +729,17 @@ theorem eqSystem6_no_solution_d5_real :
     ¬ ∃ W : WeightsN 6 5 ℝ, EqSystemN 6 5 W := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- For $N = 6$ and all $D \geq 3$, does there exist no solution to the monochromatic quantum graph
-equation system over $\mathbb{R}$? -/
-@[category research open, question, AMS 5 14 81]
+equation system over $\mathbb{R}$?
+
+This follows from `eqSystem6_no_solution_d3_real` by restricting colours (`no_ge3_of_no_d3`). -/
+@[category research solved, question, AMS 5 14 81, formal_proof using formal_conjectures at
+"FC_LINK_GE3R"]
 theorem eqSystem6_no_solution_ge3_real :
     ∀ D : Nat, D ≥ 3 →
-      ¬ ∃ W : WeightsN 6 D ℝ, EqSystemN 6 D W := by
-  sorry
+      ¬ ∃ W : WeightsN 6 D ℝ, EqSystemN 6 D W :=
+  no_ge3_of_no_d3 eqSystem6_no_solution_d3_real
 
 /-- For $N = 8$ and $D = 3$, does there exist no solution to the monochromatic quantum graph
 equation system over $\mathbb{R}$? -/
