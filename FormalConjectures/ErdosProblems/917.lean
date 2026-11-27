@@ -179,7 +179,8 @@ as witnessed by taking two disjoint copies of $C_{2n+1}$ and adding all edges be
 
 We take $n \geq 1$, so that $C_{2n+1}$ is a cycle.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000059"]
 theorem erdos_917.variants.dirac (n : ℕ) (hn : 1 ≤ n) :
     4 * n ^ 2 + 8 * n + 3 ≤ f 6 (4 * n + 2) := by
   sorry
@@ -191,7 +192,8 @@ $$f_k(n) \geq \frac{1}{2}\left(1-\frac{1}{k/3}\right)n^2 + n.$$
 
 We take $m \geq 3$, so that the cycle $C_m$ exists.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000059"]
 theorem erdos_917.variants.erdos_three_dvd (k : ℕ) (hk : 3 ≤ k) (h3 : 3 ∣ k) (m : ℕ)
     (hm : Odd m) (hm3 : 3 ≤ m) :
     conjecturedValue k (m * (k / 3)) + ((m * (k / 3) : ℕ) : ℝ) ≤ (f k (m * (k / 3)) : ℝ) := by

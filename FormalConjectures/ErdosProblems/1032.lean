@@ -93,7 +93,8 @@ Dirac gave an example of a $6$-chromatic critical graph with minimum degree $>n/
 Dirac's graphs join two disjoint odd cycles of length $n/2$ [Di52], [Ma15]. Here we state that
 there are such graphs for infinitely many $n$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000059"]
 theorem erdos_1032.variants.dirac_six :
     ∃ᶠ n : ℕ in atTop,
       ∃ G : SimpleGraph (Fin n), IsKCritical G 6 ∧ (n : ℝ) / 2 < (G.minDegree : ℝ) := by
