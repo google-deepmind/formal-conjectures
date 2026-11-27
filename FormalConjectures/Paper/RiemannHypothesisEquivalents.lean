@@ -35,6 +35,7 @@ open scoped ArithmeticFunction.sigma CompactlySupported Convolution ContDiff
 
 namespace RiemannHypothesis
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Robin's Criterion**. The Riemann Hypothesis is equivalent to
 $$
   \sigma(n) < e ^ {\gamma} n\log\log n
@@ -42,7 +43,8 @@ $$
 for all $n > 5040$, where $\gamma$ is the Euler-Mascheroni constant and $\sigma(n)$ is
 the sum of divisors.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-robin-lagarias/blob/dc12df6aaf4fa88fc9e6534b81ed67b89c99d8e4/FCRobinLagarias/Robin.lean#L34"]
 theorem robin_criterion :
     RiemannHypothesis ↔ ∀ n > 5040, σ 1 n < (exp eulerMascheroniConstant) * n * log (log n) := by
   sorry
@@ -53,6 +55,7 @@ theorem robin_criterion_rhs {n : ℕ} (hn : n > 5040) :
     σ 1 n < exp eulerMascheroniConstant * n * log (log n) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Lagarias' Criterion**. A refinement of Robin's criterion: the Riemann Hypothesis
 is equivalent to
 $$
@@ -63,7 +66,8 @@ for all $n \geq 2$, where $H_n = 1 + 1/2 + \cdots + 1/n$ is the $n$th harmonic n
 Note that [Co26] states this for all $n \geq 1$, but at $n = 1$ both sides equal $1$; Lagarias'
 original formulation is the non-strict inequality for all $n \geq 1$, with equality only at
 $n = 1$. -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-robin-lagarias/blob/dc12df6aaf4fa88fc9e6534b81ed67b89c99d8e4/FCRobinLagarias/Lagarias.lean#L479"]
 theorem lagarias_criterion : RiemannHypothesis ↔
     ∀ n > 1, σ 1 n < harmonic n + exp (harmonic n) * log (harmonic n) := by
   sorry
@@ -92,13 +96,15 @@ over the zeros with positive imaginary part with summand `2 * (_).re`, which mak
 sum `∑'` meaningful. -/
 noncomputable def lambda (n : ℕ) : ℝ := ∑' ρ : nontrivialPosZeros, 2 * (1 - (1 - 1 / ρ.1) ^ n).re
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Li's Criterion**. The Riemann Hypothesis is equivalent to the positivity of
 $$
   \lambda_n := \sum_{\rho}\left(1 - \left(1 - \frac{1}{\rho}\right)^n\right)
 $$
 for each $n > 0$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-rh-criteria/blob/bfe38b294f3a12ee2eddbbe65423027c9b14015a/LeanClassics/FCLi.lean#L154"]
 theorem li_criterion : RiemannHypothesis ↔ ∀ n > 0, 0 < lambda n := by
   sorry
 
@@ -128,11 +134,13 @@ noncomputable def fractScalarInvSumL2 (n : ℕ) (c θ : Fin n → ℝ) :
     Lp ℝ 2 (volume.restrict (Set.Ioc (0 : ℝ) 1)) :=
   ∑ ν, c ν • (fractScalarInv_memLp2 (θ ν)).toLp _
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Beurling-Nyman Criterion**. The Riemann Hypothesis is equivalent to the statement that
 the set of finite linear combination $\sum_{\nu = 1}^n c_{\nu}\rho_{\theta_{\nu}}$ is dense
 in $L^2(0, 1)$, when ranging over $0 < \theta_{\nu}\leq 1$ and
 $\sum_{\nu = 1}^n c_{\nu}\theta_{\nu} = 0$. -/
-@[category research solved, AMS 11 28]
+@[category research solved, AMS 11 28, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-rh-criteria/blob/bfe38b294f3a12ee2eddbbe65423027c9b14015a/LeanClassics/FCNyman.lean#L309"]
 theorem beurling_nyman_criterion : RiemannHypothesis ↔
     Dense { fractScalarInvSumL2 n c θ | (n) (c) (θ)
       (hθ : ∀ ν, θ ν ∈ Set.Ioc 0 1) (h : ∑ ν, c ν * θ ν = 0) } := by
@@ -159,6 +167,7 @@ where $\hat{g}$ is the Mellin transform, corresponds to the vanishing of the Fou
 at $\pm 1/2$. -/
 def IsTestFunction (g : ℝ → ℝ) : Prop := ∫ x, g x * exp (x / 2) = 0 ∧ ∫ x, g x * exp (-x / 2) = 0
 
+set_option linter.style.formal_proof_palomar false in
 /-- **Weil's Positivity Criterion**. The Riemann Hypothesis is equivalent to the non-positivity of
 Weil factor sums on the convolution of test functions. In [Co26] this is expressed as
 $$
@@ -169,7 +178,8 @@ the Mellin transform of $g$ vanishes at $\pm i / 2$, where $g^*(x) := \bar{g}(x^
 are the multiplicative Weil factors defined in [Co26]. We formalise this as the corresponding
 additive statement (via $x = e^u$), since convolution in mathlib is additive, and restrict to
 real-valued test functions $g$, which suffices for the equivalence. -/
-@[category research solved, AMS 11 46]
+@[category research solved, AMS 11 46, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-rh-criteria/blob/bfe38b294f3a12ee2eddbbe65423027c9b14015a/LeanClassics/FCWeil.lean#L335"]
 theorem weil_positivity_criterion :
     RiemannHypothesis ↔ ∀ g : C_c(ℝ, ℝ), ContDiff ℝ ∞ g → IsTestFunction g →
       weilArchimedean (g ⋆ fun x ↦ g (-x)) +
