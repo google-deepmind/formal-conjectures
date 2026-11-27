@@ -87,20 +87,24 @@ theorem IsReachable.refl (G : SimpleGraph V) (A : PebbleDistribution V) : IsReac
   tauto
 
 /--
-The pebbling number of a graph `G`, is the lowest natural number `n` that satisfies the
-following condition: Given any target or 'root' vertex in the graph and any initial
-pebbles distribution with `n` pebbles on the graph, another pebble distribution is reachable
-in which the designated root vertex has one or more pebbles.
+The pebbling number of a connected graph `G` is the least natural number `n` such that, for
+every initial pebble distribution with `n` pebbles and every target vertex, a distribution
+is reachable in which the target has at least one pebble.
+
+Connectedness is part of the domain: on a disconnected graph with at least two vertices, no
+finite number of pebbles can guarantee reaching every target.
 -/
-noncomputable def PebblingNumber [Fintype V] (G : SimpleGraph V) : ℕ :=
+noncomputable def PebblingNumber [Fintype V] (G : SimpleGraph V) (_hG : G.Connected) : ℕ :=
   sInf { n | ∀ D, NumberOfPebbles D = n → ∀ v, ∃ D', IsReachable G D D' ∧ 1 ≤ D' v }
 
 /--
-The pebbling number of the complete graph on `n` vertices is `n`.
+The pebbling number of the complete graph on a nonempty finite vertex type is its cardinality.
 -/
 @[category API, AMS 5]
-theorem PebblingNumber_completeGraph [Fintype V] :
-    PebblingNumber (SimpleGraph.completeGraph V) = Fintype.card V := by
+theorem PebblingNumber_completeGraph [Fintype V] [Nonempty V] :
+    PebblingNumber (SimpleGraph.completeGraph V)
+      (SimpleGraph.connected_top_iff.mpr (inferInstance : Nonempty V)) =
+      Fintype.card V := by
   refine IsLeast.csInf_eq ⟨fun D hD v => ?_, fun a ha => not_lt.1 fun ha_lt => ?_⟩
   · by_cases h : ∃ w, 2 ≤ D w
     · obtain ⟨w, hw⟩ := h
@@ -133,7 +137,8 @@ of the pebbling numbers of the factors. See
 @[category research open, AMS 5]
 theorem pebbling_number_conjecture {W : Type} [Fintype V] [Fintype W] [DecidableEq W]
     (G : SimpleGraph V) (H : SimpleGraph W) (hG : G.Connected) (hH : H.Connected) :
-    PebblingNumber (G □ H) ≤ PebblingNumber G * PebblingNumber H := by
+    PebblingNumber (G □ H) (hG.boxProd hH) ≤
+      PebblingNumber G hG * PebblingNumber H hH := by
   sorry
 
 end PebblingNumberConjecture
