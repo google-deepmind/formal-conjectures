@@ -61,4 +61,15 @@ def cardinalPartitionRel (μ : Cardinal.{u}) (r : ℕ) (γ : Ordinal.{u})
         #H = ν i ∧
         ∀ (s : Finset A) (hs : s.card = r), (↑s : Set A) ⊆ H → col ⟨s, hs⟩ = i
 
+/-- The partition relation is monotone in its targets: if
+$\mu \to (\nu'_\alpha)_{\alpha < \gamma}^r$ and $\nu_\alpha \le \nu'_\alpha$ for all $\alpha$, then
+$\mu \to (\nu_\alpha)_{\alpha < \gamma}^r$. A subset of a homogeneous set is homogeneous. -/
+theorem cardinalPartitionRel.mono {μ : Cardinal.{u}} {r : ℕ} {γ : Ordinal.{u}}
+    {ν ν' : γ.ToType → Cardinal.{u}} (h : cardinalPartitionRel μ r γ ν')
+    (hν : ∀ i, ν i ≤ ν' i) : cardinalPartitionRel μ r γ ν := by
+  intro A hA col
+  obtain ⟨i, H, hH, hhom⟩ := h A hA col
+  obtain ⟨H', hH'H, hH'⟩ := le_mk_iff_exists_subset.1 (hH ▸ hν i)
+  exact ⟨i, H', hH', fun s hs hsH ↦ hhom s hs (hsH.trans hH'H)⟩
+
 end Combinatorics
