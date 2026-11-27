@@ -192,4 +192,52 @@ theorem erdos_963.variants.positive :
       ∃ B ⊆ A, Nat.log 2 A.card ≤ B.card ∧ AddDissociated (B : Set ℝ) := by
   sorry
 
+/-- Adjoining an odd integer to a dissociated finset of even integers
+preserves dissociation. The parity of a subset sum determines whether it uses the odd element. -/
+@[category API, AMS 11]
+theorem addDissociated_insert_odd {B : Finset ℤ} {a : ℤ} (hB : AddDissociated (B : Set ℤ))
+    (he : ∀ b ∈ B, Even b) (ha : Odd a) :
+    AddDissociated ((insert a B : Finset ℤ) : Set ℤ) := by
+  by_contra h
+  obtain ⟨t, u, ht, hu, htu, hne, hsum⟩ := not_addDissociated_iff_exists_disjoint.1 h
+  rw [Finset.coe_subset] at ht hu
+  have hsum_even {s : Finset ℤ} (hs : s ⊆ B) : Even (∑ b ∈ s, b) :=
+    Finset.even_sum _ fun b hb ↦ he b (hs hb)
+  have hsum_mem {s : Finset ℤ} (hs : s ⊆ insert a B) (has : a ∈ s) :
+      Odd (∑ b ∈ s, b) := by
+    rw [← Finset.add_sum_erase s _ has]
+    exact ha.add_even (hsum_even (Finset.subset_insert_iff.1 hs))
+  have hnot_mem {s r : Finset ℤ} (hs : s ⊆ insert a B) (hr : r ⊆ insert a B)
+      (hd : Disjoint s r) (heq : ∑ b ∈ s, b = ∑ b ∈ r, b) : a ∉ s := by
+    intro has
+    have har : a ∉ r := fun har ↦ Finset.disjoint_left.1 hd has har
+    have her := hsum_even ((Finset.subset_insert_iff_of_notMem har).1 hr)
+    exact Int.not_even_iff_odd.2 (hsum_mem hs has) (heq.symm ▸ her)
+  have hat := hnot_mem ht hu htu hsum
+  have hau := hnot_mem hu ht htu.symm hsum.symm
+  rw [Finset.subset_insert_iff_of_notMem hat] at ht
+  rw [Finset.subset_insert_iff_of_notMem hau] at hu
+  exact hne (hB (Finset.coe_subset.2 ht) (Finset.coe_subset.2 hu) hsum)
+
+/-- If a finset of naturals contains an odd element and has no dissociated subset of size
+`k + 1`, its even elements have no dissociated subset of size `k`.
+Dissociation is expressed using the image in the integers. -/
+@[category API, AMS 11]
+theorem no_dissociated_subset_filter_even {A : Finset ℕ} {k : ℕ}
+    (hodd : ∃ a ∈ A, Odd a)
+    (h : ¬ ∃ B ⊆ A, B.card = k + 1 ∧ AddDissociated ((Nat.cast : ℕ → ℤ) '' (B : Set ℕ))) :
+    ¬ ∃ B ⊆ A.filter Even, B.card = k ∧ AddDissociated ((Nat.cast : ℕ → ℤ) '' (B : Set ℕ)) := by
+  rintro ⟨B, hBA, hcard, hB⟩
+  obtain ⟨a, haA, ha⟩ := hodd
+  have he (b : ℕ) (hb : b ∈ B) : Even b := (Finset.mem_filter.1 (hBA hb)).2
+  have haB : a ∉ B := fun hab ↦ Nat.not_even_iff_odd.2 ha (he a hab)
+  refine h ⟨insert a B, Finset.insert_subset_iff.2 ⟨haA, hBA.trans (Finset.filter_subset _ _)⟩,
+    by rw [Finset.card_insert_of_notMem haB, hcard], ?_⟩
+  rw [Finset.coe_insert, Set.image_insert_eq, ← Finset.coe_image, ← Finset.coe_insert]
+  rw [← Finset.coe_image] at hB
+  refine addDissociated_insert_odd hB ?_ (ha.natCast (R := ℤ))
+  intro b hb
+  obtain ⟨c, hc, rfl⟩ := Finset.mem_image.1 hb
+  exact (Int.even_coe_nat c).2 (he c hc)
+
 end Erdos963
