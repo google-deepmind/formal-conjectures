@@ -143,7 +143,7 @@ denominator. The compact RH replay discharges its Riemann hypothesis assumption.
 Taking `c = 17/20` gives the stated inequality. Bui and Heath-Brown [BH13] give
 a cumulative lower bound of `0.84665` assuming RH. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/josusanmartin/riemann/blob/d4d280813d0b4f2a8fbb89229755b24f1dfee63e/submissions/knausgard-rh-reflected-kernel-8542/proof/Solution.lean#L17405-L17409"]
+  "https://github.com/DomTheDeveloper/formal-conjectures/blob/81fefd2eae7b6e06c55fcddcfc18752e0daba924/Proofs/DistinctZeros/Result.lean#L9-L15"]
 theorem distinct_prop_lt : ∃ c > (3 - montgomeryTaylorConst⁻¹) / 2, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
     ∀ T > 0, (c - o T) * N riemannZeta T (2 * T) ≤ Nd riemannZeta T (2 * T) := by
