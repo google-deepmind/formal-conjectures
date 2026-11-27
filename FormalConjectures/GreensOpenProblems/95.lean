@@ -77,7 +77,8 @@ density. Whether $0$ counts as a palindrome does not change the density.
 The answer is no: Zakharov showed that the number of $n < X$ which are sums of two base-$g$
 palindromes is at most $X / \log^c X$ [Za24, Theorem 1], see `green_95.variants.zakharov`.
 -/
-@[category research solved, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000084"]
 theorem green_95 : ∀ g : ℕ, 2 ≤ g → ¬ 0 < (sumsOfTwo g).lowerDensity := by
   sorry
 
@@ -87,7 +88,8 @@ large $X$, the number of $n < X$ which are a sum of two positive base-$g$ palind
 $X / \log^c X$ [Za24, Theorem 1]. We state it for integer $X$. This answers the question of
 [CLB18], who had proved an upper bound $c X$ with $c < 1$ for $g \ge 3$ [CLB18, Theorem 1.4].
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000084"]
 theorem green_95.variants.zakharov :
     ∀ g : ℕ, 2 ≤ g → ∃ c : ℝ, 0 < c ∧ ∀ᶠ X : ℕ in atTop,
       ((sumsOfTwoPositive g ∩ Set.Iio X).ncard : ℝ) ≤ (X : ℝ) / Real.log X ^ c := by
