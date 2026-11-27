@@ -21,7 +21,11 @@ public import FormalConjecturesUtil
 /-!
 # Erdős Problem 14
 
-*Reference:* [erdosproblems.com/14](https://www.erdosproblems.com/14)
+*References:*
+- [erdosproblems.com/14](https://www.erdosproblems.com/14)
+- [KK26] Liam Kruer and Jensen Kohlmeyer, *A uniform square-root lower bound for non-unique sums
+  and a resolution of Erdős problem 14*, preprint, September 2026
+  ([PDF](https://liamkruer.com/assets/work/conjectures/problems/erdos-14/paper/proof.pdf)).
 -/
 
 @[expose] public section
@@ -49,17 +53,26 @@ noncomputable def squareRoot (N : ℕ) : ℝ :=
 Let $A ⊆ \mathbb{N}$. Let $B ⊆ \mathbb{N}$ be the set of integers which are representable
 in exactly one way as the sum of two elements from $A$. Is it true that for all
 $\epsilon > 0$ and large $N$, $|\{1,\ldots,N\} \setminus B| \gg_\epsilon N^{1/2 - \epsilon}$?
+
+The answer is yes: Kruer and Kohlmeyer [KK26] proved the stronger uniform lower bound
+$|\{1,\ldots,N\} \setminus B| \gg N^{1/2}$ for every $A \subseteq \mathbb{N}$.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000033"]
 theorem erdos_14.parts.i :
-    ∀ A, ∀ ε > 0, nonUniqueSumCount A ≫ almostSquareRoot ε := by sorry
+    ∀ A, ∀ ε > 0, nonUniqueSumCount A ≫ almostSquareRoot ε := by
+  sorry
 
 /--
 Is it possible that $|\{1,\ldots,N\} \setminus B| = o(N^\frac{1}{2})$?
+
+The answer is no: Kruer and Kohlmeyer [KK26] proved $|\{1,\ldots,N\} \setminus B| \gg N^{1/2}$
+for every $A \subseteq \mathbb{N}$.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000033"]
 theorem erdos_14.parts.ii :
-    ∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot := by
+    ¬ ∃ (A : Set ℕ), IsLittleO atTop (nonUniqueSumCount A) squareRoot := by
   sorry
 
 end Erdos14
