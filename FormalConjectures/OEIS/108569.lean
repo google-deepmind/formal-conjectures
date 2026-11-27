@@ -44,6 +44,28 @@ The primary defining sequence `a`.
 noncomputable def a (n : ℕ) : ℕ :=
   n.nth A
 
+/-- There is an odd term $n>1$ coprime to $3$ for which exactly seven distinct primes
+divide $n$ or $n+\varphi(n)$. The witness is $1162699874939$. -/
+@[category test, AMS 11]
+theorem exists_odd_term_seven_prime_factors :
+    ∃ n > 1, Odd n ∧ n.Coprime 3 ∧ A n ∧
+      (n.primeFactors ∪ (n + φ n).primeFactors).card = 7 := by
+  have hn : (1162699874939 : ℕ) = 257 * 7253 * 623759 := by decide
+  have hφ : φ 1162699874939 = 1158014212096 := by
+    rw [hn]
+    simp (disch := norm_num1) only [Nat.totient_mul, Nat.totient_prime]
+  have hm : 1162699874939 + φ 1162699874939 = 3 * 5 * 17 * 173 * 7253 ^ 2 := by
+    rw [hφ]
+    decide
+  refine ⟨1162699874939, by decide, by decide, by decide, ⟨by decide, ?_⟩, ?_⟩
+  · rw [hm, hφ]
+    simp (disch := norm_num1) only [Nat.totient_mul, Nat.totient_prime_pow_succ, Nat.totient_prime]
+    decide
+  · rw [hm, hn]
+    simp (disch := norm_num1) only [Nat.primeFactors_mul, Nat.primeFactors_pow,
+      Nat.Prime.primeFactors]
+    decide
+
 /-- Term theorems verifying the first few values of the sequence against the official OEIS b-file -/
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by
