@@ -68,13 +68,15 @@ for sufficiently large $r$.
 theorem error_le : ∀ᶠ r in atTop, |E r| ≤ 2 * √2 * π * r := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Hardy and Laundau independently found a lower bound by showing that
 $$
   |E(r)| \neq o\left(r^{1/2}(\log r)^{1/4}\right)
 $$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-divisor-problem/blob/80d65168002a5c5903c5808f619f23f21a21f632/HardyOmegaFC/CircleHardy.lean#L28"]
 theorem error_not_isLittleO : ¬E =o[atTop] (fun r => √r * √√r.log) := by
   sorry
 
