@@ -124,8 +124,14 @@ theorem erdos_111.variants.upper_bound_existence :
 Erdős conjectured [Er81] that for every $\varepsilon > 0$ there is a graph $G$ with
 $\chi(G) = \aleph_1$ such that $h_G(n) \ll n^{1+\varepsilon}$.
 The graph is chosen after $\varepsilon$.
+
+Proved in ZFC by Tanner Clary, with AI assistance, by establishing
+$h_{\mathrm{Sh}_k(L)}(n) \le (2k - 1) n^{1 + 1/k}$ for every linear order $L$ and $k \ge 1$ via a
+weighted inductive 2-coloring, and constructing a tree-of-colorings graph over $\mathrm{Sh}_k$ of
+chromatic cardinal $\aleph_1$ that embeds injectively as a subgraph of $\mathrm{Sh}_k(\widetilde{L})$.
 -/
-@[category research open, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000058"]
 theorem erdos_111.variants.erdos_conjecture :
     ∀ ε : ℝ, 0 < ε → ∃ (V : Type) (G : SimpleGraph V),
       G.chromaticCardinal = ℵ_ 1 ∧
