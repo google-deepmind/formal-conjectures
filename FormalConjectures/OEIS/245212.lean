@@ -157,12 +157,12 @@ theorem conjecture.variants.four_prime_gap (p q r e f g : ℕ)
   sorry
 
 /--
-An odd equality with exactly four distinct prime factors is divisible by $27$.
-See the [proof and two exact certificates](https://github.com/DomTheDeveloper/ProofPlaygrond/tree/9644e2a2d2d46353a6531f88f3d67bdc4f65fd50/proofs/oeis-divisor-sums/A245212/three-squared).
+An odd equality with exactly four distinct prime factors is divisible by $243$.
+See the [exponent exclusions and certificates](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/e9d6825f1e7aee20b1104a05a14cbefb503fd119/proofs/oeis-divisor-sums/A245212/four-prime-finiteness/README.md).
 -/
 @[category research solved, AMS 11]
 theorem conjecture.variants.four_prime_divisibility (n : ℕ) (hn : 1 < n) (ho : Odd n)
-    (hcard : n.primeFactors.card = 4) (h : a n = (σ 1 n : ℤ)) : 27 ∣ n := by
+    (hcard : n.primeFactors.card = 4) (h : a n = (σ 1 n : ℤ)) : 243 ∣ n := by
   sorry
 
 /--
@@ -186,6 +186,34 @@ See the [two independent certificates](https://github.com/DomTheDeveloper/ProofP
 @[category research solved, AMS 11]
 theorem conjecture.variants.smooth_eleven (n : ℕ) (hn : 0 < n)
     (hsmooth : ∀ p ∈ n.primeFactors, p ≤ 11) :
+    a n = (σ 1 n : ℤ) ↔ ∃ e : ℕ, n = 2 ^ e := by
+  sorry
+
+/--
+Only finitely many odd positive integers with four distinct prime factors satisfy the equality.
+See the [effective finiteness proof](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/e9d6825f1e7aee20b1104a05a14cbefb503fd119/proofs/oeis-divisor-sums/A245212/four-prime-finiteness/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.four_prime_finite :
+    {n : ℕ | 1 < n ∧ Odd n ∧ n.primeFactors.card = 4 ∧ a n = (σ 1 n : ℤ)}.Finite := by
+  sorry
+
+/--
+Every equality input $n>1$ satisfies $n<(8\omega(n))^{2\tau(n)}$.
+See the [height bound](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/5d52c998277915a87728717864f5e626f4fa3b48/proofs/oeis-divisor-sums/A245212/divisor-count/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.height_bound (n : ℕ) (hn : 1 < n) (h : a n = (σ 1 n : ℤ)) :
+    n < (8 * n.primeFactors.card) ^ (2 * n.divisors.card) := by
+  sorry
+
+/--
+Among positive integers with at most $512$ divisors, precisely the powers of two satisfy
+the equality. See the [proof and two exhaustive integer programs](https://github.com/DomTheDeveloper/ProofPlaygrond/blob/5d52c998277915a87728717864f5e626f4fa3b48/proofs/oeis-divisor-sums/A245212/divisor-count/README.md).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.at_most_512_divisors (n : ℕ) (hn : 0 < n)
+    (hcount : n.divisors.card ≤ 512) :
     a n = (σ 1 n : ℤ) ↔ ∃ e : ℕ, n = 2 ^ e := by
   sorry
 
