@@ -261,6 +261,7 @@ public import FormalConjecturesForMathlib.RingTheory.Ideal.Maximal
 public import FormalConjecturesForMathlib.RingTheory.IntersectionMultiplicity
 public import FormalConjecturesForMathlib.RingTheory.MvPolynomial.LexPlusPowers
 public import FormalConjecturesForMathlib.RingTheory.Noetherian.Defs
+public import FormalConjecturesForMathlib.RingTheory.PowerSeries.SubstExp
 public import FormalConjecturesForMathlib.RingTheory.SystemOfParameters
 public import FormalConjecturesForMathlib.RingTheory.Valuation.LocalUniformization
 public import FormalConjecturesForMathlib.SetTheory.Cardinal.Arithmetic

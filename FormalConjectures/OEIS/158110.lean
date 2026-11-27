@@ -49,17 +49,32 @@ noncomputable def logSeries (q m : ℕ) : ℚ⟦X⟧ :=
 noncomputable def a (n : ℕ) : ℚ :=
   coeff n (subst (logSeries 2 3) (exp ℚ))
 
+/-- The logarithmic series has zero constant coefficient. -/
+@[category API, AMS 13]
+theorem constantCoeff_logSeries (q m : ℕ) : constantCoeff (logSeries q m) = 0 := by
+  simp [logSeries, ← coeff_zero_eq_constantCoeff_apply]
+
+/-- The recurrence for `a` obtained by differentiating the exponential. -/
+@[category API, AMS 13]
+theorem a_succ (n : ℕ) : a (n + 1) * (n + 1) = ∑ i ∈ Finset.range (n + 1),
+    a i * (coeff (n - i + 1) (logSeries 2 3) * (n - i + 1 : ℕ)) :=
+  coeff_succ_subst_exp_mul (constantCoeff_logSeries 2 3) n
+
 @[category test, AMS 5 11]
 theorem a_0 : a 0 = 1 := by
-  sorry
+  exact coeff_zero_subst_exp (constantCoeff_logSeries 2 3)
 
 @[category test, AMS 5 11]
 theorem a_1 : a 1 = 2 := by
-  sorry
+  have h := a_succ 0
+  norm_num [Finset.sum_range_succ, a_0, logSeries] at h
+  linarith
 
 @[category test, AMS 5 11]
 theorem a_2 : a 2 = 130 := by
-  sorry
+  have h := a_succ 1
+  norm_num [Finset.sum_range_succ, a_0, a_1, logSeries] at h
+  linarith
 
 /--
 "Conjecture: given q and m are nonnegative integers, then exp( Sum_{n>=1} q^(n^m)*x^n/n ) is a

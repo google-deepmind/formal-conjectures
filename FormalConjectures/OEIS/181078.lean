@@ -48,25 +48,45 @@ $\exp\bigl(\sum_{n \ge 1} [\sum_{k \ge 0} \binom{n+k-1}{k}^{n+k-1} x^k] x^n/n\bi
 noncomputable def a (m : ℕ) : ℚ :=
   coeff m (hannaExp fun n k => ((n + k - 1).choose k : ℤ) ^ (n + k - 1))
 
+/-- The logarithmic series has zero constant coefficient. -/
+@[category API, AMS 13]
+theorem constantCoeff_hannaLog (f : ℕ → ℕ → ℤ) : constantCoeff (hannaLog f) = 0 := by
+  simp [hannaLog, ← coeff_zero_eq_constantCoeff_apply]
+
+/-- The recurrence for `a` obtained by differentiating the exponential. -/
+@[category API, AMS 13]
+theorem a_succ (m : ℕ) : a (m + 1) * (m + 1) = ∑ i ∈ Finset.range (m + 1),
+    a i * (coeff (m - i + 1)
+      (hannaLog fun n k => ((n + k - 1).choose k : ℤ) ^ (n + k - 1)) * (m - i + 1 : ℕ)) :=
+  coeff_succ_subst_exp_mul (constantCoeff_hannaLog _) m
+
 @[category test, AMS 11]
 theorem a_0 : a 0 = 1 := by
-  sorry
+  exact coeff_zero_subst_exp (constantCoeff_hannaLog _)
 
 @[category test, AMS 11]
 theorem a_1 : a 1 = 1 := by
-  sorry
+  have h := a_succ 0
+  norm_num [Finset.sum_range_succ, a_0, hannaLog, Finset.sum_Icc_succ_top] at h
+  linarith
 
 @[category test, AMS 11]
 theorem a_2 : a 2 = 2 := by
-  sorry
+  have h := a_succ 1
+  norm_num [Finset.sum_range_succ, a_0, a_1, hannaLog, Finset.sum_Icc_succ_top] at h
+  linarith
 
 @[category test, AMS 11]
 theorem a_3 : a 3 = 5 := by
-  sorry
+  have h := a_succ 2
+  norm_num [Finset.sum_range_succ, a_0, a_1, a_2, hannaLog, Finset.sum_Icc_succ_top] at h
+  linarith
 
 @[category test, AMS 11]
 theorem a_4 : a 4 = 29 := by
-  sorry
+  have h := a_succ 3
+  norm_num [Finset.sum_range_succ, a_0, a_1, a_2, a_3, hannaLog, Finset.sum_Icc_succ_top] at h
+  linarith
 
 /--
 "Conjecture: this sequence consists entirely of integers."
