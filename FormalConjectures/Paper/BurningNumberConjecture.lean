@@ -75,13 +75,15 @@ theorem burning_number_conjecture {V : Type} [Fintype V] (G : SimpleGraph V)
     burningNumber G ≤ ⌈Real.sqrt (Fintype.card V)⌉₊ := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **Paths attain the conjectured bound** (Bonato–Janssen–Roshanbin [BJR16]).
 
 The burning number of the path on `n ≥ 1` vertices is exactly `⌈√n⌉`, so the bound in the
 burning number conjecture cannot be improved.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/rotem4997/burning-number-lean/blob/1df2b97f8c66d81eb4f3e53b241e84925d4fc13a/BurningNumberLean/Path.lean#L160"]
 theorem burning_number_conjecture.variants.path (n : ℕ) (hn : 1 ≤ n) :
     burningNumber (SimpleGraph.pathGraph n) = ⌈Real.sqrt n⌉₊ := by
   sorry
