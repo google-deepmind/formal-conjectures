@@ -76,11 +76,60 @@ theorem erdos_413.variants.bigOmega :
     { n | IsBarrier (fun m => Ω m) n }.Infinite := by
   sorry
 
-/-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`. -/
+/-- `2 ^ Ω m ≤ m` for `m ≠ 0`: each prime factor is at least `2`. -/
+@[category API, AMS 11]
+theorem two_pow_bigOmega_le {m : ℕ} (hm : m ≠ 0) : 2 ^ Ω m ≤ m := by
+  rw [ArithmeticFunction.cardFactors_apply]
+  calc 2 ^ m.primeFactorsList.length ≤ m.primeFactorsList.prod :=
+        List.pow_card_le_prod _ _ fun p hp => (Nat.prime_of_mem_primeFactorsList hp).two_le
+    _ = m := Nat.prod_primeFactorsList hm
+
+/-- Selfridge computed that the largest `Ω`-barrier below `10^5` is `99840`.
+
+Proof idea: `2 ^ Ω m ≤ m` bounds `Ω` below `99840`; the rest is explicit evaluation of `Ω`. -/
 @[category research solved, AMS 11]
 theorem erdos_413.variants.bigOmega_largest_barrier_lt_100k :
     IsGreatest {n : ℕ | n < 10 ^ 5 ∧ IsBarrier (fun m => Ω m) n} 99840 := by
-  sorry
+  constructor
+  · refine ⟨by norm_num, fun m hm => ?_⟩
+    show (m : ℝ) + (Ω m : ℝ) ≤ 99840
+    by_cases h : m < 99824
+    · have h2 : Ω m ≤ 16 := by
+        by_contra hc
+        have h3 := Nat.pow_le_pow_right (show 0 < 2 by norm_num) (not_le.1 hc)
+        rcases Nat.eq_zero_or_pos m with rfl | hpos
+        · simp at hc
+        · have := two_pow_bigOmega_le hpos.ne'
+          omega
+      have h3 : (Ω m : ℝ) ≤ 16 := by exact_mod_cast h2
+      have h4 : (m : ℝ) ≤ 99823 := by exact_mod_cast (by omega : m ≤ 99823)
+      linarith
+    · push Not at h
+      have h3 : m + Ω m ≤ 99840 := by
+        interval_cases m <;>
+          simp [ArithmeticFunction.cardFactors_apply, Nat.primeFactorsList_ofNat]
+      exact_mod_cast h3
+  · rintro n ⟨hn, hb⟩
+    by_contra hlt
+    push Not at hlt
+    -- pairs `(m, Ω m)` whose `m + Ω m` rules out every barrier in `(99840, 10^5)`
+    set L : List (ℕ × ℕ) := [
+        (99840, 12), (99848, 5), (99852, 5), (99856, 6), (99860, 4), (99862, 4), (99864, 7),
+        (99870, 4), (99873, 7), (99876, 6), (99880, 6), (99885, 3), (99887, 2), (99888, 6),
+        (99892, 5), (99896, 4), (99897, 4), (99900, 8), (99904, 8), (99909, 4), (99912, 6),
+        (99916, 3), (99918, 6), (99920, 6), (99924, 5), (99928, 4), (99930, 4), (99932, 5),
+        (99936, 8), (99940, 5), (99944, 6), (99946, 5), (99950, 4), (99952, 5), (99954, 6),
+        (99957, 4), (99960, 8), (99966, 3), (99968, 9), (99975, 5), (99978, 4), (99981, 6),
+        (99984, 6), (99988, 4), (99990, 6), (99992, 5), (99996, 5)] with hL
+    have hΩ : ∀ p ∈ L, Ω p.1 = p.2 := by
+      simp [hL, ArithmeticFunction.cardFactors_apply, Nat.primeFactorsList_ofNat]
+    have key : ∀ p ∈ L, p.1 < n → p.1 + p.2 ≤ n := fun p hp h => by
+      have h5 : (p.1 : ℝ) + (Ω p.1 : ℝ) ≤ n := hb p.1 h
+      rw [hΩ p hp] at h5
+      exact_mod_cast h5
+    simp only [hL, List.mem_cons, forall_eq_or_imp, List.not_mem_nil, false_imp_iff,
+      implies_true, and_true] at key
+    omega
 
 /-- Does there exist some $\epsilon > 0$ such that there are infinitely many
 $\epsilon$-barriers for $\omega$? Lau [La26, Theorem 1.3] gives a positive answer. -/
