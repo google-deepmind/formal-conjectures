@@ -75,6 +75,107 @@ theorem alon_saks_seymour_conjecture : ¬
       G.chromaticNumber ≤ bicliquePartitionNumber G + 1 := by
   sorry
 
+/-- The stars centred at `0, 1, …, n - 2` partition the edges of `K_n`. -/
+@[category API, AMS 5]
+lemma isBicliquePartition_stars (n : ℕ) :
+    IsBicliquePartition (completeGraph (Fin n)) (n - 1)
+      (fun i => {u | u.val = i.val}) (fun i => {u | i.val < u.val}) where
+  disjoint i := by
+    rw [Finset.disjoint_left]
+    intro u h1 h2
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at h1 h2
+    omega
+  adj_iff u v := by
+    simp only [completeGraph, top_adj, InBiclique, Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · intro huv
+      rcases lt_or_gt_of_ne (Fin.val_ne_of_ne huv) with h | h
+      · exact ⟨⟨u.val, by omega⟩, Or.inl ⟨rfl, h⟩⟩
+      · exact ⟨⟨v.val, by omega⟩, Or.inr ⟨h, rfl⟩⟩
+    · rintro ⟨i, ⟨h1, h2⟩ | ⟨h1, h2⟩⟩ h <;> subst h <;> omega
+  unique u v i j := by
+    simp only [InBiclique, Finset.mem_filter, Finset.mem_univ, true_and]
+    rintro (⟨h1, h2⟩ | ⟨h1, h2⟩) (⟨h3, h4⟩ | ⟨h3, h4⟩) <;> ext <;> omega
+
+/-- Tverberg's argument: a biclique partition of the complete graph on `V` has at least
+`|V| - 1` parts. -/
+@[category API, AMS 5]
+lemma card_le_of_isBicliquePartition {k : ℕ} {A B : Fin k → Finset V}
+    (h : IsBicliquePartition (completeGraph V) k A B) : Fintype.card V ≤ k + 1 := by
+  classical
+  by_contra hlt
+  rw [not_le] at hlt
+  let M : Matrix (Option (Fin k)) V ℝ := fun o u => o.elim 1 fun m => if u ∈ A m then 1 else 0
+  have hker : (Matrix.mulVecLin M).ker ≠ ⊥ := LinearMap.ker_ne_bot_of_finrank_lt (by
+    simpa only [Module.finrank_fintype_fun_eq_card, Fintype.card_option, Fintype.card_fin] using hlt)
+  obtain ⟨x, hx, hx0⟩ := (Submodule.ne_bot_iff _).mp hker
+  have hM : ∀ o, ∑ u, M o u * x u = 0 := fun o => congrFun hx o
+  have hsum : ∑ u, x u = 0 := by simpa [M] using hM none
+  have hA : ∀ m, ∑ u, (if u ∈ A m then x u else 0) = 0 := fun m => by
+    simpa [M, ite_mul] using hM (some m)
+  -- each ordered pair of distinct vertices lies in exactly one biclique
+  have hind : ∀ u v, (if u ≠ v then (1 : ℝ) else 0) =
+      ∑ m, ((if u ∈ A m ∧ v ∈ B m then 1 else 0) + (if u ∈ B m ∧ v ∈ A m then 1 else 0)) := by
+    intro u v
+    have hm : ∀ m, ((if u ∈ A m ∧ v ∈ B m then (1 : ℝ) else 0) +
+        (if u ∈ B m ∧ v ∈ A m then 1 else 0)) = if InBiclique (A m) (B m) u v then 1 else 0 := by
+      intro m
+      have := Finset.disjoint_left.mp (h.disjoint m)
+      unfold InBiclique
+      by_cases h1 : u ∈ A m <;> by_cases h2 : v ∈ B m <;> by_cases h3 : u ∈ B m <;>
+        by_cases h4 : v ∈ A m <;> simp_all
+    simp only [hm, Finset.sum_boole]
+    split_ifs with huv
+    · obtain ⟨m, hm⟩ := (h.adj_iff u v).mp (by simpa [completeGraph] using huv)
+      have : ({m' | InBiclique (A m') (B m') u v} : Finset (Fin k)) = {m} := by
+        ext m'
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
+        exact ⟨fun hm' => h.unique u v m' m hm' hm, fun e => e ▸ hm⟩
+      simp [this]
+    · have : ∀ m, ¬ InBiclique (A m) (B m) u v := fun m hm =>
+        (by simpa [completeGraph] using (h.adj_iff u v).mpr ⟨m, hm⟩ : u ≠ v) (not_not.mp huv)
+      simp [this]
+  have hcross : ∑ u, ∑ v, (if u ≠ v then (1 : ℝ) else 0) * (x u * x v) = 0 := by
+    have hm : ∀ m, ∑ u, ∑ v, ((if u ∈ A m ∧ v ∈ B m then (1 : ℝ) else 0) +
+        (if u ∈ B m ∧ v ∈ A m then 1 else 0)) * (x u * x v) = 0 := by
+      intro m
+      have e : ∀ u v, ((if u ∈ A m ∧ v ∈ B m then (1 : ℝ) else 0) +
+          (if u ∈ B m ∧ v ∈ A m then 1 else 0)) * (x u * x v) =
+          (if u ∈ A m then x u else 0) * (if v ∈ B m then x v else 0) +
+          (if u ∈ B m then x u else 0) * (if v ∈ A m then x v else 0) := by
+        intro u v
+        by_cases h1 : u ∈ A m <;> by_cases h2 : v ∈ B m <;> by_cases h3 : u ∈ B m <;>
+          by_cases h4 : v ∈ A m <;> simp [h1, h2, h3, h4, mul_comm, one_add_one_eq_two, mul_two]
+      simp only [e, Finset.sum_add_distrib, ← Finset.sum_mul_sum, hA, zero_mul, mul_zero,
+        add_zero]
+    calc ∑ u, ∑ v, (if u ≠ v then (1 : ℝ) else 0) * (x u * x v)
+        = ∑ u, ∑ v, ∑ m, ((if u ∈ A m ∧ v ∈ B m then (1 : ℝ) else 0) +
+            (if u ∈ B m ∧ v ∈ A m then 1 else 0)) * (x u * x v) := by
+          simp only [hind, Finset.sum_mul]
+      _ = ∑ m, ∑ u, ∑ v, ((if u ∈ A m ∧ v ∈ B m then (1 : ℝ) else 0) +
+            (if u ∈ B m ∧ v ∈ A m then 1 else 0)) * (x u * x v) := by
+          exact (Finset.sum_congr rfl fun _ _ => Finset.sum_comm).trans Finset.sum_comm
+      _ = 0 := Finset.sum_eq_zero fun m _ => hm m
+  have hsq : ∑ u, x u ^ 2 = 0 := by
+    have h2 : (∑ u, x u) * (∑ v, x v) =
+        ∑ u, x u ^ 2 + ∑ u, ∑ v, (if u ≠ v then (1 : ℝ) else 0) * (x u * x v) := by
+      rw [Finset.sum_mul_sum, ← Finset.sum_add_distrib]
+      refine Finset.sum_congr rfl fun u _ => ?_
+      calc ∑ v, x u * x v
+          = ∑ v, ((if u = v then x u * x v else 0) +
+              (if u ≠ v then (1 : ℝ) else 0) * (x u * x v)) :=
+            Finset.sum_congr rfl fun v _ => by by_cases huv : u = v <;> simp [huv]
+        _ = x u ^ 2 + ∑ v, (if u ≠ v then (1 : ℝ) else 0) * (x u * x v) := by
+          rw [Finset.sum_add_distrib, Finset.sum_ite_eq]
+          simp [sq]
+    rw [hsum, zero_mul, hcross, add_zero] at h2
+    exact h2.symm
+  apply hx0
+  funext u
+  have := (Finset.sum_eq_zero_iff_of_nonneg fun u _ => sq_nonneg (x u)).mp hsq u
+    (Finset.mem_univ u)
+  simpa using this
+
 /--
 **The Graham–Pollak theorem (1971).**
 
@@ -86,7 +187,15 @@ subgraphs, and $n - 1$ suffice: $\operatorname{bp}(K_n) = n - 1$.
 @[category research solved, AMS 5]
 theorem alon_saks_seymour_conjecture.variants.graham_pollak (n : ℕ) :
     bicliquePartitionNumber (completeGraph (Fin n)) = n - 1 := by
-  sorry
+  unfold bicliquePartitionNumber
+  refine le_antisymm (Nat.sInf_le ⟨_, _, isBicliquePartition_stars n⟩) ?_
+  have hne : {k | ∃ A B : Fin k → Finset (Fin n),
+      IsBicliquePartition (completeGraph (Fin n)) k A B}.Nonempty :=
+    ⟨n - 1, _, _, isBicliquePartition_stars n⟩
+  obtain ⟨A, B, h⟩ := Nat.sInf_mem hne
+  have := card_le_of_isBicliquePartition h
+  rw [Fintype.card_fin] at this
+  omega
 
 /--
 **Huang–Sudakov (2012): a polynomial separation.**
