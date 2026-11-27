@@ -82,12 +82,14 @@ $\zeta(3)$ is irrational.
 theorem irrational_three : ∃ x, Irrational x ∧ riemannZeta 3 = x := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 There are infinitely many $\zeta(2n + 1)$, $n \in \mathbb{N}$, that are irrational.
 
 [Ri00] Rivoal, T. (2000). _La fonction zeta de Riemann prend une infinité de valeurs irrationnelles aux entiers impairs_. Comptes Rendus de l'Académie des Sciences, Série I. 331 (4): 267–270.
 -/
-@[category research solved, AMS 11 33]
+@[category research solved, AMS 11 33, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-ball-rivoal/blob/f98cb073c8f87d874a3762ec1aa3a734ca190bd2/BallRivoalFC/Assembly.lean#L153"]
 theorem infinite_irrational_at_odd :
     { n : ℕ | ∃ x, Irrational x ∧ riemannZeta (2 * n + 1) = x }.Infinite := by
   sorry
