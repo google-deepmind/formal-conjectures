@@ -46,10 +46,12 @@ noncomputable def g (k n : ℕ) : ℕ :=
   sSup {m | ∃ A : Finset ℕ, A ⊆ Finset.Icc 1 n ∧ A.card = k ∧ A.gcd id = 1 ∧
     m = frobeniusNumber A}
 
+set_option linter.style.formal_proof_palomar false in
 /-- For every fixed $k \geq 2$, Erdős and Graham conjectured that
 $$g(k,n) \sim \frac{n^2}{k-1}.$$
 The conjecture was proved by Dixmier [Di90]. -/
-@[category research solved, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/Jayyhk/erdos-lean/blob/81159e5b05b427ecb717aa1f689f7e4d1ea86c3f/problems/433/Erdos433.lean#L6629"]
 theorem erdos_433 : ∀ k, 2 ≤ k →
     Tendsto (fun n : ℕ => (g k n : ℝ) / ((n : ℝ) ^ 2 / ((k : ℝ) - 1))) atTop (𝓝 1) := by
   sorry
