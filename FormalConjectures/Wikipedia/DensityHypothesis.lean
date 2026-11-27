@@ -101,7 +101,7 @@ set_option linter.style.formal_proof_palomar false in
 $N(\sigma, T) \le C \, T^{2(1 - \sigma) + \varepsilon}$ for all $\frac{1}{2} \le \sigma \le 1$
 and $T \ge 2$. -/
 @[category research solved, AMS 11 30, formal_proof using lean4 at
-  "https://github.com/senamakel/density-rh/blob/91ffb87856da458ef93fcc139af0d1d389a82af2/Unconditional/DensityUnconditional.lean#L11"]
+  "https://github.com/DomTheDeveloper/ProofPlaygrond/blob/15ab5ef9aa579c89d879dc59ab2a8c2a8979b9e9/proofs/zeta-density-weighted/DensityHypothesis.lean#L9-L13"]
 theorem density_hypothesis_zeta_zeros (ε : ℝ) (hε : 0 < ε) :
     ∃ C : ℝ, 0 < C ∧ ∀ σ T : ℝ, 1 / 2 ≤ σ → σ ≤ 1 → 2 ≤ T →
       (zetaZeroCount σ T : ℝ) ≤ C * T ^ (2 * (1 - σ) + ε) := by
