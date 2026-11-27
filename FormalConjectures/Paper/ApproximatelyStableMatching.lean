@@ -36,11 +36,16 @@ namespace FanelliMoscardelli
 /--
 The universal rank-improvement threshold is $K(N)=\lceil N/2\rceil$ for every sufficiently
 large number of agents.
+
+This conjecture is false: for every integer $m \ge 3$, every complete strict preference profile
+on $N = 2m + 1$ agents admits an $m$-stable matching, so
+$K(2m + 1) \le m < m + 1 = \lceil (2m + 1) / 2 \rceil$.
 -/
-@[category research open, AMS 5 68 91]
+@[category research solved, AMS 5 68 91, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000064&version=1"]
 theorem stability_threshold_tight :
-    ∃ N₀ : ℕ, 3 ≤ N₀ ∧
-      ∀ N ≥ N₀, Roommates.stabilityThreshold N = (N + 1) / 2 := by
+    ¬ (∃ N₀ : ℕ, 3 ≤ N₀ ∧
+      ∀ N ≥ N₀, Roommates.stabilityThreshold N = (N + 1) / 2) := by
   sorry
 
 end FanelliMoscardelli
