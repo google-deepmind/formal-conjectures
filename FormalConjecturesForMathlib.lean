@@ -115,6 +115,7 @@ public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Mycielski
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.PathCover
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Petersen
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Prod
+public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Proportion
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.QuasiLineGraph
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Ramsey
 public import FormalConjecturesForMathlib.Combinatorics.SimpleGraph.Residue
