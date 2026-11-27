@@ -28,6 +28,12 @@ public import FormalConjecturesUtil
   generalized 4-cycles. J. Combin. Theory Ser. A (2009), 637--649.
 - [HMY26] Huang, Hao, Ma, Jie, and Yang, Tianchi, *Extremal hypergraphs without generalized
   4-cycles*. [arXiv:2609.37744](https://arxiv.org/abs/2609.37744) (2026), Theorem 1.2.
+- [YL26] Liu, Yilin, *Extremal Uniform Hypergraphs with Distinct Unions of Disjoint Edges*
+  (2026), Theorem 1.
+  [Manuscript](https://github.com/icekylinx/jsp-000523-proof/blob/264a53c8375af72b34a14d808593b07a9830287e/paper/proof.pdf)
+  and [Lean formalization](https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-23-000012&version=1).
+- [Zh26] Zhang, Leilei, *Extremal 3-uniform hypergraphs without generalized 4-cycles*.
+  [arXiv:2610.34038](https://arxiv.org/abs/2610.34038) (2026), Theorem 1.4.
 -/
 
 @[expose] public section
@@ -61,21 +67,25 @@ theorem erdos_643.parts.i :
 /--
 Is it true that $f(n;t)=(1+o(1))\binom{n}{t-1}$ for $t\geq 3$?
 
-For $t\geq4$, Huang, Ma, and Yang [HMY26] prove the exact extremal formula below.
-The case $t=3$ remains open.
+Liu [YL26, Theorem 1] gives an affirmative answer for every fixed $t\geq 3$
+and formalizes it in Lean. For rank three, Liu [YL26, Theorem 1] and Zhang [Zh26, Theorem 1.4]
+give the upper bound $\binom{n}{2}$ for the size of an avoiding family.
+For $t\geq 4$, see the exact extremal formula below.
 -/
-@[category research open, question, AMS 5]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-23-000012&version=1"]
 theorem erdos_643.parts.ii :
     ∀ t : ℕ, 3 ≤ t →
     (fun n ↦ (forcingThreshold n t : ℝ)) ~[atTop]
         (fun n ↦ (n.choose (t - 1) : ℝ)) := by
   sorry
 
-/-- Huang, Ma, and Yang [HMY26, Theorem 1.2] determine the maximum size of an avoiding family
-for each fixed $t\geq4$ and all sufficiently large $n$:
+/-- Liu [YL26, Theorem 1] and Huang, Ma, and Yang [HMY26, Theorem 1.2] determine the maximum
+size of an avoiding family for each fixed $t\geq 4$ and all sufficiently large $n$:
 $$\binom{n-1}{t-1}+\left\lfloor\frac{n-1}{t}\right\rfloor.$$
-The forcing threshold is one larger. -/
-@[category research solved, AMS 5]
+The forcing threshold is one larger. The linked Lean proof is Liu's. -/
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-23-000012&version=1"]
 theorem erdos_643.variants.exact_t_ge_four :
     ∀ t : ℕ, 4 ≤ t → ∀ᶠ n : ℕ in atTop,
       Hypergraph.extremalNumber n t (fun H ↦ ¬ H.HasRepeatedDisjointUnion) =
