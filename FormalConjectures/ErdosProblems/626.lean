@@ -106,7 +106,8 @@ Erdős [Er59b] proved that for $k \geq 4$
 $$g_k(n) \leq \frac{2}{\log(k-2)}\log n + 1.$$
 We state it for all sufficiently large $n$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-19-000004"]
 theorem erdos_626.variants.erdos_upper :
     ∀ k : ℕ, 4 ≤ k → ∀ᶠ n : ℕ in atTop,
       (g k n : ℝ) ≤ 2 * Real.log n / Real.log ((k : ℝ) - 2) + 1 := by

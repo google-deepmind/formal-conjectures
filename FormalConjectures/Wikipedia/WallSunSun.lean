@@ -64,7 +64,11 @@ algebra `QuadraticAlgebra K a b` for some `a b : K`. -/
 lemma isQuadraticExtension_iff_exists_quadraticAlgebra :
     IsQuadraticExtension K L ↔ ∃ a b, Nonempty (L ≃ₐ[K] QuadraticAlgebra K a b) where
   mp _ := exists_quadraticAlgebra_of_isQuadraticExtension ..
-  mpr := by rintro ⟨a, b, ⟨e⟩⟩; sorry
+  mpr := by
+    rintro ⟨a, b, ⟨e⟩⟩
+    have : Module.Free K L := Module.Free.of_equiv e.symm.toLinearEquiv
+    refine { finrank_eq_two' := ?_ }
+    rw [e.toLinearEquiv.finrank_eq, QuadraticAlgebra.finrank_eq_two]
 
 end Algebra
 
@@ -86,7 +90,11 @@ lemma isQuadraticExtension_iff_exists_quadraticAlgebra :
     IsQuadraticExtension ℚ K ↔
       ∃ d ≠ (1 : ℤ), Squarefree d ∧ Nonempty (K ≃+* QuadraticAlgebra ℚ d 0) where
   mp _ := exists_quadraticAlgebra_of_isQuadraticExtension _
-  mpr := by rintro ⟨d, hd₁, hd, ⟨e⟩⟩; sorry
+  mpr := by
+    rintro ⟨d, hd₁, hd, ⟨e⟩⟩
+    have : Module.Free ℚ K := Module.Free.of_equiv e.toRatAlgEquiv.symm.toLinearEquiv
+    refine { finrank_eq_two' := ?_ }
+    rw [e.toRatAlgEquiv.toLinearEquiv.finrank_eq, QuadraticAlgebra.finrank_eq_two]
 
 /-- An integer `D` is a fundamental discriminant iff it is the discriminant of the explicit
 quadratic field `QuadraticAlgebra ℚ d 0` for some squarefree `d : ℤ` not equal to 1. -/

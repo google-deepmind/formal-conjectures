@@ -77,7 +77,41 @@ $a(184) = 2$ and $a(736) = a(16 \cdot 46) = 4 \le 7$.
 -/
 @[category research solved, AMS 11]
 theorem conjecture_1 : ¬ ∀ n : ℕ, 599 < n → 7 < a n := by
-  sorry
+  intro h
+  -- A finite check: no `k ≥ 8` is a valid base for `736` (all bases involved are at most `27`).
+  have hcheck : (List.range' 8 20).all (fun k =>
+      (0 :: List.range' k (28 - k)).all fun b1 =>
+        (0 :: List.range' k (28 - k)).all fun b2 =>
+          (0 :: List.range' k (28 - k)).all fun b3 =>
+            k ^ 2 + b1 ^ 2 + b2 ^ 2 + b3 ^ 2 != 736) = true := by
+    decide +kernel
+  have hvalid : ∀ k, isValidBase 736 k = true → k ≤ 7 := by
+    intro k hk
+    by_contra hk7
+    simp only [isValidBase, Bool.and_eq_true, decide_eq_true_eq, List.any_eq_true,
+      beq_iff_eq] at hk
+    obtain ⟨-, b1, hb1, b2, hb2, b3, hb3, heq⟩ := hk
+    have hsmall : ∀ b, b ^ 2 ≤ 736 → b ≤ 27 := fun b hb => by
+      by_contra hc
+      have := Nat.pow_le_pow_left (show 28 ≤ b by omega) 2
+      omega
+    have hk27 : k ≤ 27 := hsmall k (by omega)
+    have hmem : ∀ b, b ∈ 0 :: List.range' k (736 - k + 1) → b ^ 2 ≤ 736 →
+        b ∈ 0 :: List.range' k (28 - k) := fun b hb hb2 => by
+      have hb27 := hsmall b hb2
+      rw [List.mem_cons, List.mem_range'_1] at hb ⊢
+      omega
+    have hall := List.all_eq_true.mp hcheck k (List.mem_range'_1.mpr ⟨by omega, by omega⟩)
+    have hne := List.all_eq_true.mp (List.all_eq_true.mp (List.all_eq_true.mp hall b1
+      (hmem b1 hb1 (by omega))) b2 (hmem b2 hb2 (by omega))) b3 (hmem b3 hb3 (by omega))
+    simp [heq] at hne
+  have ha : a 736 ≤ 7 := by
+    unfold a
+    cases hmax : ((Icc 1 736).filter fun k => isValidBase 736 k).max with
+    | bot => exact Nat.zero_le 7
+    | coe m => exact hvalid m (Finset.mem_filter.mp (Finset.mem_of_max hmax)).2
+  have := h 736 (by norm_num)
+  omega
 
 /--
 "By Lagrange's Theorem every number can be written as a sum of four squares. Can the same be
