@@ -22,6 +22,7 @@ public import FormalConjecturesUtil
 
 *References:*
 - [Gr24] [Ben Green's 100 Open Problems](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.44)
+- [Erdős Problem 1202](https://www.erdosproblems.com/1202) (the same problem; resolved in the negative)
 - [Er80] Erdős, Paul. "A survey of problems in combinatorial number theory."
   Annals of Discrete Mathematics 6 (1980): 89-115.
 -/
@@ -38,10 +39,24 @@ $2 \leqslant p_1 < p_2 < \dots < p_{1000} < N^{9/10}$. Does the remaining set ha
 $\frac{1}{10} N$?
 
 We interpret "half the residue classes" as $\lfloor p_i / 2 \rfloor$.
+
+Answer: False. This is the same problem as [Erdős Problem 1202](https://www.erdosproblems.com/1202),
+which the erdosproblems.com curators record as resolved in the negative (2026-04-12 revision, due
+to Liam Price and GPT-5.4 Pro).
+
+The refutation is by explicit sieve configurations; a witnessed instance (verification credited to
+B. Cowgill, 2026-11-23): for $N = 10^{12}$, take the $1000$ primes
+$p_1 < \dots < p_{1000}$ in $(10^9, 10^9 + 50000)$ and forbid the upper half
+$\lfloor p_i/2 \rfloor$ of each prime's residue classes. With $q = 10^9$, every integer of the
+form $j q + r$ with $0 \leqslant j < 1000$ and $10^8 \leqslant r < 3 \cdot 10^8$ survives: its
+residue modulo $p_i$ is $r - j(p_i - q)$, which lies between $0$ and $(p_i - 1)/2$. At least
+$N/5$ of $[1, N]$ survive, so $10 \cdot |{\rm remaining}| > N$ and the sieve's guarantee fails
+in the range needed for this problem. (The general estimate recorded in the 1202 resolution is not
+claimed uniformly; this instance is the range Green's problem requires.)
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11]
 theorem green_44 :
-    ∀ (N : ℕ) (p : Fin 1000 → ℕ) (A : (i : Fin 1000) → Finset (ZMod (p i))),
+    ¬ ∀ (N : ℕ) (p : Fin 1000 → ℕ) (A : (i : Fin 1000) → Finset (ZMod (p i))),
       let remaining := (Finset.Icc 1 N).filter (fun x => ∀ i, (x : ZMod (p i)) ∉ A i)
       (∀ i, (p i).Prime) →
       StrictMono p →
