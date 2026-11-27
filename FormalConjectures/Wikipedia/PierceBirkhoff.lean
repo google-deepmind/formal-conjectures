@@ -20,7 +20,10 @@ public import FormalConjecturesUtil
 /-!
 # Pierce–Birkhoff conjecture
 
-*Reference:* [Wikipedia](https://en.wikipedia.org/wiki/Pierce%E2%80%93Birkhoff_conjecture)
+*References:*
+- [Wikipedia](https://en.wikipedia.org/wiki/Pierce%E2%80%93Birkhoff_conjecture)
+- [LLR26] Zehua Lai, Lek-Heng Lim, and Junyu Ren, *Pierce-Birkhoff conjecture is false*,
+  [arXiv:2609.10420](https://arxiv.org/abs/2609.10420) (2026).
 
 The Pierce-Birkhoff conjecture asserts that any piecewise-polynomial function can be expressed
 as a maximum of finite minima of finite collections of polynomials. It was first stated in 1956
@@ -82,15 +85,19 @@ def IsPiecewisePolynomial (f : ℝ → ℝ) : Prop :=
     ∀ᵉ (i : ι) (x ∈ P i), f x = Polynomial.eval x (g i)
 
 /--
-The Pierce-Birkhoff conjecture states that for every real piecewise-polynomial function
+The Pierce-Birkhoff conjecture asserted that for every real piecewise-polynomial function
 `f : ℝⁿ → ℝ`, there exists a finite set of polynomials `gᵢⱼ ∈ ℝ[x₁, ..., xₙ]` such that
-`f = supᵢ infⱼ(gᵢⱼ)`.
+`f = supᵢ infⱼ(gᵢⱼ)`. This is false: Lai, Lim, and Ren [LLR26] constructed a 30-dimensional
+piecewise-quadratic counterexample on `ℝ³⁰ ≃ S²(ℝ⁵) × S²(ℝ⁵)`, formalized directly against
+`IsPiecewiseMvPolynomial` and the finite max-of-min normal form below.
 -/
-@[category research open, AMS 13]
-theorem pierce_birkhoff_conjecture {n : ℕ} (f : (Fin n → ℝ) → ℝ)
-    (hf : IsPiecewiseMvPolynomial f) :
-    ∃ (ι κ : Type) (g : ι → κ → MvPolynomial (Fin n) ℝ), Finite ι ∧ Finite κ ∧
-      ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
+@[category research solved, AMS 13, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000027"]
+theorem pierce_birkhoff_conjecture :
+    ¬ ∀ {n : ℕ} (f : (Fin n → ℝ) → ℝ),
+      IsPiecewiseMvPolynomial f →
+      ∃ (ι κ : Type) (g : ι → κ → MvPolynomial (Fin n) ℝ), Finite ι ∧ Finite κ ∧
+        ∀ x, f x = ⨆ i, ⨅ j, MvPolynomial.eval x (g i j) := by
   sorry
 
 /--
