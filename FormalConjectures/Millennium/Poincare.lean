@@ -47,6 +47,13 @@ def ConjectureFor (n : ℕ) : Prop :=
 
 /--
 The Millennium Problem, solved by Grigori Perelman in 2003: the Poincaré Conjecture holds.
+
+Ziyang Qin, Yuan Liao, Ayush Khaitan, and Bennett Chow formalized the
+Hamilton–Perelman proof in Lean 4. Their
+[Lean theorem](https://github.com/liao9yuan/differential-geometry-mathdb/blob/9f65eaf95b9ff5f1b39cfb2d2d24e51aed891568/Submission.lean#L17)
+proves this homotopy-sphere formulation and was
+[verified by MathDB](https://mathdb.com/p/316224/poincare-conjecture).
+See [Qin et al.](https://arxiv.org/abs/2609.33842) for the formalization.
 -/
 @[category research solved, AMS 54 57]
 theorem poincare_conjecture : ConjectureFor 3 := by
