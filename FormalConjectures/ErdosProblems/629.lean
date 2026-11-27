@@ -101,10 +101,11 @@ theorem erdos_629.variants.radhakrishnan_srinivasan :
       c * 2 ^ k * Real.sqrt (k / Real.log k) ≤ (n k : ℝ) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős, Rubin, and Taylor [ERT80] proved $n(2)=6$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/laughingbear/erdos-629-lean/blob/9443165ef903cb23bc930f7951ebbc2d43b906a0/Erdos629.lean#L282"]
 theorem erdos_629.variants.n_two : n 2 = 6 := by
   sorry
 
