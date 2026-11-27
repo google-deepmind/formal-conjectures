@@ -26,6 +26,7 @@ an adjacent difference.
 
 *References:*
 - [OEIS A260194](https://oeis.org/A260194)
+- [Palomar proof](https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000063&version=1)
 -/
 
 @[expose] public section
@@ -73,11 +74,16 @@ theorem a_8 : a 8 = 10 := by rfl
 theorem a_9 : a 9 = 12 := by rfl
 
 /--
-Does every positive integer occur as a difference in this sequence?
+"Does every positive integer occur as a difference in this sequence?"
+
+The answer is no. The positive integer $14$ never occurs as an adjacent difference.
+The Lean proof uses a finite modular invariant. It was generated using OpenAI ChatGPT/Codex
+under Colton Hines's direction and mechanically verified by Palomar.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000063&version=1"]
 theorem conjecture :
-    ∀ d > 0, ∃ n, a (n + 1) = a n + d := by
+    ¬ (∀ d > 0, ∃ n, a (n + 1) = a n + d) := by
   sorry
 
 end OeisA260194
