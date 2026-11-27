@@ -145,10 +145,9 @@ The recurrence is defined for every $n\ge0$, with $a(n)\sim2^{1/4}\sqrt n$.
 -/
 @[category research open, AMS 11 40]
 theorem total_and_asymptotic :
-    (∀ n : ℕ, ∃ value : ℕ, a n = some value) ∧
-      ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, 1 ≤ N ∧
-        ∀ n : ℕ, N ≤ n → ∀ value : ℕ, a n = some value →
-          |(value : ℝ) / ((2 : ℝ) ^ (1 / 4 : ℝ) * Real.sqrt (n : ℝ)) - 1| < ε := by
+    ∃ f : ℕ → ℕ, (∀ n, a n = some (f n)) ∧
+      Asymptotics.IsEquivalent Filter.atTop (fun n => (f n : ℝ))
+        (fun n => (2 : ℝ) ^ (1 / 4 : ℝ) * Real.sqrt n) := by
   sorry
 
 end OeisA399998
