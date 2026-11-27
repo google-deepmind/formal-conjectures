@@ -136,13 +136,10 @@ theorem simple_prop_one_hundred : ∃ o : ℝ → ℝ, o =o[atTop] (1 : ℝ → 
   sorry
 
 set_option linter.style.formal_proof_palomar false in
-/-- The proportion of distinct zeros of `ζ` exceeds the Montgomery–Taylor bound
-`(3 - c_MT⁻¹) / 2 = 0.8362…`. Knausgård [Kn26] proves a dyadic lower bound of
-`0.854225 - o(1)` for distinct zeros on the critical line, with multiplicity in the
-denominator. The compact RH replay discharges its Riemann hypothesis assumption.
-Taking `c = 17/20` gives the stated inequality. Bui and Heath-Brown [BH13] give
-a cumulative lower bound of `0.84665` assuming RH. -/
-@[category research solved, AMS 11, formal_proof using lean4 at
+/-- The proportion of distinct zeros of `ζ` in `(T, 2T]` exceeds the Montgomery–Taylor bound
+`(3 - c_MT⁻¹) / 2 = 0.8362…`. The witness `c = 17/20` follows from Knausgård's dyadic
+`0.854225 - o(1)` estimate [Kn26] for distinct critical-line zeros counted against all zeros
+with multiplicity. Bui and Heath-Brown [BH13] give a cumulative bound of `0.84665` under RH. -/@[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/DomTheDeveloper/formal-conjectures/blob/81fefd2eae7b6e06c55fcddcfc18752e0daba924/Proofs/DistinctZeros/Result.lean#L9-L15"]
 theorem distinct_prop_lt : ∃ c > (3 - montgomeryTaylorConst⁻¹) / 2, ∃ o : ℝ → ℝ,
     o =o[atTop] (1 : ℝ → ℝ) ∧
