@@ -158,9 +158,16 @@ theorem conjecture1 :
 /--
 Conjecture: If $n$ is not of the form $10^m$ then $a(n)$ is nonzero.
 - _Farideh Firoozbakht_, Jan 07 2015
+
+This is false: e.g. for $n = 104040$ (and also $n = 750760$), which is not a power of $10$,
+every candidate $p_r = 10 n \sum_{i=0}^{r-1} 10^{6i} + 1$ satisfies
+$999999 \cdot p_r = (1020 \cdot 10^{3r} - 201)(1020 \cdot 10^{3r} + 201)$ and is therefore
+composite for all $r \geq 1$, so $a(104040) = 0$.
 -/
-@[category research open, AMS 11]
-theorem conjecture2 (n : ℕ) (hn : 0 < n) (h : ∀ m : ℕ, n ≠ 10 ^ m) : a n ≠ 0 := by
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000028"]
+theorem conjecture2 :
+    ¬ ∀ (n : ℕ), 0 < n → (∀ m : ℕ, n ≠ 10 ^ m) → a n ≠ 0 := by
   sorry
 
 def conjecture3.answer : Option ℕ := sorry
