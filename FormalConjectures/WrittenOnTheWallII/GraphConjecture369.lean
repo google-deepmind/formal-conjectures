@@ -53,7 +53,7 @@ noncomputable def havelHakimiFirstZero : ℕ :=
 $\gamma_t(T) \ge \mathrm{dd}_{\mathrm{mode}}(T) + (n \bmod 2)k$, where $\gamma_t$ is the total
 domination number, $\mathrm{dd}_{\mathrm{mode}}$ counts the distinct modal degrees, and $k$ is
 the first Havel–Hakimi step at which a zero appears. -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at "https://github.com/adamben04/graffiti-pc-369-counterexample/blob/656cf0ba8bc8bd8290ba1a7753b0cbe1b860f967/Graffiti369.lean"]
 theorem conjecture369 :
     ¬ ∀ (V : Type) [Fintype V] [DecidableEq V] (T : SimpleGraph V) [DecidableRel T.Adj],
       T.IsTree → 2 < Fintype.card V →
