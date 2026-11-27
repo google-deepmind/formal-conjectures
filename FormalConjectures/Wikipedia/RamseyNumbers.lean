@@ -37,6 +37,14 @@ $2$-subsets, as `Combinatorics.hypergraphRamsey 2 n` (see `FormalConjecturesForM
 - [Exoo89] G. Exoo, *A lower bound for* $R(5,5)$, Journal of Graph Theory 13 (1989), 97–98.
   DOI: 10.1002/jgt.3190130113
 - [AM24] V. Angeltveit and B. McKay, *$R(5,5) \le 46$*, arXiv:2409.15709 (2024).
+- [Exoo89b] G. Exoo, *On two classical Ramsey numbers of the form $R(3,n)$*, SIAM Journal on
+  Discrete Mathematics 2 (1989), 488–490. DOI: 10.1137/0402043
+- [Ang25] V. Angeltveit, *$R(3,10) \le 41$*, Electronic Journal of Combinatorics 32(4) (2025),
+  #P4.30. DOI: 10.37236/12936
+- [Exoo12] G. Exoo, *On the Ramsey number $R(4,6)$*, Electronic Journal of Combinatorics 19(1)
+  (2012), #P66. DOI: 10.37236/2102
+- [MR97] B. D. McKay and S. P. Radziszowski, *Subgraph counting identities and Ramsey numbers*,
+  Journal of Combinatorial Theory, Series B 69 (1997), 193–209. DOI: 10.1006/jctb.1996.1741
 - [OEIS A212954](https://oeis.org/A212954)
 - [MathWorld: Ramsey Number](https://mathworld.wolfram.com/RamseyNumber.html)
 -/
@@ -123,7 +131,8 @@ theorem ramsey_number_five_five_upper_bound :
 Besides $R(5,5)$, several small Ramsey numbers are known exactly, while others (such as $R(6,6)$)
 remain open. The values below are collected in the dynamic survey [Rad] (see also
 [OEIS A212954]): the exact diagonal value $R(4,4) = 18$, the exact off-diagonal values $R(3,k)$
-for $3 \le k \le 9$, and $R(4,5) = 25$. -/
+for $3 \le k \le 9$, and $R(4,5) = 25$. The first open cases with $k = 3$ and $k = 4$ are
+$R(3,10)$ and $R(4,6)$. -/
 
 /-- $R(3,3) = 6$. -/
 @[category research solved, AMS 5]
@@ -170,11 +179,69 @@ theorem ramsey_number_four_four : R(4, 4) = 18 := by
 theorem ramsey_number_four_five : R(4, 5) = 25 := by
   sorry
 
+def ramsey_number_three_ten.answer : ℕ := sorry
+
+/--
+The Ramsey number $R(3,10)$ is unknown. It is known that $40 \le R(3,10) \le 41$
+([Exoo89b], [Ang25]).
+-/
+@[category research open, question value, AMS 5]
+theorem ramsey_number_three_ten : R(3, 10) = ramsey_number_three_ten.answer := by
+  sorry
+
+/--
+Lower bound $40 \le R(3,10)$ [Exoo89b], equivalently: there exists a graph on $39$ vertices with
+no $3$-clique and no independent set of size $10$.
+-/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_ten_lower_bound :
+    ∃ G : SimpleGraph (Fin 39), G.CliqueFree 3 ∧ (Gᶜ).CliqueFree 10 := by
+  sorry
+
+/--
+Upper bound $R(3,10) \le 41$ [Ang25], i.e. every graph on $41$ vertices contains a $3$-clique or
+an independent set of size $10$.
+-/
+@[category research solved, AMS 5]
+theorem ramsey_number_three_ten_upper_bound :
+    IsGraphRamsey 41 3 10 := by
+  sorry
+
+def ramsey_number_four_six.answer : ℕ := sorry
+
+/--
+The Ramsey number $R(4,6)$ is unknown. The best published bounds are $36 \le R(4,6) \le 41$
+([Exoo12], [MR97]). The survey [Rad] also reports an unpublished upper bound $R(4,6) \le 40$
+by Angeltveit and McKay.
+-/
+@[category research open, question value, AMS 5]
+theorem ramsey_number_four_six : R(4, 6) = ramsey_number_four_six.answer := by
+  sorry
+
+/--
+Lower bound $36 \le R(4,6)$ [Exoo12], equivalently: there exists a graph on $35$ vertices with
+no $4$-clique and no independent set of size $6$.
+-/
+@[category research solved, AMS 5]
+theorem ramsey_number_four_six_lower_bound :
+    ∃ G : SimpleGraph (Fin 35), G.CliqueFree 4 ∧ (Gᶜ).CliqueFree 6 := by
+  sorry
+
+/--
+Upper bound $R(4,6) \le 41$ [MR97], i.e. every graph on $41$ vertices contains a $4$-clique or
+an independent set of size $6$.
+-/
+@[category research solved, AMS 5]
+theorem ramsey_number_four_six_upper_bound :
+    IsGraphRamsey 41 4 6 := by
+  sorry
+
 def ramsey_number_six_six.answer : ℕ := sorry
 
 /--
-The diagonal Ramsey number $R(6,6)$ is unknown. The best known bounds recorded in [Rad] are
-$102 \le R(6,6) \le 165$.
+The diagonal Ramsey number $R(6,6)$ is unknown. The best published bounds recorded in [Rad] are
+$102 \le R(6,6) \le 165$. The survey [Rad] also reports an unpublished upper bound
+$R(6,6) \le 160$ by Angeltveit and McKay.
 -/
 @[category research open, question value, AMS 5]
 theorem ramsey_number_six_six : R(6, 6) = ramsey_number_six_six.answer := by
