@@ -65,11 +65,13 @@ theorem rowlandDiff_small_witnesses :
     rowlandDiff 2 = 1 ∧ rowlandDiff 5 = 5 ∧ rowlandDiff 6 = 3 ∧ rowlandDiff 11 = 11 := by
   decide
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Rowland's theorem (2008): for every $n \ge 2$, the step $d(n) = a(n) - a(n - 1)$ equals $1$ or is
 prime.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/rotem4997/rowland-lean/blob/6252ce3553d9d2440d84a45af7315466ba9b969f/RowlandLean/Basic.lean#L168"]
 theorem rowland_diff_eq_one_or_prime {n : ℕ} (hn : 2 ≤ n) :
     rowlandDiff n = 1 ∨ (rowlandDiff n).Prime := by
   sorry
