@@ -156,4 +156,13 @@ theorem conjecture.variants.four_prime_gap (p q r e f g : ℕ)
     37 * (n : ℤ) * n.divisors.card ≤ 288 * (a n - (σ 1 n : ℤ)) := by
   sorry
 
+/--
+An odd equality with exactly four distinct prime factors is divisible by $27$.
+See the [proof and two exact certificates](https://github.com/DomTheDeveloper/ProofPlaygrond/tree/9644e2a2d2d46353a6531f88f3d67bdc4f65fd50/proofs/oeis-divisor-sums/A245212/three-squared).
+-/
+@[category research solved, AMS 11]
+theorem conjecture.variants.four_prime_divisibility (n : ℕ) (hn : 1 < n) (ho : Odd n)
+    (hcard : n.primeFactors.card = 4) (h : a n = (σ 1 n : ℤ)) : 27 ∣ n := by
+  sorry
+
 end OeisA245212
