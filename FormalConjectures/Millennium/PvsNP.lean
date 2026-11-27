@@ -60,6 +60,25 @@ The conjecture that the complexity classes P and BPP are equal.
 @[category research open, AMS 68]
 theorem P_eq_BPP : P = BPP := by sorry
 
+open Computability Turing in
+/-- The machine of `M`, with its output-alphabet equivalence composed with `Equiv.boolNot`,
+decides `fun a => !f a`. -/
+def tm2ComputableInPolyTimeNot {α Γ : Type} {ea : α → List Γ} {f : α → Bool}
+    (M : TM2ComputableInPolyTime ea (fun b : Bool => [b]) f) :
+    TM2ComputableInPolyTime ea (fun b : Bool => [b]) (fun a => !f a) where
+  tm := M.tm
+  inputAlphabet := M.inputAlphabet
+  outputAlphabet := M.outputAlphabet.trans Equiv.boolNot
+  time := M.time
+  outputsFun a := by
+    have := M.outputsFun a
+    simpa [Equiv.boolNot] using this
+
+/-- `P` is closed under complement. -/
+@[category API, AMS 68]
+theorem compl_mem_P {L : DecisionProblem} (h : L ∈ P) : Lᶜ ∈ P :=
+  h.elim fun M => ⟨tm2ComputableInPolyTimeNot M⟩
+
 /--
 The theorem that the set of complements of languages in P is itself P.
 
@@ -69,7 +88,9 @@ and that compositions of poly-time computable functions are also poly-time compu
 @[category textbook, AMS 68]
 theorem coP_eq_P :
     { L | Lᶜ ∈ P } = P := by
-  sorry
+  ext L
+  refine ⟨fun h => ?_, compl_mem_P⟩
+  simpa using compl_mem_P h
 
 /--
 The theorem that P is a subset of NP.
