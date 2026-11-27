@@ -75,6 +75,7 @@ theorem alon_saks_seymour_conjecture : ¬
       G.chromaticNumber ≤ bicliquePartitionNumber G + 1 := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 **The Graham–Pollak theorem (1971).**
 
@@ -83,7 +84,8 @@ subgraphs, and $n - 1$ suffice: $\operatorname{bp}(K_n) = n - 1$.
 
 *Reference:* [GP71].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/rotem4997/graham-pollak-lean/blob/98aed7d5bcbcace55d06aae86db7ea3bb81bbf7f/GrahamPollakLean/Basic.lean#L135"]
 theorem alon_saks_seymour_conjecture.variants.graham_pollak (n : ℕ) :
     bicliquePartitionNumber (completeGraph (Fin n)) = n - 1 := by
   sorry
