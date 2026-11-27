@@ -94,10 +94,12 @@ theorem zetaZeroSet_finite (σ T : ℝ) :
   refine ⟨⟨(s.re, s.im), ⟨⟨hs.1, hs.2.1⟩, ⟨hs.2.2.1.le, hs.2.2.2.1⟩⟩, ?_⟩, hs.2.2.2.2⟩
   simp [mul_comm Complex.I, Complex.re_add_im]
 
+set_option linter.style.formal_proof_palomar false in
 /-- Density Hypothesis: for every $\varepsilon > 0$, there exists $C > 0$ such that
 $N(\sigma, T) \le C \, T^{2(1 - \sigma) + \varepsilon}$ for all $\frac{1}{2} \le \sigma \le 1$
 and $T \ge 2$. -/
-@[category research open, AMS 11 30]
+@[category research solved, AMS 11 30, formal_proof using lean4 at
+  "https://github.com/senamakel/density-rh/blob/91ffb87856da458ef93fcc139af0d1d389a82af2/Unconditional/DensityUnconditional.lean#L11"]
 theorem density_hypothesis_zeta_zeros (ε : ℝ) (hε : 0 < ε) :
     ∃ C : ℝ, 0 < C ∧ ∀ σ T : ℝ, 1 / 2 ≤ σ → σ ≤ 1 → 2 ≤ T →
       (zetaZeroCount σ T : ℝ) ≤ C * T ^ (2 * (1 - σ) + ε) := by
