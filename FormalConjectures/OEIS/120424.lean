@@ -25,7 +25,9 @@ is even
 and $f(x) = x$ if $x$ is odd.
 
 *References:*
-- [A120424](https://oeis.org/A120424)-/
+- [A120424](https://oeis.org/A120424)
+- T. Adamczewski, "OEIS Open: How many conjectures can language models turn into theorems?",
+  [arXiv:2608.11941](https://arxiv.org/abs/2608.11941) [cs.AI], 2026, Appendix A.-/
 
 @[expose] public section
 
@@ -74,6 +76,37 @@ Conjecture (2): There are infinitely many consecutive pairs that differ by 1.-/
 @[category research open, AMS 11]
 theorem conjecture2 :
     Set.Infinite {n : ℕ | a (n + 1) = a n + 1 ∨ a n = a (n + 1) + 1} := by
+  sorry
+
+/-- The statement of `conjecture1` says that the set of indices of even terms has natural
+density $1/2$. -/
+@[category API, AMS 11]
+theorem conjecture1_iff_hasDensity :
+    Filter.Tendsto (fun n : ℕ => ((Finset.filter (fun k => a k % 2 = 0) (Finset.range n)).card
+        : ℝ) / (n : ℝ)) Filter.atTop (nhds (1 / 2 : ℝ)) ↔
+      {n : ℕ | a n % 2 = 0}.HasDensity (1 / 2) := by
+  unfold Set.HasDensity Set.partialDensity
+  refine Iff.of_eq (congrArg (fun g => Filter.Tendsto g _ _) (funext fun n => ?_))
+  rw [Set.inter_univ, Set.univ_inter, Set.ncard_Iio_nat, ← Set.ncard_coe_finset]
+  congr 3
+  ext k
+  simp [and_comm]
+
+set_option linter.style.formal_proof_palomar false in
+/--
+Conjectures (1) and (2) are incompatible: if the even terms have natural density $1/2$, then only
+finitely many consecutive terms differ by $1$.
+
+Proved in the OEIS Open project, see T. Adamczewski, OEIS Open: How many conjectures can
+language models turn into theorems?, [arXiv:2608.11941](https://arxiv.org/abs/2608.11941),
+Appendix A.
+-/
+@[category research solved, AMS 11,
+  formal_proof using lean4 at "https://github.com/epoch-research/LeanOpenProblems-results/blob/cbb7cb657f24157d9ebb7640ec50bd35bad78ad8/runs/oeis-full-50usd-ant-j0j0g4uzligm1k41/oeis_a120424_conjecture_0/Submission/Spec.lean#L489"]
+theorem not_conjecture1_and_conjecture2 :
+    ¬ (Filter.Tendsto (fun n : ℕ => ((Finset.filter (fun k => a k % 2 = 0) (Finset.range n)).card
+        : ℝ) / (n : ℝ)) Filter.atTop (nhds (1 / 2 : ℝ)) ∧
+      Set.Infinite {n : ℕ | a (n + 1) = a n + 1 ∨ a n = a (n + 1) + 1}) := by
   sorry
 
 end OeisA120424
