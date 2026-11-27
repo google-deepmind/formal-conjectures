@@ -69,7 +69,22 @@ for $2\leq k\leq n$, where $n$ is even, since then the sum is at least $\sqrt{2}
 @[category research solved, question, AMS 5 60]
 theorem erdos_395.variants.one : ¬ ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, 0 < n →
     ∀ z : Fin n → ℂ, (∀ i, ‖z i‖ = 1) → c / n ≤ (signedSumCount z 1 : ℝ) / 2 ^ n := by
-  sorry
+  rintro ⟨c, hc, h⟩
+  have hcount : signedSumCount ![1, Complex.I] 1 = 0 := by
+    rw [signedSumCount]
+    convert Set.ncard_empty (Fin 2 → ℤ) using 2
+    ext ε
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
+    intro hε hle
+    have hsq : Complex.normSq (∑ i, (ε i : ℂ) * ![1, Complex.I] i) ≤ 1 := by
+      rw [Complex.normSq_eq_norm_sq]
+      nlinarith [norm_nonneg (∑ i, (ε i : ℂ) * ![1, Complex.I] i)]
+    rcases hε 0 with h0 | h0 <;> rcases hε 1 with h1 | h1 <;>
+      norm_num [Fin.sum_univ_two, h0, h1, Complex.normSq_apply] at hsq
+  have := h 2 two_pos ![1, Complex.I] (fun i => by fin_cases i <;> simp)
+  rw [hcount] at this
+  norm_num at this
+  linarith
 
 /--
 The bound of $1/n$ in [erdős_395](https://www.erdosproblems.com/395) is the best possible, as
