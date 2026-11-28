@@ -17,6 +17,7 @@ module
 
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.LineGraph
 public import Mathlib.Combinatorics.SimpleGraph.Prod
 public import Mathlib.Order.Lattice.Nat
 
@@ -129,8 +130,9 @@ noncomputable def edgeCoverNumber (G : SimpleGraph α) : ℕ :=
 
 def edgesAdjacent (e e' : Sym2 α) : Prop := ∃ v, v ∈ e ∧ v ∈ e'
 
+/-- An edge dominating set consists of edges of `G` and meets every other edge at an endpoint. -/
 def IsEdgeDominating (G : SimpleGraph α) (M : Set (Sym2 α)) : Prop :=
-  ∀ ⦃e⦄, e ∈ G.edgeSet → e ∈ M ∨ ∃ e' ∈ M, edgesAdjacent e e'
+  M ⊆ G.edgeSet ∧ ∀ ⦃e⦄, e ∈ G.edgeSet → e ∈ M ∨ ∃ e' ∈ M, edgesAdjacent e e'
 
 @[mk_iff]
 structure IsNEdgeDominatingSet (n : ℕ) (M : Finset (Sym2 α)) : Prop where
@@ -139,6 +141,46 @@ structure IsNEdgeDominatingSet (n : ℕ) (M : Finset (Sym2 α)) : Prop where
 
 noncomputable def edgeDominationNumber (G : SimpleGraph α) : ℕ :=
   sInf {n | ∃ M : Finset (Sym2 α), G.IsNEdgeDominatingSet n M}
+
+omit [Fintype α] [DecidableEq α] in
+/-- Edge domination in `G` is vertex domination in its line graph. -/
+theorem isEdgeDominating_iff_lineGraph (M : Set (Sym2 α)) :
+    G.IsEdgeDominating M ↔ M ⊆ G.edgeSet ∧ G.lineGraph.IsDominating (Subtype.val ⁻¹' M) := by
+  constructor
+  · rintro ⟨hM, h⟩
+    refine ⟨hM, fun e ↦ ?_⟩
+    by_cases he : (e : Sym2 α) ∈ M
+    · exact Or.inl he
+    · obtain ⟨f, hf, hef⟩ := (h e.property).resolve_left he
+      refine Or.inr ⟨⟨f, hM hf⟩, hf, lineGraph_adj_iff_exists.2 ⟨?_, hef⟩⟩
+      rintro rfl
+      exact he hf
+  · rintro ⟨hM, h⟩
+    refine ⟨hM, fun {e} he ↦ ?_⟩
+    rcases h ⟨e, he⟩ with hmem | ⟨f, hf, hef⟩
+    · exact Or.inl hmem
+    · exact Or.inr ⟨f, hf, (lineGraph_adj_iff_exists.1 hef).2⟩
+
+omit [Fintype α] [DecidableEq α] in
+/-- The edge domination number equals the domination number of the line graph. -/
+theorem edgeDominationNumber_eq_dominationNumber_lineGraph (G : SimpleGraph α) :
+    G.edgeDominationNumber = G.lineGraph.dominationNumber := by
+  classical
+  unfold edgeDominationNumber dominationNumber
+  congr 1
+  ext n
+  constructor
+  · rintro ⟨M, hM, rfl⟩
+    refine ⟨M.subtype (· ∈ G.edgeSet), ?_, ?_⟩
+    · convert ((isEdgeDominating_iff_lineGraph _).1 hM).2 using 1
+      exact Set.ext fun _ ↦ Finset.mem_subtype
+    · rw [Finset.card_subtype, Finset.filter_eq_self.2 fun _ he ↦ hM.1 he]
+  · rintro ⟨D, hD, rfl⟩
+    refine ⟨D.map (Function.Embedding.subtype _), ?_, Finset.card_map _⟩
+    apply (isEdgeDominating_iff_lineGraph _).2
+    refine ⟨Finset.map_subtype_subset D, ?_⟩
+    simpa only [Finset.coe_map, Function.Embedding.coe_subtype,
+      Set.preimage_image_eq _ Subtype.val_injective] using hD
 
 /-! ### Domination equivalence -/
 
