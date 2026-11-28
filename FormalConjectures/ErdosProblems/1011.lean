@@ -189,7 +189,7 @@ set_option linter.style.formal_proof_palomar false in
 of chromatic number at least five is $\lfloor (n-6)^2/4 \rfloor + 6$.
 This extends Kitamura's five-colour theorem to orders $47$ through $79$. -/
 @[category research solved, AMS 5, formal_proof using lean4 at
-  "https://github.com/prabhavag/erdos-1011-five-colour/blob/2dfbb57f2387bd73f4f0798330b1c67131d57828/Proof/From47.lean#L137"]
+  "https://github.com/prabhavag/formal-maths/blob/4b2965cd05f301a1a30519019ecd7bc157936a12/results/erdos-1011-five-colour/lean/Proof/From47.lean#L143"]
 theorem erdos_1011.variants.five_ge_47 {n : ℕ} (hn : 47 ≤ n) :
     IsLeast (thresholds 5 n) ((n - 6) ^ 2 / 4 + 6) := by
   sorry
