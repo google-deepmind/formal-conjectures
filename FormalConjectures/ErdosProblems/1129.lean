@@ -194,7 +194,8 @@ $n\ge 3$, this is still $\Lambda^*$ for all $\tau\ge 1$ close to $1$ (see the pr
 $\pm 1/\tau,\pm t/\tau$ with $1\le\tau\le b$ for a constant $b\approx 1.0433$, where $t$ is as
 in `erdos_1129.variants.four_nodes`, are all optimal [RaVa15, Theorem 4.2].
 -/
-@[category research solved, AMS 41]
+@[category research solved, AMS 41, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000052"]
 theorem erdos_1129.variants.free_nodes_not_unique (n : ℕ) (hn : 3 ≤ n) :
     ¬ {x : Fin n → ℝ | IsMinimiser x}.Countable := by
   sorry
