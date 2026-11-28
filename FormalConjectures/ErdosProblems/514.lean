@@ -177,8 +177,9 @@ $M(r)^\epsilon$)?
 
 We formalise the power-growth example $M(r)^\epsilon$, with $\epsilon>0$ allowed to depend on $f$.
 Even with this choice of exponent, the answer is no: the functions of Hayman [Ha60] have
-no such path. This does not settle the question for arbitrary slower comparison functions. See `erdos_514.variants.hayman` and `not_exists_fast_path`. The length estimate
-has no precise claim to state and is not formalised.
+no such path. This does not settle the question for arbitrary slower comparison functions.
+See `erdos_514.variants.hayman` and `not_exists_fast_path`. The length estimate has no precise
+claim to state and is not formalised.
 -/
 @[category research solved, question, AMS 30]
 theorem erdos_514.parts.iii :
