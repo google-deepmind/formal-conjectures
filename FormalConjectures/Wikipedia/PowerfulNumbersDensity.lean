@@ -16,6 +16,7 @@ limitations under the License.
 module
 
 public import FormalConjecturesUtil
+public import FormalConjectures.Millennium.RiemannHypothesis
 
 /-!
 # Asymptotic density of powerful numbers
@@ -55,27 +56,32 @@ noncomputable abbrev A : ℝ := (riemannZeta (3 / 2)).re / (riemannZeta 3).re
 continuation. -/
 noncomputable abbrev B : ℝ := (riemannZeta (2 / 3)).re / (riemannZeta 2).re
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Szekeres [ES35] proved that the number of powerful integers up to $x$ satisfies
 $$Q(x) = \frac{\zeta(3/2)}{\zeta(3)} x^{1/2} + O(x^{1/3}).$$
 In particular $Q(x) \sim \frac{\zeta(3/2)}{\zeta(3)} \sqrt{x}$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-powerful-numbers/blob/775a39aa568faf06ceb598b585504af4d6fed303/PowerfulFC/Main.lean#L212"]
 theorem asymptotic_erdos_szekeres :
     (fun x : ℝ => (Q x : ℝ) - A * x ^ ((1 : ℝ) / 2)) =O[atTop]
       fun x => x ^ ((1 : ℝ) / 3) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Bateman and Grosswald [BG58] proved the sharper asymptotic
 $$Q(x) = \frac{\zeta(3/2)}{\zeta(3)} x^{1/2} + \frac{\zeta(2/3)}{\zeta(2)} x^{1/3} + O(x^{1/6}).$$
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://github.com/ChironTheCentaur/rh-lab-powerful-numbers/blob/775a39aa568faf06ceb598b585504af4d6fed303/PowerfulFC/BatemanGrosswald.lean#L358"]
 theorem asymptotic_bateman_grosswald :
     (fun x : ℝ => (Q x : ℝ) - A * x ^ ((1 : ℝ) / 2) - B * x ^ ((1 : ℝ) / 3)) =O[atTop]
       fun x => x ^ ((1 : ℝ) / 6) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Can the exponent $1/6$ in the error term of the Bateman–Grosswald asymptotic be improved
 unconditionally? That is, is there $\delta > 0$ such that
@@ -84,7 +90,10 @@ O(x^{1/6 - \delta})?$$
 The answer is yes. Liu proved the exponent $121/860 + \varepsilon$ assuming the Riemann
 Hypothesis [SA26, §1], and the Riemann Hypothesis is proved [Al26].
 -/
-@[category research solved, question, AMS 11]
+@[category research solved, question, AMS 11,
+  conditional formal_proof using lean4 at
+    "https://github.com/ChironTheCentaur/rh-lab-powerful-numbers/blob/467faf0ee95603cd28ff806134bd3e0de330747d/PowerfulFC/ErrorTerm.lean#L236"
+    assuming RiemannHypothesis.riemannHypothesis]
 theorem error_term_improvement :
     ∃ δ > (0 : ℝ),
       (fun x : ℝ => (Q x : ℝ) - A * x ^ ((1 : ℝ) / 2) - B * x ^ ((1 : ℝ) / 3)) =O[atTop]
