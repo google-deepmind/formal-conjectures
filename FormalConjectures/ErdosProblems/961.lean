@@ -64,10 +64,13 @@ theorem erdos_961.variants.well_defined (k : ℕ) (hk : 0 < k): ∃ n, Erdos961P
 /--
 For $k$, let $f(k)$ be the minimal $n$ such that every set of $n$ consecutive integers $>k$ contains
 an integer divisible by a prime $>k$, i.e. not $(k+1)$-smooth.
+
+For $k > 0$ such an $n$ exists by `erdos_961.variants.well_defined`, so the infimum below is a
+minimum. It is written as `sInf` rather than `Nat.find` of that proof, so that statements about `f`
+do not depend on the proof of Sylvester–Schur.
 -/
 noncomputable def f (k : ℕ) : ℕ :=
-  open scoped Classical in
-  if hk : 0 < k then Nat.find (erdos_961.variants.well_defined k hk) else 0
+  if 0 < k then sInf {n | Erdos961Prop k n} else 0
 
 /--
 It is conjectured that $f(k) \ll (\log k)^O(1)$.

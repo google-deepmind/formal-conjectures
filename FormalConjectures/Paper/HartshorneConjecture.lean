@@ -64,11 +64,17 @@ instance : HasFiniteCoproducts S.VectorBundles :=
 
 variable {S} in
 /--
-A splitting of a vector bundle `𝓕` is a non-trivial direct sum decomposition of `𝓕`
+A splitting of a vector bundle `𝓕` is a non-trivial direct sum decomposition of `𝓕`.
+
+The direct sum is taken in `S.Modules`, whose coproducts come from Mathlib, rather than in
+`S.VectorBundles`, whose finite coproducts are only provided by the `sorry` above. This keeps
+the statements below independent of that `sorry`; the two notions agree because the inclusion
+of vector bundles into modules is fully faithful and a finite direct sum of vector bundles is a
+vector bundle.
 -/
 structure VectorBundles.Splitting (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] where
   components : ι → S.VectorBundles
-  iso : 𝓕 ≅ ∐ components
+  iso : 𝓕.carrier ≅ ∐ fun i ↦ (components i).carrier
   non_trivial : ∀ i, IsEmpty (components i ≅ 𝓕)
 
 instance {S : Scheme} (𝓕 : S.VectorBundles) (ι : Type) [Fintype ι] [Nonempty ι] :
