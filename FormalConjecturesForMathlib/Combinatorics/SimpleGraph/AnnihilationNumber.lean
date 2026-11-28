@@ -15,6 +15,7 @@ limitations under the License.
 -/
 module
 
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.Finset.Sort
 public import Mathlib.Data.Multiset.Interval
@@ -61,9 +62,133 @@ noncomputable def annihilationNumber' (G : SimpleGraph α) [DecidableRel G.Adj] 
   -- the condition (0 ≤ sum of all degrees).
   candidates.getLast!
 
-set_option linter.unusedSectionVars false in
--- TODO(Paul-Lez): debug the issue with the unused variable linter...
-proof_wanted annihilationNumberEq (G : SimpleGraph α) [DecidableRel G.Adj] :
-    annihilationNumber G = annihilationNumber' G
+private lemma sum_take_le_sum_of_le :
+    ∀ {L : List ℕ}, L.Pairwise (· ≤ ·) → ∀ {S : Multiset ℕ}, S ≤ (L : Multiset ℕ) →
+      (L.take (Multiset.card S)).sum ≤ S.sum
+  | [], _, S, hS => by
+    have h0 : S = 0 := Multiset.le_zero.mp hS
+    simp [h0]
+  | a :: rest, hL, S, hS => by
+    rw [List.pairwise_cons] at hL
+    rcases hL with ⟨ha_le, hrest⟩
+    by_cases hS0 : S = 0
+    · simp [hS0]
+    · by_cases haS : a ∈ S
+      · have hS_eq : a ::ₘ (S.erase a) = S := Multiset.cons_erase haS
+        have hS'_le : S.erase a ≤ (rest : Multiset ℕ) := by
+          rw [← Multiset.cons_le_cons_iff a, hS_eq]
+          exact hS
+        have hcard : Multiset.card S = Multiset.card (S.erase a) + 1 := by
+          simpa [Multiset.card_cons] using congrArg Multiset.card hS_eq.symm
+        conv_lhs => rw [hcard, List.take_succ_cons, List.sum_cons]
+        conv_rhs => rw [← hS_eq, Multiset.sum_cons]
+        exact Nat.add_le_add_left (sum_take_le_sum_of_le hrest hS'_le) a
+      · have hS_rest : S ≤ (rest : Multiset ℕ) := by
+          rw [Multiset.le_iff_count] at hS ⊢
+          intro x
+          have hx := hS x
+          by_cases hxa : x = a
+          · subst hxa
+            rw [Multiset.count_eq_zero.mpr haS]
+            exact Nat.zero_le _
+          · change S.count x ≤ (a ::ₘ (rest : Multiset ℕ)).count x at hx
+            rw [Multiset.count_cons_of_ne hxa] at hx
+            exact hx
+        obtain ⟨b, hbS⟩ := Multiset.exists_mem_of_ne_zero hS0
+        have hbrest : b ∈ rest := Multiset.mem_of_le hS_rest hbS
+        have hab : a ≤ b := ha_le b hbrest
+        have hS_eq : b ::ₘ (S.erase b) = S := Multiset.cons_erase hbS
+        have hS'_le : S.erase b ≤ (rest : Multiset ℕ) := (Multiset.erase_le b S).trans hS_rest
+        have hcard : Multiset.card S = Multiset.card (S.erase b) + 1 := by
+          simpa [Multiset.card_cons] using congrArg Multiset.card hS_eq.symm
+        conv_lhs => rw [hcard, List.take_succ_cons, List.sum_cons]
+        conv_rhs => rw [← hS_eq, Multiset.sum_cons]
+        exact Nat.add_le_add hab (sum_take_le_sum_of_le hrest hS'_le)
+
+private lemma le_getLast_of_pairwise_lt :
+    ∀ {L : List ℕ}, L.Pairwise (· < ·) → ∀ (hne : L ≠ []) {x : ℕ}, x ∈ L → x ≤ L.getLast hne
+  | [], _, hne, _, _ => (hne rfl).elim
+  | [a], _, _, x, hx => by
+    simp only [List.mem_singleton] at hx
+    simp [hx]
+  | a :: b :: tail, hL, _, x, hx => by
+    rw [List.pairwise_cons] at hL
+    rw [List.mem_cons] at hx
+    rw [List.getLast_cons (List.cons_ne_nil b tail)]
+    rcases hx with rfl | hx'
+    · exact (hL.1 _ (List.getLast_mem (List.cons_ne_nil b tail))).le
+    · exact le_getLast_of_pairwise_lt hL.2 (List.cons_ne_nil b tail) hx'
+
+omit [DecidableEq α] in
+theorem annihilationNumberEq (G : SimpleGraph α) [DecidableRel G.Adj] :
+    annihilationNumber G = annihilationNumber' G := by
+  let L : List ℕ := (Finset.univ.val.map fun v => G.degree v).sort (· ≤ ·)
+  let cond : ℕ → Bool := fun k => decide ((L.take k).sum ≤ (L.drop k).sum)
+  let cands : List ℕ := (List.range (Fintype.card α + 1)).filter cond
+  have hL_coe : (L : Multiset ℕ) = degreeMultiset G := by
+    simp [L, degreeMultiset]
+  have hL_len : L.length = Fintype.card α := by
+    simp [L]
+  have hL_sorted : L.Pairwise (· ≤ ·) :=
+    Multiset.pairwise_sort (degreeMultiset G) (· ≤ ·)
+  have hL_sum : L.sum = 2 * G.edgeFinset.card := by
+    rw [← Multiset.sum_coe, hL_coe, degreeMultiset]
+    exact G.sum_degrees_eq_twice_card_edges
+  have hcond_iff : ∀ k : ℕ, cond k = true ↔ (L.take k).sum ≤ G.edgeFinset.card := by
+    intro k
+    have hsplit : (L.take k).sum + (L.drop k).sum = 2 * G.edgeFinset.card := by
+      rw [← List.sum_append, List.take_append_drop, hL_sum]
+    simp only [cond, decide_eq_true_eq]
+    omega
+  have hcands_ne : cands ≠ [] := by
+    intro hnil
+    have h0 : 0 ∈ cands := by
+      rw [List.mem_filter]
+      exact ⟨List.mem_range.mpr (Nat.zero_lt_succ _), (hcond_iff 0).mpr (by simp)⟩
+    rw [hnil] at h0
+    simp at h0
+  have hgetLast : cands.getLast! = cands.getLast hcands_ne := by
+    have aux : ∀ (l : List ℕ) (h : l ≠ []), l.getLast! = l.getLast h := by
+      intro l h
+      cases l with
+      | nil => exact (h rfl).elim
+      | cons a t => simp [List.getLast!]
+    exact aux cands hcands_ne
+  have hcands_sorted : cands.Pairwise (· < ·) :=
+    List.pairwise_lt_range.filter cond
+  change annihilationNumber G = cands.getLast!
+  rw [hgetLast]
+  apply le_antisymm
+  · unfold annihilationNumber
+    apply Finset.sup_le
+    intro S hS
+    simp only [Finset.mem_filter, Finset.mem_Iic] at hS
+    have hcard_le : Multiset.card S ≤ Fintype.card α := by
+      calc Multiset.card S ≤ Multiset.card (degreeMultiset G) := Multiset.card_le_card hS.1
+        _ = Fintype.card α := by simp [degreeMultiset]
+    have hS_le_L : S ≤ (L : Multiset ℕ) := by
+      rw [hL_coe]
+      exact hS.1
+    have hk_mem : Multiset.card S ∈ cands := by
+      rw [List.mem_filter]
+      refine ⟨List.mem_range.mpr (Nat.lt_succ_of_le hcard_le), ?_⟩
+      exact (hcond_iff _).mpr ((sum_take_le_sum_of_le hL_sorted hS_le_L).trans hS.2)
+    exact le_getLast_of_pairwise_lt hcands_sorted hcands_ne hk_mem
+  · set k := cands.getLast hcands_ne
+    have hk_mem : k ∈ cands := List.getLast_mem hcands_ne
+    rw [List.mem_filter] at hk_mem
+    have hk_le : k ≤ Fintype.card α := Nat.lt_succ_iff.mp (List.mem_range.mp hk_mem.1)
+    have hk_sum : (L.take k).sum ≤ G.edgeFinset.card := (hcond_iff k).mp hk_mem.2
+    let S : Multiset ℕ := (L.take k : List ℕ)
+    have hS_le : S ≤ degreeMultiset G := by
+      rw [← hL_coe]
+      exact Multiset.coe_le.mpr (List.take_sublist k L).subperm
+    have hS_mem : S ∈ (Finset.Iic (degreeMultiset G)).filter
+        (fun T => Multiset.sum T ≤ G.edgeFinset.card) := by
+      simp only [Finset.mem_filter, Finset.mem_Iic]
+      exact ⟨hS_le, by simpa [S] using hk_sum⟩
+    have hS_card : Multiset.card S = k := by
+      simp [S, List.length_take, hL_len, hk_le]
+    simpa [annihilationNumber, hS_card] using Finset.le_sup (f := Multiset.card) hS_mem
 
 end SimpleGraph
