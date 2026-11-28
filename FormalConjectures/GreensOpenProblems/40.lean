@@ -26,6 +26,9 @@ public import FormalConjecturesUtil
   Problemy Peredachi Informatsii 26.4 (1990): 38-55.
 - [CHL97] Cohen, G., Honkala, I., Litsyn, S., & Lobstein, A. (1997). Covering codes (Vol. 54). Elsevier.
 - [St94] R. Struik, Covering codes, PhD Thesis, Eindhoven University of Technology, the Netherlands, 106 pp, 1994.
+- [KK26] Kohlmeyer, Jensen and Kruer, Liam. "Asymptotically optimal binary linear covering codes of
+  radius two." Preprint, September 2026.
+  Available at https://liamkruer.com/assets/work/conjectures/problems/green-40/paper/proof.pdf
 
 -/
 
@@ -81,8 +84,12 @@ theorem green_40.upper_bound (r : ℕ) : f r ≤ (r ^ r : ℝ≥0∞) / (r.facto
 theorem green_40.f_eq_one_for_all : ∀ r, f r = 1 := by
   sorry
 
-/-- It is not known whether f(2) = 1 [Gr24] -/
-@[category research open, question, AMS 5 94]
+/-- Is $f(2) = 1$? [Gr24]
+
+The answer is yes: Kohlmeyer and Kruer [KK26] constructed asymptotically optimal binary linear
+covering codes of radius $2$, proving $f(2) = 1$. -/
+@[category research solved, question, AMS 5 94, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000029"]
 theorem green_40.f_two_eq_one : f 2 = 1 := by
   sorry
 
