@@ -34,6 +34,12 @@ open Filter Asymptotics
 def HasDistinctSums {ι α : Type*} [Preorder ι] [AddCommMonoid α] (a : ι → α) : Prop :=
   {J : Finset ι | (J : Set ι).OrdConnected}.InjOn (fun J ↦ ∑ x ∈ J, a x)
 
+/-- All sums over intervals are distinct, except that two one-term sums are not compared.
+This allows repeated terms. -/
+def HasDistinctSumsWeak {ι α : Type*} [Preorder ι] [AddCommMonoid α] (a : ι → α) : Prop :=
+  ∀ ⦃J₁ J₂ : Finset ι⦄, (J₁ : Set ι).OrdConnected → (J₂ : Set ι).OrdConnected →
+    ¬(J₁.card = 1 ∧ J₂.card = 1) → ∑ x ∈ J₁, a x = ∑ x ∈ J₂, a x → J₁ = J₂
+
 /-- Let $f(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 < \dotsc < a_k \le n$
 such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
 noncomputable def f (n : ℕ) : ℕ :=
@@ -156,9 +162,11 @@ theorem erdos_357.variants.hegyvari : ∃ (o o' : ℕ → ℝ), o =o[atTop] (1 :
   sorry
 
 /-- Let $h(n)$ be the maximal $k$ such that there exist integers $1 \le a_1 \leq \dotsc \leq a_k \le n$
-such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct. -/
+such that all sums of the shape $\sum_{u \le i \le v} a_i$ are distinct, except that sums over two
+one-term intervals are not compared (otherwise repeated terms would be impossible).
+Source for this reading: https://www.erdosproblems.com/forum/thread/357. -/
 noncomputable def h (n : ℕ) : ℕ :=
-  sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ Monotone a ∧ HasDistinctSums a}
+  sSup {k : ℕ | ∃ a : Fin k → ℤ, Set.range a ⊆ Set.Icc 1 n ∧ Monotone a ∧ HasDistinctSumsWeak a}
 
 -- The analogous question assuming only monotonicity of the $a_i$. The wording of the website
 -- suggests that this is open, though it's not clear whether the difficulty is the same as for the
