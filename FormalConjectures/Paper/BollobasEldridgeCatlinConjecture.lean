@@ -66,7 +66,8 @@ If $2\Delta_1\Delta_2 < n$ then $G_1$ and $G_2$ pack.
 
 *Reference:* [SS78].
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-14-000010"]
 theorem bollobas_eldridge_catlin_conjecture.variants.sauer_spencer
     {V : Type} [Fintype V] [DecidableEq V] (G₁ G₂ : SimpleGraph V)
     [DecidableRel G₁.Adj] [DecidableRel G₂.Adj]

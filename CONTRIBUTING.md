@@ -37,7 +37,7 @@ This project follows
    and comment on the issue (e.g., "I plan to work on this") to have it
    assigned to you.
 
-   More generally, we encourage adding formalisations of open conjectures from
+   More generally, we encourage adding formalisations of *open* conjectures from
    all sorts of sources, including:
 
    - **Literature:** textbooks, problem books and research papers (including
@@ -55,9 +55,11 @@ This project follows
      [The Scottish Book](https://en.wikipedia.org/wiki/Scottish_Book).
 
    We are also interested in the formalised statements of solved variants of
-   open conjectures and solved statements from dedicated problem lists. While
-   the main goal is to collect conjecture statements, we appreciate the
-   inclusion of very short proofs for solved items or counterexamples,
+   open conjectures and solved statements from dedicated problem lists. 
+   Apart from that solved problems, even in cases where they were settled
+   recently are out of scope.
+   While the main goal is to collect conjecture statements, we appreciate
+   the inclusion of very short proofs for solved items or counterexamples,
    especially if they are illuminating and testing the definitions.
    **Longer proofs (i.e. more than 25-50 lines) are not to be included in this
    repository.** Instead, we welcome you to host your proof in your own
