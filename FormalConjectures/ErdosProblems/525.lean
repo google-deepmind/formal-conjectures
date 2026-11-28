@@ -34,6 +34,7 @@ public import FormalConjecturesUtil
   polynomials on a neighborhood of the unit circle_. Trans. Amer. Math. Soc. (1999), 4963-4980.
 - [CoNg21] Cook, Nicholas A. and Nguyen, Hoi H., _Universality of the minimum modulus for random
   trigonometric polynomials_. Discrete Anal. (2021), Paper No. 20, 46.
+  [arXiv:2101.07203](https://arxiv.org/abs/2101.07203)
 -/
 
 @[expose] public section
@@ -56,6 +57,21 @@ def exceptional (n : ℕ) : Set (Fin (n + 1) → ℤˣ) :=
 noncomputable def m {n : ℕ} (ε : Fin (n + 1) → ℤˣ) : ℝ :=
   sInf ((fun z ↦ ‖eval ε z‖) '' Metric.sphere (0 : ℂ) 1)
 
+open scoped ComplexConjugate in
+/-- For real signs the minimum modulus is attained on the closed upper unit semicircle. -/
+@[category API, AMS 30]
+theorem exists_min_on_upper_semicircle {n : ℕ} (ε : Fin (n + 1) → ℤˣ) :
+    ∃ z : ℂ, ‖z‖ = 1 ∧ 0 ≤ z.im ∧ ‖eval ε z‖ = m ε := by
+  have hc : Continuous (fun z ↦ ‖eval ε z‖) := by unfold eval; fun_prop
+  have hs : (Metric.sphere (0 : ℂ) 1).Nonempty := ⟨1, by simp⟩
+  obtain ⟨z, hz, hm⟩ := ((isCompact_sphere (0 : ℂ) 1).image hc).sInf_mem (hs.image _)
+  rw [mem_sphere_zero_iff_norm] at hz
+  by_cases h : 0 ≤ z.im
+  · exact ⟨z, hz, h, hm⟩
+  · have heval : eval ε (conj z) = conj (eval ε z) := by simp [eval]
+    exact ⟨conj z, by simpa using hz, by simpa using le_of_not_ge h,
+      by simpa only [m, heval, Complex.norm_conj] using hm⟩
+
 open scoped Classical in
 /-- The probability that a uniformly random degree-`n` polynomial with $\pm 1$ coefficients
 satisfies `P`. -/
@@ -76,15 +92,35 @@ theorem erdos_525.parts.i :
     (fun n : ℕ ↦ ((exceptional n).ncard : ℝ)) =o[atTop] fun n : ℕ ↦ (2 : ℝ) ^ n := by
   sorry
 
+/-- For degree $2k$, a cutoff $t/\sqrt{2k}$ gives the parameter
+$k(t/\sqrt{2k})/\sqrt{2k+1}$ in the centered normalization of [CoNg21, §1]. -/
+@[category API, AMS 30 60]
+theorem tendsto_centered_cutoff (t : ℝ) :
+    Tendsto (fun k : ℕ ↦ (k : ℝ) * (t / √(2 * k : ℝ)) / √(2 * k + 1)) atTop (nhds (t / 2)) := by
+  have h2 : Tendsto (fun k : ℕ ↦ 2 * k) atTop atTop :=
+    tendsto_atTop_mono (fun k ↦ show k ≤ 2 * k by omega) tendsto_id
+  have h := ((tendsto_natCast_div_add_atTop (1 : ℝ)).comp h2).sqrt.const_mul (t / 2)
+  simp only [Function.comp_apply, Nat.cast_mul, Nat.cast_ofNat, sqrt_one, mul_one] at h
+  apply h.congr
+  intro k
+  calc
+    _ = t / 2 * (((2 * k : ℝ) / √(2 * k)) / √(2 * k + 1)) := by
+      rw [Real.div_sqrt, Real.sqrt_div (by positivity)]
+    _ = _ := by ring
+
 set_option linter.style.formal_proof_palomar false in
 /--
 What is the behaviour of
 $$m(f)=\min_{\lvert z\rvert=1}\lvert f(z)\rvert?$$
 
-Cook and Nguyen [CoNg21] have identified the limiting distribution, proving that for any
-$\epsilon>0$
-$$\lim_{n\to \infty} \mathbb{P}(m(f) > \epsilon n^{-1/2}) = e^{-\epsilon \lambda}$$
-where $\lambda=\sqrt{\pi/12}$.
+Cook and Nguyen [CoNg21, Theorem 1.2] compare the minimum for random signs with the real Gaussian
+case. For degree $n$ sign polynomials the linked Lean proof gives, for every $\epsilon>0$,
+$$\lim_{n\to\infty}\mathbb{P}(m(f)>\epsilon/\sqrt n)=\exp(-\sqrt{\pi/12}\,\epsilon).$$
+Real signs allow the minimum to be taken on the upper semicircle (`exists_min_on_upper_semicircle`).
+
+Theorem 1.1 and Corollary 1.5 of [CoNg21] state a rate of $2\sqrt{\pi/3}$ for bandwidth $k$.
+The degree is $2k$ and the polynomial is divided by $\sqrt{2k+1}$. By `tendsto_centered_cutoff`,
+the paper's stated rate translates to $\sqrt{\pi/3}$ in the degree normalization used here.
 -/
 @[category research solved, AMS 30 60, formal_proof using lean4 at
   "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos525.lean#L118"]
