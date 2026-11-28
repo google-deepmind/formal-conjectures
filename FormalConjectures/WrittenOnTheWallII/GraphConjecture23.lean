@@ -21,7 +21,7 @@ public import FormalConjecturesUtil
 # Written on the Wall II - Conjecture 23
 
 *Reference:*
-[E. DeLaVina, Written on the Wall II, Conjectures of Graffiti.pc](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
+[E. DeLaVina, *Written on the Wall II*, Conjecture 23](https://www.uhd.edu/academics/sciences/mathematics-statistics/wowii/)
 -/
 
 @[expose] public section
@@ -33,15 +33,13 @@ open SimpleGraph
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
 
 /--
-WOWII [Conjecture 23](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/)
-
 For a simple connected graph `G`, `b(G) ≥ ⌊α(G) + dist_avg(M) / 2⌋`, where `b(G)` is
 the size of a largest induced bipartite subgraph, `α(G)` is the independence number,
 `M` is the set of maximum-degree vertices, and `dist_avg(M)` is the average distance
-between distinct vertices of `M`.
+between distinct vertices of `M` ([definition 26 in the catalog](https://www.uhd.edu/academics/sciences/mathematics-statistics/wowii/files/definitions.json)).
 
-This conjecture is false; there is a counterexample with `b(G) = 19`, `α(G) = 15`,
-and `dist_avg(M) = 10`.
+The [catalog's counterexample](https://www.uhd.edu/academics/sciences/mathematics-statistics/wowii/files/ceconj23.jpg)
+has `b(G) = 19`, `α(G) = 15`, and `dist_avg(M) = 10`, giving a proposed lower bound of $20$.
 -/
 @[category research solved, question, AMS 5]
 theorem conjecture23 :
