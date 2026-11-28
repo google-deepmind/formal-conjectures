@@ -175,9 +175,9 @@ $M(r)=\max_{\lvert z\rvert=r}\lvert f(z)\rvert$? Does there exist a path along w
 $\lvert f(z)\rvert$ tends to $\infty$ faster than a fixed function of $M(r)$ (such as
 $M(r)^\epsilon$)?
 
-We formalise the last question for $M(r)^\epsilon$, with $\epsilon>0$ allowed to depend on $f$.
-This is the weakest form of the question. The answer is no: the functions of Hayman [Ha60] have
-no such path. See `erdos_514.variants.hayman` and `not_exists_fast_path`. The length estimate
+We formalise the power-growth example $M(r)^\epsilon$, with $\epsilon>0$ allowed to depend on $f$.
+Even with this choice of exponent, the answer is no: the functions of Hayman [Ha60] have
+no such path. This does not settle the question for arbitrary slower comparison functions. See `erdos_514.variants.hayman` and `not_exists_fast_path`. The length estimate
 has no precise claim to state and is not formalised.
 -/
 @[category research solved, question, AMS 30]
@@ -185,6 +185,8 @@ theorem erdos_514.parts.iii :
     ¬ ∀ f : ℂ → ℂ, Differentiable ℂ f → Transcendental ℂ[X] f →
       ∃ ε > (0 : ℝ), ∃ γ, IsPathToInfinity γ ∧
         Tendsto (fun t ↦ ‖f (γ t)‖ / maxModulus f ‖γ t‖ ^ ε) atTop atTop := by
-  sorry
+  intro h
+  obtain ⟨f, hf, htrans, hM, hinf, hfin⟩ := erdos_514.variants.hayman
+  exact not_exists_fast_path hM hinf hfin (h f hf htrans)
 
 end Erdos514
