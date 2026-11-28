@@ -69,6 +69,7 @@ $A \subseteq \{1, \ldots, N\}$ with $\lvert A\rvert = (1+o(1))cN^{1/2}$.
 theorem erdos_840 : IsLUB {c : ℝ | IsQuasiSidonConstant c} erdos_840.answer := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Erdős and Freud [ErFr91] proved
 $$\left(\frac{2}{\sqrt{3}}+o(1)\right)N^{1/2} \leq f(N) \leq \left(2+o(1)\right)N^{1/2}.$$
@@ -77,7 +78,8 @@ $$\left(\frac{2}{\sqrt{3}}+o(1)\right)N^{1/2} \leq f(N) \leq \left(2+o(1)\right)
 This is the lower bound. The lower bound is taking a genuine Sidon set $B\subset [1,N/3]$ of size
 $\sim N^{1/2}/\sqrt{3}$ and taking the union with $\{N-b : b\in B\}$.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-sidon-constructions-lean/blob/530da941d5e4f3f637a8c26b96655473a4dad8a8/ErdosSidonConstructions.lean#L816"]
 theorem erdos_840.variants.erdos_freud_lower : IsQuasiSidonConstant (2 / Real.sqrt 3) := by
   sorry
 

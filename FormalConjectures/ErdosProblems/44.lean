@@ -94,6 +94,7 @@ theorem erdos_44 : ∀ᵉ (N ≥ (1 : ℕ)) (A ⊆ Finset.Icc 1 N), IsSidon (A :
       IsSidon (A ∪ B : Set ℕ) ∧ (1 - ε) * Real.sqrt M ≤ (A ∪ B).card := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 The case where we start with an empty set (constructing large Sidon sets).
 
@@ -102,7 +103,8 @@ $\{1, \ldots, q^2 + q + 1\}$ for every prime $q$. Since $p_{n+1}/p_n \to 1$ for 
 this gives Sidon sets of size $(1 - o(1))M^{1/2}$ in $\{1, \ldots, M\}$ for every $M$; see
 [erdosproblems.com/30](https://www.erdosproblems.com/30).
 -/
-@[category research solved, question, AMS 5 11]
+@[category research solved, question, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/laughingbear/erdos-sidon-constructions-lean/blob/530da941d5e4f3f637a8c26b96655473a4dad8a8/ErdosSidonConstructions.lean#L750"]
 theorem erdos_44.variants.empty_start : ∀ᵉ (ε > (0 : ℝ)), ∀ᶠ (M : ℕ) in Filter.atTop,
     ∃ᵉ (A ⊆ Finset.Icc 1 M), IsSidon (A : Set ℕ) ∧ (1 - ε) * Real.sqrt M ≤ A.card := by
   sorry
