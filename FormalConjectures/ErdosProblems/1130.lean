@@ -180,7 +180,8 @@ there is an $i$ with $\max_{x\in[x_i,x_{i+1}]}\sum_k\lvert l_k(x)\rvert<\sqrt n$
 $\Upsilon(x_1,\ldots,x_n)<\sqrt n$. The paper allows coinciding nodes (then it calls the claim
 obvious); here the nodes are distinct. We take $n\ge 2$: for $n=1$ the sum is identically $1$.
 -/
-@[category research solved, AMS 41]
+@[category research solved, AMS 41, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000049"]
 theorem erdos_1130.variants.erdos_sqrt (n : ℕ) (hn : 2 ≤ n) (x : Fin n → ℝ)
     (hx : IsNodeSet x) :
     upsilon x < Real.sqrt n := by
