@@ -93,7 +93,8 @@ It is also known that every $C^2$ Jordan curve admits an inscribed square.
 Here a $C^2$ Jordan curve is a $C^2$ embedding of the circle into the plane, i.e. a $C^2$
 simple closed curve with nowhere vanishing velocity.
 -/
-@[category research solved, AMS 51]
+@[category research solved, AMS 51, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-28-000038&version=1"]
 theorem exists_inscribed_square_of_C2 (γ : Circle → ℝ²)
     (hγ : IsSmoothEmbedding (𝓡 1) (𝓡 2) 2 γ) :
     ∃ t₁ t₂ t₃ t₄, IsRectangle (γ t₁) (γ t₂) (γ t₃) (γ t₄) 1 := by
