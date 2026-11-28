@@ -229,6 +229,64 @@ theorem infinite_of_hasDensity_pos {S : Set ℕ} {α : ℝ} (h : S.HasDensity α
     S.Infinite :=
   mt hasDensity_zero_of_finite fun h' => hα (tendsto_nhds_unique h h')
 
+/-- A periodic set of natural numbers with period `a > 0` has natural density equal to the
+proportion of its elements in `[0, a)`. -/
+theorem hasDensity_of_periodic {p : ℕ → Prop} [DecidablePred p] {a : ℕ} (ha : 0 < a)
+    (hp : Function.Periodic p a) : {n | p n}.HasDensity (Nat.count p a / a) := by
+  set c := Nat.count p a
+  have hmul : ∀ q, Nat.count p (q * a) = q * c := fun q => by
+    induction q with
+    | zero => simp
+    | succ q ih =>
+      have : (fun k => p (q * a + k)) = p := funext fun k => by
+        simpa [add_comm] using (hp.nat_mul q) k
+      rw [add_mul, one_mul, Nat.count_add, ih]
+      simp only [this, c]
+      ring
+  have hcount : ∀ b, (b / a) * c ≤ Nat.count p b ∧ Nat.count p b ≤ (b / a) * c + c := fun b => by
+    have hb : b = (b / a) * a + b % a := (Nat.div_add_mod' b a).symm
+    have hshift : Nat.count p b = (b / a) * c + Nat.count p (b % a) := by
+      conv_lhs => rw [hb]
+      have : (fun k => p (b / a * a + k)) = p := funext fun k => by
+        simpa [add_comm] using (hp.nat_mul (b / a)) k
+      rw [Nat.count_add, hmul]
+      simp only [this]
+    rw [hshift]
+    exact ⟨Nat.le_add_right _ _, Nat.add_le_add_left
+      (Nat.count_monotone p (Nat.mod_lt b ha).le) _⟩
+  have hdens : ∀ b, Set.partialDensity {n | p n} Set.univ b = Nat.count p b / b := fun b => by
+    simp only [Set.partialDensity, Set.inter_univ, Set.univ_inter]
+    rw [Nat.count_eq_card_filter_range, ← Set.ncard_coe_finset, ncard_Iio]
+    congr 3
+    ext
+    simp [and_comm]
+  simp only [Set.HasDensity, hdens]
+  have hc : (0 : ℝ) ≤ c := Nat.cast_nonneg _
+  have ha' : (0 : ℝ) < a := by exact_mod_cast ha
+  have hlim : Tendsto (fun b : ℕ => (c : ℝ) / b) atTop (𝓝 0) :=
+    tendsto_const_nhds.div_atTop tendsto_natCast_atTop_atTop
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le' (g := fun b : ℕ => (c : ℝ) / a - c / b)
+    (h := fun b : ℕ => (c : ℝ) / a + c / b) (by simpa using hlim.const_sub ((c : ℝ) / a))
+    (by simpa using hlim.const_add ((c : ℝ) / a)) ?_ ?_
+  all_goals
+    filter_upwards [eventually_gt_atTop 0] with b hb
+    have hb' : (0 : ℝ) < b := by exact_mod_cast hb
+    obtain ⟨h1, h2⟩ := hcount b
+    have hbqr : (b : ℝ) = (b / a : ℕ) * a + (b % a : ℕ) := by
+      exact_mod_cast (Nat.div_add_mod' b a).symm
+    have hr : ((b % a : ℕ) : ℝ) < a := by exact_mod_cast Nat.mod_lt b ha
+    have hr0 : (0 : ℝ) ≤ (b % a : ℕ) := Nat.cast_nonneg _
+    have h1' : ((b / a : ℕ) : ℝ) * c ≤ Nat.count p b := by exact_mod_cast h1
+    have h2' : (Nat.count p b : ℝ) ≤ (b / a : ℕ) * c + c := by exact_mod_cast h2
+    have hcb : (c : ℝ) / a * b = (b / a : ℕ) * c + c * (b % a : ℕ) / a := by
+      rw [hbqr]; field_simp
+    have hcr : (c : ℝ) * (b % a : ℕ) / a ≤ c := by rw [div_le_iff₀ ha']; nlinarith
+    have hcr0 : (0 : ℝ) ≤ c * (b % a : ℕ) / a := by positivity
+  · rw [le_div_iff₀ hb', sub_mul, div_mul_cancel₀ _ hb'.ne']
+    linarith
+  · rw [div_le_iff₀ hb', add_mul, div_mul_cancel₀ _ hb'.ne']
+    linarith
+
 end Nat
 
 /-! ## Logarithmic Density -/
