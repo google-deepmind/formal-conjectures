@@ -99,11 +99,23 @@ theorem erdos_1180.variants.glibichuk : ∃ K : ℝ, ∀ ε : ℝ, 0 < ε → ε
   sorry
 
 set_option linter.style.formal_proof_palomar false in
-/-- It is trivial that at least $\gg \epsilon^{-1}$ summands are required. -/
+/-- The least summand bound valid for every prime is $\gg \epsilon^{-1}$. -/
 @[category research solved, AMS 11, formal_proof using lean4 at
   "https://github.com/linrock/math-proofs/blob/ba96303b34a95ac458958c1eb0bbdee54733484a/erdos-1180/Solution.lean#L95"]
 theorem erdos_1180.variants.lower_bound : ∃ K : ℝ, 0 < K ∧ ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
     K * ε⁻¹ ≤ C ε := by
+  sorry
+
+/--
+For each $0 < \epsilon \le 1$ and every sufficiently large prime $p$, some residue modulo $p$
+requires $\gg \epsilon^{-1}$ summands. For $B\in\mathbb N$ with $B\epsilon < 1$, sums of at most
+$B$ admissible inverses take at most $(\lfloor p^\epsilon\rfloor+1)^B < p$ values for large $p$.
+-/
+@[category research solved, AMS 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-10-12-000005&version=1"]
+theorem erdos_1180.variants.lower_bound_large_primes : ∃ K : ℝ, 0 < K ∧ ∀ ε : ℝ, 0 < ε → ε ≤ 1 →
+    ∃ P : ℕ, ∀ p : ℕ, P ≤ p → p.Prime → ∃ a : ZMod p,
+      ∀ s : Multiset ℕ, Represents ε p a s → K * ε⁻¹ ≤ s.card := by
   sorry
 
 /--
