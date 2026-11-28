@@ -43,6 +43,28 @@ theorem not_congruentNumber_1 : ¬ congruentNumber 1 := by
   sorry
 
 /--
+10 is not a congruent number: there is no right triangle with rational sides and
+area 10. The proof is a classical 2-descent in Fermat's style.
+
+*Reference:* [Wikipedia (Congruent number)](https://en.wikipedia.org/wiki/Congruent_number)
+-/
+@[category textbook, AMS 11, formal_proof using lean4 at
+  "https://github.com/EulersMules/congruent-numbers/blob/0b175db43603e85c4149a757e187aedba78bb8df/CongruentNumberTen.lean#L553"]
+theorem not_congruentNumber_10 : ¬ congruentNumber 10 := by
+  sorry
+
+/--
+Consequently, $10 k^2$ is not a congruent number for any positive integer $k$.
+
+*Reference:* [Wikipedia (Congruent number)](https://en.wikipedia.org/wiki/Congruent_number)
+-/
+@[category textbook, AMS 11, formal_proof using lean4 at
+  "https://github.com/EulersMules/congruent-numbers/blob/0b175db43603e85c4149a757e187aedba78bb8df/CongruentNumberTen.lean#L546"]
+theorem not_congruentNumber_10_mul_sq {k : ℕ} (hk : k ≠ 0) :
+    ¬ congruentNumber (10 * k ^ 2) := by
+  sorry
+
+/--
 The rational right triangle with side lengths $\frac{3}{2}$, $\frac{20}{3}$, and
 $\frac{41}{6}$ witnesses that $5$ is a congruent number.
 -/
