@@ -32,6 +32,7 @@ public import FormalConjecturesUtil
 
 namespace Erdos985
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is it true that, for every prime $p$, there is a prime $q \leq p$ which is a primitive root modulo $p$?
 
@@ -40,7 +41,8 @@ least prime primitive root modulo $p$ is less than $\sqrt{p} - 2$ for every prim
 [MTT16, Theorem 1]. A finite computation covers the odd primes $p \leq 2791$. The Generalized
 Riemann Hypothesis is proved [Al26].
 -/
-@[category research solved, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/lixiang90/jsp-818-prime-primitive-roots/blob/14d4d3f883461bc11b6251bf23402ddc891e82ad/PrimePrimitiveRoot.lean#L10-L13"]
 theorem erdos_985 : ∀ᵉ (p : ℕ) (hp_prime : p.Prime) (hp_nontrivial : p ≠ 2),
     ∃ q, q.Prime ∧ q < p ∧ orderOf (q : ZMod p) = p - 1 := by
   sorry
