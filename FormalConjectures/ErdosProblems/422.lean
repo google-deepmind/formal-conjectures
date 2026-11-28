@@ -23,6 +23,7 @@ public import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/422](https://www.erdosproblems.com/422)
 - [OEIS A005185](https://oeis.org/A005185)
+- [B. Cloitre, *The Mantovanelli–Hofstadter Sequence*](https://arxiv.org/pdf/2604.06237v3#page=1)
 -/
 
 @[expose] public section
@@ -87,15 +88,22 @@ theorem erdos_422.variants.surjective :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f → f.Surjective := by
   sorry
 
-def erdos_422.variants.growth_rate.answer : ℕ+ → ℝ := sorry
+/-- For $n > 1$, the recurrence at $n+1$ requires $f(n) < n+1$. The initial value gives $f(1)=1$. -/
+@[category API, AMS 11]
+theorem IsHofstadterQ.le_index {f : ℕ+ → ℕ+} (hf : IsHofstadterQ f) (n : ℕ+) : f n ≤ n := by
+  rcases eq_or_lt_of_le (one_le : 1 ≤ n) with rfl | hn
+  · exact hf.1.le
+  · have h := (hf.2.2 (n + 1) (PNat.lt_add_one_iff.2 hn)).1
+    simpa only [PNat.add_sub, PNat.lt_add_one_iff] using h
 
 /--
-How does $f$ grow?
+One precise form of the growth question, given by Cloitre, asks whether $f(n)/n$ converges
+as $n$ tends to infinity, assuming the $Q$-sequence is defined at every positive integer.
 -/
-@[category research open, question value, AMS 11]
+@[category research open, question, AMS 11]
 theorem erdos_422.variants.growth_rate :
     ∀ f : ℕ+ → ℕ+, IsHofstadterQ f →
-    (fun n ↦ (f n : ℝ)) =O[atTop] erdos_422.variants.growth_rate.answer := by
+      ∃ L : ℝ, Tendsto (fun n : ℕ+ ↦ (f n : ℝ) / (n : ℝ)) atTop (𝓝 L) := by
   sorry
 
 /--
