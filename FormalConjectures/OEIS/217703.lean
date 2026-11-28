@@ -79,6 +79,7 @@ theorem conjecture_1 (n : ℕ) (hn : 1 ≤ n) :
     Irreducible (Polynomial.map (Int.castRingHom ℚ) (polyS n)) := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Conjecture, (ii): $a(n) = S_n(0)$ is negative if and only if
 $1 < n < 58$ or $n > 2177$.
@@ -86,7 +87,9 @@ $1 < n < 58$ or $n > 2177$.
 
 Disproved by Ansh Mishra and Aryan Senthilkumar: $a(81935) > 0$.
 -/
-@[category research solved, AMS 11]
+@[category research solved, AMS 11,
+  formal_proof using lean4 at
+    "https://github.com/nan0techn0/formal-math-portfolio/blob/6df6556b9ea823149e1a073d7ee0449d8b345aae/proofs/A217703Proof.lean#L197-L200"]
 theorem conjecture_2 :
     ¬ ∀ n : ℕ, (a n < 0 ↔ (1 < n ∧ n < 58) ∨ 2177 < n) := by
   sorry
