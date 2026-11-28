@@ -39,7 +39,7 @@ noncomputable def R (N : ℕ) : ℕ :=
   sSup { #A | (A) (_ : A ⊆ Finset.Icc 1 N)
       (_ : Set.InjOn (fun (S : Finset ℕ) ↦ ∑ n ∈ S, (1 : ℚ) / n) A.powerset) }
 
-def erdos_321.answer : ℕ := sorry
+def erdos_321.answer (N : ℕ) : ℕ := sorry
 
 /--
 Let $R(N)$ be the size of the largest $A\subseteq\{1, ..., N\}$ such that all sums
@@ -47,7 +47,7 @@ $\sum_{n\in S} \frac{1}{n}$ are distinct for $S\subseteq A$. What is $R(N)$?
 -/
 @[category research open, question value, AMS 11]
 theorem erdos_321 (N : ℕ) :
-    R N = erdos_321.answer := by
+    R N = erdos_321.answer N := by
   sorry
 
 /-
@@ -97,7 +97,7 @@ $$
 $$
 valid for any $k \ge 4$ with $\log_k N \ge k$ and any $r \ge 1$ with $\log_{2r} N \ge 1$. (In these bounds $\log_i n$ denotes the $i$-fold iterated logarithm.)
 
-[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum \sb{1}\spN\,1/i$_. Math. Comp. (1975), 29-42.
+[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum_{1}^{N}\,1/i$_. Math. Comp. (1975), 29-42.
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
 @[category research solved, AMS 11]
@@ -116,7 +116,7 @@ Since `Real.log` is defined on all of $\mathbb{R}$, the condition $\log_{2r} N \
 formalised as $\log_i N \ge 1$ for all $i \le 2r$, which is equivalent to it for the
 genuine iterated logarithm and ensures that every intermediate iterate is positive.
 
-[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum \sb{1}\spN\,1/i$_. Math. Comp. (1975), 29-42.
+[BlEr75] Bleicher, M. N. and Erdős, P., _The number of distinct subsums of $\sum_{1}^{N}\,1/i$_. Math. Comp. (1975), 29-42.
 [BlEr76b] Bleicher, Michael N. and Erdős, Paul, _Denominators of Egyptian fractions. II_. Illinois J. Math. (1976), 598-613.
 -/
 @[category research solved, AMS 11]

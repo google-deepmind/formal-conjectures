@@ -72,7 +72,8 @@ def integerDetN : Set ℕ :=
 "Conjecture: $1/\det(M)$ is an integer only for n: 1 to 34, 36 and 38." - _Robert G. Wilson v_,
 Aug 02 2015
 -/
-@[category research open, AMS 11 15]
+@[category research solved, AMS 11 15, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-10-000008"]
 theorem conjecture1 :
     ∀ n : ℕ, 1 ≤ n → (((lcmMatrix n).det)⁻¹.den = 1 ↔ n ∈ integerDetN) := by
   sorry
