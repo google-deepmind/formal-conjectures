@@ -119,7 +119,8 @@ They conjectured that the limit exists and equals $1/\pi$, see
 We use `maxLocalTime`, which also counts the visit at time $0$. This changes $T_n$ by at most one.
 The bounds are stated with $\varepsilon$ to avoid the junk values of `liminf` and `limsup`.
 -/
-@[category research solved, AMS 60]
+@[category research solved, AMS 60, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000040"]
 theorem erdos_1166.variants.erdos_taylor {Ω : Type*} [MeasureSpace Ω]
     [IsProbabilityMeasure (ℙ : Measure Ω)] {X : ℕ → Ω → ℤ × ℤ}
     (hX : IsSimpleRandomWalkSteps X) :
