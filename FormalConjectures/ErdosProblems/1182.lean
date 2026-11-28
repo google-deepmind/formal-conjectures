@@ -159,20 +159,24 @@ theorem erdos_1182.variants.ramsey_ge {n : ℕ} (G : SimpleGraph (Fin n)) (hG : 
     2 * n - 1 ≤ SimpleGraph.graphRamsey (⊤ : SimpleGraph (Fin 3)) G := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 By a result of Chvátal [Ch77], $R(K_3,T)=2n-1$ whenever $T$ is a tree on $n$ vertices (as stated
 in [BEFRS80, p. 193]).
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/laughingbear/erdos-1182-lean/blob/da6c40e96af229b2014a21b167cc0577fff170ec/Erdos1182.lean#L273"]
 theorem erdos_1182.variants.chvatal {n : ℕ} (T : SimpleGraph (Fin n)) (hT : T.IsTree) :
     IsTriangleGood T := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Every connected graph with at most $n-1$ edges is a tree, so Chvátal's theorem [Ch77] gives
 $F(n)\geq n-1$ ([BEFRS80, p. 193]).
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/laughingbear/erdos-1182-lean/blob/da6c40e96af229b2014a21b167cc0577fff170ec/Erdos1182.lean#L277"]
 theorem erdos_1182.variants.F_ge_pred {n : ℕ} (hn : 2 ≤ n) : n - 1 ≤ F n := by
   sorry
 
