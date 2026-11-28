@@ -68,7 +68,8 @@ theorem erdos_1190 : ∀ ε : ℝ, 0 < ε → ∀ᶠ m : ℕ in atTop,
 Erdős [Er80] seems to credit Mirsky and Newman with the result that $\epsilon_m<1$, but gives no
 reference.
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000024"]
 theorem erdos_1190.variants.lt_one (m : ℕ) (hm : 1 ≤ m) (S : Finset ℕ) (a : ℕ → ℤ)
     (hS : ∀ n ∈ S, m < n)
     (hdisj : ∀ n ∈ S, ∀ n' ∈ S, n ≠ n' → ¬ ∃ x : ℤ, x ≡ a n [ZMOD n] ∧ x ≡ a n' [ZMOD n']) :
