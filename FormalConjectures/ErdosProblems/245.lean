@@ -51,6 +51,7 @@ theorem erdos_245 :
           / (A ∩ Icc 1 ⌊N⌋₊).ncard := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $A\subseteq\mathbb{N}$ be an infinite set such that $|A\cap \{1, ..., N\}| = o(N)$.
 Then
@@ -58,7 +59,8 @@ $$
 \limsup_{N\to\infty}\frac{|(A + A)\cap \{1, ..., N\}|}{|A \cap \{1, ..., N\}|} \geq 2.
 $$
 -/
-@[category research solved, AMS 5 11]
+@[category research solved, AMS 5 11, formal_proof using lean4 at
+  "https://github.com/israelgonzalezb/formal-conjectures/blob/fa5aa4e679e074466ad54ba1512b8be408baaeb7/FormalConjectures/ErdosProblems/245.lean#L62"]
 theorem erdos_245.variants.two (A : Set ℕ) (h_inf : A.Infinite)
     (hf : atTop.Tendsto (fun N ↦ (A ∩ Icc 1 ⌊N⌋₊ |>.ncard : ℝ) / N) (𝓝 0)) :
     2 ≤ atTop.limsup
