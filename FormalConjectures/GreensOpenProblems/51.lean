@@ -30,6 +30,9 @@ public import FormalConjecturesUtil
   Geometric & Functional Analysis GAFA 12.3 (2002): 584-597.
 - [Ruz91] Ruzsa, Imre Z. "Arithmetic progressions in sumsets."
   Acta Arithmetica 60.2 (1991): 191-202.
+- [KK26] Kohlmeyer, Jensen and Kruer, Liam. "Green's Open Problem 51 at Density One Half:
+  Bounded Codimension in Binary Sumsets." Preprint, September 2026.
+  Available at https://liamkruer.com/assets/work/conjectures/problems/green-51/paper/proof.pdf
 -/
 
 @[expose] public section
@@ -72,8 +75,12 @@ theorem green_51.upper :
 /--
 Suppose that $A \subset \mathbb{F}_2^n$ has density $\alpha > 1/2 - C/\sqrt{n}$.
 Does $A + A$ contain a subspace of co-dimension $O_C(1)$? [Sa11, Question 5.1]
+
+The answer is yes: Kohlmeyer and Kruer [KK26] proved that $A + A$ contains a subspace of
+co-dimension at most $1 + 256 e C^2$.
 -/
-@[category research open, question, AMS 5 11]
+@[category research solved, question, AMS 5 11, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000030"]
 theorem green_51.one_half :
     ∀ (k : ℝ), 0 < k →
       ∃ (c : ℕ), ∀ᶠ (n : ℕ) in atTop,
