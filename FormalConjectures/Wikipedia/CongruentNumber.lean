@@ -43,6 +43,33 @@ theorem not_congruentNumber_1 : ¬ congruentNumber 1 := by
   sorry
 
 /--
+**Genocchi (1855):** if $p$ is a prime with $p \equiv 3 \pmod{8}$, then $p$ is not
+a congruent number.
+
+*References:*
+- A. Genocchi (1855); see L. E. Dickson, *History of the Theory of Numbers*, Vol. II, Ch. XVI
+- [Wikipedia (Congruent number)](https://en.wikipedia.org/wiki/Congruent_number)
+-/
+@[category textbook, AMS 11, formal_proof using lean4 at
+  "https://github.com/EulersMules/congruent-numbers/blob/deabb4e856d59fd3a900e481fb47454b7d7c8ad2/CongruentNumberGenocchi.lean#L503"]
+theorem not_congruentNumber_prime {p : ℕ} [Fact p.Prime] (hp8 : p % 8 = 3) :
+    ¬ congruentNumber p := by
+  sorry
+
+/--
+Consequently, $p k^2$ is not a congruent number for any positive integer $k$.
+
+*References:*
+- A. Genocchi (1855); see L. E. Dickson, *History of the Theory of Numbers*, Vol. II, Ch. XVI
+- [Wikipedia (Congruent number)](https://en.wikipedia.org/wiki/Congruent_number)
+-/
+@[category textbook, AMS 11, formal_proof using lean4 at
+  "https://github.com/EulersMules/congruent-numbers/blob/deabb4e856d59fd3a900e481fb47454b7d7c8ad2/CongruentNumberGenocchi.lean#L495"]
+theorem not_congruentNumber_genocchi {p : ℕ} [Fact p.Prime] (hp8 : p % 8 = 3) {k : ℕ}
+    (hk : k ≠ 0) : ¬ congruentNumber (p * k ^ 2) := by
+  sorry
+
+/--
 The rational right triangle with side lengths $\frac{3}{2}$, $\frac{20}{3}$, and
 $\frac{41}{6}$ witnesses that $5$ is a congruent number.
 -/
