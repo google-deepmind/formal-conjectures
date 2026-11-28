@@ -65,8 +65,11 @@ theorem erdos_60.variants.he_ma_yang :
 
 /--
 Erdős and Simonovits conjectured that at least 2 copies of $C_4$ are guaranteed.
+
+This weak form is still open for general $n$: He, Ma, and Yang [HeMaYa21] only cover
+$n = q^2 + q + 1$ with $q$ even.
 -/
-@[category research solved, AMS 5]
+@[category research open, AMS 5]
 theorem erdos_60.variants.two_copies :
     ∀ᶠ n : ℕ in atTop,
       ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj],
