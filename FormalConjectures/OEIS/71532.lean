@@ -23,7 +23,8 @@ public import FormalConjecturesUtil
 The sequence $a(n) = -\sum_{k=1}^n (-1)^{\lfloor (3/2)^k \rfloor}$.
 
 *References:*
-- [A071532](https://oeis.org/A071532)-/
+- [A071532](https://oeis.org/A071532)
+-/
 
 @[expose] public section
 
@@ -78,8 +79,11 @@ theorem conjecture1 : ¬ ∀ n : ℕ, 2 < n → 0 < a n := by
 
 /--
 For $n$ large enough, does $a(n) > \sqrt{n}$ always hold?
+
+The growth law in `conjecture3` would give $|a(n)| < \sqrt{n}$ for all sufficiently large $n$,
+as shown in `eventually_abs_lt_sqrt_of_log_sq`.
 -/
-@[category research open, AMS 11]
+@[category research open, question, AMS 11]
 theorem conjecture2 :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → (a n : ℝ) > Real.sqrt (n : ℝ) := by
   sorry
@@ -91,6 +95,23 @@ Conjecture: asymptotically, $a(n) \sim C \log(n)^2$ for some constant $C > 0$.
 theorem conjecture3 :
     ∃ C : ℝ, 0 < C ∧ (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n : ℕ ↦ C * Real.log (n : ℝ) ^ 2) := by
   sorry
+
+/-- If $a(n) \sim C (\log n)^2$ for a fixed $C$, then $|a(n)| < \sqrt{n}$ eventually. -/
+@[category API, AMS 11]
+theorem eventually_abs_lt_sqrt_of_log_sq {C : ℝ}
+    (h : (fun n : ℕ ↦ (a n : ℝ)) ~[atTop] (fun n ↦ C * Real.log (n : ℝ) ^ 2)) :
+    ∀ᶠ n : ℕ in atTop, |(a n : ℝ)| < Real.sqrt n := by
+  have hlog : (fun n : ℕ ↦ Real.log (n : ℝ) ^ 2) =o[atTop] (fun n ↦ Real.sqrt (n : ℝ)) := by
+    simpa only [Function.comp_def, Real.rpow_two, ← Real.sqrt_eq_rpow] using
+      (isLittleO_log_rpow_rpow_atTop 2 (by norm_num : (0 : ℝ) < 1 / 2)).comp_tendsto
+        (tendsto_natCast_atTop_atTop (R := ℝ))
+  have hsmall := h.isBigO.trans_isLittleO (hlog.const_mul_left C)
+  have hpos : ∀ᶠ n : ℕ in atTop, 0 < ‖Real.sqrt (n : ℝ)‖ := by
+    filter_upwards [eventually_gt_atTop 0] with n hn
+    rw [Real.norm_of_nonneg (Real.sqrt_nonneg _), Real.sqrt_pos]
+    exact_mod_cast hn
+  simpa only [Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _)] using
+    hsmall.eventuallyLT_norm_of_eventually_pos hpos
 
 def conjecture3_value.answer : ℝ := sorry
 
