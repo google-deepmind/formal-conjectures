@@ -23,6 +23,9 @@ public import FormalConjecturesUtil
 *References:*
 - [Gr26] [Ben Green's Open Problem 65](https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf#problem.65)
 - [Gr22] [Green, Ben. "On Sárközy's theorem for shifted primes."](https://arxiv.org/abs/2206.08001)
+- [OAI26] OpenAI, *A power saving for square-difference-free sets*, OpenAI Math Release preprint,
+  September 24, 2026.
+  [paper](https://github.com/openai/math/blob/3344da59991ed94f9ba711217b29c1d760badfa6/preprints/A-power-saving-for-square-difference-free-sets-September-24-2026/paper.pdf)
 -/
 
 @[expose] public section
@@ -68,11 +71,18 @@ theorem not_forall_of_isNonzeroSquare :
   simp at hdn
   exact hn hdn
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Is there $c > 0$ such that every sufficiently large subset $A \subseteq [N]$ of size at least
 $N^{1-c}$ has a difference that is a nonzero square?
+
+The answer is yes, by [OAI26]. The linked Lean theorem gives $c, C$ with $c > 0$ such that every
+square-difference-free $A \subseteq [N]$ has $|A| \le C N^{1-c}$. Taking
+$c' = \min(c/2, 1/2)$, for large $N$ we have $C N^{1-c} < N^{1-c'}$, so any $A \subseteq [N]$
+with $|A| \ge N^{1-c'}$ has a difference that is a nonzero square.
 -/
-@[category research open, question, AMS 5 11]
+@[category research solved, question, AMS 5 11,
+  formal_proof using lean4 at "https://github.com/openai/math/blob/3344da59991ed94f9ba711217b29c1d760badfa6/lean/OAI/Combinatorics/SquareDifference/Main.lean#L83-L91"]
 theorem green_65 :
     LargeDifferencePattern IsNonzeroSquare := by
   sorry
