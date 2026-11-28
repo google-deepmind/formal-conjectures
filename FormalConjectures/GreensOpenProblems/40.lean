@@ -64,11 +64,162 @@ noncomputable def f (r : ℕ) : ℝ≥0∞ :=
 theorem green_40 : Tendsto f atTop (𝓝 ⊤) := by
   sorry
 
+/-! Hamming parity-check construction, adapted from anatoliiohorodnyk/lean-fc-proofs
+     (Apache-2.0, commit 5da9642575b26c2c816a49bcb56b33fed5456619). -/
+lemma g40_norm_single (n : ℕ) (j : Fin n) : hammingNorm (Pi.single j (1 : ZMod 2) : 𝔽₂ n) = 1 := by
+  unfold hammingNorm
+  rw [Finset.card_eq_one]
+  refine ⟨j, ?_⟩
+  ext i
+  by_cases h : i = j
+  · subst h; simp
+  · simp [h, Pi.single_apply]
+
+lemma g40_zmod2 (a : ZMod 2) (h : a ≠ 0) : a = 1 := by
+  fin_cases a
+  · exact absurd rfl h
+  · rfl
+
+lemma g40_card_ball (n : ℕ) : Nat.card (hammingBall n 1) = n + 1 := by
+  let g : Option (Fin n) → 𝔽₂ n := fun o => o.elim 0 (fun i => Pi.single i 1)
+  have hg : Function.Injective g := by
+    intro o o' h
+    cases o with
+    | none =>
+      cases o' with
+      | none => rfl
+      | some j =>
+        have := congrFun h j
+        simp [g] at this
+    | some i =>
+      cases o' with
+      | none =>
+        have := congrFun h i
+        simp [g] at this
+      | some j =>
+        by_contra hij
+        have hij' : i ≠ j := fun e => hij (by rw [e])
+        have := congrFun h i
+        simp [g, Pi.single_apply, hij'] at this
+  have hrange : Set.range g = hammingBall n 1 := by
+    ext x
+    constructor
+    · rintro ⟨o, rfl⟩
+      cases o with
+      | none => simp [g, hammingBall]
+      | some i => simp only [g, hammingBall, Set.mem_setOf_eq, Option.elim]; rw [g40_norm_single]
+    · intro hx
+      simp only [hammingBall, Set.mem_setOf_eq] at hx
+      rcases Nat.le_one_iff_eq_zero_or_eq_one.mp hx with h0 | h1
+      · exact ⟨none, by simpa [g, eq_comm] using hammingNorm_eq_zero.mp h0⟩
+      · unfold hammingNorm at h1
+        obtain ⟨j, hj⟩ := Finset.card_eq_one.mp h1
+        refine ⟨some j, ?_⟩
+        funext i
+        simp only [g, Option.elim]
+        by_cases hij : i = j
+        · subst hij
+          have : i ∈ ({i} : Finset (Fin n)) := Finset.mem_singleton_self i
+          rw [← hj] at this
+          simp only [Finset.mem_filter, Finset.mem_univ, true_and] at this
+          simp [g40_zmod2 _ this]
+        · have : i ∉ ({j} : Finset (Fin n)) := by simpa using hij
+          rw [← hj] at this
+          simp only [Finset.mem_filter, Finset.mem_univ, true_and, not_not] at this
+          simp [Pi.single_apply, hij, this]
+  rw [← hrange, Nat.card_congr (Equiv.ofInjective g hg).symm]
+  simp
+
+lemma g40_card_space (n : ℕ) : Nat.card (𝔽₂ n) = 2 ^ n := by
+  simp [Nat.card_fun]
+
+lemma g40_lower (n r : ℕ) (V : Submodule (ZMod 2) (𝔽₂ n)) (hV : IsCoveringSubspace n r V) :
+    2 ^ n ≤ Nat.card V * Nat.card (hammingBall n r) := by
+  have h := Set.natCard_add_le (s := (V : Set (𝔽₂ n))) (t := hammingBall n r)
+  rw [hV, Nat.card_univ, g40_card_space] at h
+  exact h
+
+lemma g40_ge (n r : ℕ) : 1 ≤ minDensity n r := by
+  unfold minDensity
+  refine le_iInf₂ fun V hV => ?_
+  rw [ENNReal.le_div_iff_mul_le (Or.inl (by simp)) (Or.inl (by simp)), one_mul]
+  exact_mod_cast g40_lower n r V hV
+
+lemma g40_two_add {k : ℕ} (x : Fin k → ZMod 2) : x + x = 0 := by
+  funext i
+  simp only [Pi.add_apply, Pi.zero_apply]
+  generalize x i = a
+  fin_cases a <;> rfl
+
+/-- The Hamming code of length `2^m - 1`. -/
+lemma g40_hamming (m : ℕ) : ∃ V : Submodule (ZMod 2) (𝔽₂ (2 ^ m - 1)),
+    IsCoveringSubspace (2 ^ m - 1) 1 V ∧ Nat.card V * 2 ^ m = 2 ^ (2 ^ m - 1) := by
+  set n := 2 ^ m - 1 with hn
+  have hcard : Fintype.card {v : Fin m → ZMod 2 // v ≠ 0} = n := by
+    rw [Fintype.card_subtype_compl, Fintype.card_fun, ZMod.card, Fintype.card_fin]
+    simp [hn]
+  let e : Fin n ≃ {v : Fin m → ZMod 2 // v ≠ 0} := (Fintype.equivFinOfCardEq hcard).symm
+  let H : 𝔽₂ n →ₗ[ZMod 2] (Fin m → ZMod 2) := ∑ i, (LinearMap.proj i).smulRight (e i).1
+  have hH : ∀ x, H x = ∑ i, x i • (e i).1 := by
+    intro x; simp [H]
+  have hHs : ∀ j, H (Pi.single j 1) = (e j).1 := by
+    intro j; rw [hH]; simp [Pi.single_apply]
+  refine ⟨LinearMap.ker H, ?_, ?_⟩
+  · apply Set.eq_univ_of_forall
+    intro x
+    rw [Set.mem_add]
+    by_cases hx : H x = 0
+    · exact ⟨x, by simpa using hx, 0, by simp [hammingBall, hammingNorm_zero], add_zero x⟩
+    · set j := e.symm ⟨H x, hx⟩
+      have hej : (e j).1 = H x := by simp [j]
+      refine ⟨x + Pi.single j 1, ?_, Pi.single j 1, ?_, ?_⟩
+      · simp only [SetLike.mem_coe, LinearMap.mem_ker, map_add, hHs, hej]
+        exact g40_two_add (H x)
+      · simp [hammingBall, g40_norm_single]
+      · rw [add_assoc, g40_two_add, add_zero]
+  · have hsurj : LinearMap.range H = ⊤ := by
+      rw [LinearMap.range_eq_top]
+      intro s
+      by_cases hs : s = 0
+      · exact ⟨0, by simp [hs]⟩
+      · exact ⟨Pi.single (e.symm ⟨s, hs⟩) 1, by rw [hHs]; simp⟩
+    have hrk := LinearMap.finrank_range_add_finrank_ker H
+    rw [hsurj, finrank_top] at hrk
+    simp only [Module.finrank_fin_fun] at hrk
+    have hcV : Nat.card (LinearMap.ker H) = 2 ^ (n - m) := by
+      haveI := Fintype.ofFinite (LinearMap.ker H)
+      rw [Nat.card_eq_fintype_card, Module.card_eq_pow_finrank (K := ZMod 2), ZMod.card]
+      congr 1; omega
+    have hmn : m ≤ n := by have := Nat.lt_two_pow_self (n := m); omega
+    rw [hcV, ← pow_add]; congr 1; omega
+
+lemma g40_le (m : ℕ) : minDensity (2 ^ m - 1) 1 ≤ 1 := by
+  obtain ⟨V, hV, hc⟩ := g40_hamming m
+  unfold minDensity
+  refine (iInf₂_le V hV).trans ?_
+  rw [g40_card_ball]
+  have h1 : 2 ^ m - 1 + 1 = 2 ^ m := Nat.sub_add_cancel Nat.one_le_two_pow
+  have : (Nat.card V : ℝ≥0∞) * ((2 ^ m - 1 + 1 : ℕ) : ℝ≥0∞) = 2 ^ (2 ^ m - 1) := by
+    rw [h1]; exact_mod_cast hc
+  rw [this, ENNReal.div_self (by simp) (by simp)]
+
+theorem g40_main : f 1 = 1 := by
+  unfold f
+  apply le_antisymm
+  · apply Filter.liminf_le_of_frequently_le'
+    rw [Filter.frequently_atTop]
+    intro a
+    refine ⟨2 ^ (a + 1) - 1, ?_, g40_le (a + 1)⟩
+    have := Nat.lt_two_pow_self (n := a + 1); omega
+  · exact Filter.le_liminf_of_le (by isBoundedDefault) (Eventually.of_forall fun n => g40_ge n 1)
+
+
+
 set_option linter.style.formal_proof_palomar false in
 /-- The only value known is $f(1) = 1$, which follows from the existence of the Hamming code [Gr24]. -/
 @[category research solved, AMS 5 94, formal_proof using lean4 at "https://github.com/anatoliiohorodnyk/lean-fc-proofs/blob/5da9642575b26c2c816a49bcb56b33fed5456619/Proofs/T_Green40_green_40_sanity_f_one.lean#L216"]
 theorem green_40.sanity_f_one : f 1 = 1 := by
-  sorry
+  exact g40_main
 
 set_option linter.style.formal_proof_palomar false in
 /-- $f(r) \le r^r / r! \sim e^r$ [Gr24]. -/
