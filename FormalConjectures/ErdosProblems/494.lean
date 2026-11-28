@@ -156,6 +156,42 @@ of size greater than $3$ (by Steinerberger). -/
 theorem erdos_494.variants.product :
     ∃ (A B : Finset ℂ), 3 < A.card ∧ A.card = B.card ∧ (0 : ℂ) ∉ A ∧ (0 : ℂ) ∉ B ∧
       prodMultiset A 3 = prodMultiset B 3 ∧ A ≠ B := by
-  sorry
+  let ζ : ℂ := (1 + Real.sqrt 3 * Complex.I) / 2
+  have hζ : ζ ^ 2 = ζ - 1 := by
+    have h3 : (Real.sqrt 3 : ℂ) ^ 2 = 3 := mod_cast Real.sq_sqrt (by norm_num)
+    linear_combination (Complex.I ^ 2 / 4) * h3 + (3 / 4) * Complex.I_sq
+  have nodup4 {a b c d : ℂ} (h1 : a ≠ b) (h2 : a ≠ c) (h3 : a ≠ d)
+      (h4 : b ≠ c) (h5 : b ≠ d) (h6 : c ≠ d) : ([a, b, c, d] : List ℂ).Nodup := by
+    simp [h1, h2, h3, h4, h5, h6]
+  have mem_mk4 {x a b c d : ℂ} {h} :
+      x ∈ (⟨↑[a, b, c, d], h⟩ : Finset ℂ) ↔ x = a ∨ x = b ∨ x = c ∨ x = d := by
+    simp [← Finset.mem_val]
+  have hprod (S : Finset ℂ) : prodMultiset S 3 = (S.val.powersetCard 3).map Multiset.prod := by
+    rw [prodMultiset, ← Finset.map_val_val_powersetCard, Multiset.map_map]
+    congr 1
+    ext s
+    simp
+  have prod4 (a b c d : ℂ) :
+      ((↑[a, b, c, d] : Multiset ℂ).powersetCard 3).map Multiset.prod =
+        ↑[b * (c * d), a * (c * d), a * (b * d), a * (b * c)] := by
+    simp [Multiset.powersetCard_coe']
+  let A : Finset ℂ :=
+    ⟨↑[1, ζ, ζ ^ 2, ζ ^ 4], nodup4 (by grind) (by grind) (by grind) (by grind) (by grind) (by grind)⟩
+  let B : Finset ℂ :=
+    ⟨↑[1, ζ ^ 2, ζ ^ 3, ζ ^ 4],
+      nodup4 (by grind) (by grind) (by grind) (by grind) (by grind) (by grind)⟩
+  refine ⟨A, B, (by decide : 3 < 4), rfl, ?_, ?_, ?_, ?_⟩
+  · intro h; rcases mem_mk4.mp h with h | h | h | h <;> grind
+  · intro h; rcases mem_mk4.mp h with h | h | h | h <;> grind
+  · rw [hprod, hprod, prod4, prod4,
+      show ζ * (ζ ^ 2 * ζ ^ 4) = ζ by grind, show 1 * (ζ ^ 2 * ζ ^ 4) = 1 by grind,
+      show 1 * (ζ * ζ ^ 4) = 1 - ζ by grind, show 1 * (ζ * ζ ^ 2) = -1 by grind,
+      show ζ ^ 2 * (ζ ^ 3 * ζ ^ 4) = -1 by grind, show 1 * (ζ ^ 3 * ζ ^ 4) = ζ by grind,
+      show 1 * (ζ ^ 2 * ζ ^ 3) = 1 - ζ by grind]
+    exact Multiset.coe_eq_coe.mpr (List.perm_append_singleton (-1) [ζ, 1, 1 - ζ])
+  · intro hAB
+    have hmem : ζ ^ 3 ∈ B := mem_mk4.mpr (Or.inr (Or.inr (Or.inl rfl)))
+    rw [← hAB] at hmem
+    rcases mem_mk4.mp hmem with h | h | h | h <;> grind
 
 end Erdos494
