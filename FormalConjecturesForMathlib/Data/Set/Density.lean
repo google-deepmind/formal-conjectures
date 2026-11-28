@@ -20,7 +20,6 @@ public import FormalConjecturesForMathlib.Algebra.Order.Group.Pointwise.Interval
 public import FormalConjecturesForMathlib.Data.Set.Interval
 public import FormalConjecturesForMathlib.Order.Interval.Finset.Basic
 public import FormalConjecturesForMathlib.Order.Interval.Finset.Nat
-public import Batteries.Util.ProofWanted
 public import Mathlib.Tactic
 
 @[expose] public section
@@ -249,6 +248,260 @@ def Set.HasLogDensity (A : Set ℕ) (d : ℝ) : Prop :=
   Tendsto (fun n : ℕ => (∑ k ≤ n with k ∈ A, (k : ℝ)⁻¹ / .log n : ℝ)) atTop (𝓝 d)
 
 /-- If a set has natural density `d`, then it also has logarithmic density `d`. -/
-proof_wanted Set.HasDensity.hasLogDensity {A : Set ℕ} {d : ℝ} (h : A.HasDensity d) : A.HasLogDensity d
+theorem Set.HasDensity.hasLogDensity {A : Set ℕ} {d : ℝ} (h : A.HasDensity d) :
+    A.HasLogDensity d := by
+  classical
+  rw [Set.HasLogDensity]
+  let a : ℕ → ℝ := fun k => if k ∈ A then 1 else 0
+  let S : ℕ → ℝ := fun n => ∑ k ∈ Finset.Icc 1 n, a k
+  let B : ℕ → ℝ := fun n => ∑ k ∈ Finset.Icc 1 (n - 1), (1 : ℝ) / ((k : ℝ) + 1)
+  have ha_nonneg : ∀ k, 0 ≤ a k := fun k => by
+    by_cases hk : k ∈ A <;> simp [a, hk]
+  have ha_le_one : ∀ k, a k ≤ 1 := fun k => by
+    by_cases hk : k ∈ A <;> simp [a, hk]
+  have hS_bound : ∀ n ≥ 1, |S n / (n : ℝ)| ≤ 1 := by
+    intro n hn
+    have hn_pos : (0 : ℝ) < n := Nat.cast_pos.mpr (by omega)
+    have hS_nonneg : 0 ≤ S n := Finset.sum_nonneg fun k _ => ha_nonneg k
+    have hS_le : S n ≤ (n : ℝ) := by
+      calc S n ≤ ∑ _k ∈ Finset.Icc 1 n, (1 : ℝ) := Finset.sum_le_sum fun k _ => ha_le_one k
+        _ = (n : ℝ) := by simp
+    rw [abs_of_nonneg (div_nonneg hS_nonneg hn_pos.le), div_le_one hn_pos]
+    exact hS_le
+  have hsum_eq : ∀ n : ℕ,
+      (∑ k ≤ n with k ∈ A, (k : ℝ)⁻¹ / Real.log n) =
+        (∑ k ∈ Finset.Icc 1 n, a k / (k : ℝ)) / Real.log n := by
+    intro n
+    rw [← Finset.sum_div]
+    congr 1
+    rw [Finset.sum_filter]
+    have hIic : Finset.Iic n = insert 0 (Finset.Icc 1 n) := by
+      ext k; simp only [Finset.mem_Iic, Finset.mem_insert, Finset.mem_Icc]; omega
+    rw [hIic, Finset.sum_insert (by simp)]
+    simp only [Nat.cast_zero, inv_zero, ite_self, zero_add]
+    refine Finset.sum_congr rfl fun k _ => ?_
+    by_cases hk : k ∈ A <;> simp [a, hk, div_eq_mul_inv]
+  have hpart : ∀ n : ℕ, A.partialDensity Set.univ (n + 1) = (a 0 + S n) / ((n : ℝ) + 1) := by
+    intro n
+    have hset :
+        A ∩ Set.Iio (n + 1) = (((Finset.range (n + 1)).filter (· ∈ A) : Finset ℕ) : Set ℕ) := by
+      ext k
+      simp [Set.mem_Iio, and_comm]
+    have hncard : ((A ∩ Set.Iio (n + 1)).ncard : ℝ) = a 0 + S n := by
+      rw [hset, Set.ncard_coe_finset, Finset.card_filter, Nat.cast_sum]
+      have hrange : Finset.range (n + 1) = insert 0 (Finset.Icc 1 n) := by
+        ext k; simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Icc]; omega
+      rw [hrange, Finset.sum_insert (by simp)]
+      congr 1
+      · by_cases h0 : 0 ∈ A <;> simp [a, h0]
+      · refine Finset.sum_congr rfl fun k _ => ?_
+        by_cases hk : k ∈ A <;> simp [a, hk]
+    simp [Set.partialDensity, hncard]
+  have hS_tendsto : Tendsto (fun n : ℕ => S n / (n : ℝ)) atTop (𝓝 d) := by
+    have h1 : Tendsto (fun n : ℕ => ((n : ℝ) + 1) / (n : ℝ)) atTop (𝓝 1) := by
+      have h1' : Tendsto (fun n : ℕ => (1 : ℝ) + 1 / (n : ℝ)) atTop (𝓝 1) := by
+        simpa using Tendsto.const_add (1 : ℝ) tendsto_one_div_atTop_nhds_zero_nat
+      refine h1'.congr' (eventually_atTop.mpr ⟨1, fun n hn => ?_⟩)
+      have hn' : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
+      field_simp
+    have h2 : Tendsto (fun n : ℕ => A.partialDensity Set.univ (n + 1)) atTop (𝓝 d) :=
+      h.comp (tendsto_add_atTop_nat 1)
+    have h3 : Tendsto (fun n : ℕ => a 0 / (n : ℝ)) atTop (𝓝 0) :=
+      tendsto_const_div_atTop_nhds_zero_nat (a 0)
+    have hcomb : Tendsto
+        (fun n : ℕ => (((n : ℝ) + 1) / (n : ℝ)) * A.partialDensity Set.univ (n + 1) -
+          a 0 / (n : ℝ)) atTop (𝓝 d) := by
+      simpa using (h1.mul h2).sub h3
+    refine hcomb.congr' (eventually_atTop.mpr ⟨1, fun n hn => ?_⟩)
+    rw [hpart n]
+    have hn' : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
+    have hn1 : (n : ℝ) + 1 ≠ 0 := by positivity
+    field_simp
+    ring
+  have hIcc_succ : ∀ r : ℕ, Finset.Icc 1 (r + 1) = insert (r + 1) (Finset.Icc 1 r) := by
+    intro r; ext k; simp only [Finset.mem_Icc, Finset.mem_insert]; omega
+  have hnotmem : ∀ r : ℕ, r + 1 ∉ Finset.Icc 1 r := by
+    intro r; simp
+  have habel : ∀ m : ℕ,
+      ∑ k ∈ Finset.Icc 1 (m + 1), a k / (k : ℝ) =
+        S (m + 1) / ((m + 1 : ℕ) : ℝ) +
+          ∑ k ∈ Finset.Icc 1 m, (S k / (k : ℝ)) / ((k : ℝ) + 1) := by
+    intro m
+    induction m with
+    | zero =>
+      simp [S]
+    | succ m ih =>
+      have hS_succ : S (m + 2) = S (m + 1) + a (m + 2) := by
+        dsimp only [S]
+        rw [hIcc_succ (m + 1), Finset.sum_insert (hnotmem (m + 1)), add_comm]
+      rw [hIcc_succ (m + 1), Finset.sum_insert (hnotmem (m + 1)), add_comm, ih,
+        hIcc_succ m, Finset.sum_insert (hnotmem m), hS_succ]
+      push_cast
+      have hm1 : (m : ℝ) + 1 ≠ 0 := by positivity
+      have hm2 : (m : ℝ) + 2 ≠ 0 := by positivity
+      have hm11 : (m : ℝ) + 1 + 1 ≠ 0 := by positivity
+      field_simp
+      ring
+  have hH_upper : ∀ m : ℕ,
+      ∑ k ∈ Finset.Icc 1 m, (1 : ℝ) / ((k : ℝ) + 1) ≤ Real.log ((m + 1 : ℕ) : ℝ) := by
+    intro m
+    induction m with
+    | zero => simp
+    | succ m ih =>
+      rw [hIcc_succ m, Finset.sum_insert (hnotmem m)]
+      have hstep : (1 : ℝ) / (((m + 1 : ℕ) : ℝ) + 1) ≤
+          Real.log ((m + 2 : ℕ) : ℝ) - Real.log ((m + 1 : ℕ) : ℝ) := by
+        have hpos : (0 : ℝ) < ((m + 1 : ℕ) : ℝ) / ((m + 2 : ℕ) : ℝ) := by positivity
+        have hlog := Real.log_le_sub_one_of_pos hpos
+        rw [Real.log_div (by positivity) (by positivity)] at hlog
+        have halg : ((m + 1 : ℕ) : ℝ) / ((m + 2 : ℕ) : ℝ) - 1 =
+            -((1 : ℝ) / (((m + 1 : ℕ) : ℝ) + 1)) := by
+          push_cast
+          field_simp
+          ring
+        linarith
+      linarith
+  have hH_lower : ∀ m : ℕ,
+      Real.log ((m + 2 : ℕ) : ℝ) - Real.log 2 ≤
+        ∑ k ∈ Finset.Icc 1 m, (1 : ℝ) / ((k : ℝ) + 1) := by
+    intro m
+    induction m with
+    | zero => simp
+    | succ m ih =>
+      rw [hIcc_succ m, Finset.sum_insert (hnotmem m)]
+      have hstep : Real.log ((m + 3 : ℕ) : ℝ) - Real.log ((m + 2 : ℕ) : ℝ) ≤
+          (1 : ℝ) / (((m + 1 : ℕ) : ℝ) + 1) := by
+        have hpos : (0 : ℝ) < ((m + 3 : ℕ) : ℝ) / ((m + 2 : ℕ) : ℝ) := by positivity
+        have hlog := Real.log_le_sub_one_of_pos hpos
+        rw [Real.log_div (by positivity) (by positivity)] at hlog
+        have halg : ((m + 3 : ℕ) : ℝ) / ((m + 2 : ℕ) : ℝ) - 1 =
+            (1 : ℝ) / (((m + 1 : ℕ) : ℝ) + 1) := by
+          push_cast
+          field_simp
+          ring
+        linarith
+      linarith
+  have hB_le : ∀ n ≥ 1, B n ≤ Real.log (n : ℝ) := by
+    intro n hn
+    have hm : n - 1 + 1 = n := Nat.sub_add_cancel hn
+    simpa [B, hm] using hH_upper (n - 1)
+  have hB_err : ∀ n ≥ 1, |B n - Real.log (n : ℝ)| ≤ Real.log 2 := by
+    intro n hn
+    have hm2 : n - 1 + 2 = n + 1 := by omega
+    have hlow1 : Real.log ((n + 1 : ℕ) : ℝ) - Real.log 2 ≤ B n := by
+      simpa [B, hm2] using hH_lower (n - 1)
+    have hlog_mono : Real.log (n : ℝ) ≤ Real.log ((n + 1 : ℕ) : ℝ) :=
+      Real.log_le_log (Nat.cast_pos.mpr (by omega)) (by exact_mod_cast Nat.le_succ n)
+    have hup : B n ≤ Real.log (n : ℝ) := hB_le n hn
+    have hlog2 : 0 ≤ Real.log 2 := Real.log_nonneg (by norm_num)
+    exact abs_le.mpr ⟨by linarith, by linarith⟩
+  rw [Metric.tendsto_atTop]
+  intro ε hε
+  obtain ⟨N₀, hN₀⟩ := Metric.tendsto_atTop.mp hS_tendsto (ε / 2) (half_pos hε)
+  let N : ℕ := max N₀ 1
+  have hN1 : 1 ≤ N := le_max_right N₀ 1
+  have hN : ∀ k ≥ N, |S k / (k : ℝ) - d| < ε / 2 := fun k hk => by
+    simpa [Real.dist_eq] using hN₀ k (le_trans (le_max_left N₀ 1) hk)
+  let C : ℝ :=
+    1 + |∑ k ∈ Finset.Icc 1 (N - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1)| + |d| * Real.log 2
+  let R : ℝ := max 1 (2 * C / ε)
+  obtain ⟨M, hM⟩ := exists_nat_gt (Real.exp R)
+  refine ⟨max (N + 1) M, fun n hn => ?_⟩
+  rw [Real.dist_eq, hsum_eq n]
+  have hnN : N + 1 ≤ n := le_trans (le_max_left _ _) hn
+  have hnM : M ≤ n := le_trans (le_max_right _ _) hn
+  have hR_lt : R < Real.log (n : ℝ) := by
+    calc R = Real.log (Real.exp R) := (Real.log_exp R).symm
+      _ < Real.log (n : ℝ) :=
+        Real.log_lt_log (Real.exp_pos R) (hM.trans_le (Nat.cast_le.mpr hnM))
+  have hlog_pos : 0 < Real.log (n : ℝ) := by
+    linarith [le_max_left 1 (2 * C / ε)]
+  have hdiff :
+      (∑ k ∈ Finset.Icc 1 n, a k / (k : ℝ)) / Real.log n - d =
+        (S n / (n : ℝ) +
+          ∑ k ∈ Finset.Icc 1 (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1) +
+          d * (B n - Real.log n)) / Real.log n := by
+    have hm : n - 1 + 1 = n := Nat.sub_add_cancel (by omega)
+    have hab := habel (n - 1)
+    rw [hm] at hab
+    rw [hab]
+    have hsum_sub :
+        ∑ k ∈ Finset.Icc 1 (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1) =
+          (∑ k ∈ Finset.Icc 1 (n - 1), (S k / (k : ℝ)) / ((k : ℝ) + 1)) - d * B n := by
+      simp_rw [sub_div, Finset.sum_sub_distrib, B, Finset.mul_sum]
+      congr 1
+      refine Finset.sum_congr rfl fun k _ => ?_
+      ring
+    rw [hsum_sub]
+    have hlog_ne : Real.log n ≠ 0 := hlog_pos.ne'
+    field_simp
+    ring
+  rw [hdiff, abs_div, abs_of_pos hlog_pos]
+  have hsplit : Finset.Icc 1 (n - 1) = Finset.Icc 1 (N - 1) ∪ Finset.Icc N (n - 1) := by
+    ext k; simp only [Finset.mem_Icc, Finset.mem_union]; omega
+  have hdisj : Disjoint (Finset.Icc 1 (N - 1)) (Finset.Icc N (n - 1)) := by
+    rw [Finset.disjoint_left]
+    intro k hk1 hk2
+    simp only [Finset.mem_Icc] at hk1 hk2
+    omega
+  have htail :
+      |∑ k ∈ Finset.Icc N (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1)| ≤
+        (ε / 2) * Real.log n := by
+    calc |∑ k ∈ Finset.Icc N (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1)|
+        ≤ ∑ k ∈ Finset.Icc N (n - 1), |(S k / (k : ℝ) - d) / ((k : ℝ) + 1)| :=
+          Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ k ∈ Finset.Icc N (n - 1), (ε / 2) * ((1 : ℝ) / ((k : ℝ) + 1)) := by
+          refine Finset.sum_le_sum fun k hk => ?_
+          have hkN : N ≤ k := (Finset.mem_Icc.mp hk).1
+          have hpos : (0 : ℝ) < (k : ℝ) + 1 := by positivity
+          rw [abs_div, abs_of_pos hpos, mul_one_div]
+          exact div_le_div_of_nonneg_right (hN k hkN).le hpos.le
+      _ = (ε / 2) * ∑ k ∈ Finset.Icc N (n - 1), (1 : ℝ) / ((k : ℝ) + 1) := by
+          rw [← Finset.mul_sum]
+      _ ≤ (ε / 2) * B n := by
+          refine mul_le_mul_of_nonneg_left ?_ (by linarith)
+          refine Finset.sum_le_sum_of_subset_of_nonneg ?_ (fun k _ _ => by positivity)
+          intro k hk
+          simp only [Finset.mem_Icc] at hk ⊢
+          omega
+      _ ≤ (ε / 2) * Real.log n :=
+          mul_le_mul_of_nonneg_left (hB_le n (by omega)) (by linarith)
+  have hnum :
+      |S n / (n : ℝ) +
+          ∑ k ∈ Finset.Icc 1 (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1) +
+          d * (B n - Real.log n)| ≤
+        C + (ε / 2) * Real.log n := by
+    rw [hsplit, Finset.sum_union hdisj]
+    have h1 := abs_add_le
+      (S n / (n : ℝ) +
+        (∑ k ∈ Finset.Icc 1 (N - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1) +
+          ∑ k ∈ Finset.Icc N (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1)))
+      (d * (B n - Real.log n))
+    have h2 := abs_add_le
+      (S n / (n : ℝ))
+      (∑ k ∈ Finset.Icc 1 (N - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1) +
+        ∑ k ∈ Finset.Icc N (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1))
+    have h3 := abs_add_le
+      (∑ k ∈ Finset.Icc 1 (N - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1))
+      (∑ k ∈ Finset.Icc N (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1))
+    have hS1 : |S n / (n : ℝ)| ≤ 1 := hS_bound n (by omega)
+    have hd_err : |d * (B n - Real.log n)| ≤ |d| * Real.log 2 := by
+      rw [abs_mul]
+      exact mul_le_mul_of_nonneg_left (hB_err n (by omega)) (abs_nonneg d)
+    dsimp only [C]
+    linarith
+  have hC_div : C / Real.log n < ε / 2 := by
+    rw [div_lt_div_iff₀ hlog_pos (by norm_num : (0 : ℝ) < 2)]
+    have h2C : 2 * C / ε < Real.log n := (le_max_right 1 (2 * C / ε)).trans_lt hR_lt
+    rw [div_lt_iff₀ hε] at h2C
+    linarith
+  calc |S n / (n : ℝ) +
+        ∑ k ∈ Finset.Icc 1 (n - 1), (S k / (k : ℝ) - d) / ((k : ℝ) + 1) +
+        d * (B n - Real.log n)| / Real.log n
+      ≤ (C + (ε / 2) * Real.log n) / Real.log n :=
+        div_le_div_of_nonneg_right hnum hlog_pos.le
+    _ = C / Real.log n + ε / 2 := by
+        rw [add_div, mul_div_cancel_right₀ _ hlog_pos.ne']
+    _ < ε := by linarith
 
 end LogarithmicDensity
