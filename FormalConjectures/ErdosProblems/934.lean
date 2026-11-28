@@ -91,13 +91,15 @@ expression, as in that remark: `h t d = erdos_934.answer t d` for all `1 ≤ t` 
 theorem erdos_934 : ∀ t d : ℕ, 1 ≤ t → h t d = erdos_934.answer t d := by
   sorry
 
+set_option linter.style.formal_proof_palomar false in
 /--
 It is easy to see that $h_t(d)\leq 2d^t$ always and $h_1(d)=d+1$.
 
 The site (and [CCJK22, p. 1]) states $h_1(d)=d+1$ without restriction; it fails for $d=2$ (the
 triangle has three pairwise intersecting edges, so $h_1(2)=4$), hence we assume $d\neq 2$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://github.com/laughingbear/erdos-934-lean/blob/66a920843124b2aff35330e1fd219f007e467e8e/Erdos934.lean#L214"]
 theorem erdos_934.variants.h_one : ∀ d : ℕ, d ≠ 2 → h 1 d = d + 1 := by
   sorry
 
