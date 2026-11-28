@@ -48,7 +48,9 @@ $n_i \geq 2$ covering $\mathbb{Z}$; the trivial exact covering system consisting
 class $0 \pmod 1$ is therefore excluded.
 -/
 @[category research solved, AMS 11, formal_proof using lean4 at
-  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos947.lean#L277"]
+  "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos947.lean#L277",
+  formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000024"]
 theorem erdos_947 : ¬ ∃ c : StrictCoveringSystem ℤ, Pairwise (Disjoint on c.coset) := by
   sorry
 
