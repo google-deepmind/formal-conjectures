@@ -24,6 +24,8 @@ relaxedAutoImplicit = false
 weak.linter.style.copyright.formalConjectures = true
 weak.linter.style.namespace = true
 weak.linter.style.stubs = true
+# Forbid definitions built from proofs that are still `sorry`
+weak.linter.style.sorryProof = true
 # Don't open Classical globally
 weak.linter.style.openClassical = true
 

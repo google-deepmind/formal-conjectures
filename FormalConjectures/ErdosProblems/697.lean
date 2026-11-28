@@ -41,8 +41,19 @@ theorem density_exists (m : ℕ) (α : ℝ) : ∃ δ, HasDensity
   sorry
 
 /-- For each $m$ and $\alpha$, $\delta (m, \alpha)$ is the density of the set of integers which are
-divisible by some $d \equiv 1 \pmod{m}$ with $1 < d < exp (m ^ \alpha)$ exists. -/
-noncomputable def δ (m : ℕ) (α : ℝ) : ℝ := (density_exists m α).choose
+divisible by some $d \equiv 1 \pmod{m}$ with $1 < d < exp (m ^ \alpha)$.
+
+The density exists by `density_exists`. It is chosen with `Classical.epsilon` rather than from
+the proof of `density_exists`, so that statements about `δ` do not depend on that proof. -/
+noncomputable def δ (m : ℕ) (α : ℝ) : ℝ :=
+  Classical.epsilon fun δ ↦ HasDensity
+    {n : ℕ | ∃ d, d ≡ 1 [MOD m] ∧ (d : ℝ) ∈ Set.Ioo 1 (exp (m ^ α)) ∧ d ∣ n} δ
+
+/-- `δ m α` is the density of the set in `density_exists`. -/
+@[category API, AMS 11]
+theorem hasDensity_δ (m : ℕ) (α : ℝ) : HasDensity
+    {n : ℕ | ∃ d, d ≡ 1 [MOD m] ∧ (d : ℝ) ∈ Set.Ioo 1 (exp (m ^ α)) ∧ d ∣ n} (δ m α) :=
+  Classical.epsilon_spec (density_exists m α)
 
 /-- $\delta < \frac{m ^ \alpha + 1}{m}$. This shows that
 $lim_{m\rightarrow\infty} \delta (m, \alpha) = 0$ for $\alpha < 1$.
