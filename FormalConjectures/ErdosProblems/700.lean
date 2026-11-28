@@ -29,6 +29,12 @@ A problem of Erdős and Szekeres [ErSz78].
    Austral. Math. Soc. Gaz. (1978), 97-99.
  * [OEIS A091963](https://oeis.org/A091963)
  * Guy, R. K., _Unsolved Problems in Number Theory_, B31, B33.
+ * [Pr26] GPT 5.6 Sol Pro, prompted by Price, L., _Large Binomial GCDs_ (2026).
+   [Manuscript](https://www.overleaf.com/read/pmnwkfnhhxhn#82956e), listed among the
+   [proof claims](https://www.erdosproblems.com/forum/thread/700/proof-claims) for this problem.
+ * [Tr26] Tresmontant, A., _Independent proof of part (b) of Problem 700_ (2026).
+   [Submission](https://erdosproblemaday.com/submission/yzwb6a) to Erdős Problem a Day, with its
+   [review](https://erdosproblemaday.com/day/700-tresmontant-elementary-proof-of-b-checked).
 -/
 
 @[expose] public section
@@ -116,8 +122,14 @@ theorem prime_power_divisor_separation : f 12 = 3 ∧ 12 / P 12 = 4 ∧ 12 / Q 1
 
 Erdős–Szekeres [ErSz78] could not prove this. (Since $f(n) \ge p(n)$, the least prime factor of
 $n$, there are infinitely many $n$ — those of the form $p^2$ — with $f(n) \ge n^{1/2}$; the
-question asks for the strict inequality.) Here $f(n) > n^{1/2}$ is written as `(f n) ^ 2 > n`. -/
-@[category research open, question, AMS 11]
+question asks for the strict inequality.) Here $f(n) > n^{1/2}$ is written as `(f n) ^ 2 > n`.
+
+The answer is yes. A proof by GPT 5.6 Sol Pro, prompted by Price [Pr26], gives infinitely many
+products $n = pqr$ of three primes with $f(n) = pq > n^{1/2}$; erdosproblems.com records it as
+accepted. Tresmontant [Tr26] gives an elementary proof: $f(pqr) > (pqr)^{1/2}$ for all primes
+$p < q < r$ with $q - p < r - q$ and $2(r - p)^2 < p$, and there are infinitely many such
+triples. -/
+@[category research solved, question, AMS 11]
 theorem erdos_700.parts.ii :
     {n : ℕ | ¬ n.Prime ∧ 1 < n ∧ (f n) ^ 2 > n}.Infinite := by
   sorry
