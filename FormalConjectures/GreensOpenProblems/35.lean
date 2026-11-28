@@ -44,6 +44,11 @@ supported on `[0,1]`, and has total integral `1`.
   at scale*, arXiv:2511.02864 (2025), Section 6.2.
 - [YD26](https://arxiv.org/abs/2601.16175)
   M. Yuksekgonul et al., *Learning to Discover at Test Time*, arXiv:2601.16175 (2026).
+- [MO07](https://arxiv.org/abs/math/0410004)
+  G. Martin and K. O'Bryant, *The symmetric subset problem in continuous Ramsey theory*,
+  Experiment. Math. 16 (2007), no. 2, 145-165.
+- [Wh22](https://arxiv.org/abs/2210.16437)
+  E. P. White, *An almost-tight $L^2$ autoconvolution inequality*, arXiv:2210.16437 (2022).
 
 The constants of [CS17], [MV10], [AE25], [GGTW25] and [YD26] are stated for functions supported on
 $[-1/4, 1/4]$; rescaling to $[0, 1]$ halves them.
@@ -64,11 +69,18 @@ def IsUnitIntervalDensity (f : ℝ → ℝ) : Prop :=
 noncomputable def c (p : ℝ≥0∞) : ℝ≥0∞ :=
   sInf { r | ∃ f, IsUnitIntervalDensity f ∧ r = eLpNorm (f ⋆ f) p }
 
-def green_35.lower.answer : ℝ≥0∞ → ℝ≥0∞ := sorry
+noncomputable def green_35.lower.answer : ℝ≥0∞ → ℝ≥0∞ :=
+  fun p ↦ if p = 2 then 0.758 else 0
 
 /-- Lower bound for $c(p)$ for $1 < p \le \infty$, improving the known value $\sqrt{4/7}$ at
-$p = 2$ or the known value $0.64$ at $p = \infty$. -/
-@[category research open, question value, AMS 26 28 42]
+$p = 2$ or the known value $0.64$ at $p = \infty$.
+
+Martin and O'Bryant [MO07, Corollary 2.8] prove $\|f \ast f\|_2^2 \ge 1.14915$ for densities
+supported on $[-1/4, 1/4]$, which rescales to $\|f \ast f\|_2^2 \ge 0.574575$ on $[0, 1]$. So
+$c(2) \ge 0.758 > \sqrt{4/7}$. White [Wh22, Theorem 1] improves this to
+$c(2)^2 \ge 0.574635728$.
+The answer is informative only at $p = 2$ and is `0` otherwise. -/
+@[category research solved, question value, AMS 26 28 42]
 theorem green_35.lower :
     (∀ p, 1 < p → green_35.lower.answer p ≤ c p) ∧
       (ENNReal.ofReal (Real.sqrt (4 / 7)) < green_35.lower.answer 2 ∨
