@@ -165,10 +165,16 @@ theorem ABφθSpec.existsUnique : ∃! ABφθ : ℝ × ℝ × ℝ × ℝ,
     ABφθSpec ABφθ.1 ABφθ.2.1 ABφθ.2.2.1 ABφθ.2.2.2 :=
   sorry
 
-def A : ℝ := ABφθSpec.existsUnique.choose.1
-def B : ℝ := ABφθSpec.existsUnique.choose.2.1
-def φ : ℝ := ABφθSpec.existsUnique.choose.2.2.1
-def θ : ℝ := ABφθSpec.existsUnique.choose.2.2.2
+/-- The unique solution of `ABφθSpec` (it exists by `ABφθSpec.existsUnique`). It is chosen with
+`Classical.epsilon` rather than from that proof, so that statements about Gerver's sofa do not
+depend on it. -/
+def ABφθ : ℝ × ℝ × ℝ × ℝ :=
+  Classical.epsilon fun ABφθ : ℝ × ℝ × ℝ × ℝ ↦ ABφθSpec ABφθ.1 ABφθ.2.1 ABφθ.2.2.1 ABφθ.2.2.2
+
+def A : ℝ := ABφθ.1
+def B : ℝ := ABφθ.2.1
+def φ : ℝ := ABφθ.2.2.1
+def θ : ℝ := ABφθ.2.2.2
 
 def r (α : ℝ) : ℝ :=
   if α ≤ φ then
