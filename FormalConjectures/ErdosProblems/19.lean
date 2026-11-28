@@ -30,7 +30,11 @@ edge-disjoint exactly when their vertex sets share at most one vertex.
 *References:*
 * [erdosproblems.com/19](https://www.erdosproblems.com/19)
 * [Hi81] Hindman, N., *On a conjecture of Erdős, Faber, and Lovász about $n$-colorings*.
-  Canad. J. Math. (1981).
+  Canad. J. Math. 33 (1981), 563–570.
+* [KPS23] Kirchweger, M., Peitl, T. and Szeider, S., *A SAT solver's opinion on the
+  Erdős-Faber-Lovász conjecture*. SAT 2023, LIPIcs 271 (2023), 13:1–13:17.
+* [RoAl14] Romero, D. and Alonso-Pecina, F., *The Erdős–Faber–Lovász conjecture is true for
+  $n \le 12$*. Discrete Math. Algorithms Appl. 6 (2014), 1450039.
 * [Ka92] Kahn, J., *Coloring nearly-disjoint hypergraphs with $n + o(n)$ colors*.
   J. Combin. Theory Ser. A (1992).
 * [KKKMO21] Kang, D. Y., Kelly, T., Kühn, D., Methuku, A. and Osthus, D., *A proof of the
@@ -229,6 +233,17 @@ Hindman [Hi81] proved the Erdős–Faber–Lovász conjecture for $n < 10$.
 @[category research solved, AMS 5]
 theorem erdos_19.variants.lt_ten :
     ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), n < 10 → C.graph.chromaticNumber = n := by
+  sorry
+
+/--
+Hindman's verification [Hi81, p. 569] covers every configuration in which the vertices lying in at
+least three of the copies of $K_n$ together meet at most ten of the copies, and so in particular
+every $n \le 10$ (see also [KPS23, Theorem 5]). Romero and Alonso-Pecina [RoAl14] extended the
+verification to $n \le 12$, and [KPS23] re-verified it with a SAT solver.
+-/
+@[category research solved, AMS 5]
+theorem erdos_19.variants.le_ten :
+    ∀ (V : Type) (n : ℕ) (C : EFLConfig V n), n ≤ 10 → C.graph.chromaticNumber = n := by
   sorry
 
 /--
