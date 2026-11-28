@@ -56,11 +56,29 @@ noncomputable def C6a : ℝ :=
 theorem c6a_eq_half : C6a = 1 / 2 := by
   sorry
 
-/-- The upper bound $C_{6a} \le 1/2$ [F1995]. It holds because in the family of all subsets of a
-finite set, every element belongs to exactly half of the sets. -/
+/-- The upper bound $C_{6a} \le 1/2$ [F1995]. In the family $\{\emptyset, \{0\}\}$, each
+element belongs to at most one of the two sets. -/
 @[category research solved, AMS 5]
 theorem c6a_upper_bound : C6a ≤ 1 / 2 := by
-  sorry
+  unfold C6a
+  refine csSup_le ⟨0, ?_⟩ ?_
+  · intro A _ _
+    exact ⟨0, by simp⟩
+  · intro c hc
+    let A : Finset (Finset ℕ) := {∅, {0}}
+    have hA : A ≠ {∅} := by decide
+    have hUnion : ∀ᵉ (X ∈ A) (Y ∈ A), X ∪ Y ∈ A := by
+      intro X hX Y hY
+      simp only [A, mem_insert, mem_singleton] at hX hY
+      rcases hX with rfl | rfl <;> rcases hY with rfl | rfl <;> simp [A]
+    obtain ⟨i, hi⟩ := hc A hA hUnion
+    have hCard : #A = 2 := by decide
+    have hCount : #{x ∈ A | i ∈ x} ≤ 1 := by
+      by_cases hi0 : i = 0 <;> simp [A, filter_insert, filter_singleton, hi0]
+    rw [hCard] at hi
+    have hCount' : (#{x ∈ A | i ∈ x} : ℝ) ≤ 1 := by exact_mod_cast hCount
+    apply (le_div_iff₀ (by norm_num : (0 : ℝ) < 2)).2
+    exact hi.trans hCount'
 
 /-- Can the best known upper bound $1/2$ be improved? -/
 @[category research open, question, AMS 5]
