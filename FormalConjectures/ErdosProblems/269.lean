@@ -52,16 +52,22 @@ The sum $\sum_{n=1}^\infty \frac{1}{[a_0,\ldots,a_{n - 1}]}$.
 -/
 noncomputable def series (P : Set ℕ) : ℝ :=  ∑' n, (1 : ℝ) / (partialLcm P n)
 
+set_option linter.style.formal_proof_palomar false in
 /--
 Let $P$ be a finite set of primes with $|P| \ge 2$ and let
 $\{a_1 < a_2 < \dots\}$ be the set of positive integers whose prime factors
 are all in $P$. Is the sum
 $$ \sum_{n=1}^\infty \frac{1}{[a_1,\ldots,a_n]} $$
 rational?
+
+The answer is no: for $P = \{2, 3\}$ the sum is irrational. Steve Fan (erdosproblems.com forum,
+problem 269) proved it transcendental; the linked formal disproof uses his factorisation of the
+series and an elementary Diophantine approximation argument.
 -/
-@[category research open, question, AMS 11]
+@[category research solved, question, AMS 11, formal_proof using lean4 at
+  "https://github.com/GuillaumeBAUD-coder/open-math-agents/blob/f4f5b06e4fb237797ebfc55c52e8dd64e40471da/proofs/Erdos269.erdos_269.variants.rational.lean#L1113"]
 theorem erdos_269.variants.rational :
-    ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
+    ¬ ∀ᵉ (P : Finset ℕ) (h : ∀ p ∈ P, p.Prime) (h_card : P.card ≥ 2),
     ∃ (q : ℚ), q = (series (P : Set ℕ)) := by
   sorry
 
