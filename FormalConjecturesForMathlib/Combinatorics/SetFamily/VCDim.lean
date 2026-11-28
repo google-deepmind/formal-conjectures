@@ -83,4 +83,56 @@ lemma HasVCDimAtMost.mono (h : d ≤ d') (hd : HasVCDimAtMost 𝒜 d) : HasVCDim
 
 @[simp] lemma HasVCDimAtMost.empty : HasVCDimAtMost (∅ : Set (Set α)) d := by simp [HasVCDimAtMost]
 
-proof_wanted hasVCDimAtMost_iff_shatters : HasVCDimAtMost 𝒜 d ↔ ∀ A, Shatters 𝒜 A → A.encard ≤ d
+lemma hasVCDimAtMost_iff_shatters :
+    HasVCDimAtMost 𝒜 d ↔ ∀ A, Shatters 𝒜 A → A.encard ≤ d := by
+  constructor
+  · intro h A hA
+    by_contra hlt
+    rw [not_le] at hlt
+    have hsub : ∃ F : Finset α, (F : Set α) ⊆ A ∧ F.card = d + 1 := by
+      by_cases hfin : A.Finite
+      · have hcard : d + 1 ≤ hfin.toFinset.card := by
+          rw [hfin.encard_eq_coe_toFinset_card] at hlt
+          exact Order.add_one_le_of_lt (Nat.cast_lt.mp hlt)
+        obtain ⟨F, hFA, hFcard⟩ := Finset.exists_subset_card_eq hcard
+        exact ⟨F, fun x hx => (hfin.mem_toFinset.mp (hFA hx)), hFcard⟩
+      · exact Set.Infinite.exists_subset_card_eq hfin (d + 1)
+    obtain ⟨F, hFA, hFcard⟩ := hsub
+    let e : Fin (d + 1) ≃ F := (F.equivFinOfCardEq hFcard).symm
+    let x : Fin (d + 1) → α := fun i => (e i).1
+    have hx_inj : Function.Injective x := Subtype.val_injective.comp e.injective
+    have hxA : ∀ i, x i ∈ A := fun i => hFA (e i).2
+    have hC : ∀ s : Set (Fin (d + 1)), ∃ C ∈ 𝒜, A ∩ C = x '' s := fun s =>
+      hA (Set.image_subset_iff.mpr fun i _ => hxA i)
+    choose C hC_mem hAC using hC
+    refine h x C hC_mem fun i s => ?_
+    constructor
+    · intro hi
+      have hmem : x i ∈ x '' s := by rw [← hAC s]; exact ⟨hxA i, hi⟩
+      exact hx_inj.mem_set_image.mp hmem
+    · intro hi
+      have hmem : x i ∈ A ∩ C s := by rw [hAC s]; exact ⟨i, hi, rfl⟩
+      exact hmem.2
+  · intro h x C hC hxC
+    have hx_inj : Function.Injective x := by
+      intro i j hij
+      have h1 : x i ∈ C {i} := (hxC i {i}).mpr rfl
+      rw [hij] at h1
+      exact ((hxC j {i}).mp h1).symm
+    have hshat : Shatters 𝒜 (Set.range x) := by
+      intro B hB
+      refine ⟨C (x ⁻¹' B), hC _, ?_⟩
+      ext y
+      simp only [Set.mem_inter_iff, Set.mem_range]
+      constructor
+      · rintro ⟨⟨i, rfl⟩, hy⟩
+        exact (hxC i (x ⁻¹' B)).mp hy
+      · intro hy
+        obtain ⟨i, rfl⟩ := hB hy
+        exact ⟨⟨i, rfl⟩, (hxC i (x ⁻¹' B)).mpr hy⟩
+    have hle := h (Set.range x) hshat
+    have hcard : (Set.range x).encard = (d + 1 : ℕ) := by
+      rw [← Set.image_univ, hx_inj.encard_image, Set.encard_univ, ENat.card_eq_coe_fintype_card,
+        Fintype.card_fin]
+    rw [hcard] at hle
+    exact Nat.not_succ_le_self d (Nat.cast_le.mp hle)
