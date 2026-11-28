@@ -45,10 +45,12 @@ theorem erdos_695 :
   sorry
 
 /--
-Is there a sequence of primes $q_1 < q_2 < \cdots$ such that $q_{i + 1} \equiv 1 \pmod{q_i}$ and
+Is there a sequence of primes $q_1 < q_2 < \cdots$ satisfying $q_{i + 1} \equiv 1 \pmod{q_i}$ for
+every $i$ and
 $$
-q(k) \leq \exp(k (\log k)^{1 + o(1)})?
+q_k \leq \exp(k (\log k)^{1 + o(1)})
 $$
+for all sufficiently large $k$?
 -/
 @[category research open, question, AMS 11]
 theorem erdos_695.variants.upperBound :
@@ -59,7 +61,7 @@ theorem erdos_695.variants.upperBound :
       ∃ o : ℕ → ℝ,
         (o =o[atTop] (1 : ℕ → ℝ)) ∧
         -- We use `(k + 1)` here as the informal statement is 1-indexed.
-        ∀ k, q k ≤ exp ((k + 1) * log (k + 1) ^ (1 + o k)) := by
+        ∀ᶠ k in atTop, q k ≤ exp ((k + 1) * log (k + 1) ^ (1 + o k)) := by
   sorry
 
 end Erdos695
