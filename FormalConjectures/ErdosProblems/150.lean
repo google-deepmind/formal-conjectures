@@ -23,15 +23,15 @@ public import FormalConjecturesUtil
 *References:*
 - [erdosproblems.com/150](https://www.erdosproblems.com/150)
 - [Br24] Bradač, D., *On a question of Erdős and Nešetřil about minimal cuts in a graph*.
-  arXiv:2409.02974 (2024).
+  [arXiv:2409.02974](https://arxiv.org/abs/2409.02974) (2024).
 - [Er88] Erdős, P., *Problems and results in combinatorial analysis and graph theory*.
-  Discrete Math. (1988), 81-92.
+  [Discrete Math. (1988), 81-92](https://webmail.math-inst.hu/~p_erdos/1988-27.pdf).
 - [FKTV08] Fomin, Fedor V. and Kratsch, Dieter and Todinca, Ioan and Villanger, Yngve, *Exact
   algorithms for treewidth and minimum fill-in*. SIAM J. Comput. (2008), 1058-1079.
 - [FoVi12] Fomin, Fedor V. and Villanger, Yngve, *Treewidth computation and extremal
   combinatorics*. Combinatorica (2012), 289-308.
 - [GaMa18] Gaspers, Serge and Mackenzie, Simon, *On the number of minimal separators in graphs*.
-  J. Graph Theory (2018), 653-659.
+  [J. Graph Theory (2018), 653-659](https://doi.org/10.1002/jgt.22179).
 -/
 
 @[expose] public section
@@ -75,16 +75,45 @@ theorem erdos_150 :
       Tendsto (fun n : ℕ ↦ (maxMinimalCuts n : ℝ) ^ (1 / n : ℝ)) atTop (𝓝 α) := by
   sorry
 
-/--
-Asked by Erdős and Nešetřil, who also ask whether $c(3m+2)=3^m$.
+/-- The five pairs of nonadjacent vertices of the five-cycle are minimal cuts. -/
+@[category API, AMS 5]
+theorem five_le_maxMinimalCuts : 5 ≤ maxMinimalCuts 5 := by
+  let G := SimpleGraph.cycleGraph 5
+  let F : Finset (Finset (Fin 5)) := {{0, 2}, {0, 3}, {1, 3}, {1, 4}, {2, 4}}
+  have hcuts : ∀ T ∈ F, ¬ (G.induce (↑(Tᶜ) : Set (Fin 5))).Preconnected ∧
+      ∀ S ∈ T.ssubsets, (G.induce (↑(Sᶜ) : Set (Fin 5))).Preconnected := by decide +kernel
+  have hsub : (fun T : Finset (Fin 5) ↦ (T : Set (Fin 5))) '' (F : Set _) ⊆
+      {T | IsMinimalCut G T} := by
+    rintro _ ⟨T, hT, rfl⟩
+    obtain ⟨hdisc, hmin⟩ := hcuts T hT
+    refine ⟨?_, fun S hS ↦ ?_⟩
+    · rw [← Finset.coe_compl]
+      exact hdisc
+    · classical
+      obtain ⟨S', rfl⟩ : ∃ S' : Finset (Fin 5), (S' : Set _) = S := ⟨S.toFinset, by simp⟩
+      rw [← Finset.coe_compl]
+      exact hmin S' (Finset.mem_ssubsets.mpr (by exact_mod_cast hS))
+  have hF : F.card = 5 := by decide
+  calc
+    5 = ((fun T : Finset (Fin 5) ↦ (T : Set (Fin 5))) '' (F : Set _)).ncard := by
+      rw [Set.ncard_image_of_injective _ Finset.coe_injective, Set.ncard_coe_finset, hF]
+    _ ≤ {T | IsMinimalCut G T}.ncard := Set.ncard_le_ncard hsub
+    _ ≤ maxMinimalCuts 5 := by
+      unfold maxMinimalCuts
+      refine le_csSup ?_ ⟨G, rfl⟩
+      refine ⟨Nat.card (Set (Fin 5)), ?_⟩
+      rintro _ ⟨H, rfl⟩
+      exact Set.ncard_le_card _
 
-Note that the lower bound $1.4457\leq \alpha$ of Gaspers and Mackenzie [GaMa18] provides a
-negative answer to the above question of Erdős and Nešetřil.
--/
+/-- Erdős and Nešetřil asked whether $c(3m+2)=3^m$. The five-cycle gives $c(5) \ge 5 > 3$,
+so equality fails at $m=1$. -/
 @[category research solved, question, AMS 5]
 theorem erdos_150.variants.erdos_nesetril :
     ¬ ∀ m : ℕ, maxMinimalCuts (3 * m + 2) = 3 ^ m := by
-  sorry
+  intro h
+  have heq : maxMinimalCuts 5 = 3 := h 1
+  have hcut := five_le_maxMinimalCuts
+  omega
 
 /--
 Seymour observed that $c(3m+2)\geq 3^m$, as seen by the graph of $m$ independent paths of length
@@ -104,6 +133,28 @@ theorem erdos_150.variants.lower_bound (α : ℝ)
     (hα : Tendsto (fun n : ℕ ↦ (maxMinimalCuts n : ℝ) ^ (1 / n : ℝ)) atTop (𝓝 α)) :
     1.4457 ≤ α := by
   sorry
+
+/-- Seymour's lower bound is strict for every sufficiently large $m$. Bradač [Br24, p. 1]
+relates the growth rate for minimal cuts to that for minimal separators. The lower bound
+$1.4457$ of Gaspers and Mackenzie [GaMa18] exceeds $\sqrt[3]{3}$. -/
+@[category research solved, AMS 5]
+theorem erdos_150.variants.eventually_gt_seymour :
+    ∀ᶠ m : ℕ in atTop, 3 ^ m < maxMinimalCuts (3 * m + 2) := by
+  obtain ⟨α, -, hα⟩ := erdos_150
+  have hbase : (1.445 : ℝ) < α := lt_of_lt_of_le (by norm_num) (erdos_150.variants.lower_bound α hα)
+  obtain ⟨N, hN⟩ := eventually_atTop.mp (hα.eventually_const_lt hbase)
+  filter_upwards [eventually_ge_atTop N] with m hm
+  have hn : 3 * m + 2 ≠ 0 := by omega
+  have hpow := pow_lt_pow_left₀ (hN (3 * m + 2) (by omega)) (by norm_num) hn
+  rw [one_div, Real.rpow_inv_natCast_pow (Nat.cast_nonneg _) hn] at hpow
+  have hle : (3 : ℝ) ^ m ≤ 1.445 ^ (3 * m + 2) := calc
+    _ ≤ ((1.445 : ℝ) ^ 3) ^ m := by
+      gcongr
+      norm_num
+    _ ≤ _ := by
+      rw [pow_add, pow_mul]
+      exact le_mul_of_one_le_right (by positivity) (by norm_num)
+  exact_mod_cast hle.trans_lt hpow
 
 /--
 The current best-known bounds on $\alpha$ are
