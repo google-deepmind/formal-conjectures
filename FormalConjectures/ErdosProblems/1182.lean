@@ -36,6 +36,8 @@ public import FormalConjecturesUtil
 - [Ch77] Chvátal, V., *Tree-complete graph Ramsey numbers*. J. Graph Theory 1 (1977), 93.
 - [NiRo09] Nikiforov, V. and Rousseau, C. C., *Ramsey goodness and beyond*. Combinatorica 29
   (2009), 227-262.
+- [Su07] Sudakov, B., *Ramsey numbers and the size of graphs*. SIAM J. Discrete Math. 21 (2007),
+  980-986.
 -/
 
 @[expose] public section
@@ -87,7 +89,8 @@ theorem le_F {n q : ℕ} (hq : q ≤ n.choose 2)
   rintro p ⟨hp, -⟩
   exact hp
 
-def erdos_1182.parts.i.answer : ℕ → ℝ := sorry
+noncomputable def erdos_1182.parts.i.answer : ℕ → ℝ :=
+  fun n ↦ (n : ℝ) ^ (3 / 2 : ℝ) * Real.sqrt (Real.log n)
 
 /--
 Let $f(n)$ be maximal such that there is a connected graph $G$ with $n$ vertices and $f(n)$ edges
@@ -102,9 +105,15 @@ This is the first part: estimate $f(n)$. The problem is due to Burr, Erdős, Fau
 Schelp [BEFRS80] and appears in [Er78, p. 33]. We read "estimate" as the order of magnitude
 `=Θ`. Burr, Erdős, Faudree, Rousseau and Schelp [BEFRS80, Theorem 2] proved
 $n^{3/2}(\log n)^{1/2}\ll f(n)\ll n^{5/3}(\log n)^{2/3}$ (`erdos_1182.variants.f_lower`,
-`erdos_1182.variants.f_upper`).
+`erdos_1182.variants.f_upper`), and a theorem of Sudakov [Su07, Theorem 1.1] gives
+$f(n)\ll n^{3/2}\log n$.
+
+The order of magnitude is $n^{3/2}(\log n)^{1/2}$. The upper bound
+$f(n)\ll n^{3/2}(\log n)^{1/2}$ is proved in the linked formalization. We know of no refereed
+proof of it.
 -/
-@[category research open, question value, AMS 5]
+@[category research solved, question value, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-28-000021"]
 theorem erdos_1182.parts.i :
     (fun n : ℕ ↦ (f n : ℝ)) =Θ[atTop] erdos_1182.parts.i.answer := by
   sorry
@@ -126,7 +135,8 @@ $F(n)=\Theta(n)$, by $F(n)\ge n-1$ (`erdos_1182.variants.F_ge_pred`, from Chvát
 `erdos_1182.variants.nikiforov_rousseau`. The finer question of the asymptotic behaviour of
 $F(n)/n$ is open, see `erdos_1182.variants.brandt_expects`.
 -/
-@[category research solved, question value, AMS 5]
+@[category research solved, question value, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-28-000021"]
 theorem erdos_1182.parts.ii :
     (fun n : ℕ ↦ (F n : ℝ)) =Θ[atTop] erdos_1182.parts.ii.answer := by
   sorry
@@ -145,7 +155,8 @@ it seems certain. The answer is no: Brandt [Br96] proved $F(n)\le 84n$ (as recor
 page, see `erdos_1182.variants.brandt`), and [NiRo09, Theorem 5.1] implies $F(n)<50n$ for large
 $n$ (see `erdos_1182.variants.nikiforov_rousseau`).
 -/
-@[category research solved, question, AMS 5]
+@[category research solved, question, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-28-000021"]
 theorem erdos_1182.parts.iii :
     ¬ Tendsto (fun n : ℕ ↦ (F n : ℝ) / n) atTop atTop := by
   sorry
@@ -154,7 +165,8 @@ theorem erdos_1182.parts.iii :
 It is trivial that $R(K_3,G)\geq 2n-1$ for any connected graph $G$ on $n$ vertices
 ([BEFRS80, p. 193]).
 -/
-@[category textbook, AMS 5]
+@[category textbook, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-28-000021"]
 theorem erdos_1182.variants.ramsey_ge {n : ℕ} (G : SimpleGraph (Fin n)) (hG : G.Connected) :
     2 * n - 1 ≤ SimpleGraph.graphRamsey (⊤ : SimpleGraph (Fin 3)) G := by
   sorry
@@ -241,7 +253,8 @@ $A>0$ with
 $$n^{3/2}(\log n)^{1/2} \ll f(n),$$
 more precisely $An^{3/2}(\log n)^{1/2}<f(n)$ for all sufficiently large $n$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-28-000021"]
 theorem erdos_1182.variants.f_lower :
     ∃ A > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       A * (n : ℝ) ^ (3 / 2 : ℝ) * Real.sqrt (Real.log n) < (f n : ℝ) := by
@@ -253,7 +266,8 @@ $B>0$ with
 $$f(n)\ll n^{5/3}(\log n)^{2/3},$$
 more precisely $f(n)<Bn^{5/3}(\log n)^{2/3}$ for all sufficiently large $n$.
 -/
-@[category research solved, AMS 5]
+@[category research solved, AMS 5, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-28-000021"]
 theorem erdos_1182.variants.f_upper :
     ∃ B > (0 : ℝ), ∀ᶠ n : ℕ in atTop,
       (f n : ℝ) < B * (n : ℝ) ^ (5 / 3 : ℝ) * Real.log n ^ (2 / 3 : ℝ) := by
