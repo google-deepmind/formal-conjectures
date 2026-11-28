@@ -125,7 +125,8 @@ $2 \le n < \omega$, where $\mathfrak{c}$ is the order type of the real numbers.
 Positive partial answer to Problem 70 with $\beta = \omega + n$ and the blue side
 fixed at $4$ [ErRa56, Theorem 31].
 -/
-@[category research solved, AMS 3]
+@[category research solved, AMS 3, formal_proof using lean4 at
+  "https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-27-000043"]
 theorem erdos_rado (n : ℕ) (hn : 2 ≤ n) :
     RealCardinalRamsey3 (ω + n) 4 := by
   sorry
